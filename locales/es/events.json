@@ -1,0 +1,93 @@
+{
+   "halloween17": {
+      "treat": "***¡Truco o trato!*** ¡Tienes **{{qtd}}** Dulces del alijo de este servidor!",
+      "treatRefresh": "¡No no no! Ya tienes tus dulces, shoo!\nPuede volver a aparecer en **{{remaining}}**",
+      "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.fun/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
+      "newAccOut": ":warning: Lo siento, las nuevas cuentas no pueden participar. Quizás puedas unirte al siguiente.",
+      "nextThis": "Puedes Trick or Treat aquí de nuevo en:",
+      "candiesCheck": "Has recogido ** {{amt}} ** Dulces hasta el momento. ¡Sigue llamando a los servidores para obtener más!",
+      "candiesCheckHim": "**{{user}}** ha recolectado ** {{amt}} ** Dulces hasta el momento.",
+      "candieRank": "Estos son los tipos más ricos en dulces del barrio",
+      "candies": "**{{amt}}** Dulces",
+      "candytop": "Los mejores coleccionistas de Dulces son:",
+      "candyprize": "¡Los usuarios mejor clasificados obtendrán buenas recompensas al final del evento!"
+   },
+   "xmas17": {
+      "give": "Da Llaves",
+      "droprates": "La tasa de caída de Cofres de Eventos de este servidor se ha aumentado en **{{amount}}x**",
+      "bori_receive": "Borealis recibió **{{herKeys}} Llaves** %EMJ% de este servidor",
+      "absentElf": "Parece que {{elfie}} no está, vuelve a intentarlo más tarde.",
+      "shopUpdate": "{{role2}} {{role1}}:\n  ¡El comerciante tiene **artículos nuevos** en stock!",
+      "noFunds_key": "Hmmm... parece que no tienes suficientes Llaves",
+      "windky_PLURAL": "Llaves de cuerda",
+      "windky_SINGULAR": "Llave de cuerda",
+      "austra_buy": "¿Es eso lo que quieres? ¡Por **{{price}}** Llaves de cuerda puede ser todo tuyo! ¿Tenemos un trato?",
+      "austra_checkout": "**¡Hecho!** ¡Ha sido un gran placer hacer negocios contigo~!",
+      "austra_noFunds": "Lo siento, los dos estamos perdiendo el tiempo aquí. No tienes suficientes Llaves para eso. Pero puedo dártelo si me das **{{rubAmount}}** Rubines.",
+      "austra_ultimatePoverty": "...que aparentemente tampoco tienes. ¡Shoo!",
+      "austra_exg": "Puedo intercambiar mis Llaves por una cantidad justa de tus Rubines, pero estoy mucho más interesada en Llaves. Utiliza comandos como estos para intercambiar conmigo:",
+      "help_elf": "Comprueba si hay duendes alrededor",
+      "help_info": "Información general del evento",
+      "help_austra": "Menú de interacción de la comerciante",
+      "help_borea": "Menú de interacción de la coleccionista",
+      "australis_bio": "Australis es la duende de Midsummer Xmas, en las líneas de ensamblaje del sur de Santa. Como Santa no los supervisa, ella hace todo lo que está a su alcance para recuperar las Llaves de cuerda perdidas, incluso tomando artículos a hurtadillas y revenderlos a un precio mucho más bajo.",
+      "borealis_bio": "Borealis es una joven duende a tiempo parcial de las principales líneas de ensamblaje de Santa en el Polo Norte. Ella se ofreció voluntariamente para ayudar a encontrar las Llaves de cuerda perdidas. Ella es una de las aprendices favoritas de Santa, por esa razón, él toma sus sugerencias bastante en serio.",
+      "au_function": "Australis intercambia artículos de tiendas por llaves de cuerda, la rareza de los artículos depende de la cantidad de llaves que tenga.",
+      "bo_function": "Borealis recolecta llaves de cuerda y las trae de vuelta a Santa, la tasa de abandono de los Botines de Evento aumenta significativamente según la cantidad de llaves que tenga.",
+      "elfAppears": "{{notify_roles}}:\n¡Una de las elfas de Santa acaba de aparecer en este servidor!\n**{{aust_or_borea}}** estará aquí por {{amount}} horas. Usa `{{prefix}}{{elf}}` para hablar con ella.",
+      "automessage": "**Información del evento global de PolluXmas**\nEste canal se usará para publicar actualizaciones de eventos para este servidor.\n\nLas actualizaciones incluyen:\n   - *Aparición de elfas de Papá Noel*\n   - *Nuevos artículos del comerciante elfo*\n   - *Actualizaciones de drop rate del elfo coleccionista*\n\nHay tres roles de utilidad para este evento, obtenlos si deseas recibir una notificación.\n{{genericRole}} - para **todas las** actualizaciones.\n{{austri}} - para las actualizaciones de **comerciante**.\n{{bori}} - para actualizaciones de **coleccionista**.",
+      "theTrader": "Australis - La Comerciante",
+      "theCollector": "Borealis - La coleccionista",
+      "traderElfText": "Necesito algunas Llaves de Cuerda que se perdieron en la fábrica de Santa. ¿Viste alguna?\n**¡Puedo intercambiarlos por artículos!**",
+      "collectorElfText": "Estoy recogiendo Llaves de Cuerda perdidas alrededor de servidores, ¿viste alguna?\n**¡Con estas Llaves, podremos entregar Cofres de Regalo más rápido a tu servidor!*",
+      "theseElf": "Estos son los duendes que están actualmente en este servidor:",
+      "thisElf": "Esta és la elfa que se encuentra actualmente en este servidor:",
+      "noElf": "No hay elfos actualmente en este servidor:",
+      "configIntro": "¡El evento PolluXmas ha sido configurado en tu servidor! Siéntete libre de pasearte y cambiar el nombre de estos roles y canales, si los eliminas, es posible que necesites ejecutar la configuración automática de nuevo. **Todo el progreso del evento se perderá si lo haces.**",
+      "tNot": "Rol de notificación del comerciante",
+      "cNot": "Rol de notificación del Coleccionista",
+      "configInfo": "Diles a tus miembros que utilicen estos roles para recibir notificaciones sobre el evento y/o que se les notifique acerca de su elfo preferido.\n**¡NO EDITES LOS PERMISOS DE POLLUX EN EL CANAL DE EVENTOS!** El desarrollador no puede recuperar datos de eventos perdidos si eso ocurre alguna vez.",
+      "thankKys": "¡Muchas gracias! Santa puede entregar regalos aquí **{{amount}}x** más rápido ahora debido a tu bondad~",
+      "howmanyKys": "¡Ah gracias! ¿Cuántas llaves puedes darme?",
+      "noFunds_bo": "Parece que no tienes tantas llaves.",
+      "hasAmount": "{{username}} ha recopilado {{amount}} Llaves de Cuerda"
+   },
+   "valentines": {
+
+   },
+   "easter": {
+      "egghunt": "***{{user}}** está buscando huevos en este canal...*",
+      "egghuntfail": "*Pero no pudo encontrar nada*",
+      "egghuntsuccess": "¡Genial! ¡Aquí hay un huevo! Vamos a ver...",
+      "egghuntsuccess2": "{{rarity_emoji}} ¡ {{user}} encontró un **Huevo {{rarity}}**!",
+      "egghuntsuccess3": "Tienes un total de **{{X}}** huevos contigo.\n**{{Y}}** de ellos son únicos.\n\nMas info en: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+      "delaytrade": "",
+      "wanttrade": "{{user}} quiere intercambiar **{{tradingEgg}}** contigo.",
+      "wanttrade2": "*Para aceptarlo, escribe `accept` seguido del ID del Huevo que mandarás de vuelta.*\n\nE.j. `accept C1` para dar un Huevo [**C1**] a cambio de este Huevo [**{{eggcode}}**]",
+      "eggtradetitle": "Intercambio de Huevos de Pascua",
+      "noegginvent": "Este huevo o no existe o no está en tu inventorio",
+      "needegg": "¡Necesitas especificar un huevo para dar a cambio!",
+      "tradeok": "**¡Éxito!** El {{egg1}} de {{user1}} fue intercambiado por el {{egg2}} de {{user2}}. "
+   },
+   "wintersummer": {
+
+   },
+   "tmtk": {
+
+   },
+   "jailbreak": {
+
+   },
+   "wizards": {
+
+   },
+   "generic": {
+      "next": "Disponible de nuevo en este servidor en {{remain}}",
+      "newServer": "Los nuevos servidores no pueden participar en este evento. Ponte en contacto con el Desarrollador o unete al servidor de soporte si deseas participar en el evento con este servidor.",
+      "newJoin": "",
+      "yourpos": "Tu rango actual es:",
+      "evChan": "Canal de eventos",
+      "gNot": "Rol genérico del evento",
+      "current_eventforMasters": ""
+   }
+}

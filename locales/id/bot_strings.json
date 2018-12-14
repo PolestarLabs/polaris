@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "",
+        "RBN_plural": "",
+        "JDE": "",
+        "JDE_plural": "",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "Pemberitahuan",
+        "first": "1",
+        "second": "2",
+        "third": "3",
+        "fourth": "4",
+        "fifth": "5",
+        "infinite": "",
+        "none": "Kosong",
+        "reason": "Alasan",
+        "banned": "",
+        "kicked": "",
+        "usage": "Pemakaian",
+        "module": "",
+        "inst": "",
+        "bet": "",
+        "level": "",
+        "levelUp": "Naik Level!",
+        "discord": {
+            "role": "",
+            "server": "",
+            "member": "",
+            "user": "",
+            "user_plural": "",
+            "channel": "",
+            "channel_plural": "",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "Penanggungjawab",
+        "wasbanned": "telah di **banned**",
+        "waskicked": "telah di **tendang**",
+        "modLogs": "",
+        "actLogs": "",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "Hak untuk akses ini tidak bisa dijalankan dengan benar:\n{{PERMSLIST}}",
+            "denied": "Kamu tidak diizinkan untuk menggunakan ini. Perintah ini membutuhkan Pangkat {{rankNeed}}, Pangkat kamu sekarang {{rankMe}}. Hubungi pemilik server atau Moderator.",
+            "disabledModule": ":no_entry_sign: {{module}} telah dilarang di sini. Sayang sekali.",
+            "genericInvalid": "Aduh-duh, kayaknya Perintah itu tidak benar ;~;",
+            "prefixChng": "Sip, sekarang awalannya adalah {{prefix}}, ayo coba `{{prefix}}stats'.",
+            "moderationNeeded": "",
+            "chooseAmod": "Bisa pilih sebuah _module_ enggak?",
+            "kinNone": "Bilang dong mau _Tendang_ siapa. Tentu saja, mungkin aku juga bisa menendangmu.",
+            "kin404": "Aku tidak bisa menemukannya. Apa dia sudah kabur duluan? Atau mereka hanya imajinasi milikmu saja.",
+            "unperm": "Aku tidak bisa melakukannya. Mungkin kamu bisa memberiku akses sebelum menyuruhku untuk melakukan sesuatu.",
+            "noRoleHere": "_Role_ itu tidak terdaftar. Pastikan kamu memberikan _role_ yang tepat.",
+            "noRolesGiven": "_Role_ yang mana? Kamu tidak salahkan?",
+            "roleAlreadyHere": "_Role_ itu sudah ada di daftar.",
+            "nosuchrole": "Eh, aku tidak bisa menemukan _role_ itu, tolong ketik dengan benar. Jangan lupa dengan tulisan besar-kecilnya.",
+            "kbanNone": "Banned siapa? Aku bisa saja banned kamu.",
+            "superRoleNope": "Sepertinya **{{user}}** belum mendapatkan Role **{{group}}**",
+            "banNone": "Banned siapa? Aku bisa saja banned kamu.",
+            "unpermB": "Aku tidak memiliki akses untuk memproses ini.",
+            "cantFindChannel": "Aku tidak bisa menemukan _Channel_ itu. Coba pakai #channel untuk memeriksanya jika ada.",
+            "noChannelGiven": "Beritahu aku channel mana yang ingin diberikan informasi aktivitas.",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "Oke, akan aku lakukan ....",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: Menendang {{target}} dari sini.\n**Alasan:** *{{reason}}*",
+            "autoroleunAdded": "_Role_ **{{role}}** telah dihilangkan dari _Role_ Otomatis.",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "Alasan tidak jelas",
+            "didban": ""
+        },
+        "logs": {
+            "success": "Oke! Aku telah mengatur {{channel}} ini sebagai _Channel_ {{CHNTYPE}}!",
+            "successDelete": "Beres. {{channel}} bukan lagi sebagai _Channel_ {{CHNTYPE}}.",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "Pilih slot untuk memakai medal baru milikmu!",
+            "timeout": "",
+            "cancelled": "",
+            "youSure": "",
+            "choose": "",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "Aku telah mengganti teks personal milikmu ke: {{pstext}}\nCoba `{{prefix}}profile` untuk melihat perubahannya pada Kartu Profil milikmu. Aku yakin seseorang pasti akan menyukainya."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "Oke sip. **{{user}}** sekarang sudah masuk ke dalam grup **{{group}}**.",
+            "rolermCom": "Astaga, **{{user}}** sudah tidak jadi bagian dari grup **{{group}}**. Kira-kira kenapa bisa ya?",
+            "superRoleadCom": "Tentu. **{{user}}** telah diberikan Role **{{group}}**!",
+            "superRolermCom": "Beres. **{{uses}}** tidak mendapatkan Role **{{group}}** lagi!",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "Jumlah Rubi kamu sekarang {{number}}, tidak cukup untuk membelinya",
+            "noFunds": "Rubi tidak cukup",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Kamu dapat 100 Rubi dari bonus harian!",
+            "dailyNope": "Ini {{emoji}} ya? Sepertinya kamu sudah mengklaim Rubi tersebut, kamu bisa dapat lagi di: **{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "_Module_ **{{module}}** telah dimatikan secara **Global**.",
+            "disabledChn": "_Module_ {{module}} telah dimatikan pada #{{channel}}",
+            "disabledComSer": "Perintah {{command}} telah dimatikan secara **Global**.",
+            "disabledComChn": "Perintah {{command}} telah dimatikan pada #{{channel}}",
+            "enabledSer": "_Module_ **{{module}}** telah diperbolehkan secara **Global**.",
+            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada #{{channel}}",
+            "enabledComSer": "Perintah **{{command}}** telah diperbolehkan secara **Global**",
+            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada #{{channel}}"
+        },
+        "reput": {
+            "noSelf": "Enggak, aku tidak bisa memberi _rep_ ke dirimu sendiri.",
+            "noTarget": "Kamu harus beritahu dulu mau kasih +_Rep_ ke siapa.",
+            "confirm": ":fleur_de_lis:  **{{who}}** telah menambahkan **+1Rep** ke **{{target}}**. Baiknya.",
+            "cooldown": "Eits tahan dulu, kamu bisa memberikan _rep_ lagi dalam {{remaining}}. Sabar ya."
+        },
+        "$": {
+            "insuFloor": "Rubi kamu tidak cukup. Paling tidak kamu harus memiliki **{{number}}** {{emoji}}",
+            "insuBet": "Minimal taruhannya ialah {{number}}",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Sepertinya kamu lagi miskin, kasihannya.",
+            "cash100": "Eh? Kamu ternyata memiliki beberapa Rubi.",
+            "cash500": "Wah sudah mulai tajir",
+            "cash1000": "Oke, sekarang kamu sepertnya sudah tajir.",
+            "cash5000": "Wah! Kok bisa Kamu jadi _super_ tajir begitu?",
+            "cash10000": "Kamu tidak membobol bank, 'kan? Aku boleh telepon polisi enggak?",
+            "cashInfinite": "Berbuat curang itu tidak baik loh."
+        },
+        "greet": {
+            "byeOFF": "Kamu mematikan pesan perpisahan? Ini mungkin bagus, mengingat mereka juga tidak melihatnya.",
+            "byeON": "Pesan Perpisahan telah dinyalakan pada _Channel_ ini! Mereka saja tidak melihatnya, yah paling tidak aku bisa mengucapkan perpisahan.",
+            "helloOFF": "Kamu mematikan fitur Pesan Salam? Bukankah ini tidak bagus?",
+            "helloON": "Pesan Salam dinyalakan pada _Channel_ ini. Aku yakin pasti orang-orang akan menghargai kerja kerasku karena memberi salam kepada mereka.",
+            "inTex": "Pesan salam telah di simpan!",
+            "outTex": "Pesan perpisahan telah di simpan!",
+            "tellmeMSG": "Pesan terlalu pendek atau tidak ada pesan yang ditemukan.",
+            "tellmeCHN": "_Channel_ tidak di pilih!",
+            "timer": "Ya, aku akan menghapus Pesan Salam setelah {{timeMin}} detik!",
+            "timerby": "Ya, aku akan menghapus Pesan Perpisahan setelah {{timeMin}} detik!",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}' Tingkat kadar Garam-nya adalah **{{amount}}%** {{emoji}}",
+            "booru404": "Maaf ya, aku tidak menemukan apa pun dengan label itu. Cek lagi deh sudah benar atau tidak.",
+            "nsfw404": "Maaf, itu terlalu sadis sampai-sampai aku tidak menemukannya di mana pun. Kamu ini betul-betul deh.",
+            "nsfwNope": ":no_entry_sign: Perintah NSFW tidak diperbolehkan di _Channel_ ini, dasar mesum.",
+            "nsfwNofunds": "Rubi kamu tidak cukup untuk membeli sesuatu. Bisa di atur jika kamu sudah punya **5** Rubi. (Dapatkan Rubi dengan cara `{{prefix}}daily` )",
+            "nsfwCheckout": "5 debit {{emoji}} telah diambil dari penyimpananmu.",
+            "airwaifu": ":airplane: Aerowaifu ini telah dipasangkan denganmu.",
+            "leadUnap": "Jika kamu tidak melihat dirimu di sini, ketik `{{prefix}}profile` untuk melihat _Level_ milikmu. Tidak semua orang bisa muncul di Peringkat teratas.",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{targe}} telah menjadi anggota sejak: {{joinedstamp}}",
+            "aviOK": "Oke, demi kamu aku mengganti fotoku. Kamu bisa menggantinya lagi pada {{cooldown}}",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "Tambah _Role_ sendiri pada Server ini",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**Tuliskan alasan kenapa ingin melakukan pengaturan ulang untuk konfirmasi**\nKirim **c** untuk batal.",
+            "start": "",
+            "cancel": "Atur Ulang Dibatalkan!",
+            "timeout": "Waktu Atur Ulang Habis!",
+            "completed": "Info Server telah sukses di hapus dan diatur ulang. Coba gunakan **+serverinfo** untuk memeriksa jika sudah benar telah diatur ulang. Aku tidak tanggung jawab jika ada yang salah."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": "bantuan"
+}

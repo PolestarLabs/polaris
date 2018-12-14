@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "Rubin",
+        "RBN_plural": "Rubinok",
+        "JDE": "",
+        "JDE_plural": "Jádék",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "Gyakori",
+        "U": "Rendkívüli",
+        "R": "Ritka",
+        "SR": "Szuper Ritka",
+        "UR": "Ultra Ritka",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "Mennyiség",
+        "overview": "Áttekintés",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "Eredmény",
+        "announcement": "Bejelentés",
+        "first": "Első",
+        "second": "Második",
+        "third": "Harmadik",
+        "fourth": "Negyedik",
+        "fifth": "Ötödik",
+        "infinite": "",
+        "none": "Semmi",
+        "reason": "Ok",
+        "banned": "",
+        "kicked": "",
+        "usage": "Használata",
+        "module": "Modul",
+        "inst": "Utasítások",
+        "bet": "Tét",
+        "level": "Szint",
+        "levelUp": "Szintet léptél!",
+        "discord": {
+            "role": "",
+            "server": "Szerver",
+            "member": "Tag",
+            "user": "Felhasználó",
+            "user_plural": "Felhasználók",
+            "channel": "",
+            "channel_plural": "Channelek",
+            "voice_channel": "",
+            "private": "Privát üzenet"
+        }
+    },
+    "logs": {
+        "responsible": "Felelősség",
+        "wasbanned": "**bannolva** kett",
+        "waskicked": "**kickkelve** lett",
+        "modLogs": "",
+        "actLogs": "Tevékenység Napló",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": "A szerver beállításai megváltoztak!"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "",
+            "denied": "Nincs ehhez jogosultságod. E parancs használatohoz legalább {{rankNeed}} rangra van szükséged, míg a tied csak {{rankMe}}. Vedd fel a kapcsolatot a szerver tulajával vagy egy moderátorral.",
+            "disabledModule": ":no_entry_sign: A Mester megtiltotta, hogy a {{module}}-t használjuk itt. Elég kár, nemde?",
+            "genericInvalid": "Hoppácska, úgy látszik ez a parancs érvénytelen ;~;",
+            "prefixChng": "Mostantól a prefixumom {{prefix}}, próbáld ki `{{prefix}}stats` -el",
+            "moderationNeeded": "",
+            "chooseAmod": "Képes lennél végre egy modult választani?",
+            "kinNone": "Először is mondd meg nekem a nevét annak, akit ki kéne kickelnem, veled tenném meg.",
+            "kin404": "Hoppácska, nem találom őt :[ Nem ment már el? Lehet, hogy már elment? Bár az is meglehet, hogy csak a képzeleted szüleményei voltak.",
+            "unperm": "Nincs engedélyem ehhez. Nem gondolod, hogy engedélyt kellene ehhez adnod, mielőtt parancsolgatni kezdesz nekem.",
+            "noRoleHere": "Ez a Role nincs a listán. Ügyelj arra, hogy helyesen írd le a role nevét.",
+            "noRolesGiven": "Nem említettél meg semmilyen Role-t. Biztos, hogy jól csinálod?",
+            "roleAlreadyHere": "Úgy látszik, hogy ez a Role már rajta van a listán.",
+            "nosuchrole": "Izé, nem találtam meg ezt a role-t, írd le a pontos nevét! Tudod, van különbség a kis- és nagybetűk között.",
+            "kbanNone": "Mondd meg, hogy kit bannoljak ki, mielőtt te lennél az áldozatom.",
+            "superRoleNope": "Úgy látszik **{{user}}** nem rendelkezik a **{{group}}** Role-lal!",
+            "banNone": "Mondd meg, hogy kit bannoljak ki, mielőtt te lennél az áldozatom.",
+            "unpermB": "Nekem úgy látszik, hogy nincs elég engedélyem, hogy megcsináljam ezt.",
+            "cantFindChannel": "Nem találom ezt a channelt :/ Próbáld meg használni a #channelt, hogy bebiztosítsd, hogy létezik.",
+            "noChannelGiven": "Meg kell mondanod, hogy melyik channelbe írjam a logokat.",
+            "insuperms": "",
+            "not-a-NSFW-channel": "Ez a channel nem NSFW. Nem szórhatod szét csak úgy ezeket a \"művészi\" képeket!"
+        },
+        "warnings": {
+            "timesOutIn": "Ez {{s}} másodperc múlva lejár",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "Oki, már csinálom is...",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: {{target}}-t kikickeltem.\n **Oka:** *{{reason}}*",
+            "autoroleunAdded": "Role **{{role}}** removed from Autoroles.",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "Az ok nem részletezett.",
+            "didban": ""
+        },
+        "logs": {
+            "success": "",
+            "successDelete": "",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "Válaszd ki, hogy hova tegyen a vadonatúj érmedet!",
+            "timeout": "Azt hiszem, hogy elfelejtetted kitenni a érmeidet. Hívj nyugodtan, ha mégis kitennéd őket~",
+            "cancelled": "Nos, ha nem szeretnéd most kitenni ezeket, akkor minek hívtál?",
+            "youSure": "",
+            "choose": "Válaszd ki az érmeket, amiket ki szeretnél tenni a Profilkártyádra",
+            "success": "Gyönyörű! Az új érmed ott díszeleg a Profilkártyádon~",
+            "unequipSuccess": "Okés, az érmet leszedtem a profilodról.",
+            "unequipChoose": "Melyik érmet szeretnéd eltávolítani?",
+            "unequipConfirm": "Ezt szeretnéd levenni?",
+            "equipTwice": "Ez a medál már a profilodon van!",
+            "isEmpty": "Nincs mit eltávolítani!"
+        },
+        "discoin": {
+            "desc": "A Rubinjaidat elküldtem, majd %BOT% fog egy üzenetet küldeni, ha megérkezett.",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "Ez a valuta nem létezik!",
+            "invalidAmt": "Ennyit nem tudsz átváltani!",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "Tartsd meg ezt a kódot arra az esetre, ha a Rubinok nem érnének célt.",
+            "ex-succ": "Sikeres volt az átváltás!"
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "Megváltoztattam a személyes üzeneted erre: {{pstext}} \nHasználd a `{{prefix}}profile` parancsot, hogy megnézhesd ezt a ProfilKártyádon. Valakinek biztos tetszeni fog."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "Okés! Most már **{{user}}t** is bevettük a **{{group}}** csapatba.",
+            "rolermCom": "Jaj ne, **{{user}}** már nem része a **{{group}}** csapatnak. Vajon miért?",
+            "superRoleadCom": "Oksi. **{{user}}** **{{group}}** megkapta a Role-t!",
+            "superRolermCom": "Kész is. **{{user}}** most már nem rendelkezik a **{{group}}** Role-lal!",
+            "selfroleunAdded": "",
+            "noselfRoles": "Ezen a szerveren nem tudsz magadnak role-t adni."
+        },
+        "generic": {
+            "inviteText": "Ha megszeretnél hívni a szerveredre kattints [IDE]",
+            "cancel": "",
+            "noFundsBalance": "Úgy látszik, hogy ezt nem engedheted meg magadnak, a számládon csak {{number}} rubin van.",
+            "noFunds": "Nincs elég rubinod",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} 100 Rubint kaptál a napi bónuszodnak hála!",
+            "dailyNope": "{{emoji}} Hmm? Úgy látszik, hogy ma már megkaptad a Rubinjaidat, ha többet szeretnél, gyere vissza **{{remaining}}** múlva.",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "",
+            "disabledChn": "A {{module}} modult már nem lehet a #{{channel}} channelen használni.",
+            "disabledComSer": "",
+            "disabledComChn": "A **{{command}}** parancsot most már nem lehet a #{{channel}} channelen használni",
+            "enabledSer": "",
+            "enabledChn": "A **{{module}}** modul most már használható a #{{channel}} channelen",
+            "enabledComSer": "",
+            "enabledComChn": "A **{{command}}** parancs most már használható a #{{channel}} channelen"
+        },
+        "reput": {
+            "noSelf": "Nem, nem engedem, hogy fényezd magad.",
+            "noTarget": "",
+            "confirm": ":fleur_de_lis:  **{{who}}**, ki **+1Rep**pel ajándékozta meg **{{target}}**t. Hát nem rendes?~",
+            "cooldown": ""
+        },
+        "$": {
+            "insuFloor": "Nincs elég Rubinod. Ehhez legalább **{{number}}** rubinra van szükséged {{emoji}}",
+            "insuBet": "A tétednek legalább {{number}}-nak kell lennie",
+            "noFundsBet": "",
+            "noBet": "Csak szórakozás miatt játszunk? Vagy csak túl szegény vagy, hogy feltedd a téted?",
+            "acceptDec": "Kattints a {{icon}} ikonra, hogy elfogadhasd, egy nap csak 5 tranzakciót tudsz lebonyolítani.",
+            "declinedTrans": "",
+            "ongoingTrade": "Nem kezdhetsz egy másik cserét, míg egy folyamatban van!",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Úgy látszik, hogy elég csóró vagy, de tőled nem is vártam mást.",
+            "cash100": "Hmm? Úgy látszik, hogy van egy pár Rubinod.",
+            "cash500": "Csíra vagy",
+            "cash1000": "Közel vagy ahhoz, hogy gazdagnak mondjalak, nagyon közel.",
+            "cash5000": "Oh? Mégis hogy lettél ilyen gazdag?",
+            "cash10000": "Na jó... Bankot raboltál? Lehet, hogy hívnom kellene a rendőrséget.",
+            "cashInfinite": "Tudod, nem kellene csalnod."
+        },
+        "greet": {
+            "byeOFF": "Kikapcsolod a búcsú üzeneteket? Lehet, hogy ez e legjobb, hiszen már úgy se látnák.",
+            "byeON": "Most már láthatóak lesznek a búcsú üzenetek! Mondjuk nem fogják látni, de legalább elég udvarias vagyok, hogy elbúcsúzzak tőlük.",
+            "helloOFF": "Most már nem küldök köszöntő üzeneteket! Ez egy kicsit bunkó, nem gondolod?",
+            "helloON": "Most már láthatóak a köszönő üzenetek ezen a channelen! Biztos vagyok, hogy mindenki értékelni fogja, hogy köszönök neki.",
+            "inTex": "Üdvözlés mentve!",
+            "outTex": "Búcsú üzenet mentve!",
+            "tellmeMSG": "Az üzenet túl rövid vagy nem található.",
+            "tellmeCHN": "Channel nem lett megadva!",
+            "timer": "Természetesen, most már törölni fogom az üdvözléseket {{timeMin}} másodperc után!",
+            "timerby": "Rendben, törlöm az búcsú üzenetet {{timeMin}} másodperc után!",
+            "noTimer": "Oké, egy üzenetet sem fogok törölni.",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}-nak **{{amount}}%**-ban sós a p*csája {{emoji}}",
+            "booru404": "Hoppika, semmit sem találtam ezekkel a tagekkel. Ellenőrizd, hogy mindent helyesen írtál-e.",
+            "nsfw404": "Már megbocsáss, de a kérésed annyira bizarr, hogy ennek megfelelőt sehol se találtam. De tőled nem is vártam mást.",
+            "nsfwNope": ":no_entry_sign: Nem ezen a channelen kellene az NSFW parancsokat használnod, perverz...",
+            "nsfwNofunds": "Nincs elég rubinod ahhoz, hogy mocskos dolgokat vehess, de ha adsz **5** Rubint, akkor beszélhetünk. (Rubinokat a `{{prefix}}daily` paranccsal szerezhetsz)",
+            "nsfwCheckout": "5 {{emoji}}t leemeltem az egyenlegedről.",
+            "airwaifu": ":airplane: Ezt az Aerowaifut gondosan válogattuk ki számodra.",
+            "leadUnap": "Ha nem találod itt magad, akkor a `{{prefix}}profile` paranccsal megnézheted a szinted. Végülis nem lehet rajta mindenki ezen a listán.",
+            "position": "A helyed a rangsorban:",
+            "usethisfor": "Írd ||p!rank {{scope}}| {{srr}}hoz",
+            "transmittedVc": "",
+            "decon": "{{user}} megtisztította magát a radioaktív szennyezéstől.",
+            "decon2": "{{user}} megtisztította {{user2}}t a radioaktív szennyezéstől.",
+            "cancer": "{{user}} épp most nézi, hogy mennyire rákos ez a channel.",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{target}} tag {{joinedstamp}} óta",
+            "aviOK": "Oké-zsoké, ez az új képem. Legközelebb {{cooldown}} múlva változtathatod meg a profilképem",
+            "colorChange": "A kedvenc színedet elmentettem!"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "",
+        "daily": {
+            "lastdly": "Utolsó napi bónusz :",
+            "next": "Következő napi bónusz:",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**Írd le, hogy miért akarsz atomot küldeni a szerverre a megerősítéshez**\n Küldd a **c** betűt, ha meggondoltad magad.",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": ""
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "Dobásaid:",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "Nem gondolod, hogy be kellene előbb fejezni a játékot, amit elkezdtél, mielőtt újat kezdenél?",
+            "newgame": "",
+            "result": "Eredmény:",
+            "bust": "",
+            "youwin": "Gratulálok! Most te nyertél!",
+            "youlose": "",
+            "hit": "Válaszolj `hit`, hogy még egy kártyát húzhass,",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "A nyereményed **%$%** %emj%",
+            "_minor": "Jobb, mint a semmi, nem?",
+            "_mid": "Nem rossz, de nem is jó",
+            "_major": "Majdnem!",
+            "_ultimate_1": "Nagyszerű!!! :heart:",
+            "_ultimate_2": "Annyira szerencsés vagy!!! :heart:",
+            "_ultimate_3": "Elhiszed ezt?! :heart:",
+            "kommunism": "KOMMUNISTA JACKPOT!!! A nyereményed szétosztottam az elvtársak között, bár te 3-szor annyit kapsz belőle.",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "Mennyi Rubin! Remélem, nem nekem kell majd mindet cipelnem.",
+            "potato": "Krumplik... Lehet, hogy készíthetnék ezekből valamit.",
+            "zero_1": "Jaj nekem, úgy látszik, hogy az összes Rubinod az enyém lett.",
+            "zero_2": "Egyet sem találtál el? Kár.",
+            "zero_3": "Talán, ha újra próbálod, akkor még nyerhetsz is valamit."
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "Tudod, hogy mi ez? Egy **RARE** Lootbox!",
+        "suprareDrop": "",
+        "ultraRareDrop": "Nem fogod elhinni! Egy **ULTRA RARE** Lootbox van itt! Talán nem látsz ilyet még egyszer!",
+        "lootDrop": [
+            "Jaj nekem, csak nem egy lootboxot látok?",
+            "Hogy? Ez egy Lootbox?",
+            "Úgy látszik, hogy valaki eldobott egy itt egy Lootboxot.",
+            "Bocsi, hogy közbeszólok, de... Eddig senki sem vette észre ezt a gazdátlan Lootboxot?",
+            "Azta! Nézd milt találtam!",
+            ""
+        ],
+        "lootPick": "**__20 másodpercetek__** van, hogy megküzdjetek érte! Írjátok, hogy `{{prefix}}pick` , hogy indulhassatok érte!",
+        "goesTo": "Lejárt az idő! Nézzük, hogy ki kapja ezt a Boxot.\n**Ezt a Lootboxot nem más kapja, mint:**",
+        "congrats": "",
+        "opening": "{{user}} kinyitotta a Lootboxát...",
+        "contains": "",
+        "options": "Megtarthatod, vagy újranyithatod, aminek az ára {{amt}}",
+        "keep": "Megtartom",
+        "reroll": "Újranyitom",
+        "rerolled": "Próbáljuk meg megint, nyissuk újra a boxot...",
+        "noMoreRolls": "Nincs több újranyitási lehetőséged, el kell fogadnod ezt az eredményt.",
+        "noFunds": "Több Rubinra lesz szükséged ahhoz, hogy újranyisd a lootboxod, majd legközelebb.",
+        "rerollRemain": "Újranyitási lehetőségek száma:",
+        "addedRubines": "{{X}} rubint írtam neked jóvá",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "Hagytátok elúszni a Lootboxot? Nem is tudom, hogy miért vártam tőletek többet.",
+        "contesting": "Indulók ezért a Boxért:",
+        "eventDrop": "",
+        "notThisbox": "Nem tudsz ilyen boxot kinyitni, írd, hogy `{{prefix}}lootbox`, hogy lásd, milyen boxaid vannak~"
+    },
+    "eastereggs": {
+        "konodioda": "Azt hitted, hogy Pollux az, **DE ÉN VOLTAM AZ, DIO**!",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "Nézd meg a Pinnelt üzenetet további információkért",
+        "reactThis": "Reagálj erre az üzenetre, hogy megkaphasd a role-okat."
+    },
+    "helpkey": "segítség"
+}

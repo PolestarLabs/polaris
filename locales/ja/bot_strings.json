@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "ルビン",
+        "RBN_plural": "ルービンズ",
+        "JDE": "",
+        "JDE_plural": "翡翠",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "量",
+        "overview": "概要",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "お知らせ",
+        "first": "最初",
+        "second": "二番目",
+        "third": "三番",
+        "fourth": "第4",
+        "fifth": "五番目",
+        "infinite": "",
+        "none": "なし",
+        "reason": "理由",
+        "banned": "",
+        "kicked": "",
+        "usage": "",
+        "module": "モジュール",
+        "inst": "指示",
+        "bet": "ベット",
+        "level": "レベル",
+        "levelUp": "レベルアップ！",
+        "discord": {
+            "role": "役割",
+            "server": "サーバ",
+            "member": "メンバー",
+            "user": "ユーザー",
+            "user_plural": "ユーザー",
+            "channel": "チャネル",
+            "channel_plural": "チャンネル",
+            "voice_channel": "音声チャネル",
+            "private": "プライベートメッセージ\n"
+        }
+    },
+    "logs": {
+        "responsible": "責任ある",
+        "wasbanned": "**禁止された**",
+        "waskicked": "**キックド**",
+        "modLogs": "",
+        "actLogs": "アクティビティログ",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": "サーバーの設定が変更されました。"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "次の権限は正しく実行されません：\n{{PERMSLIST}}",
+            "denied": "あなたはこれを使用する権限がありません。 このコマンドは、{{rankNeed}} の標高ランクを必要とし、ランクは {{rankMe}}です。 サーバーの所有者またはモデレーターに連絡してください。",
+            "disabledModule": "no_entry_sign：私たちの主人は{{module}}がここで禁止されていると宣言しました。 バマー",
+            "genericInvalid": "うーん..無効なコマンド ;〜;",
+            "prefixChng": "ああ、今私の接頭辞は{{prefix}}です、 `{{prefix}}stats` を使って試してみてください",
+            "moderationNeeded": "",
+            "chooseAmod": "モジュールを選択してください。",
+            "kinNone": "내가 걷어차 야 할 놈의 이름을 말해줘. 하지만 난 항상 대신 킥 수 있습니다.",
+            "kin404": "죄송합니다, 나는이 사람을 찾을 수 없다고 생각합니다 :[ 그는 이미 갔습니까? 그는 존재하니? 당신의 상상력이 아닙니까? 너 확실해?",
+            "unperm": "어떤 지옥 이유 때문에 나는 이것을 할 권한이 없다. 나 한테 허락 해줘.",
+            "noRoleHere": "この役割はリストにありません。 それをもう一度確認してください。",
+            "noRolesGiven": "何の役割に言及しなかった、あなたは右のそれをやっていますか？",
+            "roleAlreadyHere": "ねえ、ミスター、この役割はすでにここにあります！",
+            "nosuchrole": "ええ、私はこの役割を見つけることができませんでした、その名前を正確に入力してください！ 大文字と小文字を区別していて大変です",
+            "kbanNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
+            "superRoleNope": "**{{user}} **には役割がありません **{{group}}**！",
+            "banNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
+            "unpermB": "ああ、私はこれを処理するのに十分なパーマを持っていないと思います...",
+            "cantFindChannel": "ええと...このチャンネルを見つけることができませんでした：/確信が持てない場合は #channel を試してみてください",
+            "noChannelGiven": "そして、どこでこれらの活動を記録するのですか？ あなたの顔に？ ログインするチャンネルを教えてください！",
+            "insuperms": "",
+            "not-a-NSFW-channel": "最初にこのチャンネルをNSFWに設定してください。 子供たちは周りにあります"
+        },
+        "warnings": {
+            "timesOutIn": "これは{{s}}秒後にタイムアウトします",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "さて、ちょっと待って...",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: ここから{{target}}の尻を蹴った。\n  **理由** *{{理由}}*",
+            "autoroleunAdded": "ロール **{{role}}** は自動ロールから削除されました。",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "特定できない理由",
+            "didban": ""
+        },
+        "logs": {
+            "success": "完了！ 私は {{CHNTYPE}} のチャンネルとして{{channel}}を設定しました！",
+            "successDelete": "準備完了！ 私は {{channel}} を {{CHNTYPE}} のチャンネルとしました！",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "新しいメダルを装備するスロットを選択してください！",
+            "timeout": "あなたはあなたのメダルを装備するのを忘れました。 あなたがそれらを装備したいときに私に電話してください〜",
+            "cancelled": "あなたが今装備するつもりがないなら、私はあなたのメダルを世話します〜",
+            "youSure": "",
+            "choose": "あなたのプロフィールカードに装備する勲章を選択してください",
+            "success": "綺麗な！ プロフィールカードに新しいメダルがあります~",
+            "unequipSuccess": "メダルは装備されていません！",
+            "unequipChoose": "どのメダルを取り除くつもりですか？",
+            "unequipConfirm": "これはあなたが装備を解除したいのですか？",
+            "equipTwice": "あなたはすでにこのメダルを装備しています！",
+            "isEmpty": "削除するものは何もありません！"
+        },
+        "discoin": {
+            "desc": "あなたのトランザクションは処理中です。%BOT％ \nからの応答が確認されるとすぐに表示されます。",
+            "intake": "Pollux **ルービンズ**（RBN）交換：",
+            "outtake": "%BOTNAME% さんの **%CURRNAME%**（{{$}}）",
+            "remainder": "{{$}}の残りの制限",
+            "receiptCode": "トランザクション受領コード",
+            "amNaN": "無効な数量",
+            "invalidCurr": "この通貨は存在しません！",
+            "invalidAmt": "この金額を交換することはできません！",
+            "unverified": "あなたは交換を確認していません。\n[http://discoin.sidetrip.xyz/verify]で自分自身を確認してください。",
+            "userLimit": "今日の為替上限に達しました！",
+            "globalLimit": "今日の操作は終了しました、ありがとうございます！",
+            "takedis": "何か起こった場合にこのコードを保存してください",
+            "ex-succ": "交換成功！"
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "よー！ 準備完了！ あなたの個人的なテキストは{{pstext}}です。あなたの~~あまり美しい~~プロフィールカードでこの美しい線を見るには `{{prefix}}profile`を使ってください。 喜平〜"
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "良い！ 今すぐ **{{user}}** は **{{group}}**グループ〜に含まれています！",
+            "rolermCom": "**{{user}}** は、もはや **{{group}}** グループの一部ではありません！ 残念だ。",
+            "superRoleadCom": "良い。 **{{user}}**は **{{group}}**の役割を受けました！",
+            "superRolermCom": "はい！ **{{user}}** は、もはや **{{group}}** の役割に属しません！",
+            "selfroleunAdded": "ロール **{{role}}** はセルフロールから削除されました。",
+            "noselfRoles": "このサーバーにはセルフ・ロールはありません"
+        },
+        "generic": {
+            "inviteText": "あなたのサーバーに私を招待してください [ここ]",
+            "cancel": "",
+            "noFundsBalance": "あなたがこれを買う余裕がないようですが、あなたの残高は {{number}} Rubinesです",
+            "noFunds": "あなたには十分なRubinesがありません",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} 毎日のボーナスとして100個のRubinesを受け取りました。",
+            "dailyNope": "{{emoji}}うん？ 既にあなたのルービーズを主張しているようですが、あなたはもっと多くを得ることができます：**{{remaining}} **",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "**{{module}}**モジュールは無効になっています **グローバル**",
+            "disabledChn": "{{module}}モジュールは、チャネル #{{channel}}で無効にされています",
+            "disabledComSer": "**{{command}}** 명령이 비활성화되었습니다 **グローバル**",
+            "disabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용 중지되었습니다.",
+            "enabledSer": "**{{module}}** 모듈이 활성화되었습니다. **グローバル**",
+            "enabledChn": "채널 #{{channel}}에서 **{{module}}** 모듈을 사용하도록 설정했습니다.",
+            "enabledComSer": "**{{command}}** 명령이 활성화되었습니다 **グローバル**",
+            "enabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용하도록 설정되었습니다."
+        },
+        "reput": {
+            "noSelf": "ねえ、スマートなお尻！ あなたは自分自身にそれをすることはできません！",
+            "noTarget": "真空に感謝しない限り、誰に感謝するか教えてください。",
+            "confirm": ":fleur_de_lis: **{{who} ** は、**{{target}}** に **+1Rep** を親切に追加しました。 どれくらい甘い〜",
+            "cooldown": "ちょっと待って！ あなたは {{remaining}} を待ってからもう一度人に感謝することができます。 我慢して。"
+        },
+        "$": {
+            "insuFloor": "あなたには十分なRubinesがありません。 **{{number}}** {{emoji}} 以上が必要です",
+            "insuBet": "少なくとも {{number}} 賭ける",
+            "noFundsBet": "",
+            "noBet": "楽しみのために遊ぶええ？ 大丈夫〜",
+            "acceptDec": "これらを受け入れるには{{icon}}をクリックしてください。1日に5つの取引しか受け付けられません。",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "期待どおり、あなたはかなり貧しいようです。",
+            "cash100": "ハァッ？ あなたは実際にいくつかのRubinesを持っています。",
+            "cash500": "あなたはとても冷たいです",
+            "cash1000": "私はあなたをほとんど金持ちだと思うだろう。",
+            "cash5000": "あなたは非常に豊かです",
+            "cash10000": "あなたは銀行を盗んだのですか？",
+            "cashInfinite": "あなたはシステムを乱用していますか？"
+        },
+        "greet": {
+            "byeOFF": "さよならメッセージが無効になりました！ さようなら、さようなら。 とった？\nさようなら\n**バイバイ**\nハハハハ...オハイオ州、まあ、それはなくなってしまった。 ありがとうございました！",
+            "byeON": "さよならメッセージはこのチャンネルで有効になっています！ 彼らはそれを見るつもりはないが、少なくとも私はさよならを言うのは礼儀正しい。",
+            "helloOFF": "ウェルカムメッセージが無効になりました！ それはあなたのゲストを迎えることはうれしいことではありません。 :X",
+            "helloON": "このチャンネルでウェルカムメッセージが有効になっています！ 私は誰もが〜に参加するとすぐに彼らの顔に幸せなハローを受け取ることを確認します！",
+            "inTex": "挨拶のメッセージが保存されました！",
+            "outTex": "お別れメッセージが保存されました！",
+            "tellmeMSG": "メッセージが短すぎるか、メッセージが見つかりません。",
+            "tellmeCHN": "チャンネルが指定されていません！",
+            "timer": "さて、{{timeMin}} 秒後にウェルカムメッセージを削除します！",
+            "timerby": "{{timeMin}}秒後にさよならメッセージを削除します。",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}' は **{{amount}}%** {{emoji}} のバカなように振る舞います",
+            "booru404": "おっと、私はそれらのタグを使用して何を見つけることができませんでした。 すべてが正しいかどうかチェックしてください。",
+            "nsfw404": "少年、あなたのポルノはとても奇妙なのでどこにも見つけられませんでした。何か他のものを試してみてください。",
+            "nsfwNope": ":no_entry_sign: このチャンネルではNSFWのコマンドは許可されていません。",
+            "nsfwNofunds": "あなたはいたずらなものを買うのに十分なルビンを持っていません。私に**5** Rubinesを与え、我々は話をすることができます。`{{prefix}}daily` でRubinesを入手する",
+            "nsfwCheckout": "5 {{emoji}} はあなたの資金から引き落とされました。",
+            "airwaifu": ":airplane: このAerowaifuは慎重にあなたのためのキュレーションされています。",
+            "leadUnap": "ここに自分自身が見えない場合は、`{{prefix}}profile` のプロファイルを入力してレベルを確認してください。 たぶん、あなたはちょうど吸います。",
+            "position": "このランクのあなたの地位は",
+            "usethisfor": "タイプ |p!rank {{scope}}| ために {{srr}}",
+            "transmittedVc": "あなたの音声チャンネルに送信されました！",
+            "decon": "{{user}}は自分自身を汚染除去しています。",
+            "decon2": "{{user}}は{{user2}}を除染しています。",
+            "cancer": "{{user}}はこのチャットの癌のレベルを検査しています。",
+            "geiger": ":radioactive: ガイガーカウンターによると、このチャットガンの可能性は \n**{{percentage}}%** で **{{radiation}}μSv/h**"
+        },
+        "misc": {
+            "memberSince": "{target}} その時以来のメンバーです： {{joinedstamp}}",
+            "aviOK": "私の新しい写真は今これです。 私のプロフィール画像は{{cooldown}}で再び変更できます",
+            "colorChange": "私はあなたがこの賭けを取り戻すことはできないと思っています...あなたは{{number}}ルビンを手に入れました"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "このサーバーの自己割り当て可能な役割",
+        "daily": {
+            "lastdly": "最後の日記 :",
+            "next": "次の日記:",
+            "streakcurr": "現在のストリーク:",
+            "expirestr": "ストリークが終了するまでの時間:",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**確認するには、以下の核兵器理由を書く**\n  キャンセルの場合は **c** を送信してください。",
+            "start": "",
+            "cancel": "爆撃が中止！",
+            "timeout": "爆撃がタイムアウト！",
+            "completed": "サーバー情報が正常に消去され、リセットされました。 **+serverinfo** を使用して、すべてが正しくリセットされたかどうかを確認してください。 私は、その後の 核廃絶 汚染の責任を負いません。"
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "ロールは：",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "ねえ、私たちはすでに試合をしています！",
+            "newgame": "いくつかのブラックジャックをプレイする時間、私はあなたがルールを知っていると思うので、始めましょう。",
+            "result": "結果：",
+            "bust": "",
+            "youwin": "おめでとう！ あなたはこの時間に勝った！",
+            "youlose": "",
+            "hit": "カードをもう1枚引くために「hit」に応答し、",
+            "stand": "",
+            "split": "`split` あなたの手を分割するには、",
+            "double": "",
+            "pass": "或るいは  `stand` 合格する。",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "あなたの賞金は **%$%** %em%％",
+            "_minor": "何もないより良い？ ;）",
+            "_mid": "悪くない、全く！",
+            "_major": "とても近い！",
+            "_ultimate_1": "それは素晴らしいことです！！！ :heart:",
+            "_ultimate_2": "あなたはとてもラッキーです！ :heart:",
+            "_ultimate_3": "これを信じられますか？ :heart:",
+            "kommunism": "共産主義の大当たり!!! あなたの賞金が高い3倍され、そしてそれは、私が見つけることができる限り多くの人々によって分割されました！",
+            "pollux_jackpot": "",
+            "lucky": "ラッキーセブンズベイビー〜",
+            "jackpot": "あなたの賞に加えて、あなたはまた、100のリングと余分な人生を持っています",
+            "bonanza": "わーい！ ルビンがたくさん！ 運ぶためにあまりにも多くの ルービンズ！",
+            "potato": "ジャガイモ...悪くないが、どちらかといえば良い",
+            "zero_1": "ああ！ あなたは1つのルービンを返すことさえできませんでした...",
+            "zero_2": "ああ、あまりにも悪いです...ここには何もありません。",
+            "zero_3": "次回は運がいいよ、甘い。 あなたを信頼しています！ ;）"
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "これは何ですか？ **レア** ルーツボックスです！",
+        "suprareDrop": "",
+        "ultraRareDrop": "私はこれを信じることができない！**ウルトラレア** ルーツボックスが落ちた！もう一度見ることはできません！",
+        "lootDrop": [
+            "みんな！ ルーツボックスがちょうどこのチャンネルで生まれました！",
+            "みんな！ルーツボックスが落ちた！クイック、それを手に入れよう！",
+            "ニース、ここに ルーツボックス があるように見えます！",
+            "中断して申し訳ありませんが、誰かがここに横たわっているこの ルーツボックス に気付いたのですか？",
+            "スゴイ！ 私が見つけたこの ルーツボックス を見てください！",
+            ""
+        ],
+        "lootPick": "あなたはそれをすべて争うために、**__ 20 Seconds __** を持っています！ `{{prefix}}pick` を入力してリクエストしてください！",
+        "goesTo": "時間切れ！ 誰がこの箱を入手しているのか見てみましょう。\n**このルーツボックスは、以下の間で抽選されます:**",
+        "congrats": "",
+        "opening": "{{user}} 彼/彼女の ルーツボックス を開いた...",
+        "contains": "",
+        "options": "あなたはそれを維持するか、{{amt}} を支払ってそれを再登録することができます",
+        "keep": "それを保つ",
+        "reroll": "それを保つ",
+        "rerolled": "ボックスコンテンツを再読み込みしてみましょう...",
+        "noMoreRolls": "あなたはリロールを使い果たしました。この結果にこだわる必要があります。",
+        "noFunds": "あなたはリロールを買う余裕がない、次回は運が良い。",
+        "rerollRemain": "残りのリロール：",
+        "addedRubines": "あなたの天びんに{{X}}ルビンを追加しました",
+        "addedJades": "{{X}} あなたのポーチに追加された翡翠",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "重複{{tpe}} {{itm}} `{{X}}` ルービンと交換",
+        "morons": "あなたは **バカの束です** ！ あなたはLootboxをスリップさせます。 ]:U",
+        "contesting": "このボックスのエントリー：",
+        "eventDrop": "",
+        "notThisbox": "このようなボックスはありません。 `{{prefix}}lootbox`をもう一度試してみてください。利用可能なオプションは〜"
+    },
+    "eastereggs": {
+        "konodioda": "あなたはそれがポルックスだったと思っていましたが **私はDIO **でした！",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "詳細については、固定メッセージを確認してください",
+        "reactThis": "このメッセージに反応して役割を自動受信する"
+    },
+    "helpkey": "助けて"
+}

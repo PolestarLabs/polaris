@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "루빈",
+        "RBN_plural": "루빈",
+        "JDE": "제이드",
+        "JDE_plural": "제이드",
+        "SPH": "사파이어",
+        "SPH_plural": "사파이어",
+        "C": "커먼",
+        "U": "언커먼",
+        "R": "레어",
+        "SR": "수퍼 레어",
+        "UR": "울트라 레어",
+        "lootbox": "전리품 상자",
+        "lootbox_plural": "전리품 상자들",
+        "thevoid": "허공"
+    },
+    "terms": {
+        "total": "",
+        "amount": "양",
+        "overview": "개요",
+        "coinHeads": "앞면",
+        "coinTails": "뒷면",
+        "qnt": "양",
+        "res": "결과",
+        "announcement": "발표",
+        "first": "1위",
+        "second": "2위",
+        "third": "3위",
+        "fourth": "4위",
+        "fifth": "5위",
+        "infinite": "무한한",
+        "none": "없음",
+        "reason": "이유",
+        "banned": "차단됨",
+        "kicked": "강퇴됨",
+        "usage": "용법",
+        "module": "기준 치수",
+        "inst": "명령",
+        "bet": "내기",
+        "level": "수평",
+        "levelUp": "레벨 업!",
+        "discord": {
+            "role": "역할",
+            "server": "섬기는 사람",
+            "member": "회원",
+            "user": "사용자",
+            "user_plural": "사용자",
+            "channel": "채널",
+            "channel_plural": "채널",
+            "voice_channel": "음성 채널",
+            "private": "사신"
+        }
+    },
+    "logs": {
+        "responsible": "책임감있는",
+        "wasbanned": "였다 **banned**",
+        "waskicked": "였다 **kicked**",
+        "modLogs": "관리 로그",
+        "actLogs": "활동 기록",
+        "advLogs": "고급 모드",
+        "logChan": "일반 로그",
+        "userJoin": "{{user}} 가 서버에 들어왔습니다",
+        "userLeave": "{{user}} 가 서버를 떠났습니다",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "새로운 채널이 만들어졌습니다: {{channel}}",
+        "delChan": "채널이 삭제되었습니다: {{channel}}",
+        "updtChan": "{{channel}} 채널이 업데이트되었습니다",
+        "newRole": "새로운 역할이 만들어졌습니다: {{role}}",
+        "uptRole": "{{user}} 의 역할이 업데이트되었습니다",
+        "delRole": "{{role}} 이 **삭제되었습니다**.",
+        "revokeBan": "**{{user}}**에 대한 활동 정지 취소됨",
+        "usrNick": "지금부터 **{{user}}** 는 자신을 **{{newuser}}**로 부르기로 했습니다",
+        "usrPhoto": "{{user}} 가 자신의 프로필 사진을 변경했습니다.",
+        "usrRoles": "{{user}} 의 역할이 업데이트되었습니다.",
+        "gSets": "서버 설정이 변경되었습니다"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "다음 사용 권한은 올바르게 진행되지 않습니다.\n{{PERMSLIST}}",
+            "denied": "귀하는 이것을 사용할 권한이 없습니다. 이 명령은 {{rankNeed}}의 고도 등급이 필요하고, 당신의 순위는 {{rankMe}}입니다. 서버 소유자 또는 Mod에 문의하십시오.",
+            "disabledModule": ":no_entry_sign : 우리 주인은 {{module}}이 (가) 여기 금지되어 있다고 선언했습니다. 유감 이네요",
+            "genericInvalid": "오, 이런, 커맨드가 틀렸어. ㅠ.ㅠ",
+            "prefixChng": "좋아, 내 접두사는 이제 {{prefix}}이고, '{{prefix}} stats'를 사용하여 시도해보십시오.",
+            "moderationNeeded": "저기, 당신은 이 코멘드를 사용할 수 없습니다. **Manage Server** 에서 허락을 받거나 관리자가 되야 해요. ('{{prefix}}modrole [@Role]'로 하나 지정하세요)",
+            "chooseAmod": "모듈을 선택해주세요.",
+            "kinNone": "누굴 강퇴시킬지 말하셔야죠. 물론 전 당신도 지금 당장 강퇴시킬 수 있습니다.",
+            "kin404": "이 사람을 찾을 수없는 것 같습니다. 그들은 이미 떠났습니까? 아마 그들은 당신의 상상력의 일부 였을 것입니다.",
+            "unperm": "나는 이것을 할 권한이 없다. 아마도 나에게 무언가를하도록 명령하기 전에 권한을 주어야 할 것입니다.",
+            "noRoleHere": "역할이 나열되어 있지 않은 것 같습니다. 역할을 정확하게 알려주는지 확인하십시오.",
+            "noRolesGiven": "역할이 언급되지 않았습니까?",
+            "roleAlreadyHere": "그 역할은 이미 목록에 있는 것 같네요.",
+            "nosuchrole": "올바른 역할을 입력하십시오. ",
+            "kbanNone": "나는 금지 할 표적이 필요합니다, 나는 항상 당신을 대신 금지 할 수 있습니다.",
+            "superRoleNope": "것 같습니다 **{{user}}** 이 없습니다 **{{group}}**",
+            "banNone": "나는 금지 할 표적이 필요합니다, 나는 항상 당신을 대신 금지 할 수 있습니다.",
+            "unpermB": "이 문제를 처리 할 수있는 권한이없는 것 같습니다.",
+            "cantFindChannel": "채널을 찾을 수 없습니다. #channel 을 사용하여 존재하는지 확인하십시오.",
+            "noChannelGiven": "활동을 기록 할 채널을 알려줘야합니다.",
+            "insuperms": "{{imsorry}} 당신에게 권한이 없다면 당신을 위해 그걸 할 수 없습니다.",
+            "not-a-NSFW-channel": "이 채널은 NSFW로 설정되어 있지 않습니다. 어디에서나 \"작품\"을 떠나지 마십시오."
+        },
+        "warnings": {
+            "timesOutIn": "이 시간 초과는 {{s} 초",
+            "enterVoiceBetterExperience": "~100%~ 즐기시려면 보이스 채널에 있으셔야 합니다."
+        },
+        "verbose": {
+            "jas": [
+                "좋아, 지금하고있어... ㅈ.ㅈ",
+                "잠시 기다려 주십시오...",
+                "잠시만 기다려주세요..."
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "네.",
+                    "알겠습니다!",
+                    "알겠습니다.",
+                    "알겠습니다.",
+                    "맞아요!",
+                    "알겠습니다!",
+                    "",
+                    "좋아요!",
+                    "좋아요!",
+                    "알겠습니다!",
+                    "설정 완료!",
+                    "모두 완료!",
+                    "완료."
+                ],
+                "yatta": [
+                    "야호!",
+                    "아, 맞아요!",
+                    "좋아요!",
+                    "멋져요!",
+                    "좋아요!",
+                    "좋아요!",
+                    "좋아요!",
+                    "좋아요!",
+                    "완벽해요!",
+                    "놀라워요!"
+                ],
+                "gomenasai": [
+                    "죄송합니다,",
+                    "당황스럽네요,",
+                    "음... 죄송합니다,",
+                    "제 실수네요,",
+                    "제 실수네요,",
+                    "절 용서해주세요,",
+                    "죄송합니다,"
+                ],
+                "ohmy_positive": [
+                    "오 이런!",
+                    "우와!",
+                    "아!",
+                    "보세요!",
+                    "멋져요!",
+                    "야호!",
+                    "믿기지 않아요!"
+                ],
+                "ohmy_negative": [
+                    "오 이런!",
+                    "어어...",
+                    "아...",
+                    "이런!",
+                    "안돼애애애!",
+                    "이런!"
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: {{target}} 쫓겨\n**Reason:** *{{reason}}*",
+            "autoroleunAdded": "역할 **{{role}}**이 자동 역할에서 제거되었습니다.",
+            "modroleunAdded": "역할 **{{role}}** 은 더 이상 관리자 역할이 아닙니다. 당신 쿠데타를 일으키시려 하는 건가요?",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "이유 불명",
+            "didban": ""
+        },
+        "logs": {
+            "success": "끝난! {{CHNTYPE}}의 채널로 {{channel}}을 (를) 설정했습니다.",
+            "successDelete": "좋구나. {{channel}}은 더 이상 {{CHNTYPE}}의 채널이 아닙니다.",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "새로운 메달을 장착 할 수있는 슬롯을 선택하십시오!",
+            "timeout": "메달을 장비하고 싶지 않았습니까? 당신이 무언가를 장비하고 싶을 때 다시 전화 해.",
+            "cancelled": "음, 지금 메달을 장비하고 싶지 않다면 왜 나에게 전화 했지?",
+            "youSure": "",
+            "choose": "프로필 카드에 장착 할 메달을 선택하십시오.",
+            "success": "",
+            "unequipSuccess": "좋아, 메달이 없어졌습니다.",
+            "unequipChoose": "어느 메달을 지우겠습니까?",
+            "unequipConfirm": "이 메달을 없애시겠습니까?",
+            "equipTwice": "이미이 메달을 장비하고 있습니다!",
+            "isEmpty": "제거 할 항목이 없습니다!"
+        },
+        "discoin": {
+            "desc": "28 루빈 DueUtil 이 신용을 교환합니다.",
+            "intake": "폴룩스 **루빈** (RBN) 교환:",
+            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) 받다:",
+            "remainder": "{{$}}의 남아있는 한도",
+            "receiptCode": "거래 영수증 코드",
+            "amNaN": "유효하지 않은 수량",
+            "invalidCurr": "그 통화는 존재하지 않습니다!",
+            "invalidAmt": "그 금액을 교환 할 수는 없습니다!",
+            "unverified": "귀하는 교환을 위해 확인되지 않았습니다.\n[http://discoin.sidetrip.xyz/verify]에서 직접 확인하십시오",
+            "userLimit": "오늘의 교환 제한에 도달했습니다!",
+            "globalLimit": "Discoin 한도에 도달했습니다. 내일 다시 시도하십시오.",
+            "takedis": "루비가 목적지에 도달하지 못하는 경우를 대비하여이 코드를 보관하십시오.",
+            "ex-succ": "교환 성공!"
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": "\n[번역가들께] 이건 평범한 번역이 아닙니다. 그러니 이 '모든' 문자열을 Pollux가 이 언어를 말하는 것에 대한 가벼운 고정관념적 우스갯소리로 바꿔주세요- 그 언어를 말하는 사람들이 알아들을 수 있다면 더 좋겠죠.\n예시:\n[BRAZILIAN PORTUGUESE] - 'because nobody cares about portugal afterall'\n[KOREAN] 'i can already feel my APM rising'\n[FRENCH] 'don't even dare to make baguette jokes'\n[RUSSIAN] 'now bring me a vodka'\n- 당신의 창의력을 마음껏 펼쳐 참신하고 좋은 문구를 만드세요!\n\n[Pollux 사용자들께: **이 어색한 문장들을 읽고 계신다면, 잘 번역하지 못한 번역가를 탓하세요] "
+        },
+        "profile": {
+            "persotexUpdate": "개인 텍스트를 {{pstext}} (으)로 변경했습니다.\n`{{prefix}} profile`을 사용하여 여러분의 ProfileCard에 새로운 라인을 표시하십시오. 나는 누군가 그것을 즐길 것이라고 확신한다."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "{{user}} 와 이혼하는 것에 대해 동의하십니까? **둘 다** %EMJ% **5000 루빈** 이 차감됩니다. 두 명의 사랑포인트도 **반 동강** 날 거예요!",
+            "saidnope": "{{userB}} 가 이혼을 원하지 않는답니다. %EMJ%**10000 루빈**을 냄으로서 이혼을 강요하여 제가 변호사를 부를 수는 있겠지만, 둘 다 **자신의 모든 사랑 포인트**를 잃게 될 거예요!",
+            "saidnothing": "{{userB}} 가 아무 말도 없네요. %EMJ%**15000 루빈**을 냄으로서 이혼을 강요하여 제가 변호사를 부를 수는 있겠지만, 둘 다 **자신의 모든 사랑 포인트**를 잃게 될 거예요!",
+            "saidyep": "",
+            "forced_rej": "알겠습니다. 변호사를 불러 이 상황을 해결했어요- 당신들은 이제 이혼했습니다!",
+            "info": "",
+            "divorce_title": "이혼"
+        },
+        "roles": {
+            "roleadCom": "좋구나. **{{user}}** **{group}}** 그룹에 포함되었습니다.",
+            "rolermCom": "오 마이, **{{user}}**는 더 이상 **{{group}}** 그룹에 속해 있지 않습니다. ",
+            "superRoleadCom": "당연하지. **{{user}}** 주어진 **{{group}}** 역할!",
+            "superRolermCom": "끝난. **{{user}}** 더 이상 그룹에 속하지 않는다 **{{group}}** 역할.",
+            "selfroleunAdded": "역할 **{{role}}** 자체 할당 역할에서 제거되었습니다.",
+            "noselfRoles": "이 서버에는 자체 할당 역할이 없습니다."
+        },
+        "generic": {
+            "inviteText": "[여기]를 클릭하여 서버에 나를 초대하십시오.",
+            "cancel": "마음을 바꿨나요? 네, 이따 봐요~",
+            "noFundsBalance": "네가 이럴 여유가 없어 보인다, 너는 가지고 {{number}} 루빈",
+            "noFunds": "충분하지 않은 루빈",
+            "plus_rubines": "%R$t(keywords.RBN_plural) 가 당신의 잔액에 추가되었습니다. 좋지 않나요?",
+            "minus_rubines": "당신의 잔액에서 %R$t(keywords.RBN_plural) 을 가져가겠습니다, 알겠죠~?"
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} 당신은 받았습니다 100 루빈!",
+            "dailyNope": "{{emoji}} 흠? 이미 청구하셨습니다 루빈, 더 많은 것을 얻을 수 있습니다: **{{remaining}}**",
+            "dailyStreak": "{{emoji}} 10일 연속 출석체크한 기념으로 **+500 루빈**을 드립니다!"
+        },
+        "toggle": {
+            "disabledSer": "**{{Module}}** 모듈이 사용 중지되었습니다. **Globally**. ",
+            "disabledChn": "모듈 {{module}}이 (가) {{channel}} 채널에서 사용 중지되었습니다.",
+            "disabledComSer": "**{{command}}** 명령이 비활성화되었습니다 **Globally **",
+            "disabledComChn": "**{{command}}** 명령이 사용 중지되었습니다 #{{channel}}에서.",
+            "enabledSer": "**{{module}}** 모듈이 활성화되었습니다. **Globally**",
+            "enabledChn": "** {{module}} ** 모듈이에서 활성화되었습니다 #{{channel}}에서.",
+            "enabledComSer": "**{{command}}** 명령이 활성화되었습니다 **Globally**",
+            "enabledComChn": "** {{command}} ** 명령이 채널에서 사용 설정되었습니다."
+        },
+        "reput": {
+            "noSelf": "아니, 거절한다!",
+            "noTarget": "+ rep 할 사람을 말해봐. 당신이 공허에 + rep를 던지면 않는 한.",
+            "confirm": ":fleur_de_lis:  **{{who}}**  친절하게 추가했습니다 **+1Rep** 에 **{{target}}**.",
+            "cooldown": "기다려, {{remaining}}에서 다시 할 수 있습니다. 기다려주십시오."
+        },
+        "$": {
+            "insuFloor": "너는 충분하지 않은 루빈이. 당신은 적어도이 필요 **{{number}}** {{emoji}}",
+            "insuBet": "적어도 내기 {{number}}",
+            "noFundsBet": "",
+            "noBet": "재미있게 놀고 있니? 너무 가난하니?",
+            "acceptDec": "이를 수락하려면 {{icon}} 을 클릭하십시오. 하루에 5 건의 거래 만 수락 할 수 있습니다.",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "예상했던 대로 꽤 가난하시네요.",
+            "cash100": "어라, 당신 의외로 루빈이 좀 있으시네요.",
+            "cash500": "cash500",
+            "cash1000": "당신을 부자라고 생각하겠습니다... 거의.",
+            "cash5000": "어? 어떻게 그렇게 부자가 되셨습니까?",
+            "cash10000": "은행에서 좀 훔쳤나요? 112에 전화할까요?",
+            "cashInfinite": "속임수 쓰시면 안 되죠."
+        },
+        "greet": {
+            "byeOFF": "bye 메시지를 사용 중지 했습니까? 아마 그것은 최고를위한 것입니다.",
+            "byeON": "Bye이 채널에서 활성화 된 메시지! 비록 그들이 그것을 보지 않을지라도, 적어도 나는 작별 인사를하기에 충분히 예의입니다. ㅅ.ㅅ",
+            "helloOFF": "환영 메시지를 껐습니까? ㅠ.ㅠ",
+            "helloON": "이 채널에서 사용 가능한 환영 메시지입니다. 사람들이 저의 인사를 열심히 감사 할 것이라고 확신합니다.",
+            "inTex": "인사말 메시지 저장 됨!",
+            "outTex": "작별 인사 메시지가 저장되었습니다!",
+            "tellmeMSG": "␣메시지가 너무 짧거나 메시지가 없습니다.",
+            "tellmeCHN": "␣채널 지정되지 않았습니다!",
+            "timer": "물론 {{timeMin}} 초 후에 환영 메시지를 삭제하겠습니다!",
+            "timerby": "물론, {{timeMin}} 초 후에 Bye Messages를 삭제할 것입니다!",
+            "noTimer": "",
+            "outChan": "알겠습니다! 작별 메세지들은 **{{channel}}**에 올리도록 하겠습니다.",
+            "inChan": "알겠습니다! 환영 메세지들은 **{{channel}}**에 올리도록 하겠습니다. "
+        },
+        "forFun": {
+            "saltLVL": "{{target}}' 나쁘다 **{{amount}}%** {{emoji}}",
+            "booru404": "미안하지만, 그 꼬리표로 아무것도 못 찾았 어. 정확한지 확인해야합니다.",
+            "nsfw404": "실례지만 포르노가 너무 기괴해서 어디서나 찾을 수 없습니다. 귀하를 좋아하는 사람이 기대하는대로.",
+            "nsfwNope": " :no_entry_sign: NSFW 이 채널에서는 명령을 사용할 수 없습니다.",
+            "nsfwNofunds": "당신은 그것을 사기에 충분한 루빈이 없다. 돌아와 와 **5**루빈. (루비 네스 받기 `{{prefix}}daily` )",
+            "nsfwCheckout": " 5 {{emoji}} 귀하의 자금에서 인출되었습니다.",
+            "airwaifu": ":airplane: 비행기가 조심스럽게 큐레이팅되었습니다.",
+            "leadUnap": "여기서 자신을 볼 수 없다면`{{prefix}} profile '을 입력하여 레벨을 확인하십시오.",
+            "position": "여기에서 당신의 순위는",
+            "usethisfor": "",
+            "transmittedVc": "음성 채널로 보냈습니다!",
+            "decon": "{{user}}이 (가) 자신을 오염 제거하고 있습니다.",
+            "decon2": "{{user}}이 (가) {{user2}}의 오염을 제거합니다.",
+            "cancer": "{{user}} 님이이 채팅의 암 발생 정도를 검사하고 있습니다.",
+            "geiger": ":radioactive: 가이거 계수기에 따르면이 채팅 암 잠재력은 **{{radiation}}μSv/h** 의 **{{percentage}}%**"
+        },
+        "misc": {
+            "memberSince": "{{target}} 님은  이후 멤버입니다 {{joinedstamp}}.",
+            "aviOK": "Ok, 나는 당신을 위해 나의 그림을 바꿨다. 프로필 사진을 다시 변경할 수 있습니다  에서 {{cooldown}}.",
+            "colorChange": "좋아하는 색깔이 저장되었습니다!"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "이 서버에 대한 자체 할당 가능 역할",
+        "daily": {
+            "lastdly": "마지막 날 :",
+            "next": "다음 출석체크:",
+            "streakcurr": "현 출석체크 횟수:",
+            "expirestr": "",
+            "dailyStreakJades": "{{emoji}} 3일 연속 출석체크한 기념으로 **+1000 제이드**를 드립니다!",
+            "dailyStreakSapphs": "{{emoji}} 250일 연속 출석체크한 기념으로 **+1 사파이어**를 드립니다!",
+            "availableDaily": "현재 가능함!"
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**확인을 위해 핵 이유를 쓰십시오**\n  취소하려면 **c**를 보냅니다.",
+            "start": "",
+            "cancel": "누크가 중단되었습니다!",
+            "timeout": "핵무기가 초과되었습니다!",
+            "completed": "서버 정보를 성공적으로 지우고 재설정했습니다. **+serverinfo** 를 사용하여 모든 것이 제대로 재설정되었는지 확인하십시오. 나는 이후에 핵 낙진 오염에 대한 책임을지지 않습니다."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "롤은 다음과 같습니다:",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "다른 게임을 시작하기 전에 게임을 끝내야합니다.",
+            "newgame": "블랙 잭? 너는 규칙을 안다. 그래서 시작하자.",
+            "result": "결과:",
+            "bust": "",
+            "youwin": "치하! 당신이 이겼어!",
+            "youlose": "어? 제가 이겼네요.",
+            "hit": "",
+            "stand": "",
+            "split": " `split` 너의 손을 나눠 라,",
+            "double": "",
+            "pass": "또는 `stand` 통과.",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "The prize money for this is **%$%** %emj%.",
+            "_minor": "아무것도없는 것보다는 낫다,응?",
+            "_mid": "나쁘지 않은데, 너는 약간의 루빈을 얻었다.",
+            "_major": "너무 가까이!",
+            "_ultimate_1": "놀랄 만한! :heart: ㅅ.ㅅ",
+            "_ultimate_2": "너는 운이 좋다!!! :heart:",
+            "_ultimate_3": "이거 믿을 수있어?! :heart:",
+            "kommunism": "공산주의자 대성공! 귀하의 상금은 인구가 많은 사람들 사이에서 재분배되었으며, 귀하는 그들이하는 일의 3 배를받습니다.",
+            "pollux_jackpot": "",
+            "lucky": "럭키 세븐, 잘 했어.",
+            "jackpot": "상금 외에도 100 개의 반지와 여분의 생명을 얻었습니다.",
+            "bonanza": "매우 많은 루빈! 당신은 내가이 모든 것을 나르도록하기를 계획하지 않기를 바란다.",
+            "potato": "감자 ... 나는 너를 위해서 이걸 만들 수있어.",
+            "zero_1": "오, 내 모든 루빈이 지금 내 것 같아.",
+            "zero_2": "단 하나의 히트가 아니십니까? 부끄러운 줄 알아.",
+            "zero_3": "아마도 다시 시도하면 무언가를 얻을 수 있습니까?"
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "이게 뭔지 알아? **레어** 전리품 상자입니다!",
+        "suprareDrop": "{{interjection}} **수퍼 레어** 전리품 상자다!",
+        "ultraRareDrop": "나는 그것을 믿을 수 없다. ** 울트라 레어 ** 전리품 상자가 떨어졌다! 당신은 결코 다시는 볼 수 없을지도 모릅니다!",
+        "lootDrop": [
+            "오, 내, 전리품 상자가 방금이 채널에서 생성되었습니다!",
+            "뭐? 그게 약탈 상자 야?",
+            "Someone seems to drop the loot box here.",
+            "방해해서 미안하지만,이 전리품 상자가 여기 누워있는 것을 누군가 알았습니까?",
+            "놀랄 만한! 내가 뭘 찾았는지 봐!",
+            ""
+        ],
+        "lootPick": "␣당신은 모두 분쟁을하기 위해 ** __ 20 초 __ **를 가지고 있습니다! `{{prefix}}pick '을 써서 그것을 요구할 기회를 얻으십시오!",
+        "goesTo": "시간의 최대! 누가이 박스를 가져 왔는지 보자.\n**이 전리품 상자는 다음 사이에 추첨됩니다 **",
+        "congrats": "축하드려요! 상자는 당신의 **인벤토리**에 추가되었습니다. `{{prefix}}lootbox` 코멘드를 사용하여 열 수 있어요.",
+        "opening": "{{user}}이 전리품 상자를 열었습니다 ...",
+        "contains": "이 {{adjective}} 전리품 상자 안에는:",
+        "options": "계속 유지하거나 {{amt}}을 지불하여 변경할 수 있습니다.",
+        "keep": "보관해라",
+        "reroll": "그것을 바꾼다.",
+        "rerolled": "상자 내용을 바꾸어 다시 시도해 봅시다 ...",
+        "noMoreRolls": "변경 사항이 모두 소진되었으므로이 결과를 계속 사용해야합니다",
+        "noFunds": "당신은 충분한 루빈이 없습니다. 아마도 다음 번에",
+        "rerollRemain": "남은 변경 사항 :",
+        "addedRubines": "{{X}} 잔액에 루빈이 추가되었습니다.",
+        "addedJades": "{{X}} 비취가 파우치에 추가되었습니다.",
+        "addedMedal": "**{{itm}}** 메달이 당신의 메달 포켓에 추가되었습니다",
+        "addedSticker": "**{{itm}}** 스티커가 당신의 스티커 엘범에 추가되었습니다",
+        "addedBG": "배경 `[code:{{itm}}]` 가 당신의 배경 바인더에 추가되었습니다",
+        "duplicateExchange": "{{tpe}}`{{itm}}' 이 (가) {{X}} 루핀과 교환되었습니다.",
+        "morons": "전리품 상자가 미끄러지도록 내버려 두시겠습니까? 내가 너에게서 기대했던대로.",
+        "contesting": "이 상자에 이의를 제기하십시오:",
+        "eventDrop": "",
+        "notThisbox": "그 상자가없는 것 같아. `{{prefix}} lootbox` 를 다시 시도하고 소유하고있는 상자를보십시오."
+    },
+    "eastereggs": {
+        "konodioda": "폴룩스라고 생각했는데 **하지만 그건 나, DIO**!",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "추가 정보는 첨부 된 메시지 확인",
+        "reactThis": "역할을 자동 수신하려면이 메시지에 응답하십시오."
+    },
+    "helpkey": "도움"
+}

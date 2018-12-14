@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "",
+        "RBN_plural": "",
+        "JDE": "",
+        "JDE_plural": "",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "HIGH NOON",
+        "first": "HIGH NOONst",
+        "second": "HIGH NOONnd",
+        "third": "HIGH NOONrd",
+        "fourth": "HIGH NOONth",
+        "fifth": "HIGH NOONth",
+        "infinite": "",
+        "none": "HIGH NOON",
+        "reason": "REASON",
+        "banned": "",
+        "kicked": "",
+        "usage": "HIGH NOON",
+        "module": "",
+        "inst": "",
+        "bet": "",
+        "level": "HIGH NOON",
+        "levelUp": "HIGH NOON!",
+        "discord": {
+            "role": "",
+            "server": "",
+            "member": "",
+            "user": "",
+            "user_plural": "",
+            "channel": "",
+            "channel_plural": "",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "HIGH NOON",
+        "wasbanned": "WAS **BANNED**",
+        "waskicked": "WAS **KICKED**",
+        "modLogs": "",
+        "actLogs": "",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "THE FOLLOWING PERMISSIONS ARE NOT PRESENT TO PROCEED CORRECTLY: HIGH NOON PERMISSION, {{PERMSLIST}}",
+            "denied": "YOU'RE NOT CREE ENOUGH TO USE THIS. THIS COMMANDS REQUIRES A RANK OF {{rankNeed}}, YOUR RANK IS {{rankMe}}. CONTACT MCCREE. OR THE SERVER OWNER. OR A MOD.",
+            "disabledModule": ":no_entry_sign: MCCREE HAS DECLARED {{module}} FORBIDDEN HERE. DON'T TRY.",
+            "genericInvalid": "SHIT, THAT DOESN'T EXIST COWBOY.",
+            "prefixChng": "ALRIGHT, MY PREFIX IS NOW {{MCCREE!}}, TRY IT OUT USING `MCCREE!NOONSTATS`",
+            "moderationNeeded": "",
+            "chooseAmod": "CHOOSE A MODULE. COME ON.",
+            "kinNone": "YOU NEED TO TELL ME WHO I'M SUPPOSED TO KICK. I'M GONNA KICK YOUR BUTT INSTEAD.",
+            "kin404": "I CAN'T SEE THAT THOT! DID THEY LEAVE? MAYBE YOU SAW SOME WEIRD STUFF. A HIGH NOON PERHAPS.",
+            "unperm": "I CAN'T DO THIS. YOU SHOULD GIVE ME PERMS BEFORE COMMANDING ME TO DO STUFF.",
+            "noRoleHere": "SEEMS LIKE THAT ROLE ISN'T IN THE NOONLIST. YOU SURE YOU'RE TYPING IT CORRECTLY?",
+            "noRolesGiven": "YOU DIDN'T MENTION A ROLE, TRY HARDER",
+            "roleAlreadyHere": "THAT ROLE IS ALREADY ON THE NOONLIST.",
+            "nosuchrole": "I CAN'T FIND THAT ROLE, TYPE THE NAME EXACTLY AS IT IS. IT'S ALSO CASE SENSITIVE IF YOU DIDN'T KNOW THAT.",
+            "kbanNone": "I NEED A TARGET TO BAN, I COULD ALWAYS BAN YOU INSTEAD.",
+            "superRoleNope": "IT SEEMS **{{USER}}** DOESN'T HAVE THE **MCCREE** ROLE.",
+            "banNone": "I NEED A TARGET TO BAN, I COULD ALWAYS BAN YOU INSTEAD.",
+            "unpermB": "I DON'T SEEM TO HAVE ENOUGH PERMS TO PROCESS THIS.",
+            "cantFindChannel": "I CAN'T SEE THAT CHANNEL. TRY USING #MCCREESFAVORITECHANNEL TO MAKE SURE IT EXISTS.",
+            "noChannelGiven": "YOU NEED TO TELL ME WHICH CHANNEL TO LOG THE ACTIVITIES INFO.",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "OKAAAAAAY, DOING IT NOW.",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: KICKED {{target}} FROM MCCREE'S FAVORITE PLACE.\n**REASON IS UNKNOWN. OR MAYBE NOT:** *{{reason}}*",
+            "autoroleunAdded": "ROLE **{{role}}** REMOVED FROM AUTO-ROLES.",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "REASON NOT SPECIFIED",
+            "didban": ""
+        },
+        "logs": {
+            "success": "DONE! I'VE SET MCCREE'S FAVORITE CHANNEL AS THE CHANNEL FOR {{CHNTYPE}}!",
+            "successDelete": "ALRIGHT. MCCREE'S FAVORITE CHANNEL IS NO LONGER THE CHANNEL FOR {{CHNTYPE}}.",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "CHOOSE A SLOT TO EQUIP YOUR BRAND NEW MEDAL!",
+            "timeout": "DID YOU NOT WANT TO EQUIP A MCCREE MEDAL? CALL ME AGAIN WHEN YOU WANT TO EQUIP ONE.",
+            "cancelled": "WELL, IF YOU'RE NOT GOING TO EQUIP A MEDAL NOW, WHY DID YOU CALL MCCREE?",
+            "youSure": "",
+            "choose": "CHOOSE A MCCREE MEDAL TO EQUIP ONTO YOUR THING",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "YOU'VE CHANGED YOUR THING TEXT TO: {{pstext}}\nUSE `{{prefix}}MCCREEISTHEBEST` TO SEE THE LINE ON THAT THING YOU HAVE. I'M PRETTY SURE SOMEONE WILL TRY TO HIGH NOON YOU FOR THAT."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "ALRIGHT. **{{user}}** IS NOW INCLUDED IN THE MCCREE GROUP.",
+            "rolermCom": "OH MY, **{{user}}** IS NO LONGER PART OF THE MCCREE GROUP. I WONDER WHY, MAYBE HE WASN'T SKILLED ENOUGH TO PRESS Q.",
+            "superRoleadCom": "OF COURSE. **{{user}}** HAS BEEN GIVEN THE **MCCREE** ROLE!",
+            "superRolermCom": "DONE. **{{user}}** NO LONGER BELONGS TO THE **MCCREE** ROLE!",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "NOT ENOUGH NOON, YOU HAVE {{number}} NOONS",
+            "noFunds": "NOT ENOUGH NOONS",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} IT'S HIGH NOON, 100 NOONS FOR FREE!",
+            "dailyNope": "{{emoji}} WOAH THERE? SEEMS LIKE YOU ALREADY USED HIGH NOON, YOU CAN HIGH NOON MORE IN: **{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "THE **{{module}}** MODULE HAS BEEN DISABLED **GLOBALLY**.",
+            "disabledChn": "THE {{module}} MODULE HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}",
+            "disabledComSer": "THE **{{command}}** COMMAND HAS BEEN DISABLED **GLOBALLY**.",
+            "disabledComChn": "THE **{{command}}** COMMAND HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}.",
+            "enabledSer": "THE **{{module}}** MODULE HAS BEEN ENABLED **GLOBALLY**.",
+            "enabledChn": "THE **{{module}}** MODULE HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}.",
+            "enabledComSer": "THE **{{command}}** COMMAND HAS BEEN ENABLED **GLOBALLY**.",
+            "enabledComChn": "THE **{{command}}** COMMAND HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}."
+        },
+        "reput": {
+            "noSelf": "NO, I REFUSE TO LET YOU ~~HIGH NOON~~ REP YOURSELF.",
+            "noTarget": "YOU NEED TO TELL ME WHO TO +INCREASEREPUTATION.",
+            "confirm": "<:polLULx:389641289735471107>  **{{who}}** HAS KINDLY HIGH NOONED **{{target}}**. THEY MUST BE NICE LIKE MCCREE.",
+            "cooldown": "HOLD ON, WAIT. YOU CAN HIGH NOON SOMEONE AGAIN IN {{remaining}}. PLEASE BE PATIENT."
+        },
+        "$": {
+            "insuFloor": "NOT ENOUGH HIGH NOON. IT'S **{{number}}** {{emoji}}",
+            "insuBet": "IT'S ATLEAST {{number}} NOONS",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "HUH HO, EXCUSE ME. YOU'RE NOT QUITE HIGH NOON.",
+            "cash100": "HUH, YOU ACTUALLY HAVE SOME NOONS.",
+            "cash500": "YOU'RE NOON.",
+            "cash1000": "YOU'RE ALMOST NOON.",
+            "cash5000": "YOU'RE VERY NOON.",
+            "cash10000": "YOU'RE ULTRA NOON.",
+            "cashInfinite": "FUCK YOU."
+        },
+        "greet": {
+            "byeOFF": "YOU DISABLED THE BYE MESSAGE? PERHAPS THAT'S FOR THE BEST, THEY WOULDN'T SEE IT ANYWAYS.",
+            "byeON": "BYE MESSAGE ENABLED IN THIS CHANNEL! EVEN THOUGH THEY AREN'T GOING TO SEE IT, ATLEAST I'M POLITE ENOUGH TO BID FAREWELL.",
+            "helloOFF": "YOU TURNED OFF THE WELCOME MESSAGE? RATHER R00D DON'T YOU THINK?",
+            "helloON": "WELCOME MESSAGE ENABLED IN THIS CHANNEL. I'M SURE PEOPLE WILL APPRECIATE MY HARD WORK GREETING THEM.",
+            "inTex": "GREETINGS MESSAGE SAVED! IT NOW IS: `IT'S HIGH NOON`",
+            "outTex": "FAREWELL MESSAGE SAVED!",
+            "tellmeMSG": "MESSAGE TOO SHORT OR NO MESSAGE FOUND.",
+            "tellmeCHN": "CHANNEL NOT SPECIFIED!",
+            "timer": "OF COURSE, I WILL NOW DELET WELCOME MESSAGES AFTER {{timeMin}} SECONDS!",
+            "timerby": "SURE, I WILL NOW DELET BYE MESSAGES AFTER {{timeMin}} SECONDS!",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "MCCREE ({{target}}): MY ULTIMATE (DEADEYE) IS ALMOST READY! (**{{amount}}%**)",
+            "booru404": "I'M SORRY, BUT I CAN'T FIND ANYTHING WITH THOSE TAGNGNSGS. YOU SHOULD CHECK IF THEY'RE PROPER NOONED.",
+            "nsfw404": "EXCUSE ME MISTER, YOUR PORN IS SO BIZARRE I COULDN'T EVEN FIND MYSELF IN IT!",
+            "nsfwNope": ":no_entry_sign: NSFW HIGH NOONS ARE NOT ALLOWED IN THIS CHANNEL.",
+            "nsfwNofunds": "YOU DON'T HAVE ENOUGH NOONS TO BUY NSFW NOONS. COME BACK WITH **5** NOONS THEN WE CAN TALK. (GET RUBINES WITH `{{prefix}}VERYNOON`)",
+            "nsfwCheckout": "5 NOONS HAS BEEN DEMENTED FROM YOUR ACCOUNT.",
+            "airwaifu": ":airplane: THIS HIGHNOONWAIFU HAS BEEN CAREFULLY NOONED FOR YOU.",
+            "leadUnap": "IF YOU DON'T SEE YOURSELF HERE, TYPE `{{prefix}}MCCREEISTHEBEST` TO SEE YOUR LEVEL. NOT EVERYONE CAN BE ON THE LEADERBOARD AFTER ALL.",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{target}} HAS BEEN A MCCREE SINCE: {{joinedstamp}}",
+            "aviOK": "ALRIGHT, I'VE CHANGED MY PHOTO FOR YOU. AM I NOT CREE ENOUGH? ALRIGHT, YOU CAN CHANGE THE PROPIC AGAIN. IN {{cooldown}} THOUGH.",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "SELF-NOONABLE ROLES FOR THIS SERVER",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**WRITE THE HIGH NOON REASON BELOW TO CONFIRM**\nSEND **c** TO CANCEL.",
+            "start": "",
+            "cancel": "HIGH NOON ABORTED!",
+            "timeout": "HIGH NOON TIMED OUT!",
+            "completed": "SERVER INFO HAS BEEN SUCCESSFULLY WIPED AND RESET. TRY USING **+HIGHNOONINFO** TO SEE IF EVERYTHING WAS PROPERLY RESET. I'M NOT RESPONSIBLE FOR ANY AFTERWARD NUCLEAR FALLOUT CONTAMINATION."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": "HIGH NOON"
+}

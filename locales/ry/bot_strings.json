@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "Rubine",
+        "RBN_plural": "Rubines",
+        "JDE": "Jade",
+        "JDE_plural": "Jade",
+        "SPH": "Sapphire",
+        "SPH_plural": "Sapphires",
+        "C": "Common",
+        "U": "Uncommon",
+        "R": "Rare",
+        "SR": "Super Rare",
+        "UR": "Ultra Rare",
+        "lootbox": "Lootbox",
+        "lootbox_plural": "Lootboxes",
+        "thevoid": "soth"
+    },
+    "terms": {
+        "total": "Nilgh'ri hnahh",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "Nw",
+        "coinTails": "Mgep",
+        "qnt": "Quantity",
+        "res": "Result",
+        "announcement": "Throdog vulgtm",
+        "first": "1st",
+        "second": "2nd",
+        "third": "3rd",
+        "fourth": "4th",
+        "fifth": "5th",
+        "infinite": "Ph'nilgh'ri",
+        "none": "None",
+        "reason": "Mgepahlloig",
+        "banned": "M'epgoka",
+        "kicked": "M'ep epgoka",
+        "usage": "Ahuaaah'",
+        "module": "Module",
+        "inst": "Ulnah",
+        "bet": "Bet",
+        "level": "Level",
+        "levelUp": "Level Up!",
+        "discord": {
+            "role": "Role",
+            "server": "Server",
+            "member": "Hri",
+            "user": "Hri",
+            "user_plural": "Hri",
+            "channel": "Channel",
+            "channel_plural": "Channels",
+            "voice_channel": "Ai Channel",
+            "private": "Uh'eor ehye"
+        }
+    },
+    "logs": {
+        "responsible": "Uh'eog ot hnah",
+        "wasbanned": "mgepah **banned**",
+        "waskicked": "mgepah **kicked**",
+        "modLogs": "Moderation Logs",
+        "actLogs": "Activity Logs",
+        "advLogs": "Advanced Logs",
+        "logChan": "General Logs",
+        "userJoin": "**{{user}}** mgep **joined** Server",
+        "userLeave": "**{{user}}** mgep **left** Server",
+        "messDel": "Aimgr'luh **mgepmggoka** llll {{channel}}",
+        "messEdit": "{{user}} mgepah **ahazath** f'aimgr'luhh {{channel}}",
+        "newChan": "Mgepnah **channel** mgep mgepah **mgepuaaah**: {{channel}}",
+        "delChan": "**channel** mgep mgepah **mgepmggoka**: {{channel}}",
+        "updtChan": "Channel **{{channel}}** mgep mgepah **ephaii mgah'n'ghft**",
+        "newRole": "Mgepnah **role** mgep mgepah **mgepuaaah**: {{role}}",
+        "uptRole": "Roles {{user}} mgep mgepah ephaii mgepmgah'n'ghft",
+        "delRole": "**role** mgep mgepah **mgepmggoka**: {{role}}",
+        "revokeBan": "Ban **{{user}}** mgepmggoka",
+        "usrNick": "Hup hai **{{user}}** yaah hai **{{newuser}} **",
+        "usrPhoto": "**{{user}}** mgepahazath mgr'luh geb",
+        "usrRoles": "Roles ephaii mgepmgah'n'ghft ot {{user}}",
+        "gSets": "Server mgepkadishtu ahuh'eog mgepahazath"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "Ulnah ahnythor mgah'n'ghft {{PERMSLIST}}",
+            "denied": "Ymg'ah nafl l'mgepgoka ahuaaah fahf. Fahf ulnah ulnah uh'eogyaah ot {{rankNeed}}, ymg'uh'eogyaah ah {{rankMe}}. Shtunggli Server Owner ngnah Mod.",
+            "disabledModule": ":no_entry_sign: c'uh'eog mgep s'uhn {{module}} ah'ehyeah geb. Cahf's nng mgvulgtnah.",
+            "genericInvalid": "Hlirgh, cahf ulnah ah invalid;",
+            "prefixChng": "Ya prefix ah hai, h' ah'gotha yog '{{prefix}}stats'. ",
+            "moderationNeeded": "Ymg'mg ulnah, ymg'ahnythor **manage server** ulnah ngnah modrole `{{prefix}}modrole [@Role]`",
+            "chooseAmod": "Mgah'n'ghft mgepkadishtu module.",
+            "kinNone": "Ymg' l'ai ya ahf'Ym l'mggoka ebumna. Y'ahor nilgh'riyar ymg'mggoka l'shog.",
+            "kin404": "Y'ahor't mgah'n'ghft fahf hlirgh. F'mgepah epgoka? f'ahnythor ah nilgh'rinah ot ymg'fhtagn.",
+            "unperm": "Y'nafl mgep perms l'ah fahf. ymg'ahnythor goka ya perms mgep ulnah ya l'ah goka.",
+            "noRoleHere": "Role nafl ah'sgn. Ai ya role mgleth.",
+            "noRolesGiven": "mg Role mgepah mgep'ai.",
+            "roleAlreadyHere": "Role mgepgoka mgepah agl.",
+            "nosuchrole": "Role nafl geb.",
+            "kbanNone": "Ai ahf'ahnythor epgoka mg yar.",
+            "superRoleNope": "**{{user}}** ah nafl **{{group}}**",
+            "banNone": "ai ahf' ahnythor epgoka mg yar.",
+            "unpermB": "Y' mgep nafl r'luh.",
+            "cantFindChannel": "Mg mgr'luh Channel. #channel mgah'n'ghft.",
+            "noChannelGiven": "Ahagl l' agl ai?",
+            "insuperms": "{{imsorry}} Y'ahor't ah perms nafl mgep ymg'.",
+            "not-a-NSFW-channel": "Fahf channel nafl NSFW. Epgoka nafl ymg'r'luh vulgtmm."
+        },
+        "warnings": {
+            "timesOutIn": "Fahf ephaiepgoka {{s}} 'S",
+            "enterVoiceBetterExperience": "Ymg'ahnythor ai channel mgleth r'luh."
+        },
+        "verbose": {
+            "jas": [
+                "Okay, h'ah hai",
+                "Ah'f'nah aimgr'luhh...",
+                "Y'nah fhtagn."
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "Vulgtmnah.",
+                    "Vulgtmnah hai.",
+                    "Hai mgleth.",
+                    "Mgleth.",
+                    "Mgleth!",
+                    "Mgepkadishtu.",
+                    "Athg.",
+                    "Vulgtmnah!",
+                    "Mgeph'lloig!",
+                    "L'h'ah!",
+                    "H'ah mgep!",
+                    "H'mgep mgepah.",
+                    "Mgepah."
+                ],
+                "yatta": [
+                    "Lloigehye!",
+                    "C'lloigehye!",
+                    "Vulgtmnah!",
+                    "",
+                    "Vulgtmnah!",
+                    "Vulgtmnah!",
+                    "Mgeph'lloig!",
+                    "Hupa vulgtmnah!",
+                    "Hupa vulgtmnah!",
+                    "Og vulgtmnah!"
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Lloighnahh n'ghft,",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Vulgtmnah!",
+                    "Lloigehye!",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: nafl wgah'n {{target}} hup geb. \n**Reason:** *{{reason}}* ",
+            "autoroleunAdded": "**{{role}}** mgepmggoka Auto-Roles.",
+            "modroleunAdded": "**{{role}}** mgepmggoka Modrole. l' ah'gotha mggoka Cthulhu.",
+            "incinerate": "Fm'latghor cahf fm'latgh {{amt}} aimgr'luhh!",
+            "roleAdded": "Mgepkadishtu, Role mgepgoka agl.",
+            "noReason": "Throdog aimgr'luh nafl mgepgoka",
+            "didban": "Y'mggoka {{target}}, lloighnahh {{reason}}."
+        },
+        "logs": {
+            "success": "Ah hai {{channel}} Mgep ahazath {{CHNTYPE}}.",
+            "successDelete": "{{channel}} aimgr'luhh hup mgepmggoka {{CHNTYPE}}.",
+            "failure": "H'mgep nafl mgepah mggoka'ai, ah'gotha ephaii."
+        },
+        "equip": {
+            "nomedals": "Mg hnah l'agl geb. Hnah mgah'n'ghft ehyeog.",
+            "equipSlot": "Agl ahagl mgepnah medal.",
+            "timeout": "Mg agl, ai ahhai gotha agl medal.",
+            "cancelled": "",
+            "youSure": "Agl cahf geb?",
+            "choose": "",
+            "success": "Throdog. Profilecard mgepnah mgep medal.",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "Pollux **Rubines** (RBN) ahazath:",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "Transaction Receipt Code",
+            "amNaN": "Invalid quantity",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "Y'ai {{LANGUAGE}} ymg'geb.",
+            "language_joke": "Cthulhu llll fhtagn mgahnnn yg'bthnknahh ng n'ghft lloighnahh."
+        },
+        "profile": {
+            "persotexUpdate": "Y'ahazath ymg': {{pstext}}\n `{{prefix}}profile` ymg'mgr'luh."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "**{{user}}** hai mgepgoka **{{group}}**.",
+            "rolermCom": "**{{user}}** mgepmggoka goka **{{group}}**.",
+            "superRoleadCom": "**{{user}}** goka mgepah **{{group}}** Role!",
+            "superRolermCom": "**{{user}}** mggoka mgepah **{{group}}** Role!",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "H' ymg' Rubines ahorna fahf, ymg' ah {{number}} Rubines",
+            "noFunds": "Nafl'nilgh'ri Rubines",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Ne'goka 100 Rubines daily tharanak'ah!",
+            "dailyNope": "{{emoji}} Hrii'ilyaa **{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "**{{module}}** wgah'n mgep mgepah nafl mgepgoka **globally**.",
+            "disabledChn": "{{module}} wgah'n mgep mgepah nafl ph'nglui mgepgoka Channel #{{channel}}",
+            "disabledComSer": "**{{command}}** ulnah mgep mgepah nafl mgepgoka **Globally**",
+            "disabledComChn": "**{{command}}** command has been not granted in #{{channel}}",
+            "enabledSer": "**{{module}}** wgah'n mgep mgepah mgepgoka **globally**",
+            "enabledChn": "**{{module}}** wgah'n mgep mgepah ph'nglui mgepgoka #{{channel}}",
+            "enabledComSer": "**{{command}}** ulnah mgep mgepah mgepgoka **Globally**",
+            "enabledComChn": "**{{command}}** ulnah mgep mgepah ph'nglui mgepgoka channel #{{channel}}"
+        },
+        "reput": {
+            "noSelf": "Mg ymg'Rep.",
+            "noTarget": "Ai ya ahf' +Rep. Rep syha'h n'ghft?",
+            "confirm": ":fleur_de_lis:  **{{who}}** mgepgoka **+1Rep** **{{target}}**.",
+            "cooldown": "Ymg' ahna vulgtm Rep {{remaining}}."
+        },
+        "$": {
+            "insuFloor": "Ymg' ah nafl mgep llllw'nafh rubines. Ymg' llll **{{number}}** {{emoji}}",
+            "insuBet": "Goka'geb {{number}}",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Hlirgh Nafl Rubines, Stell'bsna Rubines.",
+            "cash100": "Ne Rubines, uh'e tharanak Rubines.",
+            "cash500": "Hrii chtenff",
+            "cash1000": "Nafl'mnahn' Cthulhu'nyth.",
+            "cash5000": "Nalf'mnahn' Rubine s'uhn?",
+            "cash10000": "Ymg' mgepah hup mggokaog R'lea? ahnythor Y'uln Cthulhu?",
+            "cashInfinite": "Ymg' mg cheat ymg' kadishtu."
+        },
+        "greet": {
+            "byeOFF": "Mg vulgtm llll epgoka.",
+            "byeON": "Vulgtm llll epgoka.",
+            "helloOFF": "Mg vulgtm llll uh'e mgepnog.",
+            "helloON": "Vulgtm llll uh'e mgepnog.",
+            "inTex": "Nog vulgtm ph'lloig.",
+            "outTex": "Epgoka vulgtm ph'lloig.",
+            "tellmeMSG": "Mg ai geb.",
+            "tellmeCHN": "Channel mg ai.",
+            "timer": "Mgepmggoka aimgr'luhh ep {{timeMin}} 'S.",
+            "timerby": "Mgepmggoka epgoka aimgr'luhh {{timeMin}} 'S.",
+            "noTimer": "Mgepmggoka aimgr'luhh mgah.",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}' fm'latgh n'ghft **{{amount}}%** {{emoji}}",
+            "booru404": "Na'ah tags. Stell'bsna uln Ne'ah.",
+            "nsfw404": "Na'hlirgh! Stell'bsna wgah'n!",
+            "nsfwNope": ":no_entry_sign: NSFW vulgtm na'goka Channel.",
+            "nsfwNofunds": "Ymg' mgep llllw'nafh Rubines l' mggokai LEWD hnahh. Nog llll **5**rubines ng c' ahor ai. (goka rubines llll `{{prefix}}daily` )",
+            "nsfwCheckout": "5 {{emoji}} Ne'Goka Pollux.",
+            "airwaifu": ":airplane: Fahf aerowaifu goka llll ymg'. ",
+            "leadUnap": "Ymg'na ymg'mgr'luh geb, type '{{prefix}}profile' l'ymg'mgr'luh level. Nafl riuh'eor ahor llll ah leaderboard ep nilgh'ri.",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{target}} mgep mgepah hri Iiahe: {{joinedstamp}}",
+            "aviOK": "",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "Ymg' mgepgoka Roles llll Server",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": "Server Info mgep mgepah mgepmggoka. llll vulgtlagln mgepnah lw'nafh."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "Zhro ahf'mgep mgepuaaah Blackjack.",
+            "newgame": "Blackjack, kadishtu nilgh'ri l'ah.",
+            "result": "Zhro:",
+            "bust": "Bust",
+            "youwin": "Ymg'mgep throdog goka!",
+            "youlose": "Mgvulgtnah ymg'mgng ya nafl.",
+            "hit": "Ai `hit` goka one card,",
+            "stand": "",
+            "split": "",
+            "double": "`double` goka ehyee ahog bet ng goka ehye card.",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": ""
+}

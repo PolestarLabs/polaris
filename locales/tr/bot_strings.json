@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "Rubin",
+        "RBN_plural": "Rubinler",
+        "JDE": "Jade",
+        "JDE_plural": "Jadeler",
+        "SPH": "Sapphire",
+        "SPH_plural": "Sapphireler",
+        "C": "Sıradan",
+        "U": "Olağandışı",
+        "R": "Nadir",
+        "SR": "Süper Nadir",
+        "UR": "Ultra Nadir",
+        "lootbox": "Define Sandığı",
+        "lootbox_plural": "Define Sandıkları",
+        "thevoid": "hiçlik"
+    },
+    "terms": {
+        "total": "Toplam",
+        "amount": "Miktar",
+        "overview": "Genel Bakış",
+        "coinHeads": "Tura",
+        "coinTails": "Yazı",
+        "qnt": "Nicelik",
+        "res": "Sonuç",
+        "announcement": "Duyuru",
+        "first": "Birinci",
+        "second": "İkinci",
+        "third": "Üçüncü",
+        "fourth": "Dördüncü",
+        "fifth": "Beşinci",
+        "infinite": "Sonsuz",
+        "none": "Hiç",
+        "reason": "Neden",
+        "banned": "Banlandı",
+        "kicked": "Atıldı",
+        "usage": "Kullanılışı",
+        "module": "Modüller",
+        "inst": "Talimatlar",
+        "bet": "Bahis",
+        "level": "Seviye",
+        "levelUp": "Seviye yükseldi!",
+        "discord": {
+            "role": "Rol",
+            "server": "Sunucu",
+            "member": "Üye",
+            "user": "Kullanıcı",
+            "user_plural": "Kullanıcılar",
+            "channel": "Kanal",
+            "channel_plural": "Kanallar",
+            "voice_channel": "Ses Kanalı",
+            "private": "Özel Mesaj"
+        }
+    },
+    "logs": {
+        "responsible": "Sorumlu",
+        "wasbanned": "**banlanmıştı**",
+        "waskicked": "**atılmıştı**",
+        "modLogs": "Moderatör log'u",
+        "actLogs": "Etkinlik Kayıtları",
+        "advLogs": "Gelişmiş Loglar",
+        "logChan": "Genel Loglar",
+        "userJoin": "**{{user}}** Sunucuya **katıldı**",
+        "userLeave": "**{{user}}** Sunucudan çıktı",
+        "messDel": "{{channel}} kanalında mesaj **silindi**",
+        "messEdit": "{{user}}, {{channel}} kanalında mesajını **düzenledi**",
+        "newChan": "Yeni bir **kanal** **oluşturuldu**: {{channel}}",
+        "delChan": "**Kanal** **silindi**: {{channel}}",
+        "updtChan": "**{{channel}}** kanalı **güncellendi**",
+        "newRole": "Yeni bir **rol** **oluşturuldu**: {{role}}",
+        "uptRole": "{{user}} kullanıcısının rolleri güncellendi",
+        "delRole": "Bir **rol** **silindi**: {{role}}",
+        "revokeBan": "**{{user}}** kullanıcısının banı kaldırıldı",
+        "usrNick": "Bundan böyle **{{user}}** kendine **{{newuser}} ** diyor",
+        "usrPhoto": "**{{user}}** Profil Fotoğrafını değiştirdi",
+        "usrRoles": "{{user}} kullanıcısının rolleri güncellendi",
+        "gSets": "Sunucu ayarları değiştirildi"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "Aşağıdaki izinler düzgün çalışmıyor:\n{{PERMSLIST}}",
+            "denied": "Bunu kullanmak için yetkin yok. Bu komutu kullanmak için {{rankNeed}} yüksekliğinde bir rol gerekli; senin şu anki rolün {{rankMe}}. Sunucu sahibi veya bir moderatör ile iletişime geç.",
+            "disabledModule": ":no_entry_sign: Efendimiz {{module}} komutunu burada yasakladı.",
+            "genericInvalid": "Ayy, görünüşe göre bu komut geçersiz ;~;",
+            "prefixChng": "Pekâlâ, prefix'im şu anda {{prefix}}, '{{prefix}}stats' kullanarak deneyin bi'.",
+            "moderationNeeded": "Üzgünüm, bu komutu kullanamazsın. Ya **Sunucu Yöneticisi** yetkilerine ya da Moderatör/Yönetici rolüne sahip olman lâzım (`{{prefix}}modrole [@Role] yaparak ayarla bi' tane)",
+            "chooseAmod": "Bir modül seç, lütfen.",
+            "kinNone": "Kimi atacağımı söylemen lazım. Tabii ki, onun yerine seni de atabilirim.",
+            "kin404": "O kişiyi bulamıyorum. Gerçekten çıktı mı? Belki de hayâllerimizin bir parçasıdır.",
+            "unperm": "Bunu yapmak için iznim yok. Bir şey yapmamı istemeden gereken izinleri vermelisin belki de.",
+            "noRoleHere": "Görünüşe göre bahsettiğin rol listede yok. Bana rolü düzgünce söylediğinden emin ol.",
+            "noRolesGiven": "Hiç bi' rolden bahsetmedin, doğru yaptığından emin misin?",
+            "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
+            "nosuchrole": "Bahsettiğin rolü bulamadım ya, rolün ismini tam olarak yaz. Harfe duyarlı olduğunu hatırla.",
+            "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
+            "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
+            "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
+            "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
+            "cantFindChannel": "Görünüşe göre o kanalı bulamıyorum. #channel kullanmayı dene de olup olmadığına bi' bak.",
+            "noChannelGiven": "Aktiviteleri hangi kanala kayıt etmemi söylemen lazım.",
+            "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
+            "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
+        },
+        "warnings": {
+            "timesOutIn": "Bu, {{s}} saniye boyunca timeout atacak",
+            "enterVoiceBetterExperience": "Tam deneyim için bir ses kanalında olman ~lâzım~."
+        },
+        "verbose": {
+            "jas": [
+                "Pekâlâ, hemmen yapıyorum.",
+                "Bi' saniye...",
+                "Bir dakika, lütfen..."
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "Peki.",
+                    "Tamamdır!",
+                    "Her şey tamam.",
+                    "Tamam.",
+                    "Taamam!",
+                    "Anlaşıldı!",
+                    "Olumlu.",
+                    "İyi!",
+                    "Çok güzel!",
+                    "Tamam!",
+                    "Her şey hazır!",
+                    "Bitti!",
+                    "Halloldu."
+                ],
+                "yatta": [
+                    "Yaşasın!",
+                    "Oo eveet!",
+                    "İyi!",
+                    "Harika!",
+                    "Güzel!",
+                    "Müthiş!",
+                    "Çok güzel!",
+                    "Tatlış!",
+                    "Mükemmel!",
+                    "Harika!"
+                ],
+                "gomenasai": [
+                    "Üzgünüm,",
+                    "Çok utahdırıcı,",
+                    "Ah, pardon,",
+                    "Özür dilerim,",
+                    "Benim hatam,",
+                    "Affet beni,",
+                    "Pardon,"
+                ],
+                "ohmy_positive": [
+                    "Amanım!",
+                    "Vay be!",
+                    "Ay!",
+                    "Bak!",
+                    "Sugoi!",
+                    "Yaşasın!",
+                    "İnanılmaz!"
+                ],
+                "ohmy_negative": [
+                    "Amanım!",
+                    "Uuuuh...",
+                    "Ah...",
+                    "Olamaz!",
+                    "Hayııııır!",
+                    "Öff!"
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: {{target}} kişisi buradan atıldı. **Nedeni:** *{reason}* ",
+            "autoroleunAdded": "**{{role}}** rolü otomatik rollerden çıkarıldı.",
+            "modroleunAdded": "**{{role}}** artık moderatör rolü değil. Darbe yapamaya falan mı çalışıyorsun?",
+            "incinerate": "{{amt}} Mesajı aleve verdim!",
+            "roleAdded": "Anlaşıldı, rolü ekledim.",
+            "noReason": "Spesifik bir neden belirtilmedi.",
+            "didban": "*nazikçe* {{target}} kişisini burayı terk etmesini istedim.**Nedeni**: *{{reason}}*Pisliklerini temizlemem için biraz zaman verin."
+        },
+        "logs": {
+            "success": "Halletim! {{channel}} kanalını {{CHNTYPE}} kanalı olarak ayarladım!",
+            "successDelete": "Pekâlâ. {{channel}} kanalı artık {{CHNTYPE}} kanalı değil.",
+            "failure": "Olamaz, görünüşe göre bir şeyler yanlış gitti. Üzgünüm."
+        },
+        "equip": {
+            "nomedals": "Peh, takacak hiç madalyan yok. Birazcık almaya ne dersin?",
+            "equipSlot": "Madalyanı takacak bir yer seç!",
+            "timeout": "Madalyon takmayı istememiş miydin? Bi' tane takmak istediğinde beni tekrardan çağır.",
+            "cancelled": "Şu anda madalyon takmak istemiyorsan beni niye çağırdın?",
+            "youSure": "Burada takacak mısın?",
+            "choose": "Profil kartına takcağın madalyayı seç.",
+            "success": "Harika! Artık profil kartında yepyeni bir madalya var~",
+            "unequipSuccess": "Pekâlâ, Madalya çıkarıldı.",
+            "unequipChoose": "Hangi madalyonu çıkaracaksın?",
+            "unequipConfirm": "Çıkarmak istediğin bu mu?",
+            "equipTwice": "Bu madalyayı hâli hazırda takmışsın!",
+            "isEmpty": "Çıkarılacak bir şey yok ki!"
+        },
+        "discoin": {
+            "desc": "Rubinlerin gönderiliyor, %BOT% ulaştığı gibi cevap verecek.",
+            "intake": "Pollux **Rubinler** (RBN) Değiştirildi:",
+            "outtake": "%BOTNAME% **%CURRNAME%** ({{$}}) Ulaştırılacak:",
+            "remainder": "{{$}} için kalan limit",
+            "receiptCode": "İşlem iade kodu",
+            "amNaN": "Geçersiz miktar",
+            "invalidCurr": "Öyle bi' döviz yok ki!",
+            "invalidAmt": "O miktarı değiş-tokuş edemezsin! ",
+            "unverified": "Değiş-tokuş yapmak için onaylı değilsin.\nLütfen kendini [http://discoin.sidetrip.xyz/verify] adresinde onaylat",
+            "userLimit": "Bugünlük değiş-tokuş limitine ulaştın!",
+            "globalLimit": "Discoin limitine ulaştın, yarın tekrar dene.",
+            "takedis": "Rubinlerin hedefine ulaşamaması durumu için bu kodu yanında tut.",
+            "ex-succ": "Değiş-tokuş başarılı!"
+        },
+        "langIntro": {
+            "global": "Tamam, bu sunucuda bundan böyle {{LANGUAGE}} konuşacağım. {{LANGJOKE}}",
+            "channel": "Sırf senin için burada {{LANGUAGE}} konuşacağım.",
+            "language_joke": "Ver mehteri!"
+        },
+        "profile": {
+            "persotexUpdate": "Senin kişisel yazını şu şekilde değiştirdim: {{pstext}}  profil kartındaki değişiklilleri görmek için `{{prefix}}profile` komutunu kullan. Eminim birileri sevecektir."
+        },
+        "trade": {
+            "exchangeWhat": "Karşılığında ne vermek istiyorsun?",
+            "tradeStert": "**{{user.tag}}** bir ticaret başlattı",
+            "has10toOffer": "{{targetName}} kullanıcısının karşılık olarak bir şey sunması için 10 saniyesi var",
+            "tradeSummary": "Ticaretin Özeti",
+            "confimrTrade": "Ticareti Onayla",
+            "plsConfirmTrade": "Onaylamanızı rica ediyorum",
+            "confirmed": "Ticaret Onaylandı!",
+            "declined": "Ticaret reddedildi!",
+            "timeout": "Ticaretin süresi geçti!",
+            "confirm10s": "{{user}} **Onaylıyor musun?** `10s`"
+        },
+        "items": {
+            "confirmDestroy": "Bu eşyayı yok etmek istediğinden emin misin?",
+            "destroyWhat": "Yok mu edeyim? Neyi?",
+            "cantDestroy": "Bunu yok edemem.",
+            "destroyed": "Eşya yok edildi! Ardından kalanlar:"
+        },
+        "divorce": {
+            "confirmdiag": "{{user}} kişisinden boşanmayı onaylıyor musun? \n**ikinizden de** %EMJ%**5000 Rubin** boşanma vergisi alınacak! İkinizin de aşk puanı **yarıya** inecek!",
+            "saidnope": "{{userB}} boşanmak istemiyor. %EMJ% **10000 Rubin** Ödeyerek boşanmaya zorlayabilirsin böylece nikâh memuru çağırıp bu işi çözmesini sağlayabilirim. Ama ikiniz de **bütün Aşk Puanlarınızı** kaybedeceksiniz!",
+            "saidnothing": "{{userB}} etrafta yok gibi. %EMJ%**15000 Rubin** ödeyerek bu işi çözmesi için Nikâh Memuru çağırmamı sağlayabilirsin ama **bütün aşk puanlarını** kendi başına kaybedeceksin!",
+            "saidyep": "{{userB}} arkadaşça boşanmayı kabul etti.",
+            "forced_rej": "Peki, Bu durumla uğraşması için Nikah memurunu çağırdım, artık evli değilsiniz! ",
+            "info": "Sevdiceğin ile mutsuz musun? Azıcık Rubin harcayarak evliliğini istediğin vakit bozabilirsin. Eğer eşin de onaylıyorsa arkadaş canlısı bir şekilde halledebilirsin veya nikâh memuru çağırarak işleri bitirebilirsiniz.\n\nBoşanma çiftin aşk puanını alacak. Yani, ne istediğinden emin ol. Bu evlilikte kullandığınız yüzük **yok olacak**!",
+            "divorce_title": "Boşanma"
+        },
+        "roles": {
+            "roleadCom": "Pekâlâ. **{{user}}** artık **{{group}}** grubuna ekli.",
+            "rolermCom": "Aman aman, **{{user}}** artık **{{group}}** grubunun bir parçası değil. Acaba neden?",
+            "superRoleadCom": "Elbette. **{{user}}** kişisine **{{group}}** rolü verildi!",
+            "superRolermCom": "Bitti. **{{user}}** kişisi artık **{{group}}** rolüne ait değil!",
+            "selfroleunAdded": "**{{role}}** rolü kendinden-rollerden çıkarıdı.",
+            "noselfRoles": "Bu sunucuda kendinden-rol yok"
+        },
+        "generic": {
+            "inviteText": "Buraya tıklayarak beni sunucuna davet et: [HERE]",
+            "cancel": "Fikrini mi değiştirdin? Peki, görüşürüz o zaman~",
+            "noFundsBalance": "Görünüşe göre bunu alamıyorsun, {{number}} Rubinin var.",
+            "noFunds": "Yeteri kadar Rubinin yok.",
+            "plus_rubines": "%R $t(keywords.RBN_plural) Bakiyene eklendi. Güzel, değil mi?",
+            "minus_rubines": "Bakiyenden %R $t(keywords.RBN_plural) alıyorum tamam mı~?"
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Günlük ödül olarak 100 Rubin kazandın!",
+            "dailyNope": "{{emoji}} Zaten günlük Rubinlerini almışsın, daha fazlasını **{{remaining}}** içerisinde alabilirsin.",
+            "dailyStreak": "{{emoji}} 10 kere üst üste günlük ödülünü topladığın için **+500 Rubin** aldın!"
+        },
+        "toggle": {
+            "disabledSer": "**{{module}}** modülü **Globally** devre dışı bırakıldı.",
+            "disabledChn": "{{module}} modülü #{{channel}} kanalında devre dışı bırakıldı.",
+            "disabledComSer": "**{{command}}** komutu **Globally** devre dışı bırakıldı.",
+            "disabledComChn": "**{{command}}** komutu #{{channel}} kanalında devre dışı bırakıldı.",
+            "enabledSer": "**{{module}}** modülü **Globally** aktifleştirildi.",
+            "enabledChn": "**{{module}}** modülü #{{channel}} kanalında aktifleştirildi.",
+            "enabledComSer": "**{{command}}** komutu **Globally** aktifleştirildi.",
+            "enabledComChn": "**{{command}}** komutu #{{channel}} kanalında aktifleştirildi."
+        },
+        "reput": {
+            "noSelf": "Yoo, kendini replemene izin vermiyorum.",
+            "noTarget": "Kimi replemem gerektiğini söylemelisin öbür türlü uzaya rep atmış oluyorsun.",
+            "confirm": ":fleur_de_lis: **{{who}}**  **{{target}}** *+1Rep* verdi. İyi biri olsa gerek.",
+            "cooldown": "Sakin ol, {{remaining}} içerisinde tekrar repleyebilirsin. Sabırlı ol."
+        },
+        "$": {
+            "insuFloor": "Yeteri kadar Rubinin yok. En az **{{number}}** Rubinin olmalı {{emoji}}",
+            "insuBet": "En azından {{number}} Rubin bahis koy",
+            "noFundsBet": "Görünüşe göre bahsine arka çıkamıyorsun... {{number}} $t(keywords.RBN,{count:{{number}}}) paran var",
+            "noBet": "Eğlence için mi oynuyorsun? Bahis yatırmak için çok mu fakirsin?",
+            "acceptDec": "Kabul etmek için {{icon}}\"una tıkla, Her gün en fazla 5 kere kabul edebilirsin.",
+            "declinedTrans": "{{user}} senin $t(keywords.RBN_plural) mangırını istemiyor gibi.",
+            "ongoingTrade": "Hâl-i Hazırda takas yaparken başka bir takas başlatamazsın!",
+            "hasAmount": "{{target}} {{number}} $t(keywords.RBN,{count:{{number}}}) sahibi.",
+            "youAmount": "{{number}} $t(keywords.RBN,{count:{{number}}}) var. {{comment}}",
+            "cash10": "Görünüşe göre fakirsin, beklendiği gibi.",
+            "cash100": "Aa, az biraz Rubinin var gibi.",
+            "cash500": "İyisin, iyi iyi",
+            "cash1000": "Belki seni zenginden sayardım ama \"belki\" işte.",
+            "cash5000": "SEN nasıl bu kadar zengin oldun?",
+            "cash10000": "Banka falan mı soydun? Polisleri çağırayım mı?",
+            "cashInfinite": "Hile yapmamalısın biliyorsun di' mi"
+        },
+        "greet": {
+            "byeOFF": "Görüşürüz mesajını devre dışı mı bıraktın? Belki de en iyisi budur, görmüyorlar zaten.",
+            "byeON": "Görüşürüz mesajı bu kanalda aktif! Görmeyecek olsalar bile veda edecek kadar kibarım.",
+            "helloOFF": "Hoş geldin mesajını devre dışı mı bıraktın? Oldukça kabaca olduğunu düşünmüyor musun?",
+            "helloON": "Hoş geldin mesajı bu sunucuda aktif. Eminim insanlar onları selamlamamı minnet ile karşılayacak.",
+            "inTex": "Selamla mesajı kaydedildi!",
+            "outTex": "Veda mesajı kaydedildi!",
+            "tellmeMSG": "Mesaj çok kısa ya da hiçbir mesaj bulunamadı.",
+            "tellmeCHN": "Spesifik bir kanal gösterilmedi!",
+            "timer": "Elbette, Hoş geldin mesajlarını {{timeMin}} saniye sonra sileceğim!",
+            "timerby": "Tabii ki, Görüşürüz mesajlarını {{timeMin}} saniye sonra sileceğim!",
+            "noTimer": "Peki, Hiçbir mesaj silinmeyecek.",
+            "outChan": "Pekâlâ! Veda mesajları **{{channel}}** kanalında yayımlanacak",
+            "inChan": "Pekâlâ! Hoş geldin mesajları **{{channel}}** kanalında yayımlanacak "
+        },
+        "forFun": {
+            "saltLVL": "{{target}} kişisinin sinir seviyesi **{{amount}}%** kadar {{emoji}}",
+            "booru404": "Üzgünüm, belirttiğin etiketlerle ilgili hiçbir şey bulamadım. Etiketlerin doğruluğundan emin ol.",
+            "nsfw404": "Kusura bakma ama aradığın porno baya bi' değişik; hiçbir yerde bulamadım. Senin gibi birinden beklendiği gibi.",
+            "nsfwNope": ":no_entry_sign: NSFW komutları bu kanalda açık değil, seni hınzır.",
+            "nsfwNofunds": "Yaramaz şeyler almak için yeterli Rubinin yok. Hele bi' **5**Rubinle gel de iki laf edelim. (`{{prefix}}daily` kullanarak Rubin kazan.)",
+            "nsfwCheckout": "5 {{emoji}} bakiyenden tahsil edildi.",
+            "airwaifu": "\n :airplane: This Aerowaifu has been carefully curated for you.",
+            "leadUnap": "Burada kendini göremiyorsan `{{prefix}}profile` yazarak seviyeni gör. Herkes zirvede olamaz tabii ki. ",
+            "position": "Bu sıralamadakı pozisyonun:",
+            "usethisfor": "{{srr}} için |p!rank {{scope}}| yaz",
+            "transmittedVc": "Ses kanalınıza katıldım!",
+            "decon": "{{user}} kendini arındırıyor.",
+            "decon2": "{{user}} {{user2}} adlı kullanıcıyı arındırıyor.",
+            "cancer": "{{user}} Bu kanalın kanser seviyesini ölçüyor.",
+            "geiger": ":radioactive: Geiger sayacına göre bu kanalın kanser potansiyeli **%{{percentage}}** **{{radiation}}μSv/h** ile birlikte "
+        },
+        "misc": {
+            "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
+            "aviOK": "Pekâlâ, senin için fotoğrafımı değiştirdim. Profil fotoğrafımı {{cooldown}} içerisinde tekrar değiştirebilirsin.",
+            "colorChange": "Favori Rengin Kaydedildi!"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla."
+        },
+        "autoRolesforThis": "Bu sunucu için kendinden atanılabilir roller",
+        "daily": {
+            "lastdly": "Son günlük ödül :",
+            "next": "Bir sonraki günlük ödül:",
+            "streakcurr": "Şu anki seri:",
+            "expirestr": "Serinin bitmesine kalan:",
+            "dailyStreakJades": "{{emoji}} 3 gün art arda topladığın için **+1000 Jade**!",
+            "dailyStreakSapphs": "250 gün üst üste günlük ödülünü topladığın için {{emoji}} **+1 Sapphire**!",
+            "availableDaily": "Şu anda mevcut!"
+        },
+        "nuke": {
+            "confirm": "**__Aşağıdakiler dahil olmak üzere bütün sunucuya özel ayarlar sıfırlanacak__**\n```\n-Prefix\n-Moderatör Rolleri\n-Aktifleştirilmiş/Devre dışı bırakılmış komut ve modülleri\n-Rubinlerin ortalığa atılması KAPATILACAK\n-Seviye atlama mesajları AÇILACAK\n-Kişisel reaksiyonlar silinecek\n-Kanal hakkındaki kayıtlar\n```\n-Bu nükleer bomba, herkese ne kadar yarrağı yediğinizi göstermek için Destek kanalıma bildirilecek.\n-Eğer komutu hayvan gibi kullanırsan bu nükleer bombayı 48 saatliğine kullanamıyor olacaksın hayvan gibi kullanıp kullanmadığına da ben karar veriyorum. Hayvan gibi kullanmaya devam edersen sunucuda bu komutu yasaklarım.\n\n\n**Gerçekten nükleer bombayı atmamı ister misin?**\nGöndermek için **ok**, iptal etmek için ise **c** yaz.",
+            "confirmB": "**Onaylamak için aşağıya nükleer bomba atmanın nedenini yaz**\nİptal etmek için **c** gönder.",
+            "start": "**SUNUCUYU BOMBALIYORUM**! ",
+            "cancel": "Nükleer bomba iptal edildi!",
+            "timeout": "Nükleer bombanın süresi geçti!",
+            "completed": "Sunucu bilgileri başarılı bir şekilde silindi ve sıfırlandı. Her şeyin tam olarak silindiğini görmek için **+serverinfo**'yu kullanmayı dene. Herhangi bir nükleer-sonrası-durumdan ben sorumlu değilim."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "Bayrak Bilmece",
+            "youhave10": "Bu bayrağın hangi ülkeye ait olduğunu bilmek için 10 saniyen var. **HADİ!**",
+            "wellDone": "{{interjection}} **{{user}}** bildi! **{{country}}** ülkesinin bayrağı",
+            "noGuess": "{{interjectionB}} görünüşe göre kimse bilemedi... Bir sonraki sefere artık!"
+        },
+        "coinflip": {
+            "coinVictory": "Kazandın! {{result}}, **{{prize}}** aldın $t(keywords.RBN_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} {{result}}. Hâle bakılırsa kaybettin..."
+        },
+        "dice": {
+            "userRolledSome": "**{{user}}** zar attı:",
+            "userRolled": "**{{user}}** **`{{numDice}}`** attı...",
+            "neutralRolled": "**`{{numDice}}`** atıyor...",
+            "andGot": "ve ödül olarak **{{val}}** kazandı!",
+            "rollsWere": "Çekilenler bunlardı:",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "Başka bir oyuna başlamadan önce oynadığını bitir.",
+            "newgame": "Yirmibir demek? Kuralları zaten biliyor olman gerek, haydi, başlayalım. ",
+            "result": "Sonuç:",
+            "bust": "İflâs",
+            "youwin": "Tebrikler! Bu sefer kazandın.",
+            "youlose": "Hah! Benim zaferim!",
+            "hit": "Bir tane daha kart çekmek için `hit` diye cevap ver,",
+            "stand": "Pas",
+            "split": "Elini ayırmak için, `split`",
+            "double": "Son bir kart çekip bahsini iki katına çıkarmak için, `double`",
+            "pass": "Ya da elini geçirmek için, `stand`",
+            "even": "Patladık gibi, al, rubinlerin senin olsun."
+        },
+        "slots": {
+            "takePrize": "Bunun için ödülün, **%$%** %emj%",
+            "_minor": "Hiç yoktan iyidir, di\" mi?",
+            "_mid": "İyi de değil kötü de değil",
+            "_major": "Çok yakındı!",
+            "_ultimate_1": "Harika! :heart:",
+            "_ultimate_2": "Çok şanslısın!! :heart:",
+            "_ultimate_3": "İnanabiliyor musun!? :heart:",
+            "kommunism": "Komünist Jackpot! Ödülün topluluğa dağıtıldı, yaptıklarının 3 katını kazanacaksın.",
+            "pollux_jackpot": "Aman aman, benden üç tane var. Belki de extradan bir şeyler hak ediyorsundur.",
+            "lucky": "Şanslı yedili, tebrikler.",
+            "jackpot": "Ödülüne ek olarak, 100 tane yüzük ve ekstra can kazandın",
+            "bonanza": "Çok fazla Rubin! Umarım bunların hepsini taşımamı planlamıyorsundur.",
+            "potato": "Patatesler... Muhtemelen senin için bunlardan bir şey yapabilirim.",
+            "zero_1": "Aman aman, görünüşe göre bütün Rubinlerin artık benim.",
+            "zero_2": "Bi' tane bile vuramadın mı? Tam bir utanç.",
+            "zero_3": "Belki tekrar denersen bir şeyler kazanırsın?"
+        },
+        "ceilingBet": "Bu oyunda **{{number}}** $t(keywords.RBN_plural)'den fazla bahis oynayamazsın.",
+        "tryAgain": "Tekrar?",
+        "alreadyPlaying": "Dur bakalım! Zaten oynuyoruz ya!"
+    },
+    "loot": {
+        "rareDrop": "Bunun ne olduğunu biliyor musun? **NADİR** bir define sandığı ",
+        "suprareDrop": "{{interjection}} **SÜPER NADİR** bir Define Kutusu!",
+        "ultraRareDrop": "İnanamıyorum! **ÇOK NADİR** bir define sandığı düştü! Bir daha hiç göremeyebilirsin!",
+        "lootDrop": [
+            "Aman aman, kanalda bir tane define sandığı çıkaverdi!",
+            "Ne? Define sandığı mı o?",
+            "Birisi buraya define sandığını düşürdü gibi gözüküyor.",
+            "Böldüğüm için üzgünüm ama hiç kimse şuradaki define sandığının farkında varmadı mı?",
+            "Harika! Bak, ne bulduk!",
+            "Bak, eminim bu define sandığına bir göz atmak istersiniz."
+        ],
+        "lootPick": "Sandığı kapmak için hepinizin **__20 Saniyesi__** var!\n`{{prefix}}pick` yaz ve alma şansını yakala!",
+        "goesTo": "Süre doldu! Bakalım kutu kimin olacak.\n**Define sandığı bu kişilerin arasından seçilecek:**",
+        "congrats": "Tebrikler! Sandık **Envanterine** eklendi. `{{prefix}}lootbox` komutunu kullanarak açabilirsin.",
+        "opening": "{{user}} Define sandığını açtı...",
+        "contains": "Bu {{adjective}} Define sandığı içeriği",
+        "options": "İstersen direkt alabilir istersen {{amt}} karşılığında tekrardan açabilirsin",
+        "keep": "Direkt al",
+        "reroll": "Tekrar aç",
+        "rerolled": "Hadi bakalım, sandığı tekrardan açıyoruz...",
+        "noMoreRolls": "Tekrardan açma haklarını bitirdin, bu sonuca razı gelmek zorundasın.",
+        "noFunds": "Tekrardan açmak için daha fazla Rubin'e ihtiyacın var, belki daha sonra.",
+        "rerollRemain": "Kalan Tekrar denemeler:",
+        "addedRubines": "{{X}} Rubin hesabına eklendi",
+        "addedJades": "{{X}} Jade ",
+        "addedMedal": "**{{itm}}** Madalyon, Madalyon Paketine eklendi",
+        "addedSticker": "**{{itm}}** Etiket, Etiket Albümüne eklendi",
+        "addedBG": "`[code:{{itm}}] ` Arkaplanı, Arkaplan Ciltliğine eklendi",
+        "duplicateExchange": "{{tpe}} kopyası `{{itm}}` {{X}} Rubin karşılığında envanterine eklendi",
+        "morons": "Define sandığının kayıp gitmesine izin mi verdin? Ne diyorum ki ben, tabii ki öyle yaptın.",
+        "contesting": "Bu sandık için girişimciler:",
+        "eventDrop": "Ve daha fazlası! bu bir **ETKİNLİK KUTUSU** yani **'içinde güzel şeyler var'!**",
+        "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak."
+    },
+    "eastereggs": {
+        "konodioda": "Pollux zannettin değil mi, **AMA BEN DİOYDUM**!",
+        "vacuum": "**{{user}}** Hiçliğe **1 rep** fırlattı! {{amount}} rep vakum gibi çekildi."
+    },
+    "seasonal": {
+        "checkPin": "Daha fazlası için pinli mesaja göz at",
+        "reactThis": "Bu mesaja tepki atarak otomatik olarak rolleri al"
+    },
+    "helpkey": "Yardım"
+}

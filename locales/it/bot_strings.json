@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "",
+        "RBN_plural": "",
+        "JDE": "",
+        "JDE_plural": "",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "",
+        "first": "",
+        "second": "",
+        "third": "",
+        "fourth": "",
+        "fifth": "",
+        "infinite": "",
+        "none": "",
+        "reason": "",
+        "banned": "",
+        "kicked": "",
+        "usage": "",
+        "module": "",
+        "inst": "",
+        "bet": "",
+        "level": "",
+        "levelUp": "",
+        "discord": {
+            "role": "",
+            "server": "",
+            "member": "",
+            "user": "",
+            "user_plural": "",
+            "channel": "",
+            "channel_plural": "",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "",
+        "wasbanned": "",
+        "waskicked": "",
+        "modLogs": "",
+        "actLogs": "",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "",
+            "denied": "",
+            "disabledModule": "",
+            "genericInvalid": "",
+            "prefixChng": "",
+            "moderationNeeded": "",
+            "chooseAmod": "",
+            "kinNone": "",
+            "kin404": "",
+            "unperm": "",
+            "noRoleHere": "",
+            "noRolesGiven": "",
+            "roleAlreadyHere": "",
+            "nosuchrole": "",
+            "kbanNone": "",
+            "superRoleNope": "",
+            "banNone": "",
+            "unpermB": "",
+            "cantFindChannel": "",
+            "noChannelGiven": "",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": "",
+            "autoroleunAdded": "",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "",
+            "didban": ""
+        },
+        "logs": {
+            "success": "",
+            "successDelete": "",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "",
+            "timeout": "",
+            "cancelled": "",
+            "youSure": "",
+            "choose": "",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": ""
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "",
+            "rolermCom": "",
+            "superRoleadCom": "",
+            "superRolermCom": "",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "",
+            "noFunds": "",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "",
+            "dailyNope": "",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "",
+            "disabledChn": "",
+            "disabledComSer": "",
+            "disabledComChn": "",
+            "enabledSer": "",
+            "enabledChn": "",
+            "enabledComSer": "",
+            "enabledComChn": ""
+        },
+        "reput": {
+            "noSelf": "",
+            "noTarget": "",
+            "confirm": "",
+            "cooldown": ""
+        },
+        "$": {
+            "insuFloor": "",
+            "insuBet": "",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "",
+            "cash100": "",
+            "cash500": "",
+            "cash1000": "",
+            "cash5000": "",
+            "cash10000": "",
+            "cashInfinite": ""
+        },
+        "greet": {
+            "byeOFF": "",
+            "byeON": "",
+            "helloOFF": "",
+            "helloON": "",
+            "inTex": "",
+            "outTex": "",
+            "tellmeMSG": "",
+            "tellmeCHN": "",
+            "timer": "",
+            "timerby": "",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "",
+            "booru404": "",
+            "nsfw404": "",
+            "nsfwNope": "",
+            "nsfwNofunds": "",
+            "nsfwCheckout": "",
+            "airwaifu": "",
+            "leadUnap": "",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "",
+            "aviOK": "",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": ""
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": ""
+}

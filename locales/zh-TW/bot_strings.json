@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "紅寶石",
+        "RBN_plural": "紅寶石",
+        "JDE": "翠玉",
+        "JDE_plural": "翠玉",
+        "SPH": "藍寶石",
+        "SPH_plural": "藍寶石",
+        "C": "普通",
+        "U": "罕見",
+        "R": "稀有",
+        "SR": "超稀有",
+        "UR": "超超稀有",
+        "lootbox": "寶箱",
+        "lootbox_plural": "寶箱",
+        "thevoid": "無效"
+    },
+    "terms": {
+        "total": "",
+        "amount": "數量",
+        "overview": "概要",
+        "coinHeads": "人頭那面",
+        "coinTails": "字的那面",
+        "qnt": "數量",
+        "res": "結果",
+        "announcement": "公告",
+        "first": "第一",
+        "second": "第二",
+        "third": "第三",
+        "fourth": "第四",
+        "fifth": "第五",
+        "infinite": "無限",
+        "none": "無",
+        "reason": "原因",
+        "banned": "封鎖",
+        "kicked": "踢除",
+        "usage": "用途",
+        "module": "模組",
+        "inst": "說明",
+        "bet": "賭注",
+        "level": "等級",
+        "levelUp": "升等！",
+        "discord": {
+            "role": "身分組",
+            "server": "伺服器",
+            "member": "成員",
+            "user": "使用者",
+            "user_plural": "使用者",
+            "channel": "頻道",
+            "channel_plural": "頻道",
+            "voice_channel": "語音頻道",
+            "private": "私人訊息"
+        }
+    },
+    "logs": {
+        "responsible": "執行人",
+        "wasbanned": "被**封鎖**",
+        "waskicked": "被**踢除**",
+        "modLogs": "管理紀錄",
+        "actLogs": "活動紀錄",
+        "advLogs": "更多紀錄",
+        "logChan": "一般紀錄",
+        "userJoin": "**{{user}}**已**加入**伺服器",
+        "userLeave": "**{{user}}**已**離開 **伺服器",
+        "messDel": "一條訊息在{{channel}}被**刪除**了",
+        "messEdit": "",
+        "newChan": "一個新的**頻道**已被**創建**：{{channel}}",
+        "delChan": "一個**頻道**已被**刪除**：{{channel}}",
+        "updtChan": "**{{channel}}**頻道已被**更新**",
+        "newRole": "一個新的**身分組**已被**創建**：{{role}}",
+        "uptRole": "{{user}}的身分組已被更新",
+        "delRole": "一個**身分組**已被**刪除**：{{role}}",
+        "revokeBan": "**{{user}}**已被解除封鎖",
+        "usrNick": "",
+        "usrPhoto": "**{{user}}**更改了其頭像",
+        "usrRoles": "{{user}}的身分組已被更新",
+        "gSets": "伺服器設定已被更改！"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "以下權限無法正常執行：{{PERMSLIST}}",
+            "denied": "你沒有權限這麼做。這個指令需要{{rankNeed}}以上，你現在是{{rankMe}}。請聯絡管理員",
+            "disabledModule": ":no_entry_sign:我們的管理員已經宣布{{module}}在這裡被禁用了",
+            "genericInvalid": "糟糕...錯誤的指令 ;~;",
+            "prefixChng": "好的，現在我的指令前綴是{{prefix}}，用`{{prefix}}stats`來測試一下吧",
+            "moderationNeeded": "ㄅ好意思，你ㄅ能使用這個指令。你要ㄇ需要**管理伺服器**的權限，不然就是需要管理員身分組(可以用`{{prefix}}modrole [@Role]`來設定)",
+            "chooseAmod": "選個模組",
+            "kinNone": "你必須先我告訴我你叫我踢的人是誰，不過要我踢你也是可以",
+            "kin404": "糟糕，我找不到這個人... 他該不會早就被退了吧?也許他只是你的幻覺?",
+            "unperm": "我並沒有做這件事的權限，你應該先給我相關的權限再來叫我做事",
+            "noRoleHere": "這個身分組並不存在，請你再仔細確認過一次",
+            "noRolesGiven": "你沒有提到任何身分組，你確定你知道你在幹嘛嗎？",
+            "roleAlreadyHere": "看來這個身分組早就在名單上了",
+            "nosuchrole": "呃...我找不到這個身分組，輸入身分組時請一字不漏且區分大小寫",
+            "kbanNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
+            "superRoleNope": "**{{user}}**並沒有**{{group}}**身分組！",
+            "banNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
+            "unpermB": "喔，少年...我想你的權限不夠...",
+            "cantFindChannel": "呃...我找不到這個頻道 :/ 如果你不確定，你可以試試#channel",
+            "noChannelGiven": "OK，所以我要把這些紀錄放到哪裡？總不能寫在你臉上吧？告訴我你要把紀錄放到哪個頻道",
+            "insuperms": "{{imsorry}}如果你本身沒有權限，那我只能幫你QQ",
+            "not-a-NSFW-channel": "騷年，先把這個頻道設成NSFW。"
+        },
+        "warnings": {
+            "timesOutIn": "指令將於{{s}}秒後過期",
+            "enterVoiceBetterExperience": "你必須在語音頻道裡面才能享用最完整的~體驗~"
+        },
+        "verbose": {
+            "jas": [
+                "OK...等我一下",
+                "幫我撐10秒！",
+                "等我一下"
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "OK",
+                    "好惹",
+                    "好了",
+                    "好ㄌ",
+                    "好！",
+                    "了解",
+                    "收到",
+                    "好der",
+                    "水喔",
+                    "歐給",
+                    "設定完成",
+                    "大功告成",
+                    "完成"
+                ],
+                "yatta": [
+                    "耶！",
+                    "",
+                    "蒸蚌",
+                    "酷喔",
+                    "不錯",
+                    "好棒棒",
+                    "水喔",
+                    "可愛！",
+                    "完美！",
+                    "驚人！"
+                ],
+                "gomenasai": [
+                    "對ㄅ起，",
+                    "這下尷尬惹，",
+                    "ㄜ...歹勢，",
+                    "我道歉,",
+                    "我的錯，",
+                    "原諒我，",
+                    "對不起，"
+                ],
+                "ohmy_positive": [
+                    "天R！",
+                    "哇！",
+                    "啊！",
+                    "看！",
+                    "斯勾以！",
+                    "耶！",
+                    "難以置信！"
+                ],
+                "ohmy_negative": [
+                    "天R！",
+                    "ㄜ...",
+                    "喔...",
+                    "喔不！",
+                    "不ㄨㄨㄨ!",
+                    "我的老天鵝阿！"
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot:一腳把{{target}}踢飛了\n **原因：** *{{reason}}*",
+            "autoroleunAdded": "**{{role}}**身分組已從自動身分組中移除",
+            "modroleunAdded": "",
+            "incinerate": "我剛剛放火燒了{{amt}}條消息!",
+            "roleAdded": "",
+            "noReason": "沒有明確原因",
+            "didban": ""
+        },
+        "logs": {
+            "success": "完成！我已經把{{channel}}設定成{{CHNTYPE}}了！",
+            "successDelete": "都弄好了！我已經讓{{channel}}不再是{{CHNTYPE}}了！",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "選擇你要裝備你新徽章的位置",
+            "timeout": "所以你是有沒有要裝徽章啦？算惹，想裝的時候再叫我～",
+            "cancelled": "好吧，如果你沒有要現在裝上徽章的話，那你叫我幹嘛?",
+            "youSure": "",
+            "choose": "選擇一個要裝在你名片上的徽章",
+            "success": "真棒！你的名片上多了一個全新的徽章～",
+            "unequipSuccess": "OK，徽章已移除",
+            "unequipChoose": "你要移除哪個徽章？",
+            "unequipConfirm": "這是你想要卸除的嗎?",
+            "equipTwice": "你早就裝上這個勳章了！",
+            "isEmpty": "沒有東西可以卸除！"
+        },
+        "discoin": {
+            "desc": "交易進行中，當交易完成後，你應該會收到一則來自%BOT%的回應",
+            "intake": "轉換了Pollux **紅寶石** (RBN)：",
+            "outtake": "將從%BOTNAME%收到({{$}})**%CURRNAME%**：",
+            "remainder": "{{$}}剩下的轉換額度",
+            "receiptCode": "轉換的收據碼",
+            "amNaN": "數量無效",
+            "invalidCurr": "這種貨幣不存在",
+            "invalidAmt": "你不能轉換這樣的數量",
+            "unverified": "你必須先認證才能轉換幣值\n請在[http://discoin.sidetrip.xyz/verify]中進行認證",
+            "userLimit": "你今天的轉換數量已達上限",
+            "globalLimit": "你已達到今日Discoin的上限，請明天再試",
+            "takedis": "留著這串收據碼以防萬一",
+            "ex-succ": "轉換成功！"
+        },
+        "langIntro": {
+            "global": "好的，從現在開始，我將在這個伺服器上說{{LANGUAGE}}。{{LANGJOKE}}",
+            "channel": "為了你，我在這裡只說{{LANGUAGE}}。",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "我已經把你的個性簽名換成：{{pstext}}\n用`{{prefix}}profile`來看名片上的新台詞吧。我相信有人會欣賞它的"
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "{{userB}}不想離婚。你可以支付%EMJ%**10000紅寶石**來請律師打官司，但是你們將喪失**所有愛情點數**！",
+            "saidnothing": "看樣子{{userB}}不再附近，或是只是在行使緘默權。你還是可以支付%EMJ%**15000紅寶石**動用某些勢力來單方面離婚，但是你將喪失**所有愛情點數**！",
+            "saidyep": "{{userB}}同意好聚好散",
+            "forced_rej": "好了，你已經變回單身狗了，滿意了吧？",
+            "info": "",
+            "divorce_title": "離婚"
+        },
+        "roles": {
+            "roleadCom": "好了！**{{user}}**現在是**{{group}}**群組的一員啦！",
+            "rolermCom": "好ㄅ，**{{user}}**現在不再是**{{group}}**群組的一員了，我好奇為什麼",
+            "superRoleadCom": "好der，**{{user}}**拿到了**{{group}}**身分組！",
+            "superRolermCom": "完成。**{{user}}**不再是**{{group}}**身分組的一員！",
+            "selfroleunAdded": "**{{role}}**身分組已不能自行加入",
+            "noselfRoles": "這個伺服裡沒有可以自行加入的身分組"
+        },
+        "generic": {
+            "inviteText": "點[這裡]來邀請我到你的伺服",
+            "cancel": "",
+            "noFundsBalance": "看來你付不起這樣物品，你只有{{number}}個紅寶石",
+            "noFunds": "紅寶石不足",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}}你拿到了100紅寶石的每日獎勵～",
+            "dailyNope": "{{emoji}}嗯？看來你已經拿過你的每日獎勵了，距離下次獎勵時間還有：**{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "**{{module}}**模組已經被**全域**禁用",
+            "disabledChn": "已在#{{channel}}頻道禁用{{module}}模組",
+            "disabledComSer": "**{{command}}**指令已被**全域**禁用",
+            "disabledComChn": "已在#{{channel}}頻道禁用**{{command}}**指令",
+            "enabledSer": "**{{module}}**模組已經被**全域**開放",
+            "enabledChn": "已在#{{channel}}頻道開放{{module}}模組",
+            "enabledComSer": "**{{command}}**指令已被**全域**開放",
+            "enabledComChn": "已在#{{channel}}頻道開放**{{command}}**指令"
+        },
+        "reput": {
+            "noSelf": "想給自己聲望？你真的好棒棒",
+            "noTarget": "告訴我你要給誰聲望，除非你想讚嘆真空",
+            "confirm": ":fleur_de_lis:  **{{who}}**給了**{{target}}1點聲望**。他人真好",
+            "cooldown": "喂，等等！你在{{remaining}}內不能再使用這個指令，耐心點"
+        },
+        "$": {
+            "insuFloor": "你沒有足夠的紅寶石。你至少需要**{{number}}**{{emoji}}",
+            "insuBet": "至少賭{{number}}個紅寶石以上",
+            "noFundsBet": "",
+            "noBet": "賭好玩的是嗎?ok~",
+            "acceptDec": "點擊{{icon}}來接收，你一天最多只能接收5筆轉帳",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "看來你滿窮的，跟我想的一樣",
+            "cash100": "嗯？你還真的有一些紅寶石在身上",
+            "cash500": "酷喔！",
+            "cash1000": "我快要承認你是個有錢人了，\"快要\"。",
+            "cash5000": "喔？你怎麼這麼有錢?",
+            "cash10000": "你是不是搶過幾間銀行？我需要報警嗎?",
+            "cashInfinite": "你知道的，你真的不該作弊"
+        },
+        "greet": {
+            "byeOFF": "已禁用道別訊息",
+            "byeON": "道別訊息已在此頻道啟用！雖然他們看不到，但我們還是要有禮貌的",
+            "helloOFF": "你把歡迎訊息關掉了?你不覺得這樣有點不友善嗎?",
+            "helloON": "歡迎訊息已在此頻道啟用！我相信大家會很樂意地接受我的款待",
+            "inTex": "歡迎訊息已儲存！",
+            "outTex": "道別訊息已儲存！",
+            "tellmeMSG": "訊息太短或根本沒有訊息",
+            "tellmeCHN": "沒有指定頻道！",
+            "timer": "OK，我將在{{timeMin}}秒後刪除歡迎訊息",
+            "timerby": "好的，我將在{{timeMin}}秒後刪除再見訊息",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}的爆氣指數達到了**{{amount}}%** {{emoji}}",
+            "booru404": "糟糕！看來我找不到跟這些標籤有關的東西。你應該在確認一下",
+            "nsfw404": "騷年，看來你的喜好有點特殊，特殊到我找不到這方面的本本，不過我不怎麼意外就是了",
+            "nsfwNope": ":no_entry_sign:變態，這個頻道不能使用NSFW指令！",
+            "nsfwNofunds": "你窮到上不了車啦！交出**5**個紅寶石我就讓你上車。(每日獎勵指令：`{{prefix}}daily`",
+            "nsfwCheckout": "已經從你的餘額中拿走5個{{emoji}}",
+            "airwaifu": ":airplane:為您精心挑選的飛機娘",
+            "leadUnap": "如果你的名字沒有出現在這裡，輸入`{{prefix}}profile`來查看你的等級，畢竟不是每個人都可以擠上排行榜",
+            "position": "你在這個排行中的位置是：",
+            "usethisfor": "輸入|p!rank {{scope}}|來{{srr}}",
+            "transmittedVc": "已傳送到你所在的語音頻道",
+            "decon": "{{user}}正在淨化自己",
+            "decon2": "{{user}}正在淨化{{user2}}",
+            "cancer": "{{user}}正在測量這個聊天室的致癌程度",
+            "geiger": ":radioactive:根據蓋格計數器，這個聊天室中的輻射劑量為**{{radiation}}μSv/h**，並有著**{{percentage}}%**的致癌機率"
+        },
+        "misc": {
+            "memberSince": "{{target}}加入的時間是：{{joinedstamp}}",
+            "aviOK": "好der，我的新頭像現在是這個，{{cooldown}}之後才能在改一次",
+            "colorChange": "我記住你最喜歡的顏色了！"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "本伺服上可自行設定的身分組",
+        "daily": {
+            "lastdly": "上一次每日獎勵 :",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**輸入核炸的理由來再度確認**\n要取消的話輸入**c**",
+            "start": "",
+            "cancel": "已中止核彈發射！",
+            "timeout": "核炸指令超時！",
+            "completed": "所有伺服器設定已被清除並重置，試著用**+serverinfo**來確認是否每樣東西都被正常重置。我可不對事後的任何核污染負責。"
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "骰出了：",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "親愛的，我們已經玩到一半了",
+            "newgame": "該來玩21點了，我想你知道規則，我們就直接開始吧",
+            "result": "結果：",
+            "bust": "爆了",
+            "youwin": "恭喜！你贏了！",
+            "youlose": "",
+            "hit": "輸入`hit`來要牌",
+            "stand": "過",
+            "split": "輸入`split`來分牌",
+            "double": "",
+            "pass": "或是輸入`stand`來跳過",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "你得到的獎勵是**%$%** %emj%",
+            "_minor": "至少比什麼都沒有好吧 ;)",
+            "_mid": "不錯嘛！",
+            "_major": "就差那麼一點！",
+            "_ultimate_1": "真棒！:heart:",
+            "_ultimate_2": "你真是太幸運了！:heart:",
+            "_ultimate_3": "真是不敢相信！:heart:",
+            "kommunism": "共產中獎！你的獎勵已經被重新分配給每個人，不過你可以拿到三人份",
+            "pollux_jackpot": "",
+            "lucky": "幸運7～",
+            "jackpot": "除了原有的獎勵，你還拿到了100個戒指跟一條額外生命",
+            "bonanza": "也太多紅寶石了吧！希望你不會叫我幫你扛這些回家",
+            "potato": "馬鈴薯...不好不壞呢...",
+            "zero_1": "噢不！:(你連一個紅寶石都拿不回來...",
+            "zero_2": "太糟糕了...什麼都沒中...",
+            "zero_3": "下次會更好的，甜心，我相信你！;)"
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "你知道這是什麼嗎？這可是一個**稀有**箱子啊！",
+        "suprareDrop": "",
+        "ultraRareDrop": "我真不敢相信！一個**超稀有**箱子掉落了！你有生之年可能不會再看到第二個了！",
+        "lootDrop": [
+            "嘿！有個箱子在這個頻道出現了",
+            "什麼?我484看到一個寶箱?",
+            "真棒，看來是一個箱子！",
+            "不好意思！請問有人注意到這個箱子嗎？",
+            "斯勾以～！看看我找到的箱子！",
+            ""
+        ],
+        "lootPick": "你們有**__20秒__**的時間可以搶！輸入`{{prefix}}pick`來加入戰局！",
+        "goesTo": "時間到！我們來看誰會拿到這個箱子\n**這些人都有機會拿到這個箱子：**",
+        "congrats": "",
+        "opening": "{{user}}開啟了他的箱子...",
+        "contains": "",
+        "options": "你可以把它留著，或是付{{amt}}來重骰",
+        "keep": "留著",
+        "reroll": "重骰",
+        "rerolled": "在試一次吧，正在重骰內容物...",
+        "noMoreRolls": "你不能在重骰了，就這樣了",
+        "noFunds": "孩子，你窮到不能重骰，下次吧",
+        "rerollRemain": "剩餘重骰次數：",
+        "addedRubines": "{{X}}個紅寶石已加入你的餘額",
+        "addedJades": "{{X}}個玉已加入你的餘額",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "重複的{{tpe}}`{{itm}}`已被轉換為{{X}}個紅寶石",
+        "morons": "你居然錯過了一個寶箱？等等，我在說什麼呢，你當然錯過了",
+        "contesting": "這個箱子的競爭者：",
+        "eventDrop": "",
+        "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子"
+    },
+    "eastereggs": {
+        "konodioda": "跟你玩21點不是Pollux，**而是我，迪奧！**",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "更多資訊請查看釘選訊息",
+        "reactThis": "回應這則訊息以獲得身分組"
+    },
+    "helpkey": "幫助"
+}

@@ -1,0 +1,348 @@
+const fs = require('fs');
+const ALIASES = {} /*{
+    "sanctify": "santificar",
+    "aerowaifu": "airwaifu"
+    ,"pong":"ping"
+    ,"ピング":"ping"
+    ,"monologoakira":"monologomaçã"
+    ,"monologo":"monologomaçã"
+    ,"ev$":"evcontrib"
+    ,"evcon":"evcontrib"
+    ,"evinfo":"eventinfo"
+    ,"evboard":"eventinfo"
+
+
+
+    ,"gtf":"guessflag"
+    ,"gflag":"guessflag"
+    ,"guesstheflag":"guessflag"
+
+
+    ,"credits":"cash"
+    ,"rubines":"cash"
+    ,"rubines":"cash"
+    ,"rubine":"cash"
+    ,"rubine":"cash"
+    ,"$":"cash"
+    ,"saldo":"cash"
+    ,"grana":"cash"
+
+
+    ,"leaderboards":"rank"
+    ,"top":"rank"
+    ,"xprank":"rank"
+    ,"rk":"rank"
+
+       ,"rubinerank":"cashrank"
+    ,"$rank":"cashrank"
+    ,"rubinerank":"cashrank"
+    ,"$rk":"cashrank"
+
+
+    ,"greet":"welcome"
+    ,"boasvindas":"welcome"
+    ,"hi":"welcome"
+
+    ,"adeus":"bye"
+    ,"farewell":"bye"
+
+    ,"role":"roleme"
+    ,"putme":"roleme"
+    ,"cargo":"roleme"
+
+    ,"selfroles":"selfroles"
+    ,"selfrole":"selfroles"
+    ,"asar":"selfroles"
+    ,"sr":"selfroles"
+
+    ,"r+":"roleadd"
+    ,"radd":"roleadd"
+    ,"role-add":"roleadd"
+    ,"add-cargo":"roleadd"
+    ,"addcargo":"roleadd"
+    ,"roles.add":"roleadd"
+    ,"ar":"roleadd"
+
+    ,"r-":"rolerem"
+    ,"rrem":"rolerem"
+    ,"role-rem":"rolerem"
+    ,"role-remove":"rolerem"
+    ,"rem-cargo":"rolerem"
+    ,"remover-cargo":"rolerem"
+    ,"addcargo":"rolerem"
+    ,"remcargo":"rolerem"
+    ,"roles.add":"rolerem"
+    ,"remrole":"rolerem"
+    ,"rr":"rolerem"
+
+    ,"faustao":"faustão"
+    ,"fausto":"faustão"
+    ,"domingão":"faustão"
+
+    ,"joindate":"joined"
+
+    ,"tocar":"play"
+    ,"addmusic":"play"
+    ,"tocando":"np"
+    ,"nowplaying":"np"
+    ,"playing":"np"
+    ,"pl":"playlist"
+
+
+    ,"lewd":"lewd"
+    ,"sacanage":"lewd"
+    ,"putaria":"lewd"
+    ,"hentai":"lewd"
+    ,"あへがお":"ahegao"
+    ,"へんたい":"lewd"
+    ,"変体":"lewd"
+
+
+    ,"safebooru":"safe"
+    ,"animepic":"safe"
+
+    ,"loja":"shop"
+    ,"lojinha":"shop"
+    ,"medalshop":"shop"
+    ,"bgshop":"shop"
+    ,"backgroundshop":"shop"
+    ,"store":"shop"
+    ,"buy":"shop"
+
+    ,"bg":"background"
+    ,"fundo":"background"
+
+    ,"equipmedals":"equip"
+    ,"equipar":"equip"
+    ,"badges":"equip"
+    ,"medals":"equip"
+    ,"medalhas":"equip"
+    ,"insígnias":"equip"
+
+
+    ,"svinfo":"serverinfo"
+    ,"server":"serverinfo"
+    ,"servidor":"serverinfo"
+
+    ,"status":"stats"
+    ,"bot":"stats"
+    ,"info":"stats"
+    ,"botinfo":"stats"
+
+
+    ,"serverrank":"servers"
+    ,"servidores":"servers"
+    ,"guilds":"servers"
+    ,"guildrank":"servers"
+    ,"svrk":"servers"
+
+
+    ,"shipar":"ship"
+
+    ,"anunciar":"announce"
+    ,"anúncio":"announce"
+    ,"anuncio":"announce"
+
+    ,"profilecolor":"favcolor"
+    ,"sidebarcolor":"favcolor"
+    ,"mycolor":"favcolor"
+
+    ,"perfil":"profile"
+    ,"profilecard":"profile"
+    ,"mycard":"profile"
+    ,"pcard":"profile"
+    ,"ppc":"profile"
+
+
+    ,"ev":"eval"
+
+    ,"nível":"level"
+    ,"lv":"level"
+    ,"nv":"level"
+
+
+    ,"personaltext":"personaltxt"
+    ,"mytext":"personaltxt"
+    ,"myinfo":"personaltxt"
+    ,"mybio":"personaltxt"
+    ,"editbio":"personaltxt"
+    ,"aboutme":"personaltxt"
+    ,"sobremim":"personaltxt"
+    ,"meutexto":"personaltxt"
+    ,"textopessoal":"personaltxt"
+    ,"descrição":"personaltxt"
+    ,"descricao":"personaltxt"
+    ,"description":"personaltxt"
+    ,"ptxt":"personaltxt"
+
+
+    ,"memessuecos":"menesueco"
+    ,"menessuecos":"menesueco"
+    ,"menesuecos":"menesueco"
+    ,"memesuecos":"menesueco"
+    ,"memesueco":"menesueco"
+    ,"menesuenko":"menesueco"
+
+
+    ,"apostarmoeda":"betflip"
+    ,"flipbet":"betflip"
+
+    ,"professorpasquale":"pasquale"
+    ,"escrevedireito":"pasquale"
+
+    ,"otacoseboso":"otaco"
+    ,"otacofedido":"otaco"
+    ,"cudeapito":"otaco"
+
+    ,"asciiart":"ascii"
+    ,"gato":"cat"
+
+    ,"cor":"color"
+    ,"rgb":"color"
+    ,"hexcolor":"color"
+    ,"colorpick":"color"
+
+    ,"morsecode":"morse"
+
+    ,"banir":"ban"
+    ,"banne":"ban"
+    ,"marretar":"ban"
+    ,"banhammer":"ban"
+
+    ,"expulsar":"kick"
+    ,"chutar":"kick"
+
+
+    ,"desligar":"disable"
+    ,"desabilitar":"disable"
+    ,"desativar":"disable"
+    ,"restringir":"disable"
+    ,"restrict":"disable"
+
+
+    ,"ligar":"enable"
+    ,"ativar":"enable"
+    ,"habilitar":"enable"
+    ,"reactivate":"enable"
+    ,"unrestrict":"enable"
+
+    ,"mutar":"mute"
+    ,"silence":"mute"
+    ,"silenciar":"mute"
+    ,"shutup":"mute"
+
+    ,"sepak":"speak"
+    ,"language":"speak"
+    ,"lang":"speak"
+    ,"idioma":"speak"
+    ,"locale":"speak"
+    ,"setlocale":"speak"
+    ,"sprache":"speak"
+    ,"parlé":"speak"
+    ,"язык":"speak"
+    ,"言語":"speak"
+
+
+    ,"prefix":"prefixSet"
+    ,"setprefix":"prefixSet"
+    ,"prefixo":"prefixSet"
+
+    ,"toss":"flip"
+    ,"moeda":"flip"
+    ,"caracoroa":"flip"
+
+    ,"ajuda":"help"
+    ,"ayuda":"help"
+    ,"socorro":"help"
+    ,"acuda":"help"
+    ,"?":"help"
+    ,"welp":"help"
+
+
+
+    ,"lê":"read"
+    ,"leia":"read"
+    ,"leere":"read"
+    ,"ocr":"read"
+    ,"readit":"read"
+
+
+    ,"rolar":"roll"
+    ,"dados":"roll"
+    ,"dice":"roll"
+    ,"rl":"roll"
+
+
+
+    ,"bj":"blackjack"
+
+  ,"align":"alignment"
+  ,"alignchart":"alignment"
+  ,"alinhamento":"alignment"
+  ,"trueneutral":"alignment"
+  ,"alc":"alignment"
+
+
+  ,"dailies":"daily"
+  ,"diária":"daily"
+  ,"bonus":"daily"
+  ,"dly":"daily"
+  ,"tagesbonus":"daily"
+
+
+  ,"discoin":"exchange"
+  ,"cambio":"exchange"
+  ,"câmbio":"exchange"
+  ,"exg":"exchange"
+
+  ,"yt":"youtube"
+  ,"video":"youtube"
+  ,"teucano":"youtube"
+
+  ,"trit":"trickortreat"
+  ,"docesoutravessuras":"trickortreat"
+
+  ,"candytop":"candyrank"
+  ,"topcandy":"candyrank"
+  ,"topevent":"candyrank"
+
+  ,"cdy":"candy"
+  ,"doce":"candy"
+  ,"$cy":"candy"
+
+  ,"wtt":"weather"
+  ,"tempo":"weather"
+
+  ,"trt":"tarot"
+  ,"tarô":"tarot"
+
+  ,"ppclk":"profilelink"
+  ,"pfl":"profilelink"
+};*/
+
+console.log({ALIASES})
+
+void function init(){
+
+let files = fs.readdirSync(appRoot + "/core/commands")
+
+for (let i = 0; i < files.length; i++) {
+  let filedir = appRoot + "/core/commands/" + files[i]
+
+  let module_commands = fs.readdirSync(filedir)
+
+  for (let j in module_commands){
+    let command = require(filedir+"/"+module_commands[j]);
+    let aliases = command.aliases || []
+    for (let k in aliases){
+      ALIASES[aliases[k]] = module_commands[j].split('.')[0];
+    }
+    console.log(ALIASES)
+  }
+
+}
+
+}();
+
+
+module.exports = ALIASES;

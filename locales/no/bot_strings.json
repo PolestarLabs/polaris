@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "",
+        "RBN_plural": "",
+        "JDE": "",
+        "JDE_plural": "",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "",
+        "first": "1.",
+        "second": "2. ",
+        "third": "3.",
+        "fourth": "4.",
+        "fifth": "5.",
+        "infinite": "",
+        "none": "Ingen",
+        "reason": "",
+        "banned": "",
+        "kicked": "",
+        "usage": "",
+        "module": "",
+        "inst": "",
+        "bet": "",
+        "level": "Nivå",
+        "levelUp": "Du har gått opp et nivå! ",
+        "discord": {
+            "role": "",
+            "server": "",
+            "member": "",
+            "user": "",
+            "user_plural": "",
+            "channel": "",
+            "channel_plural": "",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "",
+        "wasbanned": "",
+        "waskicked": "",
+        "modLogs": "",
+        "actLogs": "",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "",
+            "denied": "Du er ikke autorisert til å gjøre dette. Denne kommandoen krever et ranknivå {{rankNeed}}, din rank er {{rankMe}}. Kontakt servereier eller en mod. ",
+            "disabledModule": ":no_entry_sign: Vår mester har erklært at {{module}} ikke er tillatt her. Det var synd.",
+            "genericInvalid": "Ohh, ser ut som den kommandoen ikke fungerer ;---; ",
+            "prefixChng": "Okei, min prefix er nå {{prefix}}, prøv det ut ved å bruke  '{{prefix}}stats'.␣",
+            "moderationNeeded": "",
+            "chooseAmod": "Velg en modul.",
+            "kinNone": "Du må fortelle meg hvem du skal sparke ut. Jeg kan, så klart sparke ut deg istedet. ",
+            "kin404": "¨Finner ikke denne personen. Har de allerede dratt? Kanskje de bare var en del av din fantasi.",
+            "unperm": "Jeg har ikke tillatelse til å gjøre dette. Kanskje du skulle ha gitt meg disse tillatelsene før du kommanderer meg til å gjøre noe. ",
+            "noRoleHere": "Ser ut som den rollen ikke er på listen. Sjekk at du har skrevet inn rollen riktig. ",
+            "noRolesGiven": "Ingen rolle ble valgt, har du skrevet riktig? ",
+            "roleAlreadyHere": "Ser ut som den rollen allerede er på listen. ",
+            "nosuchrole": "Ehm, jeg finner ikke denne rollen, skriv navnet eksakt. Husk at vi skiller på store og små bokstaver.",
+            "kbanNone": "",
+            "superRoleNope": "",
+            "banNone": "",
+            "unpermB": "",
+            "cantFindChannel": "",
+            "noChannelGiven": "",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "Javel, gjør det nå...",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: Sparket {{target}} herrifra. **Årsak:** *{{reason}}*",
+            "autoroleunAdded": "Role **{{role}}** er fjernet fra auto-roller- ",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "",
+            "didban": ""
+        },
+        "logs": {
+            "success": "",
+            "successDelete": "",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "",
+            "timeout": "",
+            "cancelled": "",
+            "youSure": "",
+            "choose": "",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "Jeg har endret din personlige tekst til {{pstext}}\nBruk `{{prefix}}profile` for å se den nye teksten på ditt profilkort. Jeg er sikker på at noen vil like det....\n"
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "Ok. **{{user}} er nå inkludert i gruppen **{{group}}** ",
+            "rolermCom": "Oi da, **{{user}}** er ikke lenger en del av gruppen **{{group}}**. Hmmm?",
+            "superRoleadCom": "",
+            "superRolermCom": "",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "Det ser ut som du ikke har råd nok til dette, du har {{number}} rubiner for øyeblikket",
+            "noFunds": "Ikke nok Rubiner",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Du har fått 100 Rubiner som din daglige bonus! ",
+            "dailyNope": "{{emoji}} Hmm? Det set ut som du allerede har hentet dine Rubiner, du kan hente flere om **{{remaining}}",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "Modulen **{{module}}** har blitt avslått **Globally**",
+            "disabledChn": "Modulen {{module}} har blitt avslått i kanalen # {{channel}}",
+            "disabledComSer": "Kommandoen **{{command}}** har blitt avslått **Globalt** ",
+            "disabledComChn": "Kommandoen **{{command}}**  har blitt avslått i  #{{channel}}",
+            "enabledSer": "Modulen **{{module}}** har blitt slått på **Globalt** ",
+            "enabledChn": "Modulen **{{module}}** har blitt slått på i #{{channel}}",
+            "enabledComSer": "Kommandoen **{{command}}** har blitt stått på **globalt** ",
+            "enabledComChn": "Kommandoen *{{command}}** har blitt slått på i kanalen #{{channel}}"
+        },
+        "reput": {
+            "noSelf": "",
+            "noTarget": "",
+            "confirm": "",
+            "cooldown": ""
+        },
+        "$": {
+            "insuFloor": "Du har ikke nok Rubiner. Du trenger minst **{{number}}** {{emoji}}",
+            "insuBet": "Du må vedde minst {{number}}",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Ser ut som du er litt blakk, som forventet. ",
+            "cash100": "Hvaa? Du har faktisk Rubiiner. ",
+            "cash500": "Du er ganske okay ",
+            "cash1000": "Jeg anser deg nesten som rik, Nesten...",
+            "cash5000": "ÅÅh? Hvordan ble DU så rik? ",
+            "cash10000": "Har du stjålet fra en bank?? Skal jeg ringe politiet? ",
+            "cashInfinite": "Du burde virkelig ikke jukse vet du. "
+        },
+        "greet": {
+            "byeOFF": "",
+            "byeON": "",
+            "helloOFF": "",
+            "helloON": "",
+            "inTex": "",
+            "outTex": "",
+            "tellmeMSG": "",
+            "tellmeCHN": "",
+            "timer": "",
+            "timerby": "",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{target}}' Salt Level er **{{amount}}%** {{emoji}}",
+            "booru404": "Jeg beklager, men jeg finner ingenting med de taggene. Du bør sjekke om de er korrekte. ",
+            "nsfw404": "Unnskyld meg, men din type porno er så spesiell at jeg ikke fant det noen sted. Som forventet av en som deg. ",
+            "nsfwNope": ":no_entry:sign: NSFW kommandoer er ikke tillatt i denne kanalen. Perverse person. ",
+            "nsfwNofunds": "Du har ikke nok rubiner for å kjøpe naughty ting. Kom tilbake med **5** Rubiner så kanskje vi kan fikse noe. (Få rubiner med `{{prefix}}daily` )",
+            "nsfwCheckout": "5 {{emoji}} har blitt trukket fra pengene dine.",
+            "airwaifu": "Denne Aerowaifu har blitt nøye kurert for deg.",
+            "leadUnap": "Hvis du ikke ser deg selv her, skriv `{{prefix}}profile` for å se ditt nivå. Ikke alle kan være på toppen av lista.",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": " {{target}} har vært medlem siden : {{joinedstamp}}",
+            "aviOK": "Okay, jeg har skiftet bildet mitt for deg. Du kan skifte mitt profilbilde om {{cooldown}}",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "Egen-tildelte roller for denne serveren",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": ""
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": ""
+}

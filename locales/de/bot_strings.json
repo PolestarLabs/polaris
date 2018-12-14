@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "Rubine",
+        "RBN_plural": "Rubine",
+        "JDE": "Jaden",
+        "JDE_plural": "Jade",
+        "SPH": "Saphir",
+        "SPH_plural": "Saphire",
+        "C": "Gewöhnlich",
+        "U": "Ungewöhnlich ",
+        "R": "Selten",
+        "SR": "Sehr Selten",
+        "UR": "Super selten ",
+        "lootbox": "Lootbox",
+        "lootbox_plural": "Lootboxen",
+        "thevoid": "nichts"
+    },
+    "terms": {
+        "total": "Gesamt",
+        "amount": "Menge",
+        "overview": "Übersicht",
+        "coinHeads": "Kopf",
+        "coinTails": "Zahl",
+        "qnt": "Menge",
+        "res": "Ergebniss",
+        "announcement": "Ankündigung",
+        "first": "Erster",
+        "second": "Zweiter",
+        "third": "Dritter",
+        "fourth": "Vierter",
+        "fifth": "Fünfter",
+        "infinite": "Unendlich",
+        "none": "Nichts",
+        "reason": "Grund",
+        "banned": "Gebannt",
+        "kicked": "Gekickt",
+        "usage": "Nutzen",
+        "module": "Modul",
+        "inst": "Einleitung",
+        "bet": "Wetten",
+        "level": "Level",
+        "levelUp": "Neues Level!",
+        "discord": {
+            "role": "Rolle",
+            "server": "Server",
+            "member": "Mitglied",
+            "user": "Benutzer",
+            "user_plural": "Benutzer",
+            "channel": "Channel",
+            "channel_plural": "Channels",
+            "voice_channel": "Sprachchannel",
+            "private": "Privatnachricht"
+        }
+    },
+    "logs": {
+        "responsible": "verantwortlich",
+        "wasbanned": "wurde **banned**",
+        "waskicked": "wurde **kicked**",
+        "modLogs": "Moderation Logs",
+        "actLogs": "Aktivitäts Protokoll",
+        "advLogs": "Erweiterte Logs",
+        "logChan": "Allgemeine Logs",
+        "userJoin": "**{{user}}** ist dem Server **beigetreten**",
+        "userLeave": "**{{user}}** hat den Server **verlassen**",
+        "messDel": "Eine Nachricht wurde **gelöscht** in {{channel}}",
+        "messEdit": "{{user}} hat eine Nachricht **bearbeitet** in {{channel}}",
+        "newChan": "Eine neuere **Channel** wurde **erstellt**: {{channel}}",
+        "delChan": "Ein **Channel** wurde **gelöscht**:\n{{channel}}",
+        "updtChan": "Der Channel **{{channel}}** wurde **geupdated**",
+        "newRole": "Eine neue **Rolle** wurde **erstellt**: {{role}}",
+        "uptRole": "Die **Rollen** von {{user}} wurde **geupdated**",
+        "delRole": "Eine **Rolle** wurde **gelöscht**: {{role}}",
+        "revokeBan": "**{{user}}** wurde entbannt",
+        "usrNick": "Von nun an nennt sich **{{user}}** **{{newuser}}**",
+        "usrPhoto": "**{{user}}** hat sein Profilbild geändert",
+        "usrRoles": "Die Rollen für {{user}} wurden geupdated",
+        "gSets": "Servereinstellungen wurden geändert"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "Es fehlen die folgenden Berechtigungen um Erfolgreich fortzufahren:{{PERMSLIST}}",
+            "denied": "Sorry, aber dir ist es nicht gestattet, diesen Command zu benutzen. Du brauchst mindestens die {{rankNeed}} Rolle.\nDu bist aktuell nur ein {{rankMe}}.\nKomm zurück wenn du ein {{rankNeed}} bist!",
+            "disabledModule": ":no_entry_sign: Unser Lord und Meister hat {{module}} für verboten erklärt. Echt schade...",
+            "genericInvalid": "Schade, Falsches Kommando ;~;",
+            "prefixChng": "Na gut, jetzt habe ich den Präfix {{prefix}}, versuch mal `{{prefix}}stats`.␣",
+            "moderationNeeded": "Tut mir Leid, aber du kannst diesen Command nicht benutzen. Du brauchst entweder die **Server Verwalten** Permission oder du musst die Mod/Administrator Rolle haben. (Setze diese mit `{{prefix}}modrole [@Role]`)",
+            "chooseAmod": "Wähle ein Modul, was du willst.",
+            "kinNone": "Erst die Arbeit, dann das Vergnügen. Nenn mir sofort den Namen der Person, die ich kicken soll. Sonst kicke ich **dich**.",
+            "kin404": "Ups,I denke ich kann diese Person nicht finden :< Ist er nicht gegangen? Existiert der überhaupt. Halluzinierst du nicht nur?",
+            "unperm": "Aus irgendeinem Grund habe ich keine Berechtigungen dafür. VERDAMMT",
+            "noRoleHere": "Diese Rolle steht nicht auf der Liste. Bitte überprüfe; welche Rollen überhaupt verfügbar sind...",
+            "noRolesGiven": "Keine Rolle wurde Erwähnt, hast du es richtig gemacht?",
+            "roleAlreadyHere": "Hey, Mister, diese Rolle existiert bereits.",
+            "nosuchrole": "Um, Ich konnte diese Rolle nicht finden, bitte schreibe den Namen richtig!",
+            "kbanNone": "Sag mir, welchen Penner ich bannen soll, bevor ich dich banne!",
+            "superRoleNope": "**{{user}}** besitzt nicht die **{{group}}** Rolle.",
+            "banNone": "Sag mir, welchen Penner ich bannen soll, bevor ich dich banne!",
+            "unpermB": "Ich habe nicht genügent rechte um weiter zu machen",
+            "cantFindChannel": "Um... Ich konnte den Kanal nicht finden :/ Wenn du dir nicht sicher bist, versuche #channel zu benutzen.",
+            "noChannelGiven": "Ok, und wo soll ich diese Aktivitäten aufzeichnen? Auf deinem Gesicht? Nenne mir ein Kanal zum protokollieren!",
+            "insuperms": "{{imsorry}} Ich kann dies nicht für dich tun, wenn du nicht die Berechtigung selbst hast.",
+            "not-a-NSFW-channel": "Stelle diesen Channel zu erst zu einen NSFW-Channel um. Hier sind Kinder."
+        },
+        "warnings": {
+            "timesOutIn": "Diese Zeit wird in [{{s}} zu ende sein.",
+            "enterVoiceBetterExperience": "Für alle Funktionen musst du mit einem Voice-Channel verbunden sein."
+        },
+        "verbose": {
+            "jas": [
+                "Okei, nur eine Sekunde...",
+                "Nur eine Sekunde...",
+                "Einen Moment bitte..."
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "Ok.",
+                    "Super!",
+                    "Alles klar.",
+                    "Gut.",
+                    "Gut!",
+                    "Verstanden!",
+                    "Positiv.",
+                    "Gut!",
+                    "Süß!",
+                    "Okay!",
+                    "Alles bereit!",
+                    "Alles erledigt!",
+                    "Fertig."
+                ],
+                "yatta": [
+                    "Yay!",
+                    "Oh yeah!",
+                    "Gut!",
+                    "Cool!",
+                    "Klasse!",
+                    "Gut gemacht!",
+                    "Süß!",
+                    "Allerliebst!",
+                    "Perfekt!",
+                    "Echt Super!"
+                ],
+                "gomenasai": [
+                    "Es tut mir leid,",
+                    "Das ist peinlich,",
+                    "Äh, sorry,",
+                    "Ich entschuldige mich,",
+                    "Mein Fehler,",
+                    "Verzeih mir,",
+                    "Sorry,"
+                ],
+                "ohmy_positive": [
+                    "Ach du!",
+                    "Whoa!",
+                    "Ah!",
+                    "Schau!",
+                    "",
+                    "Yay!",
+                    "Unglaublich!"
+                ],
+                "ohmy_negative": [
+                    "Ach du!",
+                    "Ähhhhhhh...",
+                    "Oh...",
+                    "Oh nein!",
+                    "Neeeeein!",
+                    "Geez!"
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: Hat {{target}} von hier weg befördert.\n**Reason:** *{{reason}}*",
+            "autoroleunAdded": "Die Rolle **{{role}}**wurde von der Autorole entfernt",
+            "modroleunAdded": "Die Rolle **{{role}}** ist nicht länger eine Modrolle.",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "Grund nicht ",
+            "didban": ""
+        },
+        "logs": {
+            "success": "Fertig! Ich habe {{channel}} als den Kanal für {{CHNTYPE}} gesetzt!",
+            "successDelete": "Alles Erledigt! {{channel}} ist nun nicht länger der Kanal für \n{{CHNTYPE}}!",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "Wähle ein Slot, um deine brandneue Medaille zu platzieren.",
+            "timeout": "Ich glaube du hast vergessen deine Medaillen auszurüsten. gib mir bescheid, wenn du bereit bist, sie auszurüsten~",
+            "cancelled": "In Ordnung, wenn du sie jetzt nicht ausrüsten willst, werde ich mich um deine Medaillen kümmern~",
+            "youSure": "",
+            "choose": "Wähle eine Medaille, welche du in deiner Profilkarte ausrüsten möchtest",
+            "success": "",
+            "unequipSuccess": "OK, Medaille entfernt",
+            "unequipChoose": "Welche Medaille willst du entfernen?",
+            "unequipConfirm": "Willst du das entrüsten?",
+            "equipTwice": "Du hast diese Medaille schon ausgerüstet!",
+            "isEmpty": "Hier ist nichts zum entfernen!"
+        },
+        "discoin": {
+            "desc": "Deine Transaktion wird bearbeitet. Eine Antwort vom %BOT% wird kommen, sobald sie bestätigt wurde!",
+            "intake": "Pollux **Rubin** (RBN) Umwandler:",
+            "outtake": "%BOTNAME%´s **%CURRNAME%** ({{$}}) bekommt:",
+            "remainder": "Verbleibendes Limit für  {{$}}",
+            "receiptCode": "Transaktionsempfangscode",
+            "amNaN": "Ungültige Menge",
+            "invalidCurr": "Diese Währung existiert nicht!",
+            "invalidAmt": "Du kannst diese Menge nicht umwandeln.",
+            "unverified": "Die ist es nicht gestattet, umzutauschen.\nBitte verifiziere dich auf \n[http://discoin.sidetrip.xyz/verify]",
+            "userLimit": "Dein Umwandlungslimit ist für Heute erreicht.",
+            "globalLimit": "Die heutigen Operationen wurden geschlossen, Danke!",
+            "takedis": "Behalte diesen Code, falls ~Scheiße passiert~",
+            "ex-succ": "Austausch erfolgreich!"
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "Perfekt! Dein Persönlicher Text ist jetzt: {{pstext}} \nNutze `{{prefix}}profile` um dein Neuen Text in deiner Profilkarte zu sehen!\n "
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "Okei!!! **{{user}}** ist nun Teil der **{{group}}**-Grupppe ~!",
+            "rolermCom": "Gut, **{{user}}** ist nun nicht länger Teil von der **{{group}}**-Gruppe...",
+            "superRoleadCom": "Okidoki **{{user}}** hat die **{{group}}** Rolle bekommen!",
+            "superRolermCom": "Fertig. **{{user}}** gehört nicht länger zur **{{group}}** Rolle!",
+            "selfroleunAdded": "Die Rolle: **{{role}}** wurde aus den selbstauswählbaren Rollen entfernt",
+            "noselfRoles": "Diesen Rollen kannst du nicht selbst beitreten."
+        },
+        "generic": {
+            "inviteText": "Lade mich zu dienen Server ein. Du musst bloß [HERE] klicken",
+            "cancel": "",
+            "noFundsBalance": "Anscheinend kannst du es dir nicht leisten, da dein Kontostand nur {{number}} Rubine beträgt. Du müsstest dafür noch etwas sparen.",
+            "noFunds": "Nicht genügend Rubine.",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Durch deinen Tagesbonus hast du 100 Rubine bekommen.\n",
+            "dailyNope": "{{result}}! Hey! Du hast deinen Preis heute schon erhalten!\nDu musst noch **{{remaining}}** warten, bevor du erneut einen Preis erhälst!",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "Schade, das **{{module}}** Modul wurde **Globally** deaktiviert.\nWie gemein...\n",
+            "disabledChn": "Schade, das **{{module}}** Modul wurde in dem Channel #{{channel}} deaktiviert.\n",
+            "disabledComSer": "Schade, das **{{command}}** Kommando wurde **Globally** deaktiviert.",
+            "disabledComChn": "Schade, das **{{command}}** Kommando wurde **Globally** deaktiviert.\nWie gemein...",
+            "enabledSer": "Schade, das **{{module}}** Modul wurde **Global** deaktiviert.\nWie gemein...",
+            "enabledChn": "Das **{{module}}** Modul wurde im channel #{{channel}} erlaubt.",
+            "enabledComSer": "Der **{{command}}** Befehl wurde **Global** aktiviert",
+            "enabledComChn": "Der **{{command}}** Befehl wurde im Channel #{{channel}} erlaubt"
+        },
+        "reput": {
+            "noSelf": "Hey Hey Süßer! Du kannst das nicht bei dir selbst ausführen ... ",
+            "noTarget": "Du musst mir sagen wem ich +Rep. Soll ansonsten wirfst du es ins nichts",
+            "confirm": ":fleur_de_lis:  **{{who}}** hat **{{target}}** ein **+1Rep** gegeben. Sehr nett",
+            "cooldown": "Halt Stop! Du kannst erst wieder in {{remaining}} jemanden loben!"
+        },
+        "$": {
+            "insuFloor": "Leider reichen deine Rubine nicht aus. Du brauchst noch **{{number}}** weitere.\n{{emoji}}",
+            "insuBet": "Bitte wette mindestens {{number}}",
+            "noFundsBet": "",
+            "noBet": "Spielst du bloß zum Spaß? Okay~",
+            "acceptDec": "Klicken Sie auf {{icon}}, um diese zu akzeptieren. Sie können nur 5 Transaktionen pro tag akzeptieren.",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Du bist ein verdamter Untermensch!",
+            "cash100": "Du bist eigentlich ganz erträglich!",
+            "cash500": "du bist ganz cool",
+            "cash1000": "Du bist fast annähernd mittelreich",
+            "cash5000": "ALTER DU BIST SCHEIßE REICH JUNGE!",
+            "cash10000": "Hast du eine Bank beraubt?",
+            "cashInfinite": "Du hast dir also Geld gecheated...\nIch hoffe, du bist jetzt stolz auf dich!\n...VERDAMMTER CHEATER!"
+        },
+        "greet": {
+            "byeOFF": "Bye Nachricht abgestellt! Schreibe bye um dich zu verabschieden. Verstanden?\nBye...\nto **bye**\nHahahah... haha.. oh man, naja, es ist weg. Danke!",
+            "byeON": "Bye Nachricht in diesem Kanal eingeschaltet! Auch wenn sie es nicht sehen können, zumindest bin ich so freundlich bescheid zu geben.",
+            "helloOFF": "Willkommensnachricht wurde deaktiviert. Das ist aber nicht nett deine Gäste nicht zu begrüßen.",
+            "helloON": "Die Willkommensnachrkcht würde in diesem Channel aktiviert.",
+            "inTex": "Begrüßungsnachricht wurde gespeichert.",
+            "outTex": "Abschiedsnachricht wurde gespeichert!",
+            "tellmeMSG": "␣Nachicht zu kurz oder es ist keine da ",
+            "tellmeCHN": "Channel nicht genau beschrieben.",
+            "timer": "Natürlich, ich werde nun nach {{timeMin}} Sekunden die Willkommensnachrichten löschen.",
+            "timerby": "Okey, Ich werde Die Verabschiedungs Nachicht nach {{timeMin}} Sekunden Löschen!",
+            "noTimer": "Ok, keine Nachrichten werden gelöscht.",
+            "outChan": "Alles klar! Abschieds Nachrichten werden in **{{channel}}** geposted!",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "Das \"Salz-Level\" {{target}}' ist **{{amount}}%** {{emoji}}",
+            "booru404": "Sorry, die angegebenen Tags existieren leider nicht!",
+            "nsfw404": "JUNGE, JUNGE, JUNGE!!! Deine Pornos sind so verdammt seltsam, nicht mal ich kann da was finden. Versuch mal etwas weniger perverses!",
+            "nsfwNope": ":no_entry_sign: DENK DOCH MAL AN DIE KINDER! Das gehört hier echt nicht rein. Frag einen Admin nach einer Erlaubnis, bevor du dieses Zeug hier reinschreibst!",
+            "nsfwNofunds": "Du hast nicht genug Rubine um... \"Erwachene Sachen\" zu kaufen.\nGib mir mit `{{prefix}}daily` **5** Rubine. Dann können wir reden!",
+            "nsfwCheckout": "5 {{emoji}} wurden von deinem Kapital abgezogen",
+            "airwaifu": ":airplane: WAS ZUR HÖLLE BEDEUTET AEROWAIFU?\nUND WAS IST FALSCH MIT DIR?",
+            "leadUnap": "Wenn du dich hier nicht siehst, liegt das daran, dass du noch `{{prefix}}profile` eingeben musst, um dein Level zu sehen. Vielleicht bist du auch einfach zu dumm ;).",
+            "position": "Deine Position im Ranking ist ",
+            "usethisfor": "Schreibe |p!rank {{scope}}| für {{srr}}",
+            "transmittedVc": "Dies wirde auf deinen Voice-Channel übertragen",
+            "decon": "{{user}} dekontaminiert sich selbst.",
+            "decon2": "{{user}} dekontaminiert {{user2}}.",
+            "cancer": "{{user}} untersucht das Cancer Level des Chats.",
+            "geiger": ":radioactive: Laut dem Strahlungsmesser ist das Cancer Potential dieses Chats **{{percentage}}%** mit **{{radiation}}μSv/h**"
+        },
+        "misc": {
+            "memberSince": "\n {{target}} ist ein Mitglied seit: {{joinedstamp}}",
+            "aviOK": "Oki-Doki, dass ist mein neues Profilbild. Du kannst es erneut in {{cooldown}} ändern.",
+            "colorChange": "Deine Lieblingsfarbe wurde gespeichert!"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "Selbstgewählte Rolle für den Server",
+        "daily": {
+            "lastdly": "Letzter Bonus :",
+            "next": "Nächster Bonus:",
+            "streakcurr": "Aktuelle Anzahl:",
+            "expirestr": "Zeit bis dein Lauf endet:",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**Schreibe den nuke Grund unterhalb um zu bestätigen.**\nSchreib **c** um abzubrechen.",
+            "start": "",
+            "cancel": "Nuke abgebrochen!␣",
+            "timeout": "Nuke abgelaufen!",
+            "completed": "Serverinformationen wurden erfolgreich gelöscht und zurückgesetzt. Versuch **+serverinfo** um zu bestätigen, das alles erfolgreich zurückgesetzt wurde. Ich bin nicht für jeglichen nuklearen Niederschlag im nachhinein verantwortlich."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "Die Würfel waren:",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "Das geht so nicht. Wir spielen momentan schon ein Spiel!",
+            "newgame": "Yeah, eine weitere Runde BlackJack. Du kennst garantiert die Regeln, also lass uns beginnen.",
+            "result": "Ergebniss:",
+            "bust": "",
+            "youwin": "Herzlichen Glückwunsch! Du hast dieses mal gewonnen!",
+            "youlose": "",
+            "hit": "Antworte mit ´hit´ um eine weitere Karte zu ziehen.",
+            "stand": "",
+            "split": "Benutze ´split´, um deine Hand aufzuteilen.",
+            "double": "",
+            "pass": "oder `stand´, um zu passen.",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "Dein Preis ist **%$%** %emj%",
+            "_minor": "Besser als nichts, oder? ;)",
+            "_mid": "Echt nicht schlecht!",
+            "_major": "So knapp!",
+            "_ultimate_1": "Echt Super! :heart:",
+            "_ultimate_2": "Du hast echt viel Glück!!! :heart:",
+            "_ultimate_3": "Kannst du das glauben?! :heart:",
+            "kommunism": "Lang Lebe der Kommunismus!!! Der dreifache Preis wird auf alle aufgeteilt!",
+            "pollux_jackpot": "",
+            "lucky": "Lucky Sevens baby~",
+            "jackpot": "Zusätzlich zu deinem Preis erhältst du 100 Ringe und ein extra Leben.",
+            "bonanza": "Yeah! Rubinenfluit! So viele Rubine kann man nicht tragen!",
+            "potato": "Kartoffeln.....nicht schlecht, aber gut ist das auch nicht.",
+            "zero_1": "Verdammt! :( Du hast nicht mal einen Rubin wiederbekommen...",
+            "zero_2": "Oh...das ist traurig......hier ist nichts.",
+            "zero_3": "Viel Glück beim nächsten mal, ich glaub an dich! ;)"
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "Weist du was das ist?! Es ist eine **seltene** Lootbox!",
+        "suprareDrop": "",
+        "ultraRareDrop": "Ich kann es kaum glauben! Eine **MEGA SELTENE** Lootbox ist erschienen!\nDu wirst wahrscheinlich nie wieder eine sehen.",
+        "lootDrop": [
+            "HEY LEUTE! Eine Lootbox ist in diesem Channel gespawnt",
+            "WHOA! Eine Lootbox! Schnell, schnapp sie dir!",
+            "Nice, scheint so als ob es hier eine Lootbox gibt.",
+            "Sorry, dass ich dich unterbreche, aber hat niemand mitbekommen, dass hier eine Lootbox rumliegt?!",
+            "Sugoi! Schau dir diese Lootbox an, die ich gefunden habe.",
+            ""
+        ],
+        "lootPick": "Ihr alle habt  **__20Sekunden__** um euch über die Lootbox zu streiten.\nBenutzt ´{{prefix}}pick´, um eine Chance zu haben, die Lootbox zu bekommen.",
+        "goesTo": "Die Zeit ist um! Mal schauen wer die Lootbox bekommt,\n**Diese Lootbox wird verteilt unter :**",
+        "congrats": "",
+        "opening": "{{user}} hat ihre/seine Lootbox geöffnet...",
+        "contains": "",
+        "options": "Du kannst es entweder behalten, oder bezahlen um erneut zu würfeln.",
+        "keep": "Behalte es",
+        "reroll": "Würfel es erneut.",
+        "rerolled": "Ok lass es uns erneut versuchen, der Inhalt der Box wird erneut gewürfelt...",
+        "noMoreRolls": "Du hast alle Würfel verbraucht, nun musst du mit dem Ergebnis verbleiben.",
+        "noFunds": "Du kannst dir keine Würfel leisten, viel Glück nächstes mal.",
+        "rerollRemain": "Wiederholungen verbleibend:",
+        "addedRubines": "{{X}} Rubine wurden zu deinem Konto hinzugefügt.",
+        "addedJades": "{{X}} Jaden wurden deinem Geldbeutel hinzugefügt",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "Duplikat {{tpe}} `{{itm}}` wurde verwertet für {{X}} Rubine.",
+        "morons": "Ihr seit ein haufen **Idioten**! Ihr habt eine Lootbox durchgehen lassen.]:U",
+        "contesting": "Einträge für diese Box:",
+        "eventDrop": "",
+        "notThisbox": "Aktuell kannst du diese Box nicht öffnen. Schreibe `{{prefix}}lootbox` erneut, um zu sehen, ob diese Option möglich ist~"
+    },
+    "eastereggs": {
+        "konodioda": "Du dachtest es war Pollux, aber du irrst dich.\n**Es war ICH, DIO**!",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "Überprüfen Sie die angeheftete Nachricht auf weitere Informationen",
+        "reactThis": "Reagieren Sie auf diese Nachricht, um die Rollen automatisch zu empfangen"
+    },
+    "helpkey": "hilfe"
+}

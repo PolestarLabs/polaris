@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "Rubine",
+        "RBN_plural": "Rubines",
+        "JDE": "Jade",
+        "JDE_plural": "Jades",
+        "SPH": "Safira",
+        "SPH_plural": "Safiras",
+        "C": "Guaipeca",
+        "U": "Macanudo",
+        "R": "Bagual",
+        "SR": "Tri Bagual",
+        "UR": "Bagualaço",
+        "lootbox": "Caixa de saque",
+        "lootbox_plural": "Caixas de saque",
+        "thevoid": "vazio"
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "Visão geral",
+        "coinHeads": "Cara",
+        "coinTails": "Coroa",
+        "qnt": "Quantidade",
+        "res": "Resultado",
+        "announcement": "Anúncio",
+        "first": "1o",
+        "second": "2o",
+        "third": "3o",
+        "fourth": "4o",
+        "fifth": "5o",
+        "infinite": "Infinito",
+        "none": "Nenhum",
+        "reason": "Motivo ",
+        "banned": "Banido",
+        "kicked": "Expulso",
+        "usage": "Utilização",
+        "module": "Módulo",
+        "inst": "Instruções",
+        "bet": "Aposta",
+        "level": "Nível",
+        "levelUp": "Tu subiste de nível!",
+        "discord": {
+            "role": "Cargo",
+            "server": "Bolicho",
+            "member": "Membro",
+            "user": "Utilizador",
+            "user_plural": "Utilizadores",
+            "channel": "Canal",
+            "channel_plural": "Canais",
+            "voice_channel": "Canal de Voz",
+            "private": "Mensagem Privada"
+        }
+    },
+    "logs": {
+        "responsible": "Responsável",
+        "wasbanned": "foi **banido**",
+        "waskicked": "foi **posto pra correr**",
+        "modLogs": "Registro de Moderação",
+        "actLogs": "Registo de Atividade",
+        "advLogs": "Registro Avançado",
+        "logChan": "Registro Geral",
+        "userJoin": "**{{user}}** se **aprochegou** no Bolicho",
+        "userLeave": "**{{user}}** se **mandou** do Bolicho",
+        "messDel": "Uma mensagem foi **excluida** em {{channel}}}",
+        "messEdit": "{{user}} **edtou** a sua mensagem em {{channel}}",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "As permissões seguintes não estão presentes para proceder corretamente:\n{{PERMSLIST}}",
+            "denied": "Tche, tu não tem autorização pra usar esse comando. Tu precisa de Permissões de nível {{rankNeed}}, teu nível de permissão é {{rankMe}}. Troca uma idéia com o dono do piquete ou  a mãe do badanha.",
+            "disabledModule": ":no_entry_sign: Nosso bagual véio declarou que o módulo {{module}} não é permitido aqui. Que cara balaqueiro.",
+            "genericInvalid": "Bah! Algo deu errado ",
+            "prefixChng": "Aí sim tchê. Mudei o prefixo dos meus comandos pra {{prefix}}, experimenta `{{prefix}}stats` para testar. ",
+            "moderationNeeded": "",
+            "chooseAmod": "Seleciona um módulo, tchê.",
+            "kinNone": "tu precisa me em quem eu vou passar o relho.",
+            "kin404": "Bah, não achei esse vivente :< Ele ainda tá por aqui? Ele sequer existe? Não é tua imaginação? TEM CERTEZA MAGRÃO???",
+            "unperm": "Por algum raio de razão eu não tenho permissões. Tá de arreganho comigo guri?",
+            "noRoleHere": "Este Cargo não tá na lista.",
+            "noRolesGiven": "Nenhum Cargo foi apontado. Tu tá fazendo isso direito, che? ",
+            "roleAlreadyHere": "Ei, desculpa, esse Cargo já está incluído! ",
+            "nosuchrole": "Hm... Não encontrei esse Cargo, digita o nome exatamente igual! ",
+            "kbanNone": "tu precisa me dizer em quem vou meter as espora. ",
+            "superRoleNope": "**{{user}}** não faz parte do Cargo **{{group}}**! ",
+            "banNone": "tu precisa me dizer em quem vou meter as espora. ",
+            "unpermB": "Che, acho que não tenho Permissões para processar este comando. ",
+            "cantFindChannel": "Umm... Eu não consegui encontrar este canal :-/ Se não tens a certeza, tenta usar #channel",
+            "noChannelGiven": "Ok, e onde é que vou enviar as tuas atividades? Na tua cara? Diz-me um canal que possa enviá-las!",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "Ok, me dá um segundo... ",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "Mas que barbaridade...",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": ":boot: Passei o relho em {{target}}. \n Motivo:{{reason}} ",
+            "autoroleunAdded": "Cargo **{{role}}** removido da lista de Autoroles. ",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "semRazão",
+            "didban": ""
+        },
+        "logs": {
+            "success": "Feito! Defini o canal {{channel}} para {{CHNTYPE}}!",
+            "successDelete": "Escolhido! Defini o canal {{channel}} para não ter {{CHNTYPE}}!",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "Escolhe um slot para equipares a tua nova medalha!",
+            "timeout": "Acho que te esqueceste de equipar as medalhas. Chama-me quando quiseres equipá-las~",
+            "cancelled": "Bom, se não vais equipá-las agora, eu vou tratar da tua medalha por ti~",
+            "youSure": "",
+            "choose": "Escolhe uma medalha para equipar no teu Profilecard",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": "Bueno! Agora teu texto é.\n {{pstext}} \n Digita `{{prefix}}profile` para visualizar tuas balacas."
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "Agora **{{user}}** faz parte do grupo de **{{group}}** !",
+            "rolermCom": "Bom, **{{user}}** não faz mais parte do grupo de **{{group}}** ! Me pergunto por quê.",
+            "superRoleadCom": "Certinho. Incluí **{{user}}** no Cargo **{{group}}**! ",
+            "superRolermCom": "Feito. Removi **{{user}}** do Cargo **{{group}}**! ",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "Tu tá mais pobre que rato de igreja. Tem só {{number}} Rubines",
+            "noFunds": "Tu não tem Rubines pra isso? Aí me caiu os butiá do bolso",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} Te aprochega e pega esses 100 Rubines de bônus diário.",
+            "dailyNope": "{{emoji}} Calma aí magrão! Teu bônus de hoje já foi, o próximo é daqui **{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "O módulo **{{module}}** foi desabilitado **Globalmente** ",
+            "disabledChn": "O módulo **{{module}}** foi desabilitado no canal #{{channel}}",
+            "disabledComSer": "O comando **{{command}}** foi desabilitado **Globalmente**",
+            "disabledComChn": "O comando **{{command}}** foi desabilitado no canal #{{channel}}",
+            "enabledSer": "O módulo **{{module}}** foi habilitado **Globalmente** ",
+            "enabledChn": "O módulo **{{module}}** foi habilitado no canal #{{channel}}",
+            "enabledComSer": "O comando **{{command}}** foi habilitado **Globalmente**",
+            "enabledComChn": "O comando **{{command}}** foi habilitado no canal #{{channel}}"
+        },
+        "reput": {
+            "noSelf": "Ô xiru! Não te fresqueia. Fica de Rep pra ti mesmo que te passo o relho.",
+            "noTarget": "Me diz pra qual vivente vai esse +Rep, ao menos que tu  teja dando Rep pro vácuo. ",
+            "confirm": ":fleur_de_lis:  **{{who}}** deu **+1Rep** na manha pra **{{target}}**. Baita trovador.",
+            "cooldown": "Segura aí nego véio! Tu vai poder dar Rep de novo dentro de {{remaining}}. Não te apoquenta;"
+        },
+        "$": {
+            "insuFloor": "Tchê teus Rubines tão meio magrinho. Tu precisa de pelo menos **{{number}}** ",
+            "insuBet": "Aposta pelo menos {{number}}, tchê.",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "Tua situação tá mais feia que briga de foice no escuro",
+            "cash100": "Tu tá mais firme que palanque em banhado.",
+            "cash500": "Tu tá faceiro feito mosca em tampa de xarope",
+            "cash1000": "Tu tá melhor que lambari de sanga",
+            "cash5000": "Tu tá é Bagual",
+            "cash10000": "Mas que barbaridade.",
+            "cashInfinite": "Tu me parece é um baita dum tramposo"
+        },
+        "greet": {
+            "byeOFF": "Mensagens de despedida desabilitadas.",
+            "byeON": "Mensagens de despedida habilitadas neste canal! Fico mais angustiada que barata de ponta-cabeça quando esses viventes vão embora.",
+            "helloOFF": "Mensagem de boas-vindas desabilitada! Não é legal não cumprimentar seus convidados. Tchê",
+            "helloON": "Mensagens de boas-vindas habilitadas neste canal! Pode ficar tranqüilo que nem água de poço",
+            "inTex": "Mensagem de boas-vindas alterada! ",
+            "outTex": "Mensagem de despedida alterada! ",
+            "tellmeMSG": "Mensagem muito curta ou nenhuma mensagem identificada!",
+            "tellmeCHN": "Canal não especificado!",
+            "timer": "Ok, eu vou apagar mensagens de boas-vindas após {{timeMin}} segundos!",
+            "timerby": "Ok, eu vou apagar mensagens de adeus após {{timeMin}} segundos!",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "O nível de atucanação de {{target}} é de **{{amount}}%** {{emoji}} ",
+            "booru404": "Achar algo com essas tags aí vai ser bucha. Tenta outra coisa.",
+            "nsfw404": "Meu guri, ou minha guria. Desculpa mas nem em chinaredo tu acha isso.",
+            "nsfwNope": ":no_entry_sign: Sem arreganho de NSFW nesse Canal, tchê. Isso daqui é um lugar de família! Pede pro Patrão arriar.",
+            "nsfwNofunds": "Tu não tem Rubines suficientes para comprar putaria. Arruma pelo menos uns **5**. ",
+            "nsfwCheckout": "Tomei 5 {{emoji}} de tua conta. ",
+            "airwaifu": ":airplane: Esta Guriaérea foi cuidadosamente escolhida para ti, meu bruxo! ",
+            "leadUnap": "Se tu não aparece aqui, digita `{{prefix}}profile` para ver teu Level. Capaz só de tu ser muito mirrado.",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{target}} faz parte do piquete desde: {{joinedstamp}} ",
+            "aviOK": "Okei, troquei minha foto por essa daqui, tu pode me pedir pra trocar de foto de novo em: {{cooldown}}",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "Cargos auto-definíveis deste Servidor ",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "**Escreve a razão do nuke em baixo para confimar**\nEnvia **c** para cancelar.",
+            "start": "",
+            "cancel": "Nuke abortado!",
+            "timeout": "Tempo de nuke esgotado!",
+            "completed": "As informações do servidor foram completamente limpas e resetadas. Tenta usar **+serverinfo** para ver se tudo foi resetado bem. Eu não sou responsável por alguma contaminação de Fallout Nuclear."
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": "ajuda"
+}

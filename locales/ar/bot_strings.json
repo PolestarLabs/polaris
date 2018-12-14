@@ -1,0 +1,466 @@
+{
+    "keywords": {
+        "RBN": "",
+        "RBN_plural": "",
+        "JDE": "",
+        "JDE_plural": "",
+        "SPH": "",
+        "SPH_plural": "",
+        "C": "",
+        "U": "",
+        "R": "",
+        "SR": "",
+        "UR": "",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": ""
+    },
+    "terms": {
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "",
+        "res": "",
+        "announcement": "",
+        "first": "",
+        "second": "",
+        "third": "",
+        "fourth": "",
+        "fifth": "",
+        "infinite": "",
+        "none": "",
+        "reason": "",
+        "banned": "",
+        "kicked": "",
+        "usage": "",
+        "module": "",
+        "inst": "",
+        "bet": "",
+        "level": "",
+        "levelUp": "",
+        "discord": {
+            "role": "",
+            "server": "",
+            "member": "",
+            "user": "",
+            "user_plural": "",
+            "channel": "",
+            "channel_plural": "",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "",
+        "wasbanned": "",
+        "waskicked": "",
+        "modLogs": "",
+        "actLogs": "",
+        "advLogs": "",
+        "logChan": "",
+        "userJoin": "",
+        "userLeave": "",
+        "messDel": "",
+        "messEdit": "",
+        "newChan": "",
+        "delChan": "",
+        "updtChan": "",
+        "newRole": "",
+        "uptRole": "",
+        "delRole": "",
+        "revokeBan": "",
+        "usrNick": "",
+        "usrPhoto": "",
+        "usrRoles": "",
+        "gSets": ""
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "",
+            "denied": "انت غير مؤهل لاستخدام هذا. هذا الامر يتطلب رتبه اعلى من  {{rankNeed}}, رتبتك هي  {{rankMe}}.  تواصل مع اونر السيرفر او تواصل مع مودز السيرفر .",
+            "disabledModule": "no_entry_sign: سيدنا اعلت ",
+            "genericInvalid": "اوووه نو -_- . الامر غير صالح :((",
+            "prefixChng": "دام كذا , الان البركفس حقي هو {{prefix}} , جرب هذا `{{prefix}}stats`",
+            "moderationNeeded": "",
+            "chooseAmod": "",
+            "kinNone": "",
+            "kin404": "",
+            "unperm": "",
+            "noRoleHere": "",
+            "noRolesGiven": "",
+            "roleAlreadyHere": "",
+            "nosuchrole": "",
+            "kbanNone": "",
+            "superRoleNope": "",
+            "banNone": "",
+            "unpermB": "",
+            "cantFindChannel": "",
+            "noChannelGiven": "",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "gomenasai": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": "",
+            "autoroleunAdded": "",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "",
+            "didban": ""
+        },
+        "logs": {
+            "success": "",
+            "successDelete": "",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "",
+            "timeout": "",
+            "cancelled": "",
+            "youSure": "",
+            "choose": "",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": ""
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "",
+            "rolermCom": "",
+            "superRoleadCom": "",
+            "superRolermCom": "",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "يبدو انك لاتستطيع الحصول على هذا لان رصيدك منخفض , رصيدك هو {{number}} روبينس \n",
+            "noFunds": "الروبينس لايكفي",
+            "plus_rubines": "",
+            "minus_rubines": ""
+        },
+        "daily": {
+            "dailyGet": "{{emoji}} انت تستطيع الحصول على 100 ياقوت من المكافأة اليومية ~",
+            "dailyNope": "{{emoji}} هيه هي ! لقد حصلت على مكأفاتك اليوميه بالفعل , يمكنك الحصول على المزيد في : **{{remaining}}**",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "",
+            "disabledChn": "",
+            "disabledComSer": "",
+            "disabledComChn": "",
+            "enabledSer": "",
+            "enabledChn": "",
+            "enabledComSer": "",
+            "enabledComChn": ""
+        },
+        "reput": {
+            "noSelf": "",
+            "noTarget": "",
+            "confirm": "",
+            "cooldown": ""
+        },
+        "$": {
+            "insuFloor": "انت لاتملك مايكفي من روبينس . انت يلزمك على الاقل **{{number}}** {{emoji}}",
+            "insuBet": "اقل سعر على الرهان هو{{number}}",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "وواووي انته",
+            "cash100": "انت كاش",
+            "cash500": "انت صغير خخ",
+            "cash1000": "أنت غني تقريبا بشكل معتدل :) مااعرف كيف بس سلك!",
+            "cash5000": "انت فااكن غنني,  كااش مان !",
+            "cash10000": "شكلك تسرق البنك :)؟",
+            "cashInfinite": "انت نذل غشاش ! :("
+        },
+        "greet": {
+            "byeOFF": "",
+            "byeON": "",
+            "helloOFF": "",
+            "helloON": "",
+            "inTex": "",
+            "outTex": "",
+            "tellmeMSG": "",
+            "tellmeCHN": "",
+            "timer": "",
+            "timerby": "",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "{{targrt}}' لفله هو **{{amount}}%** {{emoji}}",
+            "booru404": "اووووببس , انا مااقدرت اجد اي شى مع هذه العلامات . تاكد من معلوماتك اذ هي صحيحه , حبيببي!",
+            "nsfw404": "ولد , اولاً انا غيرر مسؤال عن مشاهدتك للاباحيات واذ امكنني ان اكلم ولي امرك سوف اخبرهما عنك ! ثانيا الاباحيات ذي حقك اللي قاعد تدور عليها ماحصلتها وغريبه ! دورت في كل مكان ماحصلتها . جرب شى اقل غرابه من حقك ذا ._.",
+            "nsfwNope": ":no_entry_sign: اوامر الممنوعات والمحرمات مو مسموحه بهذا الروم , حبي",
+            "nsfwNofunds": "انت لاتملك شى من الروبينس لتشتري الاشياء . حبي اديني **5** روبينس وبعدين تقدر نتكلم . تقدر تجمع روبينس مع `{{prefix}}daily`",
+            "nsfwCheckout": "5{{emoji}} تم خصمها من أموالك.",
+            "airwaifu": ":airplane: هذا الايرويايفو لقد تم الاعتناء به برعايه من اجلك",
+            "leadUnap": "اذا لم تجد نفسك هنا اكتب , `{{prefix}}حسابي` عشان تشوف لفلك . ",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": ""
+        },
+        "misc": {
+            "memberSince": "{{target}} هذا العضو هنا منذ: {{joinedstamp}}\n",
+            "aviOK": "اوككيي-دوكي , صورتي الجديده الان هي هذي . انت تقدر تقدر صورتي القميله مرثانيه في  {{cooldown}}",
+            "colorChange": ""
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "",
+        "daily": {
+            "lastdly": "",
+            "next": "",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": ""
+        },
+        "pleasewait": {
+
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "",
+            "rollsWere": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "",
+            "newgame": "",
+            "result": "",
+            "bust": "5",
+            "youwin": "",
+            "youlose": "",
+            "hit": "",
+            "stand": "",
+            "split": "",
+            "double": "",
+            "pass": "",
+            "even": ""
+        },
+        "slots": {
+            "takePrize": "",
+            "_minor": "",
+            "_mid": "",
+            "_major": "",
+            "_ultimate_1": "",
+            "_ultimate_2": "",
+            "_ultimate_3": "",
+            "kommunism": "",
+            "pollux_jackpot": "",
+            "lucky": "",
+            "jackpot": "",
+            "bonanza": "",
+            "potato": "",
+            "zero_1": "",
+            "zero_2": "",
+            "zero_3": ""
+        },
+        "ceilingBet": "",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "",
+        "suprareDrop": "",
+        "ultraRareDrop": "",
+        "lootDrop": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "lootPick": "",
+        "goesTo": "",
+        "congrats": "",
+        "opening": "",
+        "contains": "",
+        "options": "",
+        "keep": "",
+        "reroll": "",
+        "rerolled": "",
+        "noMoreRolls": "",
+        "noFunds": "",
+        "rerollRemain": "",
+        "addedRubines": "",
+        "addedJades": "",
+        "addedMedal": "",
+        "addedSticker": "",
+        "addedBG": "",
+        "duplicateExchange": "",
+        "morons": "",
+        "contesting": "",
+        "eventDrop": "",
+        "notThisbox": ""
+    },
+    "eastereggs": {
+        "konodioda": "",
+        "vacuum": ""
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": ""
+}

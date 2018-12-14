@@ -1,0 +1,195 @@
+const cmd = 'craft';
+const gear = require("../../utilities/Gearbox.js");
+const DB = require("../../database/db_ops.js");
+const ECO = require("../../archetypes/Economy.js")
+const locale = require('../../../utils/i18node');
+const $t = locale.getT();
+
+
+const init = async function (message) {
+  try{
+    
+  setTimeout(f=>  message.author.crafting = false, 25000)
+    //HELP TRIGGER
+    let P={lngs:message.lang,}
+    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
+  //------------
+      
+    
+    
+if(message.author.crafting)return;
+message.author.crafting = true;
+  function noteno(item,extra){
+    message.reply("")
+  }
+  
+    //message.reply("pos: 127, cfstatus: 1")
+  let noteno_feed = []
+  
+  let ITEMS = await DB.items.getAll();
+    
+  let embed = new gear.Embed
+  embed.description=""
+  embed.setColor('#71dbfa')
+  
+  let arg = message.content.split(/ +/).slice(1)[0];
+  if (!arg)return;
+  let crafted_item = ITEMS.find(itm=>itm.id==arg||itm.code==arg);
+  embed.title((crafted_item||{emoji:0}).emoji+" Crafting `: "+crafted_item.name+"`")
+    
+    
+  const userData = await DB.users.findOne({id:message.author.id},{"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
+  //message.reply("`console res`")
+  if(crafted_item){
+    let ID = crafted_item.id
+    let NAME = crafted_item.name
+    
+    let ICON = crafted_item.icon || '';
+    embed.thumbnail("http://pollux.fun/build/items/"+ICON+".png")
+    
+    let CODE = crafted_item.code
+    let MAT = crafted_item.materials
+    let GC = crafted_item.gemcraft
+    let fails = 0
+    let matDisplay = ""
+    let craftExplan = ""
+    
+    
+    if(GC.jades){
+      let afford = userData.modules.jades >= GC.jades;
+      let icona='yep';
+      if(!afford){
+        icona='nope'
+        fails+=1
+      }
+      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('jade')+"**"+gear.miliarize(GC.jades,true)+'** x Jades';
+    }
+      
+      
+    
+    if(GC.rubines){
+      let afford = userData.modules.rubines >= GC.rubines;
+      let icona='yep';
+      if(!afford){
+        icona='nope'
+        fails+=1
+      }
+      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('rubine')+"**"+gear.miliarize(GC.rubines,true)+'** x Rubines';
+    }
+      
+      
+    
+    if(GC.sapphires){
+      console
+      let afford = userData.modules.sapphires >= GC.sapphires;
+      let icona='yep';
+      if(!afford){
+        icona='nope'
+        fails+=1
+      }
+      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('sapphire')+"**"+gear.miliarize(GC.sapphires,true)+'** x Sapphires';
+    }
+      
+      
+    
+    MAT.forEach(material=>{
+      let icona='yep';
+        material = material.id || material;
+    
+      if (userData.modules.inventory.find(itm=>itm.id == material).count >= (material.amt || gear.count(MAT,material)) ){
+        //message.reply('ok')
+        
+      }else{
+        icona='nope';
+        fails+=1
+      }
+        matDisplay+="\n"+gear.emoji(icona)+" | "+ITEMS.find(x=>x.id==material).emoji+ITEMS.find(x=>x.id==material).name;               
+    })
+    if (fails > 0 ) {
+      embed.setColor('#ed3a19');
+      craftExplan = "\n\nThere are missing materials in your inventory, I cannot craft this."
+      embed.description= matDisplay +  craftExplan
+      message.author.crafting = false;
+      message.channel.send({embed})
+    }else{
+      craftExplan = "\n\nAll materials are available in your inventoru, proceed with the crafting?"
+      embed.description=matDisplay+ craftExplan
+      message.channel.send({embed}).then(async m=>{
+
+          let YA = {r:":yep:339398829050953728",id:'339398829050953728'}
+          let NA = {r:":nope:339398829088571402",id:'339398829088571402'}
+
+          await m.addReaction(YA.r);
+            m.addReaction(NA.r);
+
+          const reas = await m.awaitReactions({
+              maxMatches: 1,
+              time: 10000,
+              authorOnly:message.author.id
+            }
+          ).catch(e => {
+              embed.setColor("#ffd900")
+              embed.description = matDisplay
+              embed.footer("Crafting Timed Out!")
+              m.edit({embed})
+              m.removeReactions().catch()
+              return message.author.crafting = false;
+          });
+
+          if(reas.length === 0 )return;
+
+          if (reas.length === 1&&reas[0].emoji.id==NA.id) {
+            embed.setColor("#db4448")
+            embed.footer("Crafting Cancelled!")
+            embed.description = matDisplay
+            m.edit({embed})
+            m.removeReactions().catch()
+            return message.author.crafting = false;
+           }
+          if (reas.length === 1&&reas[0].emoji.id==YA.id) {
+              /*
+            await Promise.all(
+          [ECO.pay(message.author.id,GC.rubines,"crafting","RBN"),
+             ECO.pay(message.author.id,GC.jades,"crafting","JDE"),
+             ECO.pay(message.author.id,GC.sapphires,"crafting","SPH")]
+            );
+*/
+            
+            MAT.forEach(async itm=>{
+              await DB.items.consume(message.author,itm);
+            })            
+
+            await DB.items.receive(message.author.id, crafted_item.id);
+            
+            message.author.crafting = false;
+            embed.setColor("#78eb87")
+            embed.description = matDisplay
+            embed.footer("Item Crafted!")
+            m.removeReactions().catch()
+            return m.edit({embed});
+          }
+
+      
+      })
+
+    }
+    
+  }else{
+    message.author.crafting = false;
+    message.reply("Invalid Craft Code")
+  }
+
+
+  }catch(e){
+    message.author.crafting = false;
+    console.error(e)
+  }
+}
+
+module.exports = {
+  pub: true,
+  cmd: cmd,
+  perms: 3,
+  init: init,
+  cat: 'cosmetics'
+};
