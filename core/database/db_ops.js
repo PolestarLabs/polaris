@@ -1,4 +1,4 @@
-const
+const 
     miscDB        = require('./schemas/_misc.js')
    ,serverDB      = require('./schemas/servers.js')
    ,userDB        = require('./schemas/users.js')
@@ -6,12 +6,12 @@ const
    ,svMetaDB      = require('./schemas/serverMeta.js');
 
 
- module.exports = {
-
-   serverDB
-   ,userDB
-   ,channelDB
-   ,svMetaDB
+ module.exports = {   
+   
+   serverDB       
+   ,userDB        
+   ,channelDB     
+   ,svMetaDB      
    ,localranks    : require('./schemas/localranks.js')
    ,responses     : require('./schemas/responses.js')
     ,miscDB /////////////////////////////////////////////
@@ -24,12 +24,12 @@ const
    ,collectibles  : require('./schemas/collectibles.js')
    ,items         : require('./schemas/items.js')
    ,achievements  : require('./schemas/achievements.js')
-
-
+   
+   
    ,users:    userDB
    ,servers:  serverDB
    ,guilds:   serverDB
    ,channels: channelDB
    ,globals:  miscDB.global
-
+   
  };

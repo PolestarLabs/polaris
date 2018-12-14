@@ -60,12 +60,13 @@ const init= async function run(msg) {
 
 if(msg.content.split(/ +/).slice(1)[0]=="frame"){
  let ag= msg.content.split(/ +/).slice(1)[1];
-  let frame = (msg.author.dDATA.switches||{}).profileFrame
+ let dDATA = await DB.users.get(msg.author.id);
+  let frame = (dDATA.switches||{}).profileFrame
   function switchon(){
-    DB.users.set(msg.author.id,{$set:{'switches.profileFrame':true}}).then(x=>msg.react(':switchon:343511231434588161'));
+    DB.users.set(msg.author.id,{$set:{'switches.profileFrame':true}}).then(x=>  null)//msg.addReaction(':switchon:343511231434588161'));
   }
   function switchoff(){
-    DB.users.set(msg.author.id,{$set:{'switches.profileFrame':false}}).then(x=>msg.react(':switchoff:343511248085843968'));
+    DB.users.set(msg.author.id,{$set:{'switches.profileFrame':false}}).then(x=> null)// msg.addReaction(':switchoff:343511248085843968'));
   }
 
   if(ag && ag == "on"){
@@ -773,9 +774,9 @@ c.globalCompositeOperation='destination-atop';
 
 
     if(TARGET_DB.switches && (TARGET_DB.switches.profiled || TARGET_DB.switches.profileFrame)){
-
-      let tier = await gear.getTier(Target,msg.botUser,msg);
-      if(Target.id=='88120564400553984')tier='chalk'
+      let Premium = require(appRoot+"/core/utilities/Premium")
+      let tier = await Premium.getTier(Target);
+      //if(Target.id=='88120564400553984')tier='chalk'
       if(TARGET_DB.switches.profiled)tier='chalk'
 
       if(tier){

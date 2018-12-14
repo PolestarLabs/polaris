@@ -31,11 +31,11 @@ const MTH = /[\+\-\*\/\(\)]/g
 let rollEq = message.content.split(/\s+/).slice(1).join(" ");
 let primaEx = message.content.split(/\s+/).slice(1).join(" ");
 
-
+  
   //const userDATA = await gear.userDB.findOne({id:message.author.id});
   let variables = []//(userDATA.switches||{}).variables //.filter(va=> !isNaN(Number(va.value)));
-
-
+  
+  
     let counter = 0
   while(rollEq.includes("m!")){
     counter++
@@ -46,32 +46,32 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
     //message.reply("`"+rollEq+"`")
   })
   }
-
+  
   variables.forEach(vari=>{
     console.log({vari,rollEq})
     let regex = new RegExp("\\b"+vari.tag+"\\b","g");
     rollEq = rollEq.replace(regex,(vari.value+" "))
    // message.reply("`"+rollEq+"`")
   })
-
-
+  
+  
 let   NOSTREAK = false
 if(rollEq.includes("-nostreak")){
   rollEq=rollEq.replace(/-nostreak/g,"");
-  NOSTREAK = true
+  NOSTREAK = true 
 }
-
-let dicesRolled = rollEq.match(DICE_REGEX)
+  
+let dicesRolled = rollEq.match(DICE_REGEX)  
 const SINGLEROLL = (dicesRolled.length==1&&!rollEq.match(MTH));
 const SIMPLEROLL = (dicesRolled.length==1&&rollEq.match(MTH)!=null)
-
-
+      
+      
 if (dicesRolled.length>5) return message.reply("You can only roll 5 different dices at a once!");
 const  MAX_DISP = Math.floor(dicesRolled.length  / 25)||25;
-
+  
 let diceArray = []
 
-
+ 
    const streakLimit = "Dice streak can be shown for up to 25 rolls.",
     s_total =  $t('terms.total',P),
     s_overview = $t('terms.overview',P),
@@ -83,20 +83,20 @@ let notThisPls = $t("games.dice.exceedLim",P);
   for (i in dicesRolled){
     let diceAmount = Number(dicesRolled[i].split("d")[0]||1);
     let diceFaces  = Number(dicesRolled[i].split("d")[1]||1);
-
-    P.numDice = dicesRolled[i];
+    
+    P.numDice = dicesRolled[i];    
     let theyRolled =  $t("games.dice.userRolled",P),
-        neutralRolled =  $t("games.dice.neutralRolled",P)
-
+        neutralRolled =  $t("games.dice.neutralRolled",P) 
+    
     let dicetex = `${DICE_EMOTES[diceFaces]||DICE_EMOTES.any}  ${(SINGLEROLL||SIMPLEROLL)?theyRolled:neutralRolled}`
     let diceStreak = []
     let rollTotal = 0
-
+    
     for (j=0;j<diceAmount;j++){
       let rand = gear.randomize(1,diceFaces);
       rollTotal+= rand
       if(!NOSTREAK){
-
+        
       if(diceAmount<=MAX_DISP&&diceAmount>1){
         diceStreak.push(rand)
       }else if(diceAmount>MAX_DISP){
@@ -105,21 +105,21 @@ let notThisPls = $t("games.dice.exceedLim",P);
       }
 
     }
-
+    
       P.val = rollTotal;
       let andGot =  $t("games.dice.andGot",P) ;
-
-
-
-
+ 
+   
+    
+      
      let commentary= rollTotal==diceFaces*diceAmount?"⭐":(rollTotal==1||rollTotal==diceAmount)?"💀":"";
      let dicepost = andGot + commentary
-
+     
      diceArray.push({dicetex,dicepost,diceStreak,rollTotal});
-
+    
   }
 
-
+  
   let rollEq2 = rollEq.toLowerCase();
   let loop = 0
 
@@ -129,36 +129,36 @@ let notThisPls = $t("games.dice.exceedLim",P);
   }
   rollEq2=rollEq2.replace(/\s/g,"")
   rollEq2=rollEq2.replace(/(?=[^\+\-\*\/\(\)])(?=[^0-9])[^DICE]/g,"")
-
-
-
+  
+  
+  
  //message.reply("```js\n"+JSON.stringify({diceArray,rollEquation_RAW:rollEq,rollEquation:rollEq2,RESULT,SIMPLEROLL,SINGLEROLL},null,3)+"```")
-
-
+  
+  
   var RESULT = 0
-
+      
       try{
-     RESULT= eval(rollEq2);
+     RESULT= eval(rollEq2);        
       }catch(e){
         try{
-
-     RESULT= eval(rollEq2+"0");
+          
+     RESULT= eval(rollEq2+"0");        
         }catch(err){
           message.reply("Invalid Roll Equation -- Only the dice will be rolled!")
         }
       }
-
+  
   RESULT = Math.floor(RESULT);
   if(primaEx.includes("-up")) RESULT = Math.ceil(RESULT);
-
+  
   let totalTex = "**"+s_total+": "+RESULT+"**";
-
-
+  
+  
   let final_pre = (SIMPLEROLL||SINGLEROLL?"":theyRollsomedice+"\n")+diceArray.map(x=>x.dicetex).join("\n").replace(/ +/g," ")
-
+  
   let final = (SIMPLEROLL||SINGLEROLL?"":theyRollsomedice+"\n")+diceArray.map(x=>x.dicetex + x.dicepost + (x.diceStreak.length>0?"`"+x.diceStreak+"`":"")).join(" \n").replace(/ +/g," ")
-
-
+  
+  
   if (isNaN(Number(rollEq2[rollEq2.length-1]))&&!"()".includes(rollEq2[rollEq2.length-1])) rollEq2 = rollEq2.slice(0,-1);
 let overviewPre =  `
 
@@ -187,11 +187,11 @@ if((final+overview+5).length>2000){
           })
   }).catch(e=>message.reply(notThisPls))
 
+  
+  
 
-
-
-
-
+  
+  
   }
  module.exports = {
     pub:false,
@@ -200,4 +200,4 @@ if((final+overview+5).length>2000){
     init: init,
     cat: 'roleplay'
 };
-
+  

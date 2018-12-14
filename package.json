@@ -4,20 +4,25 @@
   "description": "Pollux on Eris",
   "main": "pollux.js",
   "scripts": {
-
+    "test": "poly.js"
   },
   "author": "Flicky",
   "license": "ISC",
   "dependencies": {
     "bufferutil": "^4.0.0",
     "canvas": "^2.0.0-alpha.12",
+    "canvas-text-wrapper": "^0.10.2",
+    "cheerio": "^1.0.0-rc.2",
+    "cron": "^1.5.1",
     "eris": "^0.9.0",
-    "eris-additions": "^1.2.5",
+    "eris-additions": "git+https://github.com/PolluxBot/eris-additions-plus.git",
     "erlpack": "github:abalabahaha/erlpack",
     "eventemitter3": "^3.1.0",
     "i18next": "^12.0.0",
     "i18next-node-fs-backend": "^2.1.0",
     "mongoose": "^5.3.12",
+    "pixel-util": "0.0.2",
+    "tunnel-ssh": "^4.1.4",
     "uws": "^99.0.0",
     "zlib-sync": "^0.1.4"
   },

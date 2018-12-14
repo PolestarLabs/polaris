@@ -1,8 +1,9 @@
 const gear = require("../utilities/Gearbox");
 const DB = require("../database/db_ops");
-const locale = require(appRoot+"/utils/i18node");
-const $t = locale.getT();
 const fs = require('fs')
+const locale = require(appRoot+'/utils/i18node');
+const _EVT = require("../archetypes/Events"); 
+
 
 function eventChecks(svDATA){
   if (!svDATA.event) return 1;
@@ -13,22 +14,23 @@ function eventChecks(svDATA){
   return I||1;
 };
 
-const EVENT = false
-const EVENTBOX = "event_s3"
-const EVENTICON = "solstice"
+const EVENT = _EVT.ongoing || false
+const EVENTBOX = _EVT.box_identification || "O"
+const EVENTICON = _EVT.box_picture || "chest"
 
 function convertToEvent(i,box) {
     box.id   = box.id.replace("O", EVENTBOX)
     box.text = box.text += "\n" + i.eventDrop
-    //box.pic  = EVENTICON+"_chest.png"
-    box.pic  = "chest.png"
+    box.pic  = EVENTICON+".png"
+    //box.pic  = "chest.png"
     return box;
-}
+};
 
 module.exports = {
   lootbox: async function loot(trigger) {
-
-
+const $t = locale.getT(); 
+    
+if(POLLUX.beta || POLLUX.restarting)return;
 
 if(trigger.content=="pick" &&  !trigger.channel.natural){
  return    DB.users.set(trigger.author.id,{$inc:{'modules.exp':-10}});
@@ -46,13 +48,13 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
     let prerf = serverDATA.modules.PREFIX || "+";
     const _DROPMIN   = 1
     const _DROPMAX   = 1000;
-    const _RAREMAX   = 129
+    const _RAREMAX   = 250
     const P = {
       lngs: trigger.lang,
       prefix:prerf
     }
 
-
+    
     const v = {
       dropLoot: $t("loot.lootDrop." + (gear.randomize(1, 5)), P) + $t("loot.lootPick", P).replace(prerf, ""),
       disputing: $t("loot.contesting", P),
@@ -77,6 +79,9 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       droprate = gear.randomize(_DROPMIN , _DROPMAX);
       if(droprate == 777) break;
     };
+    if(droprate !== 777 && !Server.large ){
+      droprate = gear.randomize(_DROPMIN , _DROPMAX);
+    }
 
     if (EVENT){
       let dropevent = gear.randomize(1, 5);

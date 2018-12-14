@@ -21,7 +21,7 @@ const init = async function (message) {
         break;
     }
 
-    let tuser = (await DB.userDB.findOne({id:log.from})).meta;
+    let tuser = log.from == "271394014358405121"? (await DB.users.findOne({id:log.to})).meta : (await DB.users.findOne({id:log.from})).meta;
     embed.author(tuser.tag,('https://www.pollux.fun/images/'+"rubine"+'.png'),"https://pollux.fun/profile/"+log.from)
   console.log(embed.author)
     embed.setColor(log.transaction=="+"?'#60c143':'#e23232')
@@ -29,13 +29,14 @@ const init = async function (message) {
   **Transaction Info:**`)
     embed.field("Amount",gear.miliarize(log.amt,true),true)
     embed.field("Type","`"+log.type+"`",true)
-    if(log.to!="271394014358405121") {
+    if(log.to!="271394014358405121" && log.from!="271394014358405121") {
       let ouser = (await DB.userDB.findOne({id:log.to})).meta;
       embed.field("Recipient",ouser.tag + " `"+log.to+"`",true);
     }
     if(log.type.includes('give')) embed.field(log.transaction=="+"?"FROM":"TO","**"+tuser.tag+"** `"+log.to+"`",true);
     //embed.setThumbnail('https://www.pollux.fun/images/'+curr+'.png')
-    embed.thumbnail(tuser.avatar)
+
+    embed.thumbnail(tuser.avatarURL||tuser.avatar)
     let ts = new Date(log.timestamp)
     embed.timestamp= ts
     embed.footer(log.transactionId)

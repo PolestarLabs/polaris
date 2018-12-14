@@ -32,6 +32,7 @@ const UserSchema = new mongoose.Schema({
   eventThing:Mixed,
 
   //MODULES
+  counters: Mixed,
   modules: {
       powerups:Mixed,
       lovepoints:Number,
@@ -145,6 +146,9 @@ UserSchema.methods.addItem = function receiveItem(itemId,amt=1){
 UserSchema.methods.removeItem = function destroyItem(itemId,amt=1){
   const items = require('./items.js');
   return items.consume(this.id,itemId,amt);
+}
+UserSchema.methods.addXP = function addXP(amt=1){
+  return this.update({},{ $inc: { 'modules.exp': amt } });
 }
 
 let MODEL = mongoose.model('UserDB', UserSchema, 'userdb');

@@ -1,0 +1,90 @@
+const gear = require("../utilities/Gearbox");
+const DB   = require("../database/db_ops");
+const moment = require("moment");
+const locale = require(appRoot+'/utils/i18node');
+const $t = locale.getT();
+
+class DailyCmd{
+    constructor(command, options) {
+        this.command = command;
+        this.day        = options.day || 7.2e+7;
+        this.expiration = options.expiration || null;
+        this.streak     = options.streak || false;   
+
+    }
+
+    async userData(user){
+        const USERDATA    = await DB.users.findOne({id:user.id});
+        const userDaily   = (USERDATA.counters||{})[this.command] || {last:1, streak: 1 };
+        return userDaily;
+    }
+
+    async dailyAvailable(user){
+        const now         = Date.now();
+        const userDaily   = await this.userData(user);
+        return now-userDaily.last >= this.day;
+    }
+
+    async keepStreak(user){
+        const now         = Date.now();
+        const userDaily   = await this.userData(user);        
+        return now-userDaily.last <= this.expiration;
+    }
+}
+exports.init = async function (message,cmd,opts,success,reject,info) {
+
+
+console.log(message.lang)
+  const P={lngs:message.lang}
+  let lang = message.lang[0]
+  moment.locale(lang);
+
+  const Daily = new DailyCmd(cmd,opts);
+  const v={
+      last: $t('daily.lastdly',P),
+      next: $t('daily.next',P),
+      streakcurr: $t('daily.streakcurr',P),
+      expirestr: $t('daily.expirestr',P),
+  }  
+
+  const Author = message.author
+  if(Author.dailing === true) return message.channel.send(`There's already a \`${Daily.command}\` request going on!`);
+
+  const DAY = Daily.day
+
+  const userDaily   = (await Daily.userData(Author)).last;
+  const dailyAvailable = await Daily.dailyAvailable(Author);
+
+  const embed = new gear.Embed;
+  embed.setColor("#d83668");
+  if(message.content.endsWith('info')){
+    if(info) return info (message,Daily);
+    let embe2=new gear.Embed;
+    embe2.setColor('#e35555')
+    embe2.description(`
+${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
+${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }
+  `)
+        return message.channel.send({embed:embe2});
+  }
+
+  if(!dailyAvailable && Author.id!="88120564400553984"/**/){
+    let remain = userDaily+DAY;
+    Daily.userDataStatic = userDaily;
+    return reject(message,Daily,remain);
+  };
+  
+  Author.dailing = true;
+  await gear.wait(1);
+  let now = Date.now();
+  DB.users.set(Author.id, {$set:{['counters.'+Daily.command+'.last']:now}});
+  if (Daily.streak && await Daily.keepStreak(Author)){
+      DB.users.set(Author.id, {$inc:{['counters.'+Daily.command+'.streak']:1}});
+    }else if (Daily.streak && !(await Daily.keepStreak(Author))){
+      DB.users.set(Author.id, {$set:{['counters.'+Daily.command+'.streak']:1}});
+   }
+  success(message,Daily);
+
+  Author.dailing = false;
+
+}

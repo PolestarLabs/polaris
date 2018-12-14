@@ -1,6 +1,11 @@
+const fs = require('fs');
+const path = require('path');
 const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
+
+Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
+Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
 
 module.exports = {
 
@@ -23,8 +28,8 @@ module.exports = {
 
   Embed: Eris.Embed,
   RichEmbed: this.Embed,
-  randomize: function randomize(min, max) {
-    let RAND = generator.random();
+  randomize: function randomize(min, max,seed=Date.now()) {
+    let RAND = generator.random(seed);
     return Math.floor(RAND * (max - min + 1) + min);
   },
 
@@ -100,5 +105,53 @@ module.exports = {
         }
         return array;
     },
+capitalize: function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+},
+count: function count(array,what){
+    let it=0; //go
+    array.forEach(i=> i===what?it++:false);
+    return it;
+},
 
+autoHelper: function autoHelper(trigger,options){
+    let message, P, M, key, cmd, opt;
+    if(options&&typeof options=='object'){
+      message = options.message || options.msg;
+      M=message.content;
+      P = {lngs:message.lang};
+      key = options.opt;
+      cmd=  options.cmd;
+      opt=  options.opt;
+    };
+
+    if (    trigger.includes(message.content.split(/ +/)[1])
+        ||  message.content.split(/ +/)[1]=="?"
+        ||  message.content.split(/ +/)[1]=="help"
+        || (message.content.split(/ +/).length==1&&trigger.includes('noargs'))
+        ||  trigger==='force'
+       ){
+      this.usage(cmd,message,opt);
+      return true;
+    }else{
+      return false;
+    }
+  },
+  usage: function usage(cmd, m, third) {
+    delete require.cache[require.resolve("../structures/UsageHelper.js")];
+    let usage = require("../structures/UsageHelper.js");
+    usage.run(cmd, m, third);
+  },
+  file: function(file,name){     
+      let finalFile = file instanceof Buffer ?  file :  fs.readFileSync(file);
+      let ts = Date.now();
+      if(typeof name === 'string') name = name;
+      else if(typeof file === 'string') path.basename(file)
+      else ts+".png";
+      let fileObject= {        
+        file:finalFile,
+        name
+      }
+      return fileObject;
+  }
 }

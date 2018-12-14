@@ -5,7 +5,11 @@ const Pixly = require('pixel-util');
 
 module.exports={
 
-
+  new:function newPicto(w=800,h=600){
+    const canvas = new Canvas.createCanvas(w, h);
+    return canvas;
+  },
+  
   getCanvas: async function getCanvas(path) {
     let img = await new Canvas.Image;
     img.src = await Pixly.createBuffer(path);
@@ -58,8 +62,53 @@ module.exports={
        wrap(item, text, options);
        return {item: item,height: H,width: W}; // <-- i think H and W are redundant, need to check later
 
+   },
+   avgColor: async function avgColor(link){
+
+      let blockSize = 5, 
+          defaultRGB = {r:0,g:0,b:0};
+          imgEl = await this.getCanvas(link);
+          canvas = new Canvas.createCanvas(imgEl.width,imgEl.height);
+      let context = canvas.getContext('2d'),
+          data, width, height,
+          i = -4,
+          length,
+          rgb= {r:0,g:0,b:0},
+          count = 0;
+  
+      if (!context) {
+          return defaultRGB;
+      }
+  
+      height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
+      width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
+  
+      context.drawImage(imgEl, 0, 0);
+  
+      try {
+
+          data = context.getImageData(0, 0, width, height);
+      } catch(e) {
+          return defaultRGB;
+      }
+  
+      length = data.data.length;
+  
+      while ( (i += blockSize * 4) < length ) {
+          ++count;
+          rgb.r += data.data[i];
+          rgb.g += data.data[i+1];
+          rgb.b += data.data[i+2];
+      }
+  
+      // ~~ used to floor values
+      rgb.r = ~~(rgb.r/count);
+      rgb.g = ~~(rgb.g/count);
+      rgb.b = ~~(rgb.b/count);
+      
+      return "#" +
+  ("0" + parseInt(rgb.r,10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb.g,10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb.b,10).toString(16)).slice(-2);
    }
-
-
-
 }

@@ -1,5 +1,14 @@
+// STARTUP FLAIR
+  process.stdout.write('\033c');
+  console.log(require('./asciiPollux.js').ascii());
+//===========================================
+
+
+ 
+
 const path = require('path');
 global.appRoot = path.resolve(__dirname);
+global.GNums = require('./GlobalNumbers.js');
 global.Promise = require('bluebird');
 require('./utils/paths').run();
 
@@ -10,6 +19,10 @@ const pGear = require("./core/structures/PrimitiveGearbox.js");
 
 //Eris Mods-----//
 require('./core/structures/ReactionCollector.js')(ERIS);
+Eris.Guild.prototype.member = function (user){
+  user = user.id || user;
+  return this.members.find(usr=>usr.id===user.id || usr.id === user);
+}
 Eris.Embed.prototype.setColor = function(color){
    this.color = parseInt(color.replace(/^#/, ''), 16);
    return this;
@@ -44,14 +57,17 @@ const POLLUX = new Eris(cfg.token,{
 
 global.POLLUX= POLLUX;
 
+POLLUX.beta = true
+POLLUX.maintenance = false
+
 //DATABASE INITIALIZING
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const tunnel = require('tunnel-ssh');
- console.log("Connecting to Database...");
+ console.log("• ".blue,"Connecting to Database...");
 const server = tunnel(cfg.tunnel,  (err, server)=> {
-    if(err)console.error("SSH tunnel  error: " + err);
+    if(err)console.error("• ".red,"SSH tunnel  error: " + err);
 
 mongoose.connect(cfg.dbURL, {
   useNewUrlParser: true,
@@ -61,15 +77,15 @@ mongoose.connect(cfg.dbURL, {
   connectTimeoutMS: 30000,
 
 }, (err) => {
-    if (err) return console.error(err,'Failed to connect to Database!');
+    if (err) return console.error(err,"• ".red+'Failed to connect to Database!');
 });
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
     const db = mongoose.connection;
-    db.on('error', console.error.bind(console, 'DB connection error:'.red));
+    db.on('error', console.error.bind(console, "• ".red+'DB connection error:'.red));
     db.once('open', function() {
-        console.log("DB connection successful".green);
+        console.log("• ".green,"DB connection successful");
     });
 });
 
@@ -106,8 +122,9 @@ pGear.getDirs('./locales/').then(list => {
             }
     }, (err, t) => {
         if (err) {
-            console.warn("[!] Failed to Load Translations".yellow)
+            console.warn("• ".yellow,"Failed to Load Translations", err)
         }
+
         multilang.setT(t);
     });
 });
@@ -121,10 +138,8 @@ pGear.getDirs('./locales/').then(list => {
 
 
 
-
-
 POLLUX.on("ready", async (msg) => {
-  console.log(" READY ".bold.bgGreen);
+  console.log(" READY ".bold.bgCyan);
   if (POLLUX.shard) {
     POLLUX.user.setStatus('online');
     console.log(("● ".green)+'Shard' + (1 + POLLUX.shard.id) + '/' + POLLUX.shard.count + " [ONLINE]")
@@ -145,7 +160,7 @@ fs.readdir("./eventHandlers/", (err, files) => {
 
 
 function postConnect(x){
-  console.log("Discord Client Connected".green)
+  console.log("Discord Client Connected".cyan)
 }
 
 POLLUX.on("shardReady", shard=>console.log("•".green,"Shard",(shard+"").magenta,"is Ready -"))

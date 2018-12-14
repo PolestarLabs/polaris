@@ -187,7 +187,7 @@ async function commandRun(command, message, final_payload) {
 
    //Set Command-Usable Params
    message.args = message.content.substr(message.prefix.length).split(/ +/).slice(1);
-   message.lang = (final_payload.chanData||{}).LANGUAGE || ((final_payload.svData||{}).modules||{}).LANGUAGE;
+   message.lang = [(final_payload.chanData||{}).LANGUAGE || ((final_payload.svData||{}).modules||{}).LANGUAGE || 'en', 'dev'];
    message.obtainTarget= arg => {
       let fromMentionOrID = POLLUX.users.find(u=>u.id==arg.replace(/[^0-9]/g,''));
       if(fromMentionOrID) return fromMentionOrID;

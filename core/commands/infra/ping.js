@@ -6,8 +6,7 @@ const init = async msg => {
   embed.setColor("#36393f")
   embed.description('🏓')
 
-  const fs = require('fs');
-
+  const fs = require('fs'); 
   fs.readdir(appRoot + "/../v7/resources/imgres/build/frenes/pong/", function (err, files) {
     let {randomize} = require ('../../utilities/Gearbox.js')
     let rand = randomize(0, files.length - 1);

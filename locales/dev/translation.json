@@ -1,4 +1,4 @@
-{
+{ 
     "$": {
         "insuFloor": "You do not have enough Rubines. You need at least **{{number}}** {{emoji}}",
         "insuBet": "Bet at least {{number}}",

@@ -1,12 +1,12 @@
 const DB = require('../database/db_ops');
 module.exports = {
 
-  updateMeta: async function (msg,command){
+  updateMeta: async function (msg,command){      
     await DB.userDB.updateMeta(msg.author);
     await DB.serverDB.updateMeta(msg.guild);
     return null;
   },
-
+  
   commLog: async function (message,command){
      let commandname = message.content.substr(message.prefix.length).split(/ +/)[0];
 
@@ -18,16 +18,16 @@ module.exports = {
 
   },
   administrateExp: async function (usID,command){
-
+    
     let EXP = command.exp || 1;
     return DB.users.set(usID,{$inc:{'modules.exp':EXP}});
 
   },
 
   saveStatistics: async function (message,command){
-
+   
       //STATISTICS COLLECTION
-
+     
     Promise.all([
       DB.globalDB.set({
         $inc: {
@@ -49,7 +49,7 @@ module.exports = {
               ['modules.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
         }
       })]);
-
-
+      
+  
   }
 }

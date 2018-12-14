@@ -18,7 +18,7 @@
         "pick": "Pick up any goodies in the channel",
         "prefixSet": "Define a new prefix for my commands.",
         "profile": "Shows your or @someguy's ProfileCard",
-        "rank": "**SERVER** Ranking by EXP",
+        "rank": "**SERVER** Ranking by EXP", 
         "cash": "Your current funds",
         "stats": "Robot-ish boring random info",
         "switch": "Changes my Display Picture",

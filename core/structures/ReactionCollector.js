@@ -10,13 +10,12 @@ class ReactionCollector extends EventEmitter {
 		this.bot = message.channel.guild ? message.channel.guild.shard.client : message.channel._client;
 		this.listener = (message,emoji,userID) => this.verify(message,emoji,userID);
 		this.bot.on("messageReactionAdd", this.listener);
-		if(options.time) setTimeout(() => this.stop("time"), options.time);
+		if(this.options.time) setTimeout(()=>this.stop("time"), this.options.time);
 	}
 
 	verify(message,emoji,userID) {
-
-        if(this.options.authorOnly !== false){
-          if(message.author.id !== userID) return false;
+        if(this.options.authorOnly){
+			if(this.options.authorOnly !== userID) return false;
         }
 
         let reaction = {
@@ -44,6 +43,9 @@ class ReactionCollector extends EventEmitter {
 module.exports = Eris => {
 	Eris.Message.prototype.awaitReactions = function(filter, options) {
 		const collector = new ReactionCollector(this, filter, options);
-		return new Promise(resolve => collector.on("end", resolve));
+		return new Promise((resolve,reject) => collector.on("end", (col,reas)=>{
+			if(reas == "time" && col.length == 0) reject("timeOut");
+			else resolve(col);
+		}) );
 	};
 };

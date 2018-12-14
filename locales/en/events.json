@@ -23,7 +23,7 @@
       "cooldown": "The neighborhood is still startled from your last spook... wait {{Xhours}} before showing up again!",
       "cooldown_alt": "The neighbourhood is still startled from your last spook... wait {{Xhours}} before showing up again, or buy a **decoy doll** from the **Gravekeeper**!"
     },
-    "dig": {
+    "dig": { 
       "shovel": "Shovel",
       "needShovel": "You need a {{SHOVEL_LINK}} to dig! Go find one!",
       "shovelbroke": "You hit a rock so hard with your Shovel that it breaks into pieces...",

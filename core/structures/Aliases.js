@@ -337,7 +337,6 @@ for (let i = 0; i < files.length; i++) {
     for (let k in aliases){
       ALIASES[aliases[k]] = module_commands[j].split('.')[0];
     }
-    console.log(ALIASES)
   }
 
 }

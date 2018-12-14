@@ -19,14 +19,14 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
    if(code.includes('process.')      && msg.author.id !== "88120564400553984") return;
 
   if (!code) return;
-
+  
   if(code== 'process.exit()'){
     let output ="<:maybe:476214608592633866>"+invisibar+ `\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
     let embed = new Embed({description:output});
     msg.channel.createMessage({embed});
     process.exit(1);
   }
-
+  
   try {
     let evaled = eval(code);
     if (evaled instanceof Promise) evaled = await evaled;

@@ -10,8 +10,8 @@ const collectibles = new Schema({
   rarity: String,
   icon: String,
   emoji: String,
-  attribs: Mixed
-
+  attribs: Mixed  
+  
 })
 
 let MODEL = mongoose.model('collectibles', collectibles, 'collectibles');

@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema 
 const Mixed = Schema.Types.Mixed;
 const utils = require('../../structures/PrimitiveGearbox.js');
 
@@ -11,7 +11,7 @@ const Audit = new Schema({
   transaction: String,
   amt: Number,
   timestamp: Number,
-  transactionId: String
+  transactionId: String 
 });
 
 const Buyable = new Schema({
@@ -45,14 +45,14 @@ const FanartModel = new Schema({
 
   const audit     = mongoose.model('Audit', Audit, 'transactions');
       audit.set     =  utils.dbSetter;
-      audit.get     =  utils.dbGetter;
+      audit.get     =  utils.dbGetter; 
       audit.new = payload => {
           let aud = new audit(payload);
           aud.save((err) => {
             if (err) return console.error(err);
             console.log("[NEW AUDIT]".blue,payload);
           });
-       }
+       }    
 
   const global    = mongoose.model('Global', Globals, 'globals');
       global.set  = function(alter){
@@ -69,9 +69,9 @@ const FanartModel = new Schema({
 
   const fanart    = mongoose.model('fanart', FanartModel, 'fanart');
       fanart.set    =  utils.dbSetter;
-      fanart.get    =  utils.dbGetter;
+      fanart.get    =  utils.dbGetter; 
   const buyables  = mongoose.model('buyables', Buyable, 'buyables');
       buyables.set  =  utils.dbSetter;
-      buyables.get  =  utils.dbGetter;
+      buyables.get  =  utils.dbGetter; 
 
 module.exports={ audit,global,fanart,buyables };
