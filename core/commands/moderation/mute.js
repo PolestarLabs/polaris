@@ -6,17 +6,17 @@ const $t = locale.getT();
 const cmd = 'mute';
 
 const init = async function (message) {
-    console.log(11)
     const Server = message.guild;
     const Author = message.author;
     const Member = Server.member(Author);
-    let Target = await gear.getTarget(message, 0, false);
+    let Target = gear.getTarget(message, 0, false);
     const bot = message.botUser
 
     const P = {lngs: message.lang};
 
     if (gear.autoHelper([$t("helpkey", P), 'noargs', ''], {cmd,message,opt: this.cat})) return;
     if (message.args.length < 1) return gear.autoHelper('force', {cmd,message,opt: this.cat});
+    if ( !isNaN(message.args[0])  && message.args[0].length < 10) return gear.autoHelper('force', {cmd,message,opt: this.cat});
 
     let ServerDATA = await DB.servers.get(Server.id);
 
@@ -29,11 +29,20 @@ const init = async function (message) {
         
         //-------MAGIC----------------
         
-        Target = Server.member(Target)
+        Target = Server.member(await Target);
+
+        if(!Target){
+            return message.channel.send($t('responses.errors.kin404',P));
+        }
+        if(!Target.kickable){
+            return message.channel.send($t('responses.errors.unmutable',P));
+        }
+
         let regex = /([0-9]*)[\s+]?([m|h|d|w|y]?)/
         let timing = message.args[1]
-        let number = timing.match(regex)[0];
-        let unit = timing.match(regex)[1];
+        
+        let number = !timing? 0 :timing.match(regex)[0];
+        let unit = !timing? 0 :timing.match(regex)[1];
         let mult
         switch (unit) {
             case 'y':
@@ -58,10 +67,10 @@ const init = async function (message) {
             if (message.args[2] != undefined && !isNaN(message.args[2]) && Number(message.args[2]) != 0) {
                 
                 var time = Number(message.args[2])
-            var timeTx = message.args[2] + " minutes."
+            var timeTx = message.args[2] + (message.args[2]==1?" minute.":" minutes.");
         } else {
-            var time = undefined
-            var timeTx = "Undetermined Time"
+            var time = 24*60
+            var timeTx = "undetermined time."
         }
         
         let MUTED = "MUTED"
@@ -85,39 +94,36 @@ const init = async function (message) {
                 },"No Mute Role found, creating new one!")
                 .then(async role => {
                     message.channel.send(`No Mute Role Setup, Creating **POLLUX-MUTE**...`);
-                    await DB.servers.set(Server.id, {$set: {'modules.MUTEROLE': role.id}});
-                    
-                    commitMute(role.id)
-                    setupMute(role)
-                    
+                    DB.servers.set(Server.id, {$set: {'modules.MUTEROLE': role.id}});                    
+                    setupMute(role)                    
+                    commitMute(role.id,true)
                 }).catch(console.error)
                 
                 
             } else if (Server.roles.find(x => x.name === "POLLUX-MUTE" )) {
-                console.log(1)
-            let r = Server.roles.find(x => x.name === "POLLUX-MUTE"  )
-            
-            commitMute(r)
-            setupMute(r)
+                let r = Server.roles.find(x => x.name === "POLLUX-MUTE"  )
+                
+                setupMute(r)
+                commitMute(r)
+                
+            } else if (Server.roles.find(x=>x.id==muteRole)) {
+                let r = Server.roles.find(x=>x.id==muteRole);
+                setupMute(r)
+                commitMute(muteRole)
+                
+            }
 
-        } else if (Server.roles.find(x=>x.id==muteRole)) {
-            commitMute(muteRole)
-            let r = Server.roles.find(x=>x.id==muteRole);
-            setupMute(r)
-
-        }
-
-        function setupMute(role){
+            async function setupMute(role){
             Target.addRole(role.id,"MUTED BY "+message.author.tag+`  (${message.author.id})`);
             makeitMute(Target, role, time)
             roleout(time, role)
             logThis(time, timeTx)
-            return message.channel.send(`**${Target.nick||Target.username}** was MUTED for ${timeTx}`)
+            return message.channel.send(`**${(Target.user||Target).tag}** was MUTED for ${timeTx}`)
         }
-        function roleout(tm, role) {
+        async function roleout(tm, role) {
             if (tm == undefined) return false;
             return setTimeout(f => {
-                Target.removeRole(role.id);
+                Target.removeRole(role.id,"Mute Expired");
                 DB.mutes.expire( {S:Target.guild.id,U:Target.id} );
             }, tm * 60000)
         }
@@ -191,21 +197,35 @@ const init = async function (message) {
             let now = Date.now();
             let time = minutes * 60000;
             let freedom = now + time;
-            await DB.mutes.add( {S:Mem.guild.id,U:Mem.id,E:freedom} );
+            DB.mutes.add( {S:Mem.guild.id,U:Mem.id,E:freedom} );
         };
 
 
-        function commitMute(role) {  
-            Server.channels.forEach(chn => {
-                console.log(chn.id)
-                chn.editPermission(
-                    role.id,
-                    0,
-                    2048,
-                    "role",
-                    'UPDATING MUTE OVERRIDES'
-                ).then(x=>console.log(x)).catch(console.error)
-            })
+        async function commitMute(role, first=false) {  
+            let totChans = Server.channels.filter(c=>c.type="text")
+            let erroredChans = 0;
+            let promiseBucket =[];
+            chanLen = totChans.length
+            new Promise(async resolve=>{
+
+                while (chanLen--) {
+                    let chn = Server.channels.map(c=>c)[chanLen];
+                    promiseBucket.push(
+                        chn.editPermission(
+                            role.id,
+                            0,
+                            2048,
+                            "role",
+                            'UPDATING MUTE OVERRIDES'
+                            ).then().catch(err=>erroredChans++)
+                            )
+                }
+                if( first === true ){
+                    Promise.all(promiseBucket).then(x=>{
+                        message.channel.send("`Could not edit Mute overrides in "+erroredChans+" Channels 💔`")
+                    });
+                };
+            });
         };
         
 
