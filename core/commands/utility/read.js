@@ -52,7 +52,7 @@ async function vere(base64,message,cmdPiece){
         embed.setColor("#6167b8")
         embed.description("*React with a flag to translate it.*  ```"+detections+"```")
         L = TranslateBlob.flagFromLang(lang)
-        embed.field("Prominent Language",L.flag+" "+L.name)
+        embed.field("Detected Language",L.flag+" "+L.name)
         message.channel.send({embed}).then(async mes=>{
 
             let reas = await mes.awaitReactions({maxMatches:1,time:30000});
@@ -61,7 +61,7 @@ async function vere(base64,message,cmdPiece){
             let LF = TranslateBlob.LANGFLAGS
             let rLang = Object.keys(LF).find(x=>LF[x]==Rea.emoji.name)
             let translated = await TranslateBlob.translate(detections,lang,rLang,true);
-            embed.description = "```"+translated+"```(translated)"
+            embed.description = "```"+translated+"```(translated to "+TranslateBlob.LANGNAMES[rLang]+")"
             mes.edit({embed});
         })
         

@@ -74,9 +74,16 @@ if(
   if (_servData.globalPrefix!==false){
     if(msg.content.startsWith("p2!")) msg.prefix = "p!2";
   };
-  if(msg.content.startsWith("plx2!")) msg.prefix = "plx2!";
+  if(msg.content.startsWith("plx!")) msg.prefix = "plx2!";
   if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
-    
+  
+  // ALPHA
+  if(POLLUX.user.id == "354285599588483082"){
+    if(msg.content.startsWith("=")) msg.prefix = "=";
+    else if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
+    else return;
+  }
+  
   if (msg.prefix) {
     if ((await _userData).blacklisted && _userData.blacklisted!=="") {
       msg.addReaction(":BLACKLISTED_USER:406192511070240780");

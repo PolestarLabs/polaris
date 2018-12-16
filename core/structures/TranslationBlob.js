@@ -105,6 +105,7 @@ const translate = require('google-translate-api');
 const DB = require("../database/db_ops");
 
 module.exports = {
+    LANGNAMES : translate.languages,
     LANGFLAGS,
     flagFromLang: function(locale){
         loc = locale.split("-")[0].toLowerCase();

@@ -20,6 +20,7 @@ const pGear = require("./core/structures/PrimitiveGearbox.js");
 //Eris Mods-----//
 require('./core/structures/ReactionCollector.js')(ERIS);
 Eris.Guild.prototype.member = function (user){
+  if(!user) return null;
   user = user.id || user;
   return this.members.find(usr=>usr.id===user.id || usr.id === user);
 }
@@ -40,10 +41,10 @@ const colors = require('colors');
 const POLLUX = new Eris(cfg.token,{
 
 
-  maxShards:3,
+  maxShards:1,
 
   firstShardID:0,
-  lastShardID:2,
+  lastShardID:0,
   defaultImageSize:512,
 
   defaultImageFormat:'png',
@@ -66,19 +67,22 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const tunnel = require('tunnel-ssh');
  console.log("• ".blue,"Connecting to Database...");
-const server = tunnel(cfg.tunnel,  (err, server)=> {
-    if(err)console.error("• ".red,"SSH tunnel  error: " + err);
 
+
+   tunnel(cfg.tunnel,  (err, server)=> {
+     if(err)console.error("• ".red,"SSH tunnel  error: " + err);
+     
 mongoose.connect(cfg.dbURL, {
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE,
   reconnectInterval: 1000,
   keepAlive: 1,
   connectTimeoutMS: 30000,
-
+  
 }, (err) => {
     if (err) return console.error(err,"• ".red+'Failed to connect to Database!');
-});
+  });
+
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
 
@@ -89,6 +93,7 @@ mongoose.set('useCreateIndex', true);
     });
 });
 
+  
 Promise.promisifyAll(require("mongoose"));
 
 //---
@@ -176,3 +181,16 @@ POLLUX.on("shardDisconnect", (err,shard)=>{
 
 
 POLLUX.connect().then(x=>postConnect(x));
+
+
+
+process.on("uncaughtException", err=>{
+  console.error(" UNCAUGHT EXCEPTION ".bgRed)
+  console.error(err)
+})
+
+
+process.on("unhandledRejection", err=>{
+  console.error(" UNHANDLED REJECTION ".bgYellow)
+  console.error(err)
+})

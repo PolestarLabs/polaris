@@ -126,7 +126,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
   let gchange = gear.gamechange();
   //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
-  bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
+  //bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
     
 
 
@@ -147,7 +147,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
         let logUSER = bot.users.find(x=> x.id  === mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
-        logMEMBER.removeRole(svData.modules.MUTEROLE);
+        logMEMBER.removeRole(svData.modules.MUTEROLE).catch(err=>"Die Silently");
         
         if (svData.dDATA || svData.logging) {
           return;
