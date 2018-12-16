@@ -175,7 +175,7 @@ autoHelper: function autoHelper(trigger,options){
     if(nopool)return false;
 
     const messpool = sevmesgs.filter(mes => {
-        if (mes.attachments && mes.attachment.length>0) {
+        if (mes.attachments && mes.attachments.length>0) {
           if (mes.attachments[0].url) {
             return true
           }
