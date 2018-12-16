@@ -206,5 +206,13 @@ autoHelper: function autoHelper(trigger,options){
 
    return false;
 
-  }
+  },
+    gamechange: function gamechange(gamein = false,status="online") {  
+                delete require.cache[require.resolve(`../../resources/lists/playing.js`)];
+                let gamelist = require("../../resources/lists/playing.js");
+                let max = gamelist.games.length-1
+                let rand = this.randomize(0, max)
+                let gm = gamein ? gamein : gamelist.games[rand];
+                return POLLUX.editStatus(status,{name:gm[0], type:gm[1] })
+    },
 }
