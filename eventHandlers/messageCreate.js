@@ -75,7 +75,7 @@ if(
   if (_servData.globalPrefix!==false){
     if(msg.content.startsWith("p2!")) msg.prefix = "p!2";
   };
-  if(msg.content.startsWith("plx!")) msg.prefix = "plx2!";
+  if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
   if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
   
   // ALPHA
