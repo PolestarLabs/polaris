@@ -8,19 +8,22 @@ exports.run = function(cat,msg,perms){
   }
     
   if(perms&&typeof perms == "object"){
-        if (!msg.channel.permissionsOf(POLLUX.user.id).has(perms)){
-          try{ 
-            
-      msg.addReaction(":nope:339398829088571402")
+    for(i in perms){
+      if (!msg.channel.permissionsOf(POLLUX.user.id).has(perms[i])){
+        try{ 
+          
+          msg.addReaction(":nope:339398829088571402")
       msg.channel.send($t('error.iNeedThesePerms',{lngs:msg.lang,})+`
 ${"• "+perms.join('\n• ')}
 `)
           }catch(e){
             
           }
-      return "error";
+          return "error1";
+          break;
+        }
+      }
     }
-  }
   
   
   if(['img','social','cosmetics'].includes(cat)){    
@@ -29,7 +32,7 @@ ${"• "+perms.join('\n• ')}
       msg.channel.send($t('error.iNeedThesePerms',{lngs:msg.lang,})+`
 • \`ATTACH_FILES\`
 `)
-      return "error";
+      return "error2";
     }
   }
   return "ok"
