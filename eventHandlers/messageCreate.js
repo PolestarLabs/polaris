@@ -28,6 +28,7 @@ exports.run = async function (msg) {
   
 
 if(
+  POLLUX.user.id=="354285599588483082"&&
   msg.author.id !== "88120564400553984" &&
   msg.author.id !== "163200584189476865"
   )return;
