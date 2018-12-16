@@ -186,6 +186,6 @@ let myDaily = await Premium.getDaily(Author) || 125;
 module.exports = {
     cmd:"daily",
     init,
-    cat: '$'
+    cat: 'cash'
   }
   

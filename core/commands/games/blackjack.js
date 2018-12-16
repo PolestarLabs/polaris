@@ -475,7 +475,7 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
            await ECO.receive(msg.author.id,berkelium,"gambling_blackjack","RBN");
         }
       if (berkelium < 0) {
-          await ECO.pay(msg.author.id,berkelium,"gambling_blackjack","RBN");
+          await ECO.pay(msg.author.id,Math.abs(berkelium),"gambling_blackjack","RBN");
       }
       
     }

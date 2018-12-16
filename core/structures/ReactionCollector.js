@@ -14,6 +14,7 @@ class ReactionCollector extends EventEmitter {
 	}
 
 	verify(message,emoji,userID) {
+		if (message.id != this.message.id)return;
         if(this.options.authorOnly){
 			if(this.options.authorOnly !== userID) return false;
         }

@@ -220,6 +220,7 @@ async function commandRun(command, message, final_payload) {
       command.init(message)
     ]);
 
+
   message       = null;
   final_payload = null;
   command       = null;
