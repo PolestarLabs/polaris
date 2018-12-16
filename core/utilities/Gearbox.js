@@ -31,8 +31,9 @@ module.exports = {
             mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
         );
 
-      if (!user) user = msg.author;
+      if (!user && self == true) user = msg.author;
     }
+    if(!user) return null;
     return user.user || user;
   },
 
@@ -191,5 +192,19 @@ autoHelper: function autoHelper(trigger,options){
         messpool[messpool.length-1].embeds[0]
         ).url;
     else return false;
+  },
+  modPass: function modPass(member,extra,sData=false){
+    if(sData){
+        if(sData.modules.MODROLE){
+            if(member.hasRole(Data.modules.MODROLE)) return true;
+        }
+    };
+    if(member.permission.has('manageGuild')||member.permission.has('administrator')){
+        return true;
+    }
+   if(member.permission.has(extra)) return true;
+
+   return false;
+
   }
 }
