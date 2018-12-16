@@ -11,19 +11,29 @@ module.exports = {
 
   reload: function(){delete require.cache[require.resolve('./Gearbox')]},
   emoji: function emoji(query){
-    return "-"
+    return "🈲"
   },
   getTarget: function getTarget(msg,argPos=0,self=true){
     if(!msg.args[0]) return msg.author;
     let ID = msg.args[argPos].replace(/[^0-9]/g,'');
     let user = POLLUX.users.find(usr=> usr.id === ID )
     if(!user){
-      user = msg.guild.members.find(mbr=>
-                  mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
-                            );
+        user = msg.guild.members.find(mbr=>
+            mbr.username.toLowerCase() == msg.args[argPos].toLowerCase()
+        )||
+        msg.guild.members.find(mbr=>
+            (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
+        )||
+        msg.guild.members.find(mbr=>
+            mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
+        )||
+        msg.guild.members.find(mbr=>
+            mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
+        );
+
       if (!user) user = msg.author;
     }
-    return user;
+    return user.user || user;
   },
 
   Embed: Eris.Embed,
@@ -58,7 +68,8 @@ module.exports = {
         let stashe = numstring.replace(/\B(?=(\d{3})+(?!\d))/g, char).toString();
         // Gibe precision pls
         if(strict){
-            let stash = stashe.split(char)
+            let stash = stashe
+            return stash;
         switch(stash.length){
             case 1:
                 return stash+numstringExtra;
@@ -142,7 +153,7 @@ autoHelper: function autoHelper(trigger,options){
     let usage = require("../structures/UsageHelper.js");
     usage.run(cmd, m, third);
   },
-  file: function(file,name){     
+  file: function(file,name){
       let finalFile = file instanceof Buffer ?  file :  fs.readFileSync(file);
       let ts = Date.now();
       if(typeof name === 'string') name = name;
@@ -153,5 +164,27 @@ autoHelper: function autoHelper(trigger,options){
         name
       }
       return fileObject;
+  },
+  //Get IMG from Channel MSGs
+  getChannelImg: async function getChannelImg(message,nopool) {
+    if((message.args[0]||"").startsWith("http")) return message.args[0];
+    if (message.attachments[0]) return message.attachments[0].url;
+    let sevmesgs = message.channel.messages;
+
+    if(nopool)return false;
+
+    const messpool = sevmesgs.filter(mes => {
+      try {
+        if (mes.attachments) {
+          if (mes.attachments[0].url) {
+            return true
+          }
+        }
+      } catch (e) {
+        return false
+      }
+    });
+    if ((messpool||[]).length>0) return messpool[messpool.length-1].attachments[0].url;
+    else return false;
   }
 }
