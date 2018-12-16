@@ -45,7 +45,7 @@ module.exports = Eris => {
 	Eris.Message.prototype.awaitReactions = function(filter, options) {
 		const collector = new ReactionCollector(this, filter, options);
 		return new Promise((resolve,reject) => collector.on("end", (col,reas)=>{
-			if(reas == "time" && col.length == 0) reject("timeOut");
+			if(reas == "time" && col.length == 0) reject("timeOut--");
 			else resolve(col);
 		}) );
 	};
