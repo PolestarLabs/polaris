@@ -89,74 +89,97 @@ Received **${newAmt}** **RBN**(*Pollux Rubines*) converted from **${src}**(*${co
 
 exports.run = async function(bot){
   
-  console.log("crons")
+  console.log("• ".blue,"Loading CRON subroutines...");
 
 const MIDNIGHT   = new CronJob('0 0 * * *', ()=> {
-  // EVERY MIDNIGHT
- let client = bot; 
-    client.shard.fetchClientValues('guilds.size')
-.then(results => {
-  var totalServers = results.reduce((prev, val) => prev + val, 0);
+  //======================================================================================
+  /* EVERY MIDNIGHT */
+  //======================================================================================
 
-});
-     userDB.updateMany(
+  userDB.updateMany(
      {'limits.slots':{$gt:10}},
      {$set:{'limits.slots':0}}
    ).then(x=>console.log("Daily Limit Reset for Slots "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.blackjack':{$gt:10}},
      {$set:{'limits.blackjack':0}}
    ).then(x=>console.log("Daily Limit Reset for Blackjack "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.receive':{$gt:2}},
      {$set:{'limits.receive':0}}
    ).then(x=>console.log("Daily Limit Reset for Receive "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.give':{$gt:2}},
      {$set:{'limits.give':0}}
    ).then(x=>console.log("Daily Limit Reset for Give "));   
+
   
 },null,true);
             
 const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
-  
+  //======================================================================================
+  /* EVERY 5 MINUTES */
+  //======================================================================================
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".servers"]:bot.guilds.size}}).then(x=>x=null);
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".users"]:bot.users.size}}).then(x=>x=null);
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".channels"]:bot.channels.size}}).then(x=>x=null);
-  
-  // EVERY 5
-  
-  //let gchange = gear.gamechange();
+
+  let gchange = gear.gamechange();
   //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
+  bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
     
-  // bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
 
 
   
 },null,true);
+const ONEminute = new CronJob('*/1 * * * *', async () => {
+  //======================================================================================
+  /* EVERY 1 MINUTE */
+  //======================================================================================
 
-const ONEminute  = new CronJob('*/1 * * * *', async ()=> {
-//======================================================================================
-        /* EVERY 1 MINUTE */
-//======================================================================================
-
-    /* Exchange Currency */ //================================
+  /* Manage Mutes */ //================================
+  DB.mutes.find({expires: {$lte: Date.now()} })
+  .then(mutes => {
+    mutes.forEach(mtu=>{
+      DB.servers.get(mtu.server.id).then(svData=>{
         DB.mutes.expire(Date.now()).then(console.log);
+        let logSERVER = POLLUX.guilds.get(mtu.server);
+        let logUSER = bot.users.find(x=> x.id  === mtu.user);
+        if(!logSERVER||!logUSER) return;
+        let logMEMBER = logSERVER.member(logUSER);
+        logMEMBER.removeRole(svData.modules.MUTEROLE);
         
-    /* Exchange Currency */ //================================
+        if (svData.dDATA || svData.logging) {
+          return;
+          //delete require.cache[require.resolve('./modules/dev/logs_infra.js')]
+          let log = require('./modules/dev/logs_infra.js');
+          log.init({
+            bot,
+            server: logSERVER,
+            member: logMEMBER,
+            user: logUSER,
+            logtype: "usrUnmute"
+          });
+        }      
+      })
+    })
+  });
 
+
+  /* Exchange Currency */ //================================
   discoin.fetch().then(async trades => {
     trades = JSON.parse(trades)
     if (!trades.length || trades.length === 0) return;
-    await gear.wait(Number(process.env.SHARD)*2);
-    Promise.all(trades.map(td=>resolveExchange(td,bot)));
+    await gear.wait(Number(process.env.SHARD) * 2);
+    Promise.all(trades.map(td => resolveExchange(td, bot)));
   });
-  
-},null,true);
-  
+
+  //---CRON END----///-----////------/////
+}, null, true);
+
 MIDNIGHT.start();
 FIVEminute.start();
 ONEminute.start();
-  
-  
+console.log("• ".green,"CRONs ready");
+
 }
