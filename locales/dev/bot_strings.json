@@ -13,7 +13,8 @@
         "UR": "Ultra Rare",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "void"
+        "thevoid": "void",
+        "evToken":"Event Token"
     },
     "terms": {
       "total":"Total",
@@ -103,7 +104,8 @@
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
         },
         "warnings": {
-          "open1":"Excuse me, open is a transitive verb, which means you should tell me what to open~ Try one of these options:",
+            "translationTexTooLong":":warning: **Hey! Translation text cannot exceed __1000 Characters__**\n But don't worry, I've trimmed the text for you~"
+          ,"open1":"Excuse me, open is a transitive verb, which means you should tell me what to open~ Try one of these options:",
           "open2":"Sorry but that's not something I can (or want to) open. But I'm sure I can open you one of these: ",
             "timesOutIn": "This will timeout in {{s}} seconds",
             "enterVoiceBetterExperience": "You have to be in a voice channel for the full ~experience~."
