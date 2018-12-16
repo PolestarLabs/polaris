@@ -174,17 +174,22 @@ autoHelper: function autoHelper(trigger,options){
     if(nopool)return false;
 
     const messpool = sevmesgs.filter(mes => {
-      try {
-        if (mes.attachments) {
+        if (mes.attachments && mes.attachment.length>0) {
           if (mes.attachments[0].url) {
             return true
           }
         }
-      } catch (e) {
-        return false
-      }
+        if (mes.embeds && mes.embeds.length>0) {
+          if (mes.embeds[0].type === 'image' && mes.embeds[0].url) {
+            return true
+          }
+        }
     });
-    if ((messpool||[]).length>0) return messpool[messpool.length-1].attachments[0].url;
+
+    if ((messpool||[]).length>0) return (
+        messpool[messpool.length-1].attachments[0]||
+        messpool[messpool.length-1].embeds[0]
+        ).url;
     else return false;
   }
 }
