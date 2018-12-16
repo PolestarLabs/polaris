@@ -40,10 +40,10 @@ const colors = require('colors');
 const POLLUX = new Eris(cfg.token,{
 
 
-  maxShards:1,
+  maxShards:3,
 
   firstShardID:0,
-  lastShardID:0,
+  lastShardID:2,
   defaultImageSize:512,
 
   defaultImageFormat:'png',
