@@ -1,13 +1,17 @@
-import { readFileSync } from "fs";
-import { servers } from "../database/db_ops";
+const { readFileSync } = require('fs');
+const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
-import g, { userDB } from '../utilities/Gearbox.js';
-import Discoin from "../archetypes/Discoin.js";
+const g = require( '../utilities/Gearbox');
+const DB = require( '../database/db_ops');
+
+const userDB = DB.users
+
+const Discoin = require( "../archetypes/Discoin.js");
 const discoin = new Discoin(cfg.discoin);
 const coinbase = JSON.parse(readFileSync("./resources/lists/discoin.json", "utf8"));
 const gear = g
-import { receive } from '../archetypes/Economy.js';
-import { CronJob } from 'cron';
+const { receive } = require( '../archetypes/Economy.js');
+const { CronJob } = require( 'cron');
 
 
 async function resolveExchange(exchange_itm,bot){
@@ -85,7 +89,8 @@ Received **${newAmt}** **RBN**(*Pollux Rubines*) converted from **${src}**(*${co
 
 exports.run = async function(bot){
   
-  
+  console.log("crons")
+
 const MIDNIGHT   = new CronJob('0 0 * * *', ()=> {
   // EVERY MIDNIGHT
  let client = bot; 
@@ -121,8 +126,8 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
   
   // EVERY 5
   
-  let gchange = gear.gamechange();
-  let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
+  //let gchange = gear.gamechange();
+  //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
     
   // bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
 
@@ -131,64 +136,14 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 },null,true);
 
 const ONEminute  = new CronJob('*/1 * * * *', async ()=> {
-  // EVERY 1 MINUTE
-  
 //======================================================================================
-        /* UNMUTE USERS */
+        /* EVERY 1 MINUTE */
 //======================================================================================
 
-  //require('./archetypes/cutemon.js').run(bot,gear)
-  
-        servers.find({
-          'modules.MUTEDUSERS': { $exists: true, $gt: [] }
-        }).then(arr => {
-          arr.forEach(async sv => {
-            try {
-              if (!sv) return;
-              if (!sv.modules.MUTEROLE){
-                await servers.set(sv.id,{$set:{'modules.MUTEDUSERS':[]}});
-                return;
-              };
-              let date = Date.now();
-              let SV = bot.guilds.get(sv.id);
-              if (!SV) return;
-              sv.modules.MUTEDUSERS.filter(mtu=>mtu.expires <= date).forEach(toUnmute=>{
-                let ME = SV.members.get(toUnmute.id);
-                if (!ME)return;
-                ME.roles.remove(sv.modules.MUTEROLE).then(async x=>{
-                  if(!x.guild)return;
-                  await  servers.set(sv.id,{$pull:{'modules.MUTEDUSERS':{id:toUnmute.id}}});
-                  if (x.guild.dDATA&&x.guild.dDATA.logging) {
-                          //delete require.cache[require.resolve('./modules/dev/logs_infra.js')]
-                          let log = require('./modules/dev/logs_infra.js');
-                          log.init({
-                            bot,
-                            server: x.guild,
-                            member: x,
-                            user:   x.user,
-                            logtype: "usrUnmute"
-                          });
-                    }
-               }).catch(async e=>{
-                 console.log(`
-==================================
-UNMUTE ERROR: Bad Muterole
-Muterole value: ${sv.modules.MUTEROLE}
-Server: ${sv.id} (${sv.name})
-==================================
-`);
-await  servers.set(sv.id,{$set:{'modules.MUTEDUSERS':[]}});
-               });
-             })
-            } catch (e) {
-              console.error(e)
-            }
-          })
-        });
-    
-//======================================================================================  
-        /* Exchange Currency */
-//======================================================================================  
+    /* Exchange Currency */ //================================
+        DB.mutes.expire(Date.now()).then(console.log);
+        
+    /* Exchange Currency */ //================================
 
   discoin.fetch().then(async trades => {
     trades = JSON.parse(trades)
