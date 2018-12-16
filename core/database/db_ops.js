@@ -24,6 +24,7 @@ const
    ,collectibles  : require('./schemas/collectibles.js')
    ,items         : require('./schemas/items.js')
    ,achievements  : require('./schemas/achievements.js')
+   ,mutes         : require('./schemas/mutes.js')
    
    
    ,users:    userDB
