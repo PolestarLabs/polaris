@@ -146,7 +146,7 @@ POLLUX.on("ready", async (msg) => {
   }
 })
 
-//require('./core/subroutines/cronjobs.js').run(POLLUX);
+require('./core/subroutines/cronjobs.js').run(POLLUX);
 
 const fs= require('fs')
 fs.readdir("./eventHandlers/", (err, files) => {
