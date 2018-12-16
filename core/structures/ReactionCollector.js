@@ -14,6 +14,7 @@ class ReactionCollector extends EventEmitter {
 	}
 
 	verify(message,emoji,userID) {
+		if (message.id != this.message.id)return;
         if(this.options.authorOnly){
 			if(this.options.authorOnly !== userID) return false;
         }
@@ -44,7 +45,7 @@ module.exports = Eris => {
 	Eris.Message.prototype.awaitReactions = function(filter, options) {
 		const collector = new ReactionCollector(this, filter, options);
 		return new Promise((resolve,reject) => collector.on("end", (col,reas)=>{
-			if(reas == "time" && col.length == 0) reject("timeOut");
+			if(reas == "time" && col.length == 0) reject("timeOut--");
 			else resolve(col);
 		}) );
 	};

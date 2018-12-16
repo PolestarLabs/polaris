@@ -33,7 +33,7 @@ if(
   )return;
 
 
-  const USER   = msg.author,
+  let   USER   = msg.author,
         SERVER = msg.guild,
         CHANNEL= msg.channel;
         //TARGET = msg.mentions[0];

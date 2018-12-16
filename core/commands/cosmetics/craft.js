@@ -147,13 +147,13 @@ message.author.crafting = true;
             return message.author.crafting = false;
            }
           if (reas.length === 1&&reas[0].emoji.id==YA.id) {
-              /*
+              
             await Promise.all(
           [ECO.pay(message.author.id,GC.rubines,"crafting","RBN"),
              ECO.pay(message.author.id,GC.jades,"crafting","JDE"),
              ECO.pay(message.author.id,GC.sapphires,"crafting","SPH")]
             );
-*/
+
             
             MAT.forEach(async itm=>{
               await DB.items.consume(message.author,itm);

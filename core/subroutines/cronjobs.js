@@ -1,13 +1,17 @@
-import { readFileSync } from "fs";
-import { servers } from "../database/db_ops";
+const { readFileSync } = require('fs');
+const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
-import g, { userDB } from '../utilities/Gearbox.js';
-import Discoin from "../archetypes/Discoin.js";
+const g = require( '../utilities/Gearbox');
+const DB = require( '../database/db_ops');
+
+const userDB = DB.users
+
+const Discoin = require( "../archetypes/Discoin.js");
 const discoin = new Discoin(cfg.discoin);
 const coinbase = JSON.parse(readFileSync("./resources/lists/discoin.json", "utf8"));
 const gear = g
-import { receive } from '../archetypes/Economy.js';
-import { CronJob } from 'cron';
+const { receive } = require( '../archetypes/Economy.js');
+const { CronJob } = require( 'cron');
 
 
 async function resolveExchange(exchange_itm,bot){
@@ -85,123 +89,97 @@ Received **${newAmt}** **RBN**(*Pollux Rubines*) converted from **${src}**(*${co
 
 exports.run = async function(bot){
   
-  
-const MIDNIGHT   = new CronJob('0 0 * * *', ()=> {
-  // EVERY MIDNIGHT
- let client = bot; 
-    client.shard.fetchClientValues('guilds.size')
-.then(results => {
-  var totalServers = results.reduce((prev, val) => prev + val, 0);
+  console.log("• ".blue,"Loading CRON subroutines...");
 
-});
-     userDB.updateMany(
+const MIDNIGHT   = new CronJob('0 0 * * *', ()=> {
+  //======================================================================================
+  /* EVERY MIDNIGHT */
+  //======================================================================================
+
+  userDB.updateMany(
      {'limits.slots':{$gt:10}},
      {$set:{'limits.slots':0}}
    ).then(x=>console.log("Daily Limit Reset for Slots "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.blackjack':{$gt:10}},
      {$set:{'limits.blackjack':0}}
    ).then(x=>console.log("Daily Limit Reset for Blackjack "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.receive':{$gt:2}},
      {$set:{'limits.receive':0}}
    ).then(x=>console.log("Daily Limit Reset for Receive "));
-   userDB.updateMany(
+  userDB.updateMany(
      {'limits.give':{$gt:2}},
      {$set:{'limits.give':0}}
    ).then(x=>console.log("Daily Limit Reset for Give "));   
+
   
 },null,true);
             
 const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
-  
+  //======================================================================================
+  /* EVERY 5 MINUTES */
+  //======================================================================================
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".servers"]:bot.guilds.size}}).then(x=>x=null);
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".users"]:bot.users.size}}).then(x=>x=null);
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".channels"]:bot.channels.size}}).then(x=>x=null);
-  
-  // EVERY 5
-  
+
   let gchange = gear.gamechange();
-  let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
+  //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
+  bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
     
-  // bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
 
 
   
 },null,true);
+const ONEminute = new CronJob('*/1 * * * *', async () => {
+  //======================================================================================
+  /* EVERY 1 MINUTE */
+  //======================================================================================
 
-const ONEminute  = new CronJob('*/1 * * * *', async ()=> {
-  // EVERY 1 MINUTE
-  
-//======================================================================================
-        /* UNMUTE USERS */
-//======================================================================================
+  /* Manage Mutes */ //================================
+  DB.mutes.find({expires: {$lte: Date.now()} })
+  .then(mutes => {
+    mutes.forEach(mtu=>{
+      DB.servers.get(mtu.server.id).then(svData=>{
+        DB.mutes.expire(Date.now()).then(console.log);
+        let logSERVER = POLLUX.guilds.get(mtu.server);
+        let logUSER = bot.users.find(x=> x.id  === mtu.user);
+        if(!logSERVER||!logUSER) return;
+        let logMEMBER = logSERVER.member(logUSER);
+        logMEMBER.removeRole(svData.modules.MUTEROLE);
+        
+        if (svData.dDATA || svData.logging) {
+          return;
+          //delete require.cache[require.resolve('./modules/dev/logs_infra.js')]
+          let log = require('./modules/dev/logs_infra.js');
+          log.init({
+            bot,
+            server: logSERVER,
+            member: logMEMBER,
+            user: logUSER,
+            logtype: "usrUnmute"
+          });
+        }      
+      })
+    })
+  });
 
-  //require('./archetypes/cutemon.js').run(bot,gear)
-  
-        servers.find({
-          'modules.MUTEDUSERS': { $exists: true, $gt: [] }
-        }).then(arr => {
-          arr.forEach(async sv => {
-            try {
-              if (!sv) return;
-              if (!sv.modules.MUTEROLE){
-                await servers.set(sv.id,{$set:{'modules.MUTEDUSERS':[]}});
-                return;
-              };
-              let date = Date.now();
-              let SV = bot.guilds.get(sv.id);
-              if (!SV) return;
-              sv.modules.MUTEDUSERS.filter(mtu=>mtu.expires <= date).forEach(toUnmute=>{
-                let ME = SV.members.get(toUnmute.id);
-                if (!ME)return;
-                ME.roles.remove(sv.modules.MUTEROLE).then(async x=>{
-                  if(!x.guild)return;
-                  await  servers.set(sv.id,{$pull:{'modules.MUTEDUSERS':{id:toUnmute.id}}});
-                  if (x.guild.dDATA&&x.guild.dDATA.logging) {
-                          //delete require.cache[require.resolve('./modules/dev/logs_infra.js')]
-                          let log = require('./modules/dev/logs_infra.js');
-                          log.init({
-                            bot,
-                            server: x.guild,
-                            member: x,
-                            user:   x.user,
-                            logtype: "usrUnmute"
-                          });
-                    }
-               }).catch(async e=>{
-                 console.log(`
-==================================
-UNMUTE ERROR: Bad Muterole
-Muterole value: ${sv.modules.MUTEROLE}
-Server: ${sv.id} (${sv.name})
-==================================
-`);
-await  servers.set(sv.id,{$set:{'modules.MUTEDUSERS':[]}});
-               });
-             })
-            } catch (e) {
-              console.error(e)
-            }
-          })
-        });
-    
-//======================================================================================  
-        /* Exchange Currency */
-//======================================================================================  
 
+  /* Exchange Currency */ //================================
   discoin.fetch().then(async trades => {
     trades = JSON.parse(trades)
     if (!trades.length || trades.length === 0) return;
-    await gear.wait(Number(process.env.SHARD)*2);
-    Promise.all(trades.map(td=>resolveExchange(td,bot)));
+    await gear.wait(Number(process.env.SHARD) * 2);
+    Promise.all(trades.map(td => resolveExchange(td, bot)));
   });
-  
-},null,true);
-  
+
+  //---CRON END----///-----////------/////
+}, null, true);
+
 MIDNIGHT.start();
 FIVEminute.start();
 ONEminute.start();
-  
-  
+console.log("• ".green,"CRONs ready");
+
 }

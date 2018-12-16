@@ -25,6 +25,7 @@ function checkFunds (user,amt, currency = "RBN"){
 };
 
 function pay(user,amt,type = "OTHER",currency = "RBN"){
+  if(amt == 0) return;
   const uID = user.id || user;
   return new Promise(async (resolve,reject)=>{   
     
@@ -58,6 +59,7 @@ function pay(user,amt,type = "OTHER",currency = "RBN"){
 };
 
 function receive(user,amt,type = "OTHER",currency = "RBN"){
+  if(amt == 0) return;
   const uID = user.id || user;
   return new Promise(async (resolve,reject)=>{
     
@@ -86,6 +88,7 @@ function receive(user,amt,type = "OTHER",currency = "RBN"){
 };
 
 function transfer(userFrom,userTo,amt,type = "SEND",currency = "RBN"){
+  if(amt == 0) return;
   const fromID = userFrom.id || userFrom;
   const toID   = userTo.id   || userTo;
   return new Promise(async (resolve,reject)=>{

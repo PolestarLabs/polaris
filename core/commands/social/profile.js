@@ -572,7 +572,7 @@ c.globalCompositeOperation='destination-atop';
       roundRect(cxx, 0, 0, 300, 60,10,true);
 
       let marriTo = "Married to:"//$t('marriage.marriedTo',P)
-      let partner = await msg.botUser.users.fetch(marriage_partner.id);
+      let partner = await POLLUX.users.fetch(marriage_partner.id);
       let WIFE = partner.username
       let WIFEavi = await pikto.getCanvas(partner.displayAvatarURL );
 
@@ -799,7 +799,7 @@ c.globalCompositeOperation='destination-atop';
 
       console.log(1)
 
-      let bottomTag = await gear.getTagge(Target,msg.botUser,msg);
+      let bottomTag = await gear.getTagge(Target,POLLUX,msg);
       if(Target.id=='318159939027730433')bottomTag='nonoan'
       if(Target.id=='88120564400553984')bottomTag='owner'
       console.log(2)

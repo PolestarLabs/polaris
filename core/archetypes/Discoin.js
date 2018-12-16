@@ -9,7 +9,7 @@ module.exports = class Discoin {
 		return new Promise((resolve, reject) => {
 			request.post({url: "http://discoin.sidetrip.xyz/transaction", headers: {"Authorization": this.token}, json: {"user": user, "amount": amount, "exchangeTo": exchangeTo}}, function (error, response, body) {
 				if (error || rescodes.indexOf(response.statusCode) === -1) {
-					return reject("API failure - Contact MacDue");
+					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
 				}
 				if (response.statusCode !== 200) {
 					return reject(body);
@@ -23,7 +23,7 @@ module.exports = class Discoin {
 		return new Promise((resolve, reject) => {
 			request({url: "http://discoin.sidetrip.xyz/transactions", headers: {"Authorization": this.token}}, function (error, response, body) {
 				if (error || response.statusCode !== 200) {
-					return reject("API failure - Contact MacDue");
+					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
 				}
 				return resolve(body);
 			});
@@ -34,7 +34,7 @@ module.exports = class Discoin {
 		return new Promise((resolve, reject) => {
 			request.post({url: "http://discoin.sidetrip.xyz/transaction/reverse", headers: {"Authorization": this.token}, json: {"receipt": receipt}}, function (error, response, body) {
 				if (error || response.statusCode !== 200) {
-					return reject("API failure - Contact MacDue");
+					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
 				}
 				return resolve(body);
 			});
@@ -45,7 +45,7 @@ module.exports = class Discoin {
 		return new Promise((resolve, reject) => {
 			request({url: "http://discoin.sidetrip.xyz/transaction/" + receipt, headers: {"Authorization": this.token}}, function (error, response, body) {
 				if (error || response.statusCode !== 200) {
-					return reject("API failure - Contact MacDue");
+					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
 				}
 				if (response.statusCode !== 200) {
 					return reject(body);
