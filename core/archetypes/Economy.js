@@ -19,7 +19,7 @@ function checkFunds (user,amt, currency = "RBN"){
   return new Promise(async (resolve,reject)=>{
     let userData = await DB.users.get(uID,{["modules."+CURRENCIES[currency]]:1});
     console.log(userData.modules[CURRENCIES[currency]])
-    if (userData.modules[CURRENCIES[currency]] < amt) return reject(false);
+    if (userData.modules[CURRENCIES[currency]] < amt) return resolve(false);
     else resolve(true);    
   })
 };
@@ -29,7 +29,7 @@ function pay(user,amt,type = "OTHER",currency = "RBN"){
   const uID = user.id || user;
   return new Promise(async (resolve,reject)=>{   
     
-    if(typeof amt != 'number') reject("Amount informed is not a Number");
+    if(typeof amt != 'number') resolve("Amount informed is not a Number");
     amt = parseInt(amt);    
            
     checkFunds(user,amt,currency).then(async ok=>{
