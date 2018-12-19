@@ -57,6 +57,7 @@ var init = async function (message) {
   const userData = await DB.users.get(message.author.id);
   let hasIt = userData.modules.bgInventory.includes(selectedBG.code)
   let affordsIt = await ECO.checkFunds(message.author,_price);
+  let canBuy  = selectedBG.buyable&&!selectedBG.event;
   if (hasIt){
     embed.field("\u200b","You already have this Background. Equip it?",false);      
   }else{
@@ -92,7 +93,7 @@ message.channel.send({embed}).then(async m => {
       });
     }
 
-  if(hasIt || affordsIt){
+  if(!hasIt && affordsIt && canBuy ){
     YesNo.run(m,message,positive,null,null,{
       strings:{
         cancel:"Cancelled!",
