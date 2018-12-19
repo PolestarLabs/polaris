@@ -122,7 +122,7 @@ module.exports = {
                 from: langFrom,
                 to: langTo
             }).then(res => {
-                let langFromPost = res.from.language.iso;
+                let langFromPost = (langFrom || (res.from.language.iso||"en")).toLowerCase();
                 const gear = require("../utilities/Gearbox");
                 const embed = new gear.Embed;
                 embed.title("Pollux Machine Translation 5000")
@@ -147,7 +147,7 @@ module.exports = {
 
         let langsAvailable = Object.keys(translate.languages);
         if (msg.args.length > 2) {
-            if (langsAvailable.includes(msg.args[0]) && langsAvailable.includes(msg.args[1])) {
+            if (langsAvailable.includes(msg.args[0].toLowerCase()) && langsAvailable.includes(msg.args[1].toLowerCase())) {
                 langFrom = msg.args[0]
                 langTo = msg.args[1]
                 textToTrans = msg.args.slice(2).join(' ')
@@ -159,7 +159,7 @@ module.exports = {
         }
 
         function oneArg() {
-            if (langsAvailable.includes(msg.args[0])) {
+            if (langsAvailable.includes(msg.args[0].toLowerCase())) {
                 langTo = msg.args[0]
                 textToTrans = msg.args.slice(1).join(' ')
             }
@@ -170,7 +170,7 @@ module.exports = {
             textToTrans = msg.args.join(' ')
         }
         if (langTo === "dev") langTo = "en";
-
+        
         return {textToTrans,langFrom,langTo};
         
     }

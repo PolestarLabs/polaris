@@ -24,6 +24,8 @@ async function incrementGlobal(msg) {
 
 async function levelChecks(msg) {
 
+  if (msg.author.bot) return;
+
   if (msg.guild.id === "110373943822540800") return;
 
 
