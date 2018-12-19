@@ -19,6 +19,19 @@ const init = async msg => {
   };
     
 
+    let commands = []
+    let fs = require('fs')
+    let files = fs.readdirSync(appRoot + "/core/commands");
+        for (let i = 0; i < files.length; i++) {
+            let filedir = appRoot + "/core/commands/" + files[i]
+            let morefiles = fs.readdirSync(filedir  )
+            morefiles.forEach(file=>{
+                let cmdOptions =  require( filedir+"/"+file );
+                commands.push({name: file.split('.')[0],cat:cmdOptions.cat ,pub:cmdOptions.pub,group:files[i]}); 
+            })
+        } 
+
+
     
       let helpol    = $t('help.polHelp',  P),
           heldesc   = $t('help.helpText', P),
@@ -36,7 +49,8 @@ const init = async msg => {
 
   hEmbed.description = `
   **The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!
-`
+These are just a few of the ${commands.length} commands I have!
+  `
 
 hEmbed.field(
     "•  Commands you should know from the get-go:",
@@ -44,7 +58,7 @@ hEmbed.field(
     )
 hEmbed.field(
     "•  Commands you might find useful:",
-    `- \`+read&translate <IMAGE FILE>\` | \`+background\` | \`+roll <DICE> <MATHS>\` | \`+translate\` | \`+exchange\``
+    `- \`+read&translate <IMAGE FILE>\` | \`+background\` | \`+roll <DICE> <MATHS>\` | \`+translate\` | \`+weather\` | \`+exchange\``
 )
 hEmbed.field(
     "•  Commands you might enjoy playing around with:",
@@ -52,7 +66,7 @@ hEmbed.field(
 )
 hEmbed.field(
   "•  Commands you didn't ask for:",
-    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+blackjack\` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
+    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+localnews <TEXT> <IMAGE or @USER> \` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
 )
 let tex22 = `\u200b
 
@@ -128,13 +142,7 @@ Invite me to your server at **<https://pollux.fun/invite>**
     
     ${$t('help.joinSupp', P)}: https://discord.gg/rEBCccS
     `;
-    
-      msg.author.getDMChannel().then(dmChan=>{ 
-          dmChan.createMessage({content:tex22, embed:hEmbed}).catch(e => {console.log(e);'Fail Silently'})
-          dmChan.createMessage({embed:currencyHelp}).catch(e => {console.log(e);'Fail Silently'})
-          dmChan.createMessage( end ).catch(e => {console.log(e);'Fail Silently'})
-    })
-    
+
 
 if(msg.args[0]==='full'){
     msg.channel.createMessage({content:tex22, embed:hEmbed}).catch(e => {console.log(e);'Fail Silently'})
@@ -153,9 +161,37 @@ if(msg.args[0]==='links'){
     return;
 }
 
-if(msg.args[0]){
-    return gear.autoHelper('force', {cmd:msg.args[0],msg,opt: this.cat});
+if(msg.args[0]==='commands'){
+    let allcoms = new gear.Embed()
+            .title("Available Commands")
+            .description("List of commands currently available and supported.")
+
+            commands.map(cmd=>cmd.group).filter((itm,pos,me)=> me.indexOf(itm) == pos).forEach(cmdGroup=>{
+                let gComs = "";
+                commands.filter(cmd=>cmd.group === cmdGroup).forEach(cmd=>{
+                    if(cmd.pub && !cmd.group.startsWith("_")){
+                        gComs += " `"+msg.prefix+cmd.name+"` |"
+                    }
+                })
+                allcoms.field(cmdGroup,gComs);
+            })
+
+    msg.channel.createMessage( {embed:allcoms} ).catch(e => {console.log(e);'Fail Silently'})
+    return;
 }
+
+let argCom = commands.find(cmd=> cmd.name === msg.args[0])
+if(argCom){
+    return gear.autoHelper('force', {cmd:msg.args[0],msg,opt: argCom.cat});
+}
+
+    
+msg.author.getDMChannel().then(dmChan=>{ 
+    dmChan.createMessage({content:tex22, embed:hEmbed}).catch(e => {console.log(e);'Fail Silently'})
+    dmChan.createMessage({embed:currencyHelp}).catch(e => {console.log(e);'Fail Silently'})
+    dmChan.createMessage( end ).catch(e => {console.log(e);'Fail Silently'})
+})
+
 
       const embed = new gear.Embed;
     
@@ -168,7 +204,7 @@ if(msg.args[0]){
       embed.field(":heart_decoration: " + inviteme, invitelink, false)
       embed.field("<a:polluxYAY:482436838523404288> " + "Donate", "https://patreon.com/Pollux", false)
       embed.field("Is this tiny box not enough?",
-      "Try one of these: \n[`+help full \u200b`] | [`+help currency \u200b`] \n [`+help links`] | [`+help <COMMAND>`]")
+      "Try one of these: \n[`+help full \u200b`] | [`+help currency \u200b`] \n [`+help links`] | [`+help <COMMAND>`]\n [`+help basics`] | [`+help commands`]")
     
       setTimeout(t => msg.reply({content:'' ,embed}), 1000)
 
@@ -179,5 +215,6 @@ if(msg.args[0]){
 module.exports = {
   cmd:"ping",
   init,
-  cat: 'infra'
+  cat: 'infra',
+  aliases: ['ajuda','welp','?','???','ayuda']
 }
