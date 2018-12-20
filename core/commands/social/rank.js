@@ -16,7 +16,7 @@ const init = async function (msg) {
     if(gear.autoHelper([$t("helpkey",P)],{cmd,msg,opt:this.cat}))return;
 
 
-    let Canvas = Picto.new(727,558);
+    let Canvas = Picto.new(718,570);
     let ctx = Canvas.getContext('2d');
 
     //DATA NEEDED
