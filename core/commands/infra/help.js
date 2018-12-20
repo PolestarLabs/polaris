@@ -71,7 +71,7 @@ hEmbed.field(
 let tex22 = `\u200b
 
 **Greetings! I'm Pollux. The new maid assigned to your server.**
-Here's some quick explanation on my abilities:
+Here's some quick explanations of my abilities:
 
   •  The Default Prefix is \`+\`, you can change it with \`+prefix <New Prefix>\`. 
       The Global Prefix is \`p!\`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. 
@@ -89,7 +89,7 @@ My currency system is relatively complex and has several limitations and protect
         \u200b
         `)
         .field("<:rubine:367128893372760064> Rubine Gems",`
-        *My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃:Cr, used to pretty much everything!*
+        *My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃:Cr, used for pretty much everything!*
         Can be obtained from Daily Bonuses (\`daily\`), Lootboxes (\`+box\`) and Gambling Games (\`+blackjack\`, \`+slots\`, etc.). As well as from trades with other users once you reach Level 5 and has at least a 10-day Daily Streak.
         `)
         .field("<:jade:367128893716430848> Jades Dust",`
