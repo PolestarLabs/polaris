@@ -877,10 +877,11 @@ if(msg.channel.id=='433639502465204252'){
 
 
 module.exports = {
-    pub: false,
+    pub: true,
     cmd: "profile",
     perms: 3,
     init: init,
     cat: 'social',
+    aliases:['ppc','perfil'],
     cool:800
 };
