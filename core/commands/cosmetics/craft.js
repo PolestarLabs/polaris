@@ -96,7 +96,7 @@ message.author.crafting = true;
       let icona='yep';
         material = material.id || material;
     
-      if (userData.modules.inventory.find(itm=>itm.id == material).count >= (material.amt || gear.count(MAT,material)) ){
+      if ((userData.modules.inventory.find(itm=>itm.id == material)||{}).count >= (material.amt || gear.count(MAT,material)) ){
         //message.reply('ok')
         
       }else{
@@ -112,7 +112,7 @@ message.author.crafting = true;
       message.author.crafting = false;
       message.channel.send({embed})
     }else{
-      craftExplan = "\n\nAll materials are available in your inventoru, proceed with the crafting?"
+      craftExplan = "\n\nAll materials are available in your inventory, proceed with the crafting?"
       embed.description=matDisplay+ craftExplan
       message.channel.send({embed}).then(async m=>{
 
