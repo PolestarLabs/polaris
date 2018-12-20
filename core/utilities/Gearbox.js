@@ -215,4 +215,21 @@ autoHelper: function autoHelper(trigger,options){
                 let gm = gamein ? gamein : gamelist.games[rand];
                 return POLLUX.editStatus(status,{name:gm[0], type:gm[1] })
     },
+    getMessage:    function getMessage(msg, ID) {
+            return new Promise(async (resolve, reject) => {
+                    if (ID) {
+                            msg.channel.getMessage(ID).then(resolve).catch(err => {
+                                    msg.guild.channels.forEach(c => {
+                                            if (!c.getMessage) return;
+                                            c.getMessage(ID).then(x => {
+                                                    if (x) resolve(x);
+                                            }).catch(err => "ok");
+                                    });
+                            });
+                    } else {
+                            msg.channel.getMessages(1, msg.id).then(me => resolve(me[0])).catch(reject("NO MESSAGE"));
+                    }
+            });
+    }
+    
 }
