@@ -5,28 +5,32 @@ const cfg = require(appRoot+'/config.json');
 
 exports.run = async (message,payload) => {
 
-   let bot = POLLUX
+
+  
+  
+  let bot = POLLUX
    let Database_bot = "x"//await gear.userDB.findOne({id:bot.user.id});
    let servData = payload.servData;
    let userData = payload.userData;
    let chanData = payload.chanData;
    let targData = payload.targData;
-
-
-  let forbiddens = ((chanData||{}).modules||{}).DISABLED||[];
-
+   
+   
+   let forbiddens = ((chanData||{}).modules||{}).DISABLED||[];
+   
   const _commandMetadata = determine(message)
   const _MODULE = _commandMetadata.module;
-
+  
    if(_MODULE == "_botOwner"){
-      if (message.author.id !== cfg.owner) return message.addReaction('nope:339398829088571402')
+     if (message.author.id !== cfg.owner) return message.addReaction('nope:339398829088571402')
    }
    if(_MODULE == "_botStaff"){
       if (message.author.id !== cfg.owner && !cfg.admins.includes(message.author.id)) return message.addReaction('nope:339398829088571402')
-   }
-
-
-  if(!_commandMetadata) return; // No Command Metadata Found
+    }
+    
+    //console.log(_commandMetadata)
+    
+    if(!_commandMetadata) return; // No Command Metadata Found
 
   //Global Reactions===================
   if(_commandMetadata.reaction){

@@ -168,7 +168,7 @@ autoHelper: function autoHelper(trigger,options){
   },
   //Get IMG from Channel MSGs
   getChannelImg: async function getChannelImg(message,nopool) {
-    if((message.args[0]||"").startsWith("http")) return message.args[0];
+    if((message.args&&message.args[0]||"").startsWith("http")) return message.args[0];
     if (message.attachments[0]) return message.attachments[0].url;
     let sevmesgs = message.channel.messages;
 
