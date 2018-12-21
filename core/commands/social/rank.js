@@ -79,8 +79,7 @@ const init = async function (msg) {
         let EXP = Picto.tag(ct,usr.exp,"400 "+(18-(sec?2:0))+"px 'Whitney HTF'","#FFF")
         let ww = EXP.width
         ww=ww>100?100:ww;
-        ct.fillStyle = "rgb(48, 53, 67)"
-        Picto.roundRect(ct,606-ww,sec?16:17,ww+40,EXP.height+4)
+        Picto.roundRect(ct,606-ww,sec?16:17,ww+40,EXP.height+4,10,"rgb(48, 53, 67)")
         Picto.setAndDraw(ct,EXP,610,sec?17:18,100,'right');   
 
         return res;
@@ -108,10 +107,10 @@ const init = async function (msg) {
         return res;
     }
 
-    const YA=98,
-          YB=194,
-          YC=295,
-          YD=375;
+    const YA=100,
+          YB=196,
+          YC=296,
+          YD=378;
 
           ctx.fillStyle = "#212329"
           ctx.fillRect(20,20,700,500)
@@ -126,14 +125,14 @@ const init = async function (msg) {
           ctx.fillStyle = "rgb(48, 53, 67)"
           dsp = 100
           dsp2 = 13
-          Picto.roundRect(ctx,dsp+506-ww,dsp2+498,ww+40,EXP.height+4)
+          Picto.roundRect(ctx,dsp+506-ww,dsp2+498,ww+40,EXP.height+4,10,"rgb(48, 53, 67)")
           Picto.setAndDraw(ctx,EXP,dsp+510,dsp2+500,100,'right');   
           
     ctx.drawImage((await rankBack(Ranks[0])),57,0);
     ctx.drawImage((await rankBack(Ranks[1])),57,YA);
     ctx.drawImage((await rankBack(Ranks[2])),57,YB);
-    ctx.drawImage((await rankBack(Ranks[3],true)),57,YC);
-    ctx.drawImage((await rankBack(Ranks[4],true)),57,YD);
+    ctx.drawImage((await rankBack(Ranks[3],true)),55,YC);
+    ctx.drawImage((await rankBack(Ranks[4],true)),55,YD);
     ctx.drawImage((await mFrame),0,0);
     
         let myPos = _LOCAL

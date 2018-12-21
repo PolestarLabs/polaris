@@ -1,40 +1,46 @@
 const NAMES=require(paths.LISTS+"/colors.json");
 
-module.exports = {
+colName = {
 
     init: function() {
       var color, rgb, hsl;
       for(var i = 0; i < NAMES.length; i++)
       {
         color = "#" + NAMES[i][0];
-        rgb = ntc.rgb(color);
-        hsl = ntc.hsl(color);
-        NAMES[i].push(rgb[0], rgb[1], rgb[2], hsl[0], hsl[1], hsl[2]);
+        rgb = this.rgb(color);
+        hsl = this.hsl(color);
+        NAMES[i].push( rgb, hsl );
       }
     },
-  
+    nameReverse: function(name){
+      return NAMES.find(col=> col[1].toLowerCase()===name.toLowerCase())||
+      NAMES.find(col=> col[1].toLowerCase().includes(name.toLowerCase()))||
+      NAMES.find(col=> col[1].toLowerCase().includes(name.split(' ')[0].toLowerCase()))||
+      null;
+    },
     name: function(color) {
-  
       color = color.toUpperCase();
       if(color.length < 3 || color.length > 7)
-        return ["#000000", "Invalid Color: " + color, false];
+        return null;
       if(color.length % 3 == 0)
         color = "#" + color;
       if(color.length == 4)
         color = "#" + color.substr(1, 1) + color.substr(1, 1) + color.substr(2, 1) + color.substr(2, 1) + color.substr(3, 1) + color.substr(3, 1);
-  
-      var rgb = ntc.rgb(color);
-      var r = rgb[0], g = rgb[1], b = rgb[2];
-      var hsl = ntc.hsl(color);
+
+        
+        var rgb = this.rgb(color);
+        var r = rgb[0], g = rgb[1], b = rgb[2];
+        var hsl = this.hsl(color);
       var h = hsl[0], s = hsl[1], l = hsl[2];
       var ndf1 = 0; ndf2 = 0; ndf = 0;
       var cl = -1, df = -1;
-  
+      
+      color=color.replace(/#/g,'');
       for(var i = 0; i < NAMES.length; i++)
-      {
-        if(color == "#" + NAMES[i][0])
-          return ["#" + NAMES[i][0], NAMES[i][1], true];
-0  
+      { 
+        if(color == "" + NAMES[i][0])
+        return ["" + NAMES[i][0], NAMES[i][1], true];
+        0  
         ndf1 = Math.pow(r - NAMES[i][2], 2) + Math.pow(g - NAMES[i][3], 2) + Math.pow(b - NAMES[i][4], 2);
         ndf2 = Math.pow(h - NAMES[i][5], 2) + Math.pow(s - NAMES[i][6], 2) + Math.pow(l - NAMES[i][7], 2);
         ndf = ndf1 + ndf2 * 2;
@@ -45,7 +51,7 @@ module.exports = {
         }
       }
   
-      return (cl < 0 ? ["#000000", "Invalid Color: " + color, false] : ["#" + NAMES[cl][0], NAMES[cl][1], false]);
+      return (cl < 0 ? null : ["" + NAMES[cl][0], NAMES[cl][1]]);
     },
   
     hsl: function (color) {
@@ -80,3 +86,5 @@ module.exports = {
   
   }
   
+  colName.init();
+  module.exports = colName;

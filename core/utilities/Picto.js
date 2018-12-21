@@ -133,6 +133,7 @@ module.exports={
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
   ctx.closePath();
   if (fill) {
+    ctx.fillStyle=fill
     ctx.fill();
   }
   if (stroke) {
