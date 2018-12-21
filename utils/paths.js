@@ -6,7 +6,7 @@ exports.run=()=>{
 
     CARDS:      appRoot + "/../v7/resources/imgres/usercards/",
     MEDALS:     appRoot + "/../v7/resources/imgres/medals/",
-    LISTS:      appRoot + "/../v7/resources/lists/",
+    LISTS:      appRoot + "/resources/lists/",
     BUILD:      appRoot + "/../v7/resources/imgres/build/",
     LEWD:       appRoot + "/../v7/resources/imgres/lewd/",
     EVENT:      appRoot + "/../v7/resources/imgres/event/",
