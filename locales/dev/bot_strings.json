@@ -17,9 +17,12 @@
         "evToken":"Event Token"
     },
     "terms": {
-      "total":"Total",
-      "amount":"Amount",
-      "overview":"Overview",
+        "thanks":"thanks",
+        "thanks_short":"thx",
+        "thx":"$t(terms.thanks_short)",
+        "total":"Total",
+        "amount":"Amount",
+        "overview":"Overview",
         "coinHeads": "Heads",
         "coinTails": "Tails",
         "qnt": "Quantity",
@@ -170,7 +173,8 @@
 					"Oh no!",
 					"Noooo!",
 					"Geez!"
-				]
+                ]
+   
             }
         },
         "moderation": {
@@ -341,6 +345,17 @@
             "cancer": "{{user}} is inspecting this channel's chance of cancer.",
             "geiger": ":radioactive: According to the Geiger counter, this channel's cancer potential is **{{percentage}}%** with **{{radiation}}μSv/h** "
         },
+        "commend":{
+            "noSelf":"No, I refuse to let you commend yourself. You should be ashamed of that!",
+            "give":"**{{author}}** hereby commends **{{target}}** at the expense of one Token.",
+            "totals":"{{target}} has been commended **{{cmcount}} times** so far by **{{pplcount}} different people**",
+            "topcom": "{{target}}'s top commenders are:",
+            "cooldown": "You already exhausted your commendation, try again in {{remaining}}",
+            "check_no": "Your next commendation can be done in {{remaining}}",
+            "check_yes": "You can commend again now if you have tokens available!",
+            "noItem":"You need a Commendation Token, and you don't have one. You need them in order to commend people.",
+            "commendationLimit":""
+        },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
             "aviOK": "Alright, I've changed my photo for you. You can change my propic again in {{cooldown}}",
@@ -391,6 +406,10 @@
             "neutralRolled": "Rolling **`{{numDice}}`**...",
             "andGot": "and got **{{val}}**!",
             "rollsWere": "Rolls were:",
+            "invalidRoll": "Invalid Roll Equation -- Only the dice will be rolled!",
+            "onlyRoll5": "You can only roll 5 different dices at a once!",
+            "limit25": "Dice streak can be shown for up to 25 rolls.",
+            "noDiceRolled": "Wait, there's no dices for me to roll, use `{{prefix}}roll help` if you're not sure of what you're doing~",
            "exceedLim":"This Roll exceeds Character Limits, try using `-nostreak` to ommit roll values"
         },
         "blackjack": {
