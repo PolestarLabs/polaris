@@ -5,17 +5,19 @@ const DB = require (appRoot + "/core/database/db_ops")
 exports.run = async function (msg) {
 
   if(msg.author.bot) return;
+  if(!POLLUX.ready) return;
   
   //DEBUG -----------------------------------------------------
   
   if(POLLUX.refreshing || POLLUX.beta){
-     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
-     delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
+     //delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
+     //delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
-  if(POLLUX.tapping || POLLUX.beta){
+  if( (POLLUX.tapping || POLLUX.beta) && !global.piggyback){
     let PEV =  POLLUX.tapping
     if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || POLLUX.beta)
+
       console.log(
         msg.author.tag.blue+`(${msg.author.id})\n    `.gray,
         msg.content.inverse+"\n",
