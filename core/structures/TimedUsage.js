@@ -31,7 +31,7 @@ class DailyCmd{
         return now-userDaily.last <= this.expiration;
     }
 }
-exports.init = async function (message,cmd,opts,success,reject,info) {
+exports.init = async function (message,cmd,opts,success,reject,info,presuccess) {
 
 
 console.log(message.lang)
@@ -57,7 +57,7 @@ console.log(message.lang)
 
   const embed = new gear.Embed;
   embed.setColor("#d83668");
-  if(message.content.endsWith('info')){
+  if(message.args.includes('status')||message.args.includes('stats')){
     if(info) return info (message,Daily);
     let embe2=new gear.Embed;
     embe2.setColor('#e35555')
@@ -68,12 +68,16 @@ ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')
         return message.channel.send({embed:embe2});
   }
 
-  if(!dailyAvailable && Author.id!="88120564400553984"/**/){
+  if(!dailyAvailable && Author.id!="x88120564400553984"/**/){
     let remain = userDaily+DAY;
     Daily.userDataStatic = userDaily;
     return reject(message,Daily,remain);
   };
-  
+  if(presuccess) {
+     let pre = await presuccess(message,Daily);
+    if (pre === false) return;
+   }
+
   Author.dailing = true;
   await gear.wait(1);
   let now = Date.now();
@@ -83,6 +87,7 @@ ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')
     }else if (Daily.streak && !(await Daily.keepStreak(Author))){
       DB.users.set(Author.id, {$set:{['counters.'+Daily.command+'.streak']:1}});
    }
+  
   success(message,Daily);
 
   Author.dailing = false;
