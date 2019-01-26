@@ -133,10 +133,11 @@ module.exports={
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
   ctx.closePath();
   if (fill) {
-    ctx.fillStyle=fill
+    typeof fill== "string" ? ctx.fillStyle = fill : false;
     ctx.fill();
-  }
-  if (stroke) {
+}
+if (stroke) {
+    typeof stroke== "string" ? ctx.strokeStyle = stroke : false;
     ctx.stroke();
   }
 },
@@ -152,5 +153,177 @@ setAndDraw: function setAndDraw(ct,img,x,y,maxW=300,align='left'){
   if(align=="right"){
       ct.drawImage(img.item,x-w,y,w,img.height);
   }
-}
+},
+
+
+
+
+XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
+    const color = TColor(colorX);
+    const pi = Math.PI;
+    let startR = pi * 3 / 2, endR = pToR(pcent) * pi;
+    if (pcent == "1") { endR = pi * 7 / 2; }
+    const rx = size / 2, ry = rx;
+    const canvas_proto = new Canvas.createCanvas(size,size);
+    const context = canvas_proto.getContext('2d');
+    function TColor(rgbColor) {
+        rgbColor = rgbColor.replace(/\s/g, "");
+        const arrRGB = new Array(3);
+        if (rgbColor.indexOf("rgb") > -1) {
+            const colorReg = /\s*\d+,\s*\d+,\s*\d+/i;
+            const t = colorReg.exec(rgbColor)[0].split(",");
+            for (let i = 0; i < arrRGB.length; i++) {
+                arrRGB[i] = t[i];
+            }
+        }
+        else if (rgbColor.indexOf("#") > -1) {
+            if (rgbColor.length > 4)//"#fc0,#ffcc00"
+            {
+                let j = 1;
+                for (let i = 0; i < arrRGB.length; i++) {
+                    arrRGB[i] = parseInt(rgbColor.substr((i + j), 2), 16);
+                    j += 1;
+                }
+            } else {
+                for (let i = 0; i < arrRGB.length; i++) {
+                    let t = rgbColor.substr((i + 1), 1);
+                    t = t + t;
+                    arrRGB[i] = parseInt(t, 16);
+                }
+            }
+        }
+        return arrRGB.join(",") ;
+    }
+    function pToR(p) {
+        const r = (p * 2) % 2 + 1.5;
+        if (r >= 0 && r <= 2) return r;
+        return Math.abs((2 - r) % 2);
+    }
+    function arcDraw(r, color) {
+        context.beginPath();
+        context.arc(rx, ry, r, startR, endR, false);
+        context.fillStyle = color;
+        context.lineTo(rx, ry);
+        context.closePath();
+        context.fill();
+    }
+    canvas_proto.width = canvas_proto.height = size;
+
+
+
+    context.beginPath();
+    context.arc(rx, ry, rx - 5, 0, pi * 2, true);
+    context.strokeStyle = 'rgba(' + color + ',0.25)';
+    context.lineWidth = 4;
+    context.stroke();
+    arcDraw(rx - 0, 'rgba(' + color + ',1)');
+
+    context.beginPath();
+    context.arc(rx, ry, rx - 7, 0, pi * 2, false);
+    context.fillStyle = 'rgba(255,255,255,1)';
+    context.lineTo(rx, ry);
+    context.closePath();
+    context.fill();
+
+    if(pic){
+      context.clip();
+      let a = await this.getCanvas(pic);
+      context.drawImage(a, 0, 0,size,size);
+      context.restore()
+    }
+
+    context.fillStyle = 'rgba(255,255,255,.5)';
+    context.fill();
+    context.fillStyle = 'rgba(' + color + ',1)'; ;
+
+
+    context.font = "900 18px 'Whitney HTF'";
+
+    const t = (pcent * 100).toFixed(0) + "%";
+    let WW =  context.measureText(t+"%").width
+    context.fillText(t, size/2+15-WW/2, size-15);
+
+
+
+    let label = await this.tag(context, term.toUpperCase(),false,"#222");
+    let tg = await this.tag(context,lvthis,"900 56px 'Whitney HTF'","#363636");
+
+    let f = .8
+    let lx = (size/2) - (label.width/2/f)
+    let ly = (size/2) - (label.height*1.5)
+    let lh=label.height/f
+    let lw=label.width/f
+
+    let x = (size/2) - (tg.width/2)
+    let y = (size/2) - (tg.height/2)
+
+    await context.drawImage(label.item,lx,15,lw,lh);
+    await context.drawImage(tg.item,x,y,tg.width,tg.height);
+
+    return canvas_proto
+
+},
+  makeHex: async function Hex(size,picture) {
+    let globalOffset = 0
+    size = size/2
+    let x  = size+10
+    let y=  -size
+
+    let cw=size
+    let ch=size
+
+
+    let hex= new Canvas.createCanvas (size*2+20,size*2+20)
+    let c=hex.getContext("2d")
+    c.rotate(1.5708)
+    c.save();
+    c.beginPath();
+    c.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+
+    for (side=0; side < 7; side++) {
+      c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
+    }
+
+     c.fillStyle = "#ffffff" //Target.id=="88120564400553984"?"#2b2b3b":"rgb(248, 248, 248)";
+    c.fill();
+ if(picture){
+    c.clip();
+    let a = await this.getCanvas(picture);
+      c.rotate(-1.5708)
+      c.drawImage(a, 0, x-size,size*2,size*2);
+      c.restore()
+
+
+c.globalCompositeOperation='xor';
+
+c.shadowOffsetX = 0;
+c.shadowOffsetY = 0;
+c.shadowBlur = 10;
+c.shadowColor = 'rgba(30,30,30,1)';
+
+c.beginPath();
+  for (side=0; side < 7; side++) {
+      c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
+    }
+c.stroke();
+c.stroke();
+c.stroke();
+
+c.globalCompositeOperation='destination-atop';
+
+
+ }else{
+    c.shadowColor = "rgba(34, 31, 59, 0.57)"
+    c.shadowBlur = 8
+
+ }
+       c.fill();
+
+    return hex
+
+  }
+
+
+
+
 }
