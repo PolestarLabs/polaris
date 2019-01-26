@@ -19,9 +19,12 @@ let now = Date.now()
         expirestr: $t('daily.expirestr',P),
     }  
 
+    if(message.args[0]=="info"){
+      message.args[0] = "status";
+      message.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*")
+    }
     let after = async function(msg,Dly){
         ddy = await Dly.userData(msg.author);
-
 
 
 let emblem = await Premium.getTier(Author);
@@ -182,10 +185,12 @@ let myDaily = await Premium.getDaily(Author) || 125;
     
 }
 
-
-module.exports = {
-    cmd:"daily",
-    init,
-    cat: 'cash'
-  }
-  
+module.exports={
+  init
+  ,pub:true
+  ,cmd:'daily'
+  ,perms:3
+  ,cat:'economy'
+  ,botPerms:['attachFiles','embedLinks']
+  ,aliases:['dly']
+}
