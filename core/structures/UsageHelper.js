@@ -23,7 +23,7 @@ exports.run = function run(cmd, m, third) {
   } catch (e) {
     emb.setColor("#eee")
   }
-  
+ 
   emb.thumbnail($d[third].thumb)
   emb.footer(`${v.mod}: ${v.name} | ${third.toUpperCase()} > ${cmd}`, "https://png.icons8.com/puzzle/color/16");
   emb.author($t("help.commUsage", {
@@ -41,6 +41,7 @@ exports.run = function run(cmd, m, third) {
     prefix: m.prefix,
     squad: "- PurpleCat\n - Shamisu\n - Pollyanna\n - Kurono\n - Yuki\n - Celeste"
   }), false)
+  third.aliases?emb.field("**Aliases:**",third.aliases,false):false;
 
   if (cmd == "exchange") {
     

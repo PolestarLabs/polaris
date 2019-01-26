@@ -166,7 +166,8 @@ function checkUse(DTMN, DB, msg) {
         }
     }
 async function commandRun(command, message, final_payload) {
-
+console.log(command)
+console.log(message.author.tag)
     //COMMAND COOLDOWN
 
    const {Bucket} = require('eris');
@@ -214,6 +215,9 @@ async function commandRun(command, message, final_payload) {
   //Refresh Command
   delete require.cache[require.resolve(command.path)];
   //const minibuster =require('./minibuster.js');
+
+  if(global.piggyback && message.author.id!=="88120564400553984") return; 
+
   const commandRoutine = require('../subroutines/onEveryCommand');
   await message.channel.sendTyping();
    await Promise.all([

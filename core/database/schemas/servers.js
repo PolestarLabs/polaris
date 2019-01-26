@@ -122,13 +122,16 @@ META.updateMeta = function (S) {
                $set:{
                  meta
                }
-            }).then(x=>resolve(console.log("[DATABASE]".yellow,"Meta updated for ",S.id)));
+            }).then(x=>{
+              resolve(true)
+              //resolve(console.log("[DATABASE]".yellow,"Meta updated for ",S.id))
+            });
           } else {
             let guild = new META(meta);
             guild.save((err) => {
               if (err) return console.error(err);
               prompt = ["[NEW META]".blue,S.name.yellow,`(${S.members.size})Members`].join(' ')
-              console.log(prompt);
+              //console.log(prompt);
               resolve(prompt)
             });
           }
@@ -156,7 +159,7 @@ MODEL.findOne({id: svDATA.id}, (err, guild) => {
       });
       guild.save((err) => {
         if (err) return console.error(err);
-        console.log("[NEW SERVER]".blue,svDATA.name.yellow,`(${svDATA.members.size})Members`);
+        //console.log("[NEW SERVER]".blue,svDATA.name.yellow,`(${svDATA.members.size})Members`);
         META.updateMeta(svDATA);
       });
    }

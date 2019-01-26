@@ -3,6 +3,7 @@ const path = require('path');
 const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
+const DB = require("../database/db_ops");
 
 Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
 Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
@@ -14,7 +15,8 @@ module.exports = {
     return "🈲"
   },
   getTarget: function getTarget(msg,argPos=0,self=true){
-    if(!msg.args[0]) return msg.author;
+    
+    if(!msg.args[argPos]) return self ? msg.author : null;
     let ID = msg.args[argPos].replace(/[^0-9]/g,'');
     let user = POLLUX.users.find(usr=> usr.id === ID )
     if(!user){
@@ -34,6 +36,7 @@ module.exports = {
       if (!user && self == true) user = msg.author;
     }
     if(!user) return null;
+    DB.users.new(user.user||user);
     return user.user || user;
   },
 
@@ -135,6 +138,7 @@ autoHelper: function autoHelper(trigger,options){
       key = options.opt;
       cmd=  options.cmd;
       opt=  options.opt;
+      aliases=  options.aliases;
     };
 
     if (    trigger.includes(message.content.split(/ +/)[1])
@@ -143,7 +147,7 @@ autoHelper: function autoHelper(trigger,options){
         || (message.content.split(/ +/).length==1&&trigger.includes('noargs'))
         ||  trigger==='force'
        ){
-      this.usage(cmd,message,opt);
+      this.usage(cmd,message,opt,aliases);
       return true;
     }else{
       return false;
@@ -227,7 +231,7 @@ autoHelper: function autoHelper(trigger,options){
                                     });
                             });
                     } else {
-                            msg.channel.getMessages(1, msg.id).then(me => resolve(me[0])).catch(reject("NO MESSAGE"));
+                            msg.channel.getMessages(1, msg.id).then(me => resolve(me[0])).catch(reject);
                     }
             });
     }

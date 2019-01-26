@@ -7,6 +7,7 @@ const aRANK = new mongoose.Schema({
    user: {type:String,required: true,index:{unique:false}},
    level: Number,
    exp: Number,
+   thx: Number,
    lastUpdated: Date
 });
 
@@ -33,7 +34,7 @@ MODEL.findOne({user:U,server:S}, (err, rank) => {
       });
       rank.save((err) => {
         if (err) return console.error(err);
-        console.log("[NEW RANK]".blue,S.yellow,`(${U}) User`);
+       // console.log("[NEW RANK]".blue,S.yellow,`(${U}) User`);
       });
    }
 });

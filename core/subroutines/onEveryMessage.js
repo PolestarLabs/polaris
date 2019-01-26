@@ -62,6 +62,8 @@ async function levelChecks(msg) {
     incrementLocal(msg);
     incrementGlobal(msg);
   };
+  
+  if(global.piggyback) return;
 
   ///=======  [LOCAL LVUP] ========///
   if (curLevel_local < LOCAL_RANK.level) {

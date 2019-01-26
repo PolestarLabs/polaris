@@ -6,12 +6,15 @@ const Mixed = Schema.Types.Mixed;
 
 const Achievement = new Schema({
 
-  trigger:  {type:String,required: true},
-  response: String,
-  server: {type:String,required: true,index:{unique:false}},  
-  id: {type:String,required: true,index:{unique:true}},
-  embed: Mixed,
-  type: String // EMBED, STRING, FILE
+  name: String,
+  icon: String,
+  exp: Number,
+  reveal_level: Number,
+  reveal_requisites: Array,
+  flavor_text_id: {type:String,index:{unique:true}},
+  condition:  {type:String,required: true},
+  advanced_conditions: Array,
+  id: {type:String,required: true,index:{unique:true}}
   
 })
 

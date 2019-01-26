@@ -52,7 +52,7 @@ const init = async function (msg) {
         if(!usr.meta) usr.meta = {};
         return new Object({
             name: _LOCAL? usr.nick || usr.name : usr.meta.username||usr.nick||usr.user.username,
-            avatar: Picto.getCanvas(usr.meta.avatar||(usr.user||{}).avatarURL||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+            avatar: Picto.getCanvas((_LOCAL?false:usr.meta.avatar)||(usr.user||{}).avatarURL||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
             exp: usr.modules.exp,
             level: usr.modules.level,
             tagline: usr.modules.tagline,
@@ -71,7 +71,7 @@ const init = async function (msg) {
         let ct = res.getContext('2d');
         if (!usr)return res;
         ct.fillStyle = usr.color;
-        ct.fillRect(0,0,45,sec?80:100);        
+        ct.fillRect(0,0,45,sec?80:100);    
         ct.drawImage(await usr.avatar,90,2,sec?80:90,sec?80:90);
         ct.drawImage(await usr.bg,255,-50,400,206);
         ct.fillStyle = "rgba(45, 63, 77,0.1)"
