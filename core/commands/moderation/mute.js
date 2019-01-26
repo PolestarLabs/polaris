@@ -238,7 +238,7 @@ const init = async function (message) {
 }
 
 module.exports = {
-    pub: false,
+    pub: true,
     cmd: cmd,
     perms: 3,
     init: init,
