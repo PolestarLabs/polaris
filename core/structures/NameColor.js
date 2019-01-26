@@ -1,4 +1,4 @@
-const NAMES=require(paths.LISTS+"/colors.json");
+const NAMES = require(paths.LISTS+"/colors.json");
 
 colName = {
 
@@ -26,7 +26,6 @@ colName = {
         color = "#" + color;
       if(color.length == 4)
         color = "#" + color.substr(1, 1) + color.substr(1, 1) + color.substr(2, 1) + color.substr(2, 1) + color.substr(3, 1) + color.substr(3, 1);
-
         
         var rgb = this.rgb(color);
         var r = rgb[0], g = rgb[1], b = rgb[2];
@@ -34,23 +33,23 @@ colName = {
       var h = hsl[0], s = hsl[1], l = hsl[2];
       var ndf1 = 0; ndf2 = 0; ndf = 0;
       var cl = -1, df = -1;
-      
       color=color.replace(/#/g,'');
       for(var i = 0; i < NAMES.length; i++)
-      { 
+      {   
         if(color == "" + NAMES[i][0])
         return ["" + NAMES[i][0], NAMES[i][1], true];
-        0  
-        ndf1 = Math.pow(r - NAMES[i][2], 2) + Math.pow(g - NAMES[i][3], 2) + Math.pow(b - NAMES[i][4], 2);
-        ndf2 = Math.pow(h - NAMES[i][5], 2) + Math.pow(s - NAMES[i][6], 2) + Math.pow(l - NAMES[i][7], 2);
+
+        ndf1 = Math.pow(r - NAMES[i][2][0], 2) + Math.pow(g - NAMES[i][3][1], 2) + Math.pow(b - NAMES[i][4][2], 2);
+        ndf2 = Math.pow(h - NAMES[i][5][0], 2) + Math.pow(s - NAMES[i][6][1], 2) + Math.pow(l - NAMES[i][7][2], 2);
         ndf = ndf1 + ndf2 * 2;
+        
         if(df < 0 || df > ndf)
         {
           df = ndf;
           cl = i;
         }
+   
       }
-  
       return (cl < 0 ? null : ["" + NAMES[cl][0], NAMES[cl][1]]);
     },
   

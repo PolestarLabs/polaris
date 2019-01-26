@@ -14,8 +14,6 @@ const init = async function (message) {
     let P={lngs:message.lang,}
     if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
   //------------
-      
-    
     
 if(message.author.crafting)return;
 message.author.crafting = true;

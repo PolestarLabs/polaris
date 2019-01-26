@@ -75,6 +75,7 @@ let ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16,'\u200b ');
   return '\u200b'
 
 }
+
 emb.field("Last Transactions", 
 `${await lastTransBuild(lastTrans[0])}
 ${await lastTransBuild(lastTrans[1])}

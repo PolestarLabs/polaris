@@ -55,6 +55,7 @@ const init = async function (msg){
     }
     res.embed.description = gear.emoji('yep') + colorChanged;
     res.embed.footer = {}
+    console.log(res)
     DB.users.set(msg.author.id,{$set:{'modules.favcolor': ("#"+res.hex).replace("##","#") }})
     msg.channel.send({embed:res.embed})
 }

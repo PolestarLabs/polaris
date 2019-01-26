@@ -65,7 +65,7 @@ MODEL.findOne({id: chanData.id}, (err, newChan) => {
       });
       user.save((err) => {
         if (err) return console.error(err);
-        console.log("[NEW CHANNEL]".blue,"#"+chanData.name.yellow,`(ID:${chanData.id})`);
+        //console.log("[NEW CHANNEL]".blue,"#"+chanData.name.yellow,`(ID:${chanData.id})`);
         MODEL.updateMeta(chanData);
       });
    }

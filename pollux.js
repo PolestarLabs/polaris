@@ -19,6 +19,8 @@ const pGear = require("./core/structures/PrimitiveGearbox.js");
 
 //Eris Mods-----//
 require('./core/structures/ReactionCollector.js')(ERIS);
+
+
 Eris.Guild.prototype.member = function (user){
   if(!user) return null;
   user = user.id || user;
@@ -29,6 +31,8 @@ Eris.Embed.prototype.setColor = function(color){
    return this;
 }
 
+//global.piggyback = true;
+
 //---------------//
 
 const cfg = require('./config.json');
@@ -36,7 +40,7 @@ const cfg = require('./config.json');
 const colors = require('colors');
 
 
-
+//console.log = function(){}
 
 const POLLUX = new Eris(cfg.token,{
 
