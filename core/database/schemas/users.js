@@ -53,8 +53,8 @@ const UserSchema = new mongoose.Schema({
       bgID:{type:String,default:"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"},
       sticker:String,
       bgInventory:{type:Array,default:["5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"]},
-      skin: {type: String, default:'default'},
-      skinsAvailable: Array,
+      //skin: {type: String, default:'default'},
+      //skinsAvailable: Array,
       achievements: Array,
 
       //FINANCES
@@ -76,13 +76,13 @@ const UserSchema = new mongoose.Schema({
               medals: {type:Array,default:[0,0,0,0,0,0,0,0,0]},
               medalInventory: Array,
 
-           //----CARDS
-              cards: Array,
-              cardInventory: Array,
-              cardCollection: Array,
+           //-/---CARDS
+              //cards: Array,
+              //cardInventory: Array,
+              //cardCollection: Array,
            //----STAMPS
-              stampInventory: Array,
-              stampCollection: Array,
+              //stampInventory: Array,
+              //stampCollection: Array,
            //----STICKERS
               stickerInventory: Array,
               stickerCollection: Array,
@@ -90,11 +90,11 @@ const UserSchema = new mongoose.Schema({
               fishes: Array,
               fishCollection: Array,
            //----ELEMENTS
-              elements: Array,
-              elementCollection: Array,
+              //elements: Array,
+              //elementCollection: Array,
            //----FLOWERS
-              flowers: Array,
-              flowerCollection: Array,
+              //flowers: Array,
+              //flowerCollection: Array,
 
       //-------------------------------
 
@@ -119,6 +119,8 @@ const UserSchema = new mongoose.Schema({
           MP:{type:Number,default:100}
       },
       */
+     commend:Number,
+     commended:Number,
       fun: {
           waifu: Mixed,
           lovers: Mixed,
@@ -143,12 +145,40 @@ UserSchema.methods.addItem = function receiveItem(itemId,amt=1){
   const items = require('./items.js');
   return items.receive(this.id,itemId,amt);
 }
+
+UserSchema.methods.upCommend = function upCommend(USER,amt=1){
+  const miscDB = require('./_misc.js');
+  return new Promise(async resolve=>{
+    await Promise.all([
+      miscDB.commends.new(this),
+      miscDB.commends.new(USER),
+    ]);
+    await Promise.all([
+      miscDB.commends.updateOne({'id': this.id , 'whoIn.id':{$ne:USER.id}},{$addToSet: {'whoIn' : {id:USER.id} }}),
+      miscDB.commends.updateOne({'id': USER.id , 'whoOut.id':{$ne:this.id}},{$addToSet: {'whoOut' : {id:this.id} }})
+    ]);      
+    await Promise.all([
+      miscDB.commends.updateOne({id:this.id,'whoIn.id':USER.id},{$inc:{'whoIn.$.count':amt}}),
+      miscDB.commends.updateOne({id:USER.id,'whoOut.id':this.id},{$inc:{'whoOut.$.count':amt}})
+      ]);
+
+      let res = await miscDB.commends.get(this.id); 
+      resolve(res)
+    
+  })
+}
+
 UserSchema.methods.removeItem = function destroyItem(itemId,amt=1){
   const items = require('./items.js');
   return items.consume(this.id,itemId,amt);
 }
 UserSchema.methods.addXP = function addXP(amt=1){
   return this.update({},{ $inc: { 'modules.exp': amt } });
+}
+
+UserSchema.methods.incrementAttr = function incrementAttr(attr,amt=1,upper=false){
+  let attrib = upper ? attr : 'modules.'+attr; 
+  return this.model("UserDB").updateOne({id:this.id},{ $inc: { ['modules.'+attr] : amt } });
 }
 
 let MODEL = mongoose.model('UserDB', UserSchema, 'userdb');
@@ -170,25 +200,27 @@ MODEL.updateMeta = U => {
 
 
 MODEL.new = userDATA => {
-MODEL.findOne({id: userDATA.id}, (err, newUser) => {
-   if (err) {
-      console.error(err)
-   }
-   if (newUser) {
-     // Nothing
-   } else {
-      let user = new MODEL({
-         id: userDATA.id,
-         name:userDATA.username,
-         tag:userDATA.tag
-      });
-      user.save((err) => {
-        if (err) return console.error(err);
-        console.log("[NEW USER]".blue,userDATA.tag.yellow,`(ID:${userDATA.id})`);
-        MODEL.updateMeta(userDATA);
-      });
-   }
-});
+  MODEL.findOne({id: userDATA.id}, (err, newUser) => {
+    if (err) {
+        console.error(err)
+    }
+    if (newUser) {
+      // Nothing
+    } else {
+        let user = new MODEL({
+          id: userDATA.id,
+          name:userDATA.username,
+          tag:userDATA.tag
+        });
+        user.save((err) => {
+          if (err) return console.error(err);
+          //console.log("[NEW USER]".blue,userDATA.tag.yellow,`(ID:${userDATA.id})`);
+          MODEL.updateMeta(userDATA);
+        });
+    }
+  });
+
+  return MODEL.findOne({id:userDATA.id})
 }
 
 

@@ -26,10 +26,17 @@ const Buyable = new Schema({
   other : Mixed
 });
 
+const Commends = new Schema({
+  id:{type:String, required: true,index:{unique:true}},
+  whoIn: Array,
+  whoOut: Array
+})
+
+
 const Globals = new Schema({
   id:{type:Number,default:0,unique:true},
   data:Mixed
-});
+},{ strict: false });
 
 const FanartModel = new Schema({
         id:String,
@@ -73,5 +80,28 @@ const FanartModel = new Schema({
   const buyables  = mongoose.model('buyables', Buyable, 'buyables');
       buyables.set  =  utils.dbSetter;
       buyables.get  =  utils.dbGetter; 
+      const commends  = mongoose.model('commends', Commends, 'commends');
+      commends.set  =  utils.dbSetter;
+      commends.get  =  utils.dbGetter; 
+      commends.new = payload => {
+        commends.findOne({
+          id: payload.id
+        }, (err, newUser) => {
+          if (err) {
+            console.error(err)
+          }
+          if (newUser) {
+            // Nothing
+          } else {
+            let cmmd = new commends({
+              id: payload.id,
+            });
+            cmmd.save((err) => {
+              if (err) return console.error(err);
+              console.log("[NEW COMMEND]".blue);
+            });
+          }
+        })
+      }
 
-module.exports={ audit,global,fanart,buyables };
+module.exports={ audit,global,fanart,buyables,commends };

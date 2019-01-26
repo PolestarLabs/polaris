@@ -18,6 +18,7 @@ const
        ,buyables       : miscDB.buyables
        ,fanart         : miscDB.fanart
        ,globalDB       : miscDB.global
+       ,commends       : miscDB.commends
        ,audits         : miscDB.audit
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
