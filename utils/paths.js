@@ -14,8 +14,10 @@ exports.run=()=>{
     SKINS:      appRoot + "/../v7/resources/imgres/build/profile/skins/",
     FONTS:      appRoot + "/../v7/resources/fonts/",
     AVIS:       appRoot + "/avis/",
+    PROFILE:    appRoot + "/resources/imgres/build/profile/",
     LOCALE:     appRoot + "/utils/lang/",
     UTILS:      appRoot + "/utils/"
   }
 
 }
+ 
