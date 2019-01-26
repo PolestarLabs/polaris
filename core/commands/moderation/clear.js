@@ -7,8 +7,13 @@ const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
-
     
+    let ServerDATA = await DB.servers.get(msg.guild.id);
+    const modPass = gear.modPass(msg.member,"manageMessages", ServerDATA);
+    if (!modPass) {
+        return msg.reply($t('responses.errors.insuperms', P)).catch(console.error);
+    };
+
 let bucket = (await msg.channel.getMessages( msg.args[0], msg.id)).map(m=>m.id);
 
 msg.channel.send(`Deleting messages...`)
@@ -23,7 +28,7 @@ module.exports={
     ,pub:true
     ,cmd:'clear'
     ,perms:3
-    ,cat:'moderation'
+    ,cat:'mod'
     ,botPerms:['attachFiles','manageMessages']
     ,aliases:['burn']
 }
