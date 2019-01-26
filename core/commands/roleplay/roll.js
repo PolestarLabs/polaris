@@ -1,7 +1,8 @@
-//const gear = require("../../gearbox.js");
-const cmd = 'roll';
+const gear = require('../../utilities/Gearbox');
+const DB = require('../../database/db_ops');
 const locale = require('../../../utils/i18node');
 const $t = locale.getT();
+const cmd = 'roll';
 
 const init = async function (message) {
 
@@ -9,35 +10,33 @@ const v={}
 
 
 const P = {user:message.member.username,lngs:message.lang}
-  //if(gear.autoHelper([$t("helpkey",P),"noargs"],{cmd,message,opt:this.cat}))return;
+  if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
+
 
 let DICE_REGEX = /([0-9]* *d[0-9]+)/g
 let DICE_EMOTES={
   "2": "<:exchange:446901834246782976>",
-  "4":      "[DICE]",//gear.emoji("d4"),
-  "6":      "[DICE]",//gear.emoji("d6"),
-  "8":      "[DICE]",//gear.emoji("d8"),
-  "10":     "[DICE]",//gear.emoji("d10"),
-  "12":     "[DICE]",//gear.emoji("d12"),
-  "20":     "[DICE]",//gear.emoji("d20"),
-  "any":    "[DICE]",//gear.emoji("d20")
+  "4":     gear.emoji("d4"),
+  "6":     gear.emoji("d6"),
+  "8":     gear.emoji("d8"),
+  "10":    gear.emoji("d10"),
+  "12":    gear.emoji("d12"),
+  "20":    gear.emoji("d20"),
+  "any":   gear.emoji("d20")
 }
 
-gear={randomize: function(max,min){
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}}
 
 const MTH = /[\+\-\*\/\(\)]/g
 let rollEq = message.content.split(/\s+/).slice(1).join(" ");
 let primaEx = message.content.split(/\s+/).slice(1).join(" ");
 
   
-  //const userDATA = await gear.userDB.findOne({id:message.author.id});
-  let variables = []//(userDATA.switches||{}).variables //.filter(va=> !isNaN(Number(va.value)));
-  
+  const userDATA = await DB.users.get({id:message.author.id});
+  let variables = (userDATA.switches||{}).variables//||[]).filter(va=> !isNaN(Number(va.value)));
+ 
   
     let counter = 0
-  while(rollEq.includes("m!")){
+  while(rollEq.includes("!")){
     counter++
     if(counter>25)break;
     variables.forEach(vari=>{
@@ -61,18 +60,19 @@ if(rollEq.includes("-nostreak")){
   NOSTREAK = true 
 }
   
-let dicesRolled = rollEq.match(DICE_REGEX)  
+let dicesRolled = rollEq.match(DICE_REGEX)
+if(!dicesRolled) return  $t("games.dice.noDiceRolled",P);
 const SINGLEROLL = (dicesRolled.length==1&&!rollEq.match(MTH));
 const SIMPLEROLL = (dicesRolled.length==1&&rollEq.match(MTH)!=null)
       
       
-if (dicesRolled.length>5) return message.reply("You can only roll 5 different dices at a once!");
+if (dicesRolled.length>5) return message.reply($t("games.dice.onlyRoll5",P));
 const  MAX_DISP = Math.floor(dicesRolled.length  / 25)||25;
   
 let diceArray = []
 
  
-   const streakLimit = "Dice streak can be shown for up to 25 rolls.",
+   const streakLimit = $t("games.dice.limit25",P),
     s_total =  $t('terms.total',P),
     s_overview = $t('terms.overview',P),
     s_result =  $t('terms.res',P),
@@ -144,7 +144,7 @@ let notThisPls = $t("games.dice.exceedLim",P);
           
      RESULT= eval(rollEq2+"0");        
         }catch(err){
-          message.reply("Invalid Roll Equation -- Only the dice will be rolled!")
+          message.reply( $t("games.dice.invalidRoll",P) )
         }
       }
   
@@ -179,10 +179,10 @@ if((final+overview+5).length>2000){
 
   message.channel.send(final_pre+overviewPre)
     .then(async mes=>{
-         // await gear.wait(2);
+          await gear.wait(2);
           mes.edit(""+final+overviewPre)
             .then(async me2=>{
-                  // await gear.wait(1);
+                   await gear.wait(1);
                    me2.edit(final+ overview)
           })
   }).catch(e=>message.reply(notThisPls))
