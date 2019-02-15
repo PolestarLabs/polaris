@@ -213,11 +213,15 @@ Winner:\`${JSON.stringify(luckyOne)}\
       goesto.delete().catch(e=>false);
       dramaMsg.delete().catch(e=>false);
       CHN.send("||"+drama[rand]+"||, "+v.gratz);
-      await Promise.all([ 
+      await Promise.all([
         DB.users.set({id:{$in:ids}},{$inc:{'modules.exp':100}})
        ,DB.users.set(luckyOne.id,{$inc:{'modules.exp':500}})
-       ,DB.control.set(trigger.author.id,{$inc:{'data.boxesLost':-1,'data.boxesTriggered':1,'data.boxesEarned':1},$push:{'data.boxTriggerMessages': `[${pickers.length} Pickers] | `+(trigger.content || "[Embeded Image]")}})
-       ,DB.control.set({id:{$in:ids}},{$inc:{'data.boxesLost':1}}})
+       ,DB.control.set(
+         trigger.author.id,
+         {$inc:
+          {'data.boxesLost':-1,'data.boxesTriggered':1,'data.boxesEarned':1},
+          $push:{'data.boxTriggerMessages' : `[${pickers.length} Pickers] | `+(trigger.content || "[Embeded Image]")}})
+       ,DB.control.set({id:{$in:ids}},{$inc:{'data.boxesLost':1}})
       ]);
       trigger.channel.natural = false
     }
