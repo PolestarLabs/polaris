@@ -29,7 +29,6 @@ function convertToEvent(i,box) {
 module.exports = {
   lootbox: async function loot(trigger) {
 const $t = locale.getT(); 
-    console.log("xxx")
 if(POLLUX.beta || POLLUX.restarting){
   if(trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653")  return;
 }
