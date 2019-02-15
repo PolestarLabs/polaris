@@ -10,8 +10,8 @@ exports.run = async function (msg) {
   //DEBUG -----------------------------------------------------
   
   if(POLLUX.refreshing || POLLUX.beta){
-     //delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
-     //delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
+     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
+     delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
   if( (POLLUX.tapping || POLLUX.beta) && !global.piggyback){
@@ -72,7 +72,6 @@ if(
   
  _userData = await _userData;
  if ( !(_userData) ) return void garbageC();  
-  
 
   if (typeof (_servData.modules.PREFIX) !== 'undefined' && _servData.modules.PREFIX !== '') {    
     if(msg.content.startsWith(_servData.modules.PREFIX)) msg.prefix = _servData.modules.PREFIX;
@@ -87,8 +86,9 @@ if(
   if(POLLUX.user.id == "354285599588483082"){
     if(msg.content.startsWith("=")) msg.prefix = "=";
     else if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
-    else return;
+    else msg.prefix = false;
   }
+
   
   if (msg.prefix) {
     if ((await _userData).blacklisted && _userData.blacklisted!=="") {

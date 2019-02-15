@@ -29,8 +29,10 @@ function convertToEvent(i,box) {
 module.exports = {
   lootbox: async function loot(trigger) {
 const $t = locale.getT(); 
-    
-if(POLLUX.beta || POLLUX.restarting)return;
+    console.log("xxx")
+if(POLLUX.beta || POLLUX.restarting){
+  if(trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653")  return;
+}
 
 if(trigger.content=="pick" &&  !trigger.channel.natural){
  return    DB.users.set(trigger.author.id,{$inc:{'modules.exp':-10}});
@@ -79,7 +81,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       droprate = gear.randomize(_DROPMIN , _DROPMAX);
       if(droprate == 777) break;
     };
-    if(droprate !== 777 && !Server.large ){
+    if(droprate !== 777 && !trigger.guild.large ){
       droprate = gear.randomize(_DROPMIN , _DROPMAX);
     }
 
@@ -182,18 +184,18 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
 
       let drama = pickers.map(user=>user.name);
       let ids = pickers.map(user=>user.id);
-      let drama_message = "• "+drama.join('\n• ');
+      let drama_message = "\u200b\n• "+drama.join('\n• ');
       let mention = pickers.map(user=>user.mention);
-      drama[rand] = mention[rand];
+      //drama[rand] = mention[rand];
       let mention_message = "• "+drama.join('\n• ');
 
       let goesto = await CHN.send(v.oscarGoesTo);
       let dramaMsg = await CHN.send(drama_message);
                     console.log(("WINNER PICKED!!!").green)
-      await gear.wait(2);
+      await gear.wait(4);
 
-      dramaMsg.edit(mention_message);
-      await gear.wait(2);
+      //dramaMsg.edit("||"+drama[rand]+"||");
+      //await gear.wait(1);
 
      /*
       gear.dropHook.send("---\nLootbox Drop at **"+trigger.guild.name+"** ("+trigger.guild.id+") - `#"+trigger.channel.name+"` ("+trigger.channel.id+") \n Message to trigger: ```"+trigger.content+"```" +`
@@ -206,15 +208,19 @@ Winner:\`${JSON.stringify(luckyOne)}\
 
 `)
       */
-
+      trigger.channel.deleteMessages(responses.map(x=>x.id));
       await DB.users.set(luckyOne.id,{$push:{'modules.inventory':BOX.id}});
                       console.log(("BOX ADDED!!!").green)
       goesto.delete().catch(e=>false);
       dramaMsg.delete().catch(e=>false);
-      CHN.send(mention[rand]+", "+v.gratz);
-      await DB.users.set({id:{$in:ids}},{$inc:{'modules.exp':100}});
-      await DB.users.set(luckyOne.id,{$inc:{'modules.exp':500}});
-      trigger.channel.natural = true
+      CHN.send("||"+drama[rand]+"||, "+v.gratz);
+      await Promise.all([ 
+        DB.users.set({id:{$in:ids}},{$inc:{'modules.exp':100}})
+       ,DB.users.set(luckyOne.id,{$inc:{'modules.exp':500}})
+       ,DB.control.set(trigger.author.id,{$inc:{'data.boxesLost':-1,'data.boxesTriggered':1,'data.boxesEarned':1},$push:{'data.boxTriggerMessages': `[${pickers.length} Pickers] | `+(trigger.content || "[Embeded Image]")}})
+       ,DB.control.set({id:{$in:ids}},{$inc:{'data.boxesLost':1}}})
+      ]);
+      trigger.channel.natural = false
     }
   }
 }
