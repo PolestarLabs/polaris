@@ -3,7 +3,7 @@ const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 exports.run = async msg => {
-  await Promise.all([
+  Promise.all([
     levelChecks(msg),
     Drops(msg)
   ]);

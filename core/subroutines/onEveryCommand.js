@@ -35,11 +35,11 @@ module.exports = {
               ['data.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
         }
       }),
-      DB.userDB.set(message.author.id, {
+      DB.control.set(message.author.id, {
         $inc: {
-              ['modules.statistics.commandUsage.CMD.' + command.cmd]: 1,
-              ['modules.statistics.commandUsage.TOTAL']: 1,
-              ['modules.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
+              ['data.statistics.commandUsage.CMD.' + command.cmd]: 1,
+              ['data.statistics.commandUsage.TOTAL']: 1,
+              ['data.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
         }
       }),
       DB.serverDB.set(message.guild.id, {
