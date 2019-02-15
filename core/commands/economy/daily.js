@@ -48,7 +48,7 @@ let myDaily = await Premium.getDaily(Author) || 125;
     //minibuster.up(message,hardStreak+softStreak*10)
     
 
-    let streak = userData.counters.daily.streak;
+    let streak = (userData.counters||{daily:{streak:0}}).daily.streak;
     let hardStreak = streak
 
 
