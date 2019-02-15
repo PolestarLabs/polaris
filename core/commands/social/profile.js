@@ -133,7 +133,7 @@ const init = async function run(msg) {
     if (!Target.bot) {
       svRankData = await DB.localranks.get({user:Target.id,server:msg.guild.id});
       serverank = DB.localranks
-      .find({exp:{$gt:svRankData.exp}}).countDocuments();
+      .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
       globalrank = DB.users
       .find({"modules.exp": {$gt: TARGET_DB.modules.exp},blacklisted: {$exists: false}}).countDocuments();
 
@@ -159,7 +159,6 @@ const init = async function run(msg) {
     function XPercent(x, l, f = 0.0427899) {
       let exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
       let exptoThis = Math.trunc(Math.pow(l / f, 2));
-
       let frameofact = exptoNex - exptoThis;
       let levelcoverage = x - exptoThis
       let percent = levelcoverage / frameofact;
@@ -565,7 +564,7 @@ const init = async function run(msg) {
       name: "profile-" + Target.id + ".png"
     })
 
-  } catch (e) {
+  } catch (e) { 
     console.log("ERROR PROFILE")
     console.error(e)
     msg.channel.send("```ml" + `
