@@ -13,7 +13,7 @@ const init = async function (msg){
     
     let Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
 
-    if(msg.args.includes("info")||msg.args.includes("status")){
+    if(msg.args.includes("info")||msg.args.includes("status")||msg.args.includes("stats")){
         if(msg.args.length !== 1)  Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
         if(msg.args.length === 1)  Target = msg.author;
     } 
@@ -111,6 +111,8 @@ console.log(embed)
         embe2.setColor('#3b9ea5')
         embe2.description(`
     ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online')+$t('responses.commend.check_yes',P):gear.emoji('dnd')+$t('responses.commend.check_no',P)} 
+       
+    :reminder_ribbon: × **${userData.modules.inventory.find(i=>i.id==="commendtoken").count||0}**
          `)
             return msg.channel.send({embed:embe2});
     }

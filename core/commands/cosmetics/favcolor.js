@@ -47,8 +47,9 @@ const init = async function (msg){
       
       return msg.channel.send({embed});
     }
-    
-    let res = await getColor.init(msg,true);
+
+        let res = await getColor.init(msg,true);
+ 
     if(res.name == "INVALID COLOR"){
         res.embed.description = gear.emoji('nope') + "INVALID COLOR";
         return msg.channel.send({embed:res.embed})
