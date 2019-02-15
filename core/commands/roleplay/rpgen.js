@@ -14,7 +14,7 @@ const init = async function (msg){
     let hex = (gear.randomize(0,1677720)*10+2).toString(16).padStart(6,"A");
     let color = Colors("#"+hex)[0]
 
-    if(!msg.args || msg.args[0] == "npc"){
+    if(!msg.args[0] || msg.args[0] == "npc"){
         let oneNPC = RPGen.NPCs.generate();
         const fs = require('fs'); 
         fs.readdir(appRoot + "/resources/rpgen/pics/", function (err, files) {
@@ -46,8 +46,9 @@ const init = async function (msg){
             
             embed.thumbnail("attachment://ava.gif")
 
-               return msg.channel.send({embed},{file,name:"ava.gif"});
+                msg.channel.send({embed},{file,name:"ava.gif"});
         })
+        return;
     }
 
     if(['plot','hook','story'].includes(msg.args[0])){
@@ -74,5 +75,5 @@ module.exports={
     ,perms:3
     ,cat:'roleplay'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:['rpgenerator']
+    ,aliases:['rpgenerator'] 
 }
