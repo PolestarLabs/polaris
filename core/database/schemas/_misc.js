@@ -38,6 +38,11 @@ const Globals = new Schema({
   data:Mixed
 },{ strict: false });
 
+const Control = new Schema({
+  id:{type:String,unique:true},
+  data:Mixed
+},{ strict: false });
+
 const FanartModel = new Schema({
         id:String,
         src:String,
@@ -61,6 +66,10 @@ const FanartModel = new Schema({
           });
        }    
 
+  const control    = mongoose.model('Control', Control, 'control');
+        control.set    =  utils.dbSetter;
+        control.get    =  utils.dbGetter; 
+        
   const global    = mongoose.model('Global', Globals, 'globals');
       global.set  = function(alter){
         if(!typeof alter) console.warn( "Invalid Alter Object");
@@ -80,7 +89,7 @@ const FanartModel = new Schema({
   const buyables  = mongoose.model('buyables', Buyable, 'buyables');
       buyables.set  =  utils.dbSetter;
       buyables.get  =  utils.dbGetter; 
-      const commends  = mongoose.model('commends', Commends, 'commends');
+  const commends  = mongoose.model('commends', Commends, 'commends');
       commends.set  =  utils.dbSetter;
       commends.get  =  utils.dbGetter; 
       commends.new = payload => {
@@ -104,4 +113,4 @@ const FanartModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends };
+module.exports={ audit,global,fanart,buyables,commends, control };

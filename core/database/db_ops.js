@@ -20,6 +20,7 @@ const
        ,globalDB       : miscDB.global
        ,commends       : miscDB.commends
        ,audits         : miscDB.audit
+       ,control        : miscDB.control
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
    ,collectibles  : require('./schemas/collectibles.js')
