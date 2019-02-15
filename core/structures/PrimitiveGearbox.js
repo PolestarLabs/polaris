@@ -31,7 +31,7 @@ module.exports = {
          query = {'id':query.toString()};
        };
        if(!typeof alter) resolve (null);
-       return resolve(this.updateOne(query,alter));
+       return resolve(this.updateOne(query,alter,{upsert:true}));
      })
    },
 
