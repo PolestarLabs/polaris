@@ -7,16 +7,20 @@ const $t = locale.getT();
 const init = async function (msg,programatic){
 
     delete require.cache[require.resolve('name-this-color')]
-    const colors = require('name-this-color');
+   
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ 
     let hexColor = (msg.args[0].match(hexRegex)||[])[0];
-
-
-    let result = hexColor ? colors(hexColor) : colors("hexColor");
- 
+    let result
+try{
+    const colors = require('name-this-color');
+    result = hexColor ? colors(hexColor) :[{title:"Invalid Color (Defaults to Black)",hex:"#000000"}];
+}catch(e){
+    result = [{title:"Invalid Color (Defaults to Black)",hex:"#000000"}]
+}
+ console.log({result})
 
     let embed = new gear.Embed(),
         Canvas = Picto.new(140,140),
