@@ -72,10 +72,10 @@ mongoose.Promise = global.Promise;
 const tunnel = require('tunnel-ssh');
  console.log("• ".blue,"Connecting to Database...");
 
-
+/*
    tunnel(cfg.tunnel,  (err, server)=> {
      if(err)console.error("• ".red,"SSH tunnel  error: " + err);
-     
+*/     
 mongoose.connect(cfg.dbURL, {
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE,
@@ -95,7 +95,7 @@ mongoose.set('useCreateIndex', true);
     db.once('open', function() {
         console.log("• ".green,"DB connection successful");
     });
-});
+//});
 
   
 Promise.promisifyAll(require("mongoose"));
