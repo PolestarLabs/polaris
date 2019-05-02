@@ -39,7 +39,8 @@ const init = async function (message) {
   if(TARGERDATA){
 
     emb.description =
-`${gear.emoji('RBN')} ${$t('keywords.RBN_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.rubines ,true)}**
+`${gear.invisibar}
+${gear.emoji('RBN')} ${$t('keywords.RBN_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.rubines ,true)}**
 ${gear.emoji('JDE')} ${$t('keywords.JDE_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.jades ,true)}**
 ${gear.emoji('SPH')} ${$t('keywords.SPH_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.sapphires ,true)}**
 ${gear.emoji('EVT')} ${"Event Tokens"}: **${gear.miliarize(TARGERDATA.eventGoodie || 0 , true)}**`

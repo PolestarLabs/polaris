@@ -239,9 +239,9 @@ const init = async function run(msg) {
     const _MEDALS     = {x: 100,  y: 380}
     const _STICKER    = {x: 320,  y: 395}
     const _BG         = {x: 88,   y: 15}
-    const G_RANK      = {x: 562,  y: 382}
-    const L_RANK      = {x: 559 + 172, y: 382}
-    const _RUBINES    = {x: 706,  y: 439}
+    const G_RANK      = {x: 562,  y: 382 + 80}
+    const L_RANK      = {x: 559 + 172, y: 382 + 80}
+    const _RUBINES    = {x: 706,  y: 439 +80}
     const _EXP        = {x: 0,    y: 0}
     const _REP        = {x: 53,   y: 460}
     const _STAR       = {x: 53,   y: 25}
@@ -252,7 +252,13 @@ const init = async function run(msg) {
 
     let mainframe = Picto.getCanvas(appRoot + "/resources/imgres/build/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
       _bg = Picto.getCanvas(paths.BUILD + "/backdrops/" + backgroundId + ".png"),
-      _flairTop = Picto.getCanvas(paths.BUILD + "/flairs/top/" + flair + ".png");
+      _flairTop = Picto.getCanvas(paths.BUILD + "/flairs/top/" + flair + ".png"),
+      iconRubine = Picto.getCanvas(appRoot+"/../v7/2dash/public/images/gems/rubine_full.png");
+      
+
+      const medalCanvases = medals.map(mdl=>  Picto.getCanvas(paths.MEDALS + mdl + ".png") );
+
+
     let medallien = [];
     let medlen = medals.length;
     while (medlen--) {
@@ -267,27 +273,29 @@ const init = async function run(msg) {
 
     let pre_a = "https://orig00.deviantart.net/b86e/f/2016/343/a/e/cosmog_discord_icon_by_zelakantal-dar345n.png"
 
-    let global_roundel = await Picto.XChart(120, percent, favcolor || "#dd5383", false, level);
-    let hex_frame = await Picto.makeHex(250);
-    let hex_pic = await Picto.makeHex(210, propic);
+     const [global_roundel, hex_frame, hex_pic] = await Promise.all( [
+       Picto.XChart(120, percent, favcolor || "#dd5383", false, level)
+      ,Picto.makeHex(250)
+      ,Picto.makeHex(210, propic)
+     ]);
 
 
     // NICKNAME ============================================================>
 
-    let label = await Picto.tag(ctx, nickname, "900 42px 'Whitney HTF'", "#223");
-    let tagliney = await Picto.tag(ctx, tagline, "600 20px 'Whitney HTF SC'", "#363f5c");
+    let label = Picto.tag(ctx, nickname, "900 42px 'Whitney HTF'", "#223");
+    let tagliney = Picto.tag(ctx, tagline, "600 20px 'Whitney HTF SC'", "#363f5c");
 
     // THX  ================================================================>
 
     rep = rep > 999 ? 999 : rep;
-    let _rep = await Picto.tag(ctx, rep, "40px 'Visitor TT1 BRK'", "#fff");
-    let _star = await Picto.tag(ctx, commend, "40px 'Visitor TT1 BRK'", "#fff");
+    let _rep = Picto.tag(ctx, rep, "40px 'Visitor TT1 BRK'", "#fff");
+    let _star = Picto.tag(ctx, commend, "40px 'Visitor TT1 BRK'", "#fff");
     let rep_displace = _rep.width / 2
   
 
     // LOVEPOINTS ============================================================>
     let lovpoints = TARGET_DB.modules.lovepoints > 999 ? 999 : TARGET_DB.modules.lovepoints;
-    let _love = await Picto.tag(ctx, lovpoints || "0", "40px 'Visitor TT1 BRK'", "#fff");
+    let _love = Picto.tag(ctx, lovpoints || "0", "40px 'Visitor TT1 BRK'", "#fff");
     let love_displace = _love.width / 2
 
     _bg = await _bg;
@@ -341,30 +349,31 @@ const init = async function run(msg) {
 
     if (sticker) {
       let sticky = await Picto.getCanvas(paths.BUILD + "/stickers/" + sticker + ".png");
-      ctx.drawImage(sticky, _STICKER.x - 10, _STICKER.y - 25, 200, 200)
+      ctx.drawImage(sticky, _STICKER.x - 10 -10, _STICKER.y - 25 -8, 220, 220)
     } else {
       //let polluxi = await Picto.getCanvas(paths.BUILD + "/polluxi.png");
      // ctx.drawImage(polluxi, _STICKER.x, _STICKER.y - 20)
     }
 
-    let personal = await Picto.block(ctx, persotex, "17px 'Whitney HTF Light', sans-serif", "#FFF", 255, 70)
-    ctx.drawImage(personal.item, 520, 495)
+    let personal = Picto.block(ctx, persotex, "18px 'Whitney HTF Light', sans-serif", "#FFF", 255, 70)
+    ctx.drawImage(personal.item, 520, 495 - 128)
     
-    let rubicount = await Picto.tag(ctx, rubines,
+    let rubicount = Picto.tag(ctx, rubines,
       "900 30px 'Whitney HTF Light',Sans", "#FFF")
       if (!Target.bot) ctx.drawImage(rubicount.item, _RUBINES.x - rubicount.width, _RUBINES.y);
+      if (!Target.bot) ctx.drawImage(await iconRubine, _RUBINES.x +10, _RUBINES.y);
       
       ctx.globalAlpha = .6;
-    let REP = await Picto.tag(ctx, "THX",
+    let REP = Picto.tag(ctx, "THX",
       "900 30px 'Whitney HTF',Sans", "#ffffff")
     ctx.drawImage(REP.item, 52 - REP.width / 2, 425)
     ctx.globalAlpha = 1;
-    let grank = await Picto.tag(ctx, "#" + gear.miliarize((await globalrank) + 1),
+    let grank = Picto.tag(ctx, "#" + gear.miliarize((await globalrank) + 1),
       "300 22px 'Whitney HTF Light',Sans", "#FFFFFF")
     if (!Target.bot) {
       Picto.setAndDraw(ctx, grank, G_RANK.x, G_RANK.y, 80, "left")
     }
-    let lrank = await Picto.tag(ctx, "#" + gear.miliarize(serverank + 0),
+    let lrank = Picto.tag(ctx, "#" + gear.miliarize(serverank + 0),
       "300 22px 'Whitney HTF Light',Sans", "#FFFFFF")
     if (!Target.bot) {
       Picto.setAndDraw(ctx, lrank, L_RANK.x, L_RANK.y, 80, "right")
@@ -414,7 +423,8 @@ const init = async function run(msg) {
         while (col < 3) {
           //console.log({col,ind,row,MEDAL:medals_images[ind]})
           if (medals[ind]) {
-            let medalie = await Picto.getCanvas(paths.MEDALS + medals[ind] + ".png");
+            
+            let medalie = await medalCanvases[ind];
             await ctx.drawImage(medalie, x + 68 * col, y + 68 * row, 64, 64);
           }
           ind = await ind + 1;
@@ -512,14 +522,13 @@ const init = async function run(msg) {
     //=========================================
 
     if (TARGET_DB.personal) {
-      let flaggie = await Picto.getCanvas(paths.BUILD + "/flags/" + TARGET_DB.personal.country + ".png");
-      ctx.drawImage(flaggie, _flag.x, _flag.y, 44, 30)
-
+      Picto.getCanvas(paths.BUILD + "/flags/" + TARGET_DB.personal.country + ".png").then(flaggie=>ctx.drawImage(flaggie, _flag.x, _flag.y, 44, 30));
     }
+    
     try {
 
       const cfg = require(appRoot + '/config.json');
-      let bottomtag;
+      let bottomTag;
       if (TARGET_DB.switches && !TARGET_DB.switches.hideProle) {
 
         bottomTag = TARGET_DB.switches.role
@@ -528,12 +537,11 @@ const init = async function run(msg) {
       if (cfg.admins.includes(TARGET_DB.id)) bottomTag = "moderatorplus"
       if (cfg.owner.includes(TARGET_DB.id)) bottomTag = "owner"
 
-
       if (bottomTag) {
         let tierframe = await Picto.getCanvas(paths.BUILD + "profile/bottomtags/" + bottomTag + ".png");
         ctx.drawImage(tierframe, 160 + 268, 565);
       }
-      console.log(3)
+     
       if (bottomTag == "translator" && TARGET_DB.switches.translator) {
         let flag = await Picto.getCanvas(paths.BUILD + "flags/" + TARGET_DB.switches.translator + ".png");
         ctx.drawImage(flag, 160 + 313, 567, 32, 21);
