@@ -3,6 +3,7 @@ const CDN = "https://pollux.fun"
 exports.run=()=>{
 
   global.paths = {
+    CDN,
     MISC:       appRoot + "/../v7/resources/misc/",
     REACTIONS:  appRoot + "/../v7/resources/imgres/reactions/",
 
@@ -21,6 +22,6 @@ exports.run=()=>{
     LOCALE:     appRoot + "/utils/lang/",
     UTILS:      appRoot + "/utils/"
   }
-
+ 
 }
  

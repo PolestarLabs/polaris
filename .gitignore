@@ -9,6 +9,8 @@ asciiPollux.js
 *.psd
 *.ai
 *.bat
+*.mp3
+*.wav
 *.png
 core/commands/social/profile - Copy.js
 tunnel.js

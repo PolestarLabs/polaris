@@ -250,10 +250,10 @@ const init = async function run(msg) {
 
     //=========================================
 
-    let mainframe = Picto.getCanvas(appRoot + "/resources/imgres/build/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
-      _bg = Picto.getCanvas(paths.BUILD + "/backdrops/" + backgroundId + ".png"),
-      _flairTop = Picto.getCanvas(paths.BUILD + "/flairs/top/" + flair + ".png"),
-      iconRubine = Picto.getCanvas(appRoot+"/../v7/2dash/public/images/gems/rubine_full.png");
+    let mainframe = Picto.getCanvas(paths.Build+"/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
+      _bg = Picto.getCanvas(paths.CDN + "/backdrops/" + backgroundId + ".png"),
+      _flairTop = Picto.getCanvas(paths.CDN + "/flairs/" + flair + ".png"),
+      iconRubine = Picto.getCanvas(paths.CDN+"/images/gems/rubine_full.png");
       
 
       const medalCanvases = medals.map(mdl=>  Picto.getCanvas(paths.MEDALS + mdl + ".png") );
@@ -342,13 +342,13 @@ const init = async function run(msg) {
     ctx.globalAlpha = 1;
     
     ctx.drawImage(
-      (await Picto.getCanvas(appRoot+"/resources/imgres/build/profile/litostar.png"))
+      (await Picto.getCanvas(paths.CDN+"/build/profile/litostar.png"))
       , _STAR.x - 53, _STAR.y-25
       )
     Picto.setAndDraw(ctx,_star, _STAR.x-2, _STAR.y+50,80,'center')
 
     if (sticker) {
-      let sticky = await Picto.getCanvas(paths.BUILD + "/stickers/" + sticker + ".png");
+      let sticky = await Picto.getCanvas(paths.CDN + "/stickers/" + sticker + ".png");
       ctx.drawImage(sticky, _STICKER.x - 10 -10, _STICKER.y - 25 -8, 220, 220)
     } else {
       //let polluxi = await Picto.getCanvas(paths.BUILD + "/polluxi.png");
@@ -490,7 +490,7 @@ const init = async function run(msg) {
       ctx.shadowColor = 'rgba(30,30,30,.3)';
       ctx.save();
       
-      ctx.drawImage(await Picto.getCanvas(appRoot+"/resources/imgres/build/profile/marriheart_"+WIFE.ring+".png"),
+      ctx.drawImage(await Picto.getCanvas( path.CDN+"/build/profile/marriheart_"+WIFE.ring+".png"),
       115,15)
       let WifeImage = POLLUX.users.get(WIFE.id).avatarURL || pre_a;
       let WifeName = POLLUX.users.get(WIFE.id).username || WIFE.tag.split("#")[0];
@@ -553,7 +553,7 @@ const init = async function run(msg) {
 
     if (TARGET_DB.blacklisted && TARGET_DB.blacklisted != "") {
 
-      let bliste = await Picto.getCanvas(paths.BUILD + "bliste.png");
+      let bliste = await Picto.getCanvas(paths.BUILD + "blacklisted.png");
       ctx.globalCompositeOperation = 'saturation';
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
       ctx.fillRect(0, 0, 800, 600)

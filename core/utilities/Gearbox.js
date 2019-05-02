@@ -6,8 +6,10 @@ const generator = new MersenneTwister();
 const DB = require("../database/db_ops");
 const emojiList = require(appRoot+"/resources/lists/emoji.js");
 
-Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
-Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
+if (Eris.Embed){
+  Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
+  Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
+}
 
 module.exports = {
 
