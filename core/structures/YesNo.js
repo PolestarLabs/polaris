@@ -1,14 +1,18 @@
+const gear = require("../utilities/Gearbox");
 module.exports = {
     run: async function yesNo(m,message,yes=false,no=false,timeout=false,options){
     options = options || {}
     let embed = options.embed|| (m.embeds||[])[0] || false;
     let avoidEdit = options.avoidEdit || !embed  || false;
     let time = options.time || 15000;
+    let deleteFields = typeof options.deleteFields ? options.deleteFields : true;
     console.log(avoidEdit)
     let strings = options.strings || {}
         strings.confirm =strings.confirm|| "OK"
         strings.timeout   =strings.timeout|| "TIMEOUT"
         strings.cancel    =strings.cancel|| "CANCEL"
+
+        
     let YA = {
       r: ":yep:339398829050953728",
       id: '339398829050953728'
@@ -29,11 +33,13 @@ module.exports = {
     m.removeReactions().catch();
     if(embed && !avoidEdit){
       embed.color =16499716;
-      embed.fields = []
+      if(deleteFields===true) embed.fields = [];
       embed.footer ={text: strings.timeout};
+      
       m.edit({embed});
     }
-    if (timeout)  return timeout();
+    if (timeout && typeof timeout == 'function')  return timeout();
+    else if (timeout)  return timeout;
   });
   if (!reas || reas.length === 0 ) return;
 
@@ -41,11 +47,13 @@ module.exports = {
     m.removeReactions().catch();
     if(embed && !avoidEdit){
       embed.color = 16268605
-      embed.fields = []
+      if(deleteFields===true) embed.fields = [];
       embed.footer ={text: strings.cancel};
-      m.edit({embed});
+      
+      m.edit({embed}) 
     }
-    if (no)  return no();
+    if (no && typeof no == 'function')  return no();
+    else if (no)  return no;
   }
   
   if (reas.length === 1 && reas[0].emoji.id == NA.id) {
@@ -56,11 +64,12 @@ module.exports = {
     if(embed && !avoidEdit){
       m.removeReactions().catch();
       embed.color = 1234499;
-      embed.fields = []
+      if(deleteFields===true) embed.fields = [];
       embed.footer ={text: strings.confirm};
       m.edit({embed});
     }
-      if (yes)  return yes(cancellation);
+      if (yes && typeof yes == 'function')  return yes(cancellation);
+      else if (yes)  return yes;
   } 
   }
 }
