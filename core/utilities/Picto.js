@@ -1,6 +1,7 @@
 const cfg = require(appRoot+"/config.json");
 const Canvas = require('canvas');
 const Pixly = require('pixel-util');
+const wrap = require('canvas-text-wrapper').CanvasTextWrapper;
 //const md5 = require('md5');
 
 module.exports={
@@ -11,7 +12,7 @@ module.exports={
   },
   
   getCanvas: async function getCanvas(path) {
-    let img = await new Canvas.Image;
+    let img =  new Canvas.Image;
     img.src = await Pixly.createBuffer(path);
     return img;
   },
@@ -40,7 +41,7 @@ module.exports={
     },
 
   block: function block(base, text, font, color, W, H, options) {
-       const wrap = require('canvas-text-wrapper').CanvasTextWrapper;
+     
        font = font || '14px Product,Sans'
        color = color || '#b4b4b4'
        base.font = font;
