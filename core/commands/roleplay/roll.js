@@ -9,7 +9,7 @@ const init = async function (message) {
 const v={}
 
 
-const P = {user:message.member.username,lngs:message.lang}
+const P = {user:message.member.username,lngs:message.lang,prefix:message.prefix}
   if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
 
 
@@ -34,20 +34,19 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
   const userDATA = await DB.users.get({id:message.author.id});
   let variables = (userDATA.switches||{}).variables//||[]).filter(va=> !isNaN(Number(va.value)));
  
-  
-    let counter = 0
+  let counter = 0
   while(rollEq.includes("!")){
     counter++
     if(counter>25)break;
-    variables.forEach(vari=>{
-    let regex = new RegExp("\\b"+vari.tag+"\\b","g");
+    variables.forEach(vari=>{      
+    let regex = new RegExp("!\\b"+vari.tag.replace("!","")+"\\b","g");
+    //console.log( rollEq) 
     rollEq = rollEq.replace(regex,"("+vari.value+")")
-    //message.reply("`"+rollEq+"`")
   })
   }
   
   variables.forEach(vari=>{
-    console.log({vari,rollEq})
+    console.log('oks')
     let regex = new RegExp("\\b"+vari.tag+"\\b","g");
     rollEq = rollEq.replace(regex,(vari.value+" "))
    // message.reply("`"+rollEq+"`")
@@ -61,7 +60,9 @@ if(rollEq.includes("-nostreak")){
 }
   
 let dicesRolled = rollEq.match(DICE_REGEX)
-if(!dicesRolled) return  $t("games.dice.noDiceRolled",P);
+
+
+if(!dicesRolled) return  message.channel.send ($t("games.dice.noDiceRolled",P));
 const SINGLEROLL = (dicesRolled.length==1&&!rollEq.match(MTH));
 const SIMPLEROLL = (dicesRolled.length==1&&rollEq.match(MTH)!=null)
       
@@ -194,7 +195,7 @@ if((final+overview+5).length>2000){
   
   }
  module.exports = {
-    pub:false,
+    pub:true,
     cmd: cmd,
     perms: 3,
     init: init,
