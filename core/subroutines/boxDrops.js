@@ -4,7 +4,6 @@ const fs = require('fs')
 const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events"); 
 
-
 function eventChecks(svDATA){
   if (!svDATA.event) return 1;
   if (!svDATA.event.enabled) return 1;
