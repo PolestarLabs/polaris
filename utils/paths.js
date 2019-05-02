@@ -1,3 +1,5 @@
+
+const CDN = "https://pollux.fun" 
 exports.run=()=>{
 
   global.paths = {
@@ -5,17 +7,17 @@ exports.run=()=>{
     REACTIONS:  appRoot + "/../v7/resources/imgres/reactions/",
 
     CARDS:      appRoot + "/../v7/resources/imgres/usercards/",
-    MEDALS:     appRoot + "/../v7/resources/imgres/medals/",
+    MEDALS:     CDN + "/medals/",
     LISTS:      appRoot + "/resources/lists/",
-    Build:      appRoot + "/resources/imgres/build/",
-    BUILD:      appRoot + "/../v7/resources/imgres/build/",
+    Build:      CDN + "/build/",
+    BUILD:      CDN + "/build/",
     LEWD:       appRoot + "/../v7/resources/imgres/lewd/",
     EVENT:      appRoot + "/../v7/resources/imgres/event/",
-    PROFILE:    appRoot + "/../v7/resources/imgres/build/profile/",
-    SKINS:      appRoot + "/../v7/resources/imgres/build/profile/skins/",
+    PROFILE:    CDN + "/build/profile/",
+    SKINS:      CDN + "/build//profile/skins/",
     FONTS:      appRoot + "/../v7/resources/fonts/",
     AVIS:       appRoot + "/avis/",
-    PROFILE:    appRoot + "/resources/imgres/build/profile/",
+    PROFILE:    CDN + "/build/profile/",
     LOCALE:     appRoot + "/utils/lang/",
     UTILS:      appRoot + "/utils/"
   }
