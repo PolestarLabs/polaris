@@ -4,6 +4,7 @@ const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
 const DB = require("../database/db_ops");
+const emojiList = require(appRoot+"/resources/lists/emoji.js");
 
 Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
 Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
@@ -12,8 +13,10 @@ module.exports = {
 
   reload: function(){delete require.cache[require.resolve('./Gearbox')]},
   emoji: function emoji(query){
-    return "🈲"
+    return  emojiList(query)
   },
+  invisibar : "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
+
   getTarget: function getTarget(msg,argPos=0,self=true){
     
     if(!msg.args[argPos]) return self ? msg.author : null;
@@ -73,7 +76,8 @@ module.exports = {
         // Gibe precision pls
         if(strict){
             let stash = stashe
-            return stash;
+            if(strict==='soft'){     
+              stash = stashe.split(char)       
         switch(stash.length){
             case 1:
                 return stash+numstringExtra;
@@ -88,6 +92,8 @@ module.exports = {
                 return stash[0]+char+stash[1][0]+stash[1][1]+numstringExtra+"Bi";
              }
             return stashe+numstringExtra;
+          } 
+          return stash;
         };
         // Precision is not a concern
         stash = stashe.split(char)
