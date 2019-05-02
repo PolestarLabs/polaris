@@ -1,3 +1,7 @@
+
+
+
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema 
 const Mixed = Schema.Types.Mixed;
@@ -55,6 +59,20 @@ const FanartModel = new Schema({
         ,publish:Boolean,extras:Mixed
 },{ strict: false });
 
+
+const MarketplaceModel = new Schema({
+  id:String,
+  item_id: String,
+  item_type: String,
+  price: Number,
+  currency: String,
+  author: String,
+  timestamp: Number
+},{ strict: false });
+
+
+
+
   const audit     = mongoose.model('Audit', Audit, 'transactions');
       audit.set     =  utils.dbSetter;
       audit.get     =  utils.dbGetter; 
@@ -83,12 +101,38 @@ const FanartModel = new Schema({
         }
       };
 
+  const marketplace    = mongoose.model('marketplace', MarketplaceModel, 'marketplace');
+      marketplace.set    =  utils.dbSetter;
+      marketplace.get    =  utils.dbGetter; 
+      marketplace.new = payload => {
+        marketplace.findOne({
+          id: payload.id
+        }, (err, newUser) => {
+          if (err) {
+            console.error(err)
+          }
+          if (newUser) {
+            // Nothing
+          } else {
+            let cmmd = new marketplace({
+              id: payload.id,
+            });
+            cmmd.save((err) => {
+              if (err) return console.error(err);
+              console.log("[NEW MARKET POST]".blue);
+            });
+          }
+        })
+      }
+
   const fanart    = mongoose.model('fanart', FanartModel, 'fanart');
       fanart.set    =  utils.dbSetter;
       fanart.get    =  utils.dbGetter; 
+
   const buyables  = mongoose.model('buyables', Buyable, 'buyables');
       buyables.set  =  utils.dbSetter;
       buyables.get  =  utils.dbGetter; 
+      
   const commends  = mongoose.model('commends', Commends, 'commends');
       commends.set  =  utils.dbSetter;
       commends.get  =  utils.dbGetter; 
@@ -113,4 +157,4 @@ const FanartModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control };
+module.exports={ audit,global,fanart,buyables,commends, control,marketplace }; 

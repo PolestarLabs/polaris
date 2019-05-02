@@ -27,7 +27,7 @@ var init = async function (message) {
     r: ":nope:339398829088571402",
     id: '339398829088571402'
   }
-
+ 
 
   BGBASE = gear.shuffle(BGBASE)
   let selectedBG = BGBASE.find(bg=>{
@@ -39,7 +39,7 @@ var init = async function (message) {
     return false;
   });
   if(!selectedBG) selectedBG=gear.shuffle(BGBASE)[28];
-  
+ 
   const embed = new gear.Embed;
   
   embed.author("Background","https://pollux.fun/images/tiers/"+selectedBG.rarity+".png");
