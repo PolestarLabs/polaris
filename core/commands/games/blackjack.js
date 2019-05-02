@@ -16,9 +16,11 @@ var enemyStando = false
 let handarray = []
 let hy = "|"
 
-async function getCard(suit, num) {
+
+
+async function getCard(suit, num,deck) {
     hy += ` **${num}** ${suiticons[suit]} |`
-  let minipath = paths.BUILD + "cards/" + suit + "/" + num + ".png"
+  let minipath = paths.Build + "cards/casino/"+(deck||"default")+"/" + suit  + num + ".png"
   //console.log(minipath)
   let neo = await Picto.getCanvas(minipath)
   return neo
@@ -53,9 +55,9 @@ function cardValue(card) {
     s: suit
 }
 };
-async function compileHand(H,B){
-  
-    const IMG = new Canvas.createCanvas(400, 100);
+async function compileHand(H,B,deck){
+  console.log(deck)
+    const IMG = new Canvas.createCanvas(400, 200);
     const ctx = IMG.getContext('2d');
 
 
@@ -64,7 +66,7 @@ async function compileHand(H,B){
     if (H.length === 1) {
         let mono = H[0]
         for (i = 0; i < mono.length; i++) {
-            await Dcard(mono[i], i)
+            await Dcard(mono[i], i,undefined,deck)
             
             
         }
@@ -72,33 +74,38 @@ async function compileHand(H,B){
         let a=0
         for(y=0;y<H.length;y++){
             for (i = 0; i < H[y].length; i++) {
-                await  Dcard(H[y][i],a,20)
+                await  Dcard(H[y][i],a,20,deck)
              a++
             }
             a+=1.5
         }
     }
 
-    async function Dcard(card,i,aperture){
+    async function Dcard(card,i,aperture,deck){
         let a=aperture||0
         let imaga;
-        if(card[0]=="X"){
-            imaga = await Picto.getCanvas(paths.BUILD+"cards/misc/backface.png")
+        console.log(card)
+        if(typeof card==='string' && card.startsWith("JOKER")){
+          let joker_id = card.split("-")[1];
+          imaga = await Picto.getCanvas(paths.Build+"cards/casino/JOKERS/"+(joker_id||deck||'default')+".png")
+        }
+        else if(card[0]=="X"){
+            imaga = await Picto.getCanvas(paths.Build+"cards/casino/"+(deck||'default')+"/backface.png")
         }else{
               //console.log(card)
               let x = cardValue(card);
               
               //console.log(x)
-              imaga = await getCard(x.s, x.r)
+              imaga = await getCard(x.s, x.r,deck)
             }
             
             ctx.rotate(-.15)
-        await ctx.drawImage(imaga,  (54-a) * i, 20+(i*1.5*((54-a)/10)));
+        await ctx.drawImage(imaga,  (54-a) * i, 20+(i*1.5*((54-a)/10)) , 143,160);
         //console.log(B)
-        ctx.shadowColor = B?'#eeff27':'black';
+        ctx.shadowColor = B?'#eeff27':'#3b3b4b';
         ctx.shadowBlur = 10;
         ctx.rotate(.15)
-        
+         
     }
   
     return IMG
@@ -124,7 +131,7 @@ async function drawTable(PL,DL,DATA_A,DATA_B,stuff){
     let OUTCOME = "WIN"
     
     
-    let fel = await Picto.getCanvas(_ASSETS+"feltro.png")
+    let fel = await Picto.getCanvas(paths.Build+"/games/blackjack/feltro.png")
     c.drawImage(fel,0,0)
     switch(true){
         
@@ -150,14 +157,14 @@ async function drawTable(PL,DL,DATA_A,DATA_B,stuff){
     
 
     let chip = await Picto.getCanvas(_ASSETS+"chips-"+chips+".png")
-    c.drawImage(chip,160,180)
+    c.drawImage(chip,140,170)
     
     //=================================
-    c.drawImage(DL,0,200)
+    c.drawImage(DL,-10,180)
     c.translate(200, 150);
     c.rotate(180 * Math.PI / 180);
     c.translate(-200, -150);
-    c.drawImage(PL,0,200)
+    c.drawImage(PL,-10,180)
     c.translate(200, 150);
     c.rotate(180 * Math.PI / 180);
     c.translate(-200, -150);
@@ -180,13 +187,13 @@ async function drawTable(PL,DL,DATA_A,DATA_B,stuff){
     c.drawImage(me,332,124,60,60);
     
     let wid
-    let name_p= await Picto.tag(c,_PLAYER, "500 18px 'Whitney HTF'","#fff")
+    let name_p= await Picto.tag(c,_PLAYER, "400 14px 'Corporate Logo Rounded'","#fff")
     name_p.width > 100 ? wid = 100 : wid = name_p.width;
-    c.drawImage(name_p.item,324-wid,129,wid,name_p.height)
+    c.drawImage(name_p.item,324-wid,132,wid,name_p.height)
   
-    let name_d= await Picto.tag(c,_DEALER, "500 18px 'Whitney HTF'","#fff")
+    let name_d= await Picto.tag(c,_DEALER, "400 14px 'Corporate Logo Rounded'","#fff")
     name_d.width > 100 ? wid = 100 : wid = name_d.width;
-    c.drawImage(name_d.item,16+60,99,wid,name_d.height) 
+    c.drawImage(name_d.item,16+60,102,wid,name_d.height) 
     
     let bet_img= await Picto.tag(c,gear.miliarize(bet), "900 20px 'Whitney HTF'","#e6d084")
     c.drawImage(bet_img.item,110-bet_img.width/2,170)
@@ -202,6 +209,14 @@ async function drawTable(PL,DL,DATA_A,DATA_B,stuff){
     let num_d= await Picto.tag(c,SCORE_B, "900 18px 'Whitney HTF',Sans","#fff")
     c.drawImage(num_d.item,16+60,99+20)
     
+    if(SCORE_A.toString().includes("JOKER")){
+      let bjk = await Picto.getCanvas(paths.Build+"games/blackjack/JOKER-win.png")
+      c.drawImage(bjk,0,0)
+      let mey = await Picto.getCanvas(paths.Build+"cards/casino/JOKERS/"+(SCORE_A.split('-')[1]||'default')+".png");
+      c.rotate(-25)
+      c.drawImage(mey,270,00,150,178)
+      c.rotate(25)
+    }
     if(SCORE_A.toString().toLowerCase()=="blackjack"){
         let bjk = await Picto.getCanvas(_ASSETS+"BLACKJACK-win.png")
     c.drawImage(bjk,0,0)
@@ -246,8 +261,10 @@ module.exports = {
     perms: 3,
     cat: 'gambling',
   cool:5000,
+  aliases:['bj'],
   
   init: async function run(msg) {
+    let myDeck = msg.args[1] ;
       
 const USERDATA = await DB.users.get(msg.author.id);
       
@@ -292,6 +309,7 @@ const USERDATA = await DB.users.get(msg.author.id);
       
       v._WIN  = $t("games.blackjack.youwin", P)
       v._LOSE = $t("games.blackjack.youlose", P)
+      v._JOKER  = $t("games.blackjack.joker", "Oh no! The Joker! You're so lucky~",P)
       v._EVEN = $t("games.blackjack.even", P)
       v._PRIZE  = $t("$.plus_rubines_generic", P)
       v._ANTIPRIZE  = $t("$.minus_rubines_generic", P)
@@ -350,7 +368,7 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
   //showstoppers
   
     if (Blackjack.gameExists(msg.author.id)) {
-        return msg.reply(v.ONGOING);
+      //  return msg.reply(v.ONGOING);
     }
     
     let hasmin = ECO.checkFunds(msg.author,10)
@@ -396,14 +414,17 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
         v.NEWGAME.replace("%usr%", msg.member.displayName).replace("%bt%", bet)
         ).then(async() => {
             
-            
+            options={}
             const balance = USERDATA.modules.rubines;
-            const playerHand = blackjack.getHand();
+            const playerHand = blackjack.getHand(options);
             let dealerHand = blackjack.getHand();
       let playerHands;
+      //playerHand.pop()
+      //playerHand.push('JOKER-default')
 
-      if (Blackjack.handValue(playerHand) !== 'Blackjack') {
-          playerHands = await this.getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack);
+      let playerHandValueCalc = Blackjack.handValue(playerHand);
+      if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER") ) {
+          playerHands = await this.getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,myDeck);
           const result = this.gameResult(Blackjack.handValue(playerHands[0]), 0);
           const noHit = playerHands.length === 1 && result === 'bust';
 
@@ -437,7 +458,7 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
         
         if (result !== 'bust') hideHoleCard = false;
         
-        const lossOrGain = Math.floor((['loss', 'bust'].includes(result) ? -1 : result === 'push' ? 0 : 1) * (hand.doubled ? 2 : 1) * (playerValue === 'Blackjack' ? 1.5 : 1) * bet); 
+        const lossOrGain = Math.floor((['loss', 'bust'].includes(result) ? -1 : result === 'push' ? 0 : 1) * (hand.doubled ? 2 : 1) * (playerValue === 'Blackjack' ? 1.5 : playerValue.toString().includes('JOKER') ? 2 : 1) * bet); 
         if(result=="push")resultade="push";
         winnings += lossOrGain;
         const soft = Blackjack.isSoft(hand);
@@ -457,12 +478,16 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
 
       
       let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE
+
+      if (  Blackjack.handValue(playerHands[0]).toString().includes('JOKER') ) PLAY_RES = v._JOKER;
+
       resultade === 'push' ? PLAY_RES= v._EVEN : PLAY_RES=PLAY_RES
       //console.log(playerHand)
-      let POLLUX_HAND_GFX = await compileHand(playerHands)
+      let POLLUX_HAND_GFX = await compileHand(playerHands,undefined,myDeck)
       let visihand= [dealerHand[0],["X"]]
       //console.log(visihand)
-      let PLAYER_HAND_GFX = await compileHand([hideHoleCard?visihand:dealerHand])
+     
+      let PLAYER_HAND_GFX = await compileHand([hideHoleCard?visihand:dealerHand],undefined,'default')
       
       // await parseHand(playerHands[0])   
       // await parseHand_p(dealerHand)
@@ -525,11 +550,12 @@ gameResult: function gameResult(playerValue, dealerValue) {
     if (dealerValue > 21) return 'Dealer bust';
     if (playerValue === dealerValue) return 'push';
     if (playerValue === 'Blackjack' || playerValue > dealerValue) return 'win';
+    if (playerValue.toString().includes("JOKER") || playerValue > dealerValue) return 'win';
 
     return 'loss';
   },
   
-  getFinalHand: function getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack) {
+  getFinalHand: function getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,deck) {
     return new Promise(async resolve => {
         const hands = [playerHand];
         let currentHand = hands[0];
@@ -597,8 +623,8 @@ gameResult: function gameResult(playerValue, dealerValue) {
         let bjkP = H_DATA.val.toString().toLowerCase()=="blackjack" 
         let bjkD = POL_DATA.val.toString().toLowerCase()=="blackjack" 
  
-        let POLLUX_HAND_GFX = await compileHand([currentHand],bjkD)
-        let PLAYER_HAND_GFX = await compileHand([visihand],bjkP)
+        let POLLUX_HAND_GFX = await compileHand([currentHand],bjkD,deck)
+        let PLAYER_HAND_GFX = await compileHand([visihand],bjkP,'default')
       
         
         

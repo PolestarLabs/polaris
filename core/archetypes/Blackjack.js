@@ -8,6 +8,7 @@ const DECK_TEMPLATE = suits
     .concat(ranks)
     .map(rank => rank + suit)
   ).reduce((array, arr) => array.concat(arr));
+
 class Blackjack {
   constructor(msg) {
     this.guildID = msg.guild.id;
@@ -15,10 +16,10 @@ class Blackjack {
     this.deck = [];
     games.set(this.playerID, this);
   }
-  getHand() {
-    return this.hit(this.hit([]))
+  getHand(options) {
+    return this.hit(this.hit([]),options)
   }
-  hit(hand) {
+  hit(hand,powerups) {
     if (this.deck.length === 0) {
       if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
         this.deck = decks.get(this.guildID);
@@ -27,6 +28,14 @@ class Blackjack {
         decks.set(this.guildID, this.deck);
       }
     }
+    this.deck.push("JOKER-default");
+    if(powerups && powerups.jokers){
+      let jokers = powerups.jokers.length ||0
+      while (jokers--){
+        this.deck.push(powerups.jokers[jokers]);
+      }
+    }
+    this.deck = Blackjack._shuffle(this.deck);
     hand.push(this.deck.pop());
     return hand;
   }
@@ -40,6 +49,9 @@ class Blackjack {
     return games.has(playerID);
   }
   static isSoft(hand) {
+    if(hand.find(card=>card.startsWith("JOKER"))){
+      return false;
+    }
     let value = 0;
     let aces = 0;
     hand.forEach(card => {
@@ -56,6 +68,9 @@ class Blackjack {
   static handValue(hand) {
     let value = 0;
     let aces = 0;
+    if(hand.find(card=>card.startsWith("JOKER"))){
+      return hand.find(card=>card.startsWith("JOKER"));
+    }
     hand.forEach(card => {
       value += Blackjack._cardValue(card);
       if (Blackjack._cardValue(card) === 11) aces++;
@@ -68,9 +83,11 @@ class Blackjack {
     return value;
   }
   static _cardValue(card) {
+    if(card==="JOKER"){
+      return 0
+    }
     const index = ranks.indexOf(card.slice(0, -1));
     if (index === 0) return 11;
-
     return index >= 10 ? 10 : index + 1;
   }
   static _shuffle(array) {
