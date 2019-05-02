@@ -101,10 +101,10 @@ const LANGFLAGS = {
     "zu" : "🇿🇦"
 }
 
-const translate = require('google-translate-api');
+const translate = require('@vitalets/google-translate-api');
 const DB = require("../database/db_ops");
 
-module.exports = {
+module.exports = { 
     LANGNAMES : translate.languages,
     LANGFLAGS,
     flagFromLang: function(locale){
