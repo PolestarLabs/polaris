@@ -40,23 +40,26 @@ const init = async function (msg) {
         us.user = SMEM.user 
         return us;
     });
-    const _LOCAL = ['server','local','sv','here'].includes(msg.args[0]);
+    const _LOCAL = ['server','local','sv','here'].includes(msg.args[0]) || msg.content.includes('top');
 
     const Ranks = _LOCAL ?  localUserRanks.map(rankify) : userRanks.map(rankify);
 
     const selfLocal = await DB.localranks.get({server:msg.guild.id,user:msg.author.id});
-    const selfRank = rankify(userData);
+    const selfRank = rankify(userData,"self");
 
-    function rankify(usr){
+     function rankify(usr,self){
         if(!usr) return ;
         if(!usr.meta) usr.meta = {};
+
         return new Object({
+            id: usr.id,
             name: _LOCAL? usr.nick || usr.name : usr.meta.username||usr.nick||usr.user.username,
-            avatar: Picto.getCanvas((_LOCAL?false:usr.meta.avatar)||(usr.user||{}).avatarURL||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+            avatar: Picto.getCanvas( self==="self"?msg.author.staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :POLLUX.users.find(u=>u.id==usr.id).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
             exp: usr.modules.exp,
             level: usr.modules.level,
             tagline: usr.modules.tagline,
             color: usr.modules.favcolor,
+            rubines: usr.modules.rubines,
             bg: Picto.getCanvas(paths.BUILD+"/backdrops/"+((usr.modules||{}).bgID||"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6")+".png"),
             ACV: (usr.modules.achievements||[]).length,
             DLY: (((usr.modules||{}).counters||{}).daily||{}).streak || 0
@@ -67,20 +70,21 @@ const init = async function (msg) {
     let mFrame = Picto.getCanvas(appRoot+"/resources/imgres/build/rank_mainframe.png");
 
     async function rankBack(usr,sec){
+        
         let res = Picto.new(656, sec?80:100);
         let ct = res.getContext('2d');
         if (!usr)return res;
         ct.fillStyle = usr.color;
-        ct.fillRect(0,0,45,sec?80:100);    
-        ct.drawImage(await usr.avatar,90,2,sec?80:90,sec?80:90);
-        ct.drawImage(await usr.bg,255,-50,400,206);
+        ct.fillRect(0,1,45,sec?80:100);    
+    ct.drawImage(await usr.avatar,90,2,sec?80:90,sec?80:90);
+    ct.drawImage(await usr.bg,255,-50,400,206);
         ct.fillStyle = "rgba(45, 63, 77,0.1)"
         ct.fillRect(255,-50,400,206);        
         let EXP = Picto.tag(ct,usr.exp,"400 "+(18-(sec?2:0))+"px 'Whitney HTF'","#FFF")
         let ww = EXP.width
         ww=ww>100?100:ww;
-        Picto.roundRect(ct,606-ww,sec?16:17,ww+40,EXP.height+4,10,"rgb(48, 53, 67)")
-        Picto.setAndDraw(ct,EXP,610,sec?17:18,100,'right');   
+        Picto.roundRect(ct,606-ww,sec?15:16,ww+40,EXP.height+4,10,"rgb(48, 53, 67)")
+        Picto.setAndDraw(ct,EXP,610,sec?16:17,100,'right');   
 
         return res;
     }
@@ -96,8 +100,10 @@ const init = async function (msg) {
         let TAG = Picto.tag(ct,usr.tagline,"400 "+(16-(sec?2:0))+"px 'Whitney HTF'","#AAA")
 
         
-        let _lvTag = Picto.tag(ct,"LEVEL","300 "+(14-(sec?2:0))+"px 'Whitney HTF'","#FFF")
+        let _lvTag  = Picto.tag(ct,"LEVEL","300 "+(14-(sec?2:0))+"px 'Whitney HTF'","#FFF")
+        let _uid    = Picto.tag(ct,`${gear.miliarize(usr.rubines,true,' ')} 💎 | `+usr.id,"300 "+(12-(sec?2:0))+"px 'monospace'","#FFF5")
         
+        Picto.setAndDraw(ct,_uid,640,sec?70:81,450,'right');
         Picto.setAndDraw(ct,_lvTag,60,sec?18:20,45,'center');
         Picto.setAndDraw(ct,LVL,60,sec?26:30,45,'center');
         Picto.setAndDraw(ct,NME,192,sec?16:20,300);
@@ -113,8 +119,7 @@ const init = async function (msg) {
           YD=378;
 
           ctx.fillStyle = "#212329"
-          ctx.fillRect(20,20,700,500)
-          
+          ctx.fillRect(20,20,700,500)      
           ctx.drawImage(await selfRank.avatar,650,485,58,58)
           ctx.drawImage(await selfRank.bg,245,450,400,206);
           ctx.fillStyle = selfRank.color;
@@ -159,7 +164,8 @@ const init = async function (msg) {
 
 
     let FILE = gear.file(await Canvas.toBuffer(),"rank.png");
-    msg.channel.send('',FILE)
+    let message = _LOCAL ? ":trophy: **Local Leaderboards for "+msg.guild.name+"**" : ":trophy: **Global Leaderboards**"
+    msg.channel.send(message,FILE)
     
 
 

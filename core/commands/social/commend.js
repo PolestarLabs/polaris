@@ -63,7 +63,7 @@ __**Top Commenders**__
        }
    }
 
-    const after = async function after(msg,Dly){
+    const after = async function after(msg,Dly){ 
 
         await Promise.all([
             userData.removeItem('commendtoken'),
@@ -75,7 +75,7 @@ __**Top Commenders**__
 
         P.target    = Target.nick || (Target.user||Target).username;
         P.author    = msg.member.nick || msg.author.username;
-        P.cmcount   = targetData.modules.commend +1
+        P.cmcount   = (targetData.modules.commend +1 )|| 0
         P.pplcount  = targetDataC.whoIn.length
 
         let embed = new gear.Embed()

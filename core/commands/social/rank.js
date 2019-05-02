@@ -78,7 +78,7 @@ await Promise.all([
     Picto.setAndDraw(ctx, Picto.tag(ctx, TARGET.nick||TARGET.username, "900 42px 'Whitney HTF'", "#eee")    , 340, 28,420,'left',)
     Picto.setAndDraw(ctx, Picto.tag(ctx, "#"+(1+LRpos), "900 42px 'Whitney HTF'", "#2f2c2c")    , 495, 185,112,'right',)
     Picto.setAndDraw(ctx, Picto.tag(ctx, "RANK", "400 16px 'Whitney HTF'", "#2f2c2c")   , 390, 175,112,'left',)
-    Picto.setAndDraw(ctx, Picto.tag(ctx, "20", "900 42px 'Whitney HTF'", "#2f2c2c")     , 670, 185,112,'right')
+    Picto.setAndDraw(ctx, Picto.tag(ctx, selfLocal.thx||0, "900 42px 'Whitney HTF'", "#2f2c2c")     , 670, 185,112,'right')
     Picto.setAndDraw(ctx, Picto.tag(ctx, "THX", "400 16px 'Whitney HTF'", "#2f2c2c")    , 560, 175,112,'left')
     
     
