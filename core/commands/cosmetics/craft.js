@@ -1,10 +1,11 @@
 const cmd = 'craft';
 const gear = require("../../utilities/Gearbox.js");
+const YesNo = require('../../structures/YesNo').run;
 const DB = require("../../database/db_ops.js");
 const ECO = require("../../archetypes/Economy.js")
 const locale = require('../../../utils/i18node');
 const $t = locale.getT();
-
+const diff = require('fast-diff');
 
 const init = async function (message) {
   try{
@@ -17,26 +18,76 @@ const init = async function (message) {
     
 if(message.author.crafting)return;
 message.author.crafting = true;
-  function noteno(item,extra){
-    message.reply("")
-  }
-  
+function noteno(item,extra){
+  message.reply("")
+}
+
     //message.reply("pos: 127, cfstatus: 1")
-  let noteno_feed = []
-  
-  let ITEMS = await DB.items.getAll();
+    let noteno_feed = []
     
+  let ITEMS = await DB.items.find({crafted:true});
+  
   let embed = new gear.Embed
   embed.description=""
-  embed.setColor('#71dbfa')
+  embed.setColor('#71dbfa') 
   
   let arg = message.content.split(/ +/).slice(1)[0];
   if (!arg)return;
   let crafted_item = ITEMS.find(itm=>itm.id==arg||itm.code==arg);
+
+  if(!crafted_item){   
+    message.author.crafting = false;
+    arg = message.args.join(' ').toLowerCase();
+    
+    ITEMS=ITEMS.map(itm=> {
+      itm.diff = diff(arg,itm.name.toLowerCase());
+      itm.diffs ={};
+      itm.diffs.E = itm.diff.filter(x=>x[0]===0).length
+      itm.diffs.I = itm.diff.filter(x=>x[0]===1).length
+      itm.diffs.D = itm.diff.filter(x=>x[0]===-1).length
+      itm.diffScore = 
+          itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]!==0).length 
+          + itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===-1).length*4
+          + itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===1).length*0.8
+          + itm.diff.length * 1.35
+          + itm.diffs.D*1.6
+          + itm.diffs.I*1.2
+          - itm.diffs.E*3 
+          - itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===0).length*2.6
+      return itm
+    });
+
+    ITEMS.sort( (a,b)=>a.diffScore-b.diffScore);
+
+      let DYM = ITEMS.slice(0,5).filter(y=>y.diffScore<5).map(x=>x.name+` (\`${x.code}\`)`)
+      let sorry = locale.rand('responses.verbose.interjections.gomenasai',P)
+      let res = DYM.length===1?$t('responses.crafting.didyoumeanOne',P):$t('responses.crafting.didyoumeanOne',P);
+      if(DYM.length>0){
+        let step_message = await message.channel.send(sorry+res+"\n • "+DYM.join('\n • '));
+        if(DYM.length>1) return;
+        if ( (await YesNo(step_message,message,true,false,null)) === true){
+          crafted_item=ITEMS[0]
+        }else{
+          return;
+        }
+      }else{
+        return message.channel.send("Could not find this Item or anything like it");
+      }
+    
+}
+
+  
+
+  if(!crafted_item){
+    message.author.crafting = false;
+    return message.reply($t('responses.crafting.noitem',P));
+  }
+  
+  
   embed.title((crafted_item||{emoji:0}).emoji+" Crafting `: "+crafted_item.name+"`")
     
-    
-  const userData = await DB.users.findOne({id:message.author.id},{"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
+
+  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
   //message.reply("`console res`")
   if(crafted_item){
     let ID = crafted_item.id
@@ -92,16 +143,21 @@ message.author.crafting = true;
     
     MAT.forEach(material=>{
       let icona='yep';
-        material = material.id || material;
-    
-      if ((userData.modules.inventory.find(itm=>itm.id == material)||{}).count >= (material.amt || gear.count(MAT,material)) ){
+
+
+        materialName = material.id || material;
+
+        amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
+        amtRequired = (material.amt || gear.count(MAT,materialName))
+
+      if (amtInPosession >= amtRequired){
         //message.reply('ok')
         
       }else{
         icona='nope';
         fails+=1
       }
-        matDisplay+="\n"+gear.emoji(icona)+" | "+ITEMS.find(x=>x.id==material).emoji+ITEMS.find(x=>x.id==material).name;               
+        matDisplay+="\n"+gear.emoji(icona)+" | "+ITEMS.find(x=>x.id==materialName).emoji+ITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
     })
     if (fails > 0 ) {
       embed.setColor('#ed3a19');
@@ -154,7 +210,12 @@ message.author.crafting = true;
 
             
             MAT.forEach(async itm=>{
-              await DB.items.consume(message.author,itm);
+              console.log(itm)
+              if(itm.amt){
+                await userData.removeItem(itm.id,itm.amt);
+              }else{
+                await userData.removeItem(itm);
+              }
             })            
 
             await DB.items.receive(message.author.id, crafted_item.id);
