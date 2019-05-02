@@ -168,6 +168,10 @@ UserSchema.methods.upCommend = function upCommend(USER,amt=1){
   })
 }
 
+UserSchema.methods.amtItem = function amountItem(itemId){
+  return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count || 0;
+}
+
 UserSchema.methods.removeItem = function destroyItem(itemId,amt=1){
   const items = require('./items.js');
   return items.consume(this.id,itemId,amt);
@@ -192,6 +196,7 @@ MODEL.updateMeta = U => {
           username: U.username,
           discriminator: U.discriminator,
           avatar: U.displayAvatarURL,
+          staticAvatar: (U.displayAvatarURL||"").replace('gif','png')
         }
       }
     })

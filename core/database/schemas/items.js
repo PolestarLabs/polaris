@@ -49,7 +49,7 @@ MODEL.cat    = async function(cat){
 };
 
 const itemOperation = (user,item,amt) => {
-  if(user.user && user.item && user.amt){
+  if(user && user.user && user.item && user.amt){
     user = user.user
     item = user.item
     amt  = user.amt
@@ -63,7 +63,7 @@ const itemOperation = (user,item,amt) => {
     }).then(res=>{
       return resolve(res)
     });
-    })    
+    })
   })
 };
 
