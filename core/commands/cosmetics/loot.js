@@ -34,11 +34,11 @@ const box={
   ,"C":  "    COMMON |"
 };
 const exRate = {
-  "UR": 1200
-  ,"SR": 800
-  ,"R":  600
-  ,"U":  250
-  ,"C":  100
+  "UR": 100
+  ,"SR": 80
+  ,"R":  50
+  ,"U":  35
+  ,"C":  25
   }
 
 
@@ -167,7 +167,7 @@ let LootData = await drawBox(BOX,message);
 console.log('b')
     let LootMeta = LootData.LOOTS;
 
-  let lootpic=await msg.channel.send('box')
+ // let lootpic=await msg.channel.send('box')
 
   let embed = new gear.Embed();
     
@@ -218,7 +218,7 @@ ${ej("retweet")} ${$t("loot.rerollRemain",P)} **${rerolls}**
     }
     else if(action==="reroll"&&rerolls>0){
 
-      lootpic.delete().catch(e=>'die silently');
+     // lootpic.delete().catch(e=>'die silently');
       lootembed.delete().catch(e=>'die silently');
       let emb = new gear.Embed;
       emb.setColor("#3251d0");
@@ -380,10 +380,10 @@ ctx.fillStyle=grd;
 ctx.fillRect(0,220,285,50);
   ctx.font = "900 18px 'Whitney HTF'";
   let amt = exRate[rar]
-let RBNm = await Picto.getCanvas("http://pollux.fun/images/rubine.png");
+let RBNm = await Picto.getCanvas("http://pollux.fun/images/cosmoshard.png");
 let TX = await Picto.tag(ctx, "DUPLICATE", "600 26px 'Corporate Logo Rounded'", "#ffffff");  
 let TX1 = await Picto.tag(ctx, "DUPLICATE", "600 26px 'Corporate Logo Rounded'", "rgba(0, 0, 0, .7)");  
-let TX2 = await Picto.tag(ctx, `+${amt} Rubines`, "400 18px 'Corporate Logo Rounded'", "#ffffff");  
+let TX2 = await Picto.tag(ctx, `+${amt} Cosmo Fragments`, "400 18px 'Corporate Logo Rounded'", "#ffffff");  
   
 ctx.drawImage(TX1.item,1+142-TX.width/2,1+220);
 ctx.drawImage(TX1.item,-1+142-TX.width/2,-1+220);
@@ -472,7 +472,7 @@ function invent_merge(item,message,UDATA){
   switch(iMETA.type){
     case "RUBINES":
       amt=Number(parseInt(iMETA.name));
-      ECO.receive(message.author.id,amt,"lootbox","RBN","+").then(ok=>{
+      USERDATA.addItem(message.author.id,amt,"lootbox","RBN","+").then(ok=>{
         P.X = ej("rubine")+"**"+iMETA.name +"**"
         return resolve($t("loot.addedRubines",P));
       }).catch(e=> console.warn("ERROR"));
@@ -557,10 +557,10 @@ function invent_merge(item,message,UDATA){
   function dupeExchange(P){
     return new Promise(resolve=>{
       let amt = exRate[iMETA.rarity];
-      ECO.receive(message.author.id,amt,"lootbox_dupe","RBN","+").then(ok=>{
+      UDATA.addItem("cosmo_fragment",amt).then(ok=>{
             P.itm= iMETA.name
             P.tpe= box[iMETA.type].replace(/['| |:]/g,"")
-            P.X  ="**"+ exRate[iMETA.rarity] +"**"+ej("rubine")
+            P.X  ="**"+ exRate[iMETA.rarity] +"**"+ej("cosmofragment")
             return resolve($t("loot.duplicateExchange",P));
       })
     })
