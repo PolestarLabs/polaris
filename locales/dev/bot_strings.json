@@ -1,10 +1,13 @@
 { 
     "keywords": {
         "RBN": "Rubine",
+        "RBN_fullname": "Rubine Gems",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
+        "JDE_fullname": "Jades Dust",
         "JDE_plural": "Jades",
         "SPH": "Sapphire",
+        "SPH_fullname": "Sapphire Shards",
         "SPH_plural": "Sapphires",
         "C": "Common",
         "U": "Uncommon",
@@ -295,6 +298,7 @@
             "confirm": ":fleur_de_lis:  **{{who}}** has kindly added **+1Rep** to **{{target}}**. They must be nice.",
             "cooldown": "Hold on, You can rep again in {{remaining}}. Please be patient."
         },
+
         "$": {
             "insuFloor": "You do not have enough Rubines. You need at least **{{number}}** {{emoji}}",
             "insuBet": "Bet at least {{number}}",
@@ -344,7 +348,7 @@
             "decon2": "{{user}} is decontaminating {{user2}}.",
             "cancer": "{{user}} is inspecting this channel's chance of cancer.",
             "geiger": ":radioactive: According to the Geiger counter, this channel's cancer potential is **{{percentage}}%** with **{{radiation}}μSv/h** "
-        },
+        },  
         "commend":{
             "noSelf":"No, I refuse to let you commend yourself. You should be ashamed of that!",
             "give":"**{{author}}** hereby commends **{{target}}** at the expense of one Token.",
@@ -355,6 +359,11 @@
             "check_yes": "You can commend again now if you have tokens available!",
             "noItem":"You need a Commendation Token, and you don't have one. You need them in order to commend people.",
             "commendationLimit":""
+        },
+        "crafting":{
+            "noitem": "I couldn't find this item",
+            "didyoumean": "I couldn't find this item. By any chance do you mean one of these?"
+            ,"didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?"
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
@@ -386,6 +395,28 @@
         },
         "pleasewait": {
 
+        }
+        ,"help":{
+            "greetings": "\n**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n  •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n      The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n      The Universal Prefix is `plx!` and cannot be disabled. \n",
+            "basics": "\n  **The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!\n  ",
+            "cmdlist": "COMMAND LIST",
+            "quick_getgo": "Commands you should know from the get-go",
+            "quick_useful": " Commands you might find useful",
+            "quick_enjoy": "Commands you might enjoy playing around with",
+            "quick_didntask": " Commands you didn't ask for",
+
+            "avail_cmd": "Available Commands",
+            "avail_cmdlist": "List of commands currently available and supported ({{commandcount}}).",
+            "notenough": "Is this tiny box not enough?",
+            "trythese": "Try one of these",
+
+            "curr_info": "Currency Information",
+            "currency_overview":"My currency system is relatively complex and has several limitations and protective features. Every transaction is logged and can be traced easily, that ensures your hardwork will not be eclipsed by cheaters. We log over 30 thousand transactions every day.   \n        \n    •  Everyone starts with a bunch of **Jades** and **Rubines**, and with one **Lootbox**.\n\u200b\n",
+            "rubines_desc":"\n*My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃:Cr, used for pretty much everything!*\n        Can be obtained from Daily Bonuses (`daily`), Lootboxes (`+box`) and Gambling Games (`+blackjack`, `+slots`, etc.). As well as from trades with other users once you reach Level 5 and has at least a 10-day Daily Streak.\n",
+            "jades_desc":" *Crafting \"currency\", I use these faint-teal gems - otherwise worthless - to concoct special items just for you!*\n        Can be obtained from Lootboxes, destroying Items, donating, or buying.",
+            "sapphires_desc":"*Premium currency, deep-blue pieces of the finest Sapphire gemstones, used to craft special items or as a buying currency to exclusive stuff.*\n        Can be only obtained with donations, buying, and from special events. You get one Free Sapphire every 200 and 365 Dailies, and there's a 0.1% chance of getting one from Ultra Rare Lootboxes.",
+            "lootboxes_desc":"*Special chests that contain many goodies like Backgrounds, Medals, Rubines, and Sticker Boosters*\n        Can be only obtained leveling up or from random drops, drops occur based on chat activity.\n\n         **`⚠ Intentionally Spamming to force Loot Drops, cheating, or exchanging items with Alt-Accounts will get you banned from Pollux and other bots as well.`** \n",
+            "end":"\n**The complete list of Commands can be found at <https://pollux.gg/commands>**\n\nCheck out our Partners at **<https://pollux.gg/partners>**\nSee or submit fan-created artwork at **<https://pollux.gg/fanart>**\nSee your public Profile at **<https://pollux.gg/profile/me>**\n\n**Cosmetics**\nBackground Shop **https://pollux.gg/bgshop**\nMedal Shop **https://pollux.gg/medalshop**\nCrafting Workshop **https://pollux.gg/crafting**\nVirtual Stickers **<https://pollux.gg/stickers>** (for IRL stickers check Support Server)\nEvents Information **<https://pollux.gg/events>**\n\nSupport me at **<https://patreon.com/Pollux>** or **<https://pollux.gg/donate>**\nFollow me on Twitter **<https://twitter.com/maidPollux>**\n\n---\n\n**For anything else, check the __Dashboard__: <https://pollux.gg/dashboard>**\nOr join my support server: **​ https://discord.gg/rEBCccS ​**\nInvite me to your server at **<https://pollux.gg/invite>**\n"
         }
     },
     "games": {
@@ -493,4 +524,5 @@
         "reactThis": "React to this message to auto-receive the roles"
     },
     "helpkey": "help"
+    
 }
