@@ -4,7 +4,7 @@ const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
 const DB = require("../database/db_ops");
-const emojiList = require(appRoot+"/resources/lists/emoji.js");
+const emojiList = require("../../resources/lists/emoji.js");
 
 if (Eris.Embed){
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
