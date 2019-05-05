@@ -39,16 +39,18 @@ const cfg = require('./config.json');
 
 const colors = require('colors');
 
-
 //console.log = function(){}
+
+const SHARDS_PER_CLUSTER = 1
+const CLUSTER_ID = parseInt(process.env.CLUSTER_ID)
+const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS)
 
 const POLLUX = new Eris(cfg.token,{
 
+  maxShards: TOTAL_SHARDS ,
+  firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) - SHARDS_PER_CLUSTER +1 ,
+  lastShardID: SHARDS_PER_CLUSTER * CLUSTER_ID ,
 
-  maxShards:1,
-
-  firstShardID:0,
-  lastShardID:0,
   defaultImageSize:512,
 
   defaultImageFormat:'png',
