@@ -1,7 +1,6 @@
 const gear = require(appRoot+"/core/utilities/Gearbox");
-const locale = require(appRoot+'/utils/i18node');
-const $t = locale.getT();
-const moment = require("moment");
+//const locale = require(appRoot+'/utils/i18node');
+//const $t = locale.getT();
 const ECO = require(appRoot+"/core/archetypes/Economy");
 const DB = require(appRoot+"/core/database/db_ops");
 const Picto = require(appRoot+"/core/utilities/Picto");
@@ -9,6 +8,10 @@ const Timed = require(appRoot+"/core/structures/TimedUsage");
 const Premium = require(appRoot+"/core/utilities/Premium");
 
 const init = function(message){
+  
+let moment = require("moment");
+    moment.locale(message.lang[0]||'en');
+
 let Author = message.author
 let now = Date.now()
     const P={lngs:message.lang}
