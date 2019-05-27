@@ -83,14 +83,20 @@ module.exports={
   
       height = canvas.height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
       width = canvas.width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
-  
-      context.drawImage(imgEl, 0, 0);
-  
+      try{
+
+        context.drawImage(imgEl, 0, 0);
+      }catch(e){
+        console.error(e)
+        console.error(link)
+        console.error('---')
+      }
       try {
+  
 
           data = context.getImageData(0, 0, width, height);
       } catch(e) {
-          return defaultRGB;
+          return "#000000";
       }
   
       length = data.data.length;
@@ -326,5 +332,56 @@ c.globalCompositeOperation='destination-atop';
 
 
 
+
+}
+
+
+
+async function Hex(size, picture) {
+  let globalOffset = 0
+  size = size / 2
+  let x = size + 10
+  let y = -size
+
+  let hex = new Canvas.createCanvas(size * 2 + 20, size * 2 + 20)
+  let c = hex.getContext("2d")
+  c.rotate(1.5708)
+  c.save();
+  c.beginPath();
+  c.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
+
+  for (side = 0; side < 7; side++) {
+    c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
+  }
+
+  c.fillStyle = "#ffffff"
+  c.fill();
+  if (picture) {
+    c.clip();
+    let a = await Canvas.loadImage(picture);
+    c.rotate(-1.5708)
+    c.drawImage(a, 0, x - size, size * 2, size * 2);
+    c.restore()
+
+    c.globalCompositeOperation = 'xor';
+    c.shadowOffsetX = 0;
+    c.shadowOffsetY = 0;
+    c.shadowBlur = 10;
+    c.shadowColor = 'rgba(30,30,30,1)';
+
+    c.beginPath();
+    for (side = 0; side < 7; side++) {
+      c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
+    }
+    c.stroke();
+
+    c.globalCompositeOperation = 'destination-atop';
+
+  } else {
+    c.shadowColor = "rgba(34, 31, 59, 0.57)"
+    c.shadowBlur = 8
+  }
+
+  return hex
 
 }
