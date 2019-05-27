@@ -192,6 +192,9 @@ console.log(message.author.tag)
 
    //Set Command-Usable Params
    message.args = message.content.substr(message.prefix.length).split(/ +/).slice(1);
+   message.quoteArgs = (message.cleanContent.match(/".*"/)||[null])[0]
+   if (message.quoteArgs) message.quoteArgs = message.quoteArgs.replace(/"/g,""); 
+
    message.lang = [(final_payload.chanData||{}).LANGUAGE || ((final_payload.svData||{}).modules||{}).LANGUAGE || 'en', 'dev'];
    message.obtainTarget= arg => {
       let fromMentionOrID = POLLUX.users.find(u=>u.id==arg.replace(/[^0-9]/g,''));

@@ -2,21 +2,19 @@ const gear = require('../../utilities/Gearbox');
 const navigator = require('../../structures/ReactionNavigator');
 const YesNo = require('../../structures/YesNo').run;
 const DB = require('../../database/db_ops');
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 
 
 const init = async function (msg){
 
-    const Target = gear.getTarget(msg);
+    let Target = gear.getTarget(msg);
+console.log({Target})
     
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    if(msg.author.marketplacing) return msg.channel.send("Please Wait Before making another Marketplace Action");
-    msg.author.marketplacing = true
 
-    setTimeout(()=>msg.author.marketplacing = false, 20000);
     
     /*
     { 
@@ -83,6 +81,7 @@ const init = async function (msg){
                     break;
                 case "user":
                     if(msg.args[2]){
+                        Target = gear.getTarget(msg,2);
                         query = {author:Target.id}
                     }else{
                         query = {author:msg.author.id}
@@ -157,6 +156,10 @@ const init = async function (msg){
 
     };       
 
+    if(msg.author.marketplacing) return msg.channel.send("Please Wait Before making another Marketplace Action");
+    msg.author.marketplacing = true
+    setTimeout(()=>msg.author.marketplacing = false, 20000);
+
     if(subcommand === "post"){
 
     };
@@ -168,7 +171,9 @@ const init = async function (msg){
                 return msg.channel.send(gear.emoji('nope')+"`ITEM NOT FOUND`");
             }else{
                 function deleteIt(){
-                    msg.channel.send(gear.emoji('yep')+"`ITEM DEL OK`");
+                    DB.marketplace.remove({id:offer.id}).then(res=>{
+                        msg.channel.send(gear.emoji('yep')+"`Entry Deleted`");
+                    })
                 }
                 let item = marketbase.find(it=> offer.item_id === it.id && offer.item_type === it.type ) 
                 let embed = new gear.Embed
