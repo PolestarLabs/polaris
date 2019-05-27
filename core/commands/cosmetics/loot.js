@@ -3,8 +3,8 @@ const gear = require('../../utilities/Gearbox.js');
 const Picto = require('../../utilities/Picto.js');
 const DB = require('../../database/db_ops.js');
 const Canvas = require("canvas");
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 const ECO = require("../../archetypes/Economy");
 
 const cmd = 'loot';

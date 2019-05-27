@@ -1,8 +1,8 @@
 
 const gear = require("../../utilities/Gearbox");
-const locale = require(appRoot+'/utils/i18node');
+//const locale = require(appRoot+'/utils/i18node');
 const DB = require('../../database/db_ops');
-const $t = locale.getT();
+//const $t = locale.getT();
 const cmd = 'attribute';
 
 const init = async function (message) {

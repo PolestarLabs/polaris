@@ -1,8 +1,8 @@
 const gear = require('../../utilities/Gearbox');
 const Picto = require('../../utilities/Picto');
 const DB = require('../../database/db_ops');
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 
 const init = async function (msg,programatic){
 

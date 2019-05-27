@@ -1,8 +1,8 @@
 
 const gear = require('../../utilities/Gearbox')
 const Picto = require('../../utilities/Picto')
-const locale = require(appRoot+'/utils/i18node'); 
-const $t = locale.getT();
+//const locale = require(appRoot+'/utils/i18node'); 
+//const $t = locale.getT();
 const DB = require("../../database/db_ops");
 const userDB=DB.users
 const serverDB=DB.servers

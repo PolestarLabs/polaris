@@ -3,8 +3,8 @@ const gear = require("../../utilities/Gearbox.js");
 const YesNo = require('../../structures/YesNo').run;
 const DB = require("../../database/db_ops.js");
 const ECO = require("../../archetypes/Economy.js")
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 const diff = require('fast-diff');
 
 const init = async function (message) {

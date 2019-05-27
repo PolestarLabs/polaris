@@ -1,7 +1,7 @@
 const gear = require('../../utilities/Gearbox');
 const DB = require('../../database/db_ops');
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 
 const Picto = require('../../utilities/Picto.js')
 const Canvas = require("canvas");
@@ -40,10 +40,10 @@ await Promise.all([
     let _back,_bg,_mask,_roundel,_hexavat;
     //const rolecolor = msg.guild.roles.find(r=>r.id==TARGET.roles[0])
     await Promise.all([
-        _back  = await Picto.getCanvas(paths.Build+"/profile/mainframe_mini.png")
-        ,_bg  = await Picto.getCanvas(paths.BUILD+"/backdrops/"+userData.modules.bgID+".png")
-        ,_flair  = await Picto.getCanvas(paths.BUILD+"/flairs/top/"+userData.modules.flairTop+".png")
-        ,_mask  = await Picto.getCanvas(paths.Build+"/profile/bgmask.png")
+        _back  = await Picto.getCanvas(paths.BUILD+"/profile/mainframe_mini.png")
+        ,_bg  = await Picto.getCanvas(paths.CDN+"/backdrops/"+userData.modules.bgID+".png")
+        ,_flair  = await Picto.getCanvas(paths.CDN+"/flairs/"+userData.modules.flairTop+".png")
+        ,_mask  = await Picto.getCanvas(paths.BUILD+"/profile/bgmask.png")
         ,_roundel  = await Picto.XChart(120,percent, userData.modules.favcolor, undefined,level,$t("website.level", P))
         ,_hexavat  = await Picto.makeHex(210,TARGET.avatarURL)
         ,_hexfram  = await Picto.makeHex(250)

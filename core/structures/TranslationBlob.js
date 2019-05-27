@@ -115,8 +115,8 @@ module.exports = {
           }
     },
     translate : function (textToTrans, langFrom, langTo,txOnly=false) {
-        const locale = require('../../utils/i18node');
-        const $t = locale.getT();
+        //const locale = require('../../utils/i18node');
+        //const $t = locale.getT();
         return new Promise(async resolve => {
             translate(textToTrans, {
                 from: langFrom,

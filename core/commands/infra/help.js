@@ -1,6 +1,6 @@
-const gear = require("../../utilities/Gearbox");
-const locale = require(appRoot+'/utils/i18node');
-const $t = locale.getT();
+const {Embed,autoHelper} = require("../../utilities/Gearbox");
+//const locale = require(appRoot+'/utils/i18node');
+//const $t = locale.getT();
 
 const init = async msg => {
 
@@ -13,7 +13,7 @@ const init = async msg => {
 
   let helpkey = $t("helpkey", P)
   if (msg.content.split(/ +/)[1] == helpkey || msg.content.split(/ +/)[1] == "?" || msg.content.split(/ +/)[1] == "help") {
-  let embed = new gear.Embed
+  let embed = new Embed
   embed.setDescription($t('usage.askingHelpForHelp',P))
   return msg.channel.send({embed});
   };
@@ -31,7 +31,6 @@ const init = async msg => {
             })
         } 
 
-
     
       let helpol    = $t('help.polHelp',  P),
           heldesc   = $t('help.helpText', P),
@@ -45,7 +44,7 @@ const init = async msg => {
       let invitelink = "https://pollux.gg/invite";
     
 
-      const hEmbed = new gear.Embed;
+      const hEmbed = new Embed;
 
       P.commandcount=commands.filter(x=>x.pub).length
   hEmbed.description = $t('interface.help.basics',P)
@@ -70,7 +69,7 @@ let tex22 = `\u200b
 ${$t('interface.help.greetings',P)}
 \u200b`
 
-let currencyHelp = new gear.Embed()
+let currencyHelp = new Embed()
         .title($t('interface.help.curr_info',P))
         .color("#f83255")
         .description($t('interface.help.currency_overview',P))
@@ -110,7 +109,7 @@ if(msg.args[0]==='links'){
 }
 
 if(msg.args[0]==='commands'){
-    let allcoms = new gear.Embed()
+    let allcoms = new Embed()
             .title( $t('interface.help.avail_cmd',P))
             .description( $t('interface.help.avail_cmdlist',P))
 
@@ -130,7 +129,7 @@ if(msg.args[0]==='commands'){
 
 let argCom = commands.find(cmd=> cmd.name === msg.args[0])
 if(argCom){
-    return gear.autoHelper('force', {cmd:msg.args[0],msg,opt: argCom.cat});
+    return autoHelper('force', {cmd:msg.args[0],msg,opt: argCom.cat});
 }
 
     
@@ -141,7 +140,7 @@ msg.author.getDMChannel().then(dmChan=>{
 })
  
 
-      const embed = new gear.Embed;
+      const embed = new Embed;
     
       embed.title(helpol)
       embed.setColor("#eb4190")

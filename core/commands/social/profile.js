@@ -1,12 +1,18 @@
+paths.CDN = "https://beta.pollux.gg"
+
 const gear = require('../../utilities/Gearbox.js')
-const Picto = require('../../utilities/Picto.js')
+
 
 const Canvas = require("canvas");
-const locale = require(appRoot + '/utils/i18node');
-const $t = locale.getT();
+//const locale = require(appRoot + '/utils/i18node');
+//const $t = locale.getT();
 const DB = require('../../database/db_ops');
 
 const init = async function run(msg) {
+
+  delete require.cache[require.resolve('../../utilities/Picto.js')]
+  const Picto = require('../../utilities/Picto.js')
+
 
   let start = Date.now()
 
@@ -250,7 +256,7 @@ const init = async function run(msg) {
 
     //=========================================
 
-    let mainframe = Picto.getCanvas(paths.Build+"/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
+    let mainframe = Picto.getCanvas(paths.CDN+"/build/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
       _bg = Picto.getCanvas(paths.CDN + "/backdrops/" + backgroundId + ".png"),
       _flairTop = Picto.getCanvas(paths.CDN + "/flairs/" + flair + ".png"),
       iconRubine = Picto.getCanvas(paths.CDN+"/images/gems/rubine_full.png");
@@ -444,6 +450,7 @@ const init = async function run(msg) {
       //ctx.drawImage(local_roundel,L_ROUNDEL.x,L_ROUNDEL.y,96,96);
       ctx.drawImage(global_roundel, G_ROUNDEL.x, G_ROUNDEL.y);
     }
+    
     ctx.drawImage(hex_pic, AVATAR_HEX.x + offset_hex, AVATAR_HEX.y + offset_hex);
 
 
@@ -454,7 +461,7 @@ const init = async function run(msg) {
       if (TARGET_DB.switches.profiled) tier = 'chalk'
  
       if (tier) {
-        let tierframe = await Picto.getCanvas(paths.PROFILE + "frames/" + tier + ".png");
+        let tierframe = await Picto.getCanvas(paths.CDN + "/build/profile/frames/" + tier + ".png");      
         ctx.drawImage(tierframe, -offset_hex+3, 15 + AVATAR_HEX.y - offset_hex,300,284);
       }
     } 
@@ -490,7 +497,7 @@ const init = async function run(msg) {
       ctx.shadowColor = 'rgba(30,30,30,.3)';
       ctx.save();
       
-      ctx.drawImage(await Picto.getCanvas( path.CDN+"/build/profile/marriheart_"+WIFE.ring+".png"),
+      ctx.drawImage(await Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+WIFE.ring+".png"),
       115,15)
       let WifeImage = POLLUX.users.get(WIFE.id).avatarURL || pre_a;
       let WifeName = POLLUX.users.get(WIFE.id).username || WIFE.tag.split("#")[0];

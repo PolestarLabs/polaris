@@ -1,8 +1,8 @@
 const gear = require('../../utilities/Gearbox')
 
 const DB = require('../../database/db_ops')
-const locale = require(appRoot+'/utils/i18node');
-const $t = locale.getT();
+//const locale = require(appRoot+'/utils/i18node');
+//const $t = locale.getT();
 const cmd = 'leaderboards';
 
 
@@ -60,15 +60,15 @@ const init = async function (msg) {
             tagline: usr.modules.tagline,
             color: usr.modules.favcolor,
             rubines: usr.modules.rubines,
-            bg: Picto.getCanvas(paths.BUILD+"/backdrops/"+((usr.modules||{}).bgID||"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6")+".png"),
+            bg: Picto.getCanvas(paths.CDN+"/backdrops/"+((usr.modules||{}).bgID||"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6")+".png"),
             ACV: (usr.modules.achievements||[]).length,
             DLY: (((usr.modules||{}).counters||{}).daily||{}).streak || 0
         });
     };
 
     // GATHER IMAGES NEEDED
-    let mFrame = Picto.getCanvas(appRoot+"/resources/imgres/build/rank_mainframe.png");
-
+    let mFrame = Picto.getCanvas(paths.BUILD +"/rank_mainframe.png");
+console.log(paths.BUILD+"/rank_mainframe.png")
     async function rankBack(usr,sec){
         
         let res = Picto.new(656, sec?80:100);

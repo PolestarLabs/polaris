@@ -2,8 +2,8 @@ const Canvas = require("canvas");
 const DB = require('../../database/db_ops.js')
 const Picto = require('../../utilities/Picto')
 const gear = require('../../utilities/Gearbox.js')
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 const Blackjack = require('../../archetypes/Blackjack.js');
 const _ASSETS = paths.BUILD + "games/blackjack/"
 

@@ -1,8 +1,8 @@
 const request = require('request');
 const gear = require("../../utilities/Gearbox.js");
 const cheerio = require('cheerio')
-const locale = require('../../../utils/i18node');
-const mm = locale.getT();
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
 const {riot} = require(appRoot+"/config.json")
 
 const cmd = 'rotation';
@@ -12,18 +12,18 @@ const init = async function (message) {
 
     const LANG = message.lang;
 
-    const nope = mm('CMD.noDM', {
+    const nope = $t('CMD.noDM', {
         lngs: LANG
     });
-    const gener = mm('builds.genProf', {
+    const gener = $t('builds.genProf', {
         lngs: LANG
     });
-    const inf = mm('dict.infinite', {
+    const inf = $t('dict.infinite', {
         lngs: LANG
     });
 
     //-------MAGIC----------------
-    let helpkey = mm("helpkey", {
+    let helpkey = $t("helpkey", {
         lngs: message.lang
     })
 

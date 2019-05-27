@@ -3,8 +3,8 @@ const DB = require("../../database/db_ops");
 
 const cmd = 'balance';
 
-const locale = require(appRoot+'/utils/i18node');
-const $t = locale.getT();
+//const locale = require(appRoot+'/utils/i18node');
+//const $t = locale.getT();
 
 const init = async function (message) {
 

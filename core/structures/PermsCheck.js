@@ -1,5 +1,5 @@
 const i18node = require('../../utils/i18node');
-const $t = i18node.getT();
+//const $t = i18node.getT();
 
 exports.run = function(cat,msg,perms){
   

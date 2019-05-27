@@ -3,8 +3,8 @@ const fs = require("fs");
 const gear = require("../../utilities/Gearbox");
 const DB = require("../../database/db_ops");
 const ECO = require("../../archetypes/Economy.js");
-const locale = require(appRoot + '/utils/i18node');
-const $t = locale.getT();
+//const locale = require(appRoot + '/utils/i18node');
+//const $t = locale.getT();
 const Picto = require(appRoot + '/core/utilities/Picto');
 
 var init = async function (message) {

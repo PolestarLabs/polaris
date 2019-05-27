@@ -1,7 +1,7 @@
 const gear = require("../../utilities/Gearbox");
 const DB = require("../../database/db_ops");
-const locale = require(appRoot + '/utils/i18node');
-const $t = locale.getT();
+//const locale = require(appRoot + '/utils/i18node');
+//const $t = locale.getT();
 
 const cmd = 'mute';
 
@@ -86,7 +86,7 @@ const init = async function (message) {
         
         // Create a new role with data
         var muteRole = ServerDATA.modules.MUTEROLE;
-        if (!muteRole || (!Server.roles.find(x=>x.id==muteRole) || !Server.roles.find(x => x.name === "POLLUX-MUTE"))) {
+        if ( (!muteRole || (!Server.roles.find(x=>x.id==muteRole)) && !Server.roles.find(x => x.name === "POLLUX-MUTE"))) {
             Server.createRole({
                 name: 'POLLUX-MUTE',
                 color: 0x29305a ,
@@ -99,21 +99,21 @@ const init = async function (message) {
                     commitMute(role.id,true)
                 }).catch(console.error)
                 
-                
-            } else if (Server.roles.find(x => x.name === "POLLUX-MUTE" )) {
-                let r = Server.roles.find(x => x.name === "POLLUX-MUTE"  )
-                
-                setupMute(r)
-                commitMute(r)
-                
-            } else if (Server.roles.find(x=>x.id==muteRole)) {
-                let r = Server.roles.find(x=>x.id==muteRole);
-                setupMute(r)
-                commitMute(muteRole)
-                
-            }
+            
+        } else if (Server.roles.find(x => x.name === "POLLUX-MUTE" )) {
+            let r = Server.roles.find(x => x.name === "POLLUX-MUTE"  )
+            
+            setupMute(r)
+            commitMute(r)
+            
+        } else if (Server.roles.find(x=>x.id==muteRole)) {
+            let r = Server.roles.find(x=>x.id==muteRole);
+            setupMute(r)
+            commitMute(muteRole)
+            
+        }
 
-            async function setupMute(role){
+        async function setupMute(role){
             Target.addRole(role.id,"MUTED BY "+message.author.tag+`  (${message.author.id})`);
             makeitMute(Target, role, time)
             roleout(time, role)
