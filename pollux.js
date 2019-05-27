@@ -10,6 +10,9 @@ const path = require('path');
 global.appRoot = path.resolve(__dirname);
 global.GNums = require('./GlobalNumbers.js');
 global.Promise = require('bluebird');
+Promise.config({
+  longStackTraces: true 
+})
 require('./utils/paths').run();
 
 
@@ -67,17 +70,38 @@ global.POLLUX= POLLUX;
 POLLUX.beta = true
 POLLUX.maintenance = false
 
+
+
+//=======================================//
+//      INTERNAL POOLS
+//=======================================//
+
+POLLUX.execQueue = [ ];
+POLLUX.commandPool = { };
+POLLUX.blackListedUsers = [];
+POLLUX.blackListedServers = [];
+POLLUX.updateBlacklists = (DB) =>{
+  return Promise.all([
+    DB.users.find({'blacklisted':{$exists:true}},{id:1,_id:0}),
+    DB.servers.find({'blacklisted':{$exists:true}},{id:1,_id:0})
+  ]).then( (users,servers) => {
+    POLLUX.blacklistedUsers = (users||[]).map(usr=>usr.id);
+    POLLUX.blacklistedServers = (servers||[]).map(svr=>svr.id);
+  });
+}
+
 //DATABASE INITIALIZING
 
 const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-const tunnel = require('tunnel-ssh');
- console.log("• ".blue,"Connecting to Database...");
+console.log("• ".blue,"Connecting to Database...");
 
+//const tunnel = require('tunnel-ssh');
 /*
    tunnel(cfg.tunnel,  (err, server)=> {
      if(err)console.error("• ".red,"SSH tunnel  error: " + err);
 */     
+
 mongoose.connect(cfg.dbURL, {
   useNewUrlParser: true,
   reconnectTries: Number.MAX_VALUE,
@@ -96,6 +120,9 @@ mongoose.set('useCreateIndex', true);
     db.on('error', console.error.bind(console, "• ".red+'DB connection error:'.red));
     db.once('open', function() {
         console.log("• ".green,"DB connection successful");
+        POLLUX.updateBlacklists(require('./core/database/db_ops')).then(res=>{
+          console.log("• ".blue,"Blacklist Loaded!");
+        })
     });
 //});
 
@@ -104,11 +131,11 @@ Promise.promisifyAll(require("mongoose"));
 
 //---
 
-
-
 //Translation Engine ------------- <
 const i18next = require('i18next');
 const multilang = require('./utils/i18node.js');
+
+
 const i18n_backend = require('i18next-node-fs-backend');
 const backendOptions = {
     loadPath: './locales/{{lng}}/{{ns}}.json',
@@ -137,43 +164,41 @@ pGear.getDirs('./locales/').then(list => {
         }
 
         multilang.setT(t);
+        global.$t = multilang.getT()
     });
 });
 //----------------[i18n END]-------<
 
 
-
 //=======================================//
 //      BOT EVENT HANDLER
 //=======================================//
+const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 
-
-
-POLLUX.on("ready", async (msg) => {
+const fs= require('fs')
+POLLUX.once("ready", async (msg) => {
   console.log(" READY ".bold.bgCyan);
   if (POLLUX.shard) {
     POLLUX.user.setStatus('online');
     console.log(("● ".green)+'Shard' + (1 + POLLUX.shard.id) + '/' + POLLUX.shard.count + " [ONLINE]")
   }
+  //msgPreproc.run()
+
+  fs.readdir("./eventHandlers/", (err, files) => {
+    if (err) return console.error(err);
+    files.forEach(file => {
+      let eventor = require(`./eventHandlers/${file}`);
+      let eventide = file.split(".")[0];
+      POLLUX.on(eventide, (...args) => eventor( ...args));
+    });
+  });
+
+
 })
 
-require('./core/subroutines/cronjobs.js').run(POLLUX);
-
-const fs= require('fs')
-fs.readdir("./eventHandlers/", (err, files) => {
-  if (err) return console.error(err);
-  files.forEach(file => {
-    let eventor = require(`./eventHandlers/${file}`);
-    let eventide = file.split(".")[0];
-    POLLUX.on(eventide, (...args) => eventor.run( ...args));
-  });
-});
-
-
-function postConnect(x){
-  console.log("Discord Client Connected".cyan)
-}
-
+POLLUX.on('error', (error, shard) =>
+  error && this.logger.error(`${'[Pollux]'.red} ${shard !== undefined ? `Shard ${shard} error` : 'Error'}:`, error));
+POLLUX.on('disconnected', () => this.logger.warn(`${'[Pollux]'.yellow} Disconnected from Discord`));
 POLLUX.on("shardReady", shard=>console.log("•".green,"Shard",(shard+"").magenta,"is Ready -"))
 POLLUX.on("shardResume", shard=>console.log("•".yellow,"Shard",(shard+"").magenta,"resumed Activity -"))
 POLLUX.on("shardDisconnect", (err,shard)=>{
@@ -182,12 +207,88 @@ POLLUX.on("shardDisconnect", (err,shard)=>{
   console.error(err)
   console.groupEnd();
 })
+
+
+
+require('./core/subroutines/cronjobs.js').run(POLLUX);
+
+
+//=======================================//
+//      AUX SIDE FUNCTIONS
+//=======================================//
+
+
+POLLUX.softKill = ()=>{
+    console.log("Soft killing".bgBlue)
+    POLLUX.restarting = true;
+    //POLLUX.removeListener('messageCreate')
+    
+    Promise.all(POLLUX.execQueue).then(() => {
+      POLLUX.disconnect({ reconnect: false });
+      process.exit(0)
+    }).catch(error => {
+      console.error(error);
+      process.exit(1);
+    });
+}
+POLLUX.hardKill = ()=>{
+  console.log("Hard killing".red)
+  POLLUX.removeListener('messageCreate',()=>null)
+  POLLUX.disconnect({ reconnect: false });
+  process.exit(1);
+}
+POLLUX.setAvatar = async (url) => {
+  try {
+    const response = await axios.get(url, {
+      headers: { 'Accept': 'image/*' },
+      responseType: 'arraybuffer'
+    });
+    await POLLUX.editSelf({avatar: `data:${response.headers['content-type']};base64,${response.data.toString('base64')}`});
+  
+  } catch (err) {   
+    console.error(err);
+  }
+}
+POLLUX.findUser = (query) => {
+  query = query.toLowerCase().trim();
+
+  if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
+    const user = POLLUX.users.get(query);
+    if (user)
+      return user;
+  }
+
+  let result = POLLUX.users.find(user => user.username.toLowerCase() === query);
+  if (!result)
+    result = POLLUX.users.find(user => user.username.toLowerCase().includes(query));
+  return result || null;
+}
+POLLUX.findMember = (query, members) => {
+  query = query.toLowerCase().trim();
+
+  if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
+    const member = members.get(query);
+    if (member)
+      return member;
+  }
+
+  let result = members.find(member => member.user.username.toLowerCase() === query);
+  if (!result) result = members.find(member => member.nick && member.nick.toLowerCase() === query);
+  if (!result) result = members.find(member => member.user.username.toLowerCase().includes(query));
+  if (!result) result = members.find(member => member.nick && member.nick.toLowerCase().includes(query));
+  return result || null;
+}
+
+
+function postConnect(x){
+  console.log("Discord Client Connected".cyan)
+}
+
 //POLLUX.shardPreReady(shard=>console.log("•".blue,"Shard",(shard+"").magenta,"Reading Packet -"))
 
 
 
 POLLUX.connect().then(x=>postConnect(x));
-
 
 
 process.on("uncaughtException", err=>{
