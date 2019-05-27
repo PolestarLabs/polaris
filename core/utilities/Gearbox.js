@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const fs = require('fs');
 const path = require('path');
 const Eris = require('eris');
@@ -20,24 +21,28 @@ module.exports = {
   invisibar : "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
 
   getTarget: function getTarget(msg,argPos=0,self=true){
-    
-    if(!msg.args[argPos]) return self ? msg.author : null;
-    let ID = msg.args[argPos].replace(/[^0-9]/g,'');
-    let user = POLLUX.users.find(usr=> usr.id === ID )
-    if(!user){
-        user = msg.guild.members.find(mbr=>
-            mbr.username.toLowerCase() == msg.args[argPos].toLowerCase()
-        )||
-        msg.guild.members.find(mbr=>
-            (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
-        )||
-        msg.guild.members.find(mbr=>
-            mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
-        )||
-        msg.guild.members.find(mbr=>
-            mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
-        );
 
+    if(msg.mentions.length>0) return msg.mentions[0];
+
+    if(!msg.args[argPos]) return self ? msg.author : null;
+    let ID = msg.args[argPos].replace(/[^0-9]{16,19}$/g,'');
+    console.log(ID)
+    let user = POLLUX.users.find(usr=> usr.id === ID )
+
+    if (!user) {
+      user = msg.guild.members.find(mbr =>
+          mbr.username.toLowerCase() == msg.args[argPos].toLowerCase()
+        ) ||
+        msg.guild.members.find(mbr =>
+          (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
+        ) ||
+        msg.guild.members.find(mbr =>
+          mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
+        ) ||
+        msg.guild.members.find(mbr =>
+          mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
+        );
+ 
       if (!user && self == true) user = msg.author;
     }
     if(!user) return null;
@@ -166,7 +171,39 @@ autoHelper: function autoHelper(trigger,options){
     let usage = require("../structures/UsageHelper.js");
     usage.run(cmd, m, third);
   },
-  file: function(file,name){
+
+ resolveFile: function(resource) {
+  if (Buffer.isBuffer(resource)) return Promise.resolve(resource);
+ 
+  if (typeof resource === 'string') {
+    if (/^https?:\/\//.test(resource)) {
+      return fetch(resource).then(res => res.buffer());
+    } else {
+      return new Promise((resolve, reject) => {
+        const file = path.resolve(resource);
+        fs.stat(file, (err, stats) => {
+          if (err) return reject(err);
+          if (!stats || !stats.isFile()) return reject('[FILE NOT FOUND] '.red+ file);
+          fs.readFile(file, (err2, data) => {
+            if (err2) reject(err2);
+            else resolve(data);
+          });
+          return null;
+        });
+      });
+    }
+  } else if (typeof resource.pipe === 'function') {
+    return new Promise((resolve, reject) => {
+      const buffers = [];
+      resource.once('error', reject);
+      resource.on('data', data => buffers.push(data));
+      resource.once('end', () => resolve(Buffer.concat(buffers)));
+    });
+  }
+  return Promise.reject(new TypeError('REQ_RESOURCE_TYPE'));
+},
+
+  file: function(file,name){    
       let finalFile = file instanceof Buffer ?  file :  fs.readFileSync(file);
       let ts = Date.now();
       if(typeof name === 'string') name = name;
