@@ -1,8 +1,9 @@
 const meSubs = require('../core/subroutines/onEveryMessage.js');
 const {BLACKLIST,YELLOWLIST,REDLIST} = require(paths.UTILS+'banLists.js');
 const DB = require (appRoot + "/core/database/db_ops")
- 
-exports.run = async function (msg) {
+const Preprocessor =   require('../core/structures/CommandPreprocessor.js');
+
+module.exports = async function (msg) {
 
   if(msg.author.bot) return;
   if(!POLLUX.ready) return;
@@ -29,83 +30,43 @@ exports.run = async function (msg) {
   //-----------------------------------------------------------
   
 
-if(
-  POLLUX.user.id=="354285599588483082"&&
-  msg.author.id !== "88120564400553984" &&
-  msg.author.id !== "320351832268472320" &&
-  msg.author.id !== "103727554644418560" && 
-  msg.channel.id !== "488142183216709653" &&
-  msg.author.id !== "200044537270370313" &&
-  msg.author.id !== "163200584189476865"
-  )return;
+  
+  if(
+    POLLUX.user.id=="354285599588483082"&&
+    msg.author.id !== "88120564400553984" &&
+    msg.author.id !== "320351832268472320" &&
+    msg.author.id !== "103727554644418560" && 
+    msg.channel.id !== "488142183216709653" &&
+    msg.author.id !== "200044537270370313" &&
+    msg.author.id !== "163200584189476865"
+    )
+    return;
+    
+  if (!msg.guild) return; //DM Stuff?
 
-
-  let   USER   = msg.author,
-        SERVER = msg.guild,
-        CHANNEL= msg.channel;
-        //TARGET = msg.mentions[0];
-
-
-  if (!SERVER) return; //DM Stuff?
-  if (BLACKLIST.includes(USER.id)) return; 
-  if (YELLOWLIST.includes(CHANNEL.id)) return; 
-  if (REDLIST.includes(SERVER.ownerID.id)||REDLIST.includes(SERVER.id)) return; 
-
-
-  let _chanData = dataChecks('channel',CHANNEL),
-      _servData = dataChecks('server',SERVER),
-      _userData = dataChecks('user',USER);
-
+  let _chanData = dataChecks('channel',msg.channel),
+      _servData = dataChecks('server',msg.guild);
+  let cacheUpdates = Promise.all([
+    serverCacheUpdate  (_servData, msg.guild),
+    channelCacheUpdate (_chanData, msg.channel)
+  ]);
+  
   let garbageC = () => {
     _chanData = null
     _servData = null
-    _userData = null
-    USER      = null
-    SERVER    = null
-    CHANNEL   = null
-  };
-    
- _chanData = await _chanData;
- if ( !_chanData || (_chanData.ignored === true && !msg.content.includes("unignore")) ) return void garbageC();
-  
- _servData = await _servData;
- if ( !(_servData) ) return void garbageC();
-  
- _userData = await _userData;
- if ( !(_userData) ) return void garbageC();  
+  };    
 
-  if (typeof (_servData.modules.PREFIX) !== 'undefined' && _servData.modules.PREFIX !== '') {    
-    if(msg.content.startsWith(_servData.modules.PREFIX)) msg.prefix = _servData.modules.PREFIX;
-  }
-  if (_servData.globalPrefix!==false){
-    if(msg.content.startsWith("p2!")) msg.prefix = "p!2";
-  };
-  if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
-  if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
-  
-  // ALPHA
-  if(POLLUX.user.id == "354285599588483082"){
-    if(msg.content.startsWith("=")) msg.prefix = "=";
-    else if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
-    else msg.prefix = false;
-  }
+  if(
+      ( POLLUX.blacklistedServers.includes(msg.guild.id) ) ||
+      ( typeof msg.channel.ignored && msg.channel.ignored === true && !msg.content.includes("unignore")) 
+    )
+    return void garbageC();    
 
-  
-  if (msg.prefix) {
-    if ((await _userData).blacklisted && _userData.blacklisted!=="") {
-      msg.addReaction(":BLACKLISTED_USER:406192511070240780");
-      return void garbageC();
-    }
-    if(SERVER.members.filter(memb=>REDLIST.includes(memb.id)).size>0) return msg.reply("This server is Suspended. Please Contact Support");
+  commandResolve(msg,cacheUpdates,garbageC);
 
-    require('../core/structures/CommandPreprocessor.js').run(msg, {});
-    
-  }else{
-    meSubs.run(msg);
-  };
   
 }
-
+  
 async function dataChecks(type,ent){
     return new Promise(async resolve =>{
       if(type==="user"){
@@ -129,3 +90,43 @@ async function dataChecks(type,ent){
     });
 };
 //
+async function serverCacheUpdate(server,instance){
+  server = await server;
+  if(!server) return null;
+  instance.prefix = server.modules.PREFIX     || '+'
+  instance.language = server.modules.LANGUAGE || 'en'
+  instance.globalPrefix = server.globalPrefix || false
+}
+
+async function channelCacheUpdate(channel,instance){
+  channel = await channel;
+  if (!channel) return null;
+  instance.language = channel.LANGUAGE || null;
+  instance.ignored = channel.ignored || false;  
+}
+
+async function commandResolve(msg,cacheUpdates,garbageC){
+  if(msg.content.startsWith("plx!")) msg.prefix = "plx!";
+  if (msg.guild.globalPrefix !== false){
+    if(msg.content.startsWith("p2!")) msg.prefix = "p2!";
+  };
+  if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
+  if(!msg.prefix && !msg.guild.prefix) await cacheUpdates;      
+  if(msg.guild.prefix && msg.content.startsWith(msg.guild.prefix)) msg.prefix = msg.guild.prefix;
+
+  if(POLLUX.user.id == "354285599588483082"){
+    if(msg.content.startsWith("=")) msg.prefix = "=";
+    if(msg.content.startsWith("+")) return;
+  }
+
+  if (msg.prefix) {
+    if (POLLUX.blacklistedUsers.includes(msg.author.id) ) {
+      msg.addReaction(":BLACKLISTED_USER:406192511070240780");
+      return void garbageC();
+    }
+    Preprocessor.run(msg, {});
+    
+  }else{
+    meSubs.run(msg);
+  };
+}
