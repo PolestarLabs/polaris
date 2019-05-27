@@ -1,5 +1,5 @@
 
-const CDN = "https://pollux.fun" 
+const CDN = "https://beta.pollux.gg" 
 exports.run=()=>{
 
   global.paths = {
@@ -11,7 +11,7 @@ exports.run=()=>{
     MEDALS:     CDN + "/medals/",
     LISTS:      appRoot + "/resources/lists/",
     Build:      CDN + "/build/",
-    BUILD:      CDN + "/build/",
+    BUILD:      CDN + "/build/", 
     LEWD:       appRoot + "/../v7/resources/imgres/lewd/",
     EVENT:      appRoot + "/../v7/resources/imgres/event/",
     PROFILE:    CDN + "/build/profile/",
