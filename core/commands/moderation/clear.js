@@ -29,6 +29,6 @@ module.exports={
     ,cmd:'clear'
     ,perms:3
     ,cat:'mod'
-    ,botPerms:['attachFiles','manageMessages']
+    ,botPerms:['manageMessages']
     ,aliases:['burn']
 }

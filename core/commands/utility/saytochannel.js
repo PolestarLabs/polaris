@@ -29,6 +29,6 @@ module.exports={
     ,cmd:'saytochannel'
     ,perms:2
     ,cat:'util'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['attachFiles','embedLinks','manageMessages']
     ,aliases:['stc','sayto']
 }

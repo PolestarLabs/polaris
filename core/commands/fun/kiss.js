@@ -84,6 +84,6 @@ module.exports = {
     cmd: 'kiss',
     perms: 3,
     cat: 'fun',
-    botPerms: ['attachFiles', 'embedLinks'],
+    botPerms: [ 'embedLinks'],
     aliases: []
 }

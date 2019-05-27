@@ -89,6 +89,6 @@ module.exports={
     ,cmd:'minesweeper'
     ,perms:3
     ,cat:'games'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:[]
     ,aliases:['mswp','mines']
 }

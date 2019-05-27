@@ -71,6 +71,6 @@ module.exports={
     ,cmd:'status'
     ,perms:3
     ,cat:'infra'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['embedLinks']
     ,aliases:[]
 }

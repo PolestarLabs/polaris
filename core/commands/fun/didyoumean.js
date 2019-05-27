@@ -77,6 +77,6 @@ module.exports={
     ,cmd:'didyoumean'
     ,perms:3
     ,cat:'fun'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['attachFiles']
     ,aliases:['dym']
 }

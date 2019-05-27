@@ -27,6 +27,6 @@ module.exports={
     ,cmd:'say'
     ,perms:3
     ,cat:'util'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['attachFiles','embedLinks','manageMessages']
     ,aliases:[]
 }

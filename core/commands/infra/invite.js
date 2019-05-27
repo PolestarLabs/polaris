@@ -19,6 +19,6 @@ module.exports={
     ,cmd:'invite'
     ,perms:3
     ,cat:'infra'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['attachFiles']
     ,aliases:[]
 }

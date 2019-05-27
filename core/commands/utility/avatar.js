@@ -24,6 +24,6 @@ module.exports={
     ,cmd:'avatar'
     ,perms:3
     ,cat:'util'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['embedLinks']
     ,aliases:[]
 }

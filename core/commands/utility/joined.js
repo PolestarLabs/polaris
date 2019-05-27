@@ -31,6 +31,6 @@ module.exports={
     ,cmd:'joined'
     ,perms:3
     ,cat:'utility'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['embedLinks']
     ,aliases:[]
 }
