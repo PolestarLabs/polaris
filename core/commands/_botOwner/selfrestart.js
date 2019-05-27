@@ -5,10 +5,10 @@ const init = async function (){
 
 module.exports={
     init
-    ,pub:true
+    ,pub:false
     ,cmd:'selfrestart'
     ,perms:3
     ,cat:'dev'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:[ ]
     ,aliases:[]
 }
