@@ -1,30 +1,22 @@
 const gear = require('../../utilities/Gearbox');
-const locale = require('../../../utils/i18node');
-const $t = locale.getT();
-const fs = require("fs");
+//const locale = require('../../../utils/i18node');
+//const $t = locale.getT();
+const Gal = require('../../structures/Galleries')
 
 const init = async function (message) {
-
-    let MSG = message.content
-
 
     //HELP TRIGGER
     let helpkey = $t("helpkey", {
         lngs: message.lang
     })
-    if (MSG.split(" ")[1] == helpkey || MSG.split(" ")[1] == "?" || MSG.split(" ")[1] == "help") {
+    if (message.content.split(" ")[1] == helpkey || message.content.split(" ")[1] == "?" || message.content.split(" ")[1] == "help") {
         return gear.usage(cmd, message, this.cat);
     }
     //------------
-
-    fs.readdir(paths.BUILD + "frenes/vsauce/", function (err, files) {
-        let rand = gear.randomize(0, files.length - 1);
-        var filepath = paths.BUILD + "frenes/vsauce/" + files[rand]
-
-
-        message.channel.send(":vs: **HEY VSAUCE!** Pollux here!", gear.file(filepath,'vsauce.mp4'))
-
-    })
+    message.channel.send(
+        ":vs: **HEY VSAUCE!** Pollux here!",
+         gear.file(await Gal.randomOne('vsauce'),'vsauce.mp4')
+         )
 }
 
 
