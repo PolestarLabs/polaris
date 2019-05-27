@@ -10,7 +10,14 @@ const clean = (text) => {
 }
 
 
+
 const init = async msg => {
+let depth_param = 0
+  if(msg.args[0] === "-depth"){
+    depth_param = parseInt(msg.args[1]);
+     msg.args.shift()    
+     msg.args.shift() 
+  }
 
 let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b`
   let code = msg.args.join(" ");
@@ -22,18 +29,19 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
 
   if (!code) return;
   
-  if(code== 'process.exit()'){
+  if(code == 'process.exit()'){
     let output ="<:maybe:476214608592633866>"+invisibar+ `\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
     let embed = new Embed({description:output});
-    msg.channel.createMessage({embed});
-    process.exit(1);
+    msg.channel.createMessage({embed}).then(x=>{
+      process.exit(1);
+    });
   }
   
   try {
     let evaled = eval(code);
     if (evaled instanceof Promise) evaled = await evaled;
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled, {
-      depth: 0
+      depth: 0 + depth_param
     });
      let output ="<:yep:339398829050953728>"+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
      let embed = new Embed({description:output});
