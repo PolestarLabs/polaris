@@ -347,7 +347,11 @@
             "decon": "{{user}} is decontaminating themself.",
             "decon2": "{{user}} is decontaminating {{user2}}.",
             "cancer": "{{user}} is inspecting this channel's chance of cancer.",
-            "geiger": ":radioactive: According to the Geiger counter, this channel's cancer potential is **{{percentage}}%** with **{{radiation}}μSv/h** "
+            "geiger": ":radioactive: According to the Geiger counter, this channel's cancer potential is **{{percentage}}%** with **{{radiation}}μSv/h** ",
+            "kissed": "{{user}} kisses {{victim}}~",
+            "kissedSelf": "{{user}} kisses themself as the Narcissist b*tch they are~",
+            "kissedNone": "{{user}} sends kisses~",
+            "kissFail": "{{user}} tried to kiss, but was slapped instead... *ouch*."
         },  
         "commend":{
             "noSelf":"No, I refuse to let you commend yourself. You should be ashamed of that!",
