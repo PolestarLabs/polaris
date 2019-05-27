@@ -1,12 +1,20 @@
+
+
+
+
 const DB = require('../database/db_ops');
 const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 exports.run = async msg => {
-  Promise.all([
-    levelChecks(msg),
-    Drops(msg)
-  ]);
+  POLLUX.execQueue=POLLUX.execQueue.filter(itm=>itm.constructor != Promise);
+  POLLUX.execQueue.push(
+    Promise.all([
+      levelChecks(msg),
+      Drops(msg)
+    ]).then(()=>null)
+  )
+
 };
 
 async function incrementLocal(msg) {  

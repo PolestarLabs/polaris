@@ -1,7 +1,8 @@
+
 const gear = require("../utilities/Gearbox");
 const DB = require("../database/db_ops");
 const fs = require('fs')
-const locale = require(appRoot+'/utils/i18node');
+//const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events"); 
 
 function eventChecks(svDATA){
@@ -27,10 +28,11 @@ function convertToEvent(i,box) {
 
 module.exports = {
   lootbox: async function loot(trigger) {
-const $t = locale.getT(); 
-if(POLLUX.beta || POLLUX.restarting){
-  if(trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653")  return;
+//const $t = locale.getT(); 
+if(POLLUX.beta){
+  if(trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653")  return false;
 }
+if(POLLUX.restarting)  return false;
 
 if(trigger.content=="pick" &&  !trigger.channel.natural){
  return    DB.users.set(trigger.author.id,{$inc:{'modules.exp':-10}});
@@ -39,7 +41,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
   const checkRegex = /^_.*|^p!catch|^pick|\$w|\$m\b|^.!.*\s+|^.\/.*\s+|^\+.*\s+|^<.*[0-9]>$|^(.[A-Za-z]{10,})+$|(.)\2{4,}|(. ){4,}|(.{1,5})\4{3,}/g
   const msg = trigger.content.toLowerCase();
 
-    if(msg.match(checkRegex)) return;
+    if(msg.match(checkRegex)) return false;
 
 
     const SVR = trigger.guild;
@@ -53,7 +55,6 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       lngs: trigger.lang,
       prefix:prerf
     }
-
     
     const v = {
       dropLoot: $t("loot.lootDrop." + (gear.randomize(1, 5)), P) + $t("loot.lootPick", P).replace(prerf, ""),
@@ -116,20 +117,25 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
     };
 
    // if(trigger.channel.id=="426308107992563713") droprate= 777;
-    let dropcondition = droprate===777 || (trigger.content=="fdrop" && trigger.author.id==='88120564400553984');
+    let dropcondition = droprate===777 || (trigger.content=="fdropt" && trigger.author.id==='88120564400553984');
 
     dropcondition ? console.log((`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `+"").red.bgYellow) : false;
     if(dropcondition){
 
     console.log(("DROPPE!!!").green)
 
-      if (!BOX) return;
+      if (!BOX) return false;
       trigger.channel.natural = true
 
-      let lootMessage = await CHN.send(BOX.text,{
-        file:fs.readFileSync(paths.BUILD + (BOX.pic || "chest.png")),name:"LOOTBOX.png"
-      }).catch(e=>false);
-      if(!lootMessage) return;
+
+
+      let lootMessage = await CHN.send(BOX.text,
+        //paths.BUILD + (BOX.pic || "chest.png")
+        //{file: (paths.BUILD + (BOX.pic || "chest.png")),name:"LOOTBOX.png"}
+        gear.file( await gear.resolveFile(paths.BUILD + (BOX.pic || "chest.png")) , "Lootbox.png")
+
+        ).catch(e=>false);
+      if(!lootMessage) return false;
 
       let ballotMessage = await CHN.send(v.disputing).catch(e=>false);
       if(!ballotMessage) return CHN.send("An error has occurred at `LOOT_BALLOT.get`");
@@ -150,7 +156,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
               pickMsg.addReaction(':loot:339957191027195905').catch(e=>{});
 
               pickers.push({id:pickMsg.author.id, name:pickMsg.author.username, mention:`<@${pickMsg.author.id}>`});
-              return true;
+              return;
             }else{
               //pickMsg.delete().catch();
             };
@@ -160,7 +166,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
 
       if (pickers.length === 0) {
         CHN.send(v.morons);
-        return;
+        return true;
       };
 
       try{
