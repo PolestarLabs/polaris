@@ -22,6 +22,7 @@ const
        ,audits         : miscDB.audit
        ,control        : miscDB.control
        ,marketplace    : miscDB.marketplace
+       ,reactRoles     : miscDB.reactRoles
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
    ,collectibles  : require('./schemas/collectibles.js')
