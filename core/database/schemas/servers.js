@@ -45,6 +45,7 @@ const ServerSchema = new mongoose.Schema({
             SELFROLES:  Array,
             AUTOROLES:  Array,
             ROLEMARKET: Mixed,
+            REACTIONS : Mixed,
             ACTLOG:String,
             MODLOG:String,
             ADVLOG:String,
