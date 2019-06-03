@@ -41,9 +41,15 @@ const init = async function (message) {
     embed.timestamp= ts
     embed.footer(log.transactionId)
 
-  message.channel.send({embed})
-
+    message.channel.send({embed})
 
     }
 
- module.exports = {pub:false,cmd: 'tlookup', perms: 3, init, cat: 'infra', aliases:['tlookup']};
+ module.exports = {
+    init,
+    pub:false,
+    cmd: 'tlookup',
+    perms: 3, 
+    cat: 'infra', 
+    aliases:['tlookup']
+  };

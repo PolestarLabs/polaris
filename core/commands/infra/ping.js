@@ -25,7 +25,12 @@ const init = async msg => {
 
 
 module.exports = {
-  cmd:"ping",
-  init,
-  cat: 'infra'
+  init
+  ,pub:true
+  ,cmd:'ping'
+  ,perms:3
+  ,cat:'infra'
+  ,botPerms:['embedLinks']
+  ,aliases:[]
+
 }

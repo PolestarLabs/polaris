@@ -160,8 +160,10 @@ msg.author.getDMChannel().then(dmChan=>{
 
 
 module.exports = {
-  cmd:"ping",
-  init,
-  cat: 'infra',
-  aliases: ['ajuda','welp','?','???','ayuda']
+    init, 
+    cmd:"help",
+    pub: true,
+    botPerms:['embedLinks'],
+    cat: 'infra',
+    aliases: ['welp','?','???']
 }
