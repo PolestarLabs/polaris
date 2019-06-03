@@ -160,7 +160,9 @@ autoHelper: function autoHelper(trigger,options){
         || (message.content.split(/ +/).length==1&&trigger.includes('noargs'))
         ||  trigger==='force'
        ){
-      this.usage(cmd,message,opt,aliases);
+      //this.usage(cmd,message,opt,aliases);
+      let usage = require("../structures/UsageHelper.js");
+      usage.run(cmd, message, opt);
       return true;
     }else{
       return false;

@@ -1,6 +1,5 @@
 module.exports = async function run(oldMessage){
     if(!oldMessage) return;
-    if(oldMessage.author.bot) return;
     oldMessage.channel.snipe = {
         msg_old:{
             content:        oldMessage.content
