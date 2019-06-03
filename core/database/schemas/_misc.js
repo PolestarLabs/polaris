@@ -47,6 +47,13 @@ const Control = new Schema({
   data:Mixed
 },{ strict: false });
 
+const ReactionRoles = new Schema({
+  channel:String,
+  message:String,
+  server:String,
+  rolemoji:Array,  
+},{ strict: false });
+
 const FanartModel = new Schema({
         id:String,
         src:String,
@@ -87,6 +94,10 @@ const MarketplaceModel = new Schema({
   const control    = mongoose.model('Control', Control, 'control');
         control.set    =  utils.dbSetter;
         control.get    =  utils.dbGetter; 
+
+  const reactRoles    = mongoose.model('ReactionRoles', ReactionRoles, 'ReactionRoles');
+        reactRoles.set    =  utils.dbSetter;
+        reactRoles.get    =  utils.dbGetter; 
         
   const global    = mongoose.model('Global', Globals, 'globals');
       global.set  = function(alter){
@@ -157,4 +168,4 @@ const MarketplaceModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control,marketplace }; 
+module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace }; 
