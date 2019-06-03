@@ -48,9 +48,16 @@
         "level": "Level",
         "levelUp": "Level Up!",
         "discord": {
+            "message": "Message",
+            "message_plural": "Messages",
+            "reaction": "Reaction",
+            "reaction_plural": "Reactions",
             "role": "Role",
+            "role_plural": "Roles",
             "server": "Server",
+            "server_plural": "Server",
             "member": "Member",
+            "member_plural": "Members",
             "user": "User",
             "user_plural": "Users",
             "channel": "Channel",
@@ -100,13 +107,15 @@
             "noRoleHere": "Seems that Role isn't listed. Make sure you are telling me the role correctly.",
             "noRolesGiven": "No Role was mentioned, are you doing it right?",
             "roleAlreadyHere": "Seems that Role is already on the list.",
-            "nosuchrole": "Um, I couldn't find this role, type its name exactly please. Remember it's case-sensitive.",
+            "nosuchrole": "Um, I couldn't find this role, type its name exactly please.",
             "kbanNone": "I need a target to ban, I could always ban you instead.",
             "superRoleNope": "It seems **{{user}}** does not have the Role **{{group}}**.",
             "banNone": "I need a target to ban, I could always ban you instead.",
             "unpermB": "I don't seem to have enough perms to process this.",
+            "cantFindMessageID": "Hmmm...That's not right... This Message ID seems to be invalid.",
             "cantFindChannel": "I can't seem to find that channel. Try using #channel to make sure it exists.",
             "noChannelGiven": "You need to tell me which channel to log the activities into.",
+            "emojiError":"I couldn't add this Emoji. Check reaction permissions or if the Emoji is valid...",
             "insuperms": "{{imsorry}} I can't do that for you if you don't have permission yourself.",
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
         },
@@ -400,6 +409,22 @@
         "pleasewait": {
 
         }
+        ,"reactroles":{
+            "reactrolesfor":"Reaction Roles for {{server}}",
+            "removeAll": "I've removed all Reactions Registry from here. But you'll have to clear manually any reactions from the messages themselves.",
+            "removed": "This reaction has been removed~",
+            "noroleshere": "There are no Reaction Roles in this server.",
+            "removedAllFrom": "Removed all reactions from {{ID}}~",
+            "noReactionDel":"To delete a Role Reaction, use `{{prefix}}reactionroles del [MESSAGE ID] [EMOJI]`. You can ommit `EMOJI` if you want to delete all Reactions from that Message too~",
+            "success": "Reaction Roles will be seen in this message:"
+
+        }
+        ,"shuffle":{
+             "picking":"Picking... {{as in 'picking from a list'}}"
+            ,"complete":"Complete!"
+            ,"lessthan2":"I need at very least two things to choose from..."
+            ,"ichoose": "I choose **{{list_item}}**!"
+        }
         ,"help":{
             "greetings": "\n**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n  •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n      The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n      The Universal Prefix is `plx!` and cannot be disabled. \n",
             "basics": "\n  **The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!\n  ",
@@ -432,8 +457,8 @@
 
         },
         "coinflip": {
-            "coinVictory": "You won! {{result}}, You got **{{prize}}** $t(keywords.RBN_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} {{result}}. Seems you lost..."
+            "coinVictory": "{{interjection}} You won! You got **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} You seem to have lost...better luck next time!"
         },
         "dice": {
             "userRolledSome": "**{{user}}** rolled some dice:",
