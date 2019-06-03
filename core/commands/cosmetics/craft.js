@@ -60,7 +60,7 @@ function noteno(item,extra){
     ITEMS.sort( (a,b)=>a.diffScore-b.diffScore);
 
       let DYM = ITEMS.slice(0,5).filter(y=>y.diffScore<5).map(x=>x.name+` (\`${x.code}\`)`)
-      let sorry = locale.rand('responses.verbose.interjections.gomenasai',P)
+      let sorry = rand$t('responses.verbose.interjections.gomenasai',P)
       let res = DYM.length===1?$t('responses.crafting.didyoumeanOne',P):$t('responses.crafting.didyoumeanOne',P);
       if(DYM.length>0){
         let step_message = await message.channel.send(sorry+res+"\n • "+DYM.join('\n • '));

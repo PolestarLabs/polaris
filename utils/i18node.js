@@ -8,7 +8,7 @@ module.exports = {
     },
 
     rand: function rand(string, fun,params){
-        let loc = this.getT()
+        let loc = reroute
         let rand = Math.floor(Math.random() * (loc(string,{returnObjects:true}).length));       
         return loc(string+"."+rand,params);
     },

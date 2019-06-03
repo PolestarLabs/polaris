@@ -165,6 +165,7 @@ pGear.getDirs('./locales/').then(list => {
 
         multilang.setT(t);
         global.$t = multilang.getT()
+        global.rand$t = multilang.rand
     });
 });
 //----------------[i18n END]-------<
