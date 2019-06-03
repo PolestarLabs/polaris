@@ -179,8 +179,8 @@ console.log(message.author.tag)
    }
    let ratelimit = message.author.ratelimit;
    let ratelimitDay = message.author.ratelimitHour;
-   message.author.ratelimit.queue(f=>{});
-   message.author.ratelimitHour.queue(f=>{});
+   message.author.ratelimitHour.queue(f=>null);
+   message.author.ratelimit.queue(f=>null);
    if (ratelimitDay.tokens == ratelimitDay.tokenLimit) {
      message.reply(":hourglass_flowing_sand: You reached the limit of hourly commands, please come back in one hour.");
      return null;
@@ -223,7 +223,19 @@ console.log(message.author.tag)
 
   const commandRoutine = require('../subroutines/onEveryCommand');
   await message.channel.sendTyping();
-   await Promise.all([
+  if(command.ratelimit){
+    if(!message.author.ratelimitCMD || !message.author.ratelimitCMD[command.cmd]) {
+      message.author.ratelimitCMD ? null : message.author.ratelimitCMD = {};
+      message.author.ratelimitCMD[command.cmd] = new Bucket(command.ratelimit.times ,command.ratelimit.hours * 3600000,{latency:60000});
+    } 
+    message.author.ratelimitCMD[command.cmd].queue(f=>null);
+    let ratelimit = message.author.ratelimitCMD[command.cmd];
+    if (ratelimit.tokens == ratelimit.tokenLimit) {
+      message.reply(":hourglass_flowing_sand: `Command ratelimit reached!`").then(m => m.deleteAfter(5552));
+      return null;
+    }
+  }
+  await Promise.all([
       commandRoutine.updateMeta(message,command),
       commandRoutine.saveStatistics(message,command),
       commandRoutine.administrateExp(message.author.id,command),
