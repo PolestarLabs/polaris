@@ -84,7 +84,7 @@ const init = async function (msg){
     
     if (subcommand == "del"){
 
-        let emojiQuery = (arg2||"").replace("<:a:","").replace(">","").replace("<:","");
+        let emojiQuery = (arg2||"") //.replace("<:a:","").replace(">","").replace("<:","");
 
         let messageReactionData = ReactionData.find(r=>r.message==arg1);
         if(arg1 && messageReactionData){
