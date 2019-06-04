@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubine",
+        "RBN_fullname": "",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
+        "JDE_fullname": "",
         "JDE_plural": "Jade",
         "SPH": "Sapphire",
+        "SPH_fullname": "",
         "SPH_plural": "Sapphires",
         "C": "Common",
         "U": "Uncommon",
@@ -13,9 +16,13 @@
         "UR": "Ultra Rare",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "soth"
+        "thevoid": "soth",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "Nilgh'ri hnahh",
         "amount": "",
         "overview": "",
@@ -41,9 +48,16 @@
         "level": "Level",
         "levelUp": "Level Up!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Role",
+            "role_plural": "",
             "server": "Server",
+            "server_plural": "Server",
             "member": "Hri",
+            "member_plural": "",
             "user": "Hri",
             "user_plural": "Hri",
             "channel": "Channel",
@@ -87,21 +101,27 @@
             "chooseAmod": "Mgah'n'ghft mgepkadishtu module.",
             "kinNone": "Ymg' l'ai ya ahf'Ym l'mggoka ebumna. Y'ahor nilgh'riyar ymg'mggoka l'shog.",
             "kin404": "Y'ahor't mgah'n'ghft fahf hlirgh. F'mgepah epgoka? f'ahnythor ah nilgh'rinah ot ymg'fhtagn.",
+            "unmutable": "",
             "unperm": "Y'nafl mgep perms l'ah fahf. ymg'ahnythor goka ya perms mgep ulnah ya l'ah goka.",
             "noRoleHere": "Role nafl ah'sgn. Ai ya role mgleth.",
             "noRolesGiven": "mg Role mgepah mgep'ai.",
             "roleAlreadyHere": "Role mgepgoka mgepah agl.",
-            "nosuchrole": "Role nafl geb.",
+            "nosuchrole": "",
             "kbanNone": "Ai ahf'ahnythor epgoka mg yar.",
             "superRoleNope": "**{{user}}** ah nafl **{{group}}**",
-            "banNone": "ai ahf' ahnythor epgoka mg yar.",
+            "banNone": "Ai ahf'ahnythor epgoka mg yar.",
             "unpermB": "Y' mgep nafl r'luh.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Mg mgr'luh Channel. #channel mgah'n'ghft.",
             "noChannelGiven": "Ahagl l' agl ai?",
+            "emojiError": "",
             "insuperms": "{{imsorry}} Y'ahor't ah perms nafl mgep ymg'.",
             "not-a-NSFW-channel": "Fahf channel nafl NSFW. Epgoka nafl ymg'r'luh vulgtmm."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Fahf ephaiepgoka {{s}} 'S",
             "enterVoiceBetterExperience": "Ymg'ahnythor ai channel mgleth r'luh."
         },
@@ -330,7 +350,27 @@
             "decon": "",
             "decon2": "",
             "cancer": "",
-            "geiger": ""
+            "geiger": "",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} mgep mgepah hri Iiahe: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

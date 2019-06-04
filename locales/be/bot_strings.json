@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Лалы",
+        "RBN_fullname": "",
         "RBN_plural": "Лалы",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "Нефрыту",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "Колькасць",
         "overview": "Агляд",
@@ -41,9 +48,16 @@
         "level": "Ўзровень",
         "levelUp": "Павышэнне ўзроўню!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Ролю",
+            "role_plural": "",
             "server": "Сервер",
+            "server_plural": "Сервер",
             "member": "Удзельнік",
+            "member_plural": "Удзельнікі",
             "user": "Карыстальнік",
             "user_plural": "Карыстальнікі",
             "channel": "Канал",
@@ -87,21 +101,27 @@
             "chooseAmod": "Не маглі вы выбраць модуль?",
             "kinNone": "Для пачатку вам трэба сказаць, каго выгнаць. Ці мне варта выгнаць вас?",
             "kin404": "Здаецца, я не магу знайсці гэтага чалавека. Можа, ён ужо пайшоў? Ці гэта быў адзін з вашых ўяўных сяброў?",
+            "unmutable": "",
             "unperm": "У мяне няма правоў, каб зрабіць гэта. Вам варта даць мне права, для пачатку, перад тым, як казаць мне што - то зрабіць, што я зрабіць не магу.",
             "noRoleHere": "Здаецца, ролю не існуе. Вы ўпэўненыя, што правільна паказалі ролю?",
             "noRolesGiven": "Такая роля не існуе, вы ўпэўненыя, што робіце ўсё правільна?",
             "roleAlreadyHere": "Здаецца, такая ролю ўжо існуе.",
-            "nosuchrole": "Эмм ... Я не змагла знайсці ролю, калі ласка, напішыце яе правільна.\nПамятаеце, што яна адчувальная да рэгістра.",
+            "nosuchrole": "",
             "kbanNone": "Мне патрэбна мэта, якую я магла б забаніць, але я заўсёды магу забаніць вас замест гэтага.",
             "superRoleNope": "Здаецца, **{{user}}** не адносіцца да гэтай **{{group}}** ролі.",
             "banNone": "Мне патрэбна мэта, якую я магла б забаніць, але я заўсёды магу забаніць вас замест гэтага.",
             "unpermB": "Здаецца, у мяне няма дазволаў каб зрабіць гэта.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Здаецца, я не магу знайсці гэты канал. Паспрабуйце выкарыстоўваць #канал, каб быць упэўненым, што ён існуе.",
             "noChannelGiven": "Вам трэба будзе падаць, на якім канале мне варта запісваць дзеянні.",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "Гэты канал не з'яўляецца NSFW. Не пакідайце свае \"малюначкі\" усюды."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Часам выйдзе праз {{s}} секунд",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "{{user}} абеззаражвае сябе.",
             "decon2": "{{user}} абеззаражвае {{user2}}.",
             "cancer": "{{user}} правярае ўзровень рака на гэтым канале.",
-            "geiger": ":radioactive: У адпаведнасці са лічыльнікам Гейгера, працэнт рака на гэтым канале **{{percentage}}%** з **{{radiation}}μSv/h**"
+            "geiger": ":radioactive: У адпаведнасці са лічыльнікам Гейгера, працэнт рака на гэтым канале **{{percentage}}%** з **{{radiation}}μSv/h**",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{Target}} з'яўляецца ўдзельнікам з: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Магчымыя каманды",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "Кідкі кубіка былі:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

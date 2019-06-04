@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "",
+        "RBN_fullname": "",
         "RBN_plural": "",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "",
         "overview": "",
@@ -41,9 +48,16 @@
         "level": "HIGH NOON",
         "levelUp": "HIGH NOON!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "",
+            "role_plural": "",
             "server": "",
+            "server_plural": "",
             "member": "",
+            "member_plural": "",
             "user": "",
             "user_plural": "",
             "channel": "",
@@ -87,21 +101,27 @@
             "chooseAmod": "CHOOSE A MODULE. COME ON.",
             "kinNone": "YOU NEED TO TELL ME WHO I'M SUPPOSED TO KICK. I'M GONNA KICK YOUR BUTT INSTEAD.",
             "kin404": "I CAN'T SEE THAT THOT! DID THEY LEAVE? MAYBE YOU SAW SOME WEIRD STUFF. A HIGH NOON PERHAPS.",
+            "unmutable": "",
             "unperm": "I CAN'T DO THIS. YOU SHOULD GIVE ME PERMS BEFORE COMMANDING ME TO DO STUFF.",
             "noRoleHere": "SEEMS LIKE THAT ROLE ISN'T IN THE NOONLIST. YOU SURE YOU'RE TYPING IT CORRECTLY?",
             "noRolesGiven": "YOU DIDN'T MENTION A ROLE, TRY HARDER",
             "roleAlreadyHere": "THAT ROLE IS ALREADY ON THE NOONLIST.",
-            "nosuchrole": "I CAN'T FIND THAT ROLE, TYPE THE NAME EXACTLY AS IT IS. IT'S ALSO CASE SENSITIVE IF YOU DIDN'T KNOW THAT.",
+            "nosuchrole": "",
             "kbanNone": "I NEED A TARGET TO BAN, I COULD ALWAYS BAN YOU INSTEAD.",
             "superRoleNope": "IT SEEMS **{{USER}}** DOESN'T HAVE THE **MCCREE** ROLE.",
             "banNone": "I NEED A TARGET TO BAN, I COULD ALWAYS BAN YOU INSTEAD.",
             "unpermB": "I DON'T SEEM TO HAVE ENOUGH PERMS TO PROCESS THIS.",
+            "cantFindMessageID": "",
             "cantFindChannel": "I CAN'T SEE THAT CHANNEL. TRY USING #MCCREESFAVORITECHANNEL TO MAKE SURE IT EXISTS.",
             "noChannelGiven": "YOU NEED TO TELL ME WHICH CHANNEL TO LOG THE ACTIVITIES INFO.",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": ""
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "",
             "decon2": "",
             "cancer": "",
-            "geiger": ""
+            "geiger": "",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} HAS BEEN A MCCREE SINCE: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "AVAILABLE HIGH NOONS",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubíny",
+        "RBN_fullname": "",
         "RBN_plural": "Rubíny",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "Jadeity",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "Počet",
         "overview": "Přehled",
@@ -41,9 +48,16 @@
         "level": "",
         "levelUp": "",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "",
+            "role_plural": "",
             "server": "",
+            "server_plural": "",
             "member": "Člen",
+            "member_plural": "Členové",
             "user": "Uživatel",
             "user_plural": "Uživatelé",
             "channel": "Kanál",
@@ -87,21 +101,27 @@
             "chooseAmod": "Vyber si už ten modul.",
             "kinNone": "Tak popořadě, nejdřív mi řekni jméno toho, koho budu vyhazovat. Než vyhodím tebe.",
             "kin404": "Ups, myslím že ho nenajdu :< Není už pryč? Existuje vůbec? Není to jen tvoje představivost? SEŠ SI JISTEJ???",
+            "unmutable": "",
             "unperm": "Z nějakýho divnýho důvodu na to nemám práva. DEJ MI SAKRA PRÁVA!!1!1",
             "noRoleHere": "Tahle role není na seznamu. Zkontroluj si ty sračky co jsi napsal, prosím.",
             "noRolesGiven": "Žádná role nebyla zmíněna, děláš to správně?",
             "roleAlreadyHere": "Hej, mistře, tahle role už tu je!",
-            "nosuchrole": "Um, tuhle roli nemůžu najít, napiš její jméno správně! Velký a malý písmena a tak.",
+            "nosuchrole": "",
             "kbanNone": "Řekni mi komu mám do zadku zarazit tohle kladivo, než ho tam zarazím tobě!",
             "superRoleNope": "**{{user}}** nemá roli **{{group}}**!",
             "banNone": "Řekni mi komu mám do zadku zarazit tohle kladivo, než ho tam zarazím tobě!",
             "unpermB": "O můj, asi nemám dostatek práv na provedení...",
+            "cantFindMessageID": "",
             "cantFindChannel": "Um... Tenhle kanál nemůžu najít :/ pokud si nejsi jistý, napiš #kanál",
             "noChannelGiven": "Ok, a kam tyhle aktivity zapíšu? Na tvůj obličej? Řekni mi na jaký kanál je mám zapsat!",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "Nejdřív nastav tenhle kanál jako NSFW. Jsou tady děti."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Časový limit vyprší za {{s}} sekund",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "{{user}} se dekontaminuje.",
             "decon2": "{{user}} dekontaminuje {{user2}}.",
             "cancer": "{{user}} měří level rakoviny tohoto chatu.",
-            "geiger": ":radioactive: Podle Geigerova detektoru je potenciál rakoviny chatu **{{percentage}}%** (**{{radiation}}μSv/h**)"
+            "geiger": ":radioactive: Podle Geigerova detektoru je potenciál rakoviny chatu **{{percentage}}%** (**{{radiation}}μSv/h**)",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} je členem od: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Dostupné příkazy",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "Hody byly:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

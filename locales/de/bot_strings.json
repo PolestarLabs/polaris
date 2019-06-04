@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubine",
+        "RBN_fullname": "",
         "RBN_plural": "Rubine",
         "JDE": "Jaden",
+        "JDE_fullname": "",
         "JDE_plural": "Jade",
         "SPH": "Saphir",
+        "SPH_fullname": "",
         "SPH_plural": "Saphire",
         "C": "Gewöhnlich",
         "U": "Ungewöhnlich ",
@@ -13,9 +16,13 @@
         "UR": "Super selten ",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxen",
-        "thevoid": "nichts"
+        "thevoid": "nichts",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "Gesamt",
         "amount": "Menge",
         "overview": "Übersicht",
@@ -41,9 +48,16 @@
         "level": "Level",
         "levelUp": "Neues Level!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Rolle",
+            "role_plural": "",
             "server": "Server",
+            "server_plural": "Server",
             "member": "Mitglied",
+            "member_plural": "Mitglieder",
             "user": "Benutzer",
             "user_plural": "Benutzer",
             "channel": "Channel",
@@ -87,21 +101,27 @@
             "chooseAmod": "Wähle ein Modul, was du willst.",
             "kinNone": "Erst die Arbeit, dann das Vergnügen. Nenn mir sofort den Namen der Person, die ich kicken soll. Sonst kicke ich **dich**.",
             "kin404": "Ups,I denke ich kann diese Person nicht finden :< Ist er nicht gegangen? Existiert der überhaupt. Halluzinierst du nicht nur?",
+            "unmutable": "",
             "unperm": "Aus irgendeinem Grund habe ich keine Berechtigungen dafür. VERDAMMT",
             "noRoleHere": "Diese Rolle steht nicht auf der Liste. Bitte überprüfe; welche Rollen überhaupt verfügbar sind...",
             "noRolesGiven": "Keine Rolle wurde Erwähnt, hast du es richtig gemacht?",
             "roleAlreadyHere": "Hey, Mister, diese Rolle existiert bereits.",
-            "nosuchrole": "Um, Ich konnte diese Rolle nicht finden, bitte schreibe den Namen richtig!",
+            "nosuchrole": "",
             "kbanNone": "Sag mir, welchen Penner ich bannen soll, bevor ich dich banne!",
             "superRoleNope": "**{{user}}** besitzt nicht die **{{group}}** Rolle.",
             "banNone": "Sag mir, welchen Penner ich bannen soll, bevor ich dich banne!",
             "unpermB": "Ich habe nicht genügent rechte um weiter zu machen",
+            "cantFindMessageID": "",
             "cantFindChannel": "Um... Ich konnte den Kanal nicht finden :/ Wenn du dir nicht sicher bist, versuche #channel zu benutzen.",
             "noChannelGiven": "Ok, und wo soll ich diese Aktivitäten aufzeichnen? Auf deinem Gesicht? Nenne mir ein Kanal zum protokollieren!",
+            "emojiError": "",
             "insuperms": "{{imsorry}} Ich kann dies nicht für dich tun, wenn du nicht die Berechtigung selbst hast.",
             "not-a-NSFW-channel": "Stelle diesen Channel zu erst zu einen NSFW-Channel um. Hier sind Kinder."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Diese Zeit wird in [{{s}} zu ende sein.",
             "enterVoiceBetterExperience": "Für alle Funktionen musst du mit einem Voice-Channel verbunden sein."
         },
@@ -330,7 +350,27 @@
             "decon": "{{user}} dekontaminiert sich selbst.",
             "decon2": "{{user}} dekontaminiert {{user2}}.",
             "cancer": "{{user}} untersucht das Cancer Level des Chats.",
-            "geiger": ":radioactive: Laut dem Strahlungsmesser ist das Cancer Potential dieses Chats **{{percentage}}%** mit **{{radiation}}μSv/h**"
+            "geiger": ":radioactive: Laut dem Strahlungsmesser ist das Cancer Potential dieses Chats **{{percentage}}%** mit **{{radiation}}μSv/h**",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "\n {{target}} ist ein Mitglied seit: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Verfügbare Commands",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "Die Würfel waren:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

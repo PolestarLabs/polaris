@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Рубины",
+        "RBN_fullname": "",
         "RBN_plural": "Рубины",
         "JDE": "Нефрит",
+        "JDE_fullname": "",
         "JDE_plural": "Нефриты",
         "SPH": "Сапфир",
+        "SPH_fullname": "",
         "SPH_plural": "Сапфиры",
         "C": "Обычное",
         "U": "Необыкновенное\n",
@@ -13,9 +16,13 @@
         "UR": "Невероятно Редкое",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "не учитывать"
+        "thevoid": "не учитывать",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "Количество",
         "overview": "Обзор",
@@ -41,9 +48,16 @@
         "level": "Уровень",
         "levelUp": "Повышение уровня!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Роли",
+            "role_plural": "",
             "server": "Сервер",
+            "server_plural": "Сервер",
             "member": "Участник",
+            "member_plural": "Участники",
             "user": "Пользователь",
             "user_plural": "Пользователи",
             "channel": "Канал",
@@ -83,25 +97,31 @@
             "disabledModule": ":no_entry_sign: Наш хозяин объявил {{module}} запрещенным. Беда.",
             "genericInvalid": "Божечки, кажется, это неправильная команда  ;~;",
             "prefixChng": "Поняла, мой префикс это {prefix}}, попробуйте использовать его '{{prefix}}stats'.",
-            "moderationNeeded": "Простите, вы не можете использовать эту команду. Вам нужно, либо разрешение **управлять сервером**, либо быть назначеным в мод/административные роли (задать которые можно с '{{prefix}}modrole [@Role])'",
+            "moderationNeeded": "Простите, вы не можете использовать эту команду. Вам нужно, либо разрешение **управлять сервером**, либо быть назначеным в мод/административные роли (задать которые можно с `{{prefix}}modrole [@Role])`",
             "chooseAmod": "Не могли ли вы выбрать модуль?",
             "kinNone": "Для начала вам нужно сказать, кого выгнать.  Или мне стоит выгнать вас?",
             "kin404": "Кажется, я не могу найти этого человека. Может, он уже ушел? Или это был один из ваших воображаемых друзей?",
+            "unmutable": "",
             "unperm": "У меня нет прав, чтобы сделать это. Вам стоит дать мне права, для начала, перед тем, как говорить мне что - то сделать, что я сделать не могу.",
             "noRoleHere": "Кажется, роль не существует. Вы уверены, что правильно указали роль?",
             "noRolesGiven": "Такая роль не существует, вы уверены, что делаете все правильно?",
             "roleAlreadyHere": "Кажется, такая роль уже существует.",
-            "nosuchrole": "Эмм... Я не смогла найти роль, пожалуйста, напишите ее правильно.\nПомните, что она чувствительна к регистру.",
+            "nosuchrole": "",
             "kbanNone": "Мне нужна цель, которую я могла бы забанить, но я всегда могу забанить вас вместо этого.",
             "superRoleNope": "Кажется, **{{user}}** не относится к этой **{{group}}** роли.",
             "banNone": "Мне нужна цель, которую я могла бы забанить, но я всегда могу забанить вас вместо этого.",
             "unpermB": "Кажется, у меня нет разрешений чтобы сделать это.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Кажется, я не могу найти этот канал. Попробуйте использовать #канал, чтобы быть уверенным, что он существует.",
             "noChannelGiven": "Вы должны указать, на каком канале мне стоит записывать действия.",
+            "emojiError": "",
             "insuperms": "{{imsorry}} я не могу сделать это для Вас, если Вы не имеете разрешений.",
             "not-a-NSFW-channel": "Этот канал не является NSFW. Не оставляйте свои \"рисуночки\" везде."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Время выйдет через {{s}} секунд",
             "enterVoiceBetterExperience": "Вы должны находиться в голосовом канале для полного ~погружения~."
         },
@@ -170,7 +190,7 @@
         "moderation": {
             "didkik": ":boot: Был выгнан {{target}} отсюда.\n **Причина:** *{{reason}}*",
             "autoroleunAdded": "Роль **{{role}}** убрана из Авто-ролей.",
-            "modroleunAdded": "Роль **{{role}}** больше не модерирующая. Вы собираетесь совершить переворот?",
+            "modroleunAdded": "Роль **{{role}}** больше не относится к модерации. Вы собираетесь совершить переворот?",
             "incinerate": "",
             "roleAdded": "Поняла, я добавила роль.",
             "noReason": "Причина не указана",
@@ -330,7 +350,27 @@
             "decon": "{{user}} обеззараживает себя.",
             "decon2": "{{user}} обеззараживает {{user2}}.",
             "cancer": "{{user}} проверяет уровень рака на этом канале.",
-            "geiger": ":radioactive: В соответствии со счетчиком Гейгера, процент рака на этом канале **{{percentage}}%** с **{{radiation}}μSv/h**"
+            "geiger": ":radioactive: В соответствии со счетчиком Гейгера, процент рака на этом канале **{{percentage}}%** с **{{radiation}}μSv/h**",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} является участником с: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Возможные команды",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "Броски кубика были:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

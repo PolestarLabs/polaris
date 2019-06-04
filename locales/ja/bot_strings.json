@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "ルビン",
+        "RBN_fullname": "",
         "RBN_plural": "ルービンズ",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "翡翠",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "量",
         "overview": "概要",
@@ -41,9 +48,16 @@
         "level": "レベル",
         "levelUp": "レベルアップ！",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "役割",
+            "role_plural": "",
             "server": "サーバ",
+            "server_plural": "サーバ",
             "member": "メンバー",
+            "member_plural": "メンバー",
             "user": "ユーザー",
             "user_plural": "ユーザー",
             "channel": "チャネル",
@@ -87,21 +101,27 @@
             "chooseAmod": "モジュールを選択してください。",
             "kinNone": "내가 걷어차 야 할 놈의 이름을 말해줘. 하지만 난 항상 대신 킥 수 있습니다.",
             "kin404": "죄송합니다, 나는이 사람을 찾을 수 없다고 생각합니다 :[ 그는 이미 갔습니까? 그는 존재하니? 당신의 상상력이 아닙니까? 너 확실해?",
+            "unmutable": "",
             "unperm": "어떤 지옥 이유 때문에 나는 이것을 할 권한이 없다. 나 한테 허락 해줘.",
             "noRoleHere": "この役割はリストにありません。 それをもう一度確認してください。",
             "noRolesGiven": "何の役割に言及しなかった、あなたは右のそれをやっていますか？",
             "roleAlreadyHere": "ねえ、ミスター、この役割はすでにここにあります！",
-            "nosuchrole": "ええ、私はこの役割を見つけることができませんでした、その名前を正確に入力してください！ 大文字と小文字を区別していて大変です",
+            "nosuchrole": "",
             "kbanNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
             "superRoleNope": "**{{user}} **には役割がありません **{{group}}**！",
             "banNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
             "unpermB": "ああ、私はこれを処理するのに十分なパーマを持っていないと思います...",
+            "cantFindMessageID": "",
             "cantFindChannel": "ええと...このチャンネルを見つけることができませんでした：/確信が持てない場合は #channel を試してみてください",
             "noChannelGiven": "そして、どこでこれらの活動を記録するのですか？ あなたの顔に？ ログインするチャンネルを教えてください！",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "最初にこのチャンネルをNSFWに設定してください。 子供たちは周りにあります"
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "これは{{s}}秒後にタイムアウトします",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "{{user}}は自分自身を汚染除去しています。",
             "decon2": "{{user}}は{{user2}}を除染しています。",
             "cancer": "{{user}}はこのチャットの癌のレベルを検査しています。",
-            "geiger": ":radioactive: ガイガーカウンターによると、このチャットガンの可能性は \n**{{percentage}}%** で **{{radiation}}μSv/h**"
+            "geiger": ":radioactive: ガイガーカウンターによると、このチャットガンの可能性は \n**{{percentage}}%** で **{{radiation}}μSv/h**",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{target}} その時以来のメンバーです： {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "使用可能なコマンド",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "ロールは：",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

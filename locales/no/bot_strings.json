@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "",
+        "RBN_fullname": "",
         "RBN_plural": "",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "",
         "overview": "",
@@ -41,9 +48,16 @@
         "level": "Nivå",
         "levelUp": "Du har gått opp et nivå! ",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "",
+            "role_plural": "",
             "server": "",
+            "server_plural": "",
             "member": "",
+            "member_plural": "",
             "user": "",
             "user_plural": "",
             "channel": "",
@@ -87,21 +101,27 @@
             "chooseAmod": "Velg en modul.",
             "kinNone": "Du må fortelle meg hvem du skal sparke ut. Jeg kan, så klart sparke ut deg istedet. ",
             "kin404": "¨Finner ikke denne personen. Har de allerede dratt? Kanskje de bare var en del av din fantasi.",
+            "unmutable": "",
             "unperm": "Jeg har ikke tillatelse til å gjøre dette. Kanskje du skulle ha gitt meg disse tillatelsene før du kommanderer meg til å gjøre noe. ",
             "noRoleHere": "Ser ut som den rollen ikke er på listen. Sjekk at du har skrevet inn rollen riktig. ",
             "noRolesGiven": "Ingen rolle ble valgt, har du skrevet riktig? ",
             "roleAlreadyHere": "Ser ut som den rollen allerede er på listen. ",
-            "nosuchrole": "Ehm, jeg finner ikke denne rollen, skriv navnet eksakt. Husk at vi skiller på store og små bokstaver.",
+            "nosuchrole": "",
             "kbanNone": "",
             "superRoleNope": "",
             "banNone": "",
             "unpermB": "",
+            "cantFindMessageID": "",
             "cantFindChannel": "",
             "noChannelGiven": "",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": ""
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "",
             "decon2": "",
             "cancer": "",
-            "geiger": ""
+            "geiger": "",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": " {{target}} har vært medlem siden : {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Mulige kommandoer: ",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

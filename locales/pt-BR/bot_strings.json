@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubine",
+        "RBN_fullname": "Gemas de Rubine",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
+        "JDE_fullname": "Pó de Jades",
         "JDE_plural": "Jades",
         "SPH": "Safira",
+        "SPH_fullname": "Fragmentos de Safira",
         "SPH_plural": "Safiras",
         "C": "Comum",
         "U": "Incomum",
@@ -13,9 +16,13 @@
         "UR": "Ultra Raro",
         "lootbox": "Caixa",
         "lootbox_plural": "Caixas",
-        "thevoid": "void"
+        "thevoid": "void",
+        "evToken": "Token de Evento"
     },
     "terms": {
+        "thanks": "valeu~",
+        "thanks_short": "vlw",
+        "thx": "$t(terms.thanks_short)",
         "total": "Total",
         "amount": "Quantidade",
         "overview": "Geral",
@@ -41,9 +48,16 @@
         "level": "Nível",
         "levelUp": "Level Up!",
         "discord": {
+            "message": "Mensagem",
+            "message_plural": "Mensagens",
+            "reaction": "Reação",
+            "reaction_plural": "Reações",
             "role": "Cargo",
+            "role_plural": "",
             "server": "Servidor",
+            "server_plural": "Servidor",
             "member": "Membro",
+            "member_plural": "Membros",
             "user": "Usuário",
             "user_plural": "Usuários",
             "channel": "Canal",
@@ -87,21 +101,27 @@
             "chooseAmod": "Selecione um módulo, fazendo o favor.",
             "kinNone": "Tu precisa me dizer de quem eu vou chutar a bunda ~~antes que eu chute a sua~~!",
             "kin404": "Opsie, não achei essa pessoa :< Ela ainda está por aqui? Ela sequer existe? Não é sua imaginação? TEM CERTEZA???",
+            "unmutable": "Não importa o que diga, não vou mutar essa pessoa.",
             "unperm": "Por algum raio de razão eu não tenho permissões. MIMDÁ PERMISSÃO",
             "noRoleHere": "Este Cargo não está na lista.",
             "noRolesGiven": "Nenhum Cargo foi apontado. Você está fazendo isso direito?",
             "roleAlreadyHere": "Ei, desculpa, esse Cargo já está incluído!",
-            "nosuchrole": "Hm... Não encontrei esse Cargo. Digite o nome exatamente igual! Com maiúsculas, minúsculas, números, símbolos e essas merdas.",
+            "nosuchrole": "",
             "kbanNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "superRoleNope": "**{{user}}** não faz parte do Cargo **{{group}}**!",
             "banNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "unpermB": "Rapaz, acho que não tenho Permissões para processar este comando.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Não encontrei esse canal não :/ Para conferir se ele existe mesmo, use #canal.",
             "noChannelGiven": "Vou gravar essas atividades onde? Na sua testa? Especifique um canal!",
+            "emojiError": "",
             "insuperms": "{{imsorry}} Não posso fazer isso por você se VOCÊ não tiver permissão, oras!",
             "not-a-NSFW-channel": "Primeiro defina esse canal como **NSFW**, criatura. Tem crianças por perto!"
         },
         "warnings": {
+            "translationTexTooLong": ":warning: **Ei! O texto a ser traduzido não pode exceder __1000 Caracteres__!**\n Mas relaxa, eu aparei o texto pra você~",
+            "open1": "Dá licença, é que \"open\" é um verbo transitivo, o que significa que você tem que me dizer o que abrir~ Tente uma dessas opções, xuxu:",
+            "open2": "Foi mal, mas isso não é algo que eu consiga (ou queira) abrir. Mas tenho certeza que posso abrir um desses pra você: ",
             "timesOutIn": "Você tem {{s}} segundos antes que a ação padrão seja tomada",
             "enterVoiceBetterExperience": "Entre num canal de voz para ter a experiência completa desse comando~"
         },
@@ -231,7 +251,7 @@
             "confirm10s": "{{user}} **Confirma?** `10s`"
         },
         "items": {
-            "confirmDestroy": "Tem certeza que quer destruir esse item?",
+            "confirmDestroy": "Deseja mesmo destruir esse item?",
             "destroyWhat": "Destruir o quê?",
             "cantDestroy": "Eu não posso destruir isso.",
             "destroyed": "Item destruído! Isso foi o que sobrou dele:"
@@ -330,7 +350,27 @@
             "decon": "{{user}} está se descontaminando.",
             "decon2": "{{user}} está descontaminando {{user2}}.",
             "cancer": "{{user}} está inspecionando o potencial de câncer desse canal.",
-            "geiger": ":radioactive: De acordo com o contador de Geiger, esse chat tem um potencial de câncer de **{{percentage}}%** com uma radiação de **{{radiation}}μSv/h**. "
+            "geiger": ":radioactive: De acordo com o contador de Geiger, esse chat tem um potencial de câncer de **{{percentage}}%** com uma radiação de **{{radiation}}μSv/h**. ",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "Não consegui encontrar este item",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": "Eu escolho **{{list_item}}**!"
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Comandos Disponíves",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.   \n        \n    • Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox**.\n​\n",
+            "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`daily`), Lacais (`+box`) e Joguinhos (`+blackjack`, `+slots`, etc.). Além de trocas com outros usuários, assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de `+daily` de 10 dias.\n \n",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **` Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`** \n",
+            "end": ""
         }
     },
     "games": {
@@ -372,8 +447,8 @@
             "noGuess": "{{interjectionB}} Parece que ninguém acertou... Mais sorte na próxima!"
         },
         "coinflip": {
-            "coinVictory": "Eba! {{result}}! Você ganhou **{{prize}}** $t(keywords.RBN_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} {{result}}! Você perdeu..."
+            "coinVictory": "{{interjection}} Você acertou! Você ganhou **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} Parece que você se f... digo... mais sorte na próxima vez!"
         },
         "dice": {
             "userRolledSome": "**{{user}}** rolou alguns dados:",
@@ -381,6 +456,10 @@
             "neutralRolled": "Rolando **`{{numDice}}`**...",
             "andGot": "e tirou **{{val}}**!",
             "rollsWere": "As rolagens foram:",
+            "invalidRoll": "Equação Inválida -- Apenas o dado será lançado!",
+            "onlyRoll5": "Você só pode lançar 5 dados diferentes por vez!",
+            "limit25": "A pilha de Dados pode ser mostrada para até 25 rolagens.",
+            "noDiceRolled": "Peraí, não tem nenhum dado para eu rolar, use `{{prefix}}roll help` se você não tem ideia do que está fazendo~",
             "exceedLim": "Essa rolagem excede o limite de caracteres. Tente usar `-nostreak` para ocultar os valores das rolagens"
         },
         "blackjack": {
