@@ -8,7 +8,7 @@
       "noCashC": "",
       "howMany": "",
       "completeC": "",
-      "completeR": "",
+      "completeR": "Nieźle. Jestem pewna że kiedyś znajdę zastosowanie dla tych kryształów. Teraz wróć do swojego wymiaru i baw się dobrze!",
       "timeout": "",
       "timeout2": "",
       "cancel": "",
@@ -18,24 +18,24 @@
     "spook": {
       "advisor": "",
       "spookintro": "",
-      "BOO": "",
+      "BOO": "**BUU!**",
       "followup": "",
       "cooldown": "",
       "cooldown_alt": ""
     },
     "dig": {
-      "shovel": "",
+      "shovel": "Łopata",
       "needShovel": "",
       "shovelbroke": "",
       "cooldown": "",
-      "lastTomb": "",
+      "lastTomb": "Ostatnie kopanie grobów:",
       "moreTombs": ""
     },
     "tradeExamples": "",
     "keywords": {
       "spook": "",
-      "candy": "",
-      "candy_plural": "",
+      "candy": "Cukierek",
+      "candy_plural": "Cukierek",
       "spookPowa": ""
     },
     "wardrobe": {
@@ -58,21 +58,21 @@
         "",
         "",
         "",
+        "STRASZNE SZKIELETY, POSYŁAJĄ DRESZCZE PO TWOICH PLECACH",
         "",
         "",
         "",
         "",
-        "",
-        "",
-        "",
-        "",
-        ""
+        "Chwilka... Słyszałeś to?",
+        "Byłoby mi miło gdyby ktoś potrzymał moja rękę na strasznym cmentarzu. *Kaszlnięcie*.",
+        "Sądzę że jesteśmy śledzeni.",
+        "*Pollux zniknąła. Wyślijcie wsparcie.*"
       ],
       "casketine": {
-        "quiet": "",
-        "notsus": "",
-        "onenot": "",
-        "oly": ""
+        "quiet": "Cicho tu . . . trochę za cicho.",
+        "notsus": "Tu nie ma nic podejrzanego... nie naprawdę.",
+        "onenot": "Bo jeden nigdy nie wystarcza.",
+        "oly": "Oh, przepraszam, nie domyśliłam się że jesteśmy w środku zawodów *\"Kto ma najwięcej martwych rzeczy\"**"
       },
       "openintro": ""
     }
@@ -241,26 +241,26 @@
     "prizecontents2": "",
     "prizephrases": [
       "",
+      "Obudź mnie w środku",
+      "Niebezpiecznie jest chodzić samemu, weź to",
+      "",
+      "Przysięgam, wszystko jest tam...",
+      "Nie wiem czemu jesteś taki produktywny, ale doceniam to",
+      "Dziękuję za twoje usługi",
+      "Hej dziecko, wchodź do vana, mamy lootbox'y",
+      "",
+      "OwO masz płezent",
+      "Hej, jesteś całkiem słodki i mam dla ciebie prezent >///<",
+      "To nie tak że cie lubię czy coś. Baka",
+      "Nie mów nikomu, że ci to daję",
+      "Arigadzięki gozaibardzo",
+      "To dla ciebie",
+      "Weź je i ćśśśśśś",
+      "Weź je i odejdź sobie",
+      "Będziesz moją walen- kur*e, chwila, nie te święta",
       "",
       "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      ""
+      "Poi!"
     ]
   },
   "tmtk": {
@@ -276,7 +276,7 @@
     "next": "Dostępne ponownie na tym serwerze za {{remain}}",
     "newServer": "Nowe serwery nie mogą uczestniczyć w tym wydarzeniu. Skontaktuj się z Deweloperem lub dołącz do serwera pomocy technicznej, jeśli chcesz uczestniczyć w wydarzeniu na tym serwerze.",
     "newJoin": "",
-    "noEventPart": "",
+    "noEventPart": "Nie uczestniczysz w tym wydarzeniu.",
     "yourpos": "Twoja aktualna pozycja to:",
     "evChan": "Kanał Wydarzeń",
     "gNot": "Ogólna Rola Wydarzenia",

@@ -1,10 +1,27 @@
 {
   "halloween18": {
+    "noctix": {
+      "acCask": "",
+      "acDoll": "",
+      "acToken": "",
+      "noCashR": "",
+      "noCashC": "",
+      "howMany": "",
+      "completeC": "",
+      "completeR": "",
+      "timeout": "",
+      "timeout2": "",
+      "cancel": "",
+      "greet": "",
+      "list": ""
+    },
     "spook": {
       "advisor": "",
       "spookintro": "",
       "BOO": "",
-      "followup": ""
+      "followup": "",
+      "cooldown": "",
+      "cooldown_alt": ""
     },
     "dig": {
       "shovel": "",
@@ -17,9 +34,15 @@
     "tradeExamples": "",
     "keywords": {
       "spook": "",
+      "candy": "",
+      "candy_plural": "",
       "spookPowa": ""
     },
     "wardrobe": {
+      "confirmSave": "",
+      "confirmSave2": "",
+      "mementoExists": "",
+      "mementoDamaged": "",
       "brief": "",
       "spookyWardrobe": "",
       "garments": ""

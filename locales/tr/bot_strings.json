@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubin",
+        "RBN_fullname": "",
         "RBN_plural": "Rubinler",
         "JDE": "Jade",
+        "JDE_fullname": "",
         "JDE_plural": "Jadeler",
         "SPH": "Sapphire",
+        "SPH_fullname": "",
         "SPH_plural": "Sapphireler",
         "C": "Sıradan",
         "U": "Olağandışı",
@@ -13,9 +16,13 @@
         "UR": "Ultra Nadir",
         "lootbox": "Define Sandığı",
         "lootbox_plural": "Define Sandıkları",
-        "thevoid": "hiçlik"
+        "thevoid": "hiçlik",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "Toplam",
         "amount": "Miktar",
         "overview": "Genel Bakış",
@@ -41,9 +48,16 @@
         "level": "Seviye",
         "levelUp": "Seviye yükseldi!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Rol",
+            "role_plural": "",
             "server": "Sunucu",
+            "server_plural": "Sunucu",
             "member": "Üye",
+            "member_plural": "Üyeler",
             "user": "Kullanıcı",
             "user_plural": "Kullanıcılar",
             "channel": "Kanal",
@@ -87,21 +101,27 @@
             "chooseAmod": "Bir modül seç, lütfen.",
             "kinNone": "Kimi atacağımı söylemen lazım. Tabii ki, onun yerine seni de atabilirim.",
             "kin404": "O kişiyi bulamıyorum. Gerçekten çıktı mı? Belki de hayâllerimizin bir parçasıdır.",
+            "unmutable": "",
             "unperm": "Bunu yapmak için iznim yok. Bir şey yapmamı istemeden gereken izinleri vermelisin belki de.",
             "noRoleHere": "Görünüşe göre bahsettiğin rol listede yok. Bana rolü düzgünce söylediğinden emin ol.",
             "noRolesGiven": "Hiç bi' rolden bahsetmedin, doğru yaptığından emin misin?",
             "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
-            "nosuchrole": "Bahsettiğin rolü bulamadım ya, rolün ismini tam olarak yaz. Harfe duyarlı olduğunu hatırla.",
+            "nosuchrole": "",
             "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
             "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Görünüşe göre o kanalı bulamıyorum. #channel kullanmayı dene de olup olmadığına bi' bak.",
             "noChannelGiven": "Aktiviteleri hangi kanala kayıt etmemi söylemen lazım.",
+            "emojiError": "",
             "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
             "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Bu, {{s}} saniye boyunca timeout atacak",
             "enterVoiceBetterExperience": "Tam deneyim için bir ses kanalında olman ~lâzım~."
         },
@@ -330,7 +350,27 @@
             "decon": "{{user}} kendini arındırıyor.",
             "decon2": "{{user}} {{user2}} adlı kullanıcıyı arındırıyor.",
             "cancer": "{{user}} Bu kanalın kanser seviyesini ölçüyor.",
-            "geiger": ":radioactive: Geiger sayacına göre bu kanalın kanser potansiyeli **%{{percentage}}** **{{radiation}}μSv/h** ile birlikte "
+            "geiger": ":radioactive: Geiger sayacına göre bu kanalın kanser potansiyeli **%{{percentage}}** **{{radiation}}μSv/h** ile birlikte ",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Kullanılabilir komutlar",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -372,8 +447,8 @@
             "noGuess": "{{interjectionB}} görünüşe göre kimse bilemedi... Bir sonraki sefere artık!"
         },
         "coinflip": {
-            "coinVictory": "Kazandın! {{result}}, **{{prize}}** aldın $t(keywords.RBN_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} {{result}}. Hâle bakılırsa kaybettin..."
+            "coinVictory": "",
+            "coinDefeat": ""
         },
         "dice": {
             "userRolledSome": "**{{user}}** zar attı:",
@@ -381,6 +456,10 @@
             "neutralRolled": "**`{{numDice}}`** atıyor...",
             "andGot": "ve ödül olarak **{{val}}** kazandı!",
             "rollsWere": "Çekilenler bunlardı:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubine",
+        "RBN_fullname": "",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
+        "JDE_fullname": "",
         "JDE_plural": "Jades",
         "SPH": "Zafiro",
+        "SPH_fullname": "",
         "SPH_plural": "Zafiros",
         "C": "Común",
         "U": "Poco común",
@@ -13,9 +16,13 @@
         "UR": "Ultra Raro",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "vacío"
+        "thevoid": "vacío",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "Cantidad",
         "overview": "Resumen",
@@ -41,9 +48,16 @@
         "level": "Nivel",
         "levelUp": "¡Subes de Nivel!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "Rol",
+            "role_plural": "",
             "server": "Servidor",
+            "server_plural": "Servidor",
             "member": "Miembro",
+            "member_plural": "Miembros",
             "user": "Usuario",
             "user_plural": "Usuarios",
             "channel": "Canal",
@@ -87,21 +101,27 @@
             "chooseAmod": "Elige un modulo, quieres?",
             "kinNone": "Primero lo primero, dime el nombre del tipo que voy a patear. Antes de que te patee a ti.",
             "kin404": "Whoopsie, parece que no puedo encontrar a esta persona... ¿No se habrá ido ya? ¿Existe siquiera? ¿No será tu imaginación?",
+            "unmutable": "",
             "unperm": "No tengo Permisos para hacer esto. Tal vez deberías darme Permisos antes de mandarme a hacer algo.",
             "noRoleHere": "Parece que ese Rol no está en la lista. Asegúrate de decirme el Rol correctamente.",
             "noRolesGiven": "Ningún Rol fue mencionado, ¿Lo estás haciendo bien?",
             "roleAlreadyHere": "Parece que ese Rol ya está en la lista.",
-            "nosuchrole": "Um, no puede encontrar este Rol, escribe su nombre exacto, por favor. Recuerda que detecta las mayúsculas.",
+            "nosuchrole": "",
             "kbanNone": "Dime en el culo de quien voy a enterrar este martillo, ¡antes de que lo haga en el tuyo!",
             "superRoleNope": "**{{user}}** no tiene el Rol de **{{group}}**!",
             "banNone": "Dime en el culo de quien voy a enterrar este martillo, ¡antes de que lo haga en el tuyo!",
             "unpermB": "Aw, supongo que no tengo suficientes permisos para proceder con esto... ",
+            "cantFindMessageID": "",
             "cantFindChannel": "Um...No pude encontrar este canal :/ si no estas seguro, intenta usar #canal",
             "noChannelGiven": "Tienes que decirme en que canal registrar las actividades, porfa.",
+            "emojiError": "",
             "insuperms": "{{imsorry}} Lo siento no puedo hacer eso para vos si no tienes permiso",
             "not-a-NSFW-channel": "Este canal no está configurado para NSFW. No vayas dejando tu \"obra de arte\" por todas partes."
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "Se acabará el tiempo para esto en {{s}} segundos",
             "enterVoiceBetterExperience": "Tenes que estar en un canal de voz para una experiencia ~completa~."
         },
@@ -130,11 +150,11 @@
                 "yatta": [
                     "¡Yay!",
                     "¡Oh si!",
-                    "¡Bien!",
+                    "¡Bien!.",
                     "¡Genial!",
                     "¡Bien!",
                     "¡Genial!",
-                    "¡Guay!",
+                    "¡Genial!",
                     "¡Encantador!",
                     "¡Perfecto!",
                     "¡Asombroso!"
@@ -330,7 +350,27 @@
             "decon": "{{user}} se está descontaminando a si mismo.",
             "decon2": "{{user}} está descontaminando a {{user2}}.",
             "cancer": "{{user}} está inspeccionando el nivel de cáncer de este canal.",
-            "geiger": ":radioactive: Según el contador del Geiger, el porcentaje de cancer de este canal es de **{{percentage}}%** con **{{radiation}}μSv/h**"
+            "geiger": ":radioactive: Según el contador del Geiger, el porcentaje de cancer de este canal es de **{{percentage}}%** con **{{radiation}}μSv/h**",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}} es miembro desde: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Comandos Disponibles",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -372,8 +447,8 @@
             "noGuess": ""
         },
         "coinflip": {
-            "coinVictory": "!Ganaste¡ {{result}}, Conseguiste **{{prize}}** $t(keywords.RBN_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} {{result}}. Parece que perdiste..."
+            "coinVictory": "",
+            "coinDefeat": ""
         },
         "dice": {
             "userRolledSome": "",
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "¡Y obtuvo **{{val}}** como resultado!",
             "rollsWere": "Los resultados fueron:",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

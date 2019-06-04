@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "紅寶石",
+        "RBN_fullname": "",
         "RBN_plural": "紅寶石",
         "JDE": "翠玉",
+        "JDE_fullname": "",
         "JDE_plural": "翠玉",
         "SPH": "藍寶石",
+        "SPH_fullname": "",
         "SPH_plural": "藍寶石",
         "C": "普通",
         "U": "罕見",
@@ -13,9 +16,13 @@
         "UR": "超超稀有",
         "lootbox": "寶箱",
         "lootbox_plural": "寶箱",
-        "thevoid": "無效"
+        "thevoid": "無效",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "數量",
         "overview": "概要",
@@ -41,9 +48,16 @@
         "level": "等級",
         "levelUp": "升等！",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "身分組",
+            "role_plural": "",
             "server": "伺服器",
+            "server_plural": "伺服器",
             "member": "成員",
+            "member_plural": "成員",
             "user": "使用者",
             "user_plural": "使用者",
             "channel": "頻道",
@@ -87,21 +101,27 @@
             "chooseAmod": "選個模組",
             "kinNone": "你必須先我告訴我你叫我踢的人是誰，不過要我踢你也是可以",
             "kin404": "糟糕，我找不到這個人... 他該不會早就被退了吧?也許他只是你的幻覺?",
+            "unmutable": "",
             "unperm": "我並沒有做這件事的權限，你應該先給我相關的權限再來叫我做事",
             "noRoleHere": "這個身分組並不存在，請你再仔細確認過一次",
             "noRolesGiven": "你沒有提到任何身分組，你確定你知道你在幹嘛嗎？",
             "roleAlreadyHere": "看來這個身分組早就在名單上了",
-            "nosuchrole": "呃...我找不到這個身分組，輸入身分組時請一字不漏且區分大小寫",
+            "nosuchrole": "",
             "kbanNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
             "superRoleNope": "**{{user}}**並沒有**{{group}}**身分組！",
             "banNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
             "unpermB": "喔，少年...我想你的權限不夠...",
+            "cantFindMessageID": "",
             "cantFindChannel": "呃...我找不到這個頻道 :/ 如果你不確定，你可以試試#channel",
             "noChannelGiven": "OK，所以我要把這些紀錄放到哪裡？總不能寫在你臉上吧？告訴我你要把紀錄放到哪個頻道",
+            "emojiError": "",
             "insuperms": "{{imsorry}}如果你本身沒有權限，那我只能幫你QQ",
             "not-a-NSFW-channel": "騷年，先把這個頻道設成NSFW。"
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "指令將於{{s}}秒後過期",
             "enterVoiceBetterExperience": "你必須在語音頻道裡面才能享用最完整的~體驗~"
         },
@@ -130,7 +150,7 @@
                 "yatta": [
                     "耶！",
                     "",
-                    "蒸蚌",
+                    "好der",
                     "酷喔",
                     "不錯",
                     "好棒棒",
@@ -330,7 +350,27 @@
             "decon": "{{user}}正在淨化自己",
             "decon2": "{{user}}正在淨化{{user2}}",
             "cancer": "{{user}}正在測量這個聊天室的致癌程度",
-            "geiger": ":radioactive:根據蓋格計數器，這個聊天室中的輻射劑量為**{{radiation}}μSv/h**，並有著**{{percentage}}%**的致癌機率"
+            "geiger": ":radioactive:根據蓋格計數器，這個聊天室中的輻射劑量為**{{radiation}}μSv/h**，並有著**{{percentage}}%**的致癌機率",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{target}}加入的時間是：{{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "可用的指令",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "骰出了：",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

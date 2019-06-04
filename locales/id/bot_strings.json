@@ -1,10 +1,13 @@
 {
     "keywords": {
         "RBN": "",
+        "RBN_fullname": "",
         "RBN_plural": "",
         "JDE": "",
+        "JDE_fullname": "",
         "JDE_plural": "",
         "SPH": "",
+        "SPH_fullname": "",
         "SPH_plural": "",
         "C": "",
         "U": "",
@@ -13,9 +16,13 @@
         "UR": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": ""
+        "thevoid": "",
+        "evToken": ""
     },
     "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
         "total": "",
         "amount": "",
         "overview": "",
@@ -41,9 +48,16 @@
         "level": "",
         "levelUp": "Naik Level!",
         "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
             "role": "",
+            "role_plural": "",
             "server": "",
+            "server_plural": "",
             "member": "",
+            "member_plural": "",
             "user": "",
             "user_plural": "",
             "channel": "",
@@ -87,21 +101,27 @@
             "chooseAmod": "Bisa pilih sebuah _module_ enggak?",
             "kinNone": "Bilang dong mau _Tendang_ siapa. Tentu saja, mungkin aku juga bisa menendangmu.",
             "kin404": "Aku tidak bisa menemukannya. Apa dia sudah kabur duluan? Atau mereka hanya imajinasi milikmu saja.",
+            "unmutable": "",
             "unperm": "Aku tidak bisa melakukannya. Mungkin kamu bisa memberiku akses sebelum menyuruhku untuk melakukan sesuatu.",
             "noRoleHere": "_Role_ itu tidak terdaftar. Pastikan kamu memberikan _role_ yang tepat.",
             "noRolesGiven": "_Role_ yang mana? Kamu tidak salahkan?",
             "roleAlreadyHere": "_Role_ itu sudah ada di daftar.",
-            "nosuchrole": "Eh, aku tidak bisa menemukan _role_ itu, tolong ketik dengan benar. Jangan lupa dengan tulisan besar-kecilnya.",
+            "nosuchrole": "",
             "kbanNone": "Banned siapa? Aku bisa saja banned kamu.",
             "superRoleNope": "Sepertinya **{{user}}** belum mendapatkan Role **{{group}}**",
             "banNone": "Banned siapa? Aku bisa saja banned kamu.",
             "unpermB": "Aku tidak memiliki akses untuk memproses ini.",
+            "cantFindMessageID": "",
             "cantFindChannel": "Aku tidak bisa menemukan _Channel_ itu. Coba pakai #channel untuk memeriksanya jika ada.",
             "noChannelGiven": "Beritahu aku channel mana yang ingin diberikan informasi aktivitas.",
+            "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": ""
         },
         "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
             "timesOutIn": "",
             "enterVoiceBetterExperience": ""
         },
@@ -330,7 +350,27 @@
             "decon": "",
             "decon2": "",
             "cancer": "",
-            "geiger": ""
+            "geiger": "",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{targe}} telah menjadi anggota sejak: {{joinedstamp}}",
@@ -362,6 +402,41 @@
         },
         "pleasewait": {
 
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Perintah yang tersedia",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
         }
     },
     "games": {
@@ -381,6 +456,10 @@
             "neutralRolled": "",
             "andGot": "",
             "rollsWere": "",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
             "exceedLim": ""
         },
         "blackjack": {

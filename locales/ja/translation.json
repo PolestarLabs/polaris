@@ -31,7 +31,7 @@
         "trades": "トレード",
         "drops": "ドロップ",
         "balance": "バランス",
-        "total": "合計",
+        "total": "",
         "noFundsBet": "I guess you can't back this bet... You got {{number}} rubines",
         "plus_rubines_generic": "%R% ルビンがあなたの天びんに追加されました。 甘い！",
         "minus_rubines_generic": "あなたのバランスから ％R％ ルビンを服用していますよ〜？",

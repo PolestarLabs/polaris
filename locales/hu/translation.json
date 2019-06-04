@@ -31,7 +31,7 @@
         "trades": "Cserék",
         "drops": "",
         "balance": "Egyenleg",
-        "total": "Összesen",
+        "total": "",
         "noFundsBet": "Nem tehetsz fel ekkora tétet... Csak {{number}} Rubinod van",
         "plus_rubines_generic": "%R% Rubin a számládhoz lett adva. Ez azért elég jó, nem?",
         "minus_rubines_generic": "Levonok %R% rubint az egyenlegedről, oksi~?",

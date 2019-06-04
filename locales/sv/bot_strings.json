@@ -1,0 +1,545 @@
+{
+    "keywords": {
+        "RBN": "Rubin",
+        "RBN_fullname": "",
+        "RBN_plural": "Rubin",
+        "JDE": "Jade",
+        "JDE_fullname": "",
+        "JDE_plural": "",
+        "SPH": "Safir",
+        "SPH_fullname": "",
+        "SPH_plural": "Safir",
+        "C": "Vanligt",
+        "U": "Mindre vanligt",
+        "R": "Sällsynt",
+        "SR": "",
+        "UR": "Ultra sällsynta",
+        "lootbox": "",
+        "lootbox_plural": "",
+        "thevoid": "",
+        "evToken": ""
+    },
+    "terms": {
+        "thanks": "",
+        "thanks_short": "",
+        "thx": "",
+        "total": "",
+        "amount": "",
+        "overview": "",
+        "coinHeads": "",
+        "coinTails": "",
+        "qnt": "Antal",
+        "res": "Resultat",
+        "announcement": "Tillkännagivandet",
+        "first": "1:a",
+        "second": "2:a",
+        "third": "3:e",
+        "fourth": "4:e",
+        "fifth": "5:e",
+        "infinite": "Oändlig",
+        "none": "Ingen",
+        "reason": "Orsak",
+        "banned": "",
+        "kicked": "",
+        "usage": "Användning",
+        "module": "Modul",
+        "inst": "Instruktioner",
+        "bet": "",
+        "level": "Nivå",
+        "levelUp": "Nivå upp!",
+        "discord": {
+            "message": "",
+            "message_plural": "",
+            "reaction": "",
+            "reaction_plural": "",
+            "role": "Roll",
+            "role_plural": "",
+            "server": "Server",
+            "server_plural": "Server",
+            "member": "",
+            "member_plural": "",
+            "user": "Användaren",
+            "user_plural": "Användare",
+            "channel": "Kanal",
+            "channel_plural": "Kanaler",
+            "voice_channel": "",
+            "private": ""
+        }
+    },
+    "logs": {
+        "responsible": "",
+        "wasbanned": "",
+        "waskicked": "",
+        "modLogs": "MODERERINGSLOGGAR",
+        "actLogs": "AKTIVITETSLOGGAR",
+        "advLogs": "AVANCERADE LOGGAR",
+        "logChan": "ALLMÄNA LOGGAR",
+        "userJoin": "**%1%** Har **Gått med i**  Servern",
+        "userLeave": "**%1%** har **Lämnat**  Servern",
+        "messDel": "Ett meddelande har blivit **raderat** vid% 2%",
+        "messEdit": "% 1% har **redigerat** sitt meddelande vid% 2%",
+        "newChan": "En ny ** kanal** har skapats**:% 2%",
+        "delChan": "En **kanal** har **tagits bort**:% 2%",
+        "updtChan": "Kanalen **% 2%** har **uppdaterats**",
+        "newRole": "En ny **roll** har **skapats**:",
+        "uptRole": "Rollerna på% 1% har uppdaterats",
+        "delRole": "En **roll** har blivit **borttagen**:",
+        "revokeBan": "",
+        "usrNick": "Från och med nu heter **%1%** istället **%11%**",
+        "usrPhoto": "**%1%** har en ny profilbild",
+        "usrRoles": "Roller uppdaterade för %1%",
+        "gSets": "Server-inställningar har blivit ändrade!"
+    },
+    "responses": {
+        "errors": {
+            "iNeedThesePerms": "",
+            "denied": "",
+            "disabledModule": "",
+            "genericInvalid": "",
+            "prefixChng": "",
+            "moderationNeeded": "",
+            "chooseAmod": "",
+            "kinNone": "",
+            "kin404": "",
+            "unmutable": "",
+            "unperm": "",
+            "noRoleHere": "",
+            "noRolesGiven": "",
+            "roleAlreadyHere": "",
+            "nosuchrole": "",
+            "kbanNone": "",
+            "superRoleNope": "",
+            "banNone": "",
+            "unpermB": "",
+            "cantFindMessageID": "",
+            "cantFindChannel": "",
+            "noChannelGiven": "",
+            "emojiError": "",
+            "insuperms": "",
+            "not-a-NSFW-channel": ""
+        },
+        "warnings": {
+            "translationTexTooLong": "",
+            "open1": "",
+            "open2": "",
+            "timesOutIn": "",
+            "enterVoiceBetterExperience": ""
+        },
+        "verbose": {
+            "jas": [
+                "",
+                "",
+                ""
+            ],
+            "interjections": {
+                "acknowledged": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "Bra!",
+                    "Söt!",
+                    "Okej!",
+                    "",
+                    "Allt klart!",
+                    "Klart."
+                ],
+                "yatta": [
+                    "",
+                    "",
+                    "Bra!",
+                    "",
+                    "Trevligt!",
+                    "",
+                    "Söt!",
+                    "Härligt!",
+                    "Perfekt!",
+                    "Fantastisk!"
+                ],
+                "gomenasai": [
+                    "Jag är ledsen,",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_positive": [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    ""
+                ],
+                "ohmy_negative": [
+                    "",
+                    "",
+                    "Åh...",
+                    "Åh nej!",
+                    "Neeeeeej!",
+                    ""
+                ]
+            }
+        },
+        "moderation": {
+            "didkik": "",
+            "autoroleunAdded": "",
+            "modroleunAdded": "",
+            "incinerate": "",
+            "roleAdded": "",
+            "noReason": "",
+            "didban": ""
+        },
+        "logs": {
+            "success": "",
+            "successDelete": "",
+            "failure": ""
+        },
+        "equip": {
+            "nomedals": "",
+            "equipSlot": "",
+            "timeout": "",
+            "cancelled": "",
+            "youSure": "",
+            "choose": "",
+            "success": "",
+            "unequipSuccess": "",
+            "unequipChoose": "",
+            "unequipConfirm": "",
+            "equipTwice": "",
+            "isEmpty": ""
+        },
+        "discoin": {
+            "desc": "",
+            "intake": "",
+            "outtake": "",
+            "remainder": "",
+            "receiptCode": "",
+            "amNaN": "",
+            "invalidCurr": "",
+            "invalidAmt": "",
+            "unverified": "",
+            "userLimit": "",
+            "globalLimit": "",
+            "takedis": "",
+            "ex-succ": ""
+        },
+        "langIntro": {
+            "global": "",
+            "channel": "",
+            "language_joke": ""
+        },
+        "profile": {
+            "persotexUpdate": ""
+        },
+        "trade": {
+            "exchangeWhat": "",
+            "tradeStert": "",
+            "has10toOffer": "",
+            "tradeSummary": "",
+            "confimrTrade": "",
+            "plsConfirmTrade": "",
+            "confirmed": "",
+            "declined": "",
+            "timeout": "",
+            "confirm10s": ""
+        },
+        "items": {
+            "confirmDestroy": "",
+            "destroyWhat": "",
+            "cantDestroy": "",
+            "destroyed": ""
+        },
+        "divorce": {
+            "confirmdiag": "",
+            "saidnope": "",
+            "saidnothing": "",
+            "saidyep": "",
+            "forced_rej": "",
+            "info": "",
+            "divorce_title": ""
+        },
+        "roles": {
+            "roleadCom": "",
+            "rolermCom": "",
+            "superRoleadCom": "",
+            "superRolermCom": "",
+            "selfroleunAdded": "",
+            "noselfRoles": ""
+        },
+        "generic": {
+            "inviteText": "",
+            "cancel": "",
+            "noFundsBalance": "",
+            "noFunds": "Inte tillräckligt Rubines",
+            "plus_rubines": "%R $t(nyckelord. RBN_plural) har lagts till på ditt saldo. Är inte så trevligt?",
+            "minus_rubines": "Jag tar %R $t(nyckelord. RBN_plural) från ditt saldo okej ~?"
+        },
+        "daily": {
+            "dailyGet": "",
+            "dailyNope": "",
+            "dailyStreak": ""
+        },
+        "toggle": {
+            "disabledSer": "",
+            "disabledChn": "",
+            "disabledComSer": "",
+            "disabledComChn": "",
+            "enabledSer": "",
+            "enabledChn": "",
+            "enabledComSer": "",
+            "enabledComChn": ""
+        },
+        "reput": {
+            "noSelf": "",
+            "noTarget": "",
+            "confirm": "",
+            "cooldown": ""
+        },
+        "$": {
+            "insuFloor": "",
+            "insuBet": "Satsa minst {{number}}",
+            "noFundsBet": "",
+            "noBet": "",
+            "acceptDec": "",
+            "declinedTrans": "",
+            "ongoingTrade": "",
+            "hasAmount": "",
+            "youAmount": "",
+            "cash10": "",
+            "cash100": "",
+            "cash500": "",
+            "cash1000": "",
+            "cash5000": "",
+            "cash10000": "",
+            "cashInfinite": ""
+        },
+        "greet": {
+            "byeOFF": "",
+            "byeON": "",
+            "helloOFF": "",
+            "helloON": "",
+            "inTex": "",
+            "outTex": "",
+            "tellmeMSG": "",
+            "tellmeCHN": "",
+            "timer": "",
+            "timerby": "",
+            "noTimer": "",
+            "outChan": "",
+            "inChan": ""
+        },
+        "forFun": {
+            "saltLVL": "",
+            "booru404": "",
+            "nsfw404": "",
+            "nsfwNope": "",
+            "nsfwNofunds": "",
+            "nsfwCheckout": "",
+            "airwaifu": "",
+            "leadUnap": "",
+            "position": "",
+            "usethisfor": "",
+            "transmittedVc": "",
+            "decon": "",
+            "decon2": "",
+            "cancer": "",
+            "geiger": "",
+            "kissed": "",
+            "kissedSelf": "",
+            "kissedNone": "",
+            "kissFail": ""
+        },
+        "commend": {
+            "noSelf": "",
+            "give": "",
+            "totals": "",
+            "topcom": "",
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noItem": "",
+            "commendationLimit": ""
+        },
+        "crafting": {
+            "noitem": "",
+            "didyoumean": "",
+            "didyoumeanOne": ""
+        },
+        "misc": {
+            "memberSince": "",
+            "aviOK": "",
+            "colorChange": "Din favoritfärg har sparats!"
+        }
+    },
+    "interface": {
+        "generic": {
+            "clicktoconfirm": ""
+        },
+        "autoRolesforThis": "",
+        "daily": {
+            "lastdly": "Senaste dagligen:",
+            "next": "Nästa dagligen:",
+            "streakcurr": "",
+            "expirestr": "",
+            "dailyStreakJades": "",
+            "dailyStreakSapphs": "",
+            "availableDaily": ""
+        },
+        "nuke": {
+            "confirm": "",
+            "confirmB": "",
+            "start": "",
+            "cancel": "",
+            "timeout": "",
+            "completed": ""
+        },
+        "pleasewait": {
+
+        },
+        "reactroles": {
+            "reactrolesfor": "",
+            "removeAll": "",
+            "removed": "",
+            "noroleshere": "",
+            "removedAllFrom": "",
+            "noReactionDel": "",
+            "success": ""
+        },
+        "shuffle": {
+            "picking": "",
+            "complete": "",
+            "lessthan2": "",
+            "ichoose": ""
+        },
+        "help": {
+            "greetings": "",
+            "basics": "",
+            "cmdlist": "",
+            "quick_getgo": "",
+            "quick_useful": "",
+            "quick_enjoy": "",
+            "quick_didntask": "",
+            "avail_cmd": "Tillgängliga Kommandon",
+            "avail_cmdlist": "",
+            "notenough": "",
+            "trythese": "",
+            "curr_info": "",
+            "currency_overview": "",
+            "rubines_desc": "",
+            "jades_desc": "",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
+            "end": ""
+        }
+    },
+    "games": {
+        "flags": {
+            "title": "",
+            "youhave10": "",
+            "wellDone": "",
+            "noGuess": ""
+        },
+        "coinflip": {
+            "coinVictory": "",
+            "coinDefeat": ""
+        },
+        "dice": {
+            "userRolledSome": "",
+            "userRolled": "",
+            "neutralRolled": "",
+            "andGot": "och fick **{{val}}** !",
+            "rollsWere": "",
+            "invalidRoll": "",
+            "onlyRoll5": "",
+            "limit25": "",
+            "noDiceRolled": "",
+            "exceedLim": ""
+        },
+        "blackjack": {
+            "ongoing": "Hallååå, vi spelar redan en match!",
+            "newgame": "Blackjack va? Du borde redan känna till reglerna, så låt oss börja.",
+            "result": "Resultat:",
+            "bust": "",
+            "youwin": "Gratulerar! Du vann denna gång!",
+            "youlose": "Ha! Jag vann!",
+            "hit": "Svara med `hit` för att dra ett till kort,␣",
+            "stand": "Stanna",
+            "split": "`split` för att dela dina kort",
+            "double": "`double down` för att dubbla din insats och dra ett sista kort,␣",
+            "pass": "eller `stanna` för att passa.",
+            "even": "Det vart oavgjort, i så fall vinner huset ~ Dina Rubiner stannar hos mig."
+        },
+        "slots": {
+            "takePrize": "Ditt pris för detta är **%$%** %emj%",
+            "_minor": "Bättre än ingenting ellerhur? ;)",
+            "_mid": "Inte dåligt alls!",
+            "_major": "Så nära!",
+            "_ultimate_1": "Toppen!!! :heart:",
+            "_ultimate_2": "Du har sån tur!!! :heart:",
+            "_ultimate_3": "kan du tro på det här?! :heart:",
+            "kommunism": "Kommunist Jackpot! Ditt pris har omfördelats bland folket, du får 3x vad de gör.",
+            "pollux_jackpot": "Oh my, verkar vara tre av mig. Kanske förtjänar du något, Extra.",
+            "lucky": "Lucky sevens, bra jobbat.",
+            "jackpot": "Förutom ditt pris har du också fått 100 ringar och ett extra liv",
+            "bonanza": "Så många Rubiner! Hoppas du inte planerar att jag ska bära alla dessa.",
+            "potato": "Potatisar... Jag kan förmodligen göra något utav dessa för dig.",
+            "zero_1": "Nämen, verkar som att alla dina Rubiner är mina nu.",
+            "zero_2": "Åhnej va synd.. ingenting ",
+            "zero_3": "Bättre lycka nästa gång, sötis. Jag tror på dig! ;)"
+        },
+        "ceilingBet": "Du kan inte satsa mer än **{{number}}**% emj% Rubiner i det här spelet.",
+        "tryAgain": "",
+        "alreadyPlaying": ""
+    },
+    "loot": {
+        "rareDrop": "Vet du vad detta är? det är en **SÄLLSYNT** Lootbox!",
+        "suprareDrop": "Herregud, en **super sällsynt** lootbox!",
+        "ultraRareDrop": "Jag tror inte mina ögon! en **OTROLIGT SÄLLSYNT** Lootbox är här, vi kanske aldrig får se en igen!",
+        "lootDrop": [
+            "",
+            "Men se här, en lootbox dök upp i servern!",
+            "Vänta vad är det där? Är det en Lootbox?",
+            "Verkar som att någon har glömt en lootbox här.",
+            "Förlåt att jag stör, men har ni lagt märke till Lootboxen som ligger här?",
+            "Häftigt! Kolla vad jag har hittat!"
+        ],
+        "lootPick": "Ni har **__20 sekunder__** på er att plocka upp den! Skriv `{{prefix}}pick` för en chans att få den!",
+        "goesTo": "Tiden är ute! Låt oss se vem som får den här lådan.\n** Denna Loot Box lottas ut mellan: **",
+        "congrats": "Bra gjort! Lådan har lagts till bland dina saker. Du kan öppna den med kommandot `{{prefix}}lootbox`.",
+        "opening": "{{user}} öppnade sin Lootbox...",
+        "contains": "Den här Lootbox innehåller",
+        "options": "Du kan antingen behålla det eller testa din lycka en gång till genom att betala {{amt}}",
+        "keep": "Behåll",
+        "reroll": "Igen",
+        "rerolled": "Låt oss försöka igen, blandar innehållet i lådan...",
+        "noMoreRolls": "Du kan inte testa din lycka längre, du får nöja dig med detta.",
+        "noFunds": "Du behöver fler rubiner för att testa igen, kanske nästa gång.",
+        "rerollRemain": "Återstående re-rolls:",
+        "addedRubines": "{{X}} Rubiner har lagts till i din bank",
+        "addedJades": "{{X}} Jades har lagts till din plånbok",
+        "addedMedal": "",
+        "addedSticker": "** {{itm}} ** Klistermärke har lagts till bland dina saker",
+        "addedBG": "Bakgrunden `[kod: {{itm}}]` har lagts till bland dina saker",
+        "duplicateExchange": "",
+        "morons": "Lät ni en Lootbox försvinna? varför frågar jag ens, självklart gjorde ni det.",
+        "contesting": "De som har chans att få denna lootbox är:",
+        "eventDrop": "Och det är inte bara det! Detta är en **EVENT BOX** vilket innebär **speciella goodies inuti!**",
+        "notThisbox": "Verkar som att du inte har den. Testa `{{prefix}}lootbox` Igen och titta vilka du äger."
+    },
+    "eastereggs": {
+        "konodioda": "Du trodde att det var Pollux, **men det var JAG, DIO**!",
+        "vacuum": "**{{user}}** har gett **+1 Rep** till luften. {{amount}} reps har hittills kastats ut i luften."
+    },
+    "seasonal": {
+        "checkPin": "",
+        "reactThis": ""
+    },
+    "helpkey": "Hjälp"
+}
