@@ -2,6 +2,7 @@ const Canvas = require("canvas");
 const DB = require('../../database/db_ops.js')
 const Picto = require('../../utilities/Picto')
 const gear = require('../../utilities/Gearbox.js')
+const deckManager = require("../inventory/decks.js")
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 const Blackjack = require('../../archetypes/Blackjack.js');
@@ -264,10 +265,47 @@ module.exports = {
   aliases:['bj'],
   
   init: async function run(msg) {
-    let myDeck = msg.args[1] ;
+    
+    const USERDATA = await DB.users.get(msg.author.id);
+    
+    
+    if(msg.args[0] === "decks" ) return deckManager.init(msg,"casino");    
+
+
+    if(msg.args[0] === "deck" ){
+
+      if(msg.args[1]=== "list")return deckManager.init(msg,"casino");
+
+      if(["default","vegas","reset"].includes(msg.args[1])){
+        await DB.users.set(msg.author.id,{'modules.skins.blackjack': 'default' });
+        return msg.channel.send(`Now using the default deck: **Vegas**.`)
+      }
       
-const USERDATA = await DB.users.get(msg.author.id);
-      
+      const DECKDATA = await DB.cosmetics.find({type:"skin",for: "casino" });
+      if(!USERDATA.modules.skinInventory){
+        return msg.channel.send("You don't own any skins yet.");
+      }
+
+ 
+      targetDeck = DECKDATA.find(
+          dck=> 
+            dck.localizer == msg.args[1] ||
+            dck.id == USERDATA.modules.skinInventory[msg.args[1]] || 
+            dck.name.toLowerCase().includes(msg.args.slice(1).join(' ').toLowerCase()) 
+        ) || null;
+
+      if(targetDeck && USERDATA.modules.skinInventory.includes(targetDeck.id)){
+        await DB.users.set(msg.author.id,{'modules.skins.blackjack': targetDeck.localizer });
+        return msg.channel.send(`Now using the deck **${targetDeck.name}**.`)
+      }else{
+        return msg.channel.send("You don't own this deck yet.")
+      }
+    }
+    
+    
+    const powerups = USERDATA.modules.powerups || {};
+    const myDeck = (USERDATA.modules.skins||{}).blackjack || "default";
+    
       let arg=msg.content.split(/ +/)[1]
       
       const _DEALER=msg.guild.member(POLLUX.user).nick||"Pollux"
@@ -424,7 +462,7 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
 
       let playerHandValueCalc = Blackjack.handValue(playerHand);
       if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER") ) {
-          playerHands = await this.getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,myDeck);
+          playerHands = await this.getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,myDeck,powerups);
           const result = this.gameResult(Blackjack.handValue(playerHands[0]), 0);
           const noHit = playerHands.length === 1 && result === 'bust';
 
@@ -555,7 +593,7 @@ gameResult: function gameResult(playerValue, dealerValue) {
     return 'loss';
   },
   
-  getFinalHand: function getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,deck) {
+  getFinalHand: function getFinalHand(msg, playerHand, dealerHand, balance, bet, blackjack,deck,powerups) {
     return new Promise(async resolve => {
         const hands = [playerHand];
         let currentHand = hands[0];
@@ -563,7 +601,7 @@ gameResult: function gameResult(playerValue, dealerValue) {
 
         const nextHand = () => currentHand = hands[hands.indexOf(currentHand) + 1]; // eslint-disable-line no-return-assign, max-len
         while (currentHand) { // eslint-disable-line no-unmodified-loop-condition
-            if (currentHand.length === 1) blackjack.hit(currentHand);
+            if (currentHand.length === 1) blackjack.hit(currentHand,powerups);
         if (Blackjack.handValue(currentHand) === 'Blackjack') {
           nextHand();
           continue;

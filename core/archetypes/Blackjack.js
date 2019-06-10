@@ -27,14 +27,16 @@ class Blackjack {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
         decks.set(this.guildID, this.deck);
       }
-    }
-    this.deck.push("JOKER-default");
-    if(powerups && powerups.jokers){
-      let jokers = powerups.jokers.length ||0
-      while (jokers--){
-        this.deck.push(powerups.jokers[jokers]);
+      this.deck.push("JOKER-default");
+      if(powerups && powerups.jokers){
+        let jokers = powerups.jokers.length ||0
+        while (jokers--){
+          this.deck.push(powerups.jokers[jokers]);
+        }
       }
     }
+    
+
     this.deck = Blackjack._shuffle(this.deck);
     hand.push(this.deck.pop());
     return hand;

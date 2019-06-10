@@ -22,6 +22,8 @@ const cosmetics = Schema({
   category:String,
   items:Array,
   color:String,
+  for:String,
+  localizer:String,
   exclusive:String,
   public:Boolean,
   filter:String

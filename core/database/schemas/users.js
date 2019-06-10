@@ -53,6 +53,8 @@ const UserSchema = new mongoose.Schema({
       bgID:{type:String,default:"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"},
       sticker:String,
       bgInventory:{type:Array,default:["5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"]},
+      skins: Mixed,
+      skinInventory: [String],
       //skin: {type: String, default:'default'},
       //skinsAvailable: Array,
       achievements: Array,
