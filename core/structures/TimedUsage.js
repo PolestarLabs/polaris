@@ -22,13 +22,13 @@ class DailyCmd{
     async dailyAvailable(user){
         const now         = Date.now();
         const userDaily   = await this.userData(user);
-        return now-userDaily.last >= this.day;
+        return now - (userDaily.last||0) >= this.day;
     }
 
     async keepStreak(user){
         const now         = Date.now();
         const userDaily   = await this.userData(user);        
-        return now-userDaily.last <= this.expiration;
+        return now - (userDaily.last||0) <= this.expiration;
     }
 }
 exports.init = async function (message,cmd,opts,success,reject,info,presuccess) {
@@ -52,7 +52,7 @@ console.log(message.lang)
 
   const DAY = Daily.day
 
-  const userDaily   = (await Daily.userData(Author)).last;
+  const userDaily   = (await Daily.userData(Author)).last||1;
   const dailyAvailable = await Daily.dailyAvailable(Author);
 
   const embed = new gear.Embed;
@@ -68,7 +68,7 @@ ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')
         return message.channel.send({embed:embe2});
   }
 
-  if(!dailyAvailable && Author.id!="x88120564400553984"/**/){
+  if(!dailyAvailable && Author.id!="88120564400553984"/**/){
     let remain = userDaily+DAY;
     Daily.userDataStatic = userDaily;
     return reject(message,Daily,remain);

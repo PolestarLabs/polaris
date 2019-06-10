@@ -98,7 +98,7 @@ if(Target){
 }
  module.exports = {
     pub:true,
-    botperms: ["embedLinks"],
+    botPerms: ["embedLinks"],
     aliases: ["bal","sapphires","jades"],
     cmd: cmd,
     perms: 3,

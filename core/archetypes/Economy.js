@@ -8,7 +8,7 @@ const CURRENCIES = {
   AMY: "amethysts",
   EMD: "emeralds",
   TPZ: "topazes"
-}
+} 
 
 
 function checkFunds (user,amt, currency = "RBN"){

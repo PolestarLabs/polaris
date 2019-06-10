@@ -20,7 +20,7 @@ module.exports = {
   },
   invisibar : "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
 
-  getTarget: function getTarget(msg,argPos=0,self=true){
+  getTarget: function getTarget(msg,argPos=0,self=true,soft=false){
 
     if(msg.mentions.length>0) return msg.mentions[0];
 
@@ -31,16 +31,17 @@ module.exports = {
 
     if (!user) {
       user = msg.guild.members.find(mbr =>
-          mbr.username.toLowerCase() == msg.args[argPos].toLowerCase()
+          mbr.username.toLowerCase() == msg.args[argPos].toLowerCase() ||
+          (mbr.nick||"").toLowerCase() == msg.args[argPos].toLowerCase() 
         ) ||
         msg.guild.members.find(mbr =>
-          (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
+          soft && (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
         ) ||
         msg.guild.members.find(mbr =>
-          mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
+          soft && mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
         ) ||
         msg.guild.members.find(mbr =>
-          mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
+          soft && mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
         );
  
       if (!user && self == true) user = msg.author;
