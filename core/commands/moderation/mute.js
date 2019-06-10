@@ -243,5 +243,5 @@ module.exports = {
     perms: 3,
     init: init,
     cat: 'mod',
-    botperms: ["manageChannels", "manageRoles"]
+    botPerms: ["manageChannels", "manageRoles"]
 };

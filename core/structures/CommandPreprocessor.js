@@ -207,7 +207,7 @@ console.log(message.author.tag)
    };
 
   if (command.cat) {
-    let perms = command.botperms
+    let perms = command.botPerms
     if (perms){
       delete require.cache[require.resolve('./PermsCheck.js')];
       let permchk = require('./PermsCheck.js').run(command.cat, message, perms)

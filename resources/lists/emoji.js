@@ -274,8 +274,18 @@ module.exports = function emoji(moji){
     sparkler: '<:sparkler:446901836012847124> ',
     withdraw: '<:withdraw:446901836025167872> ',
     snowstorm: '<:snowstorm:446901836025298959> ',
-  
-  
+
+    
+
+    Rdek:"<:Rdek:586965255670988810> ",
+    Cdek:"<:Cdek:586965252399300628> ",
+    URdek:"<:URdek:586965252843765800> ",
+     Udek:"<:Udek:586965252034396183> ",
+     XRdek:"<:XRdek:586965252650827789> ",
+     SRdek:"<:SRdek:586965253066326026> ",
+
+
+
   
     //HEROES
   

@@ -72,7 +72,7 @@ module.exports = {
   cool: 5000,
   pub: true,
   cmd: 'eurobeat',
-  botperms:["embedLinks"],
+  botPerms:["embedLinks"],
   perms: 3,
   init: init,
   cat: 'fun'
