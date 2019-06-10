@@ -164,89 +164,23 @@ console.log({Target})
 
     if(subcommand === "post"){
         
-        msg.channel.send("~~Do you want to buy or sell something?~~")
+        // buy type id
 
-        if(filter){
-            
-        }else{
-            msg.channel.send("What kind of stuff you want to put in the marketplace?")
-        }
-        
-        let itemType = await chooseType();
+        let operation   = filter        //  BUY / SELL
+        let itemType    = msg.args[2]   //  BG / MEDAL / STICKER / etc.
+        let item_id     = msg.args[3]   //  Item ID / Code / Icon
 
-        if(msg.args[2]){
-            
-        }else{
-            msg.channel.send("And which of these ${itemType.name} you want to put in there?")
-            
-        }
-
-        let theItem = await chooseItem(itemType);
-
-        
-        async function chooseItem(type){
-        
-            let embed = new gear.Embed();
-            const userData = await DB.users.get(msg.author.id);
-           
-            if(type === 'background'){
-                list = userData.modules.bgInventory
-                bgList = await DB.cosmetics.find({id:{$in:list},type:'background'});
-                embed.description = bgList.map(x=>x.name + " `"+x.code+"`" ).join('\n')
-                if(embed.description.length > 2000){
-                    embed.description = embed.description.slice(0,2000)
-                }
-            }
-
-msg.channel.send({embed})
-         
-        
-
+        const Helpers = 
+        {
+             background: "`+market post [sell/buy] background [ID]` - IDs can be found at BG Shop and BG Inventory (Website)"
+            ,medal:      "`+market post [sell/buy] medal [ID]` - IDs can be found at Medal Shop and Medal Inventory (Website)"
+            ,sticker:    "`+market post [sell/buy] sticker [ID]` - IDs can be found at Sticker Collections and Stickers Inventory (Website)"
+            ,boosterpack:"`+market post [sell/buy] booster [ID]` - IDs can be found at Boosterpack Collection (`+boosterpack`)"
+            ,item:       "`+market post [sell/buy] item [ID]` - IDs can be found at Inventory (`+inventory`)"
 
         }
-        async function chooseType(type=false){
-            if(!type){
-                let embed = new gear.Embed();
-                embed.description = `
-                    1⃣  Background
-                    2⃣  Medal
-                    3⃣  Sticker
-                    4⃣  Booster
-                    5⃣  Item
-                    6⃣  Skin
 
-                `
-                let menu = await msg.channel.send({embed});
-                let response = await ReactionMenu(menu,msg,['1⃣','2⃣','3⃣','4⃣','5⃣','6⃣'],{time:20000});
-                
-                switch(response.index){
-                    case 0:
-                        type = "background";
-                        break;
-                    case 1:
-                        type = "medal";
-                        break;
-                    case 2:
-                        type = "sticker";
-                        break;
-                    case 3:
-                        type = "boosterpack";
-                        break;
-                    case 4:
-                        type = "item";
-                        break;
-                    case 5:
-                        type = "skin";
-                        break;
-                    default:
-                        type = "cancel";                    
-                }
-            }
-            return type
-        }
-
-
-    };
+    }
 
     if(subcommand === "delete"){
         if(filter){
