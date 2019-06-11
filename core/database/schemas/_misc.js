@@ -116,24 +116,11 @@ const MarketplaceModel = new Schema({
       marketplace.set    =  utils.dbSetter;
       marketplace.get    =  utils.dbGetter; 
       marketplace.new = payload => {
-        marketplace.findOne({
-          id: payload.id
-        }, (err, newUser) => {
-          if (err) {
-            console.error(err)
-          }
-          if (newUser) {
-            // Nothing
-          } else {
-            let cmmd = new marketplace({
-              id: payload.id,
-            });
-            cmmd.save((err) => {
-              if (err) return console.error(err);
-              console.log("[NEW MARKET POST]".blue);
-            });
-          }
-        })
+        let aud = new marketplace(payload);
+        aud.save((err) => {
+          if (err) return console.error(err);
+          console.log("[NEW MARKETPLACE ENTRY]".blue,payload);
+        });
       }
 
   const fanart    = mongoose.model('fanart', FanartModel, 'fanart');
