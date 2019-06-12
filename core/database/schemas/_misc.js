@@ -84,7 +84,7 @@ const RelationShipModel = new Schema({
   ring: String,
   initiative: Number,
   since: Number,
-  type: String, // MARRIAGE / PARENT / CHILD
+  type: String, // MARRIAGE / PARENTS / CHILDREN
   
 },{ strict: false });
 
@@ -148,6 +148,20 @@ const RelationShipModel = new Schema({
   const relationships    = mongoose.model('Relationship', RelationShipModel, 'relationships');
         relationships.set    =  utils.dbSetter;
         relationships.get    =  utils.dbGetter; 
+        relationships.create  = function(type,users,initiative,ring){
+          return new Promise(async (resolve,reject)=>{
+
+            let rel = await relationships.find({type,users:{$all:users}});
+            if (rel.length>0) return reject("Duplicate Relationship: \n" + JSON.stringify(rel,null,2) );
+
+            relationship =  new relationships({
+              type,users,initiative,ring
+            });
+            relationship.save((err,item) => {
+              resolve (item);
+            })
+          })
+        }
 
   const fanart    = mongoose.model('fanart', FanartModel, 'fanart');
       fanart.set    =  utils.dbSetter;
