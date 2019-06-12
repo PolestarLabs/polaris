@@ -82,7 +82,7 @@ const RelationShipModel = new Schema({
   id:String,
   users: Array,
   ring: String,
-  initiative: Number,
+  initiative: String,
   since: Number,
   lovepoints: Number,
   type: String, // MARRIAGE / PARENTS / CHILDREN
@@ -156,7 +156,7 @@ const RelationShipModel = new Schema({
             if (rel.length>0) return reject("Duplicate Relationship: \n" + JSON.stringify(rel,null,2) );
 
             relationship =  new relationships({
-              type,users,initiative,ring
+              type,users,initiative,ring,since: Date.now()
             });
             relationship.save((err,item) => {
               resolve (item);
