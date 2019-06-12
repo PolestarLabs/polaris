@@ -1,28 +1,190 @@
-paths.CDN = "https://beta.pollux.gg"
-
-const gear = require('../../utilities/Gearbox.js')
-
-
-const Canvas = require("canvas");
-//const locale = require(appRoot + '/utils/i18node');
-//const $t = locale.getT();
+const gear = require('../../utilities/Gearbox.js');
+const Picto = require('../../utilities/Picto.js');
 const DB = require('../../database/db_ops');
+const moment = require("moment");
 
-const init = async function run(msg) {
+const XYZ ={
+  global_roundel: {X: 680,  Y: 2},
+  persotex    : {W: 270, H: 70, X:515, Y:492 - 126 },
+  wifeRect    : {X:100,Y:1,W:314,H:65,R:37},
+  wifeName    : {X:165 ,Y:  7 ,W:183 ,A:'left'   },
+  lovepoints  : {X:165 ,Y: 35 ,W:183 ,A:'left'   },
+  wifeSince   : {X:350 ,Y: 35 ,W:183 ,A:'right'  },
+  commend     : {X: 53 ,Y: 25 ,W: 80 ,A:'center' },
+  name        : {X:325 ,Y:268 ,W:420 ,A:'left'   },
+  medals        : {X: 100,Y: 380                   },
+  tagline     : {X:332 ,Y:310 ,W:440 ,A:'left'   },
+  rubines     : {X:706 ,Y:519 ,W:440             },
+  globalRank  : {X:588 ,Y:462 ,W: 80 ,A: 'right' },
+  localRank   : {X:725 ,Y:462 ,W: 80 ,A: 'right' },
+  background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
+  sticker     : {X: 320 ,Y: 395 ,W:220, H: 220    },
+  avatar      : {X: 10,  Y: 115},
+  flair       : {X: 235,  Y: 245, W:100, H:120},
+  flag     : {X: 748,  Y: 280},
+  offset_hex  : 20
+}; 
+const COLORS = {
+  PRIMARY_TXT_COLOR     : "#2b2b3b",
+  PRIMARY_TXT_SIZE      : "#2b2b3b",
+  PRIMARY_TXT_WEIGHT    : "#2b2b3b",      
+  SECONDARY_TXT_COLOR   : "#363f5c",
+  SECONDARY_TXT_SIZE    : "#2b2b3b",
+  SECONDARY_TXT_WEIGHT  : "#2b2b3b",
+  wifeFill: "#333340"
+};
+const TEXT={
+  NAME:{
+    SIZE:   42,
+    WEIGHT: 900,
+    FAMILY: "Whitney HTF",
+    COLOR:  "#2b2b3b"
+  },
+  TAGLINE:{
+    SIZE:20,
+    WEIGHT:600,
+    FAMILY:'Whitney HTF SC',
+    COLOR: "#363f5c"
+  },       
+  WIFENAME:{
+    SIZE:24,
+    WEIGHT:600,
+    FAMILY:'Whitney HTF',
+    COLOR:"#fdfdfd"
+  },    
+  WIFESMALL:{
+    SIZE: 20,
+    WEIGHT: 100,
+    FAMILY:'Whitney HTF',
+    COLOR:"#fdfdfd"
+  },
+  RANKS:{
+    SIZE: 22,
+    WEIGHT: 300,
+    FAMILY: 'Whitney HTF Light',
+    COLOR: "#fdfdfd"
+  },
+  PERSOTEX:{
+    SIZE: '11pt',
+    WEIGHT: '',
+    FAMILY: 'Whitney HTF Light',
+    COLOR: "#fff",
+  },
+  SIDEBAR:{
+    SIZE: 40,
+    WEIGHT: "",
+    FAMILY:"Visitor TT1 BRK",
+    COLOR: "#fdfdfd"
+  },
+  THX:{
+    SIZE: 30,
+    WEIGHT: 900,
+    FAMILY:"Whitney HTF",
+    COLOR: "#ffffff"
+  },
+  RUBINES:{
+    SIZE: 30,
+    WEIGHT: 900,
+    FAMILY:'Whitney HTF Light',
+    COLOR: "#fdfdfd"
+  }       
+};
 
-  delete require.cache[require.resolve('../../utilities/Picto.js')]
-  const Picto = require('../../utilities/Picto.js')
+class UserProfileModel{
+  constructor(userData,discordMember){
 
+    // Discord Data
+    const {Member} = require('eris');
+    if(!discordMember) discordMember = POLLUX.users.get(userData.id||userData);
+    if(userData.constructor.modelName !== "UserDB") discordMember = userData;
+    if(typeof discordMember === 'string') discordMember = POLLUX.users.get(discordMember);
+    const notMember = discordMember && discordMember.constructor != Member;
 
-  let start = Date.now()
+    this.ID = discordMember.id;
+    this.server = notMember ? null : discordMember.guild.id;
+    this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;
+    this.avatar = notMember ? discordMember.avatarURL : discordMember.user.avatarURL;
+    this.bot = discordMember.bot;
+    
+    // Pollux User Data
+    if(!userData.modules) {
+      userData = {modules:{}};
+      this.PARTIAL = true;
+    }
 
-
-  function benchmark(reson) {
-    let now = Date.now()
-    console.error("checkpoint - `" + (now - start) + "ms` (" + reson + ")")
-    //msg.reply("checkpoint - `"+(now-start)+"ms` ("+reson+")")
+    this.favColor     = /^#[0-9,A-F,a-f]{6}$/.test(userData.modules.favcolor) ? userData.modules.favcolor : "#dd5383";
+    this.tagline      = userData.modules.tagline  || ""; 
+    this.background   = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userData.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"; 
+    this.personalText = userData.modules.persotext|| "";
+    this.exp          = userData.modules.exp      || 0;
+    this.level        = userData.modules.level    || 0;
+    this.percent      = XPercent(this.exp,this.level) || 0;
+    this.sticker      = userData.modules.sticker  || null;
+    this.flair        = userData.modules.flairTop || 'default';
+    this.rubines      = userData.modules.rubines  || 0;
+    this.medals       = userData.modules.medals   || [];
+    this.marriage     = userData.featuredMarriage || null;
+    this.commend     = userData.modules.commend  || 0;
+    this.countryFlag  = (userData.personal||{}).country || null;
+    this.profileFrame = userData.switches && userData.switches.profileFrame === true ? userData.donator : null;
+    
+    if(this.medals.length>0){
+      let valid_medals = this.medals.filter(mdl=>mdl&&mdl!="0").map(v=> this.medals.indexOf(v) );
+      let arrange = valid_medals.length <= 4 ? valid_medals.length : 9; 
+      this.medalsArrangement = {style:arrange,valid:valid_medals}
+    }      
   }
 
+  get globalRank (){
+     return DB.users
+        .find({"modules.exp": {$gt: this.exp},blacklisted: {$exists: false}}).countDocuments();
+  }
+
+  get localData (){
+    return new Promise(async resolve=>{
+      if (!this.server){
+        this.thx = "---"
+        this.localRank = "---"
+        return resolve(false);
+      }
+    
+      let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
+      this.thx = svRankData.thx;
+      this.localRank = await DB.localranks
+        .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
+      return resolve(true);
+    })
+  }
+
+  get wifeData (){
+    return new Promise(async resolve=>{
+      if (this.wife) return resolve(this.wife);
+      if (!this.marriage) return resolve(null);
+      const marriage = await DB.relationships.findOne({type:'marriage', _id: this.marriage });
+      if (!marriage) return resolve(null);
+      const wifeID = marriage.users.find(usr=>usr!=this.ID);
+      if (!wifeID) return resolve(null);
+      let discordWife = POLLUX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || {username: "Unknown", avatar: POLLUX.users.get(userID).defaultAvatarURL };
+
+      this.wife = {
+        ring: marriage.ring,
+        initiative: marriage.initiative === this.ID,
+        lovepoints: marriage.lovepoints||0,
+        since:  moment.utc(marriage.since).fromNow(true),
+        wifeName: discordWife.username,
+        wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512","size=64")
+      }
+      resolve(this.wife);
+    });
+  }
+
+}
+
+
+init = async (msg)=>{
+
+
+  // PROFILE FRAME
   if (msg.content.split(/ +/).slice(1)[0] == "frame") {
     let ag = msg.content.split(/ +/).slice(1)[1];
     let dDATA = await DB.users.get(msg.author.id);
@@ -54,472 +216,320 @@ const init = async function run(msg) {
     return;
   }
 
-  try {
-    const canvas = new Canvas.createCanvas(800, 600);
+  // NORMAL PROFILE -->
+
+  const Target = gear.getTarget(msg,0,true,true);
+  let Target_Database = await DB.users.get(Target.id);
+  const USERPROFILE = new UserProfileModel(Target_Database,msg.guild.member(Target));
+  await Promise.all([
+    await USERPROFILE.wifeData,
+    await USERPROFILE.localData    
+  ]);
+  USERPROFILE.rank = (await USERPROFILE.globalRank)+1;
+
+try{
+
+  //============================  CANVAS START   ===================//
+
+    const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
+    const canvas = Picto.new(800,600);
     const ctx = canvas.getContext('2d');
 
-    const P = {
-      lngs: msg.lang
-    }
-    const v = {
-      LEVEL: $t("website.level", P),
-      GLOBAL: $t("website.global", P),
-      SERVER: $t("discord.server", P)
+  //=========================================
+  //                            Gather Images
+  //=========================================
+
+    let img={};
+    img.mainframe    = Picto.getCanvas(paths.CDN + "/build/profile/"        + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png");
+    img.background   = Picto.getCanvas(paths.CDN + "/backdrops/"            + USERPROFILE.background   + ".png");
+    img.flair        = Picto.getCanvas(paths.CDN + "/flairs/"               + USERPROFILE.flair        + ".png");
+    img.sticker      = Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
+    img.flag         = Picto.getCanvas(paths.CDN + "/images/flags/"         + USERPROFILE.countryFlag  + ".png");
+    img.aviFrame     = Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
+    img.medals       = USERPROFILE.medals.map(mdl=> new Object({
+                                  canvas: Picto.getCanvas(paths.CDN + "/medals/"+mdl+".png"),
+                                  index: USERPROFILE.medals.indexOf(mdl)
+                                }) );    
+    img.iconRubine     = Picto.getCanvas(paths.CDN + "/images/gems/rubine_full.png");
+    img.global_roundel = Picto.XChart(120, USERPROFILE.percent, USERPROFILE.favColor, false, USERPROFILE.level);
+    img.hex_frame = Picto.makeHex(250);
+    img.hex_pic = Picto.makeHex(210, USERPROFILE.avatar);
+    
+    if(isMarried) {
+      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
+      img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
     }
 
-    let finder = msg.content.split(/ +/).slice(1).join(' ')
-    if (!finder) finder = msg.author.id;
+//==========================================
+//                      Gather Graphic Text
+//==========================================
 
-    const Server = msg.guild
-    const Target = await gear.getTarget(msg);
-    let TARGET_DB = (await DB.users.findOne({
-      id: Target.id
-    }))||(await DB.users.findOne({
-      id: msg.author.id
-    }));
-    const SV_DB = await DB.servers.findOne({id: Server.id},{'modules.UPFACTOR':1});
+    let txt={};
+    let txt_type;
 
-    if (TARGET_DB.modules.bgID == undefined) {
-      TARGET_DB.modules.bgID = "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6";
-    }
-    if (TARGET_DB.modules.rep == undefined) {
-      TARGET_DB.modules.rep = 0;
-    }
-    if (TARGET_DB.modules.bgInventory == undefined) {
-      TARGET_DB.modules.bgInventory = ["5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"];
-    }
-    if (TARGET_DB.modules.medalInventory == undefined) {
-      TARGET_DB.modules.medalInventory = [];
-    }
-    if (TARGET_DB.modules.medals == undefined) {
-      TARGET_DB.modules.medals = [0, 0, 0, 0, 0, 0, 0, 0, 0];
-    }
+    txt_type = "NAME"
+    txt.name    = Picto.tag(ctx, USERPROFILE.localName,    `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    txt_type = "TAGLINE"
+    txt.tagline = Picto.tag(ctx,  USERPROFILE.tagline,     `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    txt_type = "PERSOTEX"
+    txt.persotex = Picto.block(
+        ctx, USERPROFILE.personalText,
+        `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,
+        TEXT[txt_type].COLOR,
+        XYZ.persotex.W, XYZ.persotex.H //255, 70
+    );
 
-    if (TARGET_DB.modules.medals.length < 9) {
-      let lent = 9 - TARGET_DB.modules.medals.length
-      for (i = 0; i < lent; i++) {
-        await DB.users.set(Target.id, {
-          $push: {
-            'modules.medals': 0
-          }
-        });
+    txt_type = "SIDEBAR"
+    txt.commend = Picto.tag(ctx, USERPROFILE.commend,      `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.thx = Picto.tag(ctx, USERPROFILE.thx,              `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    if(isMarried){
+      txt_type = "WIFENAME"
+      txt.wifeName = Picto.tag(ctx, USERPROFILE.wife.wifeName,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+      
+      txt_type = "WIFESMALL"
+      txt.lovepoints = Picto.tag(ctx, USERPROFILE.wife.lovepoints,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+      txt.wifeSince = Picto.tag(ctx, USERPROFILE.wife.since,                  `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    }
+    
+    txt_type = "RUBINES"
+    txt.rubines = Picto.tag(ctx, gear.miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    txt_type = "RANKS"
+    txt.globalRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.localRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.localRank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    let REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff")
+
+  //=========================================
+  //                      DRAW BACKROP (IMG)
+  //=========================================
+
+  ctx.globalCompositeOperation = "source-over";
+
+  // FULL I/O PARALLELISM   \m/
+
+  let backdrop = new Promise(async resolveAll =>{    
+   
+    let backmost = new Promise(async resolveBack =>{
+      const canvas = Picto.new(800,600);
+      const ctx = canvas.getContext('2d');
+      img.background.then(async IMG=>{
+        ctx.drawImage( IMG, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H);  
+
+        img.mainframe.then(mainframe=>{
+          
+          let colorstrap = Picto.new(81, 600)
+          let cx = colorstrap.getContext("2d")
+
+          cx.fillStyle = USERPROFILE.favColor;
+          cx.fillRect(0, 0, 81, 580);
+          cx.globalAlpha = 0.9
+          cx.globalCompositeOperation = "destination-atop";
+          cx.drawImage(mainframe, -10, -10)
+
+          cx.globalCompositeOperation = "multiply";
+          cx.drawImage(mainframe, -10, -10)
+          
+          ctx.drawImage(mainframe, 0, 0)
+          ctx.globalAlpha = .9;
+          ctx.drawImage(colorstrap, 9, 10)
+          ctx.globalAlpha = 1;
+          
+          Picto.getCanvas(paths.CDN+"/build/profile/litostar.png").then(IMG=> {
+            ctx.globalAlpha = .65;
+            ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y-25 );
+            ctx.globalAlpha = 1;
+            resolveBack(canvas);
+          });
+          mainframe = null;
+        })
+      })
+    });
+
+    let hexes = new Promise(async resolve=>{
+      const canvas = Picto.new(800,600);
+      const ctx3 = canvas.getContext('2d');
+      ctx3.drawImage(await img.hex_frame, XYZ.avatar.X, XYZ.avatar.Y);
+      ctx3.drawImage(await img.hex_pic,   XYZ.avatar.X + XYZ.offset_hex, XYZ.avatar.Y + XYZ.offset_hex);
+      if (USERPROFILE.profileFrame) {
+        ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
+        resolve(canvas);
+      }else{
+          resolve(canvas);
       }
-      TARGET_DB = await DB.users.findOne({
-        id: Target.id
-      });
-    }
+    });
+    const canvas = Picto.new(800,600);
+    const ctx = canvas.getContext('2d');        
+    let sticker;
+    if(USERPROFILE.sticker)
+      sticker = img.sticker.then(IMG => ctx.drawImage(IMG , XYZ.sticker.X - 10 -10, XYZ.sticker.Y - 25 -8,  XYZ.sticker.W,  XYZ.sticker.H) );
+    if(isMarried){
 
-    let originals = ["370610552403132416", "271394014358405121"]
+      ctx.lineWidth = 2;
+      let picDiameter = 26
+      let rectFill = COLORS.wifeFill
 
-    let flair = TARGET_DB.modules.flairTop || 'default';
+      let WIFE = USERPROFILE.wife;
+      let ringTierColor = "white";
+      if(WIFE.ring == "stardust") ringTierColor= "#2d6fe8";
+      if(WIFE.ring == "sapphire") ringTierColor= "#DaA905";
+      if(WIFE.ring == "rubine")   ringTierColor= "#DaA905";
+      if(WIFE.ring == "jade")     ringTierColor= "#7888a7";
 
-    let favcolor = "#" + (TARGET_DB.modules.favcolor || "#bb55e0").replace("#", "")
-    let PFLD = (TARGET_DB.switches || {
-      profiled: false
-    }).profiled;
-    let backgroundId = (TARGET_DB.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6")
-    if (Target.bot && !PFLD) backgroundId = "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke";
-    let persotex = (TARGET_DB.modules.persotext || "I have no personal text because i'm lazy as a sloth.")
-    const nametag = Target.tag
-    let nickname;
-    let tagline;
-    try {
-      nickname = Server.member(Target).nick || Target.username
-      tagline = TARGET_DB.modules.tagline;
-    } catch (e) {
-      nickname = (Target || msg.author).username
-      tagline = TARGET_DB.modules.tagline || "A fellow Pollux user";
-    }
-
-    let rubines = gear.miliarize(TARGET_DB.modules.rubines || 0)
-    let serverank;
-    let globalrank;
-    let svRankData
-
-    if (!Target.bot) {
-      svRankData = await DB.localranks.get({user:Target.id,server:msg.guild.id});
-      serverank = DB.localranks
-      .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
-      globalrank = DB.users
-      .find({"modules.exp": {$gt: TARGET_DB.modules.exp},blacklisted: {$exists: false}}).countDocuments();
-
-      await Promise.all([
-        serverank = await serverank,
-        globalrank = await globalrank
-      ])
-     serverank++
-    }
-
-    let rep = svRankData.thx || 0
-    let commend = TARGET_DB.modules.commend || 0
-    let propic;
-    try {
-      propic = (Target.user || Target).displayAvatarURL
-    } catch (e) {
-      propic = Target.displayAvatarURL;
-    }
-
-    let medals = TARGET_DB.modules.medals || [0, 0, 0, 0, 0, 0, 0, 0, 0]
-    let sticker = TARGET_DB.modules.sticker
-
-    function XPercent(x, l, f = 0.0427899) {
-      let exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
-      let exptoThis = Math.trunc(Math.pow(l / f, 2));
-      let frameofact = exptoNex - exptoThis;
-      let levelcoverage = x - exptoThis
-      let percent = levelcoverage / frameofact;
-      return percent;
-    }
-
-    let exp = TARGET_DB.modules.exp || 0;
-    let level = TARGET_DB.modules.level || 0;
-
-    let percent = XPercent(exp, level)
-    const SVFAC = SV_DB.modules.UPFACTOR || 1;
-
-
-    let l_exp,
-      l_level,
-      l_exptoNex,
-      l_exptoThis,
-      l_frameofact,
-      l_percent;
-
-    try {
-      l_exp =  svRankData.exp || 1
-      l_level = svRankData.level || 0
-      l_percent = XPercent(l_exp, l_level, SVFAC)
-    } catch (e) {
-      l_exp = 0
-      l_level = 0
-      l_frameofact = 0
-      l_percent = 0
-    }
-
-    if (Target.id == "271394014358405121") {
-      backgroundId = "RKvqxoAzgKM62MEfZYIOO6nHBqnZQV1i";
-      sticker = "dmg"
-      nickname = "P o l l u x"
-      l_level = 999
-      level = 999
-      percent = 1
-      l_percent = 1
-      rubines = 'Infinite'
-      globalrank = "∞"
-      serverank = "∞"
-      favcolor = "#b72d5d"
-      persotex = "Customise your profile and more at http://www.pollux.fun \nType p!help for commands!"
-      medals = [
-        "halloween_2017", "ghostling", "discord",
-        "brazil", "pollux", "starcraft",
-        "adobe", "hallux", "gbusters"
-      ]
-    }
-    if (Target.id == "370610552403132416") {
-      backgroundId = "medic";
-      nickname = "Lt. Morales | The Medic"
-      l_level = 128
-      level = 500
-      percent = 1
-      l_percent = 1
-      globalrank = "∞"
-      serverank = "∞"
-      favcolor = "#ef1942"
-      persotex = "Where's the Emergency?"
-      medals = [
-        0, 0, 0,
-        0, "starcraft", "heroes",
-        0, 0, 0
-      ]
-    }
-
-    //==================================================================
-    //==================================================================
-
-    const offset_hex  = 20
-    const AVATAR_HEX  = {x: 10,   y: 115}
-    const G_ROUNDEL   = {x: 680,  y: 2}
-    const L_ROUNDEL   = {x: 465,  y: 380}
-    const DISPLAYNAME = {x: 0,    y: 0}
-    const TAGLINE     = {x: 0,    y: 0}
-    const _MEDALS     = {x: 100,  y: 380}
-    const _STICKER    = {x: 320,  y: 395}
-    const _BG         = {x: 88,   y: 15}
-    const G_RANK      = {x: 562,  y: 382 + 80}
-    const L_RANK      = {x: 559 + 172, y: 382 + 80}
-    const _RUBINES    = {x: 706,  y: 439 +80}
-    const _EXP        = {x: 0,    y: 0}
-    const _REP        = {x: 53,   y: 460}
-    const _STAR       = {x: 53,   y: 25}
-    const _FT         = {x: 235,  y: 245}
-    const _flag       = {x: 748,  y: 280}
-
-    //=========================================
-
-    let mainframe = Picto.getCanvas(paths.CDN+"/build/profile/" + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe") + ".png"),
-      _bg = Picto.getCanvas(paths.CDN + "/backdrops/" + backgroundId + ".png"),
-      _flairTop = Picto.getCanvas(paths.CDN + "/flairs/" + flair + ".png"),
-      iconRubine = Picto.getCanvas(paths.CDN+"/images/gems/rubine_full.png");
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = 'rgba(30,30,30,.5)';
       
+      let wR = XYZ.wifeRect
+      Picto.roundRect(ctx,wR.X,wR.Y,wR.W,wR.H,wR.R,rectFill,ringTierColor)
 
-      const medalCanvases = medals.map(mdl=>  Picto.getCanvas(paths.MEDALS + mdl + ".png") );
+      ctx.shadowBlur = 0;
+      ctx.shadowColor = 'rgba(30,30,30,.3)';
+      ctx.save();
 
+      img.wifeHeart.then(IMG => ctx.drawImage( IMG , wR.X+15, wR.Y+14) );
 
-    let medallien = [];
-    let medlen = medals.length;
-    while (medlen--) {
-      let md;
-      if (medals[medlen]) md = medals[medlen];
-      medallien.unshift(Picto.getCanvas(paths.MEDALS + md + ".png"))
+      (async ()=>{
+        ctx.beginPath();
+        let thiX = wR.X+wR.W   -(picDiameter+ctx.lineWidth*2)
+        ctx.arc(thiX,picDiameter+6, picDiameter+2, 0, Math.PI*2,true);
+        ctx.clip();
+        ctx.drawImage( (await img.wifeAvatar) ,thiX-picDiameter,wR.Y+5,54,54);
+        ctx.closePath();
+        ctx.restore();
+      })()
+
     }
 
-    let medals_images = []
-    let valid_images = []
-    let valid_medals = 0
+    Promise.all([backmost,sticker,hexes]).then(array=>{
+      sticker;
+      ctx.globalCompositeOperation = "destination-over";
+      ctx.drawImage(array[0],0,0);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.drawImage(array[2],0,0);
+      array = null;
+      resolveAll(canvas);
+    })
+  });    
 
-    let pre_a = "https://orig00.deviantart.net/b86e/f/2016/343/a/e/cosmog_discord_icon_by_zelakantal-dar345n.png"
+  let z; // CURSOR
+  //=====================================================
+  //                             FOREGROUND TEXT ELEMENTS
+  //=====================================================
 
-     const [global_roundel, hex_frame, hex_pic] = await Promise.all( [
-       Picto.XChart(120, percent, favcolor || "#dd5383", false, level)
-      ,Picto.makeHex(250)
-      ,Picto.makeHex(210, propic)
-     ]);
-
-
-    // NICKNAME ============================================================>
-
-    let label = Picto.tag(ctx, nickname, "900 42px 'Whitney HTF'", "#223");
-    let tagliney = Picto.tag(ctx, tagline, "600 20px 'Whitney HTF SC'", "#363f5c");
-
-    // THX  ================================================================>
-
-    rep = rep > 999 ? 999 : rep;
-    let _rep = Picto.tag(ctx, rep, "40px 'Visitor TT1 BRK'", "#fff");
-    let _star = Picto.tag(ctx, commend, "40px 'Visitor TT1 BRK'", "#fff");
-    let rep_displace = _rep.width / 2
-  
-
-    // LOVEPOINTS ============================================================>
-    let lovpoints = TARGET_DB.modules.lovepoints > 999 ? 999 : TARGET_DB.modules.lovepoints;
-    let _love = Picto.tag(ctx, lovpoints || "0", "40px 'Visitor TT1 BRK'", "#fff");
-    let love_displace = _love.width / 2
-
-    _bg = await _bg;
-    ctx.drawImage(_bg, _BG.x, _BG.y, 692, 345);
-
-
-
-    //=====================================================
-    //                SIDEBAR COLOR
-    //=====================================================
-
-
-    let colorstrap = new Canvas.createCanvas(81, 600)
-    let cx = colorstrap.getContext("2d")
-
-    mainframe = await mainframe;
-
-    cx.fillStyle = favcolor
-    cx.fillRect(0, 0, 81, 580);
-    cx.globalAlpha = 0.9
-    cx.globalCompositeOperation = "destination-atop";
-    cx.drawImage(mainframe, -10, -10)
-
-    cx.globalCompositeOperation = "multiply";
-    cx.drawImage(mainframe, -10, -10)
-
-    ctx.drawImage(mainframe, 0, 0)
-    ctx.globalAlpha = .9;
-    ctx.drawImage(colorstrap, 9, 10)
-    ctx.globalAlpha = 1;
-
-    //-------------------------------------------------------------
-  
-    //-------------------------------------------------------------
-    ctx.globalCompositeOperation = "source-over";
-
-
-    let labw = label.width > 420 ? 420 : label.width
-    let taglw = tagliney.width > 440 ? 440 : tagliney.width;
-    ctx.drawImage(label.item, 325, 268, labw, label.height)
-    ctx.drawImage(tagliney.item, 329, 260 + label.height, taglw, tagliney.height)
-    ctx.globalAlpha = .5;
-    ctx.drawImage(_rep.item, _REP.x - rep_displace, _REP.y)
-    ctx.globalAlpha = 1;
-    
-    ctx.drawImage(
-      (await Picto.getCanvas(paths.CDN+"/build/profile/litostar.png"))
-      , _STAR.x - 53, _STAR.y-25
-      )
-    Picto.setAndDraw(ctx,_star, _STAR.x-2, _STAR.y+50,80,'center')
-
-    if (sticker) {
-      let sticky = await Picto.getCanvas(paths.CDN + "/stickers/" + sticker + ".png");
-      ctx.drawImage(sticky, _STICKER.x - 10 -10, _STICKER.y - 25 -8, 220, 220)
-    } else {
-      //let polluxi = await Picto.getCanvas(paths.BUILD + "/polluxi.png");
-     // ctx.drawImage(polluxi, _STICKER.x, _STICKER.y - 20)
+  if(isMarried){
+    ["wifeName","lovepoints","wifeSince"].forEach(z=>{
+      Picto.setAndDraw(ctx,  txt[z]   ,XYZ[z].X, XYZ[z].Y, XYZ[z].W,  XYZ[z].A )
+    });  
+  }
+  ["name","tagline","globalRank","localRank"].forEach(z=>{
+    if(!Target.bot|| ["name","tagline"].includes(z) ){
+      Picto.setAndDraw(ctx,  txt[z]   ,XYZ[z].X, XYZ[z].Y, XYZ[z].W,  XYZ[z].A )
     }
+  });  
 
-    let personal = Picto.block(ctx, persotex, "18px 'Whitney HTF Light', sans-serif", "#FFF", 255, 70)
-    ctx.drawImage(personal.item, 520, 495 - 128)
-    
-    let rubicount = Picto.tag(ctx, rubines,
-      "900 30px 'Whitney HTF Light',Sans", "#FFF")
-      if (!Target.bot) ctx.drawImage(rubicount.item, _RUBINES.x - rubicount.width, _RUBINES.y);
-      if (!Target.bot) ctx.drawImage(await iconRubine, _RUBINES.x +10, _RUBINES.y);
+  ["persotex"].forEach(z=>{
+      ctx.drawImage(txt[z].item  ,XYZ[z].X, XYZ[z].Y)// XYZ[z].W,  XYZ[z].A )
+  });  
+
+  z= "commend"
+  Picto.setAndDraw(ctx,  txt[z]   ,XYZ[z].X-2, XYZ[z].Y+50, XYZ[z].W, XYZ[z].A)
       
-      ctx.globalAlpha = .6;
-    let REP = Picto.tag(ctx, "THX",
-      "900 30px 'Whitney HTF',Sans", "#ffffff")
-    ctx.drawImage(REP.item, 52 - REP.width / 2, 425)
-    ctx.globalAlpha = 1;
-    let grank = Picto.tag(ctx, "#" + gear.miliarize((await globalrank) + 1),
-      "300 22px 'Whitney HTF Light',Sans", "#FFFFFF")
-    if (!Target.bot) {
-      Picto.setAndDraw(ctx, grank, G_RANK.x, G_RANK.y, 80, "left")
-    }
-    let lrank = Picto.tag(ctx, "#" + gear.miliarize(serverank + 0),
-      "300 22px 'Whitney HTF Light',Sans", "#FFFFFF")
-    if (!Target.bot) {
-      Picto.setAndDraw(ctx, lrank, L_RANK.x, L_RANK.y, 80, "right")
-    }
-    await ctx.drawImage(hex_frame, AVATAR_HEX.x, AVATAR_HEX.y);
+  let THX = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff");
+  ctx.globalAlpha = .5;
+  ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425)
+  ctx.globalAlpha = .8;
+  ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width/2, 455)
+  ctx.globalAlpha = 1;
 
+ let foreground = new Promise(async resolveAll=> {
+
+  const canvas = Picto.new(800,600);
+  const ctx = canvas.getContext('2d');   
+
+  let flair = img.flair.then(IMG=> ctx.drawImage(IMG, XYZ.flair.X, XYZ.flair.Y, XYZ.flair.W, XYZ.flair.H) );
+  let rubine_n_roundel = (async () =>{
+    if (!Target.bot){
+      ctx.drawImage(txt.rubines.item, XYZ.rubines.X - txt.rubines.width, XYZ.rubines.Y);
+      ctx.drawImage( (await img.iconRubine), XYZ.rubines.X +10, XYZ.rubines.Y);
+      z="global_roundel"
+      ctx.drawImage( (await img[z])  ,XYZ[z].X, XYZ[z].Y )
+      return true;
+    }else{
+      return true;
+    }
+  })();
+
+  if (USERPROFILE.countryFlag) {    
+    img.flag.then(flaggie=>ctx.drawImage(flaggie, XYZ.flag.X, XYZ.flag.Y, 44, 30));
+  }
+
+    Promise.all([rubine_n_roundel,flair]).then(arr=>{
+      resolveAll(canvas)
+    });
+ });
+    
+   valid_medals = USERPROFILE.medalsArrangement.style
+   valid  = USERPROFILE.medalsArrangement.valid
+    
     if (valid_medals == 1) {
-      let x = _MEDALS.x + (150 / 2 - 50)
-      let y = _MEDALS.y + (150 / 2 - 50)
+      let x = XYZ.medals.X + (150 / 2 - 50)
+      let y = XYZ.medals.Y + (150 / 2 - 50)
 
-      await ctx.drawImage(await valid_images[0], x, y, 150, 150)
+      img.medals[valid[0]].canvas.then(IMG=> ctx.drawImage( IMG, x, y, 150, 150 ))
 
     } else if (valid_medals == 2) {
 
-      let x = _MEDALS.x
-      let y = _MEDALS.y + 100
-
-      await ctx.drawImage(await valid_images[0], x, y, 100, 100);
-      await ctx.drawImage(await valid_images[1], x + 100, y, 100, 100);
+      let x = XYZ.medals.X
+      let y = XYZ.medals.Y + 100
+      await Promise.all([   
+       img.medals[valid[0]].canvas.then(IMG=> ctx.drawImage( IMG, x, y, 100, 100) ),
+       img.medals[valid[1]].canvas.then(IMG=> ctx.drawImage( IMG, x + 100, y, 100, 100) )
+      ]);
 
     } else if (valid_medals == 3) {
 
-      let x = _MEDALS.x
-      let x1 = _MEDALS.x + (200 / 2 - 50)
-      let y = _MEDALS.y
-      await ctx.drawImage(await valid_images[0], x1, y, 100, 100);
-      await ctx.drawImage(await valid_images[1], x, y + 100, 100, 100);
-      await ctx.drawImage(await valid_images[2], x + 100, y + 100, 100, 100);
+      let x = XYZ.medals.X
+      let x1 = XYZ.medals.X + (200 / 2 - 50)
+      let y = XYZ.medals.Y
+      await Promise.all([
+       img.medals[valid[0]].canvas.then(IMG=> ctx.drawImage( IMG, x1, y, 100, 100) ),
+       img.medals[valid[1]].canvas.then(IMG=> ctx.drawImage( IMG, x, y + 100, 100, 100) ),
+       img.medals[valid[2]].canvas.then(IMG=> ctx.drawImage( IMG, x + 100, y + 100, 100, 100) )
+      ]);
 
     } else if (valid_medals == 4) {
 
-      let x = _MEDALS.x
-      let y = _MEDALS.y
-      await ctx.drawImage(await valid_images[0], x, y, 100, 100);
-      await ctx.drawImage(await valid_images[1], x + 100, y, 100, 100);
-      await ctx.drawImage(await valid_images[2], x, y + 100, 100, 100);
-      await ctx.drawImage(await valid_images[3], x + 100, y + 100, 100, 100);
+      let x = XYZ.medals.X
+      let y = XYZ.medals.Y
+      await Promise.all([
+       img.medals[valid[0]].canvas.then(IMG=> ctx.drawImage( IMG, x, y, 100, 100) ),
+       img.medals[valid[1]].canvas.then(IMG=> ctx.drawImage( IMG, x + 100, y, 100, 100) ),
+       img.medals[valid[2]].canvas.then(IMG=> ctx.drawImage( IMG, x, y + 100, 100, 100) ),
+       img.medals[valid[3]].canvas.then(IMG=> ctx.drawImage( IMG, x + 100, y + 100, 100, 100) )
+      ]);
 
     } else {
-
-      let x = _MEDALS.x
-      let y = _MEDALS.y
+      let x = XYZ.medals.X
+      let y = XYZ.medals.Y
+      
       let ind = 0
       let row = 0
+      medalie = await Promise.all(img.medals.map(x=>x.canvas));
       while (ind < 8) {
         let col = 0
-        while (col < 3) {
-          //console.log({col,ind,row,MEDAL:medals_images[ind]})
-          if (medals[ind]) {
-            
-            let medalie = await medalCanvases[ind];
-            await ctx.drawImage(medalie, x + 68 * col, y + 68 * row, 64, 64);
+        while (col < 3) {          
+          if (img.medals[ind]) {            
+              ctx.drawImage(medalie[ind], x + 68 * col, y + 68 * row, 64, 64);
           }
-          ind = await ind + 1;
+          ind = ind + 1;
           ++col;
         }
         ++row;
       }
     } 
-
-    //ctx.drawImage(medals_images[1],_MEDALS.x+100,_MEDALS.y)
-    try {
-      _flairTop = await _flairTop;
-      ctx.drawImage(_flairTop, _FT.x, _FT.y, 100, 120);
-    } catch (e) {    }
-
-    if (!Target.bot) {
-      //ctx.drawImage(local_roundel,L_ROUNDEL.x,L_ROUNDEL.y,96,96);
-      ctx.drawImage(global_roundel, G_ROUNDEL.x, G_ROUNDEL.y);
-    }
-    
-    ctx.drawImage(hex_pic, AVATAR_HEX.x + offset_hex, AVATAR_HEX.y + offset_hex);
-
-
-    if (TARGET_DB.switches && (TARGET_DB.switches.profiled || TARGET_DB.switches.profileFrame)) {
-      let Premium = require(appRoot + "/core/utilities/Premium")
-      let tier = await Premium.getTier(Target);
-      //if(Target.id=='88120564400553984')tier='chalk'
-      if (TARGET_DB.switches.profiled) tier = 'chalk'
- 
-      if (tier) {
-        let tierframe = await Picto.getCanvas(paths.CDN + "/build/profile/frames/" + tier + ".png");      
-        ctx.drawImage(tierframe, -offset_hex+3, 15 + AVATAR_HEX.y - offset_hex,300,284);
-      }
-    } 
-
- console.log('test')
-    //=====================================================
-    //                MARRIAGE TAG
-    //=====================================================
-
-    if((TARGET_DB.married||[]).length > 0 ){
-
-      const moment = require("moment");
-
-
-      let WIFE = 
-      TARGET_DB.married.find(wife=>wife.featured)||
-      TARGET_DB.married.find(wife=>wife.ring == "stardust")||
-      TARGET_DB.married.find(wife=>wife.ring == "sapphire")||
-      TARGET_DB.married.find(wife=>wife.ring == "rubine")||
-      TARGET_DB.married.find(wife=>wife.ring == "jade");
-
-      ctx.lineWidth = 2;
-      let ringTierColor = "white";
-      if(WIFE.ring == "stardust") ringTierColor= "#2d6fe8";
-      if(WIFE.ring == "sapphire") ringTierColor= "#DaA905";
-      if(WIFE.ring == "rubine") ringTierColor= "#DaA905";
-      if(WIFE.ring == "jade") ringTierColor= "#7888a7";
-
-      ctx.shadowBlur = 25;
-      ctx.shadowColor = 'rgba(30,30,30,.5)';
-      Picto.roundRect(ctx,100,1,314,65,37,"#252833",ringTierColor)
-      ctx.shadowBlur = 0;
-      ctx.shadowColor = 'rgba(30,30,30,.3)';
-      ctx.save();
-      
-      ctx.drawImage(await Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+WIFE.ring+".png"),
-      115,15)
-      let WifeImage = POLLUX.users.get(WIFE.id).avatarURL || pre_a;
-      let WifeName = POLLUX.users.get(WIFE.id).username || WIFE.tag.split("#")[0];
-      let WifeTime = moment.utc(WIFE.since).fromNow(true)
-      ctx.beginPath();
-      let thiX = 380 
-      ctx.arc(thiX,32, 28, 0, Math.PI*2,true);
-      ctx.clip();
-      ctx.drawImage(await Picto.getCanvas(WifeImage),thiX-26,6,54,54);
-      ctx.closePath();
-      ctx.restore();
-      Picto.setAndDraw(ctx,Picto.tag(ctx,WifeName,"600 24px 'Whitney HTF'","#fff"),
-      165,7,183,'left')
-      Picto.setAndDraw(ctx,Picto.tag(ctx,TARGET_DB.modules.lovepoints+" LP","100 20px 'Whitney HTF'","#fff")
-      ,165,35,183,'left')
-      Picto.setAndDraw(ctx,Picto.tag(ctx,WifeTime ,"100 20px 'Whitney HTF'","#fff")
-      ,350,35,183,'right')
-  
-
-    }
-
-
 
 
     //=========================================
@@ -528,29 +538,33 @@ const init = async function run(msg) {
     //=========================================
     //=========================================
 
-    if (TARGET_DB.personal) {
-      Picto.getCanvas(paths.BUILD + "/flags/" + TARGET_DB.personal.country + ".png").then(flaggie=>ctx.drawImage(flaggie, _flag.x, _flag.y, 44, 30));
-    }
     
+Promise.all([backdrop,foreground]).then(async arr=>{
+
+  ctx.globalCompositeOperation = "destination-over";
+  ctx.drawImage( arr[0] , 0 , 0 )
+  
+  ctx.globalCompositeOperation = "source-over";
+  ctx.drawImage( arr[1] , 0 , 0 )
+  
+
     try {
 
       const cfg = require(appRoot + '/config.json');
       let bottomTag;
-      if (TARGET_DB.switches && !TARGET_DB.switches.hideProle) {
-
-        bottomTag = TARGET_DB.switches.role
+      if (Target_Database.switches && !Target_Database.switches.hideProle) {
+        bottomTag = Target_Database.switches.role
       }
-
-      if (cfg.admins.includes(TARGET_DB.id)) bottomTag = "moderatorplus"
-      if (cfg.owner.includes(TARGET_DB.id)) bottomTag = "owner"
+      if (cfg.admins.includes(Target_Database.id)) bottomTag = "moderatorplus"
+      if (cfg.owner.includes(Target_Database.id)) bottomTag = "owner"
 
       if (bottomTag) {
         let tierframe = await Picto.getCanvas(paths.BUILD + "profile/bottomtags/" + bottomTag + ".png");
         ctx.drawImage(tierframe, 160 + 268, 565);
       }
      
-      if (bottomTag == "translator" && TARGET_DB.switches.translator) {
-        let flag = await Picto.getCanvas(paths.BUILD + "flags/" + TARGET_DB.switches.translator + ".png");
+      if (bottomTag == "translator" && Target_Database.switches.translator) {
+        let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
         ctx.drawImage(flag, 160 + 313, 567, 32, 21);
       }
 
@@ -558,31 +572,28 @@ const init = async function run(msg) {
       console.error(e)
     }
 
-    if (TARGET_DB.blacklisted && TARGET_DB.blacklisted != "") {
-
-      let bliste = await Picto.getCanvas(paths.BUILD + "blacklisted.png");
+    if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
+      let bliste = await Picto.getCanvas(paths.CDN + "/build/bliste.png");
+      ctx.drawImage(bliste, -2, 2);
       ctx.globalCompositeOperation = 'saturation';
       ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
       ctx.fillRect(0, 0, 800, 600)
       ctx.drawImage(bliste, -2, 2);
     }
 
-    var stop = Date.now();
-    var diff = (stop - start);
-    if (msg.channel.id == '433639502465204252') {
-      msg.channel.send("|\n\n**" + msg.author.tag + "**")
-    }
+    img = null;
+    txt = null;
+    Target_Database = null;
+    FINALIZE(msg, canvas);
 
-    let buff = await canvas.toBuffer();
-    await msg.channel.createMessage('', {
-      file: buff,
-      name: "profile-" + Target.id + ".png"
-    })
+  })
+  
 
   } catch (e) { 
     console.log("ERROR PROFILE")
     console.error(e)
     msg.channel.send("```ml" + `
+
     /*====*______________________________________________. ''' .
     |     |                                             / LEVEL \\
     | REP |                                            |    #    |
@@ -602,12 +613,14 @@ const init = async function run(msg) {
     | F-B |____________||´''''''''''''''''''''|| |               |
     |     |   RUBINES  ||  P E R S O T E X T  || |  [6] [7] [8]  |
     |  D  |      XXX<| || D O E S N´T   F I T || |               |
-    +-----+------------++=====================++-+--------------*/
-` + "```")
+    +-----+------------++=====================++-+--------------+/
+  
+    
+    ` + "```")
+    //${(e.stack)}    
   } //end catch 1
 
-} //end block
-
+}
 
 module.exports = {
   pub: true,
@@ -618,3 +631,21 @@ module.exports = {
   aliases: ['ppc', 'perfil'],
   cool: 800
 };
+
+async function FINALIZE(msg,canvas){  
+  console.log(canvas)
+  let buff = await canvas.toBuffer();
+  await msg.channel.createMessage('', {
+    file: buff,
+    name: "profile.png"
+  })
+
+}
+function XPercent(X, Lv, f = 0.0427899) {
+  let toNEXT = Math.trunc(Math.pow((Lv + 1) / f, 2));
+  let toTHIS = Math.trunc(Math.pow(Lv / f, 2));
+  let PACE = toNEXT - toTHIS;
+  let PROGRESS = X - toTHIS
+  let percent = PROGRESS / PACE;
+  return percent;
+}
