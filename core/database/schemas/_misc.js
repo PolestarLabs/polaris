@@ -78,6 +78,16 @@ const MarketplaceModel = new Schema({
 },{ strict: false });
 
 
+const RelationShipModel = new Schema({
+  id:String,
+  users: Array,
+  ring: String,
+  initiative: String,
+  since: Number,
+  lovepoints: Number,
+  type: String, // MARRIAGE / PARENTS / CHILDREN
+  
+},{ strict: false });
 
 
   const audit     = mongoose.model('Audit', Audit, 'transactions');
@@ -136,6 +146,24 @@ const MarketplaceModel = new Schema({
         })
       }
 
+  const relationships    = mongoose.model('Relationship', RelationShipModel, 'relationships');
+        relationships.set    =  utils.dbSetter;
+        relationships.get    =  utils.dbGetter; 
+        relationships.create  = function(type,users,initiative,ring){
+          return new Promise(async (resolve,reject)=>{
+
+            let rel = await relationships.find({type,users:{$all:users}});
+            if (rel.length>0) return reject("Duplicate Relationship: \n" + JSON.stringify(rel,null,2) );
+
+            relationship =  new relationships({
+              type,users,initiative,ring,since: Date.now()
+            });
+            relationship.save((err,item) => {
+              resolve (item);
+            })
+          })
+        }
+
   const fanart    = mongoose.model('fanart', FanartModel, 'fanart');
       fanart.set    =  utils.dbSetter;
       fanart.get    =  utils.dbGetter; 
@@ -168,4 +196,4 @@ const MarketplaceModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace }; 
+module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships }; 

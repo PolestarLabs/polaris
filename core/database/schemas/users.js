@@ -32,6 +32,7 @@ const UserSchema = new mongoose.Schema({
   eventThing:Mixed,
 
   //MODULES
+  featuredMarriage: String,
   counters: Mixed,
   modules: {
       powerups:Mixed,

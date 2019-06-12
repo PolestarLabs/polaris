@@ -23,6 +23,7 @@ const
        ,control        : miscDB.control
        ,marketplace    : miscDB.marketplace
        ,reactRoles     : miscDB.reactRoles
+       ,relationships  : miscDB.relationships
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
    ,collectibles  : require('./schemas/collectibles.js')
