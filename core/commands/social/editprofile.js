@@ -135,7 +135,7 @@ async function PROCESS_SUBRESPONSE(msg,format){
     }else{
         return {string:''}
     }
-}
+} 
 
 module.exports={
     init
@@ -143,6 +143,6 @@ module.exports={
     ,cmd:'editprofile'
     ,perms:3
     ,cat:'social'
-    ,botPerms:['attachFiles','embedLinks','manageReactions','manageMessages']
+    ,botPerms:['attachFiles','embedLinks','manageMessages']
     ,aliases:[]
 }
