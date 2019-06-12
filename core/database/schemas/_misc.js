@@ -84,6 +84,7 @@ const RelationShipModel = new Schema({
   ring: String,
   initiative: Number,
   since: Number,
+  lovepoints: Number,
   type: String, // MARRIAGE / PARENTS / CHILDREN
   
 },{ strict: false });
