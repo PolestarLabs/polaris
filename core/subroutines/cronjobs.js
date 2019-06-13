@@ -136,7 +136,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
   
 },null,true);
-const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
 
 
   (async ()=>{
