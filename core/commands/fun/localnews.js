@@ -42,6 +42,7 @@ const init = async function (msg) {
     }
     if (!headline_tx || headline_tx.length == 0 && gear.randomize(0, 3) > 1) {
       if (!global.fakeFeed) {
+        setTimeout(()=>global.fakeFeed = null, 30000); 
         let RSS = require('rss-parser');
         let parser = new RSS();
         await (async () => {
@@ -60,7 +61,6 @@ const init = async function (msg) {
             img_link = results.data.ogImage.url;
 
             global.fakeFeed = { link: img_link, title: headline_tx };
-            setTimeout(()=>global.fakeFeed = null, 30000); 
 
           } catch (e) {
             
