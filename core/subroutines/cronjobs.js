@@ -136,7 +136,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 },null,true);
 const ONEminute = new CronJob('*/1 * * * *', async () => {
 
-  
+
   DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
     const {embedGenerator} = require('../commands/utility/rss.js');
     serverFeeds.forEach(async svFd => {
@@ -145,7 +145,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
         parser.parseURL(feed.url).then(async data => {
           if ( feed.last.isoDate != data.items[0].isoDate) {            
             const embed = await embedGenerator(data.items[0],data);
-            await DB.feed.updateMany({'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
+            await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
             POLLUX.getChannel(feed.channel).send({embed});
           }
         });
