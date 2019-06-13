@@ -24,6 +24,8 @@ const
        ,marketplace    : miscDB.marketplace
        ,reactRoles     : miscDB.reactRoles
        ,relationships  : miscDB.relationships
+       ,alerts         : miscDB.alert
+       ,feed           : miscDB.feed
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
    ,collectibles  : require('./schemas/collectibles.js')
