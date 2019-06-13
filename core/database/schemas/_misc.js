@@ -101,6 +101,35 @@ const RelationShipModel = new Schema({
           });
        }    
 
+  const FeedModel = new Schema({
+    server:{type:String,unique:true},
+    defaultChannel: String,
+    feeds: [{
+      type: {type: String}, // RSS, TWITCH, YouTube
+      url: String,
+      last: Mixed,
+      channel: String,
+    }]
+  })     
+  const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
+       feed.set    =  utils.dbSetter;
+       feed.get    =  utils.dbGetter; 
+
+  const AlertsModel = new Schema({
+    type: {type:String}, // RECURRING, ONETIME
+    scope: String, // SERVER, DM
+    channel: String, 
+    alerts: [{
+      time: Number,
+      interval: Number,
+      text: String,
+    }]
+  })     
+  
+  const alert    = mongoose.model('Alert', AlertsModel, 'Alerts');
+       alert.set    =  utils.dbSetter;
+       alert.get    =  utils.dbGetter; 
+
   const control    = mongoose.model('Control', Control, 'control');
         control.set    =  utils.dbSetter;
         control.get    =  utils.dbGetter; 
@@ -196,4 +225,4 @@ const RelationShipModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships }; 
+module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
