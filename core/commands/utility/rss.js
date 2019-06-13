@@ -11,6 +11,7 @@ const init = async function (msg){
     if(gear.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let feedData = await DB.feed.get({server: msg.guild.id});
+    const RSSFiltered = feedData ? (feedData.feeds||[]).filter(fd=>fd.type=="rss");
 
     // +RSS add (LINK) 
     if(msg.args[0]=== "add"){
@@ -36,12 +37,15 @@ const init = async function (msg){
         return  msg.guild.channels.find(chn=>chn.id===channel).send( {embed} );        
         
     }
+
+    
+
     // +RSS remove (LINK || index) 
     if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
-        if (!feedData || feedData.feeds.length == 0) return msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) );
+        if (!feedData || RSSFiltered.length == 0) return msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) );
         let target = msg.args[1];
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',"You forgot to give me an ID or URL to remove from here. Check `+rss list` if you forgot them~",P) );
-        let toDelete = feedData.feeds[target] || feedData.feeds.find(f=>f.url == target || f.url.includes(target) )
+        let toDelete = feedData.feeds.filter(fd=>fd.type=="rss")[target] || feedData.feeds.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
         let embed = new gear.Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
@@ -56,10 +60,10 @@ const init = async function (msg){
     }
 
     if(msg.args[0]=== "list"){        
-        if(feedData && feedData.feeds.length > 0){
+        if(feedData && RSSFiltered.length > 0){
             msg.channel.send(`
             **${gear.emoji('todo')+ $t('interface.feed.listShow',"RSS Feed List for this Server",P) }**
-\u2003${feedData.feeds.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
+\u2003${feedData.feeds.filter(fd=>fd.type=="rss").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',"To remove one, just try `+rss remove [# Index]`",P)}*
 `)
