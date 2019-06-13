@@ -1,3 +1,5 @@
+const RSSembedGenerator = require('../commands/utility/rss.js').embedGenerator;
+const rq = require('request')
 const { readFileSync } = require('fs');
 const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
@@ -134,25 +136,72 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
   
 },null,true);
-const ONEminute = new CronJob('*/1 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
 
 
-  DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
-    const {embedGenerator} = require('../commands/utility/rss.js');
-    serverFeeds.forEach(async svFd => {
-      svFd.feeds.forEach(feed => {
-        if (feed.type !== 'rss') return;
-        parser.parseURL(feed.url).then(async data => {
-          if ( feed.last.isoDate != data.items[0].isoDate) {            
-            const embed = await embedGenerator(data.items[0],data);
-            await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
-            POLLUX.getChannel(feed.channel).send({embed});
+  (async ()=>{
+    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
+      serverFeeds.forEach(async svFd => {
+        const serverData = await DB.servers.get(svFd.server);
+        svFd.feeds.forEach(async feed => {
+          
+          if (feed.type === 'rss'){
+            const data = await parser.parseURL(feed.url);
+            if (data.items[0] && feed.last.guid != data.items[0].guid) {
+              const embed = await RSSembedGenerator(data.items[0],data);
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
+              POLLUX.getChannel(feed.channel).send({embed});
+            }        
           }
-        });
+          
+          if (feed.type === 'twitch'){
+            const thisFeed = feed
+            const options = { 
+              method: 'GET', url: 'https://api.twitch.tv/helix/streams', qs: { user_login: feed.url },
+              headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch }
+            };
+            rq(options, function (err, res, body) {
+              if (err) throw new Error(err);
+              const StreamData = JSON.parse(body).data[0];
+              if(
+                !(
+                  thisFeed.last.type === StreamData.type &&
+                  thisFeed.last.title === StreamData.title 
+                )
+              ){
+                let opts = { 
+                  method: 'GET', url: 'https://api.twitch.tv/helix/users', qs: { login: thisFeed.url },
+                  headers:{ 'Client-ID': 'pxft8d1oya7iwgh7br053z9ezjgfno' } 
+                };
+                rq(opts, async function (err, res, bod) {
+                  if (err) throw new Error(rr);
+                  const streamer = JSON.parse(bod).data[0];
+                  const embed = new gear.Embed;
+                        embed.thumbnail(streamer.profile_image_url);
+                        embed.author(StreamData.title);
+                        embed.image(StreamData.thumbnail_url.replace('{width}','400').replace('{height}','240'));
+                        embed.timestamp(StreamData.started_at);
+                        embed.color("#6441A4");
+                  const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamerName: streamer.display_name };   
+                  await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData});
+                  POLLUX.getChannel(thisFeed.channel).send({
+                    content : $t('interface.feed.newTwitchStatus',`**${P.streamerName}** is Live now!`,P )+` <https://twitch.tv/${streamer.login}>`
+                    ,embed
+                  });
+                });
+              }
+            });
+          } 
+        })
       })
-    })
-  })
+    })    
+  })()
 
+
+})
+
+
+const ONEminute = new CronJob('*/1 * * * *', async () => {
 
 
   //======================================================================================
@@ -202,6 +251,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
 MIDNIGHT.start();
 FIVEminute.start();
 ONEminute.start();
+FIFTEENminute.start();
 console.log("• ".green,"CRONs ready");
 
 }
