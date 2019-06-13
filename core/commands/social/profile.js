@@ -12,14 +12,14 @@ const XYZ ={
   wifeSince   : {X:350 ,Y: 35 ,W:183 ,A:'right'  },
   commend     : {X: 53 ,Y: 25 ,W: 80 ,A:'center' },
   name        : {X:325 ,Y:268 ,W:420 ,A:'left'   },
-  medals        : {X: 100,Y: 380                   },
+  medals      : {X:98,Y: 370                     },
   tagline     : {X:332 ,Y:310 ,W:440 ,A:'left'   },
   rubines     : {X:706 ,Y:519 ,W:440             },
   globalRank  : {X:588 ,Y:462 ,W: 80 ,A: 'right' },
   localRank   : {X:725 ,Y:462 ,W: 80 ,A: 'right' },
   background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
   sticker     : {X: 320 ,Y: 395 ,W:220, H: 220    },
-  avatar      : {X: 10,  Y: 115},
+  avatar      : {X: 6,  Y: 123},
   flair       : {X: 235,  Y: 245, W:100, H:120},
   flag     : {X: 748,  Y: 280},
   offset_hex  : 20
@@ -96,7 +96,7 @@ class UserProfileModel{
     // Discord Data
     const {Member} = require('eris');
     if(!discordMember) discordMember = POLLUX.users.get(userData.id||userData);
-    if(userData.constructor.modelName !== "UserDB") discordMember = userData;
+    if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
     if(typeof discordMember === 'string') discordMember = POLLUX.users.get(discordMember);
     const notMember = discordMember && discordMember.constructor != Member;
 
@@ -107,7 +107,7 @@ class UserProfileModel{
     this.bot = discordMember.bot;
     
     // Pollux User Data
-    if(!userData.modules) {
+    if(!userData || !userData.modules) {
       userData = {modules:{}};
       this.PARTIAL = true;
     }
@@ -149,7 +149,7 @@ class UserProfileModel{
       }
     
       let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
-      this.thx = svRankData.thx;
+      this.thx = svRankData.thx || 0;
       this.localRank = await DB.localranks
         .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
       return resolve(true);
@@ -220,7 +220,7 @@ init = async (msg)=>{
 
   const Target = gear.getTarget(msg,0,true,true);
   let Target_Database = await DB.users.get(Target.id);
-  const USERPROFILE = new UserProfileModel(Target_Database,msg.guild.member(Target));
+  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],msg.guild.member(Target));
   await Promise.all([
     await USERPROFILE.wifeData,
     await USERPROFILE.localData    
@@ -349,18 +349,7 @@ try{
       })
     });
 
-    let hexes = new Promise(async resolve=>{
-      const canvas = Picto.new(800,600);
-      const ctx3 = canvas.getContext('2d');
-      ctx3.drawImage(await img.hex_frame, XYZ.avatar.X, XYZ.avatar.Y);
-      ctx3.drawImage(await img.hex_pic,   XYZ.avatar.X + XYZ.offset_hex, XYZ.avatar.Y + XYZ.offset_hex);
-      if (USERPROFILE.profileFrame) {
-        ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
-        resolve(canvas);
-      }else{
-          resolve(canvas);
-      }
-    });
+   
     const canvas = Picto.new(800,600);
     const ctx = canvas.getContext('2d');        
     let sticker;
@@ -403,12 +392,11 @@ try{
 
     }
 
-    Promise.all([backmost,sticker,hexes]).then(array=>{
+    Promise.all([backmost,sticker]).then(array=>{
       sticker;
       ctx.globalCompositeOperation = "destination-over";
       ctx.drawImage(array[0],0,0);
       ctx.globalCompositeOperation = "source-over";
-      ctx.drawImage(array[2],0,0);
       array = null;
       resolveAll(canvas);
     })
@@ -471,6 +459,7 @@ try{
     });
  });
     
+ if (USERPROFILE.medalsArrangement && USERPROFILE.medalsArrangement.valid.length>0 ){
    valid_medals = USERPROFILE.medalsArrangement.style
    valid  = USERPROFILE.medalsArrangement.valid
     
@@ -530,7 +519,20 @@ try{
         ++row;
       }
     } 
+  }
 
+  let hexes = new Promise(async resolve=>{
+    const canvas3 = Picto.new(800,600);
+    const ctx3 = canvas3.getContext('2d');
+    ctx3.drawImage(await img.hex_frame, XYZ.avatar.X, XYZ.avatar.Y);
+    ctx3.drawImage(await img.hex_pic,   XYZ.avatar.X + XYZ.offset_hex, XYZ.avatar.Y + XYZ.offset_hex);
+    if (USERPROFILE.profileFrame) {
+      ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
+      resolve(canvas3);
+    }else{
+        resolve(canvas3);
+    }
+  });
 
     //=========================================
     //=========================================
@@ -539,13 +541,14 @@ try{
     //=========================================
 
     
-Promise.all([backdrop,foreground]).then(async arr=>{
+Promise.all([backdrop,foreground,hexes]).then(async arr=>{
 
   ctx.globalCompositeOperation = "destination-over";
   ctx.drawImage( arr[0] , 0 , 0 )
   
   ctx.globalCompositeOperation = "source-over";
   ctx.drawImage( arr[1] , 0 , 0 )
+  ctx.drawImage( arr[2] , 0 , 0 )
   
 
     try {
@@ -567,18 +570,18 @@ Promise.all([backdrop,foreground]).then(async arr=>{
         let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
         ctx.drawImage(flag, 160 + 313, 567, 32, 21);
       }
+      
+      if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
+        let bliste = await Picto.getCanvas(paths.CDN + "/build/bliste.png");
+        ctx.drawImage(bliste, -2, 2);
+        ctx.globalCompositeOperation = 'saturation';
+        ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
+        ctx.fillRect(0, 0, 800, 600)
+        ctx.drawImage(bliste, -2, 2);
+      }
 
     } catch (e) {
       console.error(e)
-    }
-
-    if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
-      let bliste = await Picto.getCanvas(paths.CDN + "/build/bliste.png");
-      ctx.drawImage(bliste, -2, 2);
-      ctx.globalCompositeOperation = 'saturation';
-      ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
-      ctx.fillRect(0, 0, 800, 600)
-      ctx.drawImage(bliste, -2, 2);
     }
 
     img = null;
