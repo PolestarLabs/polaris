@@ -3,6 +3,8 @@ const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
 const g = require( '../utilities/Gearbox');
 const DB = require( '../database/db_ops');
+let RSS = require('rss-parser');
+let parser = new RSS();
 
 const userDB = DB.users
 
@@ -133,6 +135,26 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
   
 },null,true);
 const ONEminute = new CronJob('*/1 * * * *', async () => {
+
+  
+  DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
+    const {embedGenerator} = require('../commands/utility/rss.js');
+    serverFeeds.forEach(async svFd => {
+      svFd.feeds.forEach(feed => {
+        if (feed.type !== 'rss') return;
+        parser.parseURL(feed.url).then(async data => {
+          if ( feed.last.isoDate != data.items[0].isoDate) {            
+            const embed = await embedGenerator(data.items[0],data);
+            await DB.feed.updateMany({'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
+            POLLUX.getChannel(feed.channel).send({embed});
+          }
+        });
+      })
+    })
+  })
+
+
+
   //======================================================================================
   /* EVERY 1 MINUTE */
   //======================================================================================
@@ -165,15 +187,15 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
     })
   });
 
-
   /* Exchange Currency */ //================================
+  /*
   discoin.fetch().then(async trades => {
     trades = JSON.parse(trades)
     if (!trades.length || trades.length === 0) return;
     await gear.wait(Number(process.env.SHARD) * 2);
     Promise.all(trades.map(td => resolveExchange(td, bot)));
   });
-
+*/
   //---CRON END----///-----////------/////
 }, null, true);
 
