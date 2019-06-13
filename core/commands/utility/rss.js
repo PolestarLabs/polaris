@@ -28,7 +28,7 @@ const init = async function (msg){
             await DB.feed.set({server:msg.guild.id,'feeds.url':str},{'feeds.$.channel':channel });
             return msg.channel.send("This link is already present in your feed list. Updating Channel");
         }
-                
+
         await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
         let embed = await feedEmbed(feed.items[0],feed);
         
@@ -37,32 +37,42 @@ const init = async function (msg){
         
     }
     // +RSS remove (LINK || index) 
-    if(msg.args[0]=== "remove"){
+    if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
+        if (!feedData || feedData.feeds.length == 0) return msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) );
         let target = msg.args[1];
-        if (!target) return msg.channel.send("State an ID or URL");
+        if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',"You forgot to give me an ID or URL to remove from here. Check `+rss list` if you forgot them~",P) );
         let toDelete = feedData.feeds[target] || feedData.feeds.find(f=>f.url == target || f.url.includes(target) )
         let embed = new gear.Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
                 Channel: <#${toDelete.channel}>
                 `;
-
-        let confirm = await msg.channel.send({content:"Confirm delete?",embed});
-        YesNo.run(confirm,msg,async (cc)=>{           
-            await DB.feed.set({server:msg.guild.id},{$pull:{feeds:delet}});
-            return msg.channel.send("Deleted");
-        })
-    
+        let confirm = await msg.channel.send({content:
+            $t('interface.generic.confirmDelete',"Confirm Delete?",P),
+            embed});
+        YesNo.run(confirm,msg,async (cc)=>{
+            await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
+        });    
     }
-    if(msg.args[0]=== "list"){       
-        
-        msg.channel.send(`
-        ${feedData.feeds.map((x,i)=>i+" "+x.url+" @ "+`<#${x.channel}>`).join('\n')}        
-        `)
+
+    if(msg.args[0]=== "list"){        
+        if(feedData && feedData.feeds.length > 0){
+            msg.channel.send(`
+            **${gear.emoji('todo')+ $t('interface.feed.listShow',"RSS Feed List for this Server",P) }**
+\u2003${feedData.feeds.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
+
+*${$t('interface.feed.listRemove',"To remove one, just try `+rss remove [# Index]`",P)}*
+`)
+        }else{
+            msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) )
+        }
     }
     // +RSS defaultchannel (#channel) 
     if(msg.args[0]=== "channel"){
-        feedData
+        let channel =  msg.channelMentions[0]
+        await DB.feed.set({server:msg.guild.id},{$set:{defaultChannel:channel}});
+        P.channel = channel;
+        msg.channel.send( $t('interface.feed.channelUpdate',"Default posting Channel set to <#"+channel+">",P) )
     }
  
 }
