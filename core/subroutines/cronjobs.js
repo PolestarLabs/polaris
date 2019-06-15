@@ -136,6 +136,40 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
   
 },null,true);
+
+
+const ONEhour = new CronJob('* */1 * * *', async () => {
+
+
+
+  (async ()=>{
+    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
+      serverFeeds.forEach(async svFd => {
+        const serverData = await DB.servers.get(svFd.server);
+        svFd.feeds.forEach(async feed => {          
+          if (feed.type === 'youtube'){
+            const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
+            const data = await  getYTData(feed.url,cfg.google);
+            if (data && data.items[0] && ((feed.last||{}).id||{}).videoId != (data.items[0].id||{}).videoId ) {
+              const embed = await ytEmbedCreate(data.items[0],null);
+              const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
+              P.tuber = embed.author.name;
+              let LastVideoLink = `
+              ${$t("interface.feed.newYoutube",`**${P.tuber} has posted a new video!** Check it out at:`,P)}
+              https://youtube.com/watch?v=${data.items[0].id.videoId}`
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });        
+              POLLUX.getChannel(feed.channel).send( {content:LastVideoLink}).then(m=>m.channel.send({embed}));
+            }
+          }
+        })
+      })
+    })    
+  })()
+
+
+});
+
+
 const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
 
 
@@ -251,6 +285,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
 MIDNIGHT.start();
 FIVEminute.start();
 ONEminute.start();
+ONEhour.start();
 FIFTEENminute.start();
 console.log("• ".green,"CRONs ready");
 
