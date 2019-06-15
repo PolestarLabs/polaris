@@ -1,13 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubin",
-        "RBN_fullname": "",
+        "RBN_fullname": "Klejnoty Rubinów",
         "RBN_plural": "Rubiny",
         "JDE": "Żad",
-        "JDE_fullname": "",
+        "JDE_fullname": "Żadowy pył",
         "JDE_plural": "Żady",
         "SPH": "Szafir",
-        "SPH_fullname": "",
+        "SPH_fullname": "Odłamki Szafirów",
         "SPH_plural": "Szafiry",
         "C": "Zwyczajne",
         "U": "Niezwykłe",
@@ -22,10 +22,10 @@
     "terms": {
         "thanks": "dzięki",
         "thanks_short": "dzk",
-        "thx": "$t(termin.dzięki_skrót)",
+        "thx": "$t(terms.thanks_short)",
         "total": "W sumie",
         "amount": "Ilość",
-        "overview": "Przegląd\n",
+        "overview": "Podgląd",
         "coinHeads": "Reszka",
         "coinTails": "Orzeł",
         "qnt": "Ilość",
@@ -48,12 +48,12 @@
         "level": "Poziom",
         "levelUp": "Kolejny Poziom!",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
+            "message": "Wiadomość",
+            "message_plural": "Wiadomości",
+            "reaction": "Reakcja",
+            "reaction_plural": "Reakcje",
             "role": "Rola",
-            "role_plural": "",
+            "role_plural": "Role",
             "server": "Serwer\n",
             "server_plural": "Serwer\n",
             "member": "Członek",
@@ -106,12 +106,12 @@
             "noRoleHere": "Wydaje się, że tej Roli nie ma na liście. Upewnij się, że podajesz ją prawidłowo.",
             "noRolesGiven": "Nie wspomniano o żadnej roli, czy robisz to prawidłowo?",
             "roleAlreadyHere": "Wydaje mi się, że Rola jest już na liście.",
-            "nosuchrole": "",
+            "nosuchrole": "Um, nie znalazłam tej roli, proszę wpisz nazwę dokładnie.",
             "kbanNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "superRoleNope": "Wygląda na to, że **{{user}}** nie ma roli **{{group}}**.",
             "banNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "unpermB": "Wydaje mi się, że nie mam wystarczających uprawnień, aby to przetworzyć.",
-            "cantFindMessageID": "",
+            "cantFindMessageID": "Hmm... To się nie zgadza... ID wiadomości wygląda na niewłaściwe.",
             "cantFindChannel": "Nie mogę znaleźć tego kanału. Spróbuj użyć #kanał, aby się upewnić, że istnieje.",
             "noChannelGiven": "Musisz mi powiedzieć, na którym kanale rejestrować aktywności.",
             "emojiError": "",
@@ -178,7 +178,7 @@
                     "Nie do wiary!"
                 ],
                 "ohmy_negative": [
-                    "O ja!",
+                    "O mój!",
                     "Uuuuh...",
                     "Oj...",
                     "O nie!",
@@ -351,10 +351,10 @@
             "decon2": "{{user}} dezynfekuje {{user2}}.",
             "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
             "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**",
-            "kissed": "",
+            "kissed": "{{user}} całuje {{victim}}~",
             "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissedNone": "{{user}} przesyła całusy~",
+            "kissFail": "{{user}} próbował pocałować, ale dostał plaskacza... *auć*."
         },
         "commend": {
             "noSelf": "Nie, Nie pozwolę ci pochwalić samego siebie. Powinieneś się tego wstydzić!",
@@ -368,9 +368,9 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "noitem": "",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "noitem": "Nie mogę znaleźć tego przedmiotu",
+            "didyoumean": "Nie mogę znaleźć tego przedmiotu. Może chodzi Ci o jeden z tych?",
+            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?"
         },
         "misc": {
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować."
+            "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
         "daily": {
@@ -404,28 +429,28 @@
 
         },
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
-            "noReactionDel": "",
-            "success": ""
+            "reactrolesfor": "Reakcyjne Role dla {{server}}",
+            "removeAll": "Usunęłam stąd cały Rejestr Reakcji. Musisz jednak manualnie wyczyścić reakcje z wiadomości.",
+            "removed": "Ta reakcja została usunięta~",
+            "noroleshere": "Na tym serwerze nie ma Reakcyjnych Ról.",
+            "removedAllFrom": "Usunęłam wszystkie reakcje z {{ID}}~",
+            "noReactionDel": "Aby usunąć Reakcję Roli, użyj '{{prefix}}reactionroles del [ID WIADOMOŚCI] [EMOJI]'. Możesz też pominąć 'EMOJI', jeśli chcesz również usunąć wszystkie reakcje z tej wiadomości~",
+            "success": "Reakcyjne Role będą widoczne w tej wiadomości:"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
-            "ichoose": ""
+            "picking": "Wybieram... {{as in 'picking from a list'}}",
+            "complete": "Skończone!",
+            "lessthan2": "Potrzebuję przynajmniej dwóch rzeczy między którymi mam wybrać...",
+            "ichoose": "Wybieram **{{list_item}}**!"
         },
         "help": {
             "greetings": "",
-            "basics": "",
-            "cmdlist": "",
-            "quick_getgo": "",
-            "quick_useful": "",
+            "basics": "\n  **Podstawy** - Rozpoczęcie przygody ze mną jest tak łatwe, jak zbudowanie przyspieszacza cząstek! ...Czekaj, nigdy takiego nie zbudowałeś(-łaś)? Cóż, żaden problem!\nOto tylko kilka z {{commandcount}} komend, które mam!\n  ",
+            "cmdlist": "LISTA KOMEND",
+            "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
+            "quick_useful": " Komendy, które mogą okazać się użyteczne",
             "quick_enjoy": "",
-            "quick_didntask": "",
+            "quick_didntask": " Komendy, o które nie prosiłeś(-łaś)",
             "avail_cmd": "Dostępne komendy",
             "avail_cmdlist": "",
             "notenough": "",
