@@ -381,7 +381,7 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "",
-            "confirmDelete": ""
+            "confirmDelete": "削除を確認？"
         },
         "feed": {
             "newYoutube": "",
