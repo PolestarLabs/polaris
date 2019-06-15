@@ -386,7 +386,40 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel."
+            "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
+            "confirmDelete": "Confirm Delete?"
+        },
+        "feed":{
+            "newYoutube": "**{{tuber}} has posted a new video!** Check it out at:",
+            "noDefault": "You didn't tell me which channel to post to and there's no default channel set either.",
+            "urlPresent": "I am already watching posts from this one, I'm just going to update the destination channel instead~",
+            "noFeed"  : "There are no Feeds set up in this Server",
+            "noTube"  : "There are no YouTube notifications set up in this Server",
+            "noTwitch": "There are no Twitch alerts set up in this Server",
+
+            "stateIDorURL": "You forgot to give me an ID or URL to remove from here. Check `{{prefix}}{{command}} list` if you forgot them~"
+            ,"listRemove": "To remove one, just try `{{prefix}}{{command}} remove [Index #]`"
+            ,"channelUpdate": "I've set the Default posting Channel to {{channelID}}!"
+            
+            ,"invalidRSS": "Hey, this is not a valid RSS address! Be sure you're doing it right."
+            ,"invalidTwitch": "Look, theres no Twitch user around with that name. Check carefully what you're typing!"
+            ,"invalidYoutube": "Um, that doesn't look like a YouTube channel. Not one that I know at least..."
+            
+            ,"listShowRSS": "RSS Feed List for this Server"
+            ,"listShowTwitch": "Twitch Streams being posted in this Server"
+            ,"listShowYoutube": "New YouTube video alerts for this Server"      
+
+            ,"savedSubLastRSS": "**Saved**! - Submitting latest Posts from this Feed at {{channelID}}. Further ones will be checked every **30 minutes**"            
+            ,"savedSubLastTwitch": "**Saved**! - A notification will be posted at {{channelID}} when this Channel goes live. Checked every **15 Minutes**"            
+            ,"savedSubLastYoutube": "**Saved**! - Submitting latest video from this channel at {{channelID}}. Checked every **1 hour**"            
+            
+            ,"feedLimitRSS": "This server can only have **5** RSS feeds at once."
+            ,"feedLimitTwitch": "This server can only have **2** Twitch Channel updates at once."
+            ,"feedLimitYoutube": "This server can only have **1** YouTube Channel alert at once."
+            ,"donateToIncrease": "If you need a higher limit, consider [Donating]({{donationLink}}) or [apllying for Pollux Partnership]({{partnershipLink}})"
+             
+
+
         },
         "autoRolesforThis": "Self-assignable Roles for this Server",
         "daily": {
