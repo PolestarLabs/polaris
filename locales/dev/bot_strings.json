@@ -385,7 +385,7 @@
         }
     },
     "interface": {
-        "generic": {
+        "generic": { 
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?"
         },
