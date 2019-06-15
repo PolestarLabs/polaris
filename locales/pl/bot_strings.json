@@ -381,11 +381,11 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
-            "confirmDelete": ""
+            "confirmDelete": "Potwierdzasz usunięcie?"
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
+            "newYoutube": "**{{tuber}} właśnie wrzucił filmik!** Obejrzyj go tu:",
+            "noDefault": "Nie powiedziałeś mi na którym kanale wysyłać wiadomości oraz nie ustawiłeś domyślnego kanału.",
             "urlPresent": "",
             "noFeed": "",
             "noTube": "",
@@ -398,7 +398,7 @@
             "invalidYoutube": "",
             "listShowRSS": "",
             "listShowTwitch": "",
-            "listShowYoutube": "",
+            "listShowYoutube": "Nowe alerty filmików YouTube dla tego serwera",
             "savedSubLastRSS": "",
             "savedSubLastTwitch": "",
             "savedSubLastYoutube": "",
@@ -449,13 +449,13 @@
             "cmdlist": "LISTA KOMEND",
             "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
             "quick_useful": " Komendy, które mogą okazać się użyteczne",
-            "quick_enjoy": "",
+            "quick_enjoy": "Komendy które mogą uprzyjemnić ci czas",
             "quick_didntask": " Komendy, o które nie prosiłeś(-łaś)",
             "avail_cmd": "Dostępne komendy",
-            "avail_cmdlist": "",
-            "notenough": "",
-            "trythese": "",
-            "curr_info": "",
+            "avail_cmdlist": "Lista komend aktualnie dostępnych i wspieranych\n({{commandcount}}).",
+            "notenough": "Czy te małe pudełko ci nie wystarczy?",
+            "trythese": "Wypróbuj jedno z tych",
+            "curr_info": "Informacje o walucie",
             "currency_overview": "",
             "rubines_desc": "",
             "jades_desc": "",
