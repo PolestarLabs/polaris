@@ -202,7 +202,7 @@
 		"otaco": "Dostępne tylko w następujących językach: [PT-BR]",
 		"pasquale": "Dostępne tylko w następujących językach: [PT-BR]",
 		"ascii": "`{{prefix}}ascii [tekst]`",
-		"cat": "Mrał ",
+		"cat": "Mrał",
 		"morse": "`{{prefix}}morse [tekst]` Powinieneś być na kanale głosowym",
 		"say": "",
 		"saytochannel": "",
