@@ -381,19 +381,19 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
-            "confirmDelete": ""
+            "confirmDelete": "Confirmar exclusão?"
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
+            "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
+            "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
             "urlPresent": "",
-            "noFeed": "",
-            "noTube": "",
-            "noTwitch": "",
-            "stateIDorURL": "",
-            "listRemove": "",
-            "channelUpdate": "",
-            "invalidRSS": "",
+            "noFeed": "Não há Feeds configurados neste Servidor",
+            "noTube": "Não há notificações do YouTube configuradas neste servidor",
+            "noTwitch": "Não há alertas do Twitch configurados neste servidor",
+            "stateIDorURL": "Você esqueceu de me dar um ID ou URL para remover daqui. Verifique `{{prefix}}{{command}} list` se você esqueceu~",
+            "listRemove": "Para remover um, tente `{{prefix}}{{command}} remove [Numero]`",
+            "channelUpdate": "Eu defini o canal padrão de postagem para {{channelID}}!",
+            "invalidRSS": "Ei, este não é um endereço RSS válido! Confere se está fazendo isso certinho.",
             "invalidTwitch": "",
             "invalidYoutube": "",
             "listShowRSS": "",
