@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": ""
+            "clicktoconfirm": "",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Tambah _Role_ sendiri pada Server ini",
         "daily": {
