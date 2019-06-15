@@ -114,7 +114,7 @@
             "cantFindMessageID": "Hmm... To się nie zgadza... ID wiadomości wygląda na niewłaściwe.",
             "cantFindChannel": "Nie mogę znaleźć tego kanału. Spróbuj użyć #kanał, aby się upewnić, że istnieje.",
             "noChannelGiven": "Musisz mi powiedzieć, na którym kanale rejestrować aktywności.",
-            "emojiError": "",
+            "emojiError": "Nie mogłam dodać tego Emoji. Sprawdź permisje reakcji albo czy Emoji jest poprawne...",
             "insuperms": "{{imsorry}}, ale nie mogę tego dla ciebie zrobić, jeżeli nie masz odpowiednich uprawnień.",
             "not-a-NSFW-channel": "Ten kanał nie jest ustawiony na NSFW. Nie zostawiaj swoich \"prac\" wszędzie."
         },
@@ -352,7 +352,7 @@
             "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
             "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**",
             "kissed": "{{user}} całuje {{victim}}~",
-            "kissedSelf": "",
+            "kissedSelf": "{{user}} pocałował samego siebie bo jest taką narcystyczną s*ką~",
             "kissedNone": "{{user}} przesyła całusy~",
             "kissFail": "{{user}} próbował pocałować, ale dostał plaskacza... *auć*."
         },
@@ -396,15 +396,15 @@
             "invalidRSS": "",
             "invalidTwitch": "",
             "invalidYoutube": "",
-            "listShowRSS": "",
-            "listShowTwitch": "",
-            "listShowYoutube": "Nowe alerty filmików YouTube dla tego serwera",
+            "listShowRSS": "Lista kanałów RSS tego Serwera",
+            "listShowTwitch": "Streamy ma Twitchu postowane na tym Serwerze",
+            "listShowYoutube": "Nowe alerty filmików YouTube dla tego Serwera",
             "savedSubLastRSS": "",
             "savedSubLastTwitch": "",
             "savedSubLastYoutube": "",
             "feedLimitRSS": "",
-            "feedLimitTwitch": "",
-            "feedLimitYoutube": "",
+            "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch'u natraz.",
+            "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
             "donateToIncrease": ""
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
@@ -473,7 +473,7 @@
         },
         "coinflip": {
             "coinVictory": "",
-            "coinDefeat": ""
+            "coinDefeat": "{{interjection}} Wygląda na to że przegrałeś... powodzenia następnym razem!"
         },
         "dice": {
             "userRolledSome": "**{{user}}** wyrzucił kostkami:",
