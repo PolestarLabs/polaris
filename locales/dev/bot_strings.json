@@ -384,7 +384,7 @@
             "colorChange": "Your favorite color has been saved!"
         }
     },
-    "interface": {
+    "interface": { 
         "generic": {
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?"
