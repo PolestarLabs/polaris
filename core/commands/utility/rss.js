@@ -7,7 +7,7 @@ const parser = new RSS();
 
 const init = async function (msg){
     
-    let P={lngs:msg.lang,prefix:msg.prefix}
+    const P={lngs:msg.lang,prefix:msg.prefix,command:this.cmd}
     if(gear.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let feedData = await DB.feed.get({server: msg.guild.id});
@@ -18,23 +18,23 @@ const init = async function (msg){
         let str = msg.args[1];
         let destination = msg.channelMentions[0]
         let feed = await parser.parseURL(str).catch(e=>false);
-        if(!feed) return msg.channel.send("Invalid RSS link");
+        if(!feed) return msg.channel.send( $t('interface.feed.invalidRSS',P) );
         channel = destination || feedData.defaultChannel;
         
-        if(!channel) return msg.channel.send("No channel pointed and no default channel set");
+        if(!channel) return msg.channel.send( $t('interface.feed.noDefault',P) );
         
         let payload = {type: "rss", url: str, last: feed.items[0], channel: channel};
 
         if(feedData && feedData.feeds.find(fdd=> fdd.url == str)){
             await DB.feed.set({server:msg.guild.id,'feeds.url':str},{'feeds.$.channel':channel });
-            return msg.channel.send("This link is already present in your feed list. Updating Channel");
+            return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
 
         await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
         let embed = await feedEmbed(feed.items[0],feed);
-        
-        msg.channel.send(gear.emoji("yep"),"Feed Saved - Submitting last post from it to <#"+channel+">");
-        return  msg.guild.channels.find(chn=>chn.id===channel).send( {embed} );        
+        P.channelID = `<#${channel}>`
+        msg.channel.send(gear.emoji("yep"), $t('interface.feed.savedSubLastRSS',P));
+        return  POLLUX.getChannel(channel).send( {embed} );        
         
     }
 
@@ -42,17 +42,17 @@ const init = async function (msg){
 
     // +RSS remove (LINK || index) 
     if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
-        if (!feedData || RSSFiltered.length == 0) return msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) );
+        if (!feedData || RSSFiltered.length == 0) return msg.channel.send( $t('interface.feed.noFeed',P) );
         let target = msg.args[1];
-        if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',"You forgot to give me an ID or URL to remove from here. Check `+rss list` if you forgot them~",P) );
+        if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
         let toDelete = RSSFiltered[target] || feedData.feeds.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
         let embed = new gear.Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
-                Channel: <#${toDelete.channel}>
+                ${$t('terms.discord.channel')}: <#${toDelete.channel}>
                 `;
         let confirm = await msg.channel.send({content:
-            $t('interface.generic.confirmDelete',"Confirm Delete?",P),
+            $t('interface.generic.confirmDelete',P),
             embed});
         YesNo.run(confirm,msg,async (cc)=>{
             await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
@@ -62,21 +62,21 @@ const init = async function (msg){
     if(msg.args[0]=== "list"){        
         if(feedData && RSSFiltered.length > 0){
             msg.channel.send(`
-            **${gear.emoji('todo')+ $t('interface.feed.listShow',"RSS Feed List for this Server",P) }**
+            **${gear.emoji('todo')+ $t('interface.feed.listShowRSS',P) }**
 \u2003${RSSFiltered.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
 
-*${$t('interface.feed.listRemove',"To remove one, just try `+rss remove [# Index]`",P)}*
+*${$t('interface.feed.listRemove',P)}*
 `)
         }else{
-            msg.channel.send( $t('interface.feed.noFeed',"There's no Feeds set up in this channel",P) )
+            msg.channel.send( $t('interface.feed.noFeed',P) )
         }
     }
     // +RSS defaultchannel (#channel) 
     if(msg.args[0]=== "channel"){
         let channel =  msg.channelMentions[0]
         await DB.feed.set({server:msg.guild.id},{$set:{defaultChannel:channel}});
-        P.channel = channel;
-        msg.channel.send( $t('interface.feed.channelUpdate',"Default posting Channel set to <#"+channel+">",P) )
+        P.channelID = `<#${channel}>`;
+        msg.channel.send( rand$t('responses.verbose.interjections.acknowledged',P)+ $t('interface.feed.channelUpdate',P) )
     }
  
 }
