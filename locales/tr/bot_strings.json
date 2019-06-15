@@ -1,13 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubin",
-        "RBN_fullname": "",
+        "RBN_fullname": "Rubin Cevherleri",
         "RBN_plural": "Rubinler",
         "JDE": "Jade",
-        "JDE_fullname": "",
+        "JDE_fullname": "Jadelerin Tozu",
         "JDE_plural": "Jadeler",
         "SPH": "Sapphire",
-        "SPH_fullname": "",
+        "SPH_fullname": "Şapir Parçacıkları",
         "SPH_plural": "Sapphireler",
         "C": "Sıradan",
         "U": "Olağandışı",
@@ -17,12 +17,12 @@
         "lootbox": "Define Sandığı",
         "lootbox_plural": "Define Sandıkları",
         "thevoid": "hiçlik",
-        "evToken": ""
+        "evToken": "Etkinlik Jetonu"
     },
     "terms": {
-        "thanks": "",
-        "thanks_short": "",
-        "thx": "",
+        "thanks": "Teşekkür ederim.",
+        "thanks_short": "tşk",
+        "thx": "$t(terms.thanks_short)",
         "total": "Toplam",
         "amount": "Miktar",
         "overview": "Genel Bakış",
@@ -48,12 +48,12 @@
         "level": "Seviye",
         "levelUp": "Seviye yükseldi!",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
+            "message": "İleti",
+            "message_plural": "İletiler",
+            "reaction": "Tepki",
+            "reaction_plural": "Tepkiler",
             "role": "Rol",
-            "role_plural": "",
+            "role_plural": "Roller",
             "server": "Sunucu",
             "server_plural": "Sunucu",
             "member": "Üye",
@@ -101,27 +101,27 @@
             "chooseAmod": "Bir modül seç, lütfen.",
             "kinNone": "Kimi atacağımı söylemen lazım. Tabii ki, onun yerine seni de atabilirim.",
             "kin404": "O kişiyi bulamıyorum. Gerçekten çıktı mı? Belki de hayâllerimizin bir parçasıdır.",
-            "unmutable": "",
+            "unmutable": "Sen ne dersen de ben bu kişiyi susturmayacağım.",
             "unperm": "Bunu yapmak için iznim yok. Bir şey yapmamı istemeden gereken izinleri vermelisin belki de.",
             "noRoleHere": "Görünüşe göre bahsettiğin rol listede yok. Bana rolü düzgünce söylediğinden emin ol.",
             "noRolesGiven": "Hiç bi' rolden bahsetmedin, doğru yaptığından emin misin?",
             "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
-            "nosuchrole": "",
+            "nosuchrole": "Şey, bu rolü bulamadım, rolün ismini harfi harfine yaz, lütfen.",
             "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
             "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
-            "cantFindMessageID": "",
+            "cantFindMessageID": "Hımmm... Bu doğru değil... Bu iletinin ID'si geçersiz gibi gözüküyor.",
             "cantFindChannel": "Görünüşe göre o kanalı bulamıyorum. #channel kullanmayı dene de olup olmadığına bi' bak.",
             "noChannelGiven": "Aktiviteleri hangi kanala kayıt etmemi söylemen lazım.",
-            "emojiError": "",
+            "emojiError": "Bu Emoji'yi ekleyemedim. Tepki izinlerini ya da Emojilerin açık olup olmadığını kontrol et...",
             "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
             "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
         },
         "warnings": {
-            "translationTexTooLong": "",
-            "open1": "",
-            "open2": "",
+            "translationTexTooLong": ":warning: **Hop! Çeviri metni __1000 Karakteri__ geçemez\nAma dert etme. Senin için metni ayırdım~",
+            "open1": "Pardon, açmak geçişli bir fiil, bu da demek oluyor ki bana neyi açmam gerektiğini söylemelisin~ Şu seçeneklerden birini dene:",
+            "open2": "Kusura bakma ama bu açabileceğim (ya da açmak isteyeceğim) bir şey değil. Ama eminim ki sana şunlardan birini açabilirim: ",
             "timesOutIn": "Bu, {{s}} saniye boyunca timeout atacak",
             "enterVoiceBetterExperience": "Tam deneyim için bir ses kanalında olman ~lâzım~."
         },
@@ -351,26 +351,26 @@
             "decon2": "{{user}} {{user2}} adlı kullanıcıyı arındırıyor.",
             "cancer": "{{user}} Bu kanalın kanser seviyesini ölçüyor.",
             "geiger": ":radioactive: Geiger sayacına göre bu kanalın kanser potansiyeli **%{{percentage}}** **{{radiation}}μSv/h** ile birlikte ",
-            "kissed": "",
-            "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissed": "{{user}} {{victim}} kullanıcısını öptü~",
+            "kissedSelf": "{{user}} Narsist bir or*spu olduğundan kendisini öptü~",
+            "kissedNone": "{{user}} Öpücüklerini yolluyor~",
+            "kissFail": "{{user}} Öpmeye çalıştı ama, onun yerine, yüzüne tokadı yedi... *ov*."
         },
         "commend": {
-            "noSelf": "",
-            "give": "",
-            "totals": "",
-            "topcom": "",
-            "cooldown": "",
-            "check_no": "",
-            "check_yes": "",
-            "noItem": "",
+            "noSelf": "Hayır, Sana kendini övdürtemem. Bunu yaptığın için kendinden utanmalısın!",
+            "give": "**{{author}}** bu vesileyle **{{target}}** kullanıcısını bir Jeton karşılığında övdü.",
+            "totals": "{{target}} şu ana kadar **{{cmcount}} kere** **{{pplcount}} farklı kişi** tarafından övüldü.",
+            "topcom": "{{target}} kullanıcısını en çok öven kişiler:",
+            "cooldown": "Hâli hazırda övgünü kullandın, {{remaining}} içerisinde yeniden dene.",
+            "check_no": "Sıradaki övgün {{remaining}} içerisinde yapılabilir.",
+            "check_yes": "Jetonun varsa şu anda yeniden övebilirsin!",
+            "noItem": "Övgü Jetonun olması lâzım, ve sende yok. Birilerini övebilmek için onlara ihtiyacın var.",
             "commendationLimit": ""
         },
         "crafting": {
-            "noitem": "",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "noitem": "Bu eşyayı bulamadım",
+            "didyoumean": "Bu eşyayı bulamadım. Bunlardan birini demek istemiş olabilirsin, belki?",
+            "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?"
         },
         "misc": {
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla."
+            "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Bu sunucu için kendinden atanılabilir roller",
         "daily": {
@@ -404,39 +429,39 @@
 
         },
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
-            "noReactionDel": "",
-            "success": ""
+            "reactrolesfor": "{{server}} Sunucusundaki Tepki Rolleri",
+            "removeAll": "Tepki Girişlerinin hepsini buradan yok ettim. Ama iletilerdeki tepkileri kendi ellerinle temizlemen gerekecek.",
+            "removed": "Bu tepki kaldırıldı~",
+            "noroleshere": "Bu sunucuda Tepki Rolü yok.",
+            "removedAllFrom": "{{ID}} mesajından tüm tepkileri yok ettim~",
+            "noReactionDel": "Tepki Rolü silmek için “{{prefix}}reactionroles del [Mesaj ID'si] [EMOJI]” kullan. İletiden tüm Tepkileri silmek istiyorsan “EMOJİ”yi de kaldırabilirsin~",
+            "success": "Tepki Rolleri bu mesajda görülecek:"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
-            "ichoose": ""
+            "picking": "Seçiyorum... {{as in 'picking from a list'}}",
+            "complete": "Tamam!",
+            "lessthan2": "İçinden seçebileceğim en az iki şey olması lâzım...",
+            "ichoose": "**{{list_item}}** Seçiyorum!"
         },
         "help": {
-            "greetings": "",
-            "basics": "",
-            "cmdlist": "",
-            "quick_getgo": "",
-            "quick_useful": "",
-            "quick_enjoy": "",
-            "quick_didntask": "",
+            "greetings": "\n**Esenlikler diliyorum! Ben Pollux. Sunucunuza atanan yeni hizmetkârınız.**\nBuyurun size yeteneklerimin kısa bir açıklaması:\n\n  •Varsayılan Prefix: “+”dır, “+prefix <New Prefix>” yaparak değiştirebilirsin. \n      Küresel Prefix “p!”dir, Özgün Prefixini bilmeyen kullanıcılar için yararlıdır, **Dashboard**'da devre dışı bırakılabilir. \n      Evrensel Prefix “plx!”dir ve devre dışı bırakılamaz.\n",
+            "basics": "\n **Temeller** - Bana alışmak prototip hızlandırıcı kurmak kadar kolaydır! ... bir dakika, hiç kurmadın mı? Kafana takma!\n Bunlar {{commandcount}} sahip olduğum komutlardan sadece birazı!\n  ",
+            "cmdlist": "KOMUT LİSTESİ",
+            "quick_getgo": "Başlamak için bilmen gereken komutlar",
+            "quick_useful": " Kullanışlı bulabileceğin komutlar",
+            "quick_enjoy": "Uğraşmaktan zevk alabileceğin komutlar",
+            "quick_didntask": " İhtiyacın olmayan komutlar",
             "avail_cmd": "Kullanılabilir komutlar",
-            "avail_cmdlist": "",
-            "notenough": "",
-            "trythese": "",
-            "curr_info": "",
-            "currency_overview": "",
-            "rubines_desc": "",
-            "jades_desc": "",
-            "sapphires_desc": "",
-            "lootboxes_desc": "",
-            "end": ""
+            "avail_cmdlist": "Şu anda mevcut olan ve desteklenen komutların listesi ({{commandcount}}).",
+            "notenough": "Bu kutucuk yeterli değil mi?",
+            "trythese": "Şunlardan birini dene",
+            "curr_info": "Döviz Malumatı",
+            "currency_overview": "Döviz sistemim nispeten karmaşık ve çok sayıda limit ve koruyucu özellikleri var. Her işlem, işlenir ve izi kolayca sürülebilirdir, Bu, sıkı çalışmanın cambazlar tarafından gölgede bırakılmadığından emin olmamızı sağlar. Her gün 30 binden fazla işlem işliyoruz.   \n        \n    • Herkes biraz **Jade**, **Rubin** ve bir de **Define Sandığı** ile başlar\n",
+            "rubines_desc": "\n*Ana dövizim, açık-pembe mücevher taşları hemen hemen her şey için kullanılan özel altıgensel Al₂O₃:Cr scalenohedronların’dan oluşur!*\n        Günlük Ödüllerden (`daily`), Define Sandıklarından (`+box`) ve Kumar Oyunlarından (`+blackjack`, `+slots`, vb.) elde edilebilir. Beşinci seviyeye ulaşıp en az 10-günlük-ödül-serin olunca takaslardan da elde edebilirsin.\n",
+            "jades_desc": " *“Döviz” üretirken, özel eşyaları hazırlamak amacıyla bu soluk-mavisi mücevherleri -aksi takdirde değersiz- kullanıyorum sırf senin için!*\n        Define Sandıklarından, eşya yok ederek, bağış yapmakla, ya da satın almakla elde edilebilir.",
+            "sapphires_desc": "*Seçkin döviz, en kaliteli Şapir Mücevherlerinin koyu-mavi parçaları, özel eşyaları üretmek için ya da özel şeyleri almak için para birimi olarak kullanılır.*\n        Sadece bağış yaparak, satın alarak, ve özel etkinliklerden elde edilebilir. Her 200. ve 365. günlüklerinde Beleş Şapir kazanırsın, ve Ultra Nadir Define Sandıklarından %0.1 şansla düşürebilirsin.",
+            "lootboxes_desc": "*Arkaplan, Madalyon, Rubin ve Sticker Booster gibi birçok ganimetler bulunduran özel kutular*\n        Sadece seviye atlayarak ya da rastgele droplardan elde edilebilir. Droplar sohbet etkinliğine bağlı olarak olur.\n\n         **`⚠ Define Sandığı düşürmek için Kasten Spam yapmak, hile yapmak ya da alt hesaplarınla eşya değiş-tokuşu yapmak seni Polluxtan ve diğer botlardan bonlayacaktır.**\n",
+            "end": "\n**Komutların tam listesi <https://pollux.gg/commands> adresine bulunabilir.**\n\n**<https://pollux.gg/partners>** Adresinde Partnerlerimize göz atın\n**<https://pollux.gg/fanart>** Adresinde fan artlarınızı göster ya da gönder\n**<https://pollux.gg/profile/me>** Adresinde Herkese açık profilini bak\n\n**Kozmetikler**\nArkaplan Dükkânı **https://pollux.gg/bgshop**\nMadalyon Dükkânı **https://pollux.gg/medalshop**\nÜretim Atölyesi **https://pollux.gg/crafting**\nKanlı canlı Stickerlar **<https://pollux.gg/stickers>** (Gerçek Hayat Stickerları için Destek Sunucumuza göz atın)\nEtkinlik Malumatı **<https://pollux.gg/events>**\n\nBeni **<https://patreon.com/Pollux>** ya da **<https://pollux.gg/donate>** adreslerinden destekle\nBeni Twitterdan takip et **<https://twitter.com/maidPollux>**\n\n\n---\n\n**Başka herhangi bir şey için, __Dashboard__'a göz at: <https://pollux.gg/dashboard>**\nYa da destek sunucuma katıl: **​ https://discord.gg/rEBCccS ​**\n**<https://pollux.gg/invite>** Adresinde beni sunucuna davet et\n"
         }
     },
     "games": {
@@ -447,8 +472,8 @@
             "noGuess": "{{interjectionB}} görünüşe göre kimse bilemedi... Bir sonraki sefere artık!"
         },
         "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
+            "coinVictory": "{{interjection}} Kazandın! **{{prize}}** elde ettin $t(keywords.{{currency}}_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} Kaybettin gibi gözüküyor... bir sonraki sefere artık!"
         },
         "dice": {
             "userRolledSome": "**{{user}}** zar attı:",
@@ -456,11 +481,11 @@
             "neutralRolled": "**`{{numDice}}`** atıyor...",
             "andGot": "ve ödül olarak **{{val}}** kazandı!",
             "rollsWere": "Çekilenler bunlardı:",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
+            "invalidRoll": "Geçersiz Atış Eşiği -- Sadece zar atılacak!",
+            "onlyRoll5": "Tek seferde sadece 5 farklı zar atabilirsin!",
+            "limit25": "Zar serisi 25 atışa kadar gösterilebilir.",
+            "noDiceRolled": "Bekle, atabileceğim zar yok, ne yaptığından emin değilsen `{{prefix}}roll help` kullan~",
+            "exceedLim": "Bu Atış Karakter Limitlerini aşıyor, atış değerlerini yok saymak için `-nostreak` kullanmayı dene"
         },
         "blackjack": {
             "ongoing": "Başka bir oyuna başlamadan önce oynadığını bitir.",
