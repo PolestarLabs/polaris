@@ -405,7 +405,7 @@
             "feedLimitRSS": "",
             "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch'u natraz.",
             "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
-            "donateToIncrease": ""
+            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu rozważ [Donating]({{donationLink}}) lub [applying for Pollux Partnership]({{partnershipLink}})"
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
         "daily": {
