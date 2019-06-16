@@ -392,7 +392,7 @@
             "noTwitch": "Alerty Twitch'a nie są ustawione dla tego Serwera",
             "stateIDorURL": "Zapomniałeś podać mi ID lub URL do usunięcia stąd. Sprawdź `{{prefix}}{{command}} list` jeśli je zapomniałeś~",
             "listRemove": "",
-            "channelUpdate": "",
+            "channelUpdate": "Ustawiłam domyślny kanał postowania na {{channelID}}!",
             "invalidRSS": "Hej, to nie jest prawidłwy adres RSS! Upewnij się że robisz to dobrze.",
             "invalidTwitch": "",
             "invalidYoutube": "Um, to nie wygląda jak kanał YouTube. Przynajmniej na pewno nie jeden z tych które znam...",
@@ -459,7 +459,7 @@
             "currency_overview": "",
             "rubines_desc": "",
             "jades_desc": "",
-            "sapphires_desc": "",
+            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyty za wpłaty, może być kupiony lub otrzymany za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
             "lootboxes_desc": "",
             "end": "\n**Kompletna lista Komend dostępna jest na <https://pollux.gg/commands>**\n\nObejrzyj naszych Partnerów na **<https://pollux.gg/partners>**\nZobacz lub prześlij arty stworzone przez fanów na **<https://pollux.gg/fanart>**\nZobacz swój publiczny profil na **<https://pollux.gg/profile/me>**\n\n**Dodatki**\nSklep z tłami **<https://pollux.gg/bgshop>**\nSklep z medalami **<https://pollux.gg/medalshop>**\nTworzenie przedmiotów **<https://pollux.gg/crafting>**\nWirtualne nalepki **<https://pollux.gg/stickers>** (Aby zdobyć prawdziwe naklejki wejdź na Serwer Support'u)\nInformacje o Event'ach **<https://pollux.gg/events>**\n\nWesprzyj mnie na **<https://patreon.com/Pollux>** lub **<https://pollux.gg/donate>**\nŚledź mnie na Twitterze **<https://twitter.com/maidPollux>**\n\n---\n\n**Dla czegokolwiek innego zobacz __Dashboard__:\n<https://pollux.gg/dashboard>**\nLub dołącz na serwer support'u: **<https://discord.gf/rEBCccS>**\nZaproś mnie na swój serwer pod adresem **<https://pollux.gg/invite>**\n"
         }
@@ -472,7 +472,7 @@
             "noGuess": "{{interjectionB}} Wygląda na to, że nikt tego nie zgadł... Więcej szczęścia następnym razem!"
         },
         "coinflip": {
-            "coinVictory": "",
+            "coinVictory": "{{interjection}} Wygrałeś! Zdobyłeś **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
             "coinDefeat": "{{interjection}} Wygląda na to że przegrałeś... powodzenia następnym razem!"
         },
         "dice": {
