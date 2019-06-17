@@ -13,23 +13,23 @@
       "timeout2": "",
       "cancel": "Hm? Nic? Cóż, wiesz gdzie mnie znaleźć.",
       "greet": "Pozdrowienia. Wygląda na to że twoja obsesja na temat śmierci doprowadziła cię do mnie. Jak... *słodko*, Powinnam powiedzieć...\nCóż, jesteś we właściwym miejscu! Mogę ci zaoferować cały wachlarz różnych rzeczy. Tak samo jak ty jesteś fanatykiem martwych ciał, ja jestem fanatyczką słodyczy! Przynieś mi wszystkie jakie masz!\n\n**Tak z innej beczki**, mój napój to sok pomidorowy. Skończ się tak na mnie gapić!",
-      "list": ""
+      "list": "**Szkatułki**\nZawierają najstraszniejsze części garderiby do użycia jako ultra straszny kostium, strasz ludzi dookoła a dadzą ci więcej słodyczy!\n**Lalka-Wabik**\nPrzeklęty artefakt który będzie chodził dookoła i spowoduje że sąsiedzi zapomną że u nich byłeś przed chwilą. Użyj tego aby ominąć 6-godzinny cooldown od straszenia.\n**Tokeny Event'owe**\nDawaj je te głupiej robotycznej dziewczyny z którą spędzasz czas. Wymieni się z tobą za dekoracje."
     },
     "spook": {
       "advisor": "Hej! Nie możesz straszyć dookoła tak ubrany. Idź i zdobądź jakiś lepszy strój!",
       "spookintro": "Próbowałeś straszyć dookoła swoim kostiumem...",
       "BOO": "**BUU!**",
       "followup": "To było zaiste strasznw. Zdobyleś **{{count}} Cukierków** za taką straszność~\n\n*Ale twój kostium traci Siłę strachu za to że jest już rozpoznawalny w sąsiedztwie.*",
-      "cooldown": "",
-      "cooldown_alt": ""
+      "cooldown": "Sąsiedzi ciągle są zaskoczeni po twojej ostatniej \"wizycie\"... zaczekaj {{Xhours}} zanim zjawisz się tu ponownie!",
+      "cooldown_alt": "Sąsiedzi ciągle są zaskoczeni po twojej ostatniej \"wizycie\"... zaczekaj {{Xhours}} zanim zjawisz się tu ponownie, lub kup **lalkę-wabik** od **Strażnika Grobu**!"
     },
     "dig": {
       "shovel": "Łopata",
-      "needShovel": "",
-      "shovelbroke": "",
-      "cooldown": "",
+      "needShovel": "Potrzebujesz {{SHOVEL_LINK}} aby kopać! Znajdź sobie jakąś!",
+      "shovelbroke": "Uderzyłeś skałę tak mocno swoją Łopatą że rozpadła się na części...",
+      "cooldown": "Cmentarzysko drzemie...\nNie ma tu nic do wykopania przez następne {{Xtime}}.",
       "lastTomb": "Ostatnie kopanie grobów:",
-      "moreTombs": ""
+      "moreTombs": "Więcej kopania dostępne {{inXhours_xHousAgo}}"
     },
     "tradeExamples": "",
     "keywords": {
@@ -40,12 +40,12 @@
     },
     "wardrobe": {
       "confirmSave": "",
-      "confirmSave2": "",
-      "mementoExists": "",
-      "mementoDamaged": "",
+      "confirmSave2": "Te ubranie zostało zapisane w twojej kolekcji pamiątkowej! Zobacz swój postęp za pomocą `{{prefix}}memento`",
+      "mementoExists": "Już masz ten przedmiot w swojej pamiątkowej kolekcji. One muszą być unikatowe!",
+      "mementoDamaged": "Te ubranie jest mocno uszkodzone! nie możesz go przechowywać w ten sposób...",
       "brief": "",
       "spookyWardrobe": "Straszna Szafa {{user.tag}}",
-      "garments": ""
+      "garments": "Ubranie z twojego ekwipunku"
     },
     "caskets": {
       "tooManyGar": "",
