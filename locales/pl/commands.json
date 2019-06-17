@@ -132,7 +132,7 @@
 		"reactionroles": "Dotknij aby otrzymać rolę. Życie nigdy nie było tak łatwe!"
 	},
 	"usage": {
-		"reactionroles": "",
+		"reactionroles": "`{{prefix}}reactionroles [add|del|list|clear] [#kanał] [ID Wiadomości] [EMOJI] [Role Name | @Role]`\nDosyć rozszerzalna komenda, racja? Rozłóżmy ją:\n\nAby dodać nową Rolę za Reakcję do wiadomości:\n`{{prefix}}reactionroles add #kanał ID_WIADOMOŚCI :emoji: Moja Niesamowita Rola`\n\nAby usunąć jedną lub wszystkie dowiązania z wiadomości:\n`{{prefix}}reactionroles del ID_WIADOMOŚCI :emoji:` Dla jednej pary emoji/rola\n`{{prefix}}reactionrole del ID_WIADOMOŚCI` Dla wszystkich emoji powiązanych z tą Wiadomością\n\nMożesz zobaczyć wszystkie powiązania Wiadomość/Rola/Reakcja przy pomocy\n`{{prefix}}reactionroles list`\n\nMożesz usunąć całość używając `{{prefix}}reactionroles clear`\n\nWymaga od użytkownika posiadania uprawnień \"ZARZĄDZANIE SERWEREM\" lub \"ZARZĄDZANIE ROLAMI\", albo Roli Moderatorskiej ustawionej w Panelu Pollux'a",
 		"brackets": "",
 		"choose": "",
 		"rpgen": "",
@@ -189,7 +189,7 @@
 		"equip": "`{{prefix}}equip`\nA następnie kliknij reakcje, aby nawigować, pamiętaj, aby załadować je przed kliknięciem",
 		"fausto": "{{prefix}}faustão`\nWymaga uprawnień do ZARZĄDZANIA WEBHOOKAMI do działania.",
 		"favcolor": "{{prefix}}favcolor #FF0000`",
-		"feats": "",
+		"feats": "`{{prefix}}feats`",
 		"shop": "`{{prefix}}shop`",
 		"fortunecookie": "{{prefix}} fortunecookie` (to polecenie ma pewne problemy)",
 		"menu": "[Przerwano]",
@@ -261,7 +261,7 @@
 		"forfun": "4Fun",
 		"memes": "Memy",
 		"gambling": "Hazard",
-		"infra": "",
+		"infra": "Infra",
 		"misc": "Różne",
 		"util": "Użyteczność",
 		"music": "Muzyka"
