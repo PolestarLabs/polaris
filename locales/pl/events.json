@@ -6,7 +6,7 @@
       "acToken": "",
       "noCashR": "",
       "noCashC": "",
-      "howMany": "",
+      "howMany": "Więc, ile ich chcesz?",
       "completeC": "",
       "completeR": "Nieźle. Jestem pewna że kiedyś znajdę zastosowanie dla tych kryształów. Teraz wróć do swojego wymiaru i baw się dobrze!",
       "timeout": "",
@@ -16,10 +16,10 @@
       "list": ""
     },
     "spook": {
-      "advisor": "",
-      "spookintro": "",
+      "advisor": "Hej! Nie możesz straszyć dookoła tak ubrany. Idź i zdobądź jakiś lepszy strój!",
+      "spookintro": "Próbowałeś straszyć dookoła swoim kostiumem...",
       "BOO": "**BUU!**",
-      "followup": "",
+      "followup": "To było zaiste strasznw. Zdobyleś **{{count}} Cukierków** za taką straszność~\n\n*Ale twój kostium traci Siłę strachu za to że jest już rozpoznawalny w sąsiedztwie.*",
       "cooldown": "",
       "cooldown_alt": ""
     },
@@ -33,10 +33,10 @@
     },
     "tradeExamples": "",
     "keywords": {
-      "spook": "",
+      "spook": "Strach",
       "candy": "Cukierek",
       "candy_plural": "Cukierek",
-      "spookPowa": ""
+      "spookPowa": "Siła Strachu"
     },
     "wardrobe": {
       "confirmSave": "",
@@ -44,7 +44,7 @@
       "mementoExists": "",
       "mementoDamaged": "",
       "brief": "",
-      "spookyWardrobe": "",
+      "spookyWardrobe": "Straszna Szafa {{user.tag}}",
       "garments": ""
     },
     "caskets": {
@@ -258,7 +258,7 @@
       "Weź je i ćśśśśśś",
       "Weź je i odejdź sobie",
       "Będziesz moją walen- kur*e, chwila, nie te święta",
-      "",
+      "Wybacz że nie mogę być tam osobiście, ale tutaj masz token mojej wdzięczności",
       "",
       "Poi!"
     ]
