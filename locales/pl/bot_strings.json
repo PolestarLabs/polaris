@@ -399,10 +399,10 @@
             "listShowRSS": "Lista kanałów RSS tego Serwera",
             "listShowTwitch": "Streamy ma Twitchu postowane na tym Serwerze",
             "listShowYoutube": "Nowe alerty filmików YouTube dla tego Serwera",
-            "savedSubLastRSS": "",
-            "savedSubLastTwitch": "",
-            "savedSubLastYoutube": "",
-            "feedLimitRSS": "",
+            "savedSubLastRSS": "**Zapisano**! - Wysyłam najnowsze Posty z Źródła na {{channelID}}.\nNastępne wpisy będą sprawdzane co **30 minut**",
+            "savedSubLastTwitch": "**Zapisano**! - Powiadomienie będzie wysyłane na {{channelID}} kiedy ten kanał będzie nadawał na żywo. Sprawdzane co **15 minut**",
+            "savedSubLastYoutube": "**Zapisano**! - Wysyłanie najnowszych filmików z tego kanału na {{channelID}}.\nSprawdzane co **godzinę**",
+            "feedLimitRSS": "Ten serwer może mieć tylko **5** kanałów RSS naraz.",
             "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch'u natraz.",
             "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
             "donateToIncrease": "Jeśli potrzebujesz wyższego limitu rozważ [Donating]({{donationLink}}) lub [applying for Pollux Partnership]({{partnershipLink}})"
@@ -456,11 +456,11 @@
             "notenough": "Czy te małe pudełko ci nie wystarczy?",
             "trythese": "Wypróbuj jedno z tych",
             "curr_info": "Informacje o walucie",
-            "currency_overview": "",
+            "currency_overview": "Mój system pieniężny jest dosyć zwarty i ma kilka ograniczeń i funkcji zabezpieczających. Każda transakcja jest zapisywana i może być łatwo namierzona, co oznacza że twoja ciężka praca nie zostanie przyćmiona przez oszustów. Zapisujemy ponad 30 tysięcy transakcji każdego dnia.   \n        \n    • Każdy zaczyna z jakąś ilością **Żadów** i **Rubinów**, oraz z jedną **Skrzynką**.\n",
             "rubines_desc": "",
             "jades_desc": "",
             "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyty za wpłaty, może być kupiony lub otrzymany za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
-            "lootboxes_desc": "",
+            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach też.`** \n",
             "end": "\n**Kompletna lista Komend dostępna jest na <https://pollux.gg/commands>**\n\nObejrzyj naszych Partnerów na **<https://pollux.gg/partners>**\nZobacz lub prześlij arty stworzone przez fanów na **<https://pollux.gg/fanart>**\nZobacz swój publiczny profil na **<https://pollux.gg/profile/me>**\n\n**Dodatki**\nSklep z tłami **<https://pollux.gg/bgshop>**\nSklep z medalami **<https://pollux.gg/medalshop>**\nTworzenie przedmiotów **<https://pollux.gg/crafting>**\nWirtualne nalepki **<https://pollux.gg/stickers>** (Aby zdobyć prawdziwe naklejki wejdź na Serwer Support'u)\nInformacje o Event'ach **<https://pollux.gg/events>**\n\nWesprzyj mnie na **<https://patreon.com/Pollux>** lub **<https://pollux.gg/donate>**\nŚledź mnie na Twitterze **<https://twitter.com/maidPollux>**\n\n---\n\n**Dla czegokolwiek innego zobacz __Dashboard__:\n<https://pollux.gg/dashboard>**\nLub dołącz na serwer support'u: **<https://discord.gf/rEBCccS>**\nZaproś mnie na swój serwer pod adresem **<https://pollux.gg/invite>**\n"
         }
     },
