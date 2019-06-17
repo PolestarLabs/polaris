@@ -6,7 +6,11 @@ const cfg = require(appRoot+"/config.json")
 const g = require( '../utilities/Gearbox');
 const DB = require( '../database/db_ops');
 let RSS = require('rss-parser');
-let parser = new RSS();
+let parser = new RSS({
+  customFields:{
+    item: [['media:group','media']]
+  }
+});
 
 const userDB = DB.users
 
@@ -138,39 +142,14 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 },null,true);
 
 
-const ONEhour = new CronJob('* */1 * * *', async () => {
+const ONEhour = new CronJob('* * * * *', async () => {
 
-
-
-  (async ()=>{
-    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
-      serverFeeds.forEach(async svFd => {
-        const serverData = await DB.servers.get(svFd.server);
-        svFd.feeds.forEach(async feed => {          
-          if (feed.type === 'youtube'){
-            const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
-            const data = await  getYTData(feed.url,cfg.google);
-            if (data && data.items[0] && ((feed.last||{}).id||{}).videoId != (data.items[0].id||{}).videoId ) {
-              const embed = await ytEmbedCreate(data.items[0],null);
-              const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
-              P.tuber = embed.author.name;
-              let LastVideoLink = `
-              ${$t("interface.feed.newYoutube",`**${P.tuber} has posted a new video!** Check it out at:`,P)}
-              https://youtube.com/watch?v=${data.items[0].id.videoId}`
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });        
-              POLLUX.getChannel(feed.channel).send( {content:LastVideoLink}).then(m=>m.channel.send({embed}));
-            }
-          }
-        })
-      })
-    })    
-  })()
-
+ 
 
 });
 
 
-const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/10 * * * *', async () => {
 
 
   (async ()=>{
@@ -216,16 +195,35 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
                         embed.image(StreamData.thumbnail_url.replace('{width}','400').replace('{height}','240'));
                         embed.timestamp(StreamData.started_at);
                         embed.color("#6441A4");
-                  const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamerName: streamer.display_name };   
+                  const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
+                  const ping = thisFeed.pings || svFd.pings || '';
                   await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData});
                   POLLUX.getChannel(thisFeed.channel).send({
-                    content : $t('interface.feed.newTwitchStatus',`**${P.streamerName}** is Live now!`,P )+` <https://twitch.tv/${streamer.login}>`
+                    content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
                     ,embed
                   });
                 });
               }
             });
           } 
+          if (feed.type === 'youtube'){
+            const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
+            //const data = await  getYTData(feed.url,cfg.google);
+            const data = await parser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+feed.url)
+            if (data && data.items[0] && feed.last.link !== data.items[0].link  ) {
+              const embed = await ytEmbedCreate(data.items[0],data);
+              const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
+              P.tuber =data.items[0].author;
+              let LastVideoLink = `
+              ${$t("interface.feed.newYoutube",P)}
+              ${data.items[0].link}`
+              data.items[0].media = null;
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });        
+              const ping = thisFeed.pings || svFd.pings || '';
+              POLLUX.getChannel(feed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}));
+            }
+          }
+
         })
       })
     })    

@@ -391,6 +391,7 @@
         },
         "feed":{
             "newYoutube": "**{{tuber}} has posted a new video!** Check it out at:",
+            "newTwitchStatus": "**{{streamer}}** is live now!",
             "noDefault": "You didn't tell me which channel to post to and there's no default channel set either.",
             "urlPresent": "I am already watching posts from this one, I'm just going to update the destination channel instead~",
             "noFeed"  : "There are no Feeds set up in this Server",
