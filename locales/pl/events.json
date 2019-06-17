@@ -49,10 +49,10 @@
     },
     "caskets": {
       "tooManyGar": "Możesz mieć tylko 12 części garderoby na raz! Sprzedaj lub zniszcz jedno z twoich ubrań.",
-      "gotCasket": "",
-      "noCasket": "",
-      "hasCask": "",
-      "hasCask_plural": "",
+      "gotCasket": "Wykopałeś **1 Szkatułkę!** Następna Szkatułka będzie dostępna za 6 godzin!",
+      "noCasket": "Nie masz Szkatułek do otwarcia... Idź jakieś wykopać!",
+      "hasCask": "Masz **{{count}} Szkatułkę** na swoim podwórku.",
+      "hasCask_plural": "Masz **{{count}} Szkatułek** na swoim podwórku.",
       "commentary": [
         " . . . wygląda na coś rozmiaru dziecka . . .",
         "Tak ogólnie to mam nadzieję że to jest sos pomidorowy.",
@@ -61,7 +61,7 @@
         "STRASZNE SZKIELETY, POSYŁAJĄ DRESZCZE PO TWOICH PLECACH",
         "Jak długo po ich śmierci trzeba zaczekać żeby zamiast okradania grobów nazwać to archeologią?",
         "Oh, to takie słodkie! Pamiętam jak to wisiało na stojaku parę miesięcy temu!",
-        "",
+        "Nie twierdzę że duchy istnieją, ale określam to 'ektoplazmowa maź'.",
         "No i myślę że przypadkiem zabrałeś część czyjegoś ramienia.",
         "Chwilka... Słyszałeś to?",
         "Byłoby mi miło gdyby ktoś potrzymał moja rękę na strasznym cmentarzu. *Kaszlnięcie*.",
@@ -74,7 +74,7 @@
         "onenot": "Bo jeden nigdy nie wystarcza.",
         "oly": "Oh, przepraszam, nie domyśliłam się że jesteśmy w środku zawodów *\"Kto ma najwięcej martwych rzeczy\"**"
       },
-      "openintro": ""
+      "openintro": "**{{user}}** otworzył szkatułkę...\nA w środku było:"
     }
   },
   "halloween17": {
@@ -240,7 +240,7 @@
     "prizecontents": "",
     "prizecontents2": "",
     "prizephrases": [
-      "",
+      "masz to, dobła robota",
       "Obudź mnie w środku",
       "Niebezpiecznie jest chodzić samemu, weź to",
       "Dzięki dzieciaku! Nie wydaj wszystkiego naraz",
@@ -259,7 +259,7 @@
       "Weź je i odejdź sobie",
       "Będziesz moją walen- kur*e, chwila, nie te święta",
       "Wybacz że nie mogę być tam osobiście, ale tutaj masz token mojej wdzięczności",
-      "",
+      "Słodziaku, nie wiem kto ci powiedział że naklejka jest dołączana do tła, ale masz, trochę sezonowych błyskotek.",
       "Poi!"
     ]
   },
