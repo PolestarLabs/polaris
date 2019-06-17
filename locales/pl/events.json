@@ -3,14 +3,14 @@
     "noctix": {
       "acCask": "Hehe. Jak zdobyłeś pierwszą rzecz to już nie umiesz się powstrzymać, hę? Więc co dasz mi w zamian za tą **Szkatułę**?",
       "acDoll": "Oh, przebieglutki~ Ta lalka będzie automatycznie kręcić się w pobliżu tak długo jak mi płacisz, jak zamierzasz uregulować opłatę?",
-      "acToken": "",
+      "acToken": "Tokeny, tokeny za głupią puszkę z cyckami. Wszyscy myślicie tylko o tym jednym. Dobrze, co mi za to dasz?",
       "noCashR": "Widzisz, te czerwone kryształy nic dla mnie nie znaczą, ale... to nie znaczy że dam ci przecenę!",
       "noCashC": "Nie umiem załatwiać biznesów na głodniaka, musisz przynieść mi więcej słodyczy jeśli chcesz ten interes!",
       "howMany": "Więc ile ich chcesz?",
       "completeC": "Mniam! Bardzo dobrze, dziękuję za słodycze. A teraz wróc do swego wymiaru i baw się dobrze!",
       "completeR": "Nieźle. Jestem pewna że kiedyś znajdę zastosowanie dla tych kryształów. Teraz wróć do swojego wymiaru i baw się dobrze!",
       "timeout": "Um, jeśli nic nie robisz... moglibyśmy wrócić do naszego świata?",
-      "timeout2": "",
+      "timeout2": "Zamknij się blaszany łbie! Pozwól pomyśleć twojemu mistrzowi!\nChwila... Wy dwaj, dokąd idziecie?",
       "cancel": "Hm? Nic? Cóż, wiesz gdzie mnie znaleźć.",
       "greet": "Pozdrowienia. Wygląda na to że twoja obsesja na temat śmierci doprowadziła cię do mnie. Jak... *słodko*, Powinnam powiedzieć...\nCóż, jesteś we właściwym miejscu! Mogę ci zaoferować cały wachlarz różnych rzeczy. Tak samo jak ty jesteś fanatykiem martwych ciał, ja jestem fanatyczką słodyczy! Przynieś mi wszystkie jakie masz!\n\n**Tak z innej beczki**, mój napój to sok pomidorowy. Skończ się tak na mnie gapić!",
       "list": "**Szkatułki**\nZawierają najstraszniejsze części garderiby do użycia jako ultra straszny kostium, strasz ludzi dookoła a dadzą ci więcej słodyczy!\n**Lalka-Wabik**\nPrzeklęty artefakt który będzie chodził dookoła i spowoduje że sąsiedzi zapomną że u nich byłeś przed chwilą. Użyj tego aby ominąć 6-godzinny cooldown od straszenia.\n**Tokeny Event'owe**\nDawaj je te głupiej robotycznej dziewczyny z którą spędzasz czas. Wymieni się z tobą za dekoracje."
@@ -31,7 +31,7 @@
       "lastTomb": "Ostatnie kopanie grobów:",
       "moreTombs": "Więcej kopania dostępne {{inXhours_xHousAgo}}"
     },
-    "tradeExamples": "",
+    "tradeExamples": "*Przykład: `G 1` oznacza ** Twoje ubranie numer 1** | `R 2500` to **2500 Rubinów**",
     "keywords": {
       "spook": "Strach",
       "candy": "Cukierek",
@@ -39,16 +39,16 @@
       "spookPowa": "Siła Strachu"
     },
     "wardrobe": {
-      "confirmSave": "",
+      "confirmSave": "Na pewno chcesz zablokować te ubranie w twojej kolekcji pamiątkowej? To jest nieodwracalne!",
       "confirmSave2": "Te ubranie zostało zapisane w twojej kolekcji pamiątkowej! Zobacz swój postęp za pomocą `{{prefix}}memento`",
       "mementoExists": "Już masz ten przedmiot w swojej pamiątkowej kolekcji. One muszą być unikatowe!",
       "mementoDamaged": "Te ubranie jest mocno uszkodzone! nie możesz go przechowywać w ten sposób...",
-      "brief": "",
+      "brief": "Użyj Numeru `#X` aby wykonać akcję na konkretnym przedmiocie.\nWięcej informacji po użyciu `p!wardrobe help` ",
       "spookyWardrobe": "Straszna Szafa {{user.tag}}",
       "garments": "Ubranie z twojego ekwipunku"
     },
     "caskets": {
-      "tooManyGar": "",
+      "tooManyGar": "Możesz mieć tylko 12 części garderoby na raz! Sprzedaj lub zniszcz jedno z twoich ubrań.",
       "gotCasket": "",
       "noCasket": "",
       "hasCask": "",
