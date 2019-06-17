@@ -1,8 +1,8 @@
 {
   "halloween18": {
     "noctix": {
-      "acCask": "",
-      "acDoll": "",
+      "acCask": "Hehe. Jak zdobyłeś pierwszą rzecz to już nie umiesz się powstrzymać, hę? Więc co dasz mi w zamian za tą **Szkatułę**?",
+      "acDoll": "Oh, przebieglutki~ Ta lalka będzie automatycznie kręcić się w pobliżu tak długo jak mi płacisz, jak zamierzasz uregulować opłatę?",
       "acToken": "",
       "noCashR": "Widzisz, te czerwone kryształy nic dla mnie nie znaczą, ale... to nie znaczy że dam ci przecenę!",
       "noCashC": "Nie umiem załatwiać biznesów na głodniaka, musisz przynieść mi więcej słodyczy jeśli chcesz ten interes!",
@@ -54,7 +54,7 @@
       "hasCask": "",
       "hasCask_plural": "",
       "commentary": [
-        "",
+        " . . . wygląda na coś rozmiaru dziecka . . .",
         "Tak ogólnie to mam nadzieję że to jest sos pomidorowy.",
         "Najpierw będziesz musiał to umyć.",
         "Mam wrażenie, czy właśnie trumna się poruszyła kiedy to wziąłeś?",
