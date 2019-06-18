@@ -11,7 +11,6 @@ module.exports = {
             const response = await axios.get(URL, {
               
             });         
-            console.log({response})
             return response.data; 
         }
         const response = await axios.get(URL, {
