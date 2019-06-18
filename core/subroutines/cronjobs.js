@@ -150,7 +150,7 @@ const ONEhour = new CronJob('* * * * *', async () => {
 });
 
 
-const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
 
 
   (async ()=>{
