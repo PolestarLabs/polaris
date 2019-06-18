@@ -1,13 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubine",
-        "RBN_fullname": "",
+        "RBN_fullname": "Bijoux Rubine",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
-        "JDE_fullname": "",
+        "JDE_fullname": "Poudre de Jades",
         "JDE_plural": "Jade",
         "SPH": "Saphir",
-        "SPH_fullname": "",
+        "SPH_fullname": "Fragments de Sapphire",
         "SPH_plural": "Saphirs",
         "C": "Commun",
         "U": "Peu commun",
@@ -48,12 +48,12 @@
         "level": "Niveau",
         "levelUp": "Niveau supérieur!",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
+            "message": "Message",
+            "message_plural": "Messages",
+            "reaction": "Réaction",
+            "reaction_plural": "Réactions",
             "role": "Rôle",
-            "role_plural": "",
+            "role_plural": "Grades",
             "server": "Serveur",
             "server_plural": "Serveur",
             "member": "Membre",
@@ -106,15 +106,15 @@
             "noRoleHere": "Ce rôle n'est pas dans la liste, relis-toi bordel!",
             "noRolesGiven": "Aucun rôle n'a été mentionné, t'es sûr que tu le fais correctement?",
             "roleAlreadyHere": "Eh, oh, môssieur, ce rôle existe déjà!",
-            "nosuchrole": "",
+            "nosuchrole": "Mmmhh... Je n'ai pas pu trouver ce grade... Fais attention à la casse.",
             "kbanNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
             "superRoleNope": "**{{user}}** n'a pas le rôle **{{group}}**!",
             "banNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
             "unpermB": "Ah, à priori je n'ai pas assez de permissions pour faire ceci...",
-            "cantFindMessageID": "",
+            "cantFindMessageID": "Hmmm... ça ne va pas... Cet ID de message semble d'être invalide.",
             "cantFindChannel": "Hmmm... Je n'ai pas pu trouver ce salon :/ Si tu n'est pas sûr, essaye d'utiliser #channel",
             "noChannelGiven": "Ok, et où est-ce que je vais répertorier ces activités? Sur ton visage? Donne-moi un salon au quel me connecter!",
-            "emojiError": "",
+            "emojiError": "Je n'ai pas pu ajouter cet Emoji. Vérifie les permissions d'ajoutement des réactions ou si l'Emoji est valide...",
             "insuperms": "{{Imsorry}} Je ne peux pas faire ça pour toi si tu n'as pas le permission non plus.",
             "not-a-NSFW-channel": "Eh oh! Rends ce salon NSFW d'abord, il y a des enfants par ici..."
         },
@@ -351,10 +351,10 @@
             "decon2": "{{user}} décontamine {{user2}} !",
             "cancer": "{{user}} inspecte le niveau de cancer du chat...",
             "geiger": ":radioactive: Hmmm... selon le compteur Geiger le potentiel de cancer de ce chat est de **{{percentage}}%** avec **{{radiation}}μSv/h**",
-            "kissed": "",
-            "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissed": "{{user}} embrasse {{victim}}~",
+            "kissedSelf": "Soyant putain de narcissiste, {{user}} s'embrasse~",
+            "kissedNone": "{{user}} envoie des baisers~",
+            "kissFail": "{{user}} a essayé d'embrasser, mais a été tué à la place... *Aie*."
         },
         "commend": {
             "noSelf": "Non, je refuse de vous féliciter. Vous devriez en avoir honte !",
@@ -368,7 +368,7 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "noitem": "",
+            "noitem": "Je n'ai pas pu trouver cet article",
             "didyoumean": "",
             "didyoumeanOne": ""
         },
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler."
+            "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Rôles auto-assibles sur ce serveur.",
         "daily": {
@@ -428,7 +453,7 @@
             "quick_didntask": "",
             "avail_cmd": "Commandes disponibles",
             "avail_cmdlist": "",
-            "notenough": "",
+            "notenough": "Cette minuscule boîte ne suffit-elle pas?",
             "trythese": "",
             "curr_info": "",
             "currency_overview": "",

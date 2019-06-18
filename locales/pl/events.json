@@ -1,68 +1,68 @@
 {
   "halloween18": {
     "noctix": {
-      "acCask": "",
-      "acDoll": "",
-      "acToken": "",
-      "noCashR": "",
-      "noCashC": "",
-      "howMany": "",
-      "completeC": "",
+      "acCask": "Hehe. Jak zdobyłeś pierwszą rzecz to już nie umiesz się powstrzymać, hę? Więc co dasz mi w zamian za tą **Szkatułę**?",
+      "acDoll": "Oh, przebieglutki~ Ta lalka będzie automatycznie kręcić się w pobliżu tak długo jak mi płacisz, jak zamierzasz uregulować opłatę?",
+      "acToken": "Tokeny, tokeny za głupią puszkę z cyckami. Wszyscy myślicie tylko o tym jednym. Dobrze, co mi za to dasz?",
+      "noCashR": "Widzisz, te czerwone kryształy nic dla mnie nie znaczą, ale... to nie znaczy że dam ci zniźkę!",
+      "noCashC": "Nie umiem załatwiać biznesów na głodniaka, musisz przynieść mi więcej słodyczy, jeśli chcesz dobić targu!",
+      "howMany": "Więc ile ich chcesz?",
+      "completeC": "Mniam! Bardzo dobre, dziękuję za słodycze. A teraz wróć do swego wymiaru i baw się dobrze!",
       "completeR": "Nieźle. Jestem pewna że kiedyś znajdę zastosowanie dla tych kryształów. Teraz wróć do swojego wymiaru i baw się dobrze!",
-      "timeout": "",
-      "timeout2": "",
-      "cancel": "",
-      "greet": "",
-      "list": ""
+      "timeout": "Um, jeśli nic nie robisz... mogłybyśmy wrócić do naszego świata?",
+      "timeout2": "Zamknij się blaszany łbie! Pozwól pomyśleć twojemu mistrzowi!\nChwila... Wy dwaj, dokąd idziecie?",
+      "cancel": "Hm? Nic? Cóż, wiesz gdzie mnie znaleźć.",
+      "greet": "Pozdrowienia. Wygląda na to że twoja obsesja na temat śmierci doprowadziła cię do mnie. Jak... *słodko*, Powinnam powiedzieć...\nCóż, jesteś we właściwym miejscu! Mogę ci zaoferować cały wachlarz różnych rzeczy. Tak samo jak ty jesteś fanatykiem martwych ciał, ja jestem fanatyczką słodyczy! Przynieś mi wszystkie jakie masz!\n\n**Tak z innej beczki**, mój napój to sok pomidorowy. Skończ się tak na mnie gapić!",
+      "list": "**Szkatułki**\nZawierają najstraszniejsze części garderoby do użycia, jako ultra straszny kostium, strasz ludzi dookoła a dadzą ci więcej słodyczy!\n**Lalka-Wabik**\nPrzeklęty artefakt, który będzie chodził dookoła i spowoduje że sąsiedzi zapomną, że u nich byłeś przed chwilą. Użyj tego, aby ominąć 6-godzinny cooldown od straszenia.\n**Tokeny Event' owe**\nDawaj je tej głupiej, robotycznej dziewczynie z którą spędzasz czas. Wymieni się z tobą za dekoracje."
     },
     "spook": {
-      "advisor": "",
-      "spookintro": "",
+      "advisor": "Hej! Nie możesz straszyć tak ubrany. Idź i zdobądź jakiś lepszy strój!",
+      "spookintro": "Próbowałeś straszyć dookoła swoim kostiumem...",
       "BOO": "**BUU!**",
-      "followup": "",
-      "cooldown": "",
-      "cooldown_alt": ""
+      "followup": "To było zaiste straszne. Zdobyleś **{{count}} Cukierków** za tą straszność~\n\n*Ale twój kostium traci Siłę strachu za to że jest już rozpoznawalny w sąsiedztwie.*",
+      "cooldown": "Sąsiedzi ciągle są zaskoczeni po twojej ostatniej \"wizycie\"... zaczekaj {{Xhours}} zanim zjawisz się tu ponownie!",
+      "cooldown_alt": "Sąsiedzi ciągle są zaskoczeni po twojej ostatniej \"wizycie\"... zaczekaj {{Xhours}} zanim zjawisz się tu ponownie, lub kup **lalkę-wabik** od **Grabarza**!"
     },
     "dig": {
       "shovel": "Łopata",
-      "needShovel": "",
-      "shovelbroke": "",
-      "cooldown": "",
+      "needShovel": "Potrzebujesz {{SHOVEL_LINK}} aby kopać! Znajdź sobie jakąś!",
+      "shovelbroke": "Uderzyłeś skałę tak mocno swoją Łopatą że rozpadła się na części...",
+      "cooldown": "Cmentarzysko drzemie...\nNie ma tu nic do wykopania przez następne {{Xtime}}.",
       "lastTomb": "Ostatnie kopanie grobów:",
-      "moreTombs": ""
+      "moreTombs": "Więcej kopania dostępne {{inXhours_xHousAgo}}"
     },
-    "tradeExamples": "",
+    "tradeExamples": "*Przykład: `G 1` oznacza ** Twoje ubranie numer 1** | `R 2500` to **2500 Rubinów**",
     "keywords": {
-      "spook": "",
+      "spook": "Strach",
       "candy": "Cukierek",
       "candy_plural": "Cukierek",
-      "spookPowa": ""
+      "spookPowa": "Siła Strachu"
     },
     "wardrobe": {
-      "confirmSave": "",
-      "confirmSave2": "",
-      "mementoExists": "",
-      "mementoDamaged": "",
-      "brief": "",
-      "spookyWardrobe": "",
-      "garments": ""
+      "confirmSave": "Na pewno chcesz zablokować te ubranie w twojej kolekcji pamiątkowej? Jest to nieodwracalne!",
+      "confirmSave2": "Te ubranie zostało zapisane w twojej kolekcji pamiątkowej! Zobacz swój postęp za pomocą `{{prefix}}memento`",
+      "mementoExists": "Już masz ten przedmiot w swojej pamiątkowej kolekcji. Muszą być unikatowe!",
+      "mementoDamaged": "Te ubranie jest mocno uszkodzone! Nie możesz go przechowywać w ten sposób...",
+      "brief": "Użyj Numeru `#X` aby wykonać akcję na konkretnym przedmiocie.\nWięcej informacji po użyciu `p!wardrobe help` ",
+      "spookyWardrobe": "Straszna Szafa {{user.tag}}",
+      "garments": "Ubranie z twojego ekwipunku"
     },
     "caskets": {
-      "tooManyGar": "",
-      "gotCasket": "",
-      "noCasket": "",
-      "hasCask": "",
-      "hasCask_plural": "",
+      "tooManyGar": "Możesz mieć tylko 12 części garderoby na raz! Sprzedaj lub zniszcz jedno z twoich ubrań.",
+      "gotCasket": "Wykopałeś **1 Szkatułkę!** Następna Szkatułka będzie dostępna za 6 godzin!",
+      "noCasket": "Nie masz Szkatułek do otwarcia... Idź jakieś wykopać!",
+      "hasCask": "Masz **{{count}} Szkatułkę** na swoim podwórku.",
+      "hasCask_plural": "Masz **{{count}} Szkatułek** na swoim podwórku.",
       "commentary": [
-        "",
-        "",
-        "",
-        "",
+        " . . . wygląda na coś rozmiaru dziecka . . .",
+        "Tak ogólnie to mam nadzieję, że jest to sos pomidorowy.",
+        "Najpierw będziesz musiał to umyć.",
+        "Mam wrażenie, czy właśnie trumna poruszyła się kiedy to wziąłeś?",
         "STRASZNE SZKIELETY, POSYŁAJĄ DRESZCZE PO TWOICH PLECACH",
-        "",
-        "",
-        "",
-        "",
+        "Jak długo po ich śmierci trzeba zaczekać żeby zamiast okradania grobów nazwać to archeologią?",
+        "Oh, to takie słodkie! Pamiętam, jak to wisiało na stojaku parę miesięcy temu!",
+        "Nie twierdzę że duchy istnieją, ale określam to 'ektoplazmową mazią'.",
+        "No i myślę, że przypadkiem zabrałeś część czyjegoś ramienia.",
         "Chwilka... Słyszałeś to?",
         "Byłoby mi miło gdyby ktoś potrzymał moja rękę na strasznym cmentarzu. *Kaszlnięcie*.",
         "Sądzę że jesteśmy śledzeni.",
@@ -70,11 +70,11 @@
       ],
       "casketine": {
         "quiet": "Cicho tu . . . trochę za cicho.",
-        "notsus": "Tu nie ma nic podejrzanego... nie naprawdę.",
+        "notsus": "Tu nie ma nic podejrzanego... nic naprawdę.",
         "onenot": "Bo jeden nigdy nie wystarcza.",
         "oly": "Oh, przepraszam, nie domyśliłam się że jesteśmy w środku zawodów *\"Kto ma najwięcej martwych rzeczy\"**"
       },
-      "openintro": ""
+      "openintro": "**{{user}}** otworzył szkatułkę...\nA w środku było:"
     }
   },
   "halloween17": {
@@ -240,10 +240,10 @@
     "prizecontents": "",
     "prizecontents2": "",
     "prizephrases": [
-      "",
+      "masz to, dobła robota",
       "Obudź mnie w środku",
       "Niebezpiecznie jest chodzić samemu, weź to",
-      "",
+      "Dzięki dzieciaku! Nie wydaj wszystkiego od razu",
       "Przysięgam, wszystko jest tam...",
       "Nie wiem czemu jesteś taki produktywny, ale doceniam to",
       "Dziękuję za twoje usługi",
@@ -258,8 +258,8 @@
       "Weź je i ćśśśśśś",
       "Weź je i odejdź sobie",
       "Będziesz moją walen- kur*e, chwila, nie te święta",
-      "",
-      "",
+      "Wybacz, że nie mogę być tam osobiście, ale tutaj masz token mojej wdzięczności",
+      "Słodziaku, nie wiem kto ci powiedział że naklejka jest dołączana do tła, ale masz, trochę sezonowych błyskotek.",
       "Poi!"
     ]
   },

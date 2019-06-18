@@ -1,13 +1,13 @@
 {
     "keywords": {
         "RBN": "Rubin",
-        "RBN_fullname": "",
+        "RBN_fullname": "Klejnoty Rubinów",
         "RBN_plural": "Rubiny",
         "JDE": "Żad",
-        "JDE_fullname": "",
+        "JDE_fullname": "Żadowy pył",
         "JDE_plural": "Żady",
         "SPH": "Szafir",
-        "SPH_fullname": "",
+        "SPH_fullname": "Odłamki Szafirów",
         "SPH_plural": "Szafiry",
         "C": "Zwyczajne",
         "U": "Niezwykłe",
@@ -22,10 +22,10 @@
     "terms": {
         "thanks": "dzięki",
         "thanks_short": "dzk",
-        "thx": "$t(termin.dzięki_skrót)",
+        "thx": "$t(terms.thanks_short)",
         "total": "W sumie",
         "amount": "Ilość",
-        "overview": "Przegląd\n",
+        "overview": "Podgląd",
         "coinHeads": "Reszka",
         "coinTails": "Orzeł",
         "qnt": "Ilość",
@@ -48,12 +48,12 @@
         "level": "Poziom",
         "levelUp": "Kolejny Poziom!",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
+            "message": "Wiadomość",
+            "message_plural": "Wiadomości",
+            "reaction": "Reakcja",
+            "reaction_plural": "Reakcje",
             "role": "Rola",
-            "role_plural": "",
+            "role_plural": "Role",
             "server": "Serwer\n",
             "server_plural": "Serwer\n",
             "member": "Członek",
@@ -106,15 +106,15 @@
             "noRoleHere": "Wydaje się, że tej Roli nie ma na liście. Upewnij się, że podajesz ją prawidłowo.",
             "noRolesGiven": "Nie wspomniano o żadnej roli, czy robisz to prawidłowo?",
             "roleAlreadyHere": "Wydaje mi się, że Rola jest już na liście.",
-            "nosuchrole": "",
+            "nosuchrole": "Um, nie znalazłam tej roli, proszę wpisz nazwę dokładnie.",
             "kbanNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "superRoleNope": "Wygląda na to, że **{{user}}** nie ma roli **{{group}}**.",
             "banNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "unpermB": "Wydaje mi się, że nie mam wystarczających uprawnień, aby to przetworzyć.",
-            "cantFindMessageID": "",
+            "cantFindMessageID": "Hmm... To się nie zgadza... ID wiadomości wygląda na niewłaściwe.",
             "cantFindChannel": "Nie mogę znaleźć tego kanału. Spróbuj użyć #kanał, aby się upewnić, że istnieje.",
             "noChannelGiven": "Musisz mi powiedzieć, na którym kanale rejestrować aktywności.",
-            "emojiError": "",
+            "emojiError": "Nie mogłam dodać tego Emoji. Sprawdź uprawnienia do reakcji albo czy Emoji jest poprawne...",
             "insuperms": "{{imsorry}}, ale nie mogę tego dla ciebie zrobić, jeżeli nie masz odpowiednich uprawnień.",
             "not-a-NSFW-channel": "Ten kanał nie jest ustawiony na NSFW. Nie zostawiaj swoich \"prac\" wszędzie."
         },
@@ -178,7 +178,7 @@
                     "Nie do wiary!"
                 ],
                 "ohmy_negative": [
-                    "O ja!",
+                    "O mój!",
                     "Uuuuh...",
                     "Oj...",
                     "O nie!",
@@ -351,10 +351,10 @@
             "decon2": "{{user}} dezynfekuje {{user2}}.",
             "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
             "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**",
-            "kissed": "",
-            "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissed": "{{user}} całuje {{victim}}~",
+            "kissedSelf": "{{user}} pocałował samego siebie bo jest taką narcystyczną s*ką~",
+            "kissedNone": "{{user}} przesyła całusy~",
+            "kissFail": "{{user}} próbował pocałować, ale dostał plaskacza... *auć*."
         },
         "commend": {
             "noSelf": "Nie, Nie pozwolę ci pochwalić samego siebie. Powinieneś się tego wstydzić!",
@@ -368,9 +368,9 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "noitem": "",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "noitem": "Nie mogę znaleźć tego przedmiotu",
+            "didyoumean": "Nie mogę znaleźć tego przedmiotu. Może chodzi Ci o jeden z tych?",
+            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?"
         },
         "misc": {
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować."
+            "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
+            "confirmDelete": "Potwierdzasz usunięcie?"
+        },
+        "feed": {
+            "newYoutube": "**{{tuber}} właśnie wrzucił filmik!** Obejrzyj go tu:",
+            "noDefault": "Nie powiedziałeś mi na którym kanale wysyłać wiadomości oraz nie ustawiłeś domyślnego kanału.",
+            "urlPresent": "Już obserwuję posty z tego miejsca, więc po prostu zaktualizuję kanał docelowy~",
+            "noFeed": "Na tym Serwerze nie ma ustawionych zródeł",
+            "noTube": "Powiadomienia YouTube nie są ustawione dla tego serwera",
+            "noTwitch": "Alerty Twitch' a nie są ustawione dla tego Serwera",
+            "stateIDorURL": "Zapomniałeś podać mi ID lub URL, aby to stąd usunąć. Sprawdź `{{prefix}}{{command}} list` jeśli je zapomniałeś~",
+            "listRemove": "Aby usunąć jedno, spróbuj `{{prefix}}{{command}} remove [Index #]`",
+            "channelUpdate": "Ustawiłam domyślny kanał postowania na {{channelID}}!",
+            "invalidRSS": "Hej, to nie jest prawidłowy adres RSS! Upewnij się że robisz to dobrze.",
+            "invalidTwitch": "Spójrz, nie ma użytkownika Twitch' a o takiej nazwie. Sprawdź dokładnie co wpisujesz!",
+            "invalidYoutube": "Hmm, to nie wygląda jak kanał YouTube. Na pewno nie jeden z tych które znam...",
+            "listShowRSS": "Lista kanałów RSS tego Serwera",
+            "listShowTwitch": "Strumienie Twitch' a postowane na tym Serwerze",
+            "listShowYoutube": "Nowe alerty filmików z YouTube dla tego Serwera",
+            "savedSubLastRSS": "**Zapisano**! - Wysyłam najnowsze Posty z Źródła na {{channelID}}.\nNastępne wpisy będą sprawdzane co **30 minut**",
+            "savedSubLastTwitch": "**Zapisano**! - Powiadomienie będzie wysyłane na {{channelID}} kiedy ten kanał będzie nadawał na żywo. Sprawdzane co **15 minut**",
+            "savedSubLastYoutube": "**Zapisano**! - Wysyłanie najnowszych filmików z tego kanału na {{channelID}}.\nSprawdzane co **godzinę**",
+            "feedLimitRSS": "Ten serwer może mieć tylko **5** kanałów RSS jednocześnie.",
+            "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch' u jednocześnie.",
+            "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
+            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu, rozważ [Donating]({{donationLink}}) lub [applying for Pollux Partnership]({{partnershipLink}})"
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
         "daily": {
@@ -404,39 +429,39 @@
 
         },
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
-            "noReactionDel": "",
-            "success": ""
+            "reactrolesfor": "Reakcyjne Role dla {{server}}",
+            "removeAll": "Usunęłam stąd cały Rejestr Reakcji. Musisz jednak manualnie wyczyścić reakcje z wiadomości.",
+            "removed": "Ta reakcja została usunięta~",
+            "noroleshere": "Na tym serwerze nie ma Reakcyjnych Ról.",
+            "removedAllFrom": "Usunęłam wszystkie reakcje z {{ID}}~",
+            "noReactionDel": "Aby usunąć Reakcję Roli, użyj '{{prefix}}reactionroles del [ID WIADOMOŚCI] [EMOJI]'. Możesz też pominąć 'EMOJI', jeśli chcesz również usunąć wszystkie reakcje z tej wiadomości~",
+            "success": "Reakcyjne Role będą widoczne w tej wiadomości:"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
-            "ichoose": ""
+            "picking": "Wybieram... {{as in 'picking from a list'}}",
+            "complete": "Skończone!",
+            "lessthan2": "Potrzebuję przynajmniej dwóch rzeczy między którymi mam wybrać...",
+            "ichoose": "Wybieram **{{list_item}}**!"
         },
         "help": {
-            "greetings": "",
-            "basics": "",
-            "cmdlist": "",
-            "quick_getgo": "",
-            "quick_useful": "",
-            "quick_enjoy": "",
-            "quick_didntask": "",
+            "greetings": "\n**Witaj! Jestem Pollux. Nowa pokojówka przypisana do twojego serwera.**\nTutaj są wyjaśnienia kilku moich umiejętności:\n\n  • Domyślny Prefiks to `+`, możesz zmienić go za pomocą `+prefix <New Prefix>`. \n      Globalny Prefiks to `p!`, przydatny dla osób które nie znają twojego własnego prefiksu, może zostać wyłączony w **Panelu**. \n      Uniwersalny Prefiks to `plx!` i nie może zostać wyłączony.\n",
+            "basics": "\n  **Podstawy** - Rozpoczęcie przygody ze mną jest tak łatwe, jak zbudowanie przyspieszacza cząstek! ...Czekaj, nigdy takiego nie zbudowałeś(-łaś)? Cóż, żaden problem!\nOto tylko kilka z {{commandcount}} komend, które mam!\n  ",
+            "cmdlist": "LISTA KOMEND",
+            "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
+            "quick_useful": " Komendy, które mogą okazać się użyteczne",
+            "quick_enjoy": "Komendy które mogą uprzyjemnić ci czas",
+            "quick_didntask": " Komendy, o które nie prosiłeś(-łaś)",
             "avail_cmd": "Dostępne komendy",
-            "avail_cmdlist": "",
-            "notenough": "",
-            "trythese": "",
-            "curr_info": "",
-            "currency_overview": "",
-            "rubines_desc": "",
-            "jades_desc": "",
-            "sapphires_desc": "",
-            "lootboxes_desc": "",
-            "end": ""
+            "avail_cmdlist": "Lista komend aktualnie dostępnych i wspieranych\n({{commandcount}}).",
+            "notenough": "Czy te małe pudełko ci nie wystarczy?",
+            "trythese": "Wypróbuj jedno z tych",
+            "curr_info": "Informacje o walucie",
+            "currency_overview": "Mój system pieniężny jest dosyć zwarty i ma kilka ograniczeń i funkcji zabezpieczających. Każda transakcja jest zapisywana i może być łatwo namierzona, co oznacza że twoja ciężka praca nie zostanie przyćmiona przez oszustów. Zapisujemy ponad 30 tysięcy transakcji każdego dnia.   \n        \n    • Każdy zaczyna z jakąś ilością **Żadów** i **Rubinów**, oraz z jedną **Skrzynką**.\n",
+            "rubines_desc": "\n*Moja główna waluta, jasnoróżowe kryształy zrobione z heksagonalnych skalenohedronów z Al₂O₃:Cr, używane prawie do wszystkiego!*\n        Może być zdobyta z Codziennych Bonusów (`daily`), Lootboxów (`+box`) i z Gier Hazardowych (`+blackjack`, `+slots`, etc.). Można ją również pozyskać za wymiany z innymi użytkownikami od razu jak osiągniesz 5 Poziom i masz co najmniej 10-dniowy Ciąg Codziennych Bonusów.\n",
+            "jades_desc": " *\"Waluta\" do Tworzenia, używam tych lekko turkusowych kryształków - w innych przypadkach bezwartościowych - do tworzenia specjalnych przedmiotów dla ciebie!*\n        Może być zdobyta z Lootbox'ów, za niszczenie przedmiotów, wpłaty lub mogą być kupione.",
+            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyty za wpłaty, może być kupiony lub otrzymany za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
+            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach też.`** \n",
+            "end": "\n**Kompletna lista Komend dostępna jest na <https://pollux.gg/commands>**\n\nObejrzyj naszych Partnerów na **<https://pollux.gg/partners>**\nZobacz lub prześlij arty stworzone przez fanów na **<https://pollux.gg/fanart>**\nZobacz swój publiczny profil na **<https://pollux.gg/profile/me>**\n\n**Dodatki**\nSklep z tłami **<https://pollux.gg/bgshop>**\nSklep z medalami **<https://pollux.gg/medalshop>**\nTworzenie przedmiotów **<https://pollux.gg/crafting>**\nWirtualne nalepki **<https://pollux.gg/stickers>** (Aby zdobyć prawdziwe naklejki wejdź na Serwer Support'u)\nInformacje o Event'ach **<https://pollux.gg/events>**\n\nWesprzyj mnie na **<https://patreon.com/Pollux>** lub **<https://pollux.gg/donate>**\nŚledź mnie na Twitterze **<https://twitter.com/maidPollux>**\n\n---\n\n**Dla czegokolwiek innego zobacz __Dashboard__:\n<https://pollux.gg/dashboard>**\nLub dołącz na serwer support'u: **<https://discord.gf/rEBCccS>**\nZaproś mnie na swój serwer pod adresem **<https://pollux.gg/invite>**\n"
         }
     },
     "games": {
@@ -447,8 +472,8 @@
             "noGuess": "{{interjectionB}} Wygląda na to, że nikt tego nie zgadł... Więcej szczęścia następnym razem!"
         },
         "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
+            "coinVictory": "{{interjection}} Wygrałeś! Zdobyłeś **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} Wygląda na to że przegrałeś... powodzenia następnym razem!"
         },
         "dice": {
             "userRolledSome": "**{{user}}** wyrzucił kostkami:",

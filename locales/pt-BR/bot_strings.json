@@ -53,7 +53,7 @@
             "reaction": "Reação",
             "reaction_plural": "Reações",
             "role": "Cargo",
-            "role_plural": "",
+            "role_plural": "Cargos",
             "server": "Servidor",
             "server_plural": "Servidor",
             "member": "Membro",
@@ -106,21 +106,21 @@
             "noRoleHere": "Este Cargo não está na lista.",
             "noRolesGiven": "Nenhum Cargo foi apontado. Você está fazendo isso direito?",
             "roleAlreadyHere": "Ei, desculpa, esse Cargo já está incluído!",
-            "nosuchrole": "",
+            "nosuchrole": "Oxe, não consegui achar esse cargo. Digite o nome certinho, por favorzinho.",
             "kbanNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "superRoleNope": "**{{user}}** não faz parte do Cargo **{{group}}**!",
             "banNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "unpermB": "Rapaz, acho que não tenho Permissões para processar este comando.",
-            "cantFindMessageID": "",
+            "cantFindMessageID": "Hmmm... Algo não está certo...\nO ID dessa mensagem parece ser inválido.",
             "cantFindChannel": "Não encontrei esse canal não :/ Para conferir se ele existe mesmo, use #canal.",
             "noChannelGiven": "Vou gravar essas atividades onde? Na sua testa? Especifique um canal!",
-            "emojiError": "",
+            "emojiError": "Não consegui adicionar esse emoji. Dá uma olhadinha nas minhas permissões em adicionar reações ou se o emoji dado é inválido!",
             "insuperms": "{{imsorry}} Não posso fazer isso por você se VOCÊ não tiver permissão, oras!",
             "not-a-NSFW-channel": "Primeiro defina esse canal como **NSFW**, criatura. Tem crianças por perto!"
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Ei! O texto a ser traduzido não pode exceder __1000 Caracteres__!**\n Mas relaxa, eu aparei o texto pra você~",
-            "open1": "Dá licença, é que \"open\" é um verbo transitivo, o que significa que você tem que me dizer o que abrir~ Tente uma dessas opções, xuxu:",
+            "open1": "Dá licença, é que \"open\" é um verbo transitivo, o que significa que você tem que me dizer *o que* abrir~ Tente uma dessas opções, xuxu:",
             "open2": "Foi mal, mas isso não é algo que eu consiga (ou queira) abrir. Mas tenho certeza que posso abrir um desses pra você: ",
             "timesOutIn": "Você tem {{s}} segundos antes que a ação padrão seja tomada",
             "enterVoiceBetterExperience": "Entre num canal de voz para ter a experiência completa desse comando~"
@@ -351,26 +351,26 @@
             "decon2": "{{user}} está descontaminando {{user2}}.",
             "cancer": "{{user}} está inspecionando o potencial de câncer desse canal.",
             "geiger": ":radioactive: De acordo com o contador de Geiger, esse chat tem um potencial de câncer de **{{percentage}}%** com uma radiação de **{{radiation}}μSv/h**. ",
-            "kissed": "",
-            "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissed": "{{user}} deu um beijo em {{victim}}~",
+            "kissedSelf": "{{user}} é tão narcisista que beijou a si mesmo(a)~",
+            "kissedNone": "{{user}} mandou beijinhos~",
+            "kissFail": "{{user}} tentou dar um beijo, mas acabou levando um tapão nas ventas... *ai*."
         },
         "commend": {
-            "noSelf": "",
-            "give": "",
-            "totals": "",
-            "topcom": "",
-            "cooldown": "",
-            "check_no": "",
-            "check_yes": "",
-            "noItem": "",
+            "noSelf": "Na-na-ni-na-não. Eu me recuso a deixar você se condecorar. Toma vergonha na cara!",
+            "give": "Por meio deste, **{{author}}** condecora **{{target}}** ao custo de um Token.",
+            "totals": "{{target}} foi condecorado **{{cmcount}} vezes** até agora por **{{pplcount}} pessoas diferentes**!",
+            "topcom": "Os usuários que mais condecoraram {{target}} foram:",
+            "cooldown": "Você já gastou sua condecoração, tente de novo em {{remaining}}",
+            "check_no": "Você pode condecorar alguém de novo em {{remaining}}",
+            "check_yes": "Você já pode condecorar alguém de novo se tiver tokens disponíveis!",
+            "noItem": "Você precisa de um Token de Condecoração, mas você não tem nenhum. Você precisa deles para condecorar alguém.",
             "commendationLimit": ""
         },
         "crafting": {
             "noitem": "Não consegui encontrar este item",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumean": "Eu não consegui achar esse item. Por acaso, está falando de algum desses?",
+            "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?"
         },
         "misc": {
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar."
+            "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
+            "confirmDelete": "Confirmar exclusão?"
+        },
+        "feed": {
+            "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
+            "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
+            "urlPresent": "Eu já estou cuidando das postagens desse aí, mas vou atualizar o canal de destino~",
+            "noFeed": "Não há Feeds configurados neste Servidor",
+            "noTube": "Não há notificações do YouTube configuradas neste servidor",
+            "noTwitch": "Não há alertas do Twitch configurados neste servidor",
+            "stateIDorURL": "Você esqueceu de me dar um ID ou URL para remover daqui. Verifique `{{prefix}}{{command}} list` se você esqueceu~",
+            "listRemove": "Para remover um, tente `{{prefix}}{{command}} remove [Numero]`",
+            "channelUpdate": "Eu defini o canal padrão de postagem para {{channelID}}!",
+            "invalidRSS": "Ei, este não é um endereço RSS válido! Confere se está fazendo isso certinho.",
+            "invalidTwitch": "Olha, não há usuário Twitch por aí com esse nome. Olha direitinho o que você está digitando!",
+            "invalidYoutube": "Hmm, isso não parece com um canal do YouTube. Não um que eu conheça pelo menos...",
+            "listShowRSS": "Lista de Feed RSS para este servidor",
+            "listShowTwitch": "Transmissões da Twitch sendo postadas neste servidor",
+            "listShowYoutube": "Novos alertas de vídeo do YouTube para este servidor",
+            "savedSubLastRSS": "**Salvo**! - Enviando as últimas mensagens deste Feed em {{channelID}}. Outras serão verificadas a cada **30 minutos**",
+            "savedSubLastTwitch": "**Salvo**! - Uma notificação será postada em {{channelID}} quando este canal for ao vivo. Verificado a cada **15 minutos**",
+            "savedSubLastYoutube": "**Salvo**! - Enviando o vídeo mais recente deste canal em {{channelID}}. Verificado a cada **1 hora**",
+            "feedLimitRSS": "Este servidor só pode ter **5** feeds RSS de uma vez.",
+            "feedLimitTwitch": "Este servidor só pode ter **2** atualizações do canal Twitch de uma vez.",
+            "feedLimitYoutube": "Este servidor só pode ter **1** alerta de canal do YouTube de uma vez.",
+            "donateToIncrease": "Se você precisa de um limite maior, considere [contribuir com uma doação]({{donationLink}}) ou aplicar para [Parceria com a Pollux]({{partnershipLink}})"
         },
         "autoRolesforThis": "Cargos auto-definíveis deste Servidor",
         "daily": {
@@ -404,39 +429,39 @@
 
         },
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
-            "noReactionDel": "",
-            "success": ""
+            "reactrolesfor": "Cargos por Reação de {{server}}:",
+            "removeAll": "Eu removi todos os Registros de Reações daqui. Mas você terá que limpar manualmente as reações das próprias mensagens.",
+            "removed": "Eu removi essa reação pra você~",
+            "noroleshere": "Não há Cargos por Reação neste servidor.",
+            "removedAllFrom": "Removi todas as reações de {{ID}}~",
+            "noReactionDel": "Para apagar um Cargo por Reação, use `{{prefix}}reactionroles del [ID DA MENSAGEM] [EMOJI]`. Você pode omitir `EMOJI` se você quiser apagar todas as reações daquela mensagem também~",
+            "success": "Cargos por Reação serão vistos nessa mensagem:"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
+            "picking": "Escolhendo... {{as in 'picking from a list'}}",
+            "complete": "Concluído!",
+            "lessthan2": "Eu preciso de pelo menos duas coisas pra sortear...",
             "ichoose": "Eu escolho **{{list_item}}**!"
         },
         "help": {
-            "greetings": "",
-            "basics": "",
-            "cmdlist": "",
-            "quick_getgo": "",
-            "quick_useful": "",
-            "quick_enjoy": "",
-            "quick_didntask": "",
+            "greetings": "**Saudações! Eu sou a Pollux. A nova maid nomeada para o seu servidor.**\nAqui está uma breve explicação sobre minhas habilidades:\n  • O Prefixo Padrão é `+`, você pode mudá-lo com `+prefix <Novo Prefixo>`. \n  • O Prefixo Global é `p!`, útil para usuários que não sabem o prefixo customizado, pode ser desabilitado no **Dashboard**.\n  • O Prefixo Universal é `plx!` e não pode ser desabilitado.",
+            "basics": "\n **Os Básicos** – Começar sua jornada comigo é fácil como fazer malabarismo com costelinha de porco!\n...todo mundo já fez isso, né? Enfim, vamos ao que interessa!\n\nEsses são só alguns dos {{commandcount}} comandos que você pode me dar!\n ",
+            "cmdlist": "LISTA DE COMANDOS",
+            "quick_getgo": "Comandos simples que você deve saber:",
+            "quick_useful": " Comandos que você pode achar úteis:",
+            "quick_enjoy": " Comandos que você podem ser bem divertidos:",
+            "quick_didntask": " Comandos que literalmente ninguém pediu por eles",
             "avail_cmd": "Comandos Disponíves",
-            "avail_cmdlist": "",
-            "notenough": "",
-            "trythese": "",
-            "curr_info": "",
+            "avail_cmdlist": "Lista de comandos atualmente disponíveis e funcionais: ({{commandcount}}).",
+            "notenough": "Esta caixinha não é o bastante pra você?",
+            "trythese": "Tente um desses:",
+            "curr_info": "Informações de Economia",
             "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.   \n        \n    • Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox**.\n​\n",
             "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`daily`), Lacais (`+box`) e Joguinhos (`+blackjack`, `+slots`, etc.). Além de trocas com outros usuários, assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de `+daily` de 10 dias.\n \n",
-            "jades_desc": "",
-            "sapphires_desc": "",
+            "jades_desc": " *\"Moeda\" de Crafting: eu uso essas frágeis gemas – sem valor além disso – para criar itens especiais, só pra você!*\n        Pode ser obtida de Lootboxes, destruindo itens, doando ou comprando.",
+            "sapphires_desc": "*Moeda Premium: fragmentos azul-vibrante das melhores gemas de Safira, usadas pra criar itens ou como moeda para comprar coisinhas exclusivas!*\n        Só pode ser obtida com doações, sendo compradas individualmente, ou por eventos especiais. Você ganha uma Safira a cada 200 ou 365 Dailies, e há uma chance de 0.1% de ganhá-las em Lootboxes Ultra Raras.",
             "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **` Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`** \n",
-            "end": ""
+            "end": "\n**A lista de Comandos completa pode ser achada em <https://pollux.gg/command>**\n\nVeja nossas Parceiros em: **<https://pollux.gg/partners>**\nVeja ou envie artes criadas for fãs em: **<https://pollux.gg/fanart>**\nVeja seu perfil público em: **<https://pollux.gg/profile/me>**\n\n**Cosméticos**\nLoja de planos de fundo: **https://pollux.gg/bgshop**\nLoja de medalhas: **https://pollux.gg/medalshop**\nOficina de Criação: **https://pollux.gg/crafting**\nStickers virtuais: **<https://pollux.gg/stickers>** (para stickers físicos, cheque o Servidor de Suporte)\nInformações sobre eventos: **<https://pollux.gg/events>**\n\nMe apoie em **<https://patreon.com/Pollux>** ou **<https://pollux.gg/donate>**\nMe siga no Twitter: **<https://twitter.com/maidPollux>**\n\n◉◎◈◎◉\n\n**Para outros assuntos, cheque o __Dashboard__: <https://pollux.gg/dashboard>**\nOu entre no meu servidor de suporte: **​ https://discord.gg/rEBCccS ​**\nMe convide para o seu servidor em: **<https://pollux.gg/invite>**\n"
         }
     },
     "games": {

@@ -109,6 +109,9 @@
             "roleAlreadyHere": "Seems that Role is already on the list.",
             "nosuchrole": "Um, I couldn't find this role, type its name exactly please.",
             "kbanNone": "I need a target to ban, I could always ban you instead.",
+            "cantKickHim": "I oh-so-cannot do that to this person. I am not allowed to harm my superiors.",
+            "cantKickSelf": "You cannot ban or kick yourself doe!",
+            
             "superRoleNope": "It seems **{{user}}** does not have the Role **{{group}}**.",
             "banNone": "I need a target to ban, I could always ban you instead.",
             "unpermB": "I don't seem to have enough perms to process this.",
@@ -388,6 +391,30 @@
         "generic": { 
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?"
+        },
+        "kickban":{
+            "waitingForReason" : "waiting for reason input..."
+            ,"noReason" : "No reason for was specified. Aborted"
+            ,"cancelled" : "Cancelled by the moderator"
+            ,"userKicked" : "I have *gently* kicked {{user}} out of here."
+            , "kickFlavs" : [
+                "Gently enough so they can still walk back in."
+                ,"I hope they can still sit after this."
+                ,"Don't try this at home."
+                ,"No animals were harmed."
+                ,"They're gonna be ok... I guess."
+            ]
+            ,"userBanned" : "I have *not-so-gently* banned {{user}}. This person is not welcome here anymore,"
+            ,"userSoftBanned" : "I have *gently* banned {{user}}. Sadly I couldn't completelly obliterate this person,"
+            , "banFlavs" : [
+                "I hope they step on a LEGO."
+                ,"you can now make fun of him."
+                ,"who's next?"
+                ,"don't be like them{{'them' refers to 'this person'}}, kids." 
+            ]
+
+            ,"includeReason" : "You forgot to tell me *why* this person is being punished.\nState the reason below: `(20s)`"
+            ,"userKickError" : "Something went wrong, oof."
         },
         "feed":{
             "newYoutube": "**{{tuber}} has posted a new video!** Check it out at:",

@@ -109,7 +109,7 @@
             "nosuchrole": "",
             "kbanNone": "Ai ahf'ahnythor epgoka mg yar.",
             "superRoleNope": "**{{user}}** ah nafl **{{group}}**",
-            "banNone": "Ai ahf'ahnythor epgoka mg yar.",
+            "banNone": "ai ahf' ahnythor epgoka mg yar.",
             "unpermB": "Y' mgep nafl r'luh.",
             "cantFindMessageID": "",
             "cantFindChannel": "Mg mgr'luh Channel. #channel mgah'n'ghft.",
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": ""
+            "clicktoconfirm": "",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Ymg' mgepgoka Roles llll Server",
         "daily": {
