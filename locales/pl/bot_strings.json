@@ -444,7 +444,7 @@
             "ichoose": "Wybieram **{{list_item}}**!"
         },
         "help": {
-            "greetings": "\n**Witaj! Jestem Pollux. Nowa pokojówka przypisanando twojego serwera.**\nTutaj są wyjaśnienia kilku moich umiejętności:\n\n  • Domyślny Prefiks to `+`, możesz zmienić go za pomocą `+prefix <New Prefix>`. \n      Globalny Prefiks to `p!`, przydatny dla osób które nie znają twojego własnego prefiksu, może zostać wyłączony w **Panelu**. \n      Uniwersalny Prefiks to `plx!` i nie może zostać wyłączony.\n",
+            "greetings": "\n**Witaj! Jestem Pollux. Nowa pokojówka przypisana do twojego serwera.**\nTutaj są wyjaśnienia kilku moich umiejętności:\n\n  • Domyślny Prefiks to `+`, możesz zmienić go za pomocą `+prefix <New Prefix>`. \n      Globalny Prefiks to `p!`, przydatny dla osób które nie znają twojego własnego prefiksu, może zostać wyłączony w **Panelu**. \n      Uniwersalny Prefiks to `plx!` i nie może zostać wyłączony.\n",
             "basics": "\n  **Podstawy** - Rozpoczęcie przygody ze mną jest tak łatwe, jak zbudowanie przyspieszacza cząstek! ...Czekaj, nigdy takiego nie zbudowałeś(-łaś)? Cóż, żaden problem!\nOto tylko kilka z {{commandcount}} komend, które mam!\n  ",
             "cmdlist": "LISTA KOMEND",
             "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
