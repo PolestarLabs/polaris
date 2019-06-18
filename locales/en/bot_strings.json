@@ -4,7 +4,7 @@
         "RBN_fullname": "",
         "RBN_plural": "Rubines",
         "JDE": "Jade",
-        "JDE_fullname": "",
+        "JDE_fullname": "Jade Dust",
         "JDE_plural": "Jades",
         "SPH": "Sapphire",
         "SPH_fullname": "",
@@ -106,7 +106,7 @@
             "noRoleHere": "Seems that Role isn't listed. Make sure you are telling me the role name correctly.",
             "noRolesGiven": "No Role was mentioned, are you doing it right?",
             "roleAlreadyHere": "Seems that Role is already on the list.",
-            "nosuchrole": "",
+            "nosuchrole": "Um, I couldn't find this role, type it's name exactly please.",
             "kbanNone": "I need a target to ban, I could always ban you instead.",
             "superRoleNope": "It seems **{{user}}** does not have the Role **{{group}}**.",
             "banNone": "I need a target to ban, I could always ban you instead.",
@@ -119,8 +119,8 @@
             "not-a-NSFW-channel": "This channel isn't set as NSFW. Don't go leaving your \"artwork\" everywhere."
         },
         "warnings": {
-            "translationTexTooLong": "",
-            "open1": "",
+            "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\nBut don't worry, I've trimmed the text for you~",
+            "open1": "Excuse me, open is a transitive verb, which means you should tell me what to open~ Try one of these options: ",
             "open2": "",
             "timesOutIn": "This will timeout in {{s}} seconds",
             "enterVoiceBetterExperience": "You have to be in a voice channel for the full ~experience~."
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel."
+            "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Self-assignable Roles for this Server",
         "daily": {
@@ -410,7 +435,7 @@
             "noroleshere": "",
             "removedAllFrom": "",
             "noReactionDel": "",
-            "success": ""
+            "success": "Reaction Roles will be seen in this message: "
         },
         "shuffle": {
             "picking": "",
@@ -419,11 +444,11 @@
             "ichoose": ""
         },
         "help": {
-            "greetings": "",
-            "basics": "",
+            "greetings": "**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n •  The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n •  The Universal Prefix is `plx!` and cannot be disabled.",
+            "basics": "**The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!",
             "cmdlist": "",
             "quick_getgo": "",
-            "quick_useful": "",
+            "quick_useful": "Commands you might find useful",
             "quick_enjoy": "",
             "quick_didntask": "",
             "avail_cmd": "Available Commands",
