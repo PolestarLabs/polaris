@@ -208,10 +208,11 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
             });
           } 
           if (feed.type === 'youtube'){
+            const thisFeed = feed
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
-            //const data = await  getYTData(feed.url,cfg.google);
-            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+feed.url)
-            if (data && data.items[0] && feed.last.link !== data.items[0].link  ) {
+            //const data = await  getYTData(thisFeed.url,cfg.google);
+            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url)
+            if (data && data.items[0] && thisFeed.last.link !== data.items[0].link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
               P.tuber =data.items[0].author;
@@ -219,9 +220,9 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
               ${$t("interface.feed.newYoutube",P)}
               ${data.items[0].link}`
               data.items[0].media = null;
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });        
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':data.items[0] });        
               const ping = thisFeed.pings || svFd.pings || '';
-              POLLUX.getChannel(feed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}));
+              POLLUX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}));
             }
           }
 
