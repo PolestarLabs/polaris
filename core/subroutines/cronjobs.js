@@ -5,8 +5,9 @@ const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
 const g = require( '../utilities/Gearbox');
 const DB = require( '../database/db_ops');
-let RSS = require('rss-parser');
-let parser = new RSS({
+const RSS = require('rss-parser');
+const parser = new RSS();
+const tubeParser = new RSS({
   customFields:{
     item: [['media:group','media']]
   }
@@ -149,7 +150,7 @@ const ONEhour = new CronJob('* * * * *', async () => {
 });
 
 
-const FIFTEENminute = new CronJob('*/10 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
 
 
   (async ()=>{
@@ -209,7 +210,7 @@ const FIFTEENminute = new CronJob('*/10 * * * *', async () => {
           if (feed.type === 'youtube'){
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
             //const data = await  getYTData(feed.url,cfg.google);
-            const data = await parser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+feed.url)
+            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+feed.url)
             if (data && data.items[0] && feed.last.link !== data.items[0].link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
