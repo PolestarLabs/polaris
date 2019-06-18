@@ -25,7 +25,7 @@ module.exports = {
     pub: true,
     cmd: 'vsauce',
     perms: 3,
-    cat: 'fun',
+    cat: 'img',
     botPerms: ['attachFiles', 'embedLinks'],
     aliases: []
 }

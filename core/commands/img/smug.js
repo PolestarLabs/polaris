@@ -29,7 +29,7 @@ module.exports={
     ,pub:true
     ,cmd:'smug'
     ,perms:3
-    ,cat:'fun'
+    ,cat:'img'
     ,botPerms:['embedLinks']
     ,aliases:[]
 }

@@ -83,7 +83,7 @@ module.exports = {
     pub: true,
     cmd: 'kiss',
     perms: 3,
-    cat: 'fun',
+    cat: 'img',
     botPerms: [ 'embedLinks'],
     aliases: []
 }
