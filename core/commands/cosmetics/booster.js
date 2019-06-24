@@ -5,119 +5,48 @@ const fs = require('fs')
 
 const init = async function (msg) {
 
-    delete require.cache[require.resolve('../../structures/Animation')];
-    let Animation = require('../../structures/Animation');
-    let P = { lngs: msg.lang, prefix: msg.prefix }
-    if (gear.autoHelper([$t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+    let P={lngs:msg.lang,}
+    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,msg,opt:this.cat}))return;
 
 
-    SERIES = "nierauto";
-    A = "cat2b"
-    B = "flowers2b" 
-
-
-    const [boosterPack,stickerA,stickerB] = await Promise.all([
-        Picto.getCanvas(paths.Build+"/boosters/showcase/"+ SERIES +".png"),
-        Picto.getCanvas(paths.CDN+"/stickers/"+ A +".png"),
-        Picto.getCanvas(paths.CDN+"/stickers/"+ B +".png")
+    const [userData,stickerData,boosterData] = await Promise.all([
+        DB.users.get(msg.author.id),
+        DB.cosmetics.find({type:'sticker'}),
+        DB.items.find({type:'boosterpack'}),
     ]);
-    const newe       = await Picto.getCanvas(paths.Build+"new.png");
+    const collection = msg.args[0];
 
-    
-    gif = new Animation({
-        w: 250,
-        h: 250,
-        lastFrame: 60,
-        framerate: 48,
-        filename: "test",
-        cache: false,
-        repeat: -1,
-      //  transparentColor: 0x2C2F33,
-    });
+    if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
 
-   gif.gif.setDispose(3)
-   gif.gif.setQuality(20)
-
-    DISPLACE = 0
-    RDX = 0.6
-    RDX2 = .7
-
-
-    pandemonium = function (frame) {
-        canvas = Picto.new(250, 250);
-        ctx = canvas.getContext('2d');
-        ctx.translate(-50, 0);
-
-        ctx.globalCompositeOperation = "destination-over"
-
-        ctx.drawImage(Picto.tag(ctx,frame).item,0 , 0)
-
-        if(frame < 5){            
-            ctx.drawImage(boosterPack,175- boosterPack.width * RDX / 2  ,0+(0),285*RDX ,418 * RDX)
-        }else if(frame < 20){
-            DISPLACE+= 10+frame-20
-            ctx.drawImage(boosterPack,175- boosterPack.width * RDX / 2  ,0+(DISPLACE),285*RDX ,418 * RDX)
-        }else if(frame < 35){
-            DISPLACE+= (frame-19)/2 +1
-            ctx.drawImage(boosterPack,175- boosterPack.width * RDX / 2  ,0+(DISPLACE),285*RDX ,418 * RDX)
-        }else{  
-            ctx.drawImage(boosterPack,175- boosterPack.width * RDX / 2  ,0+(DISPLACE),285*RDX ,418 * RDX)
-        }
-
-        if(frame>25){
-            DISPLACE+=1/2            
-            
-            ctx.save()
-            ctx.translate(350, 250);
-            ctx.rotate((30-20)/100+((frame-36 )/ frame / (frame/20)))
-            ctx.translate(-350, -250);
-            ctx.drawImage(stickerA,175- stickerA.width * RDX / 2 + Math.ceil((36-20)/2) +00,   ((frame<30?-frame-20:-50)+50+(.8*(frame-20))) ,250*RDX2 ,250 * RDX2)
-            ctx.rotate(-(30-20)/100+((frame-36) / frame))
-            
-            if(frame>30){
-                ctx.restore()
-                ctx.save()
-                ctx.translate(-100, 250);
-                ctx.rotate(- ((30-20)/100+((frame-36 )/ frame / (frame/20))))
-                ctx.translate(100, -250);
-                ctx.drawImage(stickerB, -(frame-20) + 175- stickerA.width * RDX / 2 + Math.ceil((36-20)/2), 10+ (frame<30?-frame-20:-50)+50+(.8*(frame-20)) ,250*RDX2 ,250 * RDX2)
-                ctx.rotate( ((30-20)/100+((frame-36 )/ frame / (frame/20))))
-            }
-        }
-
-        ctx.restore()
-        
-        if(frame > 35 && frame <= 40){           
-           let  DSP_I= 30
-           let  DSP_E= -20
-           let tDSP =   DSP_I + ( (frame-30)*((DSP_E-DSP_I)/9) )
-           ctx.drawImage(newe, 50 +tDSP, 50 , 50,50 )
-           ctx.drawImage(newe, 250-tDSP ,50 , 50,50 )
-        }
-        if(frame>40){
-            let DSP_I= -20
-            let DSP_E= 0
-            let tDSP = DSP_I + ( (10)*((DSP_E-DSP_I)/10))            
-            if(frame<50){
-                tDSP=   DSP_I + ( (frame-40)*((DSP_E-DSP_I)/10) )
-            }
-            ctx.globalCompositeOperation = "source-over"            
-            ctx.drawImage(newe, 50 +tDSP,50 , 50,50 )
-            ctx.drawImage(newe, 250-tDSP,50 ,50,50 )
-            ctx.globalCompositeOperation = "destination-over"
-        }
-        ctx.fillStyle = "#2266AA"//"#2C2F33"
-        ctx.fillRect(0,0,350,250)
-
-        return ctx;
+    function getRandomSticker(col,exc){
+        let pile = gear.shuffle( stickerData.filter(stk=> stk.series_id == col && stk.id!=exc) );
+        return pile[ gear.randomize(0,pile.length-1) ];
     }
 
+    const stk1    = getRandomSticker(collection);
+    const stk2    = getRandomSticker(collection,stk1.id);
+    const stk1new = userData.modules.stickerInventory.includes(stk1.id);
+    const stk2new = userData.modules.stickerInventory.includes(stk2.id);
 
-    gif.generate(pandemonium);
+    const embed = new gear.Embed;
 
-    gif.once('done', res =>{
-        msg.channel.send('', res)
-    });
+    const thisPack = boosterData.find(b=>b.id===collection+"_booster");
+    P.boostername = thisPack.name;
+    P.dashboard = `[${$t('terms.dashboard',P)}](${paths.CDN}/dashboard#/stickers)`;
+    embed.author( gear.emoji(thisPack.rarity) + $t('interface.booster.title',P) );
+    embed.color = 0x36393f;
+    embed.description= `
+    ------------------------------------------------
+    ${stk1.new?":new:":":record_button:"} ${gear.emoji(stk1.rarity)}  ${stk1.name}
+    ${stk2.new?":new:":":record_button:"} ${gear.emoji(stk2.rarity)}  ${stk2.name}
+ `+"------------------------------------------------\n"+
+    $t('interface.booster.checkStickersAt',P)      
+     
+    embed.image(paths.CDN + `/generators/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}` )
+    embed.thumbnail(paths.CDN + `/build/boosters/showcase/${collection}.png`)
+    embed.footer(msg.author.tag,msg.author.avatarURL)
+
+    msg.channel.send({embed});
 
 
 };
