@@ -21,7 +21,7 @@ const init = async function (message) {
         break;
     }
 
-    let tuser = log.from == "271394014358405121"? (await DB.users.findOne({id:log.to})).meta : (await DB.users.findOne({id:log.from})).meta;
+    let tuser = log.from == "271394014358405121"? (await DB.users.get({id:log.to})).meta : (await DB.users.findOne({id:log.from})).meta;
     embed.author(tuser.tag,('https://www.pollux.fun/images/'+"rubine"+'.png'),"https://pollux.fun/profile/"+log.from)
   console.log(embed.author)
     embed.setColor(log.transaction=="+"?'#60c143':'#e23232')

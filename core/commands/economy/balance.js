@@ -32,7 +32,7 @@ const init = async function (message) {
     const moment = require ('moment');
     moment.locale(message.lang[0])
 
-    const TARGERDATA= await DB.users.findOne({id:Target.id});
+    const TARGERDATA= await DB.users.get({id:Target.id});
     emb.color('#ffd156')
     emb.title(bal)
 

@@ -51,7 +51,7 @@ const  init = async function (msg,options={}) {
   
  delete require.cache[require.resolve("../../archetypes/Lootbox.js")];
   const LOOT = require("../../archetypes/Lootbox.js");
-  let USERDATA = await DB.users.findOne({id:msg.author.id});
+  let USERDATA = await DB.users.get({id:msg.author.id});
 
   
   let thisRoll = (options||{thisroll:0}).thisRoll || 0;
@@ -299,7 +299,7 @@ async function composeItem(currentItem,base,UDATA){
   return item;
 };
 async function drawBox(BOX,message){
-  let UDATA = await DB.users.findOne({id:message.author.id});
+  let UDATA = await DB.users.get({id:message.author.id});
   try{
   const canvas = new Canvas.createCanvas(800, 600);
   const base = canvas.getContext('2d');

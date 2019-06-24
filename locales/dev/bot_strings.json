@@ -26,6 +26,7 @@
         "total":"Total",
         "amount":"Amount",
         "overview":"Overview",
+        "dashboard":"Dashboard",
         "coinHeads": "Heads",
         "coinTails": "Tails",
         "qnt": "Quantity",
@@ -391,6 +392,10 @@
         "generic": { 
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?"
+        },
+        "booster":{
+            "checkStickersAt": "Check your stickers and equip them at the {{dashboard}}"
+            ,"title": "{{boostername}} Stickers Booster"
         },
         "kickban":{
             "waitingForReason" : "waiting for reason input..."

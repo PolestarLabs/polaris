@@ -31,7 +31,7 @@ module.exports = {
          query = {'id':query.toString()};
        };
        if(!typeof alter) resolve (null);
-       return resolve(this.updateOne(query,alter,{upsert:true}));
+       return resolve(this.updateOne(query,alter,{upsert:true}).lean().exec());
      })
    },
 
@@ -41,7 +41,7 @@ module.exports = {
          query = {'id':query.toString()};
        };
        if(!typeof project) project = {_id:0};
-       return resolve(this.findOne(query,project));
+       return resolve(this.findOne(query,project).lean().exec());
      })
    }
 

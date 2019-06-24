@@ -11,7 +11,7 @@ const init = async function (message) {
   try{
     
   setTimeout(f=>  message.author.crafting = false, 25000)
-    //HELP TRIGGER
+  //HELP TRIGGER
     let P={lngs:message.lang,}
     if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
   //------------
@@ -87,7 +87,7 @@ function noteno(item,extra){
   embed.title((crafted_item||{emoji:0}).emoji+" Crafting `: "+crafted_item.name+"`")
     
 
-  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
+  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1}).lean().exec();
   //message.reply("`console res`")
   if(crafted_item){
     let ID = crafted_item.id
