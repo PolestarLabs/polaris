@@ -26,6 +26,7 @@
         "total": "합계",
         "amount": "양",
         "overview": "개요",
+        "dashboard": "대시보드",
         "coinHeads": "앞면",
         "coinTails": "뒷면",
         "qnt": "양",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "그 역할은 이미 목록에 있는 것 같네요.",
             "nosuchrole": "",
             "kbanNone": "나는 금지 할 표적이 필요합니다, 나는 항상 당신을 대신 금지 할 수 있습니다.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "것 같습니다 **{{user}}** 이 없습니다 **{{group}}**",
             "banNone": "나는 금지 할 표적이 필요합니다, 나는 항상 당신을 대신 금지 할 수 있습니다.",
             "unpermB": "이 문제를 처리 할 수있는 권한이없는 것 같습니다.",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

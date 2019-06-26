@@ -26,6 +26,7 @@
         "total": "総合計",
         "amount": "量",
         "overview": "概要",
+        "dashboard": "ダッシュボード",
         "coinHeads": "表",
         "coinTails": "裏",
         "qnt": "量",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "ねえ、ミスター、この役割はすでにここにあります！",
             "nosuchrole": "",
             "kbanNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "**{{user}} **には役割がありません **{{group}}**！",
             "banNone": "私はあなたを禁止します前に、あなたが禁止したい人を教えてください！",
             "unpermB": "ああ、私はこれを処理するのに十分なパーマを持っていないと思います...",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "",
             "confirmDelete": "削除を確認？"
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

@@ -26,6 +26,7 @@
         "total": "W sumie",
         "amount": "Ilość",
         "overview": "Podgląd",
+        "dashboard": "Panel",
         "coinHeads": "Reszka",
         "coinTails": "Orzeł",
         "qnt": "Ilość",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Wydaje mi się, że Rola jest już na liście.",
             "nosuchrole": "Um, nie znalazłam tej roli, proszę wpisz nazwę dokładnie.",
             "kbanNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
+            "cantKickHim": "Oh, obawiam się że nie mogę zrobić tego tej osobie. Nie mogę ranić moich zwierzchników.",
+            "cantKickSelf": "Nie możesz zbanować lub wyrzucić samego siebie, króliczku!",
             "superRoleNope": "Wygląda na to, że **{{user}}** nie ma roli **{{group}}**.",
             "banNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "unpermB": "Wydaje mi się, że nie mam wystarczających uprawnień, aby to przetworzyć.",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
             "confirmDelete": "Potwierdzasz usunięcie?"
+        },
+        "booster": {
+            "checkStickersAt": "Oglądaj swoje naklejki i aktywuj je w {{dashboard}}",
+            "title": "Paczka Nalepek {{boostername}}"
+        },
+        "kickban": {
+            "waitingForReason": "czekam na podanie powodu...",
+            "noReason": "Powód nie został określony. Przerwano",
+            "cancelled": "Anulowane przez moderatora",
+            "userKicked": "*Spokojnie* usunęłam stąd {{user}}.",
+            "kickFlavs": [
+                "Na tyle spokojnie że może powrócić.",
+                "Mam nadzieję że jeszcze umie po tym siadać.",
+                "Nie próbuj tego w domu.",
+                "Żadne zwierzę nie ucierpiało.",
+                "Wszystko będzie z nimi dobrze... Chyba."
+            ],
+            "userBanned": "Właśnie *niezbyt delikatnie* zbanowałam {{user}}. Ta osoba już nigdy nie będzie tu mile widziana,",
+            "userSoftBanned": "Właśnie *delikatnie* zbanowałam {{user}}. Niestety nie mogę kompletnie wymazać tej osoby,",
+            "banFlavs": [
+                "Mam nadzieję że nadepnie na LEGO.",
+                "teraz możesz się z niego pośmiać.",
+                "kto jest następny?",
+                "nie bądźcie jak ta osoba, dzieci."
+            ],
+            "includeReason": "Zapomniałeś powiedzieć mi *dlaczego* ta osoba jest karana.\nOpisz powód poniżej: `(20s)`",
+            "userKickError": "Coś poszlo nie tak, oof."
         },
         "feed": {
             "newYoutube": "**{{tuber}} właśnie wrzucił filmik!** Obejrzyj go tu:",

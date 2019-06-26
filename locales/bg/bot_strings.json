@@ -26,6 +26,7 @@
         "total": "Общо",
         "amount": "Брой на",
         "overview": "Преглед",
+        "dashboard": "Табло",
         "coinHeads": "Ези",
         "coinTails": "Тура",
         "qnt": "Количество",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Извинете господине, но тази роля е вече добавена!",
             "nosuchrole": "",
             "kbanNone": "Имам нужда от човек, който да го изгони, но винаги мога да ви изгоря",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "**{{user}}** няма тази роля: **{{group}}**!",
             "banNone": "Имам нужда от човек, който да го изгони, но винаги мога да ви изгоря",
             "unpermB": "Изглежда, че нямам разрешение да направя това.",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

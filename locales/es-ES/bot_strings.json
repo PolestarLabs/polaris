@@ -26,6 +26,7 @@
         "total": "",
         "amount": "Cantidad",
         "overview": "Resumen",
+        "dashboard": "Panel de Control",
         "coinHeads": "Cara",
         "coinTails": "Cruz",
         "qnt": "Cantidad",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Parece que ese Rol ya está en la lista.",
             "nosuchrole": "",
             "kbanNone": "Dime en el culo de quien voy a enterrar este martillo, ¡antes de que lo haga en el tuyo!",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "**{{user}}** no tiene el Rol de **{{group}}**!",
             "banNone": "Dime en el culo de quien voy a enterrar este martillo, ¡antes de que lo haga en el tuyo!",
             "unpermB": "Aw, supongo que no tengo suficientes permisos para proceder con esto... ",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "Haga clic en ✔ para confirmar su elección o ✖ para cancelar.",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

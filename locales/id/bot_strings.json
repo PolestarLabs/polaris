@@ -26,6 +26,7 @@
         "total": "",
         "amount": "",
         "overview": "",
+        "dashboard": "",
         "coinHeads": "",
         "coinTails": "",
         "qnt": "",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "_Role_ itu sudah ada di daftar.",
             "nosuchrole": "",
             "kbanNone": "Banned siapa? Aku bisa saja banned kamu.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "Sepertinya **{{user}}** belum mendapatkan Role **{{group}}**",
             "banNone": "Banned siapa? Aku bisa saja banned kamu.",
             "unpermB": "Aku tidak memiliki akses untuk memproses ini.",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
