@@ -2,12 +2,13 @@ module.exports = function emoji(moji){
 
     const emojibank={
     //POLLUX ORIGINAL
-  
+    
     //ITEMS
     loot: '<:loot:339957191027195905> '
-  
-      //SUPER UI MOJIS
-  
+    
+    //SUPER UI MOJIS
+    
+    ,loading: '<a:waitafuckingmoment:590604600319672341> '
       ,
     rubine: '<:rubine:367128893372760064> ',
     sapphire: '<:sapphire:367128894307827712> ',
@@ -277,12 +278,12 @@ module.exports = function emoji(moji){
 
     
 
-    Rdek:"<:Rdek:586965255670988810> ",
-    Cdek:"<:Cdek:586965252399300628> ",
-    URdek:"<:URdek:586965252843765800> ",
-     Udek:"<:Udek:586965252034396183> ",
-     XRdek:"<:XRdek:586965252650827789> ",
-     SRdek:"<:SRdek:586965253066326026> ",
+    Rdek:"<:Rdek:586968935514112002> ",
+    Cdek:"<:Cdek:586968935837204501> ",
+    URdek:"<:URdek:586968936105377811> ",
+     Udek:"<:Udek:586968935883210785> ",
+     XRdek:"<:XRdek:586968935967096832> ",
+     SRdek:"<:SRdek:586968935648329729> ",
 
 
 

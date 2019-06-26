@@ -12,7 +12,7 @@ module.exports={
     ,pub:true
     ,cmd:'ross'
     ,perms:3
-    ,cat:'fun'
+    ,cat:'img'
     ,botPerms:['attachFiles']
     ,aliases:[]
 }

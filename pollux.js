@@ -45,8 +45,8 @@ const colors = require('colors');
 //console.log = function(){}
 
 const SHARDS_PER_CLUSTER = 1
-const CLUSTER_ID = parseInt(process.env.CLUSTER_ID)
-const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS)
+const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0
+const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1
 
 const POLLUX = new Eris(cfg.token,{
 
@@ -82,8 +82,8 @@ POLLUX.blackListedUsers = [];
 POLLUX.blackListedServers = [];
 POLLUX.updateBlacklists = (DB) =>{
   return Promise.all([
-    DB.users.find({'blacklisted':{$exists:true}},{id:1,_id:0}),
-    DB.servers.find({'blacklisted':{$exists:true}},{id:1,_id:0})
+    DB.users.find({'blacklisted':{$exists:true}},{id:1,_id:0}).lean().exec(),
+    DB.servers.find({'blacklisted':{$exists:true}},{id:1,_id:0}).lean().exec()
   ]).then( (users,servers) => {
     POLLUX.blacklistedUsers = (users||[]).map(usr=>usr.id);
     POLLUX.blacklistedServers = (servers||[]).map(svr=>svr.id);

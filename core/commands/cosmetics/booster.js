@@ -1,0 +1,66 @@
+const gear = require('../../utilities/Gearbox');
+const Picto = require('../../utilities/Picto.js');
+const DB = require('../../database/db_ops');
+const fs = require('fs')
+
+const init = async function (msg) {
+
+    let P={lngs:msg.lang,}
+    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,msg,opt:this.cat}))return;
+
+
+    const [userData,stickerData,boosterData] = await Promise.all([
+        DB.users.get(msg.author.id),
+        DB.cosmetics.find({type:'sticker'}),
+        DB.items.find({type:'boosterpack'}),
+    ]);
+    const collection = msg.args[0];
+
+    if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
+
+    function getRandomSticker(col,exc){
+        let pile = gear.shuffle( stickerData.filter(stk=> stk.series_id == col && stk.id!=exc) );
+        return pile[ gear.randomize(0,pile.length-1) ];
+    }
+
+    const stk1    = getRandomSticker(collection);
+    const stk2    = getRandomSticker(collection,stk1.id);
+    const stk1new = userData.modules.stickerInventory.includes(stk1.id);
+    const stk2new = userData.modules.stickerInventory.includes(stk2.id);
+
+    const embed = new gear.Embed;
+
+    const thisPack = boosterData.find(b=>b.id===collection+"_booster");
+    P.boostername = thisPack.name;
+    P.dashboard = `[${$t('terms.dashboard',P)}](${paths.CDN}/dashboard#/stickers)`;
+    embed.author( gear.emoji(thisPack.rarity) + $t('interface.booster.title',P) );
+    embed.color = 0x36393f;
+    embed.description= `
+    ------------------------------------------------
+    ${stk1.new?":new:":":record_button:"} ${gear.emoji(stk1.rarity)}  ${stk1.name}
+    ${stk2.new?":new:":":record_button:"} ${gear.emoji(stk2.rarity)}  ${stk2.name}
+ `+"------------------------------------------------\n"+
+    $t('interface.booster.checkStickersAt',P)      
+     
+    embed.image(paths.CDN + `/generators/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}` )
+    embed.thumbnail(paths.CDN + `/build/boosters/showcase/${collection}.png`)
+    embed.footer(msg.author.tag,msg.author.avatarURL)
+
+    msg.channel.send({embed});
+
+
+};
+
+
+module.exports = {
+    init
+    , pub: true
+    , cmd: 'booster'
+    , perms: 3
+    , cat: 'cosmetics'
+    , botPerms: ['attachFiles', 'embedLinks']
+    , aliases: []
+}
+
+
+

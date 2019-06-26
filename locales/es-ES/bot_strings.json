@@ -150,11 +150,11 @@
                 "yatta": [
                     "¡Yay!",
                     "¡Oh si!",
-                    "¡Bien!.",
+                    "¡Bien!",
                     "¡Genial!",
                     "¡Bien!",
                     "¡Genial!",
-                    "¡Genial!",
+                    "¡Guay!",
                     "¡Encantador!",
                     "¡Perfecto!",
                     "¡Asombroso!"
@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Haga clic en ✔ para confirmar su elección o ✖ para cancelar."
+            "clicktoconfirm": "Haga clic en ✔ para confirmar su elección o ✖ para cancelar.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Roles Auto-asignables para este Servidor",
         "daily": {

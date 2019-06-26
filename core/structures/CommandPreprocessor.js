@@ -3,7 +3,7 @@ const i18node = require(appRoot+'/utils/i18node');
 const cfg = require(appRoot+'/config.json');
 
 
-exports.run = async (message,payload) => {
+exports = async (message,payload) => {
 
 
   

@@ -248,7 +248,7 @@ autoHelper: function autoHelper(trigger,options){
   modPass: function modPass(member,extra,sData=false){
     if(sData){
         if(sData.modules.MODROLE){
-            if(member.hasRole(Data.modules.MODROLE)) return true;
+            if(member.hasRole(sData.modules.MODROLE)) return true;
         }
     };
     if(member.permission.has('manageGuild')||member.permission.has('administrator')){

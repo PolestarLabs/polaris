@@ -70,13 +70,13 @@ module.exports = async function (msg) {
 async function dataChecks(type,ent){
     return new Promise(async resolve =>{
       if(type==="user"){
-        DB.users.findOne({id:ent.id}, {id:1,blacklisted:1} ).then(user=>{
+        DB.users.findOne({id:ent.id}, {id:1,blacklisted:1} ).lean().exec().then(user=>{
           if(!user) return resolve(DB.users.new(ent));
           return resolve(user);
         });
       };
       if(type==="server"){
-        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1} ).then(server=>{
+        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1} ).lean().exec().then(server=>{
           if(!server) return resolve(DB.servers.new(ent));
           return resolve(server);
         });
@@ -124,9 +124,9 @@ async function commandResolve(msg,cacheUpdates,garbageC){
       msg.addReaction(":BLACKLISTED_USER:406192511070240780");
       return void garbageC();
     }
-    Preprocessor.run(msg, {});
+    Preprocessor(msg, {}).catch(e=>null);
     
   }else{
-    meSubs.run(msg);
+    meSubs(msg);
   };
 }

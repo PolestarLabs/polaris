@@ -10,10 +10,12 @@ const Picto = require(appRoot + '/core/utilities/Picto');
 var init = async function (message) {
 
     let [BGBASE,MEDALBASE] = await Promise.all ( [ 
-        DB.cosmetics.find({type:'background',rarity:{$ne:"XR"},exclusive:{$exists:false},$or:[{buyable:true},{synth:true} ] }),
-        DB.cosmetics.find({type:'medal',rarity:{$ne:"XR"},exclusive:{$exists:false},$or:[{buyable:true},{synth:true} ] })
+        DB.cosmetics.find({type:'background',rarity:{$ne:"XR"},exclusive:{$exists:false},$or:[{buyable:true},{synth:true} ] }).lean().exec(),
+        DB.cosmetics.find({type:'medal',rarity:{$ne:"XR"},exclusive:{$exists:false},$or:[{buyable:true},{synth:true} ] }).lean().exec()
       //  DB.cosmetics.find({type:'background',rarity:{$ne:"XR"},exclusive:{$exists:false},$or:[{buyable:true},{synth:true} ] })
     ]);
+
+    console.log(1)
 
     const MSG = message.content
     let args = message.args.slice(1).join(' ');
@@ -38,7 +40,7 @@ var init = async function (message) {
 
     let operation = message.args[0] || "bg";
     let target = message.args[1] || "random";
-    const userData = await DB.users.get(message.author.id);
+    const userData = await DB.users.findOne({id:message.author.id});
     const embed = new gear.Embed;
     let hasIt, affordsIt, canBuy, payCoin, selectedItem, positive,obtainable;
 
@@ -82,9 +84,9 @@ var init = async function (message) {
 
         /* EMBED BUILD payCoin */
 
-        embed.author("Cosmetic Item Synthesis", "https://pollux.fun/images/tiers/" + selectedItem.rarity + ".png");
+        embed.author("Cosmetic Item Synthesis", paths.CDN+"/images/tiers/" + selectedItem.rarity + ".png");
         embed.description = `
-   **${ selectedItem.name}**  \`${ selectedItem.code}\` **[\`INFO\`](https://pollux.fun/bgshop "Background Shop" )**
+   **${ selectedItem.name}**  \`${ selectedItem.code}\` **[\`INFO\`](${paths.CDN}/bgshop "Background Shop" )**
   `
 
 
@@ -99,10 +101,10 @@ var init = async function (message) {
             }
         }
 
-        let imageLink = "https://pollux.fun/backdrops/" + selectedItem.code + ".png";
+        let imageLink = paths.CDN+"/backdrops/" + selectedItem.code + ".png";
         const [synthBoard,synthCircle,bgImage] = await Promise.all([ 
-            Picto.getCanvas(appRoot+"/resources/imgres/build/synthesis/frame.png"),
-            Picto.getCanvas(appRoot+"/resources/imgres/build/synthesis/"+ (obtainable?("circle_"+selectedItem.rarity):"nosynth" )+".png"),
+            Picto.getCanvas(paths.CDN+"/build/synthesis/frame.png"),
+            Picto.getCanvas(paths.CDN+"/build/synthesis/"+ (obtainable?("circle_"+selectedItem.rarity):"nosynth" )+".png"),
             Picto.getCanvas(imageLink)
         ]);
 
@@ -153,9 +155,9 @@ var init = async function (message) {
 
         /* EMBED BUILD payCoin */
 
-        embed.author("Cosmetic Item Synthesis", "https://pollux.fun/images/tiers/" + selectedItem.rarity + ".png");
+        embed.author("Cosmetic Item Synthesis", paths.CDN + "/images/tiers/" + selectedItem.rarity + ".png");
         embed.description = `
-   **${ selectedItem.name}**  \`${ selectedItem.icon}\` **[\`INFO\`](https://pollux.fun/medalshop "Medal Shop" )**
+   **${ selectedItem.name}**  \`${ selectedItem.icon}\` **[\`INFO\`](${paths.CDN}/medalshop "Medal Shop" )**
   `
         if (hasIt) {
             embed.footer( "You already have this Medal.");
@@ -168,10 +170,10 @@ var init = async function (message) {
             }
         }
 
-        let imageLink = "https://pollux.fun/medals/" + selectedItem.icon + ".png";
+        let imageLink = paths.CDN + "/medals/" + selectedItem.icon + ".png";
         const [synthBoard,synthCircle,mdlImage] = await Promise.all([ 
-            Picto.getCanvas(appRoot+"/resources/imgres/build/synthesis/frame_medal.png"),
-            Picto.getCanvas(appRoot+"/resources/imgres/build/synthesis/"+ (obtainable?("circle_"+selectedItem.rarity):"nosynth" )+".png"),
+            Picto.getCanvas(paths.CDN+"/build/synthesis/frame_medal.png"),
+            Picto.getCanvas(paths.CDN+"/build/synthesis/"+ (obtainable?("circle_"+selectedItem.rarity):"nosynth" )+".png"),
             Picto.getCanvas(imageLink)
         ]);
         embed.setColor(await Picto.avgColor(imageLink));

@@ -380,7 +380,32 @@
     },
     "interface": {
         "generic": {
-            "clicktoconfirm": "Hace clic en ✔ para confirmar o ✖ para cancelar."
+            "clicktoconfirm": "Hace clic en ✔ para confirmar o ✖ para cancelar.",
+            "confirmDelete": ""
+        },
+        "feed": {
+            "newYoutube": "",
+            "noDefault": "",
+            "urlPresent": "",
+            "noFeed": "",
+            "noTube": "",
+            "noTwitch": "",
+            "stateIDorURL": "",
+            "listRemove": "",
+            "channelUpdate": "",
+            "invalidRSS": "",
+            "invalidTwitch": "",
+            "invalidYoutube": "",
+            "listShowRSS": "",
+            "listShowTwitch": "",
+            "listShowYoutube": "",
+            "savedSubLastRSS": "",
+            "savedSubLastTwitch": "",
+            "savedSubLastYoutube": "",
+            "feedLimitRSS": "",
+            "feedLimitTwitch": "",
+            "feedLimitYoutube": "",
+            "donateToIncrease": ""
         },
         "autoRolesforThis": "Roles Auto-asignables para este Servidor",
         "daily": {
