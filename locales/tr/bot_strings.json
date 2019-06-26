@@ -26,6 +26,7 @@
         "total": "Toplam",
         "amount": "Miktar",
         "overview": "Genel Bakış",
+        "dashboard": "Panel",
         "coinHeads": "Tura",
         "coinTails": "Yazı",
         "qnt": "Nicelik",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
             "nosuchrole": "Şey, bu rolü bulamadım, rolün ismini harfi harfine yaz, lütfen.",
             "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
             "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

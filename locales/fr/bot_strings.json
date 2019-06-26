@@ -26,6 +26,7 @@
         "total": "Total",
         "amount": "Montant",
         "overview": "Vue générale",
+        "dashboard": "Tableau de bord",
         "coinHeads": "Faces",
         "coinTails": "Piles",
         "qnt": "Quantité",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Eh, oh, môssieur, ce rôle existe déjà!",
             "nosuchrole": "Mmmhh... Je n'ai pas pu trouver ce grade... Fais attention à la casse.",
             "kbanNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
+            "cantKickHim": "Je ne peux pas faire ceci à cette personne. Je suis défendue de nuire mes supérieurs.",
+            "cantKickSelf": "Tu ne peux pas t'enlever ni exclure!",
             "superRoleNope": "**{{user}}** n'a pas le rôle **{{group}}**!",
             "banNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
             "unpermB": "Ah, à priori je n'ai pas assez de permissions pour faire ceci...",
@@ -359,18 +362,18 @@
         "commend": {
             "noSelf": "Non, je refuse de vous féliciter. Vous devriez en avoir honte !",
             "give": "**{{author}}** recommande par la présente **{{target}}** à la dépense d'un jeton.",
-            "totals": "",
-            "topcom": "",
-            "cooldown": "",
-            "check_no": "",
-            "check_yes": "",
-            "noItem": "",
+            "totals": "{{target}} a été loué **{{cmcount}} fois** jusqu'à présent par **{{pplcount}} gens différents**",
+            "topcom": "Les plus grands souteneurs de {{target}} sont:",
+            "cooldown": "Vous avez déjà épuisé votre louange, essayez à nouveau en {{remaining}}",
+            "check_no": "Votre prochain louange peut être fait en {{remaining}}",
+            "check_yes": "Tu peux encore louer maintenant si t'as des jetons disponibles!",
+            "noItem": "T'as besoin d'un jeton de louage, et t'en n'as pas. T'en as besoin de louer quelqu'un.",
             "commendationLimit": ""
         },
         "crafting": {
             "noitem": "Je n'ai pas pu trouver cet article",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
+            "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?"
         },
         "misc": {
             "memberSince": "{{target}} est membre depuis: {{joinedstamp}} ",
@@ -381,31 +384,58 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler.",
-            "confirmDelete": ""
+            "confirmDelete": "Affirmer la suppression?"
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "en attente de l'entrée de la raison...",
+            "noReason": "Aucune raison n'a été spécifiée. Annulée",
+            "cancelled": "Annulé par le modérateur",
+            "userKicked": "J'ai enlevé {{user}} **gentiment** d'ici.",
+            "kickFlavs": [
+                "Assez gentillement pour les laisser y retourner.",
+                "J'espère qu'ils pourront encore s'asseoir après cela.",
+                "Les enfants, ne faîtes pas ça chez vous!",
+                "Aucun animal n'a été nui.",
+                "Ils survivront... Je pense."
+            ],
+            "userBanned": "J'ai exclu {{user}} *pas-aussi-gentiment.** Cette personne n'est plus invitée ici,",
+            "userSoftBanned": "J'ai exclu {{user}} **gentiment**. Raté, je n'ai pas pu complètement l'anéantir",
+            "banFlavs": [
+                "J'espère qu'ils marchent sur les LEGO.",
+                "Tu peux maintenant les moquer.",
+                "Qui est le prochain?",
+                "Ne les ressemblez pas{{'them' refers to 'this person'}}, les enfants."
+            ],
+            "includeReason": "T'as oublié de me dire *pourquoi* cette personne est punie. \nDéclare la raison ci-dessous: `(20s)`",
+            "userKickError": "Une erreur s'est produite, ouf."
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
-            "urlPresent": "",
-            "noFeed": "",
-            "noTube": "",
-            "noTwitch": "",
-            "stateIDorURL": "",
-            "listRemove": "",
-            "channelUpdate": "",
-            "invalidRSS": "",
-            "invalidTwitch": "",
-            "invalidYoutube": "",
-            "listShowRSS": "",
-            "listShowTwitch": "",
-            "listShowYoutube": "",
-            "savedSubLastRSS": "",
-            "savedSubLastTwitch": "",
-            "savedSubLastYoutube": "",
-            "feedLimitRSS": "",
-            "feedLimitTwitch": "",
-            "feedLimitYoutube": "",
-            "donateToIncrease": ""
+            "newYoutube": "***{{tuber}} a publié un nouveau vidéo!** Aller la voir ici:",
+            "noDefault": "Tu ne m'a pas dit à quel canal afficher et il n'y a pas non plus de chaîne par défaut.",
+            "urlPresent": "Je surveille déjà les messages de celui-ci, alors je vais changer le salon de destination~",
+            "noFeed": "Il n'a aucun fil RSS configuré dans ce serveur",
+            "noTube": "Il n'y a aucun alertes YouTube configurées dans ce serveur",
+            "noTwitch": "Il n'y a aucun alertes Twitch configurées dans ce serveur",
+            "stateIDorURL": "T'as oublié de me donner un identifiant ou URL à enlever d'ici. Vérifie la liste `{{prefix}}{{command}}` si t'as les oublié~",
+            "listRemove": "Pour en enlever un, essaye `{{prefix}}{{command}} remove [# d'Indexe]`",
+            "channelUpdate": "J'ai défini le canal d'affichage défaut à {{channelID}}!",
+            "invalidRSS": "Hé, il ne s'agit pas d'une adresse RSS valide ! Assure-toi que tu le fais correctement.",
+            "invalidTwitch": "Hélas, il n'existe pas un compte Twitch de ce nom. Vérifie attentivement ce que tu tapes!",
+            "invalidYoutube": "Ouais, ça ne ressemble pas à un canal YouTube. Au moins, à partir de mes connaissances...",
+            "listShowRSS": "Liste de fils RSS pour ce serveur",
+            "listShowTwitch": "Diffusions Twitch affichés dans ce serveur",
+            "listShowYoutube": "Nouvelles alertes YouTube pour ce serveur",
+            "savedSubLastRSS": "**Sauvegardé!** - Soumettant les derniers messages de ce fil à {{channelID}}. Les suivants vont être verifiés à chaque **30 minutes**",
+            "savedSubLastTwitch": "**Sauvegardé!** - Une alerte va être affichée à {{channelID}} quand ce salon est en directe. Vérifié à chaque **15 minutes**",
+            "savedSubLastYoutube": "**Sauvegardé!** - Soumettant la dernière vidéo de ce salon à {{channelID}}. Vérifié à chaque **1 heure**",
+            "feedLimitRSS": "Ce serveur ne peut avoir que **5** fils RSS à la fois.",
+            "feedLimitTwitch": "Ce serveur ne peut suivre que **2** comptes Twitch à la fois.",
+            "feedLimitYoutube": "Ce serveur ne peut suivre que **1** canal YouTube à la fois.",
+            "donateToIncrease": "Si vous avez besoin d'une limite supérieure, considérez [Donating]({{donationLink}}) ou [applying for Pollux Partnership]({{partnershipLink}})"
         },
         "autoRolesforThis": "Rôles auto-assibles sur ce serveur.",
         "daily": {
@@ -414,7 +444,7 @@
             "streakcurr": "Série courante:",
             "expirestr": "Temps à l'expiration:",
             "dailyStreakJades": "{{emoji}} Et voici **+1000 Jades** d'extra pour 3 jours d'affilée! Youpi!",
-            "dailyStreakSapphs": "",
+            "dailyStreakSapphs": "{{emoji}} **+1 saphir** pour 250 quotidiens continus!",
             "availableDaily": "Maintenant disponible!"
         },
         "nuke": {
@@ -429,18 +459,18 @@
 
         },
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
+            "reactrolesfor": "Rôles de réaction pour {{server}}",
+            "removeAll": "J'ai supprimé tout régistres de réaction d'ici. Tu dois effacer à main les réactions propres des messages.",
+            "removed": "Cette réaction a été supprimé~",
+            "noroleshere": "Il n'y a aucun role de réaction pour ce serveur.",
+            "removedAllFrom": "Supprimé toutes les réactions de {{ID}}~",
             "noReactionDel": "",
-            "success": ""
+            "success": "Les rôles de réaction seront vus dans ce message :"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
+            "picking": "Sélection... {{as in 'picking from a list'}}",
+            "complete": "Fini!",
+            "lessthan2": "J'ai besoin d'au moins deux choses à choisir...",
             "ichoose": ""
         },
         "help": {

@@ -26,6 +26,7 @@
         "total": "",
         "amount": "數量",
         "overview": "概要",
+        "dashboard": "儀表板",
         "coinHeads": "人頭那面",
         "coinTails": "字的那面",
         "qnt": "數量",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "看來這個身分組早就在名單上了",
             "nosuchrole": "",
             "kbanNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "**{{user}}**並沒有**{{group}}**身分組！",
             "banNone": "告訴我要ban誰，不然我就用制裁之錘敲你",
             "unpermB": "喔，少年...我想你的權限不夠...",
@@ -382,6 +385,33 @@
         "generic": {
             "clicktoconfirm": "",
             "confirmDelete": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",

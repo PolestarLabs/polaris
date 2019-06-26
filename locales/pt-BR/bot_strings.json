@@ -26,6 +26,7 @@
         "total": "Total",
         "amount": "Quantidade",
         "overview": "Geral",
+        "dashboard": "Painel",
         "coinHeads": "Cara",
         "coinTails": "Coroa",
         "qnt": "Quantidade",
@@ -108,6 +109,8 @@
             "roleAlreadyHere": "Ei, desculpa, esse Cargo já está incluído!",
             "nosuchrole": "Oxe, não consegui achar esse cargo. Digite o nome certinho, por favorzinho.",
             "kbanNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
+            "cantKickHim": "",
+            "cantKickSelf": "Você não pode banir ou expulsar a si mesmo, bobinho!",
             "superRoleNope": "**{{user}}** não faz parte do Cargo **{{group}}**!",
             "banNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "unpermB": "Rapaz, acho que não tenho Permissões para processar este comando.",
@@ -383,6 +386,33 @@
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
             "confirmDelete": "Confirmar exclusão?"
         },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "ainda esperando pela razão...",
+            "noReason": "Nenhuma razão especificada. Cancelado.",
+            "cancelled": "Cancelado pelo moderador",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "Espero que ainda consiga sentar depois disso.",
+                "Não tentem isso em casa, crianças.",
+                "Nenhum animal foi machucado.",
+                "Nada que um pouco de xarope não resolva... Eu acho."
+            ],
+            "userBanned": "",
+            "userSoftBanned": "Eu *gentilmente* botei {{user}} pra fora daqui. É uma pena que não consegui obliterá-lo totalmente,",
+            "banFlavs": [
+                "Espero que essa criatura mentecapta pise em um LEGO.",
+                "agora vocês podem zoar esse a*ban*tesma.",
+                "quem é o próximo?",
+                "não sejam como esse estrupício, crianças."
+            ],
+            "includeReason": "Você se esqueceu de me dizer o *porquê* dessa pessoa estar sendo punida.\nEscreva a razão abaixo: `(20s)`",
+            "userKickError": "Algo deu errado, vish."
+        },
         "feed": {
             "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
             "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
@@ -458,7 +488,7 @@
             "curr_info": "Informações de Economia",
             "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.   \n        \n    • Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox**.\n​\n",
             "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`daily`), Lacais (`+box`) e Joguinhos (`+blackjack`, `+slots`, etc.). Além de trocas com outros usuários, assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de `+daily` de 10 dias.\n \n",
-            "jades_desc": " *\"Moeda\" de Crafting: eu uso essas frágeis gemas – sem valor além disso – para criar itens especiais, só pra você!*\n        Pode ser obtida de Lootboxes, destruindo itens, doando ou comprando.",
+            "jades_desc": " *\"Moeda\" de Crafting: eu uso essas gemas delicadas – sem uso além desse – para criar itens especiais, só pra você!*\n        Podem ser obtidas por Lootboxes, destruindo itens, doando ou comprando.",
             "sapphires_desc": "*Moeda Premium: fragmentos azul-vibrante das melhores gemas de Safira, usadas pra criar itens ou como moeda para comprar coisinhas exclusivas!*\n        Só pode ser obtida com doações, sendo compradas individualmente, ou por eventos especiais. Você ganha uma Safira a cada 200 ou 365 Dailies, e há uma chance de 0.1% de ganhá-las em Lootboxes Ultra Raras.",
             "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **` Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`** \n",
             "end": "\n**A lista de Comandos completa pode ser achada em <https://pollux.gg/command>**\n\nVeja nossas Parceiros em: **<https://pollux.gg/partners>**\nVeja ou envie artes criadas for fãs em: **<https://pollux.gg/fanart>**\nVeja seu perfil público em: **<https://pollux.gg/profile/me>**\n\n**Cosméticos**\nLoja de planos de fundo: **https://pollux.gg/bgshop**\nLoja de medalhas: **https://pollux.gg/medalshop**\nOficina de Criação: **https://pollux.gg/crafting**\nStickers virtuais: **<https://pollux.gg/stickers>** (para stickers físicos, cheque o Servidor de Suporte)\nInformações sobre eventos: **<https://pollux.gg/events>**\n\nMe apoie em **<https://patreon.com/Pollux>** ou **<https://pollux.gg/donate>**\nMe siga no Twitter: **<https://twitter.com/maidPollux>**\n\n◉◎◈◎◉\n\n**Para outros assuntos, cheque o __Dashboard__: <https://pollux.gg/dashboard>**\nOu entre no meu servidor de suporte: **​ https://discord.gg/rEBCccS ​**\nMe convide para o seu servidor em: **<https://pollux.gg/invite>**\n"
