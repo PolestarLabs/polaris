@@ -1,5 +1,5 @@
 const RSSembedGenerator = require('../commands/utility/rss.js').embedGenerator;
-const rq = require('request')
+const axios = require('axios')
 const { readFileSync } = require('fs');
 const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
@@ -160,58 +160,50 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
         svFd.feeds.forEach(async feed => {
           
           if (feed.type === 'rss'){
-            const data = await parser.parseURL(feed.url);
+            const data = await parser.parseURL(feed.url).timeout(120).catch(e=>null);
             if (data.items[0] && feed.last.guid != data.items[0].guid) {
               const embed = await RSSembedGenerator(data.items[0],data);
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] });
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] }).timeout(100).catch(e=>null);
+
               POLLUX.getChannel(feed.channel).send({embed});
             }        
           }
           
           if (feed.type === 'twitch'){
-            const thisFeed = feed
-            const options = { 
-              method: 'GET', url: 'https://api.twitch.tv/helix/streams', qs: { user_login: feed.url },
-              headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch }
-            };
-            rq(options, function (err, res, body) {
-              if (err) throw new Error(err);
-              const StreamData = JSON.parse(body).data[0];
-              if(
-                !(
-                  thisFeed.last.type === StreamData.type &&
-                  thisFeed.last.title === StreamData.title 
+            const thisFeed = feed            
+            let response = await axios.get('https://api.twitch.tv/helix/streams?user_login'+=thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);            
+            const StreamData = response.data[0];
+            if(
+              !(
+                thisFeed.last.type === StreamData.type &&
+                thisFeed.last.title === StreamData.title &&
+                thisFeed.last.started_at === StreamData.started_at
                 )
-              ){
-                let opts = { 
-                  method: 'GET', url: 'https://api.twitch.tv/helix/users', qs: { login: thisFeed.url },
-                  headers:{ 'Client-ID': 'pxft8d1oya7iwgh7br053z9ezjgfno' } 
-                };
-                rq(opts, async function (err, res, bod) {
-                  if (err) throw new Error(rr);
-                  const streamer = JSON.parse(bod).data[0];
-                  const embed = new gear.Embed;
-                        embed.thumbnail(streamer.profile_image_url);
-                        embed.author(StreamData.title);
-                        embed.image(StreamData.thumbnail_url.replace('{width}','400').replace('{height}','240'));
-                        embed.timestamp(StreamData.started_at);
-                        embed.color("#6441A4");
-                  const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
-                  const ping = thisFeed.pings || svFd.pings || '';
-                  await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData});
-                  POLLUX.getChannel(thisFeed.channel).send({
-                    content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
-                    ,embed
-                  });
-                });
-              }
-            });
-          } 
+            ){
+              let response = await axios.get('https://api.twitch.tv/helix/users?login'+=thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);
+              const streamer = response.data[0];
+              const embed = new gear.Embed;
+                    embed.thumbnail(streamer.profile_image_url);
+                    embed.author(StreamData.title);
+                    embed.image(StreamData.thumbnail_url.replace('{width}','400').replace('{height}','240'));
+                    embed.timestamp(StreamData.started_at);
+                    embed.color("#6441A4");
+              const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
+              const ping = thisFeed.pings || svFd.pings || '';
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData}).timeout(100).catch(e=>null);
+
+              POLLUX.getChannel(thisFeed.channel).send({
+                content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
+                ,embed
+              });        
+            }
+          }
+
           if (feed.type === 'youtube'){
             const thisFeed = feed
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
             //const data = await  getYTData(thisFeed.url,cfg.google);
-            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url)
+            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url).timeout(120).catch(e=>null);
             if (data && data.items[0] && thisFeed.last.link !== data.items[0].link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
