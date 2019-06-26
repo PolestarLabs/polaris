@@ -124,9 +124,9 @@ async function commandResolve(msg,cacheUpdates,garbageC){
       msg.addReaction(":BLACKLISTED_USER:406192511070240780");
       return void garbageC();
     }
-    Preprocessor.run(msg, {});
+    Preprocessor(msg, {}).catch(e=>null);
     
   }else{
-    meSubs.run(msg);
+    meSubs(msg);
   };
 }
