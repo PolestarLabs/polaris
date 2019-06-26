@@ -1,4 +1,4 @@
-const axios = require('axios' )
+const axios = require('axios')
 const {randomize} = require('../utilities/Gearbox')
 
 module.exports = {

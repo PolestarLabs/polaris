@@ -4,7 +4,12 @@ const YesNo = require('../../structures/YesNo');
 const axios = require('axios');
 
 const googleToken = require(appRoot+'/config.json').google;
-
+let RSS = require('rss-parser');
+let parser = new RSS({
+  customFields:{
+    item: [['media:group','media']]
+  }
+});
 
 const init = async function (msg){
     
@@ -26,40 +31,32 @@ const init = async function (msg){
         let destination = msg.channelMentions[0]
 
 
-        let youtubeChannel = await getYTData(channelID,googleToken);
-        if(!youtubeChannel) youtubeChannel =   
-        await getYTData(
-            (
-                await axios.get(`https://www.googleapis.com/youtube/v3/channels?key=${googleToken}&forUsername=${channelID}&part=id&maxResults=1`)
-                .then(res=>{channelID = res.data.items[0].id; return channelID;})
-                .catch(e=>null)
-            )
-            ,googleToken
-        );
+        let youtubeChannel = await parser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+channelID).catch(e=>false);
 
         if(!youtubeChannel) return msg.channel.send( $t('interface.feed.invalidYoutube',P)  );
 
         channel = destination || feedData.defaultChannel;
-        if(!channel) return msg.channel.send( $t('interface.feed.noDefault',P) );
+        if(!channel) return msg.channel.send( $t('interface.feed.noDefault',P) );       
         
-        
-        let payload = {type: "youtube", url: channelID, last: youtubeChannel.items.filter(v=>v.id.kind=="youtube#video")[0], channel: channel};
+        let payload = {type: "youtube", url: channelID, last: youtubeChannel.items[0], channel: channel};
 
         if(feedData && feedData.feeds.find(fdd=> fdd.url == channelID)){
             await DB.feed.set({server:msg.guild.id,'feeds.url':channelID},{'feeds.$.channel':channel });
             return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
+        let embed = await feedEmbed(payload.last,youtubeChannel );
+        payload.last.media = null;
+        console.log(payload)
         await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
-
-
         
-        let embed = await feedEmbed(payload.last,youtubeChannel.items.find(it=>it.id.kind=="youtube#channel"));
+
         P.tuber = embed.author.name;
+        console.log(embed.author)
         let LastVideoLink = `
-        ${$t("interface.feed.newYoutube",`**${P.tuber} has posted a new video!** Check it out at:`,P)}
-        https://youtube.com/watch?v=${payload.last.id.videoId}`
+        ${$t("interface.feed.newYoutube", P)}
+        ${payload.last.link}`
         P.channelID = `<#${channel}>`
-        msg.channel.send(gear.emoji("yep")+ $t('interface.feed.savedSubLastRSS',P) );
+        msg.channel.send(gear.emoji("yep")+ $t('interface.feed.savedSubLastYoutube',P) );
 
         
         return  msg.guild.channels.find(chn=>chn.id===channel).send( {content:LastVideoLink}).then(m=>m.channel.send({embed}));
@@ -74,7 +71,7 @@ const init = async function (msg){
         let toDelete = feedData.feeds[target] || feedData.feeds.find(f=>f.url == target || f.url.includes(target) )
         let embed = new gear.Embed;
         embed.description = `
-                URL: https://youtube.com/channel/\`${toDelete.url}\`
+                URL: https://youtube.com/channel/${toDelete.url}
                 ${$t('terms.discord.channel')}: <#${toDelete.channel}>
                 `;
         let confirm = await msg.channel.send({content:
@@ -89,7 +86,7 @@ const init = async function (msg){
         if(feedData && feedData.feeds.length > 0){
             msg.channel.send(`
             **${gear.emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
-\u2003${feedData.feeds.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
+\u2003${feedData.feeds.filter(x=>x.type==="youtube").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` https://youtube.com/channel/${x.url} @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',P)}*
 `)
@@ -110,33 +107,21 @@ const init = async function (msg){
 
 
 async function feedEmbed(item,data){
-    
-    if(!data){
-        data = (await axios.get(`https://www.googleapis.com/youtube/v3/search?channelId=${item.snippet.channelId}&maxResults=1&part=snippet&key=${googleToken}&fields=items(snippet)&type=channel`).catch(e=>null)).data.items[0];
-    }
-    
+
     let embed = new gear.Embed;
-    embed.color("#cc1010") 
-    embed.title  = "**"+item.snippet.title+"**"
-    embed.url    = `https://youtube.com/watch?v=${item.id.videoId}`
-    embed.author( data.snippet.channelTitle , data.snippet.thumbnails.default.url, `https://youtube.com/channel/${item.id.channelId}` )
-    embed.timestamp(item.snippet.publishedAt)
-    embed.description     = (item.snippet.description || "" ).split('\n')[0]
+    embed.color("#ee1010") 
+    embed.title  = "**"+item.title+"**"
+    embed.url    = item.link
+    embed.author( item.author , null, data.link )
+    embed.timestamp(item.pubDate)
+    embed.description     = (item.media['media:description'][0] || "" ).split('\n')[0]
     embed.footer("YouTube", "https://unixtitan.net/images/youtube-clipart-gta-5.png")
 
     return embed;
   }
-
-
-  async function getYTData(ID,TOKEN){
-    return (await axios.get(`https://www.googleapis.com/youtube/v3/search?channelId=${ID}&maxResults=2&part=snippet,id&key=${TOKEN}&fields=items(id,snippet)&type=video%2Cchannel&order=date`).catch(e=>{return{}})).data;
-}
-
-
   
 module.exports={
     ytEmbedCreate: feedEmbed,
-    getYTData: getYTData,
 
     init
     ,embedGenerator: feedEmbed
