@@ -96,6 +96,7 @@ class UserProfileModel{
     // Discord Data
     const {Member} = require('eris');
     if(!discordMember) discordMember = POLLUX.users.get(userData.id||userData);
+
     if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
     if(typeof discordMember === 'string') discordMember = POLLUX.users.get(discordMember);
     const notMember = discordMember && discordMember.constructor != Member;
@@ -219,8 +220,13 @@ init = async (msg)=>{
   // NORMAL PROFILE -->
 
   const Target = gear.getTarget(msg,0,true,true);
-  let Target_Database = await DB.users.get(Target.id);
+  let Target_Database = await DB.users.findOne({id:Target.id});
+
+
+ 
+
   const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],msg.guild.member(Target));
+  //console.log(USERPROFILE)
   await Promise.all([
     await USERPROFILE.wifeData,
     await USERPROFILE.localData    
