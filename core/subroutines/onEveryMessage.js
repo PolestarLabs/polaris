@@ -6,13 +6,13 @@ const DB = require('../database/db_ops');
 const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
-exports = async msg => {
+module.exports = async msg => {
   POLLUX.execQueue=POLLUX.execQueue.filter(itm=>itm.constructor != Promise);
   POLLUX.execQueue.push(
     Promise.all([
       levelChecks(msg),
       Drops(msg)
-    ]).timeout(200).then(()=>null)
+    ]).timeout(250).then(()=>null)
   )
 
 };
