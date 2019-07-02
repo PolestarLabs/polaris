@@ -160,10 +160,11 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
         svFd.feeds.forEach(async feed => {
           
           if (feed.type === 'rss'){
-            const data = await parser.parseURL(feed.url).timeout(120).catch(e=>null);
+            const data = await parser.parseURL(feed.url).timeout(250).catch(e=>null);
+            if(!data) return;
             if (data.items[0] && feed.last.guid != data.items[0].guid) {
               const embed = await RSSembedGenerator(data.items[0],data);
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] }).timeout(100).catch(e=>null);
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] }).catch(e=>null);
 
               POLLUX.getChannel(feed.channel).send({embed});
             }        
@@ -171,7 +172,8 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
           
           if (feed.type === 'twitch'){
             const thisFeed = feed            
-            let response = await axios.get('https://api.twitch.tv/helix/streams?user_login'+=thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);            
+            let response = await axios.get('https://api.twitch.tv/helix/streams?user_login'+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);            
+            if(!response) return;
             const StreamData = response.data[0];
             if(
               !(
@@ -180,7 +182,8 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
                 thisFeed.last.started_at === StreamData.started_at
                 )
             ){
-              let response = await axios.get('https://api.twitch.tv/helix/users?login'+=thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);
+              let response = await axios.get('https://api.twitch.tv/helix/users?login'+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);
+              if(!response) return;
               const streamer = response.data[0];
               const embed = new gear.Embed;
                     embed.thumbnail(streamer.profile_image_url);
@@ -190,7 +193,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
                     embed.color("#6441A4");
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
               const ping = thisFeed.pings || svFd.pings || '';
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData}).timeout(100).catch(e=>null);
+              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData}).catch(e=>null);
 
               POLLUX.getChannel(thisFeed.channel).send({
                 content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
@@ -200,9 +203,8 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
           }
 
           if (feed.type === 'youtube'){
-            const thisFeed = feed
+            const thisFeed = feed;
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
-            //const data = await  getYTData(thisFeed.url,cfg.google);
             const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url).timeout(120).catch(e=>null);
             if (data && data.items[0] && thisFeed.last.link !== data.items[0].link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
@@ -239,11 +241,12 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   .then(mutes => {
     mutes.forEach(mtu=>{
       DB.servers.get(mtu.server.id).then(svData=>{
-        DB.mutes.expire(Date.now()).then(console.log);
+        DB.mutes.expire(Date.now());
         let logSERVER = POLLUX.guilds.get(mtu.server);
         let logUSER = bot.users.find(x=> x.id  === mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
+        if (!logMEMBER) return;
         logMEMBER.removeRole(svData.modules.MUTEROLE).catch(err=>"Die Silently");
         
         if (svData.dDATA || svData.logging) {
