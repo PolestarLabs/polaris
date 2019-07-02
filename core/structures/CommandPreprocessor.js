@@ -1,9 +1,9 @@
 const fs = require('fs');
 const i18node = require(appRoot+'/utils/i18node');
 const cfg = require(appRoot+'/config.json');
+const Aliases =  require("./Aliases")
 
-
-exports = async (message,payload) => {
+module.exports = async (message,payload) => {
 
 
   
@@ -111,8 +111,9 @@ function determine(msg) {
                 cat: "instant"
             }
         }
+        
 
-        let aliases = require("./Aliases")//JSON.parse(fs.readFileSync("./core/aliases.json", 'utf8'));
+        let aliases = Aliases();//JSON.parse(fs.readFileSync("./core/aliases.json", 'utf8'));
 
         let command;
         if (aliases[query]) command = aliases[query].toLowerCase();
