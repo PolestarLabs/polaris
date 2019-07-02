@@ -345,7 +345,7 @@ async function Hex(size, picture) {
 
   let hex = new Canvas.createCanvas(size * 2 + 20, size * 2 + 20)
   let c = hex.getContext("2d")
-  c.rotate(1.5708)
+  c.rotate(1.570)
   c.save();
   c.beginPath();
   c.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
@@ -359,7 +359,7 @@ async function Hex(size, picture) {
   if (picture) {
     c.clip();
     let a = await Canvas.loadImage(picture);
-    c.rotate(-1.5708)
+    c.rotate(-1.570)
     c.drawImage(a, 0, x - size, size * 2, size * 2);
     c.restore()
 
