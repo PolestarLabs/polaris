@@ -24,7 +24,7 @@ async function vere(base64,message,cmdPiece){
 
             const vision = new Vision.ImageAnnotatorClient({        
                 projectId: 'pollux-172700',
-                keyFilename: './Pollux-7f990738909e.json'
+                keyFilename: './Pollux-9b33db6de8e0.json'
         });
         const results = await vision.annotateImage({
             image: {
