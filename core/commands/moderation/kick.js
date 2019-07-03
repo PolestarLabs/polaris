@@ -33,7 +33,7 @@ const init = async function (msg){
         embed.footer(msg.author.tag, msg.author.avatarURL);
         embed.timestamp( new Date() );
         embed.color = 0x36393f
-        embed.thumbnail(await Gal.randomOne('kick',true));
+        embed.thumbnail(await Gal.randomOne('kick',true).catch(e=>null));
         embed.description = gear.emoji('loading') + rand$t('responses.verbose.jas',P);
         
     let reason;
@@ -76,11 +76,16 @@ const init = async function (msg){
         return;
     }
 
+  
+
     if(!pre_msg){
         pre_msg =  await msg.channel.send({embed});
     }
 
-    let post_reason = reason + `\n  [MOD: ${msg.author.tag}]`
+
+
+
+    let post_reason = reason + ` [MOD: ${msg.author.tag} `
 
     POLLUX.kickGuildMember(msg.guild.id,Target.id,post_reason).then(m=>{
         embed.color = 0x3355EE
@@ -93,9 +98,10 @@ const init = async function (msg){
         
     }).catch(err=>{
         msg.channel.send( $t('interface.kickban.userKickError',P) )
+        console.error(err)
     })
   
-
+    console.log({HMM:"B"})
 
 
 
