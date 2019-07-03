@@ -6,20 +6,22 @@ const Aliases =  require("./Aliases")
 module.exports = async (message,payload) => {
 
 
+
   
-  
-  let bot = POLLUX
-   let Database_bot = "x"//await gear.userDB.findOne({id:bot.user.id});
+   let bot = POLLUX
+   let Database_bot = {}//await gear.userDB.findOne({id:bot.user.id});
    let servData = payload.servData;
    let userData = payload.userData;
    let chanData = payload.chanData;
    let targData = payload.targData;
    
    
-   let forbiddens = ((chanData||{}).modules||{}).DISABLED||[];
+   let forbiddens = message.guild.DISABLED||[];
+   //let forbiddens = message.channel.DISABLED||[];
    
   const _commandMetadata = determine(message)
   const _MODULE = _commandMetadata.module;
+  const _COMMAND = _commandMetadata.cmd;
   
    if(_MODULE == "_botOwner"){
      if (message.author.id !== cfg.owner) return message.addReaction('nope:339398829088571402')
@@ -36,7 +38,7 @@ module.exports = async (message,payload) => {
   if(_commandMetadata.reaction){
     if (forbiddens.includes(_MODULE)) return; // Module Blocked
     // is Usable in Channel/Server ?
-    if (checkUse(_commandMetadata, {chanData,servData}, message)!==true){
+    if (checkUse(_commandMetadata, forbiddens, message)!==true){
       return; // Insert Warning here;
     }
     return message.channel.send({file: _commandMetadata.reaction});
@@ -44,15 +46,18 @@ module.exports = async (message,payload) => {
   //===================================
 
   if (forbiddens) {
-    if (forbiddens.includes(_MODULE)) {
+    if (forbiddens.includes(_MODULE) && message.guild.respondDisabled) {
       return message.reply("Module Disabled")
+    }
+    if (forbiddens.includes(_COMMAND) && message.guild.respondDisabled) {
+     // return message.reply("Command Disabled")
     }
   };
 
 
 
-  let $t = i18node.getT();
-  switch (checkUse(_commandMetadata, {chanData,servData}, message)) {
+
+  switch (checkUse(_commandMetadata, forbiddens, message)) {
     case "NONSFW":
       message.reply($t('CMD.not-a-NSFW-channel', {
         lngs: message.lang
@@ -60,10 +65,10 @@ module.exports = async (message,payload) => {
       break;
 
     case "DISABLED":
-      if (servData.disaReply!=false) {
+      if (message.guild.respondDisabled!=false) {
         message.reply($t('CMD.disabledModule', {
           lngs: message.lang,
-          module: message.content.substr(message.prefix.length).split(' ')[0]
+          module: "`"+_COMMAND+"`"
         }))
       }
       break;
@@ -135,14 +140,14 @@ function determine(msg) {
                     comm.path= pathTo
                     comm.module = files[i]
                     comm.reaction = false
+                    comm.cmd = command
                return comm
             }
         }
         return false
 
     }
-function checkUse(DTMN, DB, msg) {
-
+function checkUse(DTMN, fbd, msg) {
         try {
             let commandFile = require(DTMN.path);
             switch (true) {
@@ -151,7 +156,7 @@ function checkUse(DTMN, DB, msg) {
                     break;
                 //case  DB.chanData.modules.DISABLED.includes(commandFile.cat):
                 //case  DB.chanData.modules.DISABLED.includes(DTMN.module):
-                case  false://DB.chanData.modules.DISABLED.includes(commandFile.cmd):
+                case  fbd.includes(commandFile.cmd):
                     return "DISABLED";
                     break;
                 case msg.author.PLXpems > commandFile.perms:
@@ -162,8 +167,8 @@ function checkUse(DTMN, DB, msg) {
                     break;
             }
         } catch (err) {
-            return false;
-            console.error((err.stack).blue);
+          console.error((err.stack).blue);
+          return false;
         }
     }
 async function commandRun(command, message, final_payload) {
@@ -242,7 +247,9 @@ console.log(message.author.tag)
       commandRoutine.administrateExp(message.author.id,command),
       commandRoutine.commLog(message,command),
       command.init(message)
-    ]);
+    ]).catch(er=>{
+      console.error(er)
+    });
 
 
   message       = null;

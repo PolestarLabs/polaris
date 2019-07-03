@@ -76,13 +76,13 @@ async function dataChecks(type,ent){
         });
       };
       if(type==="server"){
-        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1} ).lean().exec().then(server=>{
+        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1 ,'modules.DISABLED':1,'modules.logging':1,'respondDisabled':1} ).lean().exec().then(server=>{
           if(!server) return resolve(DB.servers.new(ent));
           return resolve(server);
         });
       };
       if(type==="channel"){
-        DB.channels.findOne({id:ent.id}, {id:1,ignored:1,LANGUAGE:1} ).then(channel=>{
+        DB.channels.findOne({id:ent.id}, {id:1,ignored:1,LANGUAGE:1,'modules.DISABLED':1} ).then(channel=>{
           if(!channel) return resolve(DB.channels.new(ent));
           return resolve(channel);
         });
@@ -96,6 +96,9 @@ async function serverCacheUpdate(server,instance){
   instance.prefix = server.modules.PREFIX     || '+'
   instance.language = server.modules.LANGUAGE || 'en'
   instance.globalPrefix = server.globalPrefix || false
+  instance.DISABLED = server.modules.DISABLED || []
+  instance.respondDisabled = server.respondDisabled || true
+  instance.logging = server.logging || false
 }
 
 async function channelCacheUpdate(channel,instance){
@@ -103,6 +106,7 @@ async function channelCacheUpdate(channel,instance){
   if (!channel) return null;
   instance.language = channel.LANGUAGE || null;
   instance.ignored = channel.ignored || false;  
+  instance.DISABLED = channel.modules.DISABLED || []
 }
 
 async function commandResolve(msg,cacheUpdates,garbageC){
