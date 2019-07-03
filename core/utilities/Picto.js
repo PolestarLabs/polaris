@@ -1,4 +1,4 @@
-const cfg = require(appRoot+"/config.json");
+//const cfg = require(appRoot+"/config.json");
 const Canvas = require('canvas');
 const Pixly = require('pixel-util');
 const wrap = require('canvas-text-wrapper').CanvasTextWrapper;
@@ -282,7 +282,7 @@ XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
 
     let hex= new Canvas.createCanvas (size*2+20,size*2+20)
     let c=hex.getContext("2d")
-    c.rotate(1.5708)
+    c.rotate(1.570)
     c.save();
     c.beginPath();
     c.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
@@ -296,7 +296,7 @@ XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
  if(picture){
     c.clip();
     let a = await this.getCanvas(picture);
-      c.rotate(-1.5708)
+      c.rotate(-1.570)
       c.drawImage(a, 0, x-size,size*2,size*2);
       c.restore()
 
@@ -328,60 +328,53 @@ c.globalCompositeOperation='destination-atop';
 
     return hex
 
-  }
+  },
 
 
+  makeRound: async function makeRound(size,pic) {
+    const pi = Math.PI;
+    let startR = pi * 3 / 2, 
+    endR = 1 * pi;
+    const rx = size / 2, ry = rx;
+    const canvas_proto = new Canvas.createCanvas(size,size);
+    const context = canvas_proto.getContext('2d');
 
-
-}
-
-
-
-async function Hex(size, picture) {
-  let globalOffset = 0
-  size = size / 2
-  let x = size + 10
-  let y = -size
-
-  let hex = new Canvas.createCanvas(size * 2 + 20, size * 2 + 20)
-  let c = hex.getContext("2d")
-  c.rotate(1.570)
-  c.save();
-  c.beginPath();
-  c.moveTo(x + size * Math.cos(0), y + size * Math.sin(0));
-
-  for (side = 0; side < 7; side++) {
-    c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
-  }
-
-  c.fillStyle = "#ffffff"
-  c.fill();
-  if (picture) {
-    c.clip();
-    let a = await Canvas.loadImage(picture);
-    c.rotate(-1.570)
-    c.drawImage(a, 0, x - size, size * 2, size * 2);
-    c.restore()
-
-    c.globalCompositeOperation = 'xor';
-    c.shadowOffsetX = 0;
-    c.shadowOffsetY = 0;
-    c.shadowBlur = 10;
-    c.shadowColor = 'rgba(30,30,30,1)';
-
-    c.beginPath();
-    for (side = 0; side < 7; side++) {
-      c.lineTo(x + size * Math.cos(side * 2 * Math.PI / 6), y + size * Math.sin(side * 2 * Math.PI / 6));
+    let color="#FFF"
+    function arcDraw(r, color="#FFF") {
+        context.beginPath();
+        context.arc(rx, ry, r, startR, endR, false);
+        context.fillStyle = color;
+        context.lineTo(rx, ry);
+        context.closePath();
+        context.fill();
     }
-    c.stroke();
+    canvas_proto.width = canvas_proto.height = size;
 
-    c.globalCompositeOperation = 'destination-atop';
 
-  } else {
-    c.shadowColor = "rgba(34, 31, 59, 0.57)"
-    c.shadowBlur = 8
+    context.beginPath();
+    context.arc(rx, ry, rx +0, 0, pi * 2, true);
+    context.strokeStyle = 'rgba(' + color + ',0.25)';
+    context.lineWidth = 4;
+
+
+
+    context.fillStyle = 'rgba(255,255,255,1)';
+    context.lineTo(rx, ry);
+    context.closePath();
+    context.fill();
+    if(pic){
+      context.clip();
+      let a = await this.getCanvas(pic);
+      context.drawImage(a, 0, 0,size,size);
+      context.restore()
+    }
+
+    return canvas_proto
+
   }
 
-  return hex
+
+
 
 }
+
