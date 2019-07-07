@@ -3,9 +3,8 @@
   console.log(require('./asciiPollux.js').ascii());
 //===========================================
 
-
+global.clusterNames = require("./clusters.json")
  
-
 const path = require('path');
 global.appRoot = path.resolve(__dirname);
 global.GNums = require('./GlobalNumbers.js');
@@ -48,11 +47,11 @@ const SHARDS_PER_CLUSTER = 1
 const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1
 
-const POLLUX = new Eris(cfg.token,{
+const POLLUX = new Eris.CommandClient(cfg.token,{
 
   maxShards: TOTAL_SHARDS ,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) - SHARDS_PER_CLUSTER +1 ,
-  lastShardID: SHARDS_PER_CLUSTER * CLUSTER_ID ,
+  lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID+1) - 1 ,
 
   defaultImageSize:512,
 
@@ -63,13 +62,16 @@ const POLLUX = new Eris(cfg.token,{
     'GUILD_MEMBER_SPEAKING': true
   }
 
+},{
+  defaultHelpCommand: false,
+  prefix: ["plx!","p!","+","@mention"]
 });
 
 global.POLLUX= POLLUX;
 
 POLLUX.beta = true
 POLLUX.maintenance = false
-
+POLLUX.cluster = {id:CLUSTER_ID,name: clusterNames[CLUSTER_ID] }
 
 
 //=======================================//
@@ -80,6 +82,38 @@ POLLUX.execQueue = [ ];
 POLLUX.commandPool = { };
 POLLUX.blackListedUsers = [];
 POLLUX.blackListedServers = [];
+POLLUX.registerCommands = () =>{
+  readdirAsync("./core/commands").then(modules => {
+    modules.forEach(async folder=>{
+      let commands = (await readdirAsync("./core/commands/"+folder)).map(_c=>_c.split('.')[0]);
+      commands.forEach(_cmd=> POLLUX.registerOne(folder,_cmd));
+    })
+  })
+};
+
+POLLUX.registerOne = (folder,_cmd) =>{
+  try{
+    let commandFile = require(`./core/commands/${folder}/${_cmd}`);
+    POLLUX.registerCommand(_cmd,
+      commandFile.init, 
+      {
+        aliases: commandFile.aliases,
+        caseInsensitive: true,
+        requirements: {
+          userIDs: ['88120564400553984']
+        },
+        hooks:{
+          preCommand: (m,a) => m.args=a 
+        }
+      }
+    ) 
+    console.info("Register command: ".blue ,_cmd.padEnd(20,' ')," ✓".green)
+  }catch(e){
+    console.info("Register command: ".blue ,_cmd.padEnd(20,' ').yellow," ✘".red)
+    console.error( "\r                                " + e.message.red )
+  }
+};
+
 POLLUX.updateBlacklists = (DB) =>{
   return Promise.all([
     DB.users.find({'blacklisted':{$exists:true}},{id:1,_id:0}).lean().exec(),
@@ -176,7 +210,7 @@ pGear.getDirs('./locales/').then(list => {
 //=======================================//
 const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 
-const fs= require('fs')
+const readdirAsync = Promise.promisify(require('fs').readdir);
 POLLUX.once("ready", async (msg) => {
   console.log(" READY ".bold.bgCyan);
   if (POLLUX.shard) {
@@ -185,20 +219,28 @@ POLLUX.once("ready", async (msg) => {
   }
   //msgPreproc.run()
 
-  fs.readdir("./eventHandlers/", (err, files) => {
-    if (err) return console.error(err);
+  readdirAsync("./eventHandlers/").then(files => {
     files.forEach(file => {
       let eventor = require(`./eventHandlers/${file}`);
       let eventide = file.split(".")[0];
       POLLUX.on(eventide, (...args) => eventor( ...args));
     });
-  });
+  }).catch(console.error);
+
+
+  //POLLUX.updatePrefixes(require('./core/database/db_ops'));
+  // PRE=REGISTER=COMMANDS
+  POLLUX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth); 
+  POLLUX.microserver.microtasks.updateServerCache("all"); 
+  
+  POLLUX.registerCommands()
+
 
 
 })
 
 POLLUX.on('error', (error, shard) =>
-  error && this.logger.error(`${'[Pollux]'.red} ${shard !== undefined ? `Shard ${shard} error` : 'Error'}:`, error));
+  error && console.error(`${'[Pollux]'.red} ${shard !== undefined ? `Shard ${shard} error` : 'Error'}:`, error.stack));
 POLLUX.on('disconnected', () => this.logger.warn(`${'[Pollux]'.yellow} Disconnected from Discord`));
 POLLUX.on("shardReady", shard=>console.log("•".green,"Shard",(shard+"").magenta,"is Ready -"))
 POLLUX.on("shardResume", shard=>console.log("•".yellow,"Shard",(shard+"").magenta,"resumed Activity -"))
@@ -302,3 +344,5 @@ process.on("unhandledRejection", err=>{
   console.error(" UNHANDLED REJECTION ".bgYellow)
   console.error(err)
 })
+
+
