@@ -5,6 +5,9 @@ const Preprocessor =   require('../core/structures/CommandPreprocessor.js');
 
 module.exports = async function (msg) {
 
+
+  return;// temp for command client
+
   if(msg.author.bot) return;
   if(!POLLUX.ready) return;
   
