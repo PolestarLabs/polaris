@@ -1,5 +1,5 @@
-const fs = require('fs');
-const i18node = require(appRoot+'/utils/i18node');
+const {readdir} = require('fs');
+const readDirAsync = Promise.promisify(readdir);
 const cfg = require(appRoot+'/config.json');
 const Aliases =  require("./Aliases")
 
@@ -19,7 +19,7 @@ module.exports = async (message,payload) => {
    let forbiddens = message.guild.DISABLED||[];
    //let forbiddens = message.channel.DISABLED||[];
    
-  const _commandMetadata = determine(message)
+  const _commandMetadata = await determine(message);
   const _MODULE = _commandMetadata.module;
   const _COMMAND = _commandMetadata.cmd;
   
@@ -124,26 +124,28 @@ function determine(msg) {
         if (aliases[query]) command = aliases[query].toLowerCase();
         else command = query.toLowerCase();
 
-        let path = ""
-        let files = fs.readdirSync(appRoot + "/core/commands")
+        let modules = await readDirAsync(appRoot + "/core/commands");
 
-        for (i = 0; i < files.length; i++) {
-            let filedir = appRoot + "/core/commands/" + files[i]
+        modules.find(async folder=>{
 
-            let morefiles = fs.readdirSync(filedir  )
-            if (morefiles.indexOf(command + ".js") > -1) {
-
-
-                let pathTo = filedir + "/" + command + ".js";
-                let comm = require(pathTo)
-
-                    comm.path= pathTo
-                    comm.module = files[i]
-                    comm.reaction = false
-                    comm.cmd = command
-               return comm
+          let filedir = appRoot + "/core/commands/" + folder;
+          let commands = await readDirAsync(filedir);
+          
+          if (commands.includes(command + ".js") || commands.includes(command) ) {
+            let pathTo = filedir + "/" + command;
+            let comm = require(pathTo);
+                comm.path= pathTo
+                comm.module = folder
+                comm.reaction = false
+                comm.cmd = command
+                return comm
             }
-        }
+        });
+
+        //class Command 
+
+
+
         return false
 
     }
