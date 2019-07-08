@@ -132,7 +132,7 @@ module.exports={
     ,aliases:['inv']
     ,reactionButtons:[
         {
-            emoji: _emoji("LOOTBOX").replacereaction,
+            emoji: _emoji("LOOTBOX").reaction,
             type: "edit",
             response: require("./cmd").init,
             
