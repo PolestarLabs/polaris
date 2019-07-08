@@ -31,7 +31,7 @@ const DEFAULT_CMD_OPTS = {
     ,hooks:  {
         preCommand: (m,a) => {
             m.args = a;
-            m.lang = [m.channel.LANGUAGE || (m.guild || {}).LANGUAGE || 'en', 'dev'];
+            m.lang = [m.channel.LANGUAGE || (m.guild || {}).LANG || 'en', 'dev'];
         },
         postCheck: (m,a,chk) => {
             if(!chk) return null;
@@ -57,7 +57,7 @@ const registerOne = (folder, _cmd) => {
         commandFile.hidden = !commandFile.pub //legacy port
 
         const CMD = POLLUX.registerCommand(_cmd, commandFile.init, commandFile)
-        console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
+        //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
         POLLUX.commands[CMD.label].cat = commandFile.cat
         POLLUX.commands[CMD.label].module = folder
         if (commandFile.subs) {
