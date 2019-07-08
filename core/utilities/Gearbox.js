@@ -26,7 +26,6 @@ module.exports = {
 
     if(!msg.args[argPos]) return self ? msg.author : null;
     let ID = msg.args[argPos].replace(/[^0-9]{16,19}$/g,'');
-    console.log(ID)
     let user = POLLUX.users.find(usr=> usr.id === ID )
 
     if (!user) {
