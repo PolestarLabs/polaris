@@ -6,7 +6,7 @@ const Aliases =  require("./Aliases")
 module.exports = async (message,payload) => {
 
 
-
+ 
   
    let bot = POLLUX
    let Database_bot = {}//await gear.userDB.findOne({id:bot.user.id});
