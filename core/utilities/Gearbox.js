@@ -16,7 +16,7 @@ module.exports = {
   nope: ":nope:339398829088571402",
   reload: function(){delete require.cache[require.resolve('./Gearbox')]},
   emoji: function emoji(query){
-    return  emojiList(query)
+    return  new emojiList.PolluxEmoji(query)
   },
   invisibar : "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
 
