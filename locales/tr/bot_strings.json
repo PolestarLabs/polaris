@@ -109,8 +109,8 @@
             "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
             "nosuchrole": "Şey, bu rolü bulamadım, rolün ismini harfi harfine yaz, lütfen.",
             "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
-            "cantKickHim": "",
-            "cantKickSelf": "",
+            "cantKickHim": "O kişiye ne yazık ki bunu yapamıyorum. Üst devrelerime yamuk yapamam.",
+            "cantKickSelf": "Kendine ban atamaz veya kickleyemezsin ama!",
             "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
             "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
@@ -384,7 +384,34 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
-            "confirmDelete": ""
+            "confirmDelete": "Silmeyi onaylıyor musun?"
+        },
+        "booster": {
+            "checkStickersAt": "{{dashboard}}'da etiketlerine göz atıp giy",
+            "title": "{{boostername}} Etiket Güçlendirici"
+        },
+        "kickban": {
+            "waitingForReason": "bir neden girilmesi için bekleniyor...",
+            "noReason": "Herhangi bir neden belirtilmedi. Fesih edildi",
+            "cancelled": "Moderatör tarafından iptal edildi",
+            "userKicked": "{{user}} kullanıcısını *nazikçe* buradan def ettim.",
+            "kickFlavs": [
+                "Tekrardan girebilecekleri kadar nazik bir biçimde.",
+                "Umarım hâlâ oturabiliyorlardır.",
+                "Bunu evde denemeyin.",
+                "Hiçbir hayvana zarar verilmedi.",
+                "İyiler iyi... galiba, yani."
+            ],
+            "userBanned": "{{user}} kullanıcısını *nakibar* bir biçimde banladım. Bu kişi artık burada pek hoş karşılanmayacak,",
+            "userSoftBanned": "{{user}} kullanıcısını *medeni* bir biçimde banladım. Ne yazık ki bu kişinin bütün varlığını silemedim,",
+            "banFlavs": [
+                "İnşallah LEGO'nun üzerine basarlar.",
+                "bak şimdi onunla dalga geçebilirsin.",
+                "sıradaki kim?",
+                "bunun gibileri örnek almayın, çocuklar."
+            ],
+            "includeReason": "Bana bu kişiyi *neden* cezalandırdığını söylemeyi unuttun.\nNedeni aşağıda belirt: `(20s)`",
+            "userKickError": "Bin terslik oluştu. öf."
         },
         "booster": {
             "checkStickersAt": "",
@@ -414,28 +441,29 @@
             "userKickError": ""
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
-            "urlPresent": "",
-            "noFeed": "",
-            "noTube": "",
-            "noTwitch": "",
-            "stateIDorURL": "",
-            "listRemove": "",
-            "channelUpdate": "",
-            "invalidRSS": "",
-            "invalidTwitch": "",
-            "invalidYoutube": "",
-            "listShowRSS": "",
-            "listShowTwitch": "",
-            "listShowYoutube": "",
-            "savedSubLastRSS": "",
-            "savedSubLastTwitch": "",
-            "savedSubLastYoutube": "",
-            "feedLimitRSS": "",
-            "feedLimitTwitch": "",
-            "feedLimitYoutube": "",
-            "donateToIncrease": ""
+            "newYoutube": "**{{tuber}} Yeni bir video yayınladı!** Şuradan bir göt at:",
+            "newTwitchStatus": "**{{streamer}}** Canlı yayında!",
+            "noDefault": "Bana hangi kanala paylaşmam gerektiğini söylemedin ve varsayılan bir kanal da yok.",
+            "urlPresent": "Zaten bundan gelen paylaşımları takip ediyorum, bunun yerine paylaşım kanalını yenileyeceğim~",
+            "noFeed": "Bu Sunucuda bir Kaynak ayarlanmamış",
+            "noTube": "Bu Sunucuda YouTube bildirimleri ayarlanmamış",
+            "noTwitch": "Bu Sunucuda Twitch alarmları ayarlanmamış",
+            "stateIDorURL": "Buradan silmem için bana bir ID veya URL vermeyi unuttun. Eğer unuttuysan `{{prefix}}{{command}} listesini` kontrol edebilirsin~",
+            "listRemove": "Bir tanesini silmek için `{{prefix}}{{command}} sil [Index #]` komutunu dene",
+            "channelUpdate": "Varsayılan paylaşım Kanalını {{channelID}} olarak ayarladım!",
+            "invalidRSS": "Hop, Bu doğru bir RSS adresi değil! Doğru yaptığından emin ol.",
+            "invalidTwitch": "Bak. o isimde öyle bir Twitch kullanıcısı yok. Ne yazdığına doğru düzgün bir bak!",
+            "invalidYoutube": "Şey, bu pek de YouTube kanalı gibi gözükmüyor. En azından benim bildiğim gibi değil...",
+            "listShowRSS": "Bu Sunucunun RSS Kaynak Listesi",
+            "listShowTwitch": "Bu Sunucuda paylaşılan Twitch Kullanıcıları",
+            "listShowYoutube": "Bu Sunucudaki Yeni YouTube videosu alarmları",
+            "savedSubLastRSS": "**Kaydedildi**! {{channelID}} kanalında bu Kaynaktan gelen en taze Paylaşımları atıyorum. Daha fazlası her **30 dakika** içerisinde kontrol edilecek",
+            "savedSubLastTwitch": "**Kaydedildi**! - {{channelID}} Kanalında o Kanal her canlı yayına çıktığında bir bildirim paylaşılacak. Her **15 Dakikada** bir kontrol edilir",
+            "savedSubLastYoutube": "**Kaydedildi**! - Bu Kanaldan en taze videoları {{channelID}} Kanalında paylaşıyorum. Her **1 saatte** bir kontrol edilir",
+            "feedLimitRSS": "Bu sunucunun aynı anda en fazla **5** RSS Kaynağı olabilir.",
+            "feedLimitTwitch": "Bu sunucu aynı anda en fazla **2** Twitch Kanalı takip edebilir.",
+            "feedLimitYoutube": "Bu sunucunun aynı anda sadece **1** tane YouTube Kanalı alarmı olabilir.",
+            "donateToIncrease": "Daha fazla limite ihtiyaç duyuyorsan. [Bağış yapmayı] ({{donationLink}}) veya [Pollux partnerliğine] katılmayı ({{partnershipLink}}) göz önünde bulundur"
         },
         "autoRolesforThis": "Bu sunucu için kendinden atanılabilir roller",
         "daily": {
