@@ -369,7 +369,7 @@
 
     
     
-const globalEmojis = new Map();
+
 function emoji(moji){
 
     if(!emojibank[moji]){
@@ -389,22 +389,35 @@ function emoji(moji){
 
 }
 
-
+const globalEmojis = [];
 async function shallowEmojiBank(){
   POLLUX.guilds.forEach(async G =>{    
     G.emojis.forEach(async e =>{
-      globalEmojis.set(e.id, e)
+      globalEmojis.push(e)
     })
   })
 }
+function getShallowMoji(identifier){
+  let EMJ = globalEmojis.find(ge=>
+    ge.id==identifier  ||
+    ge.name==identifier||
+    ge.name.toLowerCase()==identifier.toLowerCase()
+  );
+  EMJ.string = `<${EMJ.animated?'a':''}:${EMJ.name}:${EMJ.id}>` 
+  return EMJ;
+}
+shallowEmojiBank()
 
-//shallowEmojiBank()
 
 class PolluxEmoji extends String{
   constructor(identifier){
-      let print = emojibank[identifier] ||"\⬜";
+      let print = 
+        emojibank[identifier]
+        || getShallowMoji(identifier).string
+        || "\⬜";
+      
       super (print+" ");
-      this.reaction = print.replace("<:","").replace(">","");
+      this.reaction = print.replace("<:","").replace("<a:","").replace(">","");
       this.no_space = print.replace(/ +/g,"")
       this.id       = this.reaction.split(':')[1] 
       this.name     = this.reaction.replace("a:","").split(':')[0]
@@ -414,4 +427,4 @@ class PolluxEmoji extends String{
 
 
 
-  module.exports = {PolluxEmoji};
+  module.exports = {PolluxEmoji,getShallowMoji};
