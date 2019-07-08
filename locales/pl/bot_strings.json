@@ -415,6 +415,7 @@
         },
         "feed": {
             "newYoutube": "**{{tuber}} właśnie wrzucił filmik!** Obejrzyj go tu:",
+            "newTwitchStatus": "**{{streamer}}** zaczął stream!",
             "noDefault": "Nie powiedziałeś mi na którym kanale wysyłać wiadomości oraz nie ustawiłeś domyślnego kanału.",
             "urlPresent": "Już obserwuję posty z tego miejsca, więc po prostu zaktualizuję kanał docelowy~",
             "noFeed": "Na tym Serwerze nie ma ustawionych zródeł",

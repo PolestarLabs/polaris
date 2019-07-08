@@ -415,6 +415,7 @@
         },
         "feed": {
             "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
+            "newTwitchStatus": "",
             "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
             "urlPresent": "Eu já estou cuidando das postagens desse aí, mas vou atualizar o canal de destino~",
             "noFeed": "Não há Feeds configurados neste Servidor",
