@@ -97,7 +97,7 @@ module.exports = async (message,payload) => {
 
 }
 
-function determine(msg) {
+async function determine(msg) {
         let query = msg.content.substr(msg.prefix.length).split(' ')[0];
 
         let imgreactions = []//require("./imgreactions.js").out;
