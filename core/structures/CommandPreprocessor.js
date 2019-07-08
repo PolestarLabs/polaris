@@ -21,7 +21,13 @@ const PERMS_CALC = function CommandPermission(msg){
 
 const DEFAULT_CMD_OPTS = {
     caseInsensitive: true
-    ,invalidUsageMessage: (msg)=> gear.autoHelper('force',{msg, cmd: msg.command.cmd,opt:msg.command.cat})
+    ,invalidUsageMessage: (msg)=> {
+        if(msg.command.parentCommand){
+            msg.command.cmd = msg.command.parentCommand.cmd
+            msg.command.cat = msg.command.parentCommand.cat
+        }
+        gear.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat} )
+    }
     ,cooldown: 2000     
     ,cooldownMessage: "Too Fast"
     ,cooldownReturns: 2
@@ -63,11 +69,14 @@ const registerOne = (folder, _cmd) => {
         POLLUX.commands[CMD.label].module = folder
         if (commandFile.subs) {
             commandFile.subs.forEach(sub => {
+                delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
                 let subCfile = require(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`);
 
                 CMD.registerSubcommand(sub, subCfile.init, subCfile)
             })
         }
+        CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage)
+
     } catch (e) {
         console.info( " SoftERR ".bgYellow ,_cmd.padEnd(20, ' ').yellow,e.message.red)
         //console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
