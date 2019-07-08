@@ -48,20 +48,16 @@ const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1
 
 const POLLUX = new Eris.CommandClient(cfg.token,{
-
   maxShards: TOTAL_SHARDS ,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) - SHARDS_PER_CLUSTER +1 ,
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID+1) - 1 ,
-
   defaultImageSize:512,
-
   defaultImageFormat:'png',
   disableEvents: {
     'TYPING_START': true,
     'TYPING_STOP': true,
     'GUILD_MEMBER_SPEAKING': true
   }
-
 },{
   defaultHelpCommand: false,
   prefix: ["plx!","p!","+","@mention"]
@@ -73,7 +69,6 @@ POLLUX.beta = true
 POLLUX.maintenance = false
 POLLUX.cluster = {id:CLUSTER_ID,name: clusterNames[CLUSTER_ID] }
 
-
 //=======================================//
 //      INTERNAL POOLS
 //=======================================//
@@ -82,7 +77,10 @@ POLLUX.execQueue = [ ];
 POLLUX.commandPool = { };
 POLLUX.blackListedUsers = [];
 POLLUX.blackListedServers = [];
-POLLUX.registerCommands = () =>{
+POLLUX.registerCommands = (rel) =>{
+  if(rel){
+    Object.keys(POLLUX.commands).forEach(cmd=>POLLUX.unregisterCommand(cmd))
+  }
   readdirAsync("./core/commands").then(modules => {
     modules.forEach(async folder=>{
       let commands = (await readdirAsync("./core/commands/"+folder)).map(_c=>_c.split('.')[0]);
@@ -90,24 +88,45 @@ POLLUX.registerCommands = () =>{
     })
   })
 };
-
+const commandRoutine = require('./core/subroutines/onEveryCommand');
+  
 POLLUX.registerOne = (folder,_cmd) =>{
   try{
+    delete require.cache[require.resolve( (`./core/commands/${folder}/${_cmd}`) )]
     let commandFile = require(`./core/commands/${folder}/${_cmd}`);
-    POLLUX.registerCommand(_cmd,
-      commandFile.init, 
-      {
-        aliases: commandFile.aliases,
-        caseInsensitive: true,
-        requirements: {
-          userIDs: ['88120564400553984']
-        },
-        hooks:{
-          preCommand: (m,a) => m.args=a 
-        }
+    
+    commandFile.fill = function(_,$) { !(_ in this) && (this[_]=$) };
+    commandFile.fill('caseInsensitive', true);
+    commandFile.fill('requirements', { userIDs: ['88120564400553984'] });
+    commandFile.fill('hooks', {
+      preCommand: (m,a) => {
+        m.args=a;
+        m.lang =  [m.channel.LANGUAGE || (m.guild||{}).LANGUAGE || 'en', 'dev']; 
+        m.channel.sendTyping();
+        commandRoutine.commLog(m,commandFile)
+      },
+      postCheck: (m)=>{
+        commandRoutine.updateMeta(m,commandFile)      
+      },
+      postExecution: (m)=>{
+        commandRoutine.saveStatistics(m,commandFile)
+        commandRoutine.administrateExp(m.author.id,commandFile)
       }
-    ) 
+    }); 
+    commandFile.errorMessage = "Errorrrr"
+    commandFile.hidden = !commandFile.pub //legacy port
+
+
+    
+    const CMD = POLLUX.registerCommand(_cmd,commandFile.init,commandFile)     
     console.info("Register command: ".blue ,_cmd.padEnd(20,' ')," ✓".green)
+    if(commandFile.subs){
+      commandFile.subs.forEach(sub=>{
+        let subCfile = require(`./core/commands/${folder}/${_cmd}/${sub}`);
+
+        CMD.registerSubcommand(sub, subCfile.init, subCfile)
+      })
+    }
   }catch(e){
     console.info("Register command: ".blue ,_cmd.padEnd(20,' ').yellow," ✘".red)
     console.error( "\r                                " + e.message.red )
@@ -344,5 +363,3 @@ process.on("unhandledRejection", err=>{
   console.error(" UNHANDLED REJECTION ".bgYellow)
   console.error(err)
 })
-
-
