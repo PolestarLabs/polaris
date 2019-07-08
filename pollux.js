@@ -18,6 +18,7 @@ require('./utils/paths').run();
 const ERIS = require("eris");
 const Eris = require("eris-additions")(ERIS);
 const pGear = require("./core/structures/PrimitiveGearbox.js");
+const cmdPreproc = require("./core/structures/CommandPreprocessor");
 
 //Eris Mods-----//
 require('./core/structures/ReactionCollector.js')(ERIS);
@@ -60,6 +61,8 @@ const POLLUX = new Eris.CommandClient(cfg.token,{
   }
 },{
   defaultHelpCommand: false,
+  ignoreBots: true,
+  defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
   prefix: ["plx!","p!","+","@mention"]
 });
 
@@ -75,64 +78,12 @@ POLLUX.cluster = {id:CLUSTER_ID,name: clusterNames[CLUSTER_ID] }
 
 POLLUX.execQueue = [ ];
 POLLUX.commandPool = { };
+
+POLLUX.registerCommands = cmdPreproc.registerCommands;
+POLLUX.registerOne      = cmdPreproc.registerOne;
+
 POLLUX.blackListedUsers = [];
 POLLUX.blackListedServers = [];
-POLLUX.registerCommands = (rel) =>{
-  if(rel){
-    Object.keys(POLLUX.commands).forEach(cmd=>POLLUX.unregisterCommand(cmd))
-  }
-  readdirAsync("./core/commands").then(modules => {
-    modules.forEach(async folder=>{
-      let commands = (await readdirAsync("./core/commands/"+folder)).map(_c=>_c.split('.')[0]);
-      commands.forEach(_cmd=> POLLUX.registerOne(folder,_cmd));
-    })
-  })
-};
-const commandRoutine = require('./core/subroutines/onEveryCommand');
-  
-POLLUX.registerOne = (folder,_cmd) =>{
-  try{
-    delete require.cache[require.resolve( (`./core/commands/${folder}/${_cmd}`) )]
-    let commandFile = require(`./core/commands/${folder}/${_cmd}`);
-    
-    commandFile.fill = function(_,$) { !(_ in this) && (this[_]=$) };
-    commandFile.fill('caseInsensitive', true);
-    commandFile.fill('requirements', { userIDs: ['88120564400553984'] });
-    commandFile.fill('hooks', {
-      preCommand: (m,a) => {
-        m.args=a;
-        m.lang =  [m.channel.LANGUAGE || (m.guild||{}).LANGUAGE || 'en', 'dev']; 
-        m.channel.sendTyping();
-        commandRoutine.commLog(m,commandFile)
-      },
-      postCheck: (m)=>{
-        commandRoutine.updateMeta(m,commandFile)      
-      },
-      postExecution: (m)=>{
-        commandRoutine.saveStatistics(m,commandFile)
-        commandRoutine.administrateExp(m.author.id,commandFile)
-      }
-    }); 
-    commandFile.errorMessage = "Errorrrr"
-    commandFile.hidden = !commandFile.pub //legacy port
-
-
-    
-    const CMD = POLLUX.registerCommand(_cmd,commandFile.init,commandFile)     
-    console.info("Register command: ".blue ,_cmd.padEnd(20,' ')," ✓".green)
-    if(commandFile.subs){
-      commandFile.subs.forEach(sub=>{
-        let subCfile = require(`./core/commands/${folder}/${_cmd}/${sub}`);
-
-        CMD.registerSubcommand(sub, subCfile.init, subCfile)
-      })
-    }
-  }catch(e){
-    console.info("Register command: ".blue ,_cmd.padEnd(20,' ').yellow," ✘".red)
-    console.error( "\r                                " + e.message.red )
-  }
-};
-
 POLLUX.updateBlacklists = (DB) =>{
   return Promise.all([
     DB.users.find({'blacklisted':{$exists:true}},{id:1,_id:0}).lean().exec(),
@@ -227,7 +178,7 @@ pGear.getDirs('./locales/').then(list => {
 //=======================================//
 //      BOT EVENT HANDLER
 //=======================================//
-const {msgPreproc} = require('./core/subroutines/onEveryMessage');
+//const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 
 const readdirAsync = Promise.promisify(require('fs').readdir);
 POLLUX.once("ready", async (msg) => {
