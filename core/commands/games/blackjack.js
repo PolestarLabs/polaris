@@ -360,7 +360,7 @@ module.exports = {
       v.insu = $t("$.insuBet",{lngs:msg.lang,number:10})
       v.nofunds = $t("$.noFundsBet",{lngs:msg.lang,number:USERDATA.modules.rubines})
       v.insuFloor = $t("$.insuFloor",{lngs:msg.lang,number:10})
-      v.ceiling = $t("games.ceilingBet",{lngs:msg.lang,number:2500}).replace("%emj%", gear.emoji("rubine"))
+      v.ceiling = $t("games.ceilingBet",{lngs:msg.lang,number:2500}).replace("%emj%", _emoji("rubine"))
       
       
       //HELP TRIGGER
@@ -547,7 +547,7 @@ if (await gear.manageLimits('blackjack',55,USERDATA,msg)) {
     
     let scenario = await drawTable(PLAYER_HAND_GFX,POLLUX_HAND_GFX,multiHAND_DATA[0],POL_DATA,stuff)
     let resp = berkelium > 0 ? v._PRIZE : berkelium < 0 ? v._ANTIPRIZE : ""
-    let rebalance = resp.replace("%R%",gear.emoji("rubine")+Math.abs(berkelium))
+    let rebalance = resp.replace("%R%",_emoji("rubine")+Math.abs(berkelium))
           
     msg.channel.send(PLAY_RES,{file:scenario.toBuffer(),name:"blackjack.png"}).then(m=>m.channel.send(rebalance).catch(e=>{}))
 

@@ -14,19 +14,19 @@ const PERMS_CALC = function CommandPermission(msg){
         ? [cfg.owner]
         : msg.command.module == "_boStaff" 
             ? cfg.admins
-            : POLLUX.beta ? [cfg.owner] : [];
+            : POLLUX.beta ? [cfg.owner] : cfg.admins;
     let switches = !(msg.guild.DISABLED.includes(msg.command.label) || msg.guild.DISABLED.includes(msg.command.cat))
     return (switches && uIDs);
 }
 
 const DEFAULT_CMD_OPTS = {
     caseInsensitive: true
-    ,invalidUsageMessage: (msg)=> gear.autoHelper('force',{msg, cmd:msg.command.label,opt:msg.command.cat})
+    ,invalidUsageMessage: (msg)=> gear.autoHelper('force',{msg, cmd: msg.command.cmd,opt:msg.command.cat})
     ,cooldown: 2000     
     ,cooldownMessage: "Too Fast"
     ,cooldownReturns: 2
     ,requirements: {custom:PERMS_CALC}
-    ,permissionMessage: (msg)=>{msg.addReaction(gear.emoji('nope').reaction);return false} 
+    ,permissionMessage: (msg)=>{msg.addReaction(_emoji('nope').reaction);return false} 
     ,requirements: {custom:PERMS_CALC}
     ,hooks:  {
         preCommand: (m,a) => {
@@ -58,6 +58,7 @@ const registerOne = (folder, _cmd) => {
 
         const CMD = POLLUX.registerCommand(_cmd, commandFile.init, commandFile)
         //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
+        POLLUX.commands[CMD.label].cmd = commandFile.cmd
         POLLUX.commands[CMD.label].cat = commandFile.cat
         POLLUX.commands[CMD.label].module = folder
         if (commandFile.subs) {
@@ -68,8 +69,9 @@ const registerOne = (folder, _cmd) => {
             })
         }
     } catch (e) {
-        console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
-        console.error("\r                                " + e.message.red)
+        console.info( " SoftERR ".bgYellow ,_cmd.padEnd(20, ' ').yellow,e.message.red)
+        //console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
+        //console.error("\r                                " + e.message.red)
     }
 };
 const registerCommands = (rel) => {

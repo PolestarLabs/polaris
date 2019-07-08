@@ -61,23 +61,23 @@ const init = async function (message) {
                 emb.description = "Weekly Hero Rotation"
 
                 emb.addField('All Levels', `
-${gear.emoji(rotation[0][0].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][0]}
-${gear.emoji(rotation[0][1].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][1]}
-${gear.emoji(rotation[0][2].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][2]}
-${gear.emoji(rotation[0][3].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][3]}
-${gear.emoji(rotation[0][4].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][4]}
+${_emoji(rotation[0][0].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][0]}
+${_emoji(rotation[0][1].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][1]}
+${_emoji(rotation[0][2].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][2]}
+${_emoji(rotation[0][3].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][3]}
+${_emoji(rotation[0][4].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][4]}
 `, true)
                 emb.addField('\u200b', `
-${gear.emoji(rotation[0][5].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][5]}
-${gear.emoji(rotation[0][6].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][6]}
-${gear.emoji(rotation[0][7].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][7]}
-${gear.emoji(rotation[0][8].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][8]}
-${gear.emoji(rotation[0][9].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][9]}
+${_emoji(rotation[0][5].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][5]}
+${_emoji(rotation[0][6].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][6]}
+${_emoji(rotation[0][7].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][7]}
+${_emoji(rotation[0][8].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][8]}
+${_emoji(rotation[0][9].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[0][9]}
 `, true)
-                emb.addField('Level 5', `${gear.emoji(rotation[1].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[1]}`, true)
-                emb.addField('Level 7', `${gear.emoji(rotation[2].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[2]}`, true)
-                emb.addField('Level 12', `${gear.emoji(rotation[3].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[3]}`, true)
-                emb.addField('Level 15', `${gear.emoji(rotation[4].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[4]}`, true)
+                emb.addField('Level 5', `${_emoji(rotation[1].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[1]}`, true)
+                emb.addField('Level 7', `${_emoji(rotation[2].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[2]}`, true)
+                emb.addField('Level 12', `${_emoji(rotation[3].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[3]}`, true)
+                emb.addField('Level 15', `${_emoji(rotation[4].replace(/\./g,"").replace(" ","").toLowerCase())}${rotation[4]}`, true)
                 message.channel.send({
                     embed: emb
                 })
@@ -110,7 +110,7 @@ request("https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_ke
 
                         let c = champ
                         let role = c? c.tags? c.tags[0]:"Specialist":"Specialist";
-                        rotation.push([gear.emoji(role.toLowerCase()),champ.name]);
+                        rotation.push([_emoji(role.toLowerCase()),champ.name]);
                     
                 });    
   
@@ -118,7 +118,7 @@ request("https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_ke
 
                         let c = champ
                         let role = c? c.tags? c.tags[0]:"Specialist":"Specialist";
-                        secondRotation.push([gear.emoji(role.toLowerCase()),champ.name]);
+                        secondRotation.push([_emoji(role.toLowerCase()),champ.name]);
                     
                 });    
             

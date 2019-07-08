@@ -6,17 +6,17 @@ const fs = require('fs')
 const init = async function (msg) {
 
     let P={lngs:msg.lang,}
-    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,msg,opt:this.cat}))return;
-
+    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
+    
 
     const [userData,stickerData,boosterData] = await Promise.all([
-        DB.users.get(msg.author.id),
+        DB.users.findOne({id:msg.author.id}),
         DB.cosmetics.find({type:'sticker'}),
         DB.items.find({type:'boosterpack'}),
     ]);
     const collection = msg.args[0];
 
-    if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
+   // if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
 
     function getRandomSticker(col,exc){
         let pile = gear.shuffle( stickerData.filter(stk=> stk.series_id == col && stk.id!=exc) );
@@ -33,12 +33,12 @@ const init = async function (msg) {
     const thisPack = boosterData.find(b=>b.id===collection+"_booster");
     P.boostername = thisPack.name;
     P.dashboard = `[${$t('terms.dashboard',P)}](${paths.CDN}/dashboard#/stickers)`;
-    embed.author( gear.emoji(thisPack.rarity) + $t('interface.booster.title',P) );
+    embed.author( _emoji(thisPack.rarity) + $t('interface.booster.title',P) );
     embed.color = 0x36393f;
     embed.description= `
     ------------------------------------------------
-    ${stk1.new?":new:":":record_button:"} ${gear.emoji(stk1.rarity)}  ${stk1.name}
-    ${stk2.new?":new:":":record_button:"} ${gear.emoji(stk2.rarity)}  ${stk2.name}
+    ${stk1.new?":new:":":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}
+    ${stk2.new?":new:":":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}
  `+"------------------------------------------------\n"+
     $t('interface.booster.checkStickersAt',P)      
      
@@ -47,7 +47,6 @@ const init = async function (msg) {
     embed.footer(msg.author.tag,msg.author.avatarURL)
 
     msg.channel.send({embed});
-
 
 };
 

@@ -31,7 +31,7 @@ const init = async function (msg){
             const embed = new gear.Embed()
             .thumbnail(`https://pollux.fun/backdrops/${thebg.code}.png`)
             .description(`
-            Disenchant this ${gear.emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?
+            Disenchant this ${_emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?
             \`Code:\`\u200b***\`${thebg.code}\`***
             `)
             

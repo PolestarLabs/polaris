@@ -147,7 +147,7 @@ async function levelChecks(msg) {
       //delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
       msg.author.getDMChannel().then(dmChan=>{
         if (userData.switches.LVUPDMoptout===true) return;
-        dmChan.createMessage("**+1** x "+gear.emoji('loot')+gear.emoji(polizei)+' Level Up Bonus!');
+        dmChan.createMessage("**+1** x "+_emoji('loot')+_emoji(polizei)+' Level Up Bonus!');
       })
       //require("./modules/dev/levelUp_infra.js").init(msg);
 }

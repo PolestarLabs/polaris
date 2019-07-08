@@ -113,12 +113,12 @@ const init = async function (msg){
    menumes =  await msg.channel.send( '',gear.file( canvas.toBuffer(),'inventory.png'));
    menumes.target = Target;
    return menumes;
-   //menumes.addReaction(gear.emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
-   //menumes.addReaction(gear.emoji("BOOSTER").replace(/(\<:|\>)/g,'') )
-   //menumes.addReaction(gear.emoji("CONSUMABLE").replace(/(\<:|\>)/g,'') )
-   //menumes.addReaction(gear.emoji("MATERIAL").replace(/(\<:|\>)/g,'') )
-   //menumes.addReaction(gear.emoji("KEY").replace(/(\<:|\>)/g,'') )
-   //menumes.addReaction(gear.emoji("JUNK").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("BOOSTER").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("CONSUMABLE").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("MATERIAL").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("KEY").replace(/(\<:|\>)/g,'') )
+   //menumes.addReaction(_emoji("JUNK").replace(/(\<:|\>)/g,'') )
     
 
 }
@@ -132,32 +132,32 @@ module.exports={
     ,aliases:['inv']
     ,reactionButtons:[
         {
-            emoji: gear.emoji("LOOTBOX").replacereaction,
+            emoji: _emoji("LOOTBOX").replacereaction,
             type: "edit",
             response: require("./cmd").init,
             
         },{
-            emoji: gear.emoji("BOOSTER").reaction,
+            emoji: _emoji("BOOSTER").reaction,
             type: "edit",
             response: require("./cmd").init,
             
         },{
-            emoji: gear.emoji("CONSUMABLE").reaction,
+            emoji: _emoji("CONSUMABLE").reaction,
             type: "edit",
             response: require("./cmd").init,
             
         },{
-            emoji: gear.emoji("MATERIAL").reaction,
+            emoji: _emoji("MATERIAL").reaction,
             type: "edit",
             response: require("./cmd").init,
             
         },{
-            emoji: gear.emoji("KEY").reaction,
+            emoji: _emoji("KEY").reaction,
             type: "edit",
             response: require("./cmd").init,
             
         },{
-            emoji: gear.emoji("JUNK").reaction,
+            emoji: _emoji("JUNK").reaction,
             type: "edit",
             response: require("./cmd").init,
             

@@ -56,7 +56,7 @@ const init = async function (msg){
         ${$t("interface.feed.newYoutube", P)}
         ${payload.last.link}`
         P.channelID = `<#${channel}>`
-        msg.channel.send(gear.emoji("yep")+ $t('interface.feed.savedSubLastYoutube',P) );
+        msg.channel.send(_emoji("yep")+ $t('interface.feed.savedSubLastYoutube',P) );
 
         
         return  msg.guild.channels.find(chn=>chn.id===channel).send( {content:LastVideoLink}).then(m=>m.channel.send({embed}));
@@ -85,7 +85,7 @@ const init = async function (msg){
     if(msg.args[0]=== "list"){        
         if(feedData && feedData.feeds.length > 0){
             msg.channel.send(`
-            **${gear.emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
+            **${_emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
 \u2003${feedData.feeds.filter(x=>x.type==="youtube").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` https://youtube.com/channel/${x.url} @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',P)}*

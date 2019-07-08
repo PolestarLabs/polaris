@@ -16,13 +16,13 @@ const P = {user:message.member.username,lngs:message.lang,prefix:message.prefix}
 let DICE_REGEX = /([0-9]* *d[0-9]+)/g
 let DICE_EMOTES={
   "2": "<:exchange:446901834246782976>",
-  "4":     gear.emoji("d4"),
-  "6":     gear.emoji("d6"),
-  "8":     gear.emoji("d8"),
-  "10":    gear.emoji("d10"),
-  "12":    gear.emoji("d12"),
-  "20":    gear.emoji("d20"),
-  "any":   gear.emoji("d20")
+  "4":     _emoji("d4"),
+  "6":     _emoji("d6"),
+  "8":     _emoji("d8"),
+  "10":    _emoji("d10"),
+  "12":    _emoji("d12"),
+  "20":    _emoji("d20"),
+  "any":   _emoji("d20")
 }
 
 

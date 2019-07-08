@@ -65,6 +65,8 @@ POLLUX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] }
 POLLUX.execQueue = [];
 POLLUX.commandPool = {};
 
+global._emoji = E => new (require("./resources/lists/emoji.js")).PolluxEmoji(E);
+
 POLLUX.registerCommands = cmdPreproc.registerCommands;
 POLLUX.registerOne = cmdPreproc.registerOne;
 
@@ -133,7 +135,7 @@ readdirAsync('./locales/').then(list => {
         }
     }, (err, t) => {
         if (err) {
-            console.warn("• ".yellow, "Failed to Load Translations", err)
+            console.warn("• ".yellow, "Failed to Load Some Translations".yellow, "\n"+err.map(e=>e.path.gray).join('\n'))
         }
         console.log("• ".green, "Translation Engine Loaded")
 

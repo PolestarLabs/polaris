@@ -44,7 +44,7 @@ const init = async function (msg){
         let dailyNope = $t('responses.give.cooldown',P);
         let embed=new gear.Embed();
         embed.setColor('#e35555');
-        embed.description = gear.emoji('nope') + dailyNope +P.remaining+" "+r;
+        embed.description = _emoji('nope') + dailyNope +P.remaining+" "+r;
         return msg.channel.send({embed:embed});
     }
     let info = async function(msg,Daily){
@@ -54,8 +54,8 @@ const init = async function (msg){
         let embe2=new gear.Embed();
         embe2.setColor('#e35555')
         embe2.description=`
-    ${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
-    ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(last).add(8,'hours').fromNow() }
+    ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
+    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(last).add(8,'hours').fromNow() }
       `
             return msg.channel.send({embed:embe2});
     }
@@ -78,8 +78,8 @@ const init = async function (msg){
             embed.image("https://cdn.discordapp.com/attachments/488142034776096772/586549151206998057/transfer.gif")
             embed.description =`
             
-            **${msg.author.username}** transfered **${AMOUNT}**${gear.emoji('RBN')} to **${TARGET.username}**
-            Transaction Fee: **${Math.floor(AMOUNT*0.05)}${gear.emoji('RBN')}**
+            **${msg.author.username}** transfered **${AMOUNT}**${_emoji('RBN')} to **${TARGET.username}**
+            Transaction Fee: **${Math.floor(AMOUNT*0.05)}${_emoji('RBN')}**
             Transaction ID: \`${payload.transactionId}\`
             
             `

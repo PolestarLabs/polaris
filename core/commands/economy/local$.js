@@ -69,7 +69,7 @@ const init = async function (msg){
         Icon: ${pIcon}
         Investment: ${pInvest}
         Pool: ${pPool}
-        **Rate:** ${pIcon}1\`${pCode}\` = ${gear.emoji('RBN')}${pInvest/pVolume}\`RBN\`
+        **Rate:** ${pIcon}1\`${pCode}\` = ${_emoji('RBN')}${pInvest/pVolume}\`RBN\`
         
         `)
 

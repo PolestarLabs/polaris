@@ -13,7 +13,7 @@ const init = async function (msg){
     if ((/<#[0-9]{16,19}>/.test(msg.args[0]))){
         nex_msg = msg;
         nex_msg.channel = msg.guild.channels.find(c=>c.id===msg.channelMentions[0]);
-        if(!nex_msg.channel) return msg.channel.send(gear.emoji('nope')+" `ERROR :: Channel not set`");
+        if(!nex_msg.channel) return msg.channel.send(_emoji('nope')+" `ERROR :: Channel not set`");
         nex_msg.args = msg.args.slice(1)
         nex_msg.delete = ()=>null;
         require('./say').init(nex_msg);

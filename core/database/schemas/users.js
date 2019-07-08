@@ -171,7 +171,9 @@ UserSchema.methods.upCommend = function upCommend(USER,amt=1){
   })
 }
 
-UserSchema.methods.amtItem = function amountItem(itemId){
+UserSchema.methods.amtItem = function amountItem(itemId,search){
+  //find solution for itemtype search
+  //if(search)  return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count || 0;
   return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count || 0;
 }
 

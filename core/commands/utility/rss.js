@@ -33,7 +33,7 @@ const init = async function (msg){
         await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
         let embed = await feedEmbed(feed.items[0],feed);
         P.channelID = `<#${channel}>`
-        msg.channel.send(gear.emoji("yep"), $t('interface.feed.savedSubLastRSS',P));
+        msg.channel.send(_emoji("yep"), $t('interface.feed.savedSubLastRSS',P));
         return  POLLUX.getChannel(channel).send( {embed} );        
         
     }
@@ -62,7 +62,7 @@ const init = async function (msg){
     if(msg.args[0]=== "list"){        
         if(feedData && RSSFiltered.length > 0){
             msg.channel.send(`
-            **${gear.emoji('todo')+ $t('interface.feed.listShowRSS',P) }**
+            **${_emoji('todo')+ $t('interface.feed.listShowRSS',P) }**
 \u2003${RSSFiltered.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',P)}*
