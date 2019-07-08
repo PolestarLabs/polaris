@@ -131,6 +131,7 @@ module.exports = {
     argsRequired: false,
     caseInsensitive: true,
     cooldown: 3000,
+    aliases: ['ls','entries'],
     hooks: {
         preCommand: (msg) => msg.author.marketplacing = true,
         postExecution: (msg) => msg.author.marketplacing = false,

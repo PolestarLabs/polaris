@@ -1,10 +1,11 @@
 module.exports={
-    init: function(msg){return 'market'}
+    init:  "Marketplace"
     ,pub:true
-    ,cmd:'market'
+    ,cmd:'marketplace'
     ,perms:3
     ,cat:'economy'
     ,botPerms:['attachFiles','embedLinks','manageReactions']
-    ,aliases:[]
+    ,aliases:['market','mkt']
+    ,argsRequired: true
     ,subs: ['list','post','delete']
 }
