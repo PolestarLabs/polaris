@@ -165,7 +165,8 @@ pGear.getDirs('./locales/').then(list => {
     }, (err, t) => {
         if (err) {
             console.warn("• ".yellow,"Failed to Load Translations", err)
-        }
+          }
+        console.log("• ".green,"Translation Engine Loaded")
 
         multilang.setT(t);
         global.$t = multilang.getT()
