@@ -8,6 +8,7 @@ module.exports = {
 
     updateServerCache: refreshAndResolve('./serverCache').update,
     reloadServerCache: refreshAndResolve('./serverCache').reload, 
+    updateChannels:    refreshAndResolve('./serverCache').updateChannels, 
 
 
 }
