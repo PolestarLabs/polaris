@@ -32,14 +32,14 @@ module.exports = {
       DB.globalDB.set({
         $inc: {
               ['data.statistics.commandUsage.CMD.' + command.cmd]: 1,
-              ['data.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
+              ['data.statistics.commandUsage.CAT.' + (command.cat||"UNKNOWN").replace('$', 'cash')]: 1
         }
       }),
       DB.control.set(message.author.id, {
         $inc: {
               ['data.statistics.commandUsage.CMD.' + command.cmd]: 1,
               ['data.statistics.commandUsage.TOTAL']: 1,
-              ['data.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
+              ['data.statistics.commandUsage.CAT.' + (command.cat||"UNKNOWN").replace('$', 'cash')]: 1
         }
       }),
       (async _=> {
@@ -48,7 +48,7 @@ module.exports = {
             $inc: {
               ['modules.statistics.commandUsage.CMD.' + command.cmd]: 1,
               ['modules.statistics.commandUsage.TOTAL']: 1,
-              ['modules.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
+              ['modules.statistics.commandUsage.CAT.' + (command.cat||"UNKNOWN").replace('$', 'cash')]: 1
             }
           })
         }
