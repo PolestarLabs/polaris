@@ -61,14 +61,14 @@ const init = async function (msg){
         embed.timestamp( new Date() );
         embed.color = 0x36393f
         embed.thumbnail(await Gal.randomOne('kick',true));
-        embed.description = gear.emoji('loading') + rand$t('responses.verbose.jas',P);
+        embed.description = _emoji('loading') + rand$t('responses.verbose.jas',P);
         
     let reason;
     let pre_msg
     if(msg.args.length == 1){
 
         embed.description = "*```"+ $t('interface.kickban.waitingForReason',P) +"```*"
-        pre_msg = await msg.channel.send({content: gear.emoji('loading') + $t('interface.kickban.includeReason',P)  ,embed});
+        pre_msg = await msg.channel.send({content: _emoji('loading') + $t('interface.kickban.includeReason',P)  ,embed});
         const resp = await msg.channel.awaitMessages(msg2 => msg2.author.id === msg.author.id
             , {maxMatches: 1,time: 30e3}
         );
@@ -115,7 +115,7 @@ const init = async function (msg){
                 POLLUX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL")
         }
         embed.color = 0xDD8A55
-        embed.description = gear.emoji('yep')+"  "+ $t('interface.kickban.'+(soft?"userSoftBanned":"userBanned"),P) +" "+ rand$t('interface.kickban.banFlavs',P)  + "\n``` "+reason+" ```"
+        embed.description = _emoji('yep')+"  "+ $t('interface.kickban.'+(soft?"userSoftBanned":"userBanned"),P) +" "+ rand$t('interface.kickban.banFlavs',P)  + "\n``` "+reason+" ```"
         if(pre_msg){
             pre_msg.edit({content:'',embed})
         }else{

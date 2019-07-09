@@ -63,11 +63,11 @@ async function resolveExchange(exchange_itm,bot){
                 bot.users.fetch(usr).then(u => {
                   
                 u.getDMChannel().then(dmChan=>{dmChan.send(`
-\`${src}\` ${coinbase[src].icon}:currency_exchange: ${gear.emoji('rubine')} \`RBN\`
+\`${src}\` ${coinbase[src].icon}:currency_exchange: ${_emoji('rubine')} \`RBN\`
 **Exchange Processed!**
 
-Inbound  : ${gear.emoji('rubine')} × **${amt}**
-Fees         : ${gear.emoji('rubine')} × **${taxes+coinfee}**
+Inbound  : ${_emoji('rubine')} × **${amt}**
+Fees         : ${_emoji('rubine')} × **${taxes+coinfee}**
 \`\`\`diff
 +Inbound Amount   :  ${aN(amt)}
 -Transaction Fee  :  ${aN(taxes)}
@@ -243,7 +243,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
       DB.servers.get(mtu.server.id).then(svData=>{
         DB.mutes.expire(Date.now());
         let logSERVER = POLLUX.guilds.get(mtu.server);
-        let logUSER = bot.users.find(x=> x.id  === mtu.user);
+        let logUSER   = POLLUX.findUser(mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
         if (!logMEMBER) return;

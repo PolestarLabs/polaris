@@ -13,7 +13,7 @@ const init = async function (msg){
     P.pstext=  "*```css\n"+persotxt+"```*",
     P.prefix=  msg.prefix,
     embed = new gear.Embed
-    embed.description = gear.emoji('yep') + rand$t('responses.verbose.interjections.acknowledged',P) + " " +  $t('profile.persotexUpdate',P) 
+    embed.description = _emoji('yep') + rand$t('responses.verbose.interjections.acknowledged',P) + " " +  $t('profile.persotexUpdate',P) 
 
     msg.channel.send({embed})
 

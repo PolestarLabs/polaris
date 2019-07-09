@@ -1,10 +1,9 @@
-const {Embed,autoHelper,emoji} = require('../../utilities/Gearbox');
+const {Embed} = require('../../utilities/Gearbox');
 const DB = require('../../database/db_ops');
 
-const init = async function (msg,pollux){
+const init = async function (msg,args,pollux){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    let P={lngs:msg.lang,prefix:msg.prefix}   
 
     const [USERDATA,DECKDATA] = await Promise.all(
         [
@@ -24,21 +23,21 @@ const init = async function (msg,pollux){
             let dkinfo = DECKDATA.find(dk=>dk.id===skin);
             if (dkinfo){
                 console.log(dkinfo.rarity+"dek")
-                CASINO.push(`${emoji(dkinfo.rarity+"dek")} **${dkinfo.name}** \n \u2003\u2003 \\🆔\`${dkinfo.localizer}\``);
+                CASINO.push(`${_emoji(dkinfo.rarity+"dek")} **${dkinfo.name}** \n \u2003\u2003 \\🆔\`${dkinfo.localizer}\``);
                 console.log(CASINO)
             }
         }
         if (skin.startsWith("tarot"))  {
             let dkinfo = DECKDATA.find(dk=>dk.id===skin);
             if (dkinfo){
-                TAROT.push(`${emoji(dkinfo.rarity+"dek")} **${dkinfo.name}** \n \u2003\u2003 \\🆔\`${dkinfo.localizer}\``);
+                TAROT.push(`${_emoji(dkinfo.rarity+"dek")} **${dkinfo.name}** \n \u2003\u2003 \\🆔\`${dkinfo.localizer}\``);
             }
         }
 
         
         if(i===arr.length-1){
-            CASINO.push(`${emoji("Cdek")} **Vegas** (default) \n \u2003\u2003 \\🆔\`default\``);
-            TAROT.push(`${emoji("Cdek")} **Persona 3** (default) \n \u2003\u2003 \\🆔\`persona3\``);
+            CASINO.push(`${_emoji("Cdek")} **Vegas** (default) \n \u2003\u2003 \\🆔\`default\``);
+            TAROT.push(`${_emoji("Cdek")} **Persona 3** (default) \n \u2003\u2003 \\🆔\`persona3\``);
 
             if(CASINO.length>0 && (!pollux || pollux==="casino")) 
                 embed.field(

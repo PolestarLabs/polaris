@@ -21,22 +21,30 @@ module.exports={
     return Pixly.createBuffer(path);
   },
 
- tag: function tag(base, text, font, color) {
+ tag: function tag(base, text, font, color,stroke) {
 
         font = font || '14px Product,Sans'
+        font += ",'DX아기사랑B' " //KOREAN SUPPORT
+        font += ",'Corporate Logo Rounded' " //JAPANESE SUPPORT
         color = color || '#b4b4b8'
         base.font = font;
 
         let H = base.measureText(text).emHeightAscent
-        let h = base.measureText(text).emHeightDescent;
-        let w = base.measureText(text).width;
+        let h = base.measureText(text).emHeightDescent + (stroke?stroke.line:0);
+        let w = base.measureText(text).width + (stroke?stroke.line:0);
         const item = new Canvas.createCanvas(w, h + H);
             let c = item.getContext("2d")
             c.antialias = 'subpixel';
             c.filter = 'best';
             c.font = font;
+            if(stroke){
+              c.strokeStyle  = stroke.style;
+              c.lineWidth   = stroke.line;
+              c.strokeText(text, 1+stroke.line/2, H+stroke.line/2);
+            }
             c.fillStyle = color;
-            c.fillText(text, 0, H);
+            c.fillText(text, 1+(stroke?stroke.line/2:0), H+(stroke?stroke.line/2:0) );
+
         return {item:item,height:h+H,width:w};// <-- same as above
     },
 
@@ -371,9 +379,28 @@ c.globalCompositeOperation='destination-atop';
 
     return canvas_proto
 
-  }
+  },
 
+  popOutTxt: function popOutTxt(ctx,TXT,X=0,Y=0,font,color,maxWidth =0, stroke={style:"#1b1b2b",line:10},S=0){
+    S= S||stroke.line /2 -1;
+    stroke.style = stroke.style || "#1b1b2b"
+    stroke.line = stroke.line || 10
+    let FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
+      let ctex = this.tag(ctx,TXT,FONT,stroke.style,stroke)
+    ctx.drawImage(
+      ctex.item,
+      X,Y, 
+      maxWidth && ctex.width > maxWidth ? maxWidth : ctex.width, ctex.height
+    )
+      ctex = this.tag(ctx,TXT,FONT,color,stroke)
+    ctx.drawImage(
+      ctex.item,
+      X-S,Y-S, 
+      maxWidth && ctex.width > maxWidth ? maxWidth : ctex.width, ctex.height
+    )
+    return {w:   maxWidth && ctex.width > maxWidth ? maxWidth : ctex.width + stroke.line + S + 2 ,text:TXT }
 
+}
 
 
 }

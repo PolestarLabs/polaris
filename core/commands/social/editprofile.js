@@ -42,7 +42,7 @@ const init = async function (msg){
     embed.field("✏ "+"Change Personal Text"
                 ,"\u200b \u2003  *\""+userData.modules.tagline+"\"*",true)
     embed.field(`${frameOn===true?"🔴":frameOn===false?"🔵":"🚫"} ${"Toggle Propic Frame"}`
-                ,""+(frameOn===true? gear.emoji('yep')+" **ON**" :frameOn===false? gear.emoji('nope')+"**OFF**" :"🚫"),true)
+                ,""+(frameOn===true? _emoji('yep')+" **ON**" :frameOn===false? _emoji('nope')+"**OFF**" :"🚫"),true)
     embed.field("📝 "+"Change Personal Text"
                 ," ```"+userData.modules.persotext+"```");
     embed.field("🖌 "+"Change Fav Color"

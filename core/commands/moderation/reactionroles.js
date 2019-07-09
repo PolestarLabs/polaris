@@ -74,7 +74,7 @@ const init = async function (msg){
         
         }catch(err){
             console.error(err);
-            return msg.channel.send(gear.emoji('nope') + "**ERROR** Please Contact Support~")
+            return msg.channel.send(_emoji('nope') + "**ERROR** Please Contact Support~")
         }
         
         return null;

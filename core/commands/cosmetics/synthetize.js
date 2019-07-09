@@ -45,7 +45,7 @@ var init = async function (message) {
     let hasIt, affordsIt, canBuy, payCoin, selectedItem, positive,obtainable;
 
     function gemCount(rar){
-        return `${selectedItem.rarity==rar?" __**":""}${gear.emoji(rar)} ${userData.amtItem("cosmo_gem_"+rar)}${selectedItem.rarity==rar?"**__ ":""}`      
+        return `${selectedItem.rarity==rar?" __**":""}${_emoji(rar)} ${userData.amtItem("cosmo_gem_"+rar)}${selectedItem.rarity==rar?"**__ ":""}`      
      }
    
     if (operation == "bg") {

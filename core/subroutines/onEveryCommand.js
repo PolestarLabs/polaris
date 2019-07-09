@@ -42,13 +42,18 @@ module.exports = {
               ['data.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
         }
       }),
-      DB.serverDB.set(message.guild.id, {
-        $inc: {
+      (async _=> {
+        if(message.guild){
+          DB.serverDB.set(message.guild.id, {
+            $inc: {
               ['modules.statistics.commandUsage.CMD.' + command.cmd]: 1,
               ['modules.statistics.commandUsage.TOTAL']: 1,
               ['modules.statistics.commandUsage.CAT.' + command.cat.replace('$', 'cash')]: 1
+            }
+          })
         }
-      })]);
+      })()
+    ]);
       
   
   }

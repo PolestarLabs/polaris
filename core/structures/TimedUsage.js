@@ -62,8 +62,8 @@ console.log(message.lang)
     let embe2=new gear.Embed;
     embe2.setColor('#e35555')
     embe2.description(`
-${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
-${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }
+${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
+${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }
   `)
         return message.channel.send({embed:embe2});
   }

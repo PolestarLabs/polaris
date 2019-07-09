@@ -11,7 +11,7 @@ const clean = (text) => {
 
 
 
-const init = async msg => {
+const init = async (msg) => {
 let depth_param = 0
   if(msg.args[0] === "-depth"){
     depth_param = parseInt(msg.args[1]);

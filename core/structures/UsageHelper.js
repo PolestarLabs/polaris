@@ -20,11 +20,11 @@ exports.run = function run(cmd, m, third) {
   let emb = new Embed;
   try {
     emb.setColor($d[third].color)
+    emb.thumbnail($d[third].thumb)
   } catch (e) {
     emb.setColor("#eee")
   }
  
-  emb.thumbnail($d[third].thumb)
   emb.footer(`${v.mod}: ${v.name} | ${third.toUpperCase()} > ${cmd}`, "https://png.icons8.com/puzzle/color/16");
   emb.author($t("help.commUsage", {
     lngs: m.lang,

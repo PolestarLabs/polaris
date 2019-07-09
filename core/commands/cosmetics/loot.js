@@ -10,7 +10,7 @@ const ECO = require("../../archetypes/Economy");
 const cmd = 'loot';
 
 
-const ej = gear.emoji;
+const ej = _emoji;
 
 
 const raretypes={

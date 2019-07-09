@@ -5,7 +5,6 @@ const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
 const DB = require("../database/db_ops");
-const emojiList = require("../../resources/lists/emoji.js");
 
 if (Eris.Embed){
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
@@ -15,9 +14,7 @@ if (Eris.Embed){
 module.exports = {
   nope: ":nope:339398829088571402",
   reload: function(){delete require.cache[require.resolve('./Gearbox')]},
-  emoji: function emoji(query){
-    return  emojiList(query)
-  },
+  
   invisibar : "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
 
   getTarget: function getTarget(msg,argPos=0,self=true,soft=false){
@@ -26,7 +23,6 @@ module.exports = {
 
     if(!msg.args[argPos]) return self ? msg.author : null;
     let ID = msg.args[argPos].replace(/[^0-9]{16,19}$/g,'');
-    console.log(ID)
     let user = POLLUX.users.find(usr=> usr.id === ID )
 
     if (!user) {

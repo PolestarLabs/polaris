@@ -37,17 +37,17 @@ emb.thumbnail(POLLUX.user.avatarURL)
 
 emb.field('\u200b','𝚂𝚘𝚌𝚒𝚊𝚕 𝙸𝚗𝚏𝚘𝚛𝚖𝚊𝚝𝚒𝚘𝚗 ',false)
 
-emb.field(gear.emoji('mobo')+'   Servers',"```ml\n~"  +gear.miliarize( server_estimate_count, true) + "```", true)
+emb.field(_emoji('mobo')+'   Servers',"```ml\n~"  +gear.miliarize( server_estimate_count, true) + "```", true)
 emb.field(':busts_in_silhouette:    Users',"```ml\n~" +gear.miliarize( user_estimate_count        ) + "```", true)
 
 
 emb.field('\u200b','𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚝𝚞𝚜 ',false)
-emb.field(gear.emoji('cog')+'   Websocket Ping         \u200b',"```ml\n"+ ping +"```", true)
-emb.field(gear.emoji('memslot')+'    RAM Usage',"```ml\n"+ram_usage+" MB```", true)
+emb.field(_emoji('cog')+'   Websocket Ping         \u200b',"```ml\n"+ ping +"```", true)
+emb.field(_emoji('memslot')+'    RAM Usage',"```ml\n"+ram_usage+" MB```", true)
 
-//emb.field(gear.emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${gear.getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
-emb.field(gear.emoji('mobo')+'  Servers in this Cluster         \u200b',"```css\n"+(`[S${msg.guild.shard.id}C${process.env.CLUSTER_ID}] ${POLLUX.guilds.size}`)+"```", true)
-emb.field(gear.emoji('cpu')+'   Cluster Uptime',"```ml\n"+(uptime)+"```", true)
+//emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${gear.getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
+emb.field(_emoji('mobo')+'  Servers in this Cluster         \u200b',"```css\n"+(`[S${msg.guild.shard.id}C${process.env.CLUSTER_ID}] ${POLLUX.guilds.size}`)+"```", true)
+emb.field(_emoji('cpu')+'   Cluster Uptime',"```ml\n"+(uptime)+"```", true)
 
 emb.field('\u200b'         ,'𝙻𝚒𝚗𝚔𝚜 ',false)
 emb.field('Donate'         ,"<a:polluxYAY:482436838523404288>  [Pollux on Patreon](https://patreon.com/Pollux)", true)

@@ -50,7 +50,7 @@ var init = async function (message) {
   `
   _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity] 
   embed.field("Price",  selectedBG.buyable&&!selectedBG.event ? _price : "`NOT FOR SALE`",true  )
-  embed.field("Droppable",  selectedBG.droppable ? gear.emoji('yep') :  gear.emoji('nope')+"x" ,true  )
+  embed.field("Droppable",  selectedBG.droppable ? _emoji('yep') :  _emoji('nope')+"x" ,true  )
   if (selectedBG.event ) embed.field("Event","`"+selectedBG.event+"`",true);
   else embed.field("\u200b","\u200b",true);
 

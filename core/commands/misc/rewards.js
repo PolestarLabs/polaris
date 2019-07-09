@@ -387,9 +387,9 @@ embed.thumbnail("https://pollux.fun/build/"+T.title+".png");
 embed.description(`
 **${gear.capitalize(T.title) + (T.legacy?" Legacy":"")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS=='number'?`(${STATUS} Months Left)`:""}
 
-${gear.emoji('sapphire')} x ${T.SPH}
-${gear.emoji('jade')} x ${gear.miliarize(T.JDE)}
-${gear.emoji('loot')} x ${T.boxes[0].count} ${gear.emoji(tiere)}
+${_emoji('sapphire')} x ${T.SPH}
+${_emoji('jade')} x ${gear.miliarize(T.JDE)}
+${_emoji('loot')} x ${T.boxes[0].count} ${_emoji(tiere)}
 
 **STICKERS**
 ${stickernames.map(f=>f.name).join(" • ")}
@@ -428,15 +428,15 @@ if(!((userData.counters.donateStreak||{})[T.title])){
   ECO.receive(message.author,T.immediate,"Donator's Rewards: Immediate","SPH")
 
   embed.description += `**Tier First-Time Sapphire Bonus**
-${gear.emoji('sapphire')} x ${T.immediate}
-${gear.emoji('yep')} **${gear.capitalize(T.title)} Donator's Flair**
+${_emoji('sapphire')} x ${T.immediate}
+${_emoji('yep')} **${gear.capitalize(T.title)} Donator's Flair**
 `
   embed.description += "\n*Enable profile frame with `p!profile frame [on|off]`*\n"
 }
 
 embed.description += `📶 **Streak:** ${((userData.counters.donateStreak||{}).total || 0 )+1} (${((userData.counters.donateStreak||{})[T.title] || 0 )+1} as ${[T.title]})`
 
-message.channel.send({content: gear.emoji('yep')+" All set! Rewards added!",embed});
+message.channel.send({content: _emoji('yep')+" All set! Rewards added!",embed});
 
 }
 module.exports={

@@ -51,10 +51,10 @@ const init = async function (msg){
         let res = await getColor.init(msg,true);
  
     if(res.name == "INVALID COLOR"){
-        res.embed.description = gear.emoji('nope') + "INVALID COLOR";
+        res.embed.description = _emoji('nope') + "INVALID COLOR";
         return msg.channel.send({embed:res.embed})
     }
-    res.embed.description = gear.emoji('yep') + colorChanged;
+    res.embed.description = _emoji('yep') + colorChanged;
     res.embed.footer = {}
     console.log(res)
     DB.users.set(msg.author.id,{$set:{'modules.favcolor': ("#"+res.hex).replace("##","#") }})

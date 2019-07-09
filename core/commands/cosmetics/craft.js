@@ -111,7 +111,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('jade')+"**"+gear.miliarize(GC.jades,true)+'** x Jades';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('jade')+"**"+gear.miliarize(GC.jades,true)+'** x Jades';
     }
       
       
@@ -123,7 +123,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('rubine')+"**"+gear.miliarize(GC.rubines,true)+'** x Rubines';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('rubine')+"**"+gear.miliarize(GC.rubines,true)+'** x Rubines';
     }
       
       
@@ -136,7 +136,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('sapphire')+"**"+gear.miliarize(GC.sapphires,true)+'** x Sapphires';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('sapphire')+"**"+gear.miliarize(GC.sapphires,true)+'** x Sapphires';
     }
       
       
@@ -157,7 +157,7 @@ function noteno(item,extra){
         icona='nope';
         fails+=1
       }
-        matDisplay+="\n"+gear.emoji(icona)+" | "+ITEMS.find(x=>x.id==materialName).emoji+ITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
+        matDisplay+="\n"+_emoji(icona)+" | "+ITEMS.find(x=>x.id==materialName).emoji+ITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
     })
     if (fails > 0 ) {
       embed.setColor('#ed3a19');

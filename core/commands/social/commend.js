@@ -54,7 +54,7 @@ __**Top Commenders**__
    const preafter = async function preafter(M, D) {
        if ((userData.modules.inventory.find(itm => itm.id == 'commendtoken') || {}).count >= 1) {
            if (Target.id === msg.author.id) {
-               msg.channel.send(gear.emoji('nope') + $t('responses.commend.noSelf', P));
+               msg.channel.send(_emoji('nope') + $t('responses.commend.noSelf', P));
                return false;
            }
        } else {
@@ -98,7 +98,7 @@ console.log(embed)
         let dailyNope = $t('responses.commend.cooldown',P);
         let embed=new gear.Embed;
         embed.setColor('#e35555');
-        embed.description(gear.emoji('nope') + dailyNope);
+        embed.description(_emoji('nope') + dailyNope);
         return msg.channel.send({embed:embed});
     }
 
@@ -110,7 +110,7 @@ console.log(embed)
         let embe2=new gear.Embed;
         embe2.setColor('#3b9ea5')
         embe2.description(`
-    ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online')+$t('responses.commend.check_yes',P):gear.emoji('dnd')+$t('responses.commend.check_no',P)} 
+    ${_emoji('future') } ${dailyAvailable?_emoji('online')+$t('responses.commend.check_yes',P):_emoji('dnd')+$t('responses.commend.check_no',P)} 
        
     :reminder_ribbon: × **${userData.modules.inventory.find(i=>i.id==="commendtoken").count||0}**
          `)
