@@ -79,7 +79,7 @@ const init = async  (msg, args) => {
                 return msg.channel.send(...args);
         }
         let embed = new gear.Embed
-        embed.author("User Marketplace Listings", "", "https://beta.pollux.gg")
+        embed.author("User Marketplace Listings", "", paths.CDN)
         if (tot_pages > 0) {
 
             embed.description = `Showing entries (${page}/${tot_pages})
@@ -106,7 +106,7 @@ const init = async  (msg, args) => {
                 `
         **\`${filter === 'mine' ? offer.id : item.type.toUpperCase()}\`**
         ${offer.type == "sell" ? "Selling for: " : "Buying for: "} **${gear.miliarize(offer.price, 'soft')}**${_emoji(offer.currency)}
-        [\\🔗 See entry on web](https://beta.pollux.gg/shop/marketplace/entry/${offer.id})
+        [\\🔗 See entry on web](${paths.CDN}/shop/marketplace/entry/${offer.id})
                     `, true)
         }
 

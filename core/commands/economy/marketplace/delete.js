@@ -22,7 +22,7 @@ const init = async (msg,args)=>{
         let embed = new Embed
             embed.title = "Confirm deletion of item";
             embed.description = `\`${offer.id}\``;
-            embed.thumbnail("http://beta.pollux.gg"+item.img)
+            embed.thumbnail(paths.CDN+item.img)
 
         
         embed.field(
