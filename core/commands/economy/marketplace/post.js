@@ -7,7 +7,8 @@ const init = async function(msg,args){
        
         // buy type id
 
-        let operation   = (filter||"").toLowerCase()        //  BUY / SELL
+
+        let operation   = (args[0]||"").toLowerCase()        //  BUY / SELL
         if(operation && !['buy','sell','info'].includes(operation.toLowerCase())) {
             msg.args.unshift(' ')
             operation = "sell"
@@ -41,7 +42,7 @@ const init = async function(msg,args){
         `
  
         async function AllChecks(){
-            userData = DB.users.get(msg.author.id);
+            userData = DB.users.findOne({id:msg.author.id});
             
             checkItem = function(userData, type,id,transaction){
                 pass = true;
@@ -94,7 +95,7 @@ const init = async function(msg,args){
 
             let saleStatus = checkSales(await userData, itemType, item_id);
             let itemStatus = checkItem(await userData, itemType, item_id, operation);
-
+            embed.fields =[]
             embed.field(
                 _emoji("RBN")+"Rubine Listing Eligibility",
                 saleStatus.forRBN?itemStatus.pass?_emoji('yep'):itemStatus.reason:_emoji('nope') ,true)
@@ -168,12 +169,16 @@ Use it to share your listing elsewhere!
         }
         const abort = function(){
             embed.title = ""
+            let stts = [validOperation,validType,(checkCosmetic||validItem),( price && price>0),validCurrency]
+            let tk = stts.map(s=>s?"":"'");
             embed.description = `
-            **Operation:** ${operation} ${validOperation ? _emoji("yep") :  _emoji("nope")}
-            **Item Type:** ${itemType} ${validType ? _emoji("yep") : _emoji("nope")}
-            **Item ID:** ${item_id} ${  (checkCosmetic||validItem) ? _emoji("yep") : _emoji("nope")}
-            **Price:** ${price} ${ price && price>0 ?  _emoji("yep") :  _emoji("nope")}
-            **Currency:** ${currency} ${validCurrency ?  _emoji("yep") :  _emoji("nope")}
+            **Operation Command Cheatsheet:**
+            \`\`\`scala\npost [${tk[0]}Operation] [${tk[1]}Type] [${tk[2]}ItemID] [${tk[3]}Price] (${tk[4]}Currency)\`\`\`
+            ${stts[0] ? _emoji("yep") : _emoji("nope")} **Operation:** ${operation} \u2003 ${stts[0] ?'':"`sell/buy`"}
+            ${stts[1] ? _emoji("yep") : _emoji("nope")} **Item Type:** ${itemType}  \u2003 ${stts[1] ?'':"`Item or Cosmetic Type`"}
+            ${stts[2] ? _emoji("yep") : _emoji("nope")} **Item ID:** ${item_id}     \u2003 ${stts[2] ?'':"`Item ID Code`"}
+            ${stts[3] ? _emoji("yep") : _emoji("nope")} **Price:** ${price||0}      \u2003 ${stts[3] ?'':"`Number`"}
+            ${stts[4] ? _emoji("yep") : _emoji("nope")} **Currency:** ${currency}   \u2003 ${stts[4] ?'':"`RBN|SPH`"}
             `        
             msg.channel.send({content:` **Invalid Listing Command**
             `,embed})
