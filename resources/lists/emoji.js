@@ -403,6 +403,7 @@ function getShallowMoji(identifier){
     ge.name==identifier||
     ge.name.toLowerCase()==identifier.toLowerCase()
   );
+  if (!EMJ) return {};
   EMJ.string = `<${EMJ.animated?'a':''}:${EMJ.name}:${EMJ.id}>` 
   return EMJ;
 }
