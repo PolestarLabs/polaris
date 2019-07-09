@@ -415,6 +415,7 @@
         },
         "feed": {
             "newYoutube": "***{{tuber}} a publié un nouveau vidéo!** Aller la voir ici:",
+            "newTwitchStatus": "",
             "noDefault": "Tu ne m'a pas dit à quel canal afficher et il n'y a pas non plus de chaîne par défaut.",
             "urlPresent": "Je surveille déjà les messages de celui-ci, alors je vais changer le salon de destination~",
             "noFeed": "Il n'a aucun fil RSS configuré dans ce serveur",
