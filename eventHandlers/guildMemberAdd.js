@@ -35,8 +35,8 @@ module.exports = async (guild,member) =>{
 
         const P={ lngs: [svData.modules.LANGUAGE,"dev"] };
         let txt = $t('logs.userJoin',P).replace(/\*/g,"");
-
-        let url = `${paths.CDN}/generators/userio/in/${member.id}/${welcomeSkin||"minimal"}.png?text=${txt}`
+        
+        let url = `${paths.CDN}/generators/userio/in/${member.id}/${welcomeSkin||"minimal"}.png?text=${encodeURIComponent(txt)}`
       
         resolveFile(url).then(async buffer=>{
             POLLUX.getChannel(welcomeChannel).send({content:welcomeText,embed}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
