@@ -75,6 +75,19 @@ const registerOne = (folder, _cmd) => {
                 CMD.registerSubcommand(sub, subCfile.init, subCfile)
             })
         }
+        if (commandFile.teleSubs) {
+            commandFile.teleSubs.forEach(TELE => {
+                delete require.cache[require.resolve(`${CMD_FOLDER}/${TELE.path}`)];
+                let subCfile = require(`${CMD_FOLDER}/${TELE.path}`);
+
+                CMD.registerSubcommand(TELE.label, (msg,args)=>subCfile.init(msg,args,TELE.pass), subCfile)
+            })
+        }
+        if (commandFile.autoSubs) {
+            commandFile.autoSubs.forEach(AUTOSUB => {              
+                CMD.registerSubcommand(AUTOSUB.label, AUTOSUB.gen, AUTOSUB.options)
+            })
+        }
         CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage)
 
     } catch (e) {

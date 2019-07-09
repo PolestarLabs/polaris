@@ -1,11 +1,11 @@
 const decks = new Map();
 const games = new Map();
-const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-const suits = ['C', 'D', 'H', 'S'];
-const DECK_TEMPLATE = suits
-  .map(suit => ranks.concat(ranks)
-    .concat(ranks)
-    .concat(ranks)
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const SUITS = ['C', 'D', 'H', 'S'];
+const DECK_TEMPLATE = SUITS
+  .map(suit => RANKS.concat(RANKS)
+    .concat(RANKS)
+    .concat(RANKS)
     .map(rank => rank + suit)
   ).reduce((array, arr) => array.concat(arr));
 
@@ -28,16 +28,22 @@ class Blackjack {
         decks.set(this.guildID, this.deck);
       }
       this.deck.push("JOKER-default");
+      this.deck = Blackjack._shuffle(this.deck);
+
       if(powerups && powerups.jokers){
         let jokers = powerups.jokers.length ||0
         while (jokers--){
           this.deck.push(powerups.jokers[jokers]);
+          this.deck = Blackjack._shuffle(this.deck);
         }
       }
-    }
-    
+      this.jokersLoaded = true;
+    }    
 
     this.deck = Blackjack._shuffle(this.deck);
+    if(powerups&&powerups.nojoker){
+      while(this.deck[this.deck.length-1].includes("JOKER")) Blackjack._shuffle(this.deck);
+    }
     hand.push(this.deck.pop());
     return hand;
   }
@@ -86,9 +92,9 @@ class Blackjack {
   }
   static _cardValue(card) {
     if(card==="JOKER"){
-      return 0
+      return 99
     }
-    const index = ranks.indexOf(card.slice(0, -1));
+    const index = RANKS.indexOf(card.slice(0, -1));
     if (index === 0) return 11;
     return index >= 10 ? 10 : index + 1;
   }
