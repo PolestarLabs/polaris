@@ -413,33 +413,6 @@
             "includeReason": "Bana bu kişiyi *neden* cezalandırdığını söylemeyi unuttun.\nNedeni aşağıda belirt: `(20s)`",
             "userKickError": "Bin terslik oluştu. öf."
         },
-        "booster": {
-            "checkStickersAt": "",
-            "title": ""
-        },
-        "kickban": {
-            "waitingForReason": "",
-            "noReason": "",
-            "cancelled": "",
-            "userKicked": "",
-            "kickFlavs": [
-                "",
-                "",
-                "",
-                "",
-                ""
-            ],
-            "userBanned": "",
-            "userSoftBanned": "",
-            "banFlavs": [
-                "",
-                "",
-                "",
-                ""
-            ],
-            "includeReason": "",
-            "userKickError": ""
-        },
         "feed": {
             "newYoutube": "**{{tuber}} Yeni bir video yayınladı!** Şuradan bir göt at:",
             "newTwitchStatus": "**{{streamer}}** Canlı yayında!",
