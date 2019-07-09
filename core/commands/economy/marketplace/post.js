@@ -1,3 +1,8 @@
+const DB = require('../../../database/db_ops');
+const gear = require('../../../utilities/Gearbox');
+const YesNo = require('../../../structures/YesNo').run;
+
+
 const init = async function(msg,args){
        
         // buy type id
@@ -27,8 +32,8 @@ const init = async function(msg,args){
         let embed = new gear.Embed
         embed.title = "Marketplace Listing information"
         embed.description = `
-        ${ gear.emoji("RBN") } **Rubine** Listings cost 300 RBN upfront
-        ${ gear.emoji("SPH") } **Sapphire** Listings cost 2 SPH upfront
+        ${ _emoji("RBN") } **Rubine** Listings cost 300 RBN upfront
+        ${ _emoji("SPH") } **Sapphire** Listings cost 2 SPH upfront
         To sell for Sapphires you need a [Sapphire License](${paths.CDN+'/crafting/#sph-license'}) that must be crafted 
         (Code: \`sph-license\`). It expires after 10 uses.
         There's a 5% cut from the selling price after it is completed.
@@ -91,11 +96,11 @@ const init = async function(msg,args){
             let itemStatus = checkItem(await userData, itemType, item_id, operation);
 
             embed.field(
-                gear.emoji("RBN")+"Rubine Listing Eligibility",
-                saleStatus.forRBN?itemStatus.pass?gear.emoji('yep'):itemStatus.reason:gear.emoji('nope') ,true)
+                _emoji("RBN")+"Rubine Listing Eligibility",
+                saleStatus.forRBN?itemStatus.pass?_emoji('yep'):itemStatus.reason:_emoji('nope') ,true)
             embed.field(
-                gear.emoji("SPH")+"Sapphire Listing Eligibility",
-                saleStatus.forSPH?itemStatus.pass?gear.emoji('yep'):itemStatus.reason:gear.emoji('nope') ,true)
+                _emoji("SPH")+"Sapphire Listing Eligibility",
+                saleStatus.forSPH?itemStatus.pass?_emoji('yep'):itemStatus.reason:_emoji('nope') ,true)
 
             if(operation == "info"){
                 return msg.channel.send({embed})
@@ -145,7 +150,7 @@ const init = async function(msg,args){
                     if(res.data.status === "OK"){
                         entryId = res.data.payload.id;
                         msg.channel.send(`
-${gear.emoji('yep')} **Done!** You can find your entry here:
+${_emoji('yep')} **Done!** You can find your entry here:
 ${paths.CDN+"/shop/marketplace/entry/"+entryId}
 Use it to share your listing elsewhere! 
                         `)
@@ -164,11 +169,11 @@ Use it to share your listing elsewhere!
         const abort = function(){
             embed.title = ""
             embed.description = `
-            **Operation:** ${operation} ${validOperation ? gear.emoji("yep") :  gear.emoji("nope")}
-            **Item Type:** ${itemType} ${validType ? gear.emoji("yep") : gear.emoji("nope")}
-            **Item ID:** ${item_id} ${  (checkCosmetic||validItem) ? gear.emoji("yep") : gear.emoji("nope")}
-            **Price:** ${price} ${ price && price>0 ?  gear.emoji("yep") :  gear.emoji("nope")}
-            **Currency:** ${currency} ${validCurrency ?  gear.emoji("yep") :  gear.emoji("nope")}
+            **Operation:** ${operation} ${validOperation ? _emoji("yep") :  _emoji("nope")}
+            **Item Type:** ${itemType} ${validType ? _emoji("yep") : _emoji("nope")}
+            **Item ID:** ${item_id} ${  (checkCosmetic||validItem) ? _emoji("yep") : _emoji("nope")}
+            **Price:** ${price} ${ price && price>0 ?  _emoji("yep") :  _emoji("nope")}
+            **Currency:** ${currency} ${validCurrency ?  _emoji("yep") :  _emoji("nope")}
             `        
             msg.channel.send({content:` **Invalid Listing Command**
             `,embed})
@@ -178,7 +183,7 @@ Use it to share your listing elsewhere!
         if(FULLCHECKS()){
 
             if(checkCosmetic||validItem) msg.channel.send({embed:{description:`
-            ${operation == 'sell' ? "Selling" : 'Buying'}: \`${itemType}\` **${(checkCosmetic||validItem).name}** for **${price}** ${gear.emoji(currency)}
+            ${operation == 'sell' ? "Selling" : 'Buying'}: \`${itemType}\` **${(checkCosmetic||validItem).name}** for **${price}** ${_emoji(currency)}
             `}}).then(ms=>{
                 YesNo(ms,msg,confirm);
             });
@@ -193,9 +198,9 @@ Use it to share your listing elsewhere!
 
 module.exports = {
     init,
-    argsRequired: false,
+    argsRequired: true,
     caseInsensitive: true,
-    cooldown: 5000,
+    cooldown: 8000,
     hooks: {
         preCommand: (msg) => msg.author.marketplacing = true,
         postExecution: (msg) => msg.author.marketplacing = false,
