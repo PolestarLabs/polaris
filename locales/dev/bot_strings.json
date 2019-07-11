@@ -135,7 +135,16 @@
 				"Okay, Doing it now...",
 				"Just a second...",
 				"One moment, please..."
-			],
+            ],
+            "opinion_decks":[
+                "Good choice!",
+                "That's one of my favorites~",
+                "I liked the previous one more.",
+                "Not bad.",
+                "This one is for luck.",
+                "Please return the cards intact.",
+                "Wash your hands before using these cards."
+            ],
             "interjections": {
                 "acknowledged": [
 					"Ok.",
@@ -550,6 +559,9 @@
             "split": "`split` to Split your hand,",
             "double": "`double` to double your bet and draw one last card,",
             "pass": "or `stand` to pass.",
+            "splitbreak": "Splits Breakdown:",
+            "switchdeck": "Now we're going to play BlackJack using the **{{deckname}}** deck!",
+            "switchdeckEgg": "Now we're going to play BlackJack using the dick-- I mean the **deck** {{deckname}}!\nOMG I'm so sorry!",
             "even": "Seems that we broke even, here, have your rubines back."
         },
         "slots": {
