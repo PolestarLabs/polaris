@@ -251,9 +251,10 @@ POLLUX.findMember = (query, members) => {
     return result || null;
 }
 
+require('./core/subroutines/cronjobs.js').run();
+
 function postConnect(x) {
     console.log("Discord Client Connected".cyan)
-    require('./core/subroutines/cronjobs.js').run();
     // POST STATS TO LISTS
 }
 

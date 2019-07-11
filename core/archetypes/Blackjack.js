@@ -44,7 +44,8 @@ class Blackjack {
     if(powerups&&powerups.nojoker){
       while(this.deck[this.deck.length-1].includes("JOKER")) Blackjack._shuffle(this.deck);
     }
-    hand.push(this.deck.pop());
+    //hand.push(this.deck.pop());
+    hand.push('10H')
     return hand;
   }
   endGame() {
@@ -76,7 +77,7 @@ class Blackjack {
   static handValue(hand) {
     let value = 0;
     let aces = 0;
-    if(hand.find(card=>card.startsWith("JOKER"))){
+    if(hand.find(card=> card && card.startsWith("JOKER"))){
       return hand.find(card=>card.startsWith("JOKER"));
     }
     hand.forEach(card => {

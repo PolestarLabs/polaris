@@ -20,14 +20,29 @@ const fetchCard = (card, deck) => {
 
 const renderCard = (ctx,_cImg,i,disp=0,glow=false) =>{
 	ctx.rotate(-.15);
-	ctx.drawImage(_cImg, (54 - disp) * i, 20 + (i * 1.5 * ((54 - disp) / 10)), 143, 160);
+	let equation = (100-(disp>80?80:disp))
+	ctx.drawImage(_cImg,
+			equation * i,
+			40 + (i * 1.5 * ( equation / 10)), 
+		  	143*2, 
+		  	160*2
+		);
+		console.log(100 * i,
+			40 + (i * 1.5 * (100 / 10)), '')
+		/*
+	ctx.drawImage(_cImg,
+		 (54*2 - disp) * i,
+		  20*2 + (i * 1.5 * ((54*2 - disp) / 10)),
+		   143*2, 
+		   160*2);
+		   */
 	ctx.shadowColor = glow ? '#eeff27' : '#3b3b4b';
 	ctx.shadowBlur = 10;
 	ctx.rotate(.15);
 }
 
 const renderHand = async (HANDS,deck,bjd,current) => {
-	const IMG = Picto.new(400, 200);
+	const IMG = Picto.new(800, 400);
 	const ctx = IMG.getContext('2d');
 	if (HANDS.length === 1) {
 		let handImages = await Promise.all( HANDS[0].map( card => fetchCard(card,deck) ) );
@@ -37,12 +52,12 @@ const renderHand = async (HANDS,deck,bjd,current) => {
 		HANDS.forEach(async (hand,i)=>{
 			let handImages = await Promise.all( hand.map( card => fetchCard(card,deck) ) );
 			handImages.forEach((cardImg,i2) => {
-				if(current && current !=hand ) ctx.translate(0, 50);
-				renderCard(ctx,cardImg,displacement,(HANDS.length+1)*5+i*1.5 ,bjd)
-				if(current && current !=hand ) ctx.translate(0,-50);
+				if(current && current !=hand ) ctx.translate(0, 100);
+				renderCard(ctx,cardImg,displacement,(HANDS.length+1)*5+i*3 ,bjd)
+				if(current && current !=hand ) ctx.translate(0,-100);
 				displacement++
 			})
-			displacement+=1.5
+			displacement+=1.3
 		})
 		/*
 		if(current){
@@ -67,7 +82,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 		_DEALER = drawOpts.d,
 		_v 		= drawOpts.v;
 
-	const SCENE = Picto.new(400, 300);
+	const SCENE = Picto.new(800, 600);
 	const c = SCENE.getContext('2d');
 
 	let SCORE_A = DATA_A.status + DATA_A.val,
@@ -83,19 +98,19 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
 	switch (true) {
 
-		case bet <= 25:
+		case bet <= 100:
 			chips = 1
 			break;
-		case bet <= 50:
+		case bet <= 500:
 			chips = 2
 			break;
-		case bet <= 100:
+		case bet <= 1000:
 			chips = 3
 			break;
-		case bet <= 300:
+		case bet <= 1500:
 			chips = 4
 			break;
-		case bet <= 999:
+		case bet <= 2000:
 			chips = 5
 			break;
 		default:
@@ -119,69 +134,69 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	]);
       
 
-	c.drawImage(fel, 0, 0)
-	c.drawImage(chip, 140, 170)
+	c.drawImage(fel, 0, 0,800,600)
+	c.drawImage(chip, 140*2, 170*2)
 
 	//=================================
-	c.drawImage(DL, -10, 180)
-	c.translate(200, 150);
+	c.drawImage(DL, -10*2, 180*2)
+	c.translate(200*2, 150*2);
 	c.rotate(180 * Math.PI / 180);
-	c.translate(-200, -150);
-	c.drawImage(PL, -10, 180)
-	c.translate(200, 150);
+	c.translate(-200*2, -150*2);
+	c.drawImage(PL, -10*2, 180*2)
+	c.translate(200*2, 150*2);
 	c.rotate(180 * Math.PI / 180);
-	c.translate(-200, -150);
+	c.translate(-200*2, -150*2);
 	//=================================
 
 
-	c.drawImage(you, 8, 94, 60, 60);
-	c.drawImage(me, 332, 124, 60, 60);
+	c.drawImage(you, 8*2, 94*2, 60*2, 60*2);
+	c.drawImage(me, 332*2, 124*2, 60*2, 60*2);
 
 	let wid
-	let name_p = Picto.tag(c, _PLAYER, "400 14px 'Corporate Logo Rounded'", "#fff")
-	name_p.width > 100 ? wid = 100 : wid = name_p.width;
-	c.drawImage(name_p.item, 324 - wid, 132, wid, name_p.height)
+	let name_p = Picto.tag(c, _PLAYER, "400 28px 'Corporate Logo Rounded'", "#fff")
+	name_p.width > 100*2 ? wid = 100*2 : wid = name_p.width;
+	c.drawImage(name_p.item, 324*2 - wid, 132*2, wid, name_p.height)
 
-	let name_d = Picto.tag(c, _DEALER, "400 14px 'Corporate Logo Rounded'", "#fff")
-	name_d.width > 100 ? wid = 100 : wid = name_d.width;
-	c.drawImage(name_d.item, 16 + 60, 102, wid, name_d.height)
+	let name_d = Picto.tag(c, _DEALER, "400 28px 'Corporate Logo Rounded'", "#fff")
+	name_d.width > 100*2 ? wid = 100*2 : wid = name_d.width;
+	c.drawImage(name_d.item, 16*2 + 60*2, 102*2, wid, name_d.height)
 
-	let bet_img = Picto.tag(c, gear.miliarize( bet ), "900 20px 'Whitney HTF'", "#e6d084")
-	c.drawImage(bet_img.item, 110 - bet_img.width / 2, 170)
-	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 18px 'Whitney HTF'", "#4a8b45")
-	c.drawImage(bet_txt.item, 110 - bet_txt.width / 2, 150)
+	let bet_img = Picto.tag(c, gear.miliarize( bet ), "900 40px 'Whitney HTF'", "#e6d084")
+	c.drawImage(bet_img.item, 110*2 - bet_img.width / 2, 170*2)
+	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 36px 'Whitney HTF'", "#4a8b45")
+	c.drawImage(bet_txt.item, 110*2 - bet_txt.width / 2, 150*2)
 
 
-	let num_p = Picto.tag(c, SCORE_A, "900 18px 'Whitney HTF',Sans", "#fff")
-	c.drawImage(num_p.item, 324 - num_p.width, 129 + 20)
+	let num_p = Picto.tag(c, SCORE_A, "900 36px 'Whitney HTF',Sans", "#fff")
+	c.drawImage(num_p.item, 324*2 - num_p.width, 129*2 + 20*2)
 
-	let num_d = Picto.tag(c, SCORE_B, "900 18px 'Whitney HTF',Sans", "#fff")
-	c.drawImage(num_d.item, 16 + 60, 99 + 20)
+	let num_d = Picto.tag(c, SCORE_B, "900 36px 'Whitney HTF',Sans", "#fff")
+	c.drawImage(num_d.item, 16*2 + 60*2, 99*2 + 20*2)
 
 
 	if (jkrWIN) {
-		c.drawImage(bjk, 0, 0)
+		c.drawImage(bjk, 0, 0,800,600)
 		c.rotate(-25)
-		c.drawImage(joker, 270, 00, 150, 178)
+		c.drawImage(joker, 270*2, 00, 150*2, 178*2)
 		c.rotate(25)
 	}
 	if (bjkWIN) {
-		c.drawImage(bjk, 0, 0)
-		c.drawImage(me, 328, 110, 60, 60)
+		c.drawImage(bjk, 0, 0,800,600)
+		c.drawImage(me, 328*2, 110*2, 60*2, 60*2)
 	}
 	if (bjkLOSE) {
-		c.drawImage(bjk, 0, 0)
-		c.drawImage(you, 8, 110, 60, 60)
+		c.drawImage(bjk, 0, 0,800,600)
+		c.drawImage(you, 8*2, 110*2, 60*2, 60*2)
 	}
 
-	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase(), "900 20px 'Panton Black'", "#ea2e2e")
+	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase(), "900 40px 'Panton Black'", "#ea2e2e")
 	
 	c.rotate(-.5)
-	if (Number(SCORE_B) > 21) c.drawImage(BUSTED.item,  40, 160);
-	if (Number(SCORE_A) > 21) c.drawImage(BUSTED.item, 130, 250);
+	if (Number(SCORE_B) > 21) c.drawImage(BUSTED.item,  40*2, 160*2);
+	if (Number(SCORE_A) > 21) c.drawImage(BUSTED.item, 130*2, 250*2);
 	c.rotate( .5)	
 
-	stando ? c.drawImage(stdo, 0, 0) : null;
+	stando ? c.drawImage(stdo, 0, 0,800,600) : null;
 
 	return SCENE
 }
@@ -291,8 +306,8 @@ const init       = async (msg) => {
 		).then(async () => {
 			const noJoker 	 = {nojoker: true}
 			const balance 	 = USERDATA.modules.rubines;
-			const playerHand = blackjack.getHand(noJoker);
-			const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? gear.randomize(1,10)+"H" : card );
+			const playerHand = ["10H","10H"]//blackjack.getHand(noJoker);
+			const dealerHand =["AS","8H"]// blackjack.getHand().map(card=> card.startsWith("JOKER") ? gear.randomize(1,10)+"H" : card );
 			let playerHands;
 
 			const drawOptions = {
@@ -325,7 +340,9 @@ const init       = async (msg) => {
 
 			const H_DATA = {}
 			let doubles=0;
-			playerHands.forEach((hand, i) => {				
+			let splitExplain = []
+			playerHands.forEach((hand, i) => {
+
 				const playerValue = Blackjack.handValue(hand);
 				const result = gameResult(playerValue, dealerValue);
 
@@ -333,7 +350,7 @@ const init       = async (msg) => {
 				doubles += hand.doubled?1:0;
 				const lossOrGain = Math.floor((['loss', 'bust'].includes(result) ? -1 : result === 'push' ? 0 : 1) * (hand.doubled ? 2 : 1) * (playerValue === 'Blackjack' ? 1.5 : playerValue.toString().includes('JOKER') ? 2 : 1) * bet);
 				if (result == "push") resultade = "push";
-				winnings += lossOrGain;
+				//winnings += lossOrGain;
 				const soft = Blackjack.isSoft(hand);				
 					H_DATA.num = i + 1
 					H_DATA.val = playerValue
@@ -341,6 +358,8 @@ const init       = async (msg) => {
 					H_DATA.result = playerHands.length === 1 ? `** ${msg.member.displayName}**` : ` ${result.replace(/(^\w|\s\w)/g, ma => ma.toUpperCase())}${result !== 'push' ? `, ${lossOrGain}` : `, ${"Rubines"}"} back`}\n`
 				multiHAND_DATA.push(H_DATA)
 				winnings += Number(lossOrGain)
+				console.log("Hand",i,":",("LG"+lossOrGain+"").red,("WW"+winnings+"").yellow,("RST"+resultade+"").green,(result+"").blue , "\n" )
+				splitExplain.push(`Hand ${i+1}: **${lossOrGain}**${_emoji('RBN')} \`${result.toUpperCase()}\``)
 			});
 
 			let POL_DATA = {}		
@@ -370,8 +389,12 @@ const init       = async (msg) => {
 			let resp = winnings > 0 ? v._PRIZE : winnings < 0 ? v._ANTIPRIZE : ""
 			let rebalance = resp.replace("%R%", _emoji("rubine") + Math.abs(winnings))
 
+			//let ncanvas = Picto.new(800,600)
+			//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
 			msg.channel.send(PLAY_RES, { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
-
+			if(splitExplain.length > 1){
+				msg.channel.send("**Splits Breakdown**\n"+splitExplain.join('\n'))
+			}
 		});
 
 
@@ -411,6 +434,10 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 	while (currentHand) {
 		if (currentHand.length === 1) blackjack.hit(currentHand, powerups);
 		if (Blackjack.handValue(currentHand) === 'Blackjack') {
+			nextHand();
+			continue;
+		}
+		if ((Blackjack.handValue(currentHand).startsWith||function(){return false})('JOKER') ) {
 			nextHand();
 			continue;
 		}
@@ -454,13 +481,15 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
 			renderHand([visibleHand], 'default',bjkP)
-		]).timeout(1000).catch(e=> errored = true );
+		]).timeout(1000).catch(e=> {errored = true; return [0,0] } );
 		if (errored) break;
 
 
 		options.b = totalBet
 		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(0,0));
-		
+		//let ncanvas = Picto.new(800,600)
+		//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
+
 		msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(hitstand)); 
 
 		const responses = await msg.channel.awaitMessages(msg2 =>

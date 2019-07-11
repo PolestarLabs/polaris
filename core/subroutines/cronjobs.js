@@ -150,15 +150,14 @@ const ONEhour = new CronJob('* * * * *', async () => {
 });
 
 
-const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
+const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
 
 
   (async ()=>{
-    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).then(serverFeeds => {
+    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
       serverFeeds.forEach(async svFd => {
         const serverData = await DB.servers.get(svFd.server);
         svFd.feeds.forEach(async feed => {
-          
           if (feed.type === 'rss'){
             const data = await parser.parseURL(feed.url).timeout(250).catch(e=>null);
             if(!data) return;
@@ -171,12 +170,13 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
           }
           
           if (feed.type === 'twitch'){
-            const thisFeed = feed            
+            const thisFeed = feed;
             let response = await axios.get('https://api.twitch.tv/helix/streams?user_login'+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);            
             if(!response) return;
             const StreamData = response.data[0];
+            if(!StreamData) return;
             if(
-              !(
+              !(                
                 thisFeed.last.type === StreamData.type &&
                 thisFeed.last.title === StreamData.title &&
                 thisFeed.last.started_at === StreamData.started_at
@@ -216,10 +216,9 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               data.items[0].media = null;
               await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':data.items[0] });        
               const ping = thisFeed.pings || svFd.pings || '';
-              POLLUX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}));
+              POLLUX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}).catch(e=>null)).catch(e=>null);
             }
           }
-
         })
       })
     })    
