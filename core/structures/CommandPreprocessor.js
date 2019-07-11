@@ -45,7 +45,7 @@ const DEFAULT_CMD_OPTS = {
             commandRoutine.commLog(m, m.command)
             commandRoutine.updateMeta(m, m.command)
         },
-        postExecution: (m,a,response) => {
+        postCommand: (m,a,response) => {
             commandRoutine.saveStatistics(m, m.command)
             commandRoutine.administrateExp(m.author.id, m.command)
         }
