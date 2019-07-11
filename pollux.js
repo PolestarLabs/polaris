@@ -175,7 +175,7 @@ POLLUX.once("ready", async (msg) => {
 })
 
 POLLUX.on('error', (error, shard) =>
-    error && console.error(`${'[Pollux]'.red} ${shard !== undefined ? `Shard ${shard} error` : 'Error'}:`, error.stack));
+    error && console.error(`${'[Pollux]'.red} ${shard !== undefined ? `Shard ${shard} error` : 'Error'}:`, error));
 POLLUX.on('disconnected', () => this.logger.warn(`${'[Pollux]'.yellow} Disconnected from Discord`));
 POLLUX.on("shardReady", shard => console.log("•".green, "Shard", (shard + "").magenta, "is Ready -"))
 POLLUX.on("shardResume", shard => console.log("•".yellow, "Shard", (shard + "").magenta, "resumed Activity -"))
