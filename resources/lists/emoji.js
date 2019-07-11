@@ -10,13 +10,13 @@
       
       ,loading: "<a:waitafuckingmoment:590604600319672341>"
         ,
-      rubine: "<:rubine:367128893372760064>",
+      rubine: "<:rubine_fulllarge:550389035835588638>",
       sapphire: "<:sapphire:367128894307827712>",
       jade: "<:jade:367128893716430848>",
       amethist: "<:amethist:367128881766989824>",
       emerald: "<:emerald:367128893309583360>",
     
-      RBN: "<:rubine:367128893372760064>",
+      RBN: "<:rubine_fulllarge:550389035835588638>",
       SPH: "<:sapphire:367128894307827712>",
       JDE: "<:jade:367128893716430848>",
       AMH: "<:amethist:367128881766989824>",
@@ -403,6 +403,7 @@ function getShallowMoji(identifier){
     ge.name==identifier||
     ge.name.toLowerCase()==identifier.toLowerCase()
   );
+  if(!EMJ) return false;
   EMJ.string = `<${EMJ.animated?'a':''}:${EMJ.name}:${EMJ.id}>` 
   return EMJ;
 }

@@ -41,12 +41,12 @@ const init = async function (msg,args,pollux){
 
             if(CASINO.length>0 && (!pollux || pollux==="casino")) 
                 embed.field(
-                    `<:cards:343590771993214977> **Casino Decks** \`${msg.prefix}blackjack deck [ID]\``,
+                    `${_emoji('plxcards')} **Casino Decks** \`${msg.prefix}blackjack deck [ID]\``,
                     "\u200b\u2003"+CASINO.join('\n\u2003'));
 
             if(TAROT.length>0 && (!pollux || pollux==="tarot") )
                 embed.field(
-                    `🎴 **Tarot Decks** \`${msg.prefix}tarot deck [ID]\``,
+                    `${_emoji('plxtarot')} **Tarot Decks** \`${msg.prefix}tarot deck [ID]\``,
                     "\n\u200b\u2003"+TAROT.join('\n\u2003'));
         }
     })

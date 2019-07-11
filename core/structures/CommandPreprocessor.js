@@ -15,7 +15,7 @@ const PERMS_CALC = function CommandPermission(msg){
         : msg.command.module == "_boStaff" 
             ? cfg.admins
             : POLLUX.beta ? [cfg.owner] : cfg.admins;
-    let switches = !(msg.guild.DISABLED.includes(msg.command.label) || msg.guild.DISABLED.includes(msg.command.cat))
+    let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat))
     return (switches && uIDs);
 }
 
@@ -45,7 +45,7 @@ const DEFAULT_CMD_OPTS = {
             commandRoutine.commLog(m, m.command)
             commandRoutine.updateMeta(m, m.command)
         },
-        postExecution: (m,a,response) => {
+        postCommand: (m,a,response) => {
             commandRoutine.saveStatistics(m, m.command)
             commandRoutine.administrateExp(m.author.id, m.command)
         }
