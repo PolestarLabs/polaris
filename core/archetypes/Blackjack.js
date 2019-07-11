@@ -42,10 +42,13 @@ class Blackjack {
 
     this.deck = Blackjack._shuffle(this.deck);
     if(powerups&&powerups.nojoker){
-      while(this.deck[this.deck.length-1].includes("JOKER")) Blackjack._shuffle(this.deck);
+      let incr = 0;
+      while(this.deck[this.deck.length-1].includes("JOKER")){
+        Blackjack._shuffle(this.deck);
+        if (incr > 5) break;
+      }
     }
-    //hand.push(this.deck.pop());
-    hand.push('10H')
+    hand.push(this.deck.pop());
     return hand;
   }
   endGame() {

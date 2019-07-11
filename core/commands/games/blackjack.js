@@ -18,24 +18,11 @@ const fetchCard = (card, deck) => {
 	return Picto.getCanvas(`${paths.CDN}/build/cards/casino/${deck || "default"}/${suit}${rank}.png`);
 }
 
-const renderCard = (ctx,_cImg,i,disp=0,glow=false) =>{
+const renderCard = (ctx,_cImg,_i,disp=0,glow=false) =>{
 	ctx.rotate(-.15);
 	let equation = (100-(disp>80?80:disp))
-	ctx.drawImage(_cImg,
-			equation * i,
-			40 + (i * 1.5 * ( equation / 10)), 
-		  	143*2, 
-		  	160*2
-		);
-		console.log(100 * i,
-			40 + (i * 1.5 * (100 / 10)), '')
-		/*
-	ctx.drawImage(_cImg,
-		 (54*2 - disp) * i,
-		  20*2 + (i * 1.5 * ((54*2 - disp) / 10)),
-		   143*2, 
-		   160*2);
-		   */
+	ctx.drawImage(_cImg,equation * _i,40 + (_i * 1.5 * ( equation / 10)),143*2,160*2);
+	//ctx.drawImage(_cImg,(54*2 - disp) * i,20*2 + (i * 1.5 * ((54*2 - disp) / 10)),143*2,160*2);
 	ctx.shadowColor = glow ? '#eeff27' : '#3b3b4b';
 	ctx.shadowBlur = 10;
 	ctx.rotate(.15);
@@ -53,11 +40,11 @@ const renderHand = async (HANDS,deck,bjd,current) => {
 			let handImages = await Promise.all( hand.map( card => fetchCard(card,deck) ) );
 			handImages.forEach((cardImg,i2) => {
 				if(current && current !=hand ) ctx.translate(0, 100);
-				renderCard(ctx,cardImg,displacement,(HANDS.length+1)*5+i*3 ,bjd)
+				renderCard(ctx,cardImg,displacement,(HANDS.length+1)*8+i*3 ,bjd)
 				if(current && current !=hand ) ctx.translate(0,-100);
 				displacement++
 			})
-			displacement+=1.3
+			displacement+=1.5
 		})
 		/*
 		if(current){
@@ -117,7 +104,6 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 			chips = 6
 			break;
 	}
-
 
 	const [fel,chip,you,me,bjk,stando,joker] = await Promise.all([
 		Picto.getCanvas(paths.Build + "/games/blackjack/feltro.png"),
@@ -196,7 +182,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	if (Number(SCORE_A) > 21) c.drawImage(BUSTED.item, 130*2, 250*2);
 	c.rotate( .5)	
 
-	stando ? c.drawImage(stdo, 0, 0,800,600) : null;
+	drawOpts.enemyStando ? c.drawImage(stando, 0, 0,800,600) : null;
 
 	return SCENE
 }
@@ -204,12 +190,13 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 const DECK 		 = async (msg,args) => {
 
 	const USERDATA = await DB.users.get(msg.author.id);
-	
+	let P = {lngs:msg.lang}
 	if (args[0] === "list") return deckManager.init(msg, args, "casino");
 	
 	if (["default", "vegas", "reset"].includes(msg.args[1])) {
 		await DB.users.set(msg.author.id, { 'modules.skins.blackjack': 'default' });
-		return msg.channel.send(`Now using the default deck: **Vegas**.`)
+		P.deckname = _emoji('plxcards').no_space+"`Vegas (default)`"
+		return msg.channel.send(`${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeck',P)} ${rand$t('responses.verbose.opinion_decks',P)}`)
 	}
 
 	const DECKDATA = await DB.cosmetics.find({ type: "skin", for: "casino" });
@@ -226,14 +213,16 @@ const DECK 		 = async (msg,args) => {
 			
 			if (targetDeck && USERDATA.modules.skinInventory.includes(targetDeck.id)) {
 				await DB.users.set(msg.author.id, { 'modules.skins.blackjack': targetDeck.localizer });
-		return msg.channel.send(`Now using the deck **${targetDeck.name}**.`)
+				P.deckname =  _emoji('plxcards').no_space+"`"+targetDeck.name+"`";
+				let deckSwitchMessage = `${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeck',P)} ${rand$t('responses.verbose.opinion_decks',P)}`
+				if(gear.randomize(1,6) === 3 && $t('games.blackjack.switchdeckEgg',P).length > 1 ) deckSwitchMessage= `${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeckEgg',P)} ${_emoji('plxOof')}`;
+				return msg.channel.send(deckSwitchMessage)
 	} else {
 		return msg.channel.send("You don't own this deck yet.")
 	}
 }
 
 const init       = async (msg) => {
-
 		const USERDATA = await DB.users.get(msg.author.id);
 
 		if (msg.args[0] === "decks") return deckManager.init(msg, "casino");
@@ -271,9 +260,9 @@ const init       = async (msg) => {
 
 			v.bet = $t("dict.bet", P)
 
-			v.insu = $t("$.insuBet", { lngs: msg.lang, number: 10 })
+			v.insu = $t("$.insuBet", { lngs: msg.lang, number: 25 })
 			v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.rubines })
-			v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 10 })
+			v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 })
 			v.ceiling = $t("games.ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"))
 
 
@@ -306,8 +295,8 @@ const init       = async (msg) => {
 		).then(async () => {
 			const noJoker 	 = {nojoker: true}
 			const balance 	 = USERDATA.modules.rubines;
-			const playerHand = ["10H","10H"]//blackjack.getHand(noJoker);
-			const dealerHand =["AS","8H"]// blackjack.getHand().map(card=> card.startsWith("JOKER") ? gear.randomize(1,10)+"H" : card );
+			const playerHand = blackjack.getHand(noJoker);
+			const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? gear.randomize(1,10)+"H" : card );
 			let playerHands;
 
 			const drawOptions = {
@@ -330,7 +319,7 @@ const init       = async (msg) => {
 				playerHands = [playerHand];
 			}			
 
-			blackjack.endGame();
+		
 	
 			const dealerValue = Blackjack.handValue(dealerHand);
 			let winnings = 0;
@@ -358,8 +347,8 @@ const init       = async (msg) => {
 					H_DATA.result = playerHands.length === 1 ? `** ${msg.member.displayName}**` : ` ${result.replace(/(^\w|\s\w)/g, ma => ma.toUpperCase())}${result !== 'push' ? `, ${lossOrGain}` : `, ${"Rubines"}"} back`}\n`
 				multiHAND_DATA.push(H_DATA)
 				winnings += Number(lossOrGain)
-				console.log("Hand",i,":",("LG"+lossOrGain+"").red,("WW"+winnings+"").yellow,("RST"+resultade+"").green,(result+"").blue , "\n" )
-				splitExplain.push(`Hand ${i+1}: **${lossOrGain}**${_emoji('RBN')} \`${result.toUpperCase()}\``)
+				RESULT_EMOJI = (res) => playerValue.toString().includes("JOKER") ? _emoji('plxbjkjkr') : playerValue == "Blackjack" ? _emoji('plxbjkbjk') : res == "push"? _emoji('plxbjkpush') : res=="loss"? _emoji('plxbjkloss') :res=="bust"? _emoji('plxbjkbust') :res=="Dealer bust"? _emoji('plxbjkwin') : res.toLowerCase() == "blackjack"? _emoji('plxbjkbjk') : _emoji('plxbjkwin');
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}`)
 			});
 
 			let POL_DATA = {}		
@@ -393,7 +382,7 @@ const init       = async (msg) => {
 			//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
 			msg.channel.send(PLAY_RES, { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
 			if(splitExplain.length > 1){
-				msg.channel.send("**Splits Breakdown**\n"+splitExplain.join('\n'))
+				msg.channel.send(`**${$t('games.blackjack.splitbreak',P)}**\n`+splitExplain.join('\n'))
 			}
 		});
 
@@ -427,28 +416,33 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 	const hands = [playerHand];
 	let currentHand = hands[0];
 	let totalBet = bet;
-
-	const nextHand = () => currentHand = hands[hands.indexOf(currentHand) + 1]; 
-	let opts ={};
-
-	while (currentHand) {
+	
+	async function ProcessHand(currentHand) {
+		if (!currentHand) return Promise.resolve(true);
+		const nextHand = () => currentHand = hands[hands.indexOf(currentHand) + 1];
 		if (currentHand.length === 1) blackjack.hit(currentHand, powerups);
 		if (Blackjack.handValue(currentHand) === 'Blackjack') {
 			nextHand();
-			continue;
+			return ProcessHand(currentHand);
+			//continue;
 		}
-		if ((Blackjack.handValue(currentHand).startsWith||function(){return false})('JOKER') ) {
+		let currentHandValue = Blackjack.handValue(currentHand);
+		
+		if ( typeof currentHandValue == 'string' && currentHandValue.startsWith("JOKER") ) {
 			nextHand();
-			continue;
+			return ProcessHand(currentHand);
+			//continue;
 		}
-		if (Blackjack.handValue(currentHand) >= 21) {
+		if ( currentHandValue >= 21) {
 			nextHand();
-			continue;
+			return ProcessHand(currentHand);
+			//continue;
 		}
 		if (currentHand.doubled) {
 			blackjack.hit(currentHand); 
 			nextHand();
-			continue;
+			return ProcessHand(currentHand);
+			//continue;
 		}
 
 		const canDoubleDown = 
@@ -481,8 +475,8 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
 			renderHand([visibleHand], 'default',bjkP)
-		]).timeout(1000).catch(e=> {errored = true; return [0,0] } );
-		if (errored) break;
+		]).timeout(1000).catch(e=> {errored = true; return [e,0] } );
+		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
 
 		options.b = totalBet
@@ -507,14 +501,14 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 			}
 			);
 			
-		if (responses.length === 0) break;
+		if (responses.length === 0) return Promise.resolve(false);
 		const action = responses[0].content.toLowerCase();
 		if (action == "stando") {
-			opts.enemyStando = true;
-			msg.channel.send( $t("eastereggs.konodioda", P) )
+			options.enemyStando = true;
+			msg.channel.send( $t("eastereggs.konodioda", {lngs:msg.lang}) )
 		}
 		if (action === 'stando' || action === 'stand' || Blackjack.handValue(currentHand) >= 21) {
-			if (currentHand === hands[hands.length - 1]) break;
+			if (currentHand === hands[hands.length - 1]) return Promise.resolve("EndGame");
 			nextHand();
 		}
 		if (action === 'hit') blackjack.hit(currentHand);
@@ -527,19 +521,24 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 			totalBet += bet;
 			currentHand.doubled = true;
 		}
+		return ProcessHand(currentHand);
 	}
 
-		return hands;
-	
+	await ProcessHand(currentHand);
+	return hands;	
 }
+let hooks = POLLUX.commandOptions.defaultCommandOptions.hooks;
+hooks.postExecution = (msg)=>	(new Blackjack(msg)).endGame();
 
 module.exports = {
 	init,
 	pub: true,
 	cmd: 'blackjack',
+	argsRequired:true,
 	perms: 3,
 	cat: 'gambling',
 	cooldown: 5000,
+	hooks,
 	aliases: ['bjk'],
 	teleSubs:[
 		{label: 'decks', path:'inventory/decks', pass:"casino"}
