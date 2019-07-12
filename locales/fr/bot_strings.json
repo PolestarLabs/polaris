@@ -134,6 +134,15 @@
                 "Un moment...",
                 "Veuillez patienter..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "D'acc.",
@@ -530,6 +539,9 @@
             "split": "`split` pour partager ta main,␣",
             "double": "",
             "pass": "ou `stand` pour passer.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

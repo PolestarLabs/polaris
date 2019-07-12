@@ -134,6 +134,15 @@
                 "Espera un segundo...",
                 "Un momento por favor..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ok.",
@@ -530,6 +539,9 @@
             "split": "`split` para Dividir tu mano,␣",
             "double": "`double`para duplicar tu apuesta y sacar una ultima carta,",
             "pass": " o `stand` para pasar.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Parece que hemos alcanzado el equilibrio, ten tus rubíes de vuelta."
         },
         "slots": {

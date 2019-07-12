@@ -134,6 +134,15 @@
                 "",
                 ""
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "",
@@ -530,6 +539,9 @@
             "split": "輸入`split`來分牌",
             "double": "",
             "pass": "或是輸入`stand`來跳過",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

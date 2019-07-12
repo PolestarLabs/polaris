@@ -134,6 +134,15 @@
                 "Секунду...",
                 "Подождите, пожалуйста..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Хорошо.",
@@ -530,6 +539,9 @@
             "split": "`split` чтобы разделить вашу руку,",
             "double": "",
             "pass": "или `stand`, чтобы пропустить.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

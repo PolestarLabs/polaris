@@ -134,6 +134,15 @@
                 "Nur eine Sekunde...",
                 "Einen Moment bitte..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ok.",
@@ -530,6 +539,9 @@
             "split": "Benutze ´split´, um deine Hand aufzuteilen.",
             "double": "",
             "pass": "oder `stand´, um zu passen.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

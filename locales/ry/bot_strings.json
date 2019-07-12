@@ -134,6 +134,15 @@
                 "Ah'f'nah aimgr'luhh...",
                 "Y'nah fhtagn."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Vulgtmnah.",
@@ -530,6 +539,9 @@
             "split": "",
             "double": "`double` goka ehyee ahog bet ng goka ehye card.",
             "pass": "",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

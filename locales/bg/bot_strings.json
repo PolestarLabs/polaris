@@ -134,6 +134,15 @@
                 "Само секунда ...",
                 "Един момент ..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ок.",
@@ -530,6 +539,9 @@
             "split": "`split`, за да разделите ръката си,",
             "double": "",
             "pass": "или \"stand\", за да пропуснете.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {
