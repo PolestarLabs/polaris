@@ -1,245 +1,292 @@
-const cmd = 'tarot';
-const gear = require('../../gearbox.js')
-const Canvas = require('canvas')
-const paths = require('../../paths.json')
-
-
-let array2 = require('../../../resources/lists/arkana.json')
-
-let kickIn = [
-"I see that ",
-"Seems like ",
-"The cards say ",
-"Recently ",
-"Long ago ",
-"In the past "
+const ARCANA = [
+    {
+      "id": "fool",
+      "Arcana": "The Fool",
+      "UPRIGHT.START": "living a happy life and being carefree",
+      "UPRIGHT.MID": "pay more attention to your surroundings",
+      "UPRIGHT.END": "new things in your life",
+      "REVERSED.START": "making yourself a fool",
+      "REVERSED.MID": "act like a girl",
+      "REVERSED.END": "more things to whine about"
+    },
+    {
+      "id": "magician",
+      "Arcana": "The Magician",
+      "UPRIGHT.START": "finding new things",
+      "UPRIGHT.MID": "be focused on one thing and don't stop doing what you are doing",
+      "UPRIGHT.END": "everything you want, if you will do everything for it to happen",
+      "REVERSED.START": "fooling people and lying",
+      "REVERSED.MID": "be a pussy",
+      "REVERSED.END": "rotting in hell"
+    },
+    {
+      "id": "hipriestess",
+      "Arcana": "The High Priestess",
+      "UPRIGHT.START": "not paying attention to your intuiton and your dreams",
+      "UPRIGHT.MID": "trust your intuition more",
+      "UPRIGHT.END": "becoming the one with your true self",
+      "REVERSED.START": "not trusting your imaginary friends",
+      "REVERSED.MID": "not to trust yourself (like you always do)",
+      "REVERSED.END": "your imaginary friends leaving you"
+    },
+    {
+      "id": "empress",
+      "Arcana": "The Empress",
+      "UPRIGHT.START": "looking for beautiful things in your life",
+      "UPRIGHT.MID": "treat yourself and people around you better",
+      "UPRIGHT.END": "becoming a better person and making others smile",
+      "REVERSED.START": "not loving your waifu enough",
+      "REVERSED.MID": "pay too much attention to 3d girls",
+      "REVERSED.END": "your waifu becoming shit"
+    },
+    {
+      "id": "emperor",
+      "Arcana": "The Emperor",
+      "UPRIGHT.START": "facing difficult choices",
+      "UPRIGHT.MID": "maitain your concentration and focus",
+      "UPRIGHT.END": "becoming more succesful in life",
+      "REVERSED.START": "being an emo kid",
+      "REVERSED.MID": "not to act like a real man",
+      "REVERSED.END": "you becoming a little girl"
+    },
+    {
+      "id": "hiero",
+      "Arcana": "The Hierophant",
+      "UPRIGHT.START": "changing the world around you",
+      "UPRIGHT.MID": "do what is expected of you",
+      "UPRIGHT.END": "finding wisdom and knowledge",
+      "REVERSED.START": "being a rebel",
+      "REVERSED.MID": "be edgy",
+      "REVERSED.END": "you being forever alone"
+    },
+    {
+      "id": "lovers",
+      "Arcana": "The Lovers",
+      "UPRIGHT.START": "figuring out what you stand for and what the life is",
+      "UPRIGHT.MID": "think about your decisions and choices you are facing",
+      "UPRIGHT.END": "becoming honest with yourself",
+      "REVERSED.START": "trying to love a 3d girl",
+      "REVERSED.MID": "look at 3d girls",
+      "REVERSED.END": "even your waifu leaving you"
+    },
+    {
+      "id": "chariot",
+      "Arcana": "The Chariot",
+      "UPRIGHT.START": "trying to have more control over things in your life",
+      "UPRIGHT.MID": "be determined, self-disciplined, and hard working",
+      "UPRIGHT.END": "you will become more self-disciplined",
+      "REVERSED.START": "losing your shit",
+      "REVERSED.MID": "be a control freak",
+      "REVERSED.END": "you dying alone"
+    },
+    {
+      "id": "strength",
+      "Arcana": "Strength",
+      "UPRIGHT.START": "looking for inner strength to overcome any obstacle",
+      "UPRIGHT.MID": "draw upon your inner strength",
+      "UPRIGHT.END": "you will know how to tame the beast within yourself",
+      "REVERSED.START": "starting to become a hikikomori",
+      "REVERSED.MID": "play too much rpg games",
+      "REVERSED.END": "drinking bleach"
+    },
+    {
+      "id": "hermit",
+      "Arcana": "The Hermit",
+      "UPRIGHT.START": "trying to understand the things around you",
+      "UPRIGHT.MID": "find your inner light",
+      "UPRIGHT.END": "looking at your life with a deeper understanding",
+      "REVERSED.START": "watching too much anime, like the weeb you are,",
+      "REVERSED.MID": "want to be an anime character",
+      "REVERSED.END": "people pointing fingers at you"
+    },
+    {
+      "id": "wheel",
+      "Arcana": "Wheel of Fortune",
+      "UPRIGHT.START": "getting hard life and losing hope",
+      "UPRIGHT.MID": "accept what life hands you",
+      "UPRIGHT.END": "you will appreciate the good things that happen in your life",
+      "REVERSED.START": "whining about bad things happening in your life",
+      "REVERSED.MID": "blame people and your bad luck",
+      "REVERSED.END": "using only the sad pepe meme"
+    },
+    {
+      "id": "justice",
+      "Arcana": "Justice",
+      "UPRIGHT.START": "looking for justice in your life",
+      "UPRIGHT.MID": "speak the truth",
+      "UPRIGHT.END": "things becoming fair",
+      "REVERSED.START": "trying to blame the others for your mistakes",
+      "REVERSED.MID": "not taking responsibility for your actions (you little girl)",
+      "REVERSED.END": "being a whiny girl for the rest of your life"
+    },
+    {
+      "id": "hanged",
+      "Arcana": "The Hanged Man",
+      "UPRIGHT.START": "feeling stuck in your life",
+      "UPRIGHT.MID": "become more open to different experiences",
+      "UPRIGHT.END": "letting go all of your worries and concerns that you have",
+      "REVERSED.START": "thinking that things are going slow, but you are the slowpoke",
+      "REVERSED.MID": "be a lazy ass",
+      "REVERSED.END": "laying on your bad and becoming a fat weeb"
+    },
+    {
+      "id": "death",
+      "Arcana": "Death",
+      "UPRIGHT.START": "focusing on the past too much",
+      "UPRIGHT.MID": "put the past behind you and focus on the present",
+      "UPRIGHT.END": "letting the past go and focusing on the present",
+      "REVERSED.START": "being stuck in limbo, Dante,",
+      "REVERSED.MID": "not transforming, you pokemon,",
+      "REVERSED.END": "staying in your little shell, you damn clam"
+    },
+    {
+      "id": "temper",
+      "Arcana": "Temperance",
+      "UPRIGHT.START": "trying to moderate your life",
+      "UPRIGHT.MID": "be patient to act with timing and precision",
+      "UPRIGHT.END": "finding a purpose in your life",
+      "REVERSED.START": "keeping your guns up, Stalin,",
+      "REVERSED.MID": "make a mess out of everything,loser,",
+      "REVERSED.END": "making your mom cleaning up everything after you"
+    },
+    {
+      "id": "devil",
+      "Arcana": "The Devil",
+      "UPRIGHT.START": "fearing the future",
+      "UPRIGHT.MID": "ask yourself where are you feeling stuck",
+      "UPRIGHT.END": "recalling the things you forgot",
+      "REVERSED.START": "fighting everyone, you jerk,",
+      "REVERSED.MID": "not caring about people",
+      "REVERSED.END": "everyone hating you"
+    },
+    {
+      "id": "tower",
+      "Arcana": "The Tower",
+      "UPRIGHT.START": "with something blowing your mind",
+      "UPRIGHT.MID": "break the shell around you",
+      "UPRIGHT.END": "find new things in your life",
+      "REVERSED.START": "thinking too much of yourself",
+      "REVERSED.MID": "consider yourself cooler than others",
+      "REVERSED.END": "deal with people laughing at you"
+    },
+    {
+      "id": "star",
+      "Arcana": "The Star",
+      "UPRIGHT.START": "looking for hope",
+      "UPRIGHT.MID": "being open to new ideas",
+      "UPRIGHT.END": "having faith in yourself",
+      "REVERSED.START": "feeling that everything is boring for you",
+      "REVERSED.MID": "not believing that anime is real",
+      "REVERSED.END": "you forever living with your mom"
+    },
+    {
+      "id": "moon",
+      "Arcana": "The Moon",
+      "UPRIGHT.START": "being focused on your past",
+      "UPRIGHT.MID": "finding the inner yourself",
+      "UPRIGHT.END": "not fearing the inner yourself",
+      "REVERSED.START": "watching too much illusionist shows",
+      "REVERSED.MID": "try becoming an illusionist",
+      "REVERSED.END": "being a failure"
+    },
+    {
+      "id": "sun",
+      "Arcana": "The Sun",
+      "UPRIGHT.START": "shining like a sun",
+      "UPRIGHT.MID": "living a simple life",
+      "UPRIGHT.END": "seing the path ahead of you",
+      "REVERSED.START": "thinking you are too cool",
+      "REVERSED.MID": "you trying to achieve something",
+      "REVERSED.END": "the only achievement you got being: \"Sad for Life\""
+    },
+    {
+      "id": "judge",
+      "Arcana": "Judgement",
+      "UPRIGHT.START": "trying to live your life in a different way",
+      "UPRIGHT.MID": "changing things in your life",
+      "UPRIGHT.END": "facing life as it is",
+      "REVERSED.START": "not liking to make decisions",
+      "REVERSED.MID": "be a smartass",
+      "REVERSED.END": "you talking to yourself"
+    },
+    {
+      "id": "zawarudo",
+      "Arcana": "The World",
+      "UPRIGHT.START": "accomplishing everything you wanted",
+      "UPRIGHT.MID": "finding a deeper understanding of your role",
+      "UPRIGHT.END": "people pressing F to pay respects for you",
+      "REVERSED.START": "not being too focused",
+      "REVERSED.MID": "watch too much hentai",
+      "REVERSED.END": "you being in prison"
+    }
 ]
-let connect = [
-"you've been ",
-"you were ",
-"you have been ",
-"you're "
-]
-let intermezzo = [
-", but ",
-", and ",
-", yet ",
-", then "
-]
-let connect_2 = [
-  "now seems to ", 
-"now ",
-"decided to ",
-"got to ",
-"had to ",
-"will have to ",
-"must get to ",
-"you feel an urge to ",
-"you want so much to ",
-"you feel like you have to "
-]
-let intermission = [
-", this means that you will be ",
-" which will end up in ",
-", that will lead to ",
-", so the way is ",
-". Take care with stuff like ",
-". So, don't worry about ",
-". Be careful while ",
-", so please dont ever try ",
-". I also see you  ",
-". And this last card says that you will be ",
-". In the future you will be ",
-". Very soon you will be "
 
-]
-let ligature = [
-"dealing with "
-, "finding "
-, "avoiding "
-, "facing "
-, "doing "
-, "pursuing "
-, "following "
-, "defying "
-, "getting "
-]
-let intermezzo_2 = [
-", and ",
-", but ",
-", although ",
-", though ",
-", however "
-]
-let K = [
-  "This will be ",
-"That will be ",
-"Things like this happen "
-]
-let happen = [
-"very soon! "
-, "sooner than you expect! "
-, "every day."
-, "in some years. "
-, "never! "
-, "today. "
-, "very often. "
-]
-let last = [
-".\nSo please take care"
-, ".\nAnd that's what the cards have to say"
-, ".\nAnd this is your fortune."
-, ".\nSo, please enjoy your future."
-, ".\nThat is really awesome isn't it?"
-, ".\nI wish i had a fortune like this to me."
-, ".\nYou could be better."
-, ".\nThings could be worse."
+const Picto = require('../utilities/Picto');
 
-]
-let S = [
-kickIn,
-connect,
-  " {{start}} ",
-intermezzo,
-connect_2,
-  " {{mid}} ",
-intermission,
-//ligature,
-  " {{end}} ",
-//intermezzo_2,
-//K,
-//happen,
-last
-]
+class Tarot {
 
-function pos() {
-  let r = gear.randomize(0, 10);
-  return r > 5 ? "UPRIGHT" : "REVERSED";
-}
-
-const init = async function (message) {
-
-  try {
-
-
-    const canvas = new Canvas.createCanvas(750, 350);
-    const ctx = canvas.getContext('2d');
-
-    let arcana = [
-    gear.randomize(0, array2.length - 1)
-    , gear.randomize(0, array2.length - 1)
-    , gear.randomize(0, array2.length - 1)
-         ];
-    let position = [pos(), pos(), pos()];
-
-    let ind = 0;
-    let cards = []
-    while (ind < 3) {
-      let img = array2[arcana[ind]].id;
-      let card = new Canvas.createCanvas(250, 350);
-      const ctx2 = card.getContext('2d');
-      let card_pic = await gear.getCanvas(paths.BUILD + 'tarot/persona3/' + img + '.png');
-
-      let arcaname = await gear.tag(ctx, array2[arcana[ind]].Arcana, '900 24px WhitneyHTF-Black');
-      let posname = await gear.tag(ctx, position[ind], '400 20px WhitneyHTF', '#A5A5A3');
-
-
-      let wid = arcaname.width > 240 ? 240 : arcaname.width;
-      await ctx2.drawImage(arcaname.item, 125 - (wid / 2), 310, wid, arcaname.height);
-
-      wid = posname.width
-      await ctx2.drawImage(posname.item, 125 - (wid / 2), 20);
-
-      if (position[ind] == "REVERSED") {
-        ctx2.translate(0, 350);
-        ctx2.scale(1, -1);
-      }
-      await ctx2.drawImage(card_pic, 37, 50);
-
-      cards.push(card);
-      ind++
-    };
-
-
-    cards.forEach(async(card, i) => {
-      await ctx.drawImage(card, i * 250, 0);
-    })
-
-
-
-    let finalString = ""
-
-    for (i = 0; i < S.length; i++) {
-      if (typeof S[i] !== 'string') {
-        finalString += S[i][gear.randomize(0, S[i].length - 1)]
-
-      } else {
-        finalString += S[i]
-
-      }
+    constructor(msg={},spreadSize=3){
+        this._deck = Tarot._shuffle(ARCANA);
+        this.L = msg.lang || ['en'];
+        this.spread = this.getSpread(spreadSize>9?9:spreadSize);
     }
 
+    getSpread(size){
+        let i = size,
+            spread = [];
+        while(i--){
+            this._deck = Tarot._shuffle(this._deck);
+            spread.push( {card: this._deck.pop(), pose: Tarot._pos()} );
+        }
+        return spread;
+    }
 
+    async drawCard(arcana,posit,deck="persona3"){
+        let card = Picto.new(200, 350);
+        const ctx = card.getContext('2d');
+        let card_pic = await Picto.getCanvas(`${paths.CDN}/build/cards/tarot/${deck}/${arcana.id}.png`);
+        let posname  = Picto.tag(ctx, posit, '400 20px Panton', '#A5A5A3');
+        Picto.setAndDraw(ctx,posname ,100, 20,180,'center');
+        let arcaname = Picto.tag(ctx, arcana.Arcana, '900 24px Panton');
+        Picto.setAndDraw(ctx,arcaname,100,310,180,'center');
 
+        if (posit == "REVERSED") {
+            ctx.translate(0, 350);
+            ctx.scale(1, -1);
+        }
+        ctx.drawImage(card_pic, 100-card_pic.width/2, 50);
+        return card;
+    }
 
+    async drawSpread(skin){
+        let spSize = this.spread.length
+        const canvas = new Picto.new(200*spSize, 350);
+        const ctx = canvas.getContext('2d');
 
-    let startup = `
-Spread:
-**${array2[arcana[0]].Arcana}**:\`${position[0]}\`
-**${array2[arcana[1]].Arcana}**:\`${position[1]}\`
-**${array2[arcana[2]].Arcana}**:\`${position[2]}\`
---
-`
-    pc = ''
-    finalString = finalString
-      .replace('{{start}}', pc + array2[arcana[0]][position[0] + '.START'] + pc)
-      .replace('{{mid}}', pc + array2[arcana[1]][position[1] + '.MID'] + pc)
-      .replace('{{end}}', pc + array2[arcana[2]][position[2] + '.END'] + pc)
-      .replace(/ +/g, ' ')
-      .replace(/ ,/g, ',')
-      .replace(/ \./g, '.')
+        const SPREAD = this.spread;
+        while (SPREAD.length) {
+            let currSpd = SPREAD.pop();
+            ctx.drawImage(  await this.drawCard(currSpd.card,currSpd.pose,skin) , (spSize-(SPREAD.length)-1) * 200, 0)
+        }; 
+        return canvas;
+    }
 
+    static _shuffle(array) {
+        const newArray = array.slice();
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const temp = newArray[i];
+          newArray[i] = newArray[j];
+          newArray[j] = temp;
+        }
+        return newArray;
+    }
 
+    static _pos(){
+        let r = Math.floor(Math.random() * 10 + 1);
+        return r % 2 == 0 ? "UPRIGHT" : "REVERSED";
+    }
 
-    let embed = new gear.RichEmbed
+}
 
-    embed.attachFiles({
-      attachment: await canvas.toBuffer(),
-      name: "tarot.png"
-    });
-    embed.setImage("attachment://tarot.png");
-
-    pc2 = ''
-    embed.setDescription(pc2 + finalString + pc2)
-    embed.setTitle("3 Card Spread Fortune")
-    embed.setFooter("Current Deck: Persona 3", 'https://lh3.googleusercontent.com/-9YpgeohI1lo/AAAAAAAAAAI/AAAAAAAACFA/u3wB6SrW4Vo/s640/photo.jpg')
-    embed.setColor("#951d2f")
-
-    message.channel.send({
-      embed
-    }).catch(e=>message.channel.send(startup+finalString))
-
-    /*
-    message.channel.send(startup+finalString,{
-                      files: [{
-                          attachment: await canvas.toBuffer(),
-                          name: "tarot.png"
-                      }]
-                  })
-    */
-
-  } catch (e) {
-    console.error(e)
-  }
-
-
-} 
-
-
-module.exports = {
-  pub: true,
-  cmd: cmd,
-  perms: 3,
-  init: init,
-  cat: 'games'
-};
+module.exports = Tarot;
