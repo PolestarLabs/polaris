@@ -134,6 +134,15 @@
                 "",
                 ""
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "",
@@ -530,6 +539,9 @@
             "split": "`split` för att dela dina kort",
             "double": "`double down` för att dubbla din insats och dra ett sista kort,␣",
             "pass": "eller `stanna` för att passa.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Det vart oavgjort, i så fall vinner huset ~ Dina Rubiner stannar hos mig."
         },
         "slots": {

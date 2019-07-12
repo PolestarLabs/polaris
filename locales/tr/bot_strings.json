@@ -134,6 +134,15 @@
                 "Bi' saniye...",
                 "Bir dakika, lütfen..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Peki.",
@@ -530,6 +539,9 @@
             "split": "Elini ayırmak için, `split`",
             "double": "Son bir kart çekip bahsini iki katına çıkarmak için, `double`",
             "pass": "Ya da elini geçirmek için, `stand`",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Patladık gibi, al, rubinlerin senin olsun."
         },
         "slots": {

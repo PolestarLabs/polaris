@@ -134,6 +134,15 @@
                 "잠시 기다려 주십시오...",
                 "잠시만 기다려주세요..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "네.",
@@ -530,6 +539,9 @@
             "split": " `split` 너의 손을 나눠 라,",
             "double": "",
             "pass": "또는 `stand` 통과.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

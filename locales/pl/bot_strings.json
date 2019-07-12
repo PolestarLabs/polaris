@@ -134,6 +134,15 @@
                 "Sekundkę...",
                 "Chwileczkę, proszę..."
             ],
+            "opinion_decks": [
+                "Dobry wybór!",
+                "To jedna z moich ulubionych~",
+                "Wolę ten poprzedni.",
+                "Nieźle.",
+                "Ta jest szczęśliwa.",
+                "",
+                "Umyj ręce przed użyciem tych kart."
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ok.",
@@ -436,7 +445,7 @@
             "feedLimitRSS": "Ten serwer może mieć tylko **5** kanałów RSS jednocześnie.",
             "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch' u jednocześnie.",
             "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
-            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu, rozważ [Donating]({{donationLink}}) lub [applying for Pollux Partnership]({{partnershipLink}})"
+            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu, rozważ dotację lub zgłoszenie się do Partnerstwa z Pollux'em"
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
         "daily": {
@@ -530,6 +539,9 @@
             "split": "`split`, aby podzielić rękę",
             "double": "`double`, aby podwoić swoją stawkę i dobrać ostatnią kartę,",
             "pass": "lub \"stand\", aby go przekazać.",
+            "splitbreak": "",
+            "switchdeck": "Teraz zagramy w BlackJack'a przy użyciu talii **{{deckname}}**!",
+            "switchdeckEgg": "",
             "even": "Wygląda na to, że się tutaj zepsuliśmy, trzymaj swoje Rubiny z powrotem."
         },
         "slots": {

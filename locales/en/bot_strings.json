@@ -134,6 +134,15 @@
                 "Just a second...",
                 "One moment, please..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ok.",
@@ -530,6 +539,9 @@
             "split": "`split` to Split your hand,",
             "double": "`double` to double your bet and draw one last card,",
             "pass": "or `stand` to pass.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Seems that we broke even, here, have your rubines back."
         },
         "slots": {

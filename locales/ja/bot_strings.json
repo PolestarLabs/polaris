@@ -134,6 +134,15 @@
                 "",
                 ""
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "",
@@ -530,6 +539,9 @@
             "split": "`split` あなたの手を分割するには、",
             "double": "",
             "pass": "或るいは  `stand` 合格する。",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

@@ -134,6 +134,15 @@
                 "Só um segundinho...",
                 "Um momentinho, por gentileza..."
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "OK.",
@@ -415,7 +424,7 @@
         },
         "feed": {
             "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
-            "newTwitchStatus": "",
+            "newTwitchStatus": "**{{streamer}}** está ao vivo agora!",
             "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
             "urlPresent": "Eu já estou cuidando das postagens desse aí, mas vou atualizar o canal de destino~",
             "noFeed": "Não há Feeds configurados neste Servidor",
@@ -530,6 +539,9 @@
             "split": "`split` para dividir sua mão,",
             "double": "`double` para dobrar sua aposta e puxar uma última carta,",
             "pass": "ou `stand` para passar.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Parece que empatamos, então aqui estão seus Rubines."
         },
         "slots": {

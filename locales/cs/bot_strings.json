@@ -134,6 +134,15 @@
                 "",
                 ""
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "",
@@ -530,6 +539,9 @@
             "split": "`split` aby jsi splitnul svoje karty",
             "double": "",
             "pass": "nebo `stand` pro vynechání.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

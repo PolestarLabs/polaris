@@ -134,6 +134,15 @@
                 "",
                 ""
             ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
             "interjections": {
                 "acknowledged": [
                     "",
@@ -530,6 +539,9 @@
             "split": "`Split` каб падзяліць ваш hand,",
             "double": "",
             "pass": "або `stand`, каб прапусціць.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {
