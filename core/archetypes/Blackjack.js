@@ -44,7 +44,7 @@ class Blackjack {
     if(powerups&&powerups.nojoker){
       let incr = 0;
       while(this.deck[this.deck.length-1].includes("JOKER")){
-        Blackjack._shuffle(this.deck);
+        this.deck = Blackjack._shuffle(this.deck);
         if (incr > 5) break;
       }
     }
