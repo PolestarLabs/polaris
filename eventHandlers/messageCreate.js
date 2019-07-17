@@ -1,6 +1,6 @@
 
 
-//const meSubs = require('../core/subroutines/onEveryMessage.js');
+const meSubs = require('../core/subroutines/onEveryMessage.js');
 //const {BLACKLIST,YELLOWLIST,REDLIST} = require(paths.UTILS+'banLists.js');
 //const DB = require (appRoot + "/core/database/db_ops")
 //const Preprocessor =   require('../core/structures/LEGACY_CommandPreprocessor.js/index.js');
@@ -8,15 +8,14 @@
 module.exports = async function (msg) {
 
 
-  return;// temp for command client
-
+  
   if(msg.author.bot) return;
   if(!POLLUX.ready) return;
   
   //DEBUG -----------------------------------------------------
   
   if(POLLUX.refreshing || POLLUX.beta){
-     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
+    delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
      delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
@@ -46,7 +45,8 @@ module.exports = async function (msg) {
     msg.author.id !== "163200584189476865"
     )
     return;
-    
+    meSubs(msg);
+    return;// temp for command client
   if (!msg.guild) return; //DM Stuff?
 
   let _chanData = dataChecks('channel',msg.channel),

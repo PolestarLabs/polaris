@@ -12,7 +12,7 @@ module.exports = async msg => {
     Promise.all([
       levelChecks(msg),
       Drops(msg)
-    ]).timeout(250).then(()=>null)
+    ]) 
   )
 
 };

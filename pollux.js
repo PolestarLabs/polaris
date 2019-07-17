@@ -263,13 +263,13 @@ POLLUX.connect().then( postConnect );
 process.on("uncaughtException", err => {
     console.error(" UNCAUGHT EXCEPTION ".bgRed)
     console.error(err)
-    if(!POLLUX.beta) POLLUX.softKill();
-    else POLLUX.hardKill();
+    //if(!POLLUX.beta) POLLUX.softKill();
+    //else POLLUX.hardKill();
 })
 
 process.on("unhandledRejection", err => {
     console.error(" UNHANDLED REJECTION ".bgYellow)
     console.error(err)
-    if(!POLLUX.beta) POLLUX.softKill();
-    else POLLUX.hardKill();
+    //if(!POLLUX.beta) POLLUX.softKill();
+    //else POLLUX.hardKill();
 })
