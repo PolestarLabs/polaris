@@ -1,11 +1,3 @@
-
-
-
-
-
-
-
-
 const {Embed} = require('../../utilities/Gearbox');
 const INVENTORY = require('../../archetypes/Inventory');
 
