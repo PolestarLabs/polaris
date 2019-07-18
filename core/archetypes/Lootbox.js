@@ -180,4 +180,4 @@ function legacyEmblem(ct,mini){
 
 
 
-module.exports={Lootbox_old,Lootbox,LootboxItem}
+module.exports={Lootbox,LootboxItem}
