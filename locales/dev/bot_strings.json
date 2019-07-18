@@ -395,6 +395,13 @@
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
             "aviOK": "Alright, I've changed my photo for you. You can change my propic again in {{cooldown}}",
             "colorChange": "Your favorite color has been saved!"
+        },
+        "inventory":{
+            "noSuchBox": "Look, I can't see this box in there and I'm sure you can't either.",
+            "noSuchBooster": "I can't see this Booster in your inventory. You probably lost it in this mess.",
+            "noSuchItem": "I can se a plethora of things in your inventory, except that particular item.",
+            "browsingBox": "This is your **Lootbox** Inventory",
+            "browsingBooster": "This is your **Booster Pack** Inventory"
         }
     },
     "interface": {

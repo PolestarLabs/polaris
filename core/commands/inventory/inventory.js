@@ -2,6 +2,8 @@ const gear = require('../../utilities/Gearbox');
 const DB = require('../../database/db_ops');
 const Picto = require('../../utilities/Picto');
 
+const INVOKERS   = new Map();
+
 const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
@@ -111,8 +113,9 @@ const init = async function (msg,args){
 
    menumes =  await msg.channel.send( '',gear.file( canvas.toBuffer(),'inventory.png'));
    menumes.target = Target;
-   args[10](userData);
-   args[11](msg.prefix);
+   args[10]=userData;
+   args[11]=msg.prefix;
+   INVOKERS.set(msg.author.id,menumes.id) 
    return menumes;
    //menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
    //menumes.addReaction(_emoji("BOOSTER").replace(/(\<:|\>)/g,'') )
@@ -137,39 +140,40 @@ module.exports={
             emoji: _emoji("LOOTBOX").reaction,
             type: "edit",
             response: require("./lootbox.js").init,
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("BOOSTER").reaction,
             type: "edit",
             response: require("./boosterpack.js").init,
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("CONSUMABLE").reaction,
             type: "edit",
             response: require("./cmd.js").init,
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("MATERIAL").reaction,
             type: "edit",
             response: require("./cmd.js").init,
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("KEY").reaction,
             type: "edit",
             response: require("./cmd.js").init,
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("JUNK").reaction,
             type: "edit",
             response: (m,a,u)=>console.log({m,a,u}),
-
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         }
     ],
-    reactionButtonTimeout: 30e3 
+    reactionButtonTimeout: 30e3,
+    postCommand: (m,a,r)=> setTimeout(()=>INVOKERS.delete(m.author.id),32e3)
 }

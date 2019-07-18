@@ -15,7 +15,7 @@ const init = async function (msg, args, userID) {
         description: Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[1]}open booster ${i.rarity}\``).join('\n')
     }
 
-    return { content: `${_emoji('BOOSTER')} Browsing **Boosterpack** Inventory`, embed }
+    return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',{lngs:msg.lang})}`, embed }
 
 }
 
