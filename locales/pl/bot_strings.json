@@ -140,7 +140,7 @@
                 "Wolę ten poprzedni.",
                 "Nieźle.",
                 "Ta jest szczęśliwa.",
-                "",
+                "Zwróć karty nienaruszone.",
                 "Umyj ręce przed użyciem tych kart."
             ],
             "interjections": {
@@ -539,7 +539,7 @@
             "split": "`split`, aby podzielić rękę",
             "double": "`double`, aby podwoić swoją stawkę i dobrać ostatnią kartę,",
             "pass": "lub \"stand\", aby go przekazać.",
-            "splitbreak": "",
+            "splitbreak": "Podział Splitów:",
             "switchdeck": "Teraz zagramy w BlackJack'a przy użyciu talii **{{deckname}}**!",
             "switchdeckEgg": "",
             "even": "Wygląda na to, że się tutaj zepsuliśmy, trzymaj swoje Rubiny z powrotem."

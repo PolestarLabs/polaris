@@ -135,13 +135,13 @@
                 "Veuillez patienter..."
             ],
             "opinion_decks": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Bon choix!",
+                "C'est un de mes favoris~",
+                "J'ai mieux aimé le précédent.",
+                "Pas pire.",
+                "Celui-ci est pour la chance.",
+                "Veuillez retourner les cartes intactes.",
+                "Lavez vos mains avant d'utiliser ces cartes."
             ],
             "interjections": {
                 "acknowledged": [
@@ -396,8 +396,8 @@
             "confirmDelete": "Affirmer la suppression?"
         },
         "booster": {
-            "checkStickersAt": "",
-            "title": ""
+            "checkStickersAt": "Vérifiez vos autocollants et équipez-les au {{dashboard}}",
+            "title": "{{boostername}} Booster de collants"
         },
         "kickban": {
             "waitingForReason": "en attente de l'entrée de la raison...",
@@ -424,7 +424,7 @@
         },
         "feed": {
             "newYoutube": "***{{tuber}} a publié un nouveau vidéo!** Aller la voir ici:",
-            "newTwitchStatus": "",
+            "newTwitchStatus": "**{{streamer}}** est en ligne maintenant!",
             "noDefault": "Tu ne m'a pas dit à quel canal afficher et il n'y a pas non plus de chaîne par défaut.",
             "urlPresent": "Je surveille déjà les messages de celui-ci, alors je vais changer le salon de destination~",
             "noFeed": "Il n'a aucun fil RSS configuré dans ce serveur",
@@ -481,7 +481,7 @@
             "picking": "Sélection... {{as in 'picking from a list'}}",
             "complete": "Fini!",
             "lessthan2": "J'ai besoin d'au moins deux choses à choisir...",
-            "ichoose": ""
+            "ichoose": "Je choisis **{{list_item}}**!"
         },
         "help": {
             "greetings": "",

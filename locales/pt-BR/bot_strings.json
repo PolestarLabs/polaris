@@ -135,13 +135,13 @@
                 "Um momentinho, por gentileza..."
             ],
             "opinion_decks": [
+                "Boa escolha!",
                 "",
+                "Eu gostava mais do outro...",
+                "É, dá pro gasto.",
+                "Esse é pra dar sorte.",
                 "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Lave suas mãos antes de usar essas cartas."
             ],
             "interjections": {
                 "acknowledged": [
@@ -539,9 +539,9 @@
             "split": "`split` para dividir sua mão,",
             "double": "`double` para dobrar sua aposta e puxar uma última carta,",
             "pass": "ou `stand` para passar.",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
+            "splitbreak": "Detalhamento dos Splits:",
+            "switchdeck": "Agora vamos jogar BlackJack usando o baralho **{{deckname}}**!",
+            "switchdeckEgg": "Agora vamos jogar BlackJack usando o caralho– O BARALHO, eu tava falando do **baralho** {{deckname}}!",
             "even": "Parece que empatamos, então aqui estão seus Rubines."
         },
         "slots": {
