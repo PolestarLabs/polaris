@@ -401,7 +401,36 @@
             "noSuchBooster": "I can't see this Booster in your inventory. You probably lost it in this mess.",
             "noSuchItem": "I can se a plethora of things in your inventory, except that particular item.",
             "browsingBox": "This is your **Lootbox** Inventory",
-            "browsingBooster": "This is your **Booster Pack** Inventory"
+            "browsingBooster": "This is your **Booster Pack** Inventory",
+            "emptyJokes":[
+                "Fill this inventory with your tears because it is empty."
+                ,"There is nothing in this Inventory but spiders.\nThey all stare at you and clap. Bravo."
+                ,"The inventory is as empty as your heart."
+                ,"Nothing to see here. Move along."
+                ,"This inventory contains: disappointment."
+                ,"<Insert item here>"
+                ,"...Nope, still empty."
+                ,"The inventory is empty, but you may now fill it with your tears."
+                ,"You must be awfully optimistic if you think more items are just going to appear in this inventory."
+                ,"This inventory is oh so very empty."
+                ,"You have....a whole lotta nothing"
+                ,"You will not find a finer empty inventory anywhere."
+                ,"You open the empty inventory and stare inside. The inventory stares back accusingly."
+                ,"This inventory is now full of disappointment..."   
+                ,"You stare into the abyss, the abyss stares back at you."
+                ,"\"FEED ME SEYMOUR\""
+                ,"You open the inventory to the familiar sight of nothing. Oh how you've missed that!"
+                ,"This inventory looks sad and deflated now that it is empty."
+                ,"When you gaze long enough into the empty inventory, the inventory gazes back into you."
+                ,"This inventory was once full of wondrous treasures. Then you came along..."
+                ,"This inventory is on strike until further notice"
+                ,"A single tumbleweed rolls from one side of the inventory to another"
+                ,"As you open the empty inventory, a number of trapped, screaming souls come swirling out... That's probably normal."
+                ,"The inventory is empty, but at least the interior looks really nice. Velvet-lined and everything."
+                ,"There's nothing in this inventory, but you imagine all the things it COULD'VE been..."
+                ,"Even though there wasn't anything in the inventory, opening it showered you in confetti! Yay!"
+                ,"This inventory is as empty as my well of creativity after writing all this messages"
+            ]
         }
     },
     "interface": {
