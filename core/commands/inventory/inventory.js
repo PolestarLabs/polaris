@@ -111,8 +111,8 @@ const init = async function (msg,args){
 
    menumes =  await msg.channel.send( '',gear.file( canvas.toBuffer(),'inventory.png'));
    menumes.target = Target;
-   args.push(userData);
-   args.push(msg.prefix);
+   args[10](userData);
+   args[11](msg.prefix);
    return menumes;
    //menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
    //menumes.addReaction(_emoji("BOOSTER").replace(/(\<:|\>)/g,'') )
