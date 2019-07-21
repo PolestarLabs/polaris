@@ -8,9 +8,10 @@ const init = async function (msg, args, userID) {
     if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
     const P =  {lngs:msg.lang};
 
-    const userInventory = new INVENTORY(userID || msg.author.id, "booster");
+    const userInventory = new INVENTORY(userID || msg.author.id, "boosterpack");
     const Inventory = await userInventory.listItems(args[10]);
     const embed = {color: 0xeb546d}
+
     embed.description =
         Inventory.length > 0 
             ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[1]}open booster ${i.rarity}\``).join('\n')
@@ -38,7 +39,7 @@ const open = async function (msg, args) {
 
 
 module.exports = {
-    init
+    init,
     , pub: true
     , cmd: 'boosterpack'
     , perms: 3
