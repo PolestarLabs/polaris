@@ -366,16 +366,12 @@ async function renderBG(bname, UDATA, Rar) {
   ctx.drawImage(J, 0, 0);
 
 
-  if (!UDATA.modules.bgInventory.includes(bname))
+  if (!UDATA.modules.bgInventory.includes(bname)) ctx.drawImage(NW, 220, 90, 64, 64);
+  else await makegrad(ctx, Rar);
 
 
-    ctx.drawImage(NW, 220, 90, 64, 64);
-}else {
-  await makegrad(ctx, Rar);
-}
 
-
-return itemCanvas;
+  return itemCanvas;
 };
 
 async function makegrad(ctx, rar) {
