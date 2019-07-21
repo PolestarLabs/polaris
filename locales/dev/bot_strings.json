@@ -125,7 +125,7 @@
         },
         "warnings": {
             "translationTexTooLong":":warning: **Hey! Translation text cannot exceed __1000 Characters__**\n But don't worry, I've trimmed the text for you~"
-          ,"open1":"Excuse me, open is a transitive verb, which means you should tell me what to open~ Try one of these options:",
+          ,"open1":"Excuse me, but *\"open\"* is a transitive verb, which means you should tell me *what* to open~ Try one of these options:",
           "open2":"Sorry but that's not something I can (or want to) open. But I'm sure I can open you one of these: ",
             "timesOutIn": "This will timeout in {{s}} seconds",
             "enterVoiceBetterExperience": "You have to be in a voice channel for the full ~experience~."
@@ -400,9 +400,12 @@
             "noSuchBox": "Look, I can't see this box in there and I'm sure you can't either.",
             "noSuchBooster": "I can't see this Booster in your inventory. You probably lost it in this mess.",
             "noSuchItem": "I can se a plethora of things in your inventory, except that particular item.",
-            "browsingBox": "This is your **Lootbox** Inventory",
-            "browsingBooster": "This is your **Booster Pack** Inventory",
-            "browsingMaterial": "This is your **Crafting Material Items** Inventory",
+            "browsingBox": "This is your **Lootbox** Inventory\n*Open these to receive lots of cool goodies!*",
+            "browsingBooster": "This is your **Booster Pack** Inventory\n*You can open them to obtain Profile Stickers*",
+            "browsingConsumable": "This is your **Consumable Items** Inventory\n*They have limited usage or disappear after using, some can be used directly.*",
+            "browsingJUNK": "This is your **Junk Items** Inventory\n*These items usually serve no purpose at all, but might be usable in some situations.*",
+            "browsingKEY": "This is your **Key Items** Inventory\n*These items unlock certain features from other commands or entire modules.*",
+            "browsingMATERIAL": "This is your **Crafting Material Items** Inventory\n*You can use them to craft other items.*",
             "emptyJokes":[ 
                 "Fill this inventory with your tears because it is empty."
                 ,"There is nothing in this Inventory but spiders.\nThey all stare at you and clap. Bravo."
