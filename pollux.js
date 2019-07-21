@@ -110,40 +110,45 @@ db.once('open', function () {
 
 
 //Translation Engine ------------- <
-const i18next = require('i18next');
-const multilang = require('./utils/i18node.js');
-const i18n_backend = require('i18next-node-fs-backend');
-const backendOptions = {
-    loadPath: './locales/{{lng}}/{{ns}}.json',
-    jsonIndent: 2
-};
-readdirAsync('./locales/').then(list => {
-    i18next.use(i18n_backend).init({
-        backend: backendOptions,
-        lng: 'en',
-        fallbackLng: ["en", "dev"],
-        fallbackToDefaultNS: true,
-        fallbackOnNull: true,
-        returnEmptyString: false,
-        preload: list,
-        load: 'currentOnly',
-        ns: ['bot_strings', 'events', 'commands', 'website', 'translation'],
-        defaultNS: 'bot_strings',
-        fallbackNS: 'translation',
-        interpolation: {
-            escapeValue: false
-        }
-    }, (err, t) => {
-        if (err) {
-            console.warn("• ".yellow, "Failed to Load Some Translations".yellow, "\n"+err.map(e=>e.path.gray).join('\n'))
-        }
-        console.log("• ".green, "Translation Engine Loaded")
+global.translateEngineStart = ()=>{
 
-        multilang.setT(t);
-        global.$t = multilang.getT()
-        global.rand$t = multilang.rand
+    const i18next = require('i18next');
+    const multilang = require('./utils/i18node.js');
+    const i18n_backend = require('i18next-node-fs-backend');
+    const backendOptions = {
+        loadPath: './locales/{{lng}}/{{ns}}.json',
+        jsonIndent: 2
+    };
+    readdirAsync('./locales/').then(list => {
+        i18next.use(i18n_backend).init({
+            backend: backendOptions,
+            lng: 'en',
+            fallbackLng: ["en", "dev"],
+            fallbackToDefaultNS: true,
+            fallbackOnNull: true,
+            returnEmptyString: false,
+            preload: list,
+            load: 'currentOnly',
+            ns: ['bot_strings', 'events', 'commands', 'website', 'items', 'translation'],
+            defaultNS: 'bot_strings',
+            fallbackNS: 'translation',
+            interpolation: {
+                escapeValue: false
+            }
+        }, (err, t) => {
+            if (err) {
+                console.warn("• ".yellow, "Failed to Load Some Translations".yellow, "\n"+err.map(e=>e.path.gray).join('\n'))
+            }
+            console.log("• ".green, "Translation Engine Loaded")
+
+            multilang.setT(t);
+            global.$t = multilang.getT()
+            global.rand$t = multilang.rand
+        });
     });
-});
+    return "Translation Engine Loading!"
+}
+translateEngineStart();
 
 //=======================================//
 //      BOT EVENT HANDLER
