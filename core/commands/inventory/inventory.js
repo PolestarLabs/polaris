@@ -173,6 +173,11 @@ module.exports={
             response: require("./junk.js").init,
             filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
+        },{
+            emoji: "❌",
+            type: "cancel",
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            
         }
     ],
     reactionButtonTimeout: 30e3,
