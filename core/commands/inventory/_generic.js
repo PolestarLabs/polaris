@@ -18,29 +18,27 @@ const displayItem = (invItm, embed, P) =>
 
 class GenericItemInventory{
 
-    constructor(type,commandTag,emoji,translationID,aliases,img,color){
+    constructor(type,aliases,pub,img,color){
 
-        this.invIdentifier  = type          || 'junk'
-        this.browsingTag    = translationID || 'Junk'
-        this.emoji          = emoji         || 'JUNK'
-        this.cmd            = commandTag    || 'junk'
-        this.aliases        = aliases       || []
-        this.img            = img           || 'https://via.placeholder.com/250x250'
-        this.color          = color         || 0xEBBEFF        
-        this.pub            = false;        
+        this.invIdentifier  = type               || 'junk'
+        this.browsingTag    = type.toUpperCase() || optionals.browsingTag;
+        this.emoji          = type.toUpperCase() || optionals.emoji;
+        this.cmd            = type               || optionals.cmd;   
+        this.aliases        = aliases            || []
+        this.img            = img                || ''
+        this.color          = color              || 0xEBBEFF        
+        this.pub            = pub                || true;
 
         this.init = async (msg, args, userID) => {
             if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
             const P = { lngs: msg.lang };
             const userInventory = new INVENTORY(userID || msg.author.id, this.invIdentifier);
             let Inventory = await userInventory.listItems(args[10]);
-        console.log(this.emoji)
             const response = { content: `${_emoji( this.emoji )} ${$t(`responses.inventory.browsing${this.browsingTag}`, P)} ` }
             if (Inventory.length == 0) {
                 response.embed = { description: `*${rand$t('responses.inventory.emptyJokes', P)}*`, color: this.color }
                 return response;
             }       
-            
         
             const Pagination = async (page, mss, recursion = 0) => {
                 let tot_pages = Math.ceil(Inventory.length / 5);
@@ -58,6 +56,7 @@ class GenericItemInventory{
                 let embed = new gear.Embed
                 embed.thumbnail(this.img)
                 embed.color = 0xEBBEFF
+                embed.footer((args[12]||msg).author.tag + `  |  [${page}/${tot_pages}]` ,(args[12]||msg).author.avatarURL)
         
                 if (tot_pages > 0 && tot_pages < 2) {
                     Inventory.forEach(itm => displayItem(itm, embed, P));
@@ -94,10 +93,13 @@ class GenericItemInventory{
         
         this.cat= 'inventory'
         this.botPerms= ['attachFiles', 'embedLinks']
+        this.noCMD = false;
     }
 
 
 
 }
+
+GenericItemInventory.noCMD = true;
 
 module.exports = GenericItemInventory;
