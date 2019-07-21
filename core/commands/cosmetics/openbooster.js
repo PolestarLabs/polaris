@@ -54,7 +54,7 @@ const init = async function (msg) {
 module.exports = {
     init
     , pub: true
-    , cmd: 'booster'
+    , cmd: 'openbooster'
     , perms: 3
     , cat: 'cosmetics'
     , botPerms: ['attachFiles', 'embedLinks']

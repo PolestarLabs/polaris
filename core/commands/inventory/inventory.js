@@ -1,8 +1,10 @@
-const gear = require('../../../utilities/Gearbox');
-const DB = require('../../../database/db_ops');
-const Picto = require('../../../utilities/Picto');
+const gear = require('../../utilities/Gearbox');
+const DB = require('../../database/db_ops');
+const Picto = require('../../utilities/Picto');
 
-const init = async function (msg){
+const INVOKERS   = new Map();
+
+const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
@@ -41,7 +43,8 @@ const init = async function (msg){
             'modules.bgInventory'       :1,
             'modules.medalInventory'    :1,
             'modules.stickerInventory'  :1,
-            'modules.favcolor'          :1,        
+            'modules.favcolor'          :1,    
+            id:1    
         })
         , DB.items.find().lean().exec()
     ]); 
@@ -71,11 +74,9 @@ const init = async function (msg){
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
-        console.log(itm)
         let itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
-        console.log(itemType.yellow)
-       if(!types[itemType]) types[itemType] = 0;
-       types[itemType] += (itm.count&&itm.count===0?itm.count:1);
+        if(!types[itemType]) types[itemType] = 0;
+        types[itemType] += (itm.count || 0);
     });
 
     let  a_csm = xlr99(types.consumables || 0 ,"L")
@@ -112,6 +113,10 @@ const init = async function (msg){
 
    menumes =  await msg.channel.send( '',gear.file( canvas.toBuffer(),'inventory.png'));
    menumes.target = Target;
+   args[10]=userData;
+   args[11]=msg.prefix;
+   args[12]=msg;
+   INVOKERS.set(msg.author.id,menumes.id) 
    return menumes;
    //menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
    //menumes.addReaction(_emoji("BOOSTER").replace(/(\<:|\>)/g,'') )
@@ -122,6 +127,7 @@ const init = async function (msg){
     
 
 }
+
 module.exports={
     init
     ,pub:true
@@ -134,34 +140,41 @@ module.exports={
         {
             emoji: _emoji("LOOTBOX").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: require("./lootbox.js").init,
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("BOOSTER").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: require("./boosterpack.js").init,
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("CONSUMABLE").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: require("./cmd.js").init,
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("MATERIAL").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: require("./material.js").init,
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("KEY").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: require("./cmd.js").init,
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("JUNK").reaction,
             type: "edit",
-            response: require("./cmd").init,
+            response: (m,a,u)=>console.log({m,a,u}),
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         }
     ],
-    reactionButtonTimeout: 30e3
+    reactionButtonTimeout: 30e3,
+    postCommand: (m,a,r)=> setTimeout(()=>INVOKERS.delete(m.author.id),32e3)
 }
