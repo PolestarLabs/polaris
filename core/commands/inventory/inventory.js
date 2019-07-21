@@ -69,8 +69,8 @@ const init = async function (msg,args){
     Picto.setAndDraw(ctx,Picto.tag(ctx,"소모품","400 22pt 'Panton'","#FFF"),XYZ.CSM.x,XYZ.CSM.y,XYZ.CSM.w,'right')
 
     Picto.setAndDraw(ctx,Picto.tag(ctx,"공예 재료",  "400 22pt 'Panton'","#FFF"),XYZ.MTL.x,XYZ.MTL.y,XYZ.MTL.w,'left')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"키",       "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'left')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"정크",      "400 22pt 'Panton'","#FFF"),XYZ.JNK.x,XYZ.JNK.y,XYZ.JNK.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,"정크",       "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,"키",      "400 22pt 'Panton'","#FFF"),XYZ.JNK.x,XYZ.JNK.y,XYZ.JNK.w,'left')
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
