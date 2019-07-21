@@ -25,7 +25,8 @@ function noteno(item,extra){
     //message.reply("pos: 127, cfstatus: 1")
     let noteno_feed = []
     
-  let ITEMS = await DB.items.find({crafted:true});
+  let [ITEMS,ALLITEMS] = await Promise.all([ DB.items.find({crafted:true}).lean().exec(), 
+      DB.items.find({}).lean().exec()]);
   
   let embed = new gear.Embed
   embed.description=""
@@ -87,7 +88,7 @@ function noteno(item,extra){
   embed.title((crafted_item||{emoji:0}).emoji+" Crafting `: "+crafted_item.name+"`")
     
 
-  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1}).lean().exec();
+  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
   //message.reply("`console res`")
   if(crafted_item){
     let ID = crafted_item.id
@@ -157,7 +158,7 @@ function noteno(item,extra){
         icona='nope';
         fails+=1
       }
-        matDisplay+="\n"+_emoji(icona)+" | "+ITEMS.find(x=>x.id==materialName).emoji+ITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
+        matDisplay+="\n"+_emoji(icona)+" | "+ALLITEMS.find(x=>x.id==materialName).emoji+ALLITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
     })
     if (fails > 0 ) {
       embed.setColor('#ed3a19');
