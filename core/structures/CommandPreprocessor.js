@@ -62,6 +62,8 @@ const registerOne = (folder, _cmd) => {
         //commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };      
         commandFile.hidden = !commandFile.pub //legacy port
 
+        if(commandFile.noCMD) return null;
+
         const CMD = POLLUX.registerCommand(_cmd, commandFile.init, commandFile)
         //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
         POLLUX.commands[CMD.label].cmd = commandFile.cmd
