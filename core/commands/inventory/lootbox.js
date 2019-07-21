@@ -34,6 +34,8 @@ const init = async function (msg,args,userID){
 
 
 const open = async function (msg,args,userID){
+
+    args = args.map(a=> typeof a == 'string' ? a.toUpperCase() : a);
     
     INVOKERS.delete(userID||msg.author.id)
     INV_STATUS.delete(userID||msg.author.id)
