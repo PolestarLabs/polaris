@@ -152,7 +152,7 @@ module.exports={
         },{
             emoji: _emoji("CONSUMABLE").reaction,
             type: "edit",
-            response: require("./cmd.js").init,
+            response: require("./consumable.js").init,
             filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
@@ -164,13 +164,13 @@ module.exports={
         },{
             emoji: _emoji("KEY").reaction,
             type: "edit",
-            response: require("./cmd.js").init,
+            response: require("./key.js").init,
             filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{
             emoji: _emoji("JUNK").reaction,
             type: "edit",
-            response: (m,a,u)=>console.log({m,a,u}),
+            response: require("./junk.js").init,
             filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         }
