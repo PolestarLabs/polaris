@@ -6,16 +6,19 @@ const INVENTORY = require('../../archetypes/Inventory');
 
 const init = async function (msg, args, userID) {
     if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
+    const P =  {lngs:msg.lang};
 
     const userInventory = new INVENTORY(userID || msg.author.id, "booster");
-    const Inventory = await userInventory.listItems(args[0]);
+    const Inventory = await userInventory.listItems(args[10]);
+    const embed = {color: 0xeb546d}
+    embed.description =
+        Inventory.length > 0 
+            ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[1]}open booster ${i.rarity}\``).join('\n')
+            :  `*${rand$t('responses.inventory.emptyJokes',P)}*`
 
-    let embed =
-    {
-        description: Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[1]}open booster ${i.rarity}\``).join('\n')
-    }
+    
 
-    return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',{lngs:msg.lang})}`, embed }
+    return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',P)}`, embed }
 
 }
 

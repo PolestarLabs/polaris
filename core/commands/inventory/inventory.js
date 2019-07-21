@@ -115,6 +115,7 @@ const init = async function (msg,args){
    menumes.target = Target;
    args[10]=userData;
    args[11]=msg.prefix;
+   args[12]=msg;
    INVOKERS.set(msg.author.id,menumes.id) 
    return menumes;
    //menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
@@ -157,7 +158,7 @@ module.exports={
         },{
             emoji: _emoji("MATERIAL").reaction,
             type: "edit",
-            response: require("./cmd.js").init,
+            response: require("./material.js").init,
             filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
             
         },{

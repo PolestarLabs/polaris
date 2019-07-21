@@ -7,20 +7,23 @@ const INV_STATUS = new Map();
 const init = async function (msg,args,userID){
     
     if(userID && (args[10]||{}).id != userID) return "Only the owner can see inside";
+    const P = {lngs:msg.lang};
 
     const userInventory = new INVENTORY(userID||msg.author.id,"box");
     const Inventory     = await userInventory.listItems( args[10] );
-
-    let embed =
-    {
-        description: Inventory.map(i=> `${_emoji(i.rarity)} ${_emoji(i.emoji||i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix||args[1]}open box ${i.rarity}\`` ).join('\n')
-    }
+    
+    const embed = {color: 0xd14362}
+    embed.description = 
+        Inventory.length > 0 
+            ? Inventory.map(i=> `${_emoji(i.rarity)} ${_emoji(i.emoji||i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix||args[1]}open box ${i.rarity}\`` ).join('\n')
+            :  `*${rand$t('responses.inventory.emptyJokes',P)}*`
+    
 
     args[0] = msg
     args[1] = Inventory.map(i=>i.rarity)
     INV_STATUS.set(userID || msg.author.id, args[1] );
       
-    let response =  {content: `${_emoji('LOOTBOX')} ${$t('responses.inventory.browsingBox',{lngs:msg.lang})}` , embed };
+    let response =  {content: `${_emoji('LOOTBOX')} ${$t('responses.inventory.browsingBox',P)}` , embed };
 
     if(userID) return response;
 
@@ -41,7 +44,7 @@ const open = async function (msg,args,userID){
     const userInventory = new INVENTORY(userID||msg.author.id,"box");
     const Inventory     = await userInventory.listItems();    
      
-    if(!Inventory.find(bx=>bx.rarity == args[0])) return $t('responses.inventory.noSuchBox',{lngs:msg.lang});  
+    if(!Inventory.find(bx=>bx.rarity == args[0])) return $t('responses.inventory.noSuchBox',P);  
 
     require("../cosmetics/loot.js").init(msg,{rarity:args[0]}).catch(console.error) 
 }
