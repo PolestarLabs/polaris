@@ -2,6 +2,7 @@ const INVENTORY = require('../../archetypes/Inventory');
 
 const INVOKERS   = new Map();
 const INV_STATUS = new Map();
+const LOOTING    = new Map();
 
 
 const init = async function (msg,args,userID){
@@ -22,8 +23,9 @@ const init = async function (msg,args,userID){
     args[0] = msg
     args[1] = Inventory.map(i=>i.rarity)
     INV_STATUS.set(userID || msg.author.id, args[1] );
-      
-    let response =  {content: `${_emoji('LOOTBOX')} ${$t('responses.inventory.browsingBox',P)}` , embed };
+   
+      const LOOTING    = new Map();
+    let response =  {content: `${_emoji('LOOTBOX')} ${$t('responses.inventory.browsingBox',P)}` , embed }; 
 
     if(userID) return response;
 
@@ -44,9 +46,10 @@ const open = async function (msg,args,userID){
     const userInventory = new INVENTORY(userID||msg.author.id,"box");
     const Inventory     = await userInventory.listItems();    
      
+    LOOTING.set(userID || msg.author.id, true );
     if(!Inventory.find(bx=>bx.rarity == args[0])) return $t('responses.inventory.noSuchBox',P);  
-
-    require("../cosmetics/loot.js").init(msg,{rarity:args[0]}).catch(console.error) 
+    console.log(LOOTING)
+    require("../cosmetics/loot.js").init(msg,{rarity:args[0]}).catch(console.error).then(done=> LOOTING.delete(userID || msg.author.id, true) );
 }
 
 const reactionOption = (rar) => {    
@@ -56,7 +59,7 @@ const reactionOption = (rar) => {
         response: (msg,args,uid)=>{
             return open(args[0],[rar,args[1]],uid);            
         },
-        filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id && INV_STATUS.get(uid).includes(emj.substr(0,2).replace('_',''))
+        filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id && INV_STATUS.get(uid).includes(emj.substr(0,2).replace('_','') )
     }
 }
 
