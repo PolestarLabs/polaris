@@ -8,7 +8,7 @@ const init = async function (msg){
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const userData = await DB.users.get(msg.author.id);
+    const userData = await DB.users.findOne({id:msg.author.id});
     const BGData = (await DB.cosmetics.find({type:'background', code:{$in:userData.modules.bgInventory}}))
     const bgTarget=msg.args[0];
     const FragConvert = function FragConvert(item){

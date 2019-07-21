@@ -1,0 +1,15 @@
+{
+    "partial_ring":{
+        "name": "Partial Ring",
+        "description": "A round band of metal used to create a beautiful wedding ring"
+    },
+    "lootbox_C_O":{
+        "name": "Common Lootbox",
+        "description": ""
+    },
+    "cosmo_fragment":{
+        "name": "Cosmo Fragment",
+        "description" : "Shiny gravel used to concot Cosmo Shards"
+    }
+
+}

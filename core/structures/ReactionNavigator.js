@@ -4,6 +4,7 @@ module.exports = async function ReactionNavigator(m,msg,pagefun,options={},rec){
 if(rec>30) return msg.reply("`Navigation Limit Reached`");
 
     let time = options.time || 10000
+    let content = options.content|| (m.content||[])[0] || "";
     let embed = options.embed|| (m.embeds||[])[0] || false;
     let avoidEdit = options.avoidEdit || true;
     let strings = options.strings || {}
@@ -29,7 +30,7 @@ if(rec>30) return msg.reply("`Navigation Limit Reached`");
         if(embed && !avoidEdit){
             embed.color =16499716;        
             embed.footer ={text: strings.timeout};      
-            m.edit({embed});
+            m.edit({content,embed});
         }
     });
 
