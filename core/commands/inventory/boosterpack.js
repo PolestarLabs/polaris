@@ -17,7 +17,10 @@ const init = async function (msg, args, userID) {
             ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[1]}open booster ${i.rarity}\``).join('\n')
             :  `*${rand$t('responses.inventory.emptyJokes',P)}*`
 
-    
+    embed.footer = { 
+        text: (args[12]||msg).author.tag
+        ,icon_url: (args[12]||msg).author.avatarURL
+    }
 
     return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',P)}`, embed }
 

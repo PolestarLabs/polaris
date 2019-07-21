@@ -21,7 +21,12 @@ const init = async function (msg,args,userID){
     args[0] = msg
     args[1] = Inventory.map(i=>i.rarity)
     INV_STATUS.set(userID || msg.author.id, args[1] );
-   
+    
+    embed.footer = { 
+         text: (args[12]||msg).author.tag
+        ,icon_url: (args[12]||msg).author.avatarURL
+    }
+        
 
     let response =  {content: `${_emoji('LOOTBOX')} ${$t('responses.inventory.browsingBox',{lngs:msg.lang})}` , embed }; 
 
