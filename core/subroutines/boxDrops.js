@@ -213,8 +213,8 @@ Winner:\`${JSON.stringify(luckyOne)}\
 `)
       */
       trigger.channel.deleteMessages(responses.map(x=>x.id));
-      await DB.users.set(luckyOne.id,{$push:{'modules.inventory':BOX.id}});
-                      console.log(("BOX ADDED!!!").green)
+      await DB.users.findOne({id:luckyOne.id}).then(userdata=>userdata.addItem(BOX.id) );
+      console.log(("BOX ADDED!!!").green)
       goesto.delete().catch(e=>false);
       dramaMsg.delete().catch(e=>false);
       CHN.send("||"+drama[rand]+"||, "+v.gratz);
