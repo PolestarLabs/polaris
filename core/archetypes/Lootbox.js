@@ -178,6 +178,4 @@ function legacyEmblem(ct,mini){
 }
 
 
-
-
 module.exports={Lootbox,LootboxItem}
