@@ -62,7 +62,7 @@ const reactionOption = (rar) => {
 }
 
 module.exports={
-    init
+    init, open
     ,pub:true
     ,cmd:'lootbox'
     ,perms:3
