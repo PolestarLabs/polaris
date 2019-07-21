@@ -39,7 +39,7 @@ const open = async function (msg, args) {
 
 
 module.exports = {
-    init,
+    init, open
     , pub: true
     , cmd: 'boosterpack'
     , perms: 3
