@@ -402,7 +402,8 @@
             "noSuchItem": "I can se a plethora of things in your inventory, except that particular item.",
             "browsingBox": "This is your **Lootbox** Inventory",
             "browsingBooster": "This is your **Booster Pack** Inventory",
-            "emptyJokes":[
+            "browsingMaterial": "This is your **Crafting Material Items** Inventory",
+            "emptyJokes":[ 
                 "Fill this inventory with your tears because it is empty."
                 ,"There is nothing in this Inventory but spiders.\nThey all stare at you and clap. Bravo."
                 ,"The inventory is as empty as your heart."
