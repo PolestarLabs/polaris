@@ -52,7 +52,7 @@ const open = async function (msg,args,userID){
      
     LOOTING.set(userID || msg.author.id, true );
     if(!Inventory.find(bx=>bx.rarity == args[0])) return $t('responses.inventory.noSuchBox',{lngs:msg.lang});  
-    require("../cosmetics/loot.js").init(msg,{rarity:args[0]}).catch(console.error).then(done=> LOOTING.delete(userID || msg.author.id, true) );
+    require("../cosmetics/loot.js").init(msg,{issuer:"pollux",rarity:args[0]}).catch(console.error).then(done=> LOOTING.delete(userID || msg.author.id, true) );
 }
 
 const reactionOption = (rar) => {    

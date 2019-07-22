@@ -65,7 +65,8 @@ const init = async function (msg, options = {}) {
   }
 
 
-
+  let issuer = options.issuer;
+  
   try {
     if (msg.author.id != "88120564400553984") {
       if (!options) return console.error('premature return');
@@ -73,7 +74,7 @@ const init = async function (msg, options = {}) {
       if (msg.author.looting) return;
     }
 
-    let issuer = options.issuer;
+
     let message = msg;
     msg.author.looting = true;
 
