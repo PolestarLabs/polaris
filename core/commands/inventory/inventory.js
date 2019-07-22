@@ -15,12 +15,12 @@ const init = async function (msg,args){
 
     XYZ ={
             //majors
-                LBX:   {y: 160, x: 705, w: 140, h:37 }  
-                ,BPK:  {y: 244, x: 705, w: 140, h:0  }  
-                ,CSM:  {y: 323, x: 705, w: 130, h:0  }  
+                LBX:   {y: 160, x: 710, w: 140, h:37 }  
+                ,BPK:  {y: 244, x: 710, w: 140, h:0  }  
+                ,CSM:  {y: 323, x: 710, w: 140, h:0  }  
                 ,MTL:  {y: 322, x: 180, w: 140, h:37 }  
-                ,JNK:  {y: 405, x: 180, w: 140, h:0  }  
-                ,KEY:  {y: 482, x: 180, w: 140, h:0  }  
+                ,KEY:  {y: 405, x: 180, w: 140, h:0  }  
+                ,JNK:  {y: 482, x: 180, w: 140, h:0  }  
             //minis
                 ,mBG:    {y: 255, x: 390 }  
                 ,mMD:    {y: 220, x: 390 }  
@@ -64,13 +64,13 @@ const init = async function (msg,args){
     Picto.popOutTxt(ctx,"#"+Target.discriminator, XYZ.uname.x+uname_w-30 , XYZ.uname.y+20 ,"24pt 'Panton Light'","#FFF",100,{style:"#1f1d25",line:8}).w;
     ctx.rotate(0.10)
 
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"약탈 상자",    "400 22pt 'Panton'","#FFF"),XYZ.LBX.x,XYZ.LBX.y,XYZ.LBX.w,'right')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"부스터 팩",    "400 22pt 'Panton'","#FFF"),XYZ.BPK.x,XYZ.BPK.y,XYZ.BPK.w,'right')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"소모품","400 22pt 'Panton'","#FFF"),XYZ.CSM.x,XYZ.CSM.y,XYZ.CSM.w,'right')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.lootbox'     ,P), "400 22pt 'Panton'","#FFF"),XYZ.LBX.x,XYZ.LBX.y,XYZ.LBX.w,'right')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.boosterpack' ,P), "400 22pt 'Panton'","#FFF"),XYZ.BPK.x,XYZ.BPK.y,XYZ.BPK.w,'right')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.consumable'  ,P), "400 22pt 'Panton'","#FFF"),XYZ.CSM.x,XYZ.CSM.y,XYZ.CSM.w,'right')
 
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"공예 재료",  "400 22pt 'Panton'","#FFF"),XYZ.MTL.x,XYZ.MTL.y,XYZ.MTL.w,'left')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"정크",       "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'left')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"키",      "400 22pt 'Panton'","#FFF"),XYZ.JNK.x,XYZ.JNK.y,XYZ.JNK.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.material'    ,P), "400 22pt 'Panton'","#FFF"),XYZ.MTL.x,XYZ.MTL.y,XYZ.MTL.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.key'                ,P), "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.junk'        ,P), "400 22pt 'Panton'","#FFF"),XYZ.JNK.x,XYZ.JNK.y,XYZ.JNK.w,'left')
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
@@ -79,7 +79,7 @@ const init = async function (msg,args){
         types[itemType] += (itm.count || 0);
     });
 
-    let  a_csm = xlr99(types.consumables || 0 ,"L")
+    let  a_csm = xlr99(types.consumable || 0 ,"L")
         ,a_key = xlr99(types.key || 0 )
         ,a_mtl = xlr99(types.material || 0 )
         ,a_jnk = xlr99(types.junk || 0 )

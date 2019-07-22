@@ -128,6 +128,7 @@ const init = async function (msg, options = {}) {
     let emb = new gear.Embed;
     emb.setColor("#f240a7");
     P.user = msg.member.displayName;
+    
     emb.description = ej("loot") + "" + $t("loot.opening", P);
 
     let sttup = await msg.channel.send({ embed: emb });
@@ -161,7 +162,7 @@ dispatcher.on('end', () => {
     const BOX = await BOXE.legacyfy;
 
 
-    gear.wait(2).then(x => {
+    gear.wait(5).then(x => {
       sttup.delete().catch();
     });
 
@@ -176,7 +177,7 @@ dispatcher.on('end', () => {
 
     let embed = new gear.Embed();
 
-
+    embed.thumbnail(paths.CDN+"/build/LOOT/openbox.gif")
 
     embed.title(ej(box_rarity || "C") + boxparams.altEmoji + boxparams.name);
     P.s = 30;
@@ -228,10 +229,11 @@ ${ej("retweet")} ${$t("loot.rerollRemain", P)} **${rerolls}**
       lootembed.delete().catch(e => 'die silently');
       let emb = new gear.Embed;
       emb.setColor("#3251d0");
+      emb.thumbnail(paths.CDN+"/build/LOOT/rerollbox.gif")
       emb.description = ej("retweet") + "" + $t("loot.rerolled", P);
 
       let q = await message.channel.send({ embed: emb });
-      await gear.wait(2);
+      await gear.wait(5);
       q.delete().catch();
       message.author.looting = false;
       init(message, { issuer, thisRoll: thisRoll + 1, rerolls: rerolls - 1, event, boxaher, rarity: boxaher.split('_')[1] });
