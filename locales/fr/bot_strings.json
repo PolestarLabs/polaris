@@ -14,10 +14,20 @@
         "R": "Rare",
         "SR": "Extra Rare",
         "UR": "Ultra Rare",
+        "thevoid": "nul",
+        "evToken": "Jeton d’événement",
+        "evToken_plural": "",
         "lootbox": "Lootbox",
         "lootbox_plural": "Des lootbox",
-        "thevoid": "nul",
-        "evToken": "Jeton d’événement"
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
         "thanks": "merci",
@@ -123,7 +133,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hé! Texte de traduction ne doit pas dépasser __1000 caractères__**\nN'inquiète pas, j'ai taillé la texte pour toi~",
-            "open1": "Pardon, ouvrir est une verbe transitive, donc tu dois me dire quoi ouvrir~ Essaye un de ces options:",
+            "open1": "",
             "open2": "Désolé, mais je ne peux pas (ou nne veut pas) ouvrir. Mais je peux toujours ouvrir pour vous: ",
             "timesOutIn": "Cela expirera dans {{s}} secondes",
             "enterVoiceBetterExperience": "Tu dois être dans un salon vocal pour l'expérience complète~."
@@ -388,6 +398,46 @@
             "memberSince": "{{target}} est membre depuis: {{joinedstamp}} ",
             "aviOK": "D'acc, ma nouvelle photo est donc celle-ci! Tu pourras la changer à nouveau dans {{cooldown}} ",
             "colorChange": "Ta couleur favorite a été sauvegardée!"
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {

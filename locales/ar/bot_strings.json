@@ -11,25 +11,35 @@
         "SPH_plural": "",
         "C": "",
         "U": "",
-        "R": "",
+        "R": "نادر",
         "SR": "",
         "UR": "",
+        "thevoid": "",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": "",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
         "thanks": "",
         "thanks_short": "",
         "thx": "",
-        "total": "",
+        "total": "الإجمالي",
         "amount": "",
         "overview": "",
         "dashboard": "",
         "coinHeads": "",
         "coinTails": "",
-        "qnt": "",
+        "qnt": "الكمية",
         "res": "",
         "announcement": "",
         "first": "",
@@ -46,7 +56,7 @@
         "module": "",
         "inst": "",
         "bet": "",
-        "level": "",
+        "level": "مستوى",
         "levelUp": "",
         "discord": {
             "message": "",
@@ -63,8 +73,8 @@
             "user_plural": "",
             "channel": "",
             "channel_plural": "",
-            "voice_channel": "",
-            "private": ""
+            "voice_channel": "قناة صوتية",
+            "private": "الرسائل الخاصة"
         }
     },
     "logs": {
@@ -132,13 +142,13 @@
             "jas": [
                 "",
                 "",
-                ""
+                "لحظة، من فضلك..."
             ],
             "opinion_decks": [
+                "أحسنت الاختيار!",
                 "",
                 "",
-                "",
-                "",
+                "لا بأس.",
                 "",
                 "",
                 ""
@@ -147,23 +157,23 @@
                 "acknowledged": [
                     "",
                     "",
+                    "حسنًا.",
+                    "حسنا.",
+                    "",
+                    "مفهوم!",
                     "",
                     "",
                     "",
-                    "",
-                    "",
-                    "",
-                    "",
-                    "",
+                    "حسنا!",
                     "",
                     "",
                     ""
                 ],
                 "yatta": [
+                    "ياى!",
                     "",
                     "",
-                    "",
-                    "",
+                    "رائع!",
                     "",
                     "",
                     "",
@@ -172,7 +182,7 @@
                     ""
                 ],
                 "gomenasai": [
-                    "",
+                    "اسف",
                     "",
                     "",
                     "",
@@ -183,17 +193,17 @@
                 "ohmy_positive": [
                     "",
                     "",
+                    "أه!",
                     "",
                     "",
-                    "",
-                    "",
+                    "ياى!",
                     ""
                 ],
                 "ohmy_negative": [
                     "",
                     "",
-                    "",
-                    "",
+                    "أوه...",
+                    "أوه لا!",
                     "",
                     ""
                 ]
@@ -388,6 +398,46 @@
             "memberSince": "{{target}} هذا العضو هنا منذ: {{joinedstamp}}\n",
             "aviOK": "اوككيي-دوكي , صورتي الجديده الان هي هذي . انت تقدر تقدر صورتي القميله مرثانيه في  {{cooldown}}",
             "colorChange": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
