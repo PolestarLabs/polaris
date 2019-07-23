@@ -14,10 +14,20 @@
         "R": "Raro",
         "SR": "Super Raro",
         "UR": "Ultra Raro",
+        "thevoid": "void",
+        "evToken": "Token de Evento",
+        "evToken_plural": "",
         "lootbox": "Caixa",
         "lootbox_plural": "Caixas",
-        "thevoid": "void",
-        "evToken": "Token de Evento"
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
         "thanks": "valeu~",
@@ -123,7 +133,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Ei! O texto a ser traduzido não pode exceder __1000 Caracteres__!**\n Mas relaxa, eu aparei o texto pra você~",
-            "open1": "Dá licença, é que \"open\" é um verbo transitivo, o que significa que você tem que me dizer *o que* abrir~ Tente uma dessas opções, xuxu:",
+            "open1": "",
             "open2": "Foi mal, mas isso não é algo que eu consiga (ou queira) abrir. Mas tenho certeza que posso abrir um desses pra você: ",
             "timesOutIn": "Você tem {{s}} segundos antes que a ação padrão seja tomada",
             "enterVoiceBetterExperience": "Entre num canal de voz para ter a experiência completa desse comando~"
@@ -388,6 +398,46 @@
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
             "aviOK": "Tá bom, troquei minha foto por essa daqui. Você pode me pedir pra trocar de foto de novo em: {{cooldown}}",
             "colorChange": "Sua cor favorita foi salva!"
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {

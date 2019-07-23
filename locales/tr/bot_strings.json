@@ -14,10 +14,20 @@
         "R": "Nadir",
         "SR": "Süper Nadir",
         "UR": "Ultra Nadir",
+        "thevoid": "hiçlik",
+        "evToken": "Etkinlik Jetonu",
+        "evToken_plural": "",
         "lootbox": "Define Sandığı",
         "lootbox_plural": "Define Sandıkları",
-        "thevoid": "hiçlik",
-        "evToken": "Etkinlik Jetonu"
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
         "thanks": "Teşekkür ederim.",
@@ -123,7 +133,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hop! Çeviri metni __1000 Karakteri__ geçemez\nAma dert etme. Senin için metni ayırdım~",
-            "open1": "Pardon, açmak geçişli bir fiil, bu da demek oluyor ki bana neyi açmam gerektiğini söylemelisin~ Şu seçeneklerden birini dene:",
+            "open1": "",
             "open2": "Kusura bakma ama bu açabileceğim (ya da açmak isteyeceğim) bir şey değil. Ama eminim ki sana şunlardan birini açabilirim: ",
             "timesOutIn": "Bu, {{s}} saniye boyunca timeout atacak",
             "enterVoiceBetterExperience": "Tam deneyim için bir ses kanalında olman ~lâzım~."
@@ -388,6 +398,46 @@
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
             "aviOK": "Pekâlâ, senin için fotoğrafımı değiştirdim. Profil fotoğrafımı {{cooldown}} içerisinde tekrar değiştirebilirsin.",
             "colorChange": "Favori Rengin Kaydedildi!"
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
