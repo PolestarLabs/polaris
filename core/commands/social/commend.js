@@ -24,9 +24,9 @@ const init = async function (msg){
   
     
     if(Target==null)Target=msg.author;
-    const userData    = await DB.users.get(msg.author.id);
-    const targetData  = (await DB.users.get(Target.id)) || (await DB.users.new(Target));
-    const targetDataC = (await DB.commends.get(Target.id))||{id:Target.id,whoIn:[],whoOut:[]};
+    const userData    = await DB.users.findOne({id:msg.author.id});
+    const targetData  = (await DB.users.findOne({id:Target.id})) || (await DB.users.new(Target));
+    const targetDataC = (await DB.commends.findOne({id:Target.id}))||{id:Target.id,whoIn:[],whoOut:[]};
     
     if(msg.args.includes('info')){
         let metas = await DB.users.find({id:{$in:targetDataC.whoIn.map(u=>u.id)}},{id:1,meta:1});

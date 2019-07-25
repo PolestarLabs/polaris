@@ -1,7 +1,7 @@
 
 const {shuffle,Embed,autoHelper} = require('../../utilities/Gearbox');
 
-const init = async function (msg){
+const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
@@ -9,7 +9,7 @@ const init = async function (msg){
     N= Math.abs(parseInt(msg.args[0]) || parseInt(msg.args[1])) || 0;
     ENTS = msg.args[2] ? msg.args : null;
 
-    let rolefind = (x)=> msg.guild.roles.find(rl => msg.args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()); 
+    let rolefind = (x)=> msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()); 
     if(
         msg.args[0]==='role' && msg.args[1] && (msg.roleMentions.length>0 || rolefind(1) ) ||
         msg.args[1]==='role' && msg.args[2] && (msg.roleMentions.length>0 || rolefind(2) ) 

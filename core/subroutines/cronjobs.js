@@ -143,16 +143,16 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 },null,true);
 
 
-const ONEhour = new CronJob('* * * * *', async () => {
+const ONEhour = new CronJob('* */1 * * *', async () => {
 
- 
+  POLLUX.microserver.microtasks.updateServerCache("all");
 
 });
 
 
-const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
-
-
+const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
+  
+  
   (async ()=>{
     DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
       serverFeeds.forEach(async svFd => {

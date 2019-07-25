@@ -5,7 +5,7 @@ const i18n = [{
     "name-e": "english",
     "flag": ":flag_gb:",
     "site-flag": "GB"
-}, {
+}, { 
     "code": ["es"],
     "iso": "es-ES",
     "name": "español",
@@ -102,6 +102,7 @@ const i18n = [{
     "code": ["pl", "pol"],
     "iso": "pl",
     "name": "Polski",
+    "nameContext": "polsku",
     "name-e": "Polish",
     "flag": ":flag_pl:",
     "site-flag": "PL"
@@ -141,7 +142,7 @@ module.exports = {
   i18n,
 
   langlist: i18n.map(lang => {
-    return `${ lang.flag } **\`${ lang.code }\`** ${lang.name} `
+    return `${ lang.flag } **\`${ lang.iso }\`** ${lang.name} `
   })
 
 }

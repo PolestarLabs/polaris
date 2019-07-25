@@ -37,7 +37,7 @@ const DEFAULT_CMD_OPTS = {
     ,hooks:  {
         preCommand: (m,a) => {
             m.args = a;
-            m.lang = [m.channel.LANGUAGE || (m.guild || {}).LANG || 'en', 'dev'];
+            m.lang = [m.channel.LANG || (m.guild || {}).LANG || 'en', 'dev'];
         },
         postCheck: (m,a,chk) => {
             if(!chk) return null;
