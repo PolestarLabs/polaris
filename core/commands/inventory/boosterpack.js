@@ -29,10 +29,10 @@ const init = async function (msg, args, userID) {
 
 const open = async function (msg, args) {
 
-    const userInventory = new INVENTORY(msg.author.id, "booster");
+    const userInventory = new INVENTORY(msg.author.id, "boosterpack");
     const Inventory = await userInventory.listItems();
 
-    if (!Inventory.find(bx => bx.id == args[0])) return "No such pack";
+    if (!Inventory.find(bx => bx.icon == args[0])) return "No such pack";
 
     (require("../cosmetics/openbooster.js")).init(msg, { rarity: args[0] })
 
