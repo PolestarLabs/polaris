@@ -27,7 +27,7 @@ const init = async function (msg){
         endMessage = `${revFil?"Filtered":"Purged %X"} messages from Bots`
     }
     else if(msg.args[0]=="content"){
-        censor = msg.args.slice(2).join(' ');
+        censor = msg.args.slice(1).join(' ');
         count = msg.args[1] || 250;
         endMessage = `${revFil?"Filtered":"Purged %X"} messages including *\`${censor}\`*`
         filter =  mes=>mes.content.includes(censor);
