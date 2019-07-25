@@ -424,7 +424,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
-            "confirmDelete": "Confirm Delete?"
+            "confirmDelete": "Confirm Delete?",
+            "alotWentOn" : "A lot went on in this day..."
         },
         "booster": {
             "checkStickersAt": "Check your stickers and equip them at the {{dashboard}}",

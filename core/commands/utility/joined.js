@@ -12,13 +12,14 @@ const init = async function (msg){
           
     let TG = gear.getTarget(msg,0,true);
     let joinMoment = moment.utc(msg.guild.member(TG).joinedAt);
+    moment.locale('en')
+    let joinMomentNeutral = moment.utc(msg.guild.member(TG).joinedAt);
     P.target = TG.username; 
     P.joinedstamp = joinMoment.format( moment.localeData().longDateFormat('LLLL') )
 
-    moment.locale('en')
-    let wiki = joinMoment.format('YYYY')+'_'+joinMoment.format('MMMM')+'_'+joinMoment.format('D');
+    let wiki = joinMomentNeutral.format('YYYY')+'_'+joinMomentNeutral.format('MMMM')+'_'+joinMomentNeutral.format('D');
 
-    P.joinedstamp = `[${P.joinedstamp}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} "A lot went on in this day...")`
+    P.joinedstamp = `[${P.joinedstamp}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} ${$t('interface.generic.alotWentOn',P)})`
 
     msg.channel.send({embed: {description: $t('misc.memberSince',P),color:11237342} } )
     
