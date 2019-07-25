@@ -15,12 +15,8 @@ const init = async function (msg,args){
 
     const serverData = await DB.servers.get(msg.guild.id,{'modules.MODROLE':1});
     if(!gear.modPass(msg.member,'manageRoles',serverData)) return msg.addReaction(gear.nope);   
-console.log(args)
-const rolefind = (x)=> (msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find(rl=> rl.id==msg.roleMentions[0]) );
-console.log(rolefind(5))
-console.log(rolefind(4))
-console.log(rolefind(3))
-console.log(rolefind(2))
+
+    const rolefind = (x)=> (msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find(rl=> rl.id==msg.roleMentions[0]) );
 
     let ACK = rand$t('responses.verbose.interjections.acknowledged',P)+" ";
     let YATT = rand$t('responses.verbose.interjections.yatta',P)+" ";
