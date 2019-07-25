@@ -14,10 +14,20 @@
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki",
+        "thevoid": "pustka",
+        "evToken": "Token Wydarzenia",
+        "evToken_plural": "Tokeny Eventowe",
         "lootbox": "Skrzynka",
         "lootbox_plural": "Skrzynki",
-        "thevoid": "pustka",
-        "evToken": "Token Wydarzenia"
+        "consumable": "Jadalne",
+        "consumable_plural": "Jadalne",
+        "junk": "Śmieci",
+        "junk_plural": "Śmieci",
+        "key": "Przedmioty kluczowe",
+        "material": "Materiał",
+        "material_plural": "Materiały",
+        "boosterpack": "Paczka Naklejek",
+        "boosterpack_plural": "Paczki Naklejek"
     },
     "terms": {
         "thanks": "dzięki",
@@ -123,7 +133,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Hej! Przetłumaczony tekst nie może przekraczać __1000 Znaków__**\n Lecz nie martw się, przycięłam tekst dla ciebie~",
-            "open1": "Przepraszam, otwórz to czasownik uprzedni, co oznacza, że ​​powinieneś mi powiedzieć, co otworzyć~ Spróbuj jednej z następujących opcji:",
+            "open1": "Przepraszam, ale *\"otwierać\"* to czasownik przechodni, co oznacza że musisz mi powiedzieć co otworzyć~ Spróbuj z którymś z tych:",
             "open2": "Wybacz, ale to nie jest coś, co mogę (lub chcę) otworzyć. Ale jestem pewna, że mogę otworzyć ci jedną z tych rzeczy: ",
             "timesOutIn": "To zajmie {{s}} sekund",
             "enterVoiceBetterExperience": "Aby odczuć ~pełnię wrażeń~ musisz być na kanale głosowym."
@@ -388,6 +398,46 @@
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
             "aviOK": "W porządku, zmieniłam moje zdjęcie dla ciebie. Możesz ponownie zmienić moje zdjęcie profilowe za {{cooldown}}",
             "colorChange": "Twój ulubiony kolor został zapisany!"
+        },
+        "inventory": {
+            "noSuchBox": "Spójrz, nie widzę tam tego pudełka i jestem pewna że ty też.",
+            "noSuchBooster": "Nie widzę tej paczki Naklejek w twoim ekwipunku. Pewnie gdzieś zaginęła w tym bałaganie.",
+            "noSuchItem": "Widzę masę rzeczy w twoim ekwipunku, poza tą konkretną.",
+            "browsingBox": "To twój Zbiór **Lootboxów**\n*Otwórz je i zdobądź masę fajnych rzeczy!*",
+            "browsingBooster": "To twój Zbiór **Paczek Naklejek**\n*Możesz je otworzyć aby uzyskać naklejki na profil*",
+            "browsingCONSUMABLE": "To jest twój Zbiór **Przedmiotów Jadalnych**\n*Mają ograniczone działanie albo znikają po użyciu, cześć może być użyta bezpośrednio",
+            "browsingJUNK": "To twój Zbiór **Śmieciowych Przedmiotów**\n*Te przedmioty właściwie nie mają żadnego celu, jednakże w konkretnch sytuacjach mogą być użyteczne.*",
+            "browsingKEY": "To twój Zbiór **Przedmiotów Kluczowych**\n*Te przedmioty mogą odblokować szczególne właściwości niektórych komend a nawet całych modułów*",
+            "browsingMATERIAL": "To jest twój Zbiór **Materiałów Do Tworzenia**\n*Możesz je wykorzystać do tworzenia innych przedmiotów*",
+            "emptyJokes": [
+                "Wypełnij ten ekwipunek swoimi łzami gdyż jest pusty.",
+                "W twoim ekwipunku nie ma nic poza pająkami.\nGapią się na ciebie i klaszczą. Brawo.",
+                "Ekwipunek masz pusty jak serce.",
+                "Nie ma tu nic. Idź dalej.",
+                "Ten ekwipunek zawiera: rozczarowanie.",
+                "<Wstaw tu przedmiot>",
+                "...Nie, ciągle pusty.",
+                "Twój ekwipunek jest pusty, ale możesz wypełnić go łzami.",
+                "Musisz być cholernie dobrze nastawiony skoro sądzisz że pojawi się tu więcej rzeczy.",
+                "Ten ekwipunek jest oh bardzo pusty.",
+                "Masz... Masę niczego",
+                "Nigdzie nie znajdziesz lepszego pustego ekwipunku.",
+                "Otwierasz pusty ekwipunek i patrzysz do środka. Ekwipunek gapi się na ciebie wyzywająco.",
+                "Ten ekwipunek jest teraz pełny rozczarowania...",
+                "Gapisz się w otchłań, otchłań gapi się w ciebie.",
+                "\"NAKARM MNIE SEYMOUR\"",
+                "Otwarłeś ekwipunek na znajomy widok nicości. Jak mogłeś to przegapić!",
+                "Ten ekwipunek wygląda na smutny i opróżniony bo jest pusty.",
+                "Jeśli odpowiednio długo zapatrzysz się w ekwipunek, ekwipunek zapatrzy się w ciebie.",
+                "Ten ekwipunek niegdyś pełen był niewyobrażalnych skarbów. Wtedy zjawiłeś się ty...",
+                "Ten ekwipunek strajkuje do odwołania",
+                "Kłębowisko turla się z jednej strony ekwipunku na drugą",
+                "Kiedy otwierasz pusty ekwipunek, to spora liczba uwięzionych, krzyczących dusz wywirowuje się z niego... To raczej normalka.",
+                "Ekwipunek jest pusty, ale przynajmniej wewnątrz wygląda pięknie. Obszyty aksamitem i wogóle.",
+                "Nic nie ma w tym ekwipunku, ale możesz wyobrazić sobie rzeczy które MOGŁYBY się tu znajdować...",
+                "Pomimo pustki w ekwipunku po otwarciu go zostałeś ostrzelany konfetti! Jej!",
+                "Ten ekwipunek jest tak pusty jak moja kreatywność po napisaniu tych wszystkich tekstów"
+            ]
         }
     },
     "interface": {

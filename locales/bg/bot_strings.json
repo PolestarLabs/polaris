@@ -14,10 +14,20 @@
         "R": "Рядък",
         "SR": "Супер рядък",
         "UR": "Ултра рядък",
+        "thevoid": "Невалидно",
+        "evToken": "Токен за събития",
+        "evToken_plural": "",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootbox-и",
-        "thevoid": "Невалидно",
-        "evToken": "Токен за събития"
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
         "thanks": "Благодаря",
@@ -123,7 +133,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Хей! превода не може да надминава __1000 знака__**, но не се притеснчвай, нагласих го за теб",
-            "open1": "Извини ме, отвори е преходен глагол, което ознашава, че трябва да ми кажеш по-подробно какво да отворч. Опирай едно от тези:",
+            "open1": "",
             "open2": "Съжалявам, но това не е нещо, което може (или искам да) отворя. Но съм сигурен, че може да отворя един от тези: ",
             "timesOutIn": "Времето изтича след {{s}} секунди",
             "enterVoiceBetterExperience": "Трябва да сте в фласов чат, за да получте ~пълния потенциал~на тази комнда."
@@ -388,6 +398,46 @@
             "memberSince": "{{target}} е член от: {{joinedstamp}}",
             "aviOK": "Добре, промених снимката си за вас. Вие ще бъдете в състояние да промени картината ми профил отново чрез {{cooldown}}",
             "colorChange": "Вашият любим цвят е запазен!"
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
