@@ -144,9 +144,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
 
 const ONEhour = new CronJob('* */1 * * *', async () => {
-
-  PLX.microserver.microtasks.updateServerCache("all");
-
+  PLX.microserver.microtasks.updateServerCache("all")
 });
 
 

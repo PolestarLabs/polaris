@@ -184,6 +184,7 @@ PLX.once("ready", async (msg) => {
 
     PLX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth);
     PLX.microserver.microtasks.updateServerCache("all");
+    PLX.microserver.microtasks.updateChannels("all");
     PLX.registerCommands()
 
 })
@@ -265,10 +266,11 @@ PLX.findMember = (query, members) => {
     return result || null;
 }
 
-require('./core/subroutines/cronjobs.js').run();
-
 function postConnect(x) {
     console.log("Discord Client Connected".cyan)
+    
+    require('./core/subroutines/cronjobs.js').run();
+
     // POST STATS TO LISTS
 }
 

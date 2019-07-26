@@ -1,4 +1,4 @@
-// const DB = require("../../database/db_ops")
+const DB = require("../../database/db_ops")
 
 module.exports = {
 
@@ -31,22 +31,20 @@ module.exports = {
         res.end(JSON.stringify(setserv))
     },
     updateChannels: async function ServerCacheUPDATE_CHANNEL(body,url,res){
-        console.log("query")
-        console.log(PLX.channels.map(c=>c.id))
+
         if(res && !body.id){ 
             res.statusCode = 400
             res.end("No ID provided")
         }
   
-        const query = {id: {$in: PLX.channels.map(c=>c.id) }}
+        const query = {id: {$in: Object.keys(PLX.channelGuildMap) }}
         if( (body.id||body) != 'all' ) query.id = body.id; 
-        
-        console.log(query)
+
         return DB.channels.find(query).lean().exec().then(channels=>{
             let map = channels.map(ch=>{
                 let thisChannel = PLX.getChannel(ch.id);
                 if(!thisChannel) return;
-                thisChannel.LANG = ch.LANGUAGE;
+                thisChannel.LANG = ch.modules.LANGUAGE;
                 thisChannel.DISABLED = ch.modules.DISABLED;         
                 return {meta: thisChannel.name, id: ch.id}
             })
