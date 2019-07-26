@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "",
-            "confirmDelete": "削除を確認？"
+            "confirmDelete": "削除を確認？",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "",

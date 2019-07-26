@@ -1,14 +1,14 @@
 {
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "Bague partielle",
+        "description": "Une bande de métal utilisée pour créer une belle bague de mariage"
     },
     "lootbox_C_O": {
-        "name": "",
+        "name": "Coffre commun",
         "description": ""
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Fragment des cosmos",
+        "description": "Gravier scintillant utilisé pour concocter les éclats des cosmos"
     }
 }

@@ -408,7 +408,7 @@
             "browsingCONSUMABLE": "To jest twój Zbiór **Przedmiotów Jadalnych**\n*Mają ograniczone działanie albo znikają po użyciu, cześć może być użyta bezpośrednio",
             "browsingJUNK": "To twój Zbiór **Śmieciowych Przedmiotów**\n*Te przedmioty właściwie nie mają żadnego celu, jednakże w konkretnch sytuacjach mogą być użyteczne.*",
             "browsingKEY": "To twój Zbiór **Przedmiotów Kluczowych**\n*Te przedmioty mogą odblokować szczególne właściwości niektórych komend a nawet całych modułów*",
-            "browsingMATERIAL": "To jest twój Zbiór **Materiałów Do Tworzenia**\n*Możesz je wykorzystać do tworzenia innych przedmiotów*",
+            "browsingMATERIAL": "To jest Twój Zbiór **Materiałów Do Tworzenia**\n*Możesz je wykorzystać do tworzenia innych przedmiotów*",
             "emptyJokes": [
                 "Wypełnij ten ekwipunek swoimi łzami gdyż jest pusty.",
                 "W twoim ekwipunku nie ma nic poza pająkami.\nGapią się na ciebie i klaszczą. Brawo.",
@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
-            "confirmDelete": "Potwierdzasz usunięcie?"
+            "confirmDelete": "Potwierdzasz usunięcie?",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "Oglądaj swoje naklejki i aktywuj je w {{dashboard}}",

@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Hace clic en ✔ para confirmar o ✖ para cancelar.",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "",
