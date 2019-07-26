@@ -19,7 +19,7 @@ const init = async function (msg){
 
     let wiki = joinMomentNeutral.format('YYYY')+'_'+joinMomentNeutral.format('MMMM')+'_'+joinMomentNeutral.format('D');
 
-    P.joinedstamp = `[${P.joinedstamp}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} ${$t('interface.generic.alotWentOn',P)})`
+    P.joinedstamp = `[${P.joinedstamp}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} "${$t('interface.generic.alotWentOn',P)}")`
 
     msg.channel.send({embed: {description: $t('misc.memberSince',P),color:11237342} } )
     
