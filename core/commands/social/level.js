@@ -1,5 +1,5 @@
 
-const gear = require('../../utilities/Gearbox')
+// const gear = require('../../utilities/Gearbox')
 const Picto = require('../../utilities/Picto')
 //const locale = require(appRoot+'/utils/i18node'); 
 //const $t = locale.getT();

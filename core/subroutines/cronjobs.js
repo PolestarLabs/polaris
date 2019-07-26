@@ -18,7 +18,7 @@ const userDB = DB.users
 const Discoin = require( "../archetypes/Discoin.js");
 const discoin = new Discoin(cfg.discoin);
 const coinbase = require("../../resources/lists/discoin.json");
-const gear = g
+// const gear = g
 const { receive } = require( '../archetypes/Economy.js');
 const { CronJob } = require( 'cron');
 

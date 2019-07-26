@@ -1,5 +1,5 @@
 const cfg = require('../../config.json');
-const gear = require('../utilities/Gearbox/global');
+// const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require('fs').readdir);
 
 const commandRoutine = require('../subroutines/onEveryCommand');

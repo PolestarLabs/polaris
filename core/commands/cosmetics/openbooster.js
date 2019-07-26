@@ -1,4 +1,4 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const Picto = require('../../utilities/Picto.js');
 const DB = require('../../database/db_ops');
 const fs = require('fs')

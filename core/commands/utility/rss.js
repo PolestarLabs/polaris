@@ -1,5 +1,5 @@
 const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox/global');
+// const gear = require('../../utilities/Gearbox/global');
 const YesNo = require('../../structures/YesNo');
 const RSS = require('rss-parser');
 const parser = new RSS();

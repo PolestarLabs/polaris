@@ -123,7 +123,7 @@ module.exports = {
                 to: langTo
             }).then(res => {
                 let langFromPost = (langFrom || (res.from.language.iso||"en")).toLowerCase();
-                const gear = require("../utilities/Gearbox");
+                // const gear = require("../utilities/Gearbox");
                 const embed = new gear.Embed;
                 embed.title("Pollux Machine Translation 5000")
                 if(textToTrans.length>1015) embed.description = $t('responses.warnings.translationTexTooLong',{lngs:[langTo,langFrom,'en','dev']});

@@ -1,5 +1,5 @@
 const cmd = 'craft';
-const gear = require("../../utilities/Gearbox.js");
+// const gear = require("../../utilities/Gearbox.js");
 const YesNo = require('../../structures/YesNo').run;
 const DB = require("../../database/db_ops.js");
 const ECO = require("../../archetypes/Economy.js")

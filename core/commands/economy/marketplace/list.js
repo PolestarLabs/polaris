@@ -1,5 +1,5 @@
 const DB = require('../../../database/db_ops');
-const gear = require('../../../utilities/Gearbox');
+// const gear = require('../../../utilities/Gearbox');
 const navigator = require('../../../structures/ReactionNavigator');
 
 const init = async  (msg, args) => {

@@ -1,6 +1,6 @@
 const INVENTORY = require('../../archetypes/Inventory');
 
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const navigator = require('../../structures/ReactionNavigator');
 
 const ATTR = (i) => `${i.buyable ? _emoji('market_ready').no_space : _emoji('__').no_space}\

@@ -1,6 +1,6 @@
 const cmd = 'background';
 const fs = require("fs");
-const gear = require("../../utilities/Gearbox");
+// const gear = require("../../utilities/Gearbox");
 const DB = require("../../database/db_ops");
 const ECO = require("../../archetypes/Economy.js");
 //const locale = require(appRoot + '/utils/i18node');

@@ -3,7 +3,7 @@
 
 
 const DB = require('../database/db_ops');
-const gear = require('../utilities/Gearbox');
+// const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 module.exports = async msg => {

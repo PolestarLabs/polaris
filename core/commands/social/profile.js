@@ -1,5 +1,5 @@
 const UserProfileModel = require('../../archetypes/UserProfileModel');
-const gear = require('../../utilities/Gearbox.js');
+// const gear = require('../../utilities/Gearbox.js');
 const Picto = require('../../utilities/Picto.js');
 const DB = require('../../database/db_ops');
 

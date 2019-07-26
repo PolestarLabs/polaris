@@ -1,4 +1,4 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const DB = require('../../database/db_ops');
 const Gal = require('../../structures/Galleries')
 

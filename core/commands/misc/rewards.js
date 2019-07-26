@@ -15,7 +15,7 @@ const STICKERS = [
 ]
 
 const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const ECO = require('../../archetypes/Economy')
 
 let last = STICKERS[STICKERS.length-1]
