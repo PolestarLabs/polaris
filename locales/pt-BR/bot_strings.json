@@ -16,18 +16,18 @@
         "UR": "Ultra Raro",
         "thevoid": "void",
         "evToken": "Token de Evento",
-        "evToken_plural": "",
+        "evToken_plural": "Tokens de Evento",
         "lootbox": "Caixa",
         "lootbox_plural": "Caixas",
-        "consumable": "",
-        "consumable_plural": "",
-        "junk": "",
-        "junk_plural": "",
-        "key": "",
-        "material": "",
-        "material_plural": "",
-        "boosterpack": "",
-        "boosterpack_plural": ""
+        "consumable": "Utilizável",
+        "consumable_plural": "Utilizáveis",
+        "junk": "Lixo",
+        "junk_plural": "Lixo",
+        "key": "Itens-Chave",
+        "material": "Material",
+        "material_plural": "Materiais",
+        "boosterpack": "Boosterpack",
+        "boosterpack_plural": "Boosterpacks"
     },
     "terms": {
         "thanks": "valeu~",
@@ -411,7 +411,7 @@
             "browsingMATERIAL": "",
             "emptyJokes": [
                 "",
-                "",
+                "Não tem nada neste Inventário além de aranhas.\nElas todas te encaram e aplaudem. _Bravo!_",
                 "",
                 "",
                 "",
@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
-            "confirmDelete": "Confirmar exclusão?"
+            "confirmDelete": "Confirmar exclusão?",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "",

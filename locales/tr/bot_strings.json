@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
-            "confirmDelete": "Silmeyi onaylıyor musun?"
+            "confirmDelete": "Silmeyi onaylıyor musun?",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "{{dashboard}}'da etiketlerine göz atıp giy",

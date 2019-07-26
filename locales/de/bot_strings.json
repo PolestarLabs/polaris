@@ -443,7 +443,8 @@
     "interface": {
         "generic": {
             "clicktoconfirm": "",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "",
