@@ -72,7 +72,7 @@ module.exports = {
 
     },
     gamechange: function gamechange(gamein = false, status = "online") {
-        delete require.cache[require.resolve(`../../resources/lists/playing.js`)];
+        delete require.cache[require.resolve("../../../resources/lists/playing.js")];
         let gamelist = require("../../../resources/lists/playing.js");
         let max = gamelist.games.length - 1
         let rand = randomize(0, max)
@@ -122,7 +122,7 @@ module.exports = {
       }
     },
     usage: function usage(cmd, m, third) {
-      delete require.cache[require.resolve("../structures/UsageHelper.js")];
+      delete require.cache[require.resolve("../../structures/UsageHelper.js")];
       let usage = require("../../structures/UsageHelper.js");
       usage.run(cmd, m, third);
     },
