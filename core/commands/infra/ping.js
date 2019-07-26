@@ -9,8 +9,8 @@ const init = async msg => {
   embed.description('🏓')
   
 
-    let filepath = await Gal.randomOneIndexed('pong',true).catch(e=>null);
-    if (filepath) embed.image(filepath+".gif");
+    let filepath = await Gal.randomOne('pong',true).catch(console.error);    
+    if (filepath) embed.image(filepath);
     msg.channel.createMessage({embed}).then(ms2=>{
       const stop = Date.now();
       const diff = (stop - start);

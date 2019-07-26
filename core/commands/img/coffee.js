@@ -1,4 +1,3 @@
-const {Embed} = require('../../utilities/Gearbox');
 const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
@@ -6,6 +5,7 @@ const init = async function (msg){
     embed = new Embed();
 
     let img = await Gal.randomOne('coffee',true);
+
     let avgcolor = await require('../../utilities/Picto').avgColor(img);
 
     embed.image(img);
