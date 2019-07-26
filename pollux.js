@@ -32,13 +32,17 @@ Eris.Embed.prototype.setColor = function (color) {
 }
 
 
-const SHARDS_PER_CLUSTER = 1
+const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER) || 1
 const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1
 
+console.table({SHARDS_PER_CLUSTER,
+    CLUSTER_ID,
+    TOTAL_SHARDS})
+
 global.PLX= new Eris.CommandClient(cfg.token, {
     maxShards: TOTAL_SHARDS,
-    firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) - SHARDS_PER_CLUSTER + 1,
+    firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) ,
     lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
     defaultImageSize: 512,
     defaultImageFormat: 'png',
@@ -61,9 +65,6 @@ PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] }
 
 Gearbox = require("./core/utilities/Gearbox"); 
 Object.assign(global,Gearbox.Global);
-console.log({Gearbox})
-console.log(Gearbox.Global)
-console.log(global.randomize)
 Object.assign(PLX,Gearbox.Client);
 
 //=======================================//
