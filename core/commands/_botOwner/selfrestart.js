@@ -1,6 +1,6 @@
 
 const init = async function (){
-   POLLUX.softKill()
+   PLX.softKill()
 }
 
 module.exports={

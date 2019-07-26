@@ -29,7 +29,7 @@ exports.run = function run(cmd, m, third) {
   emb.author($t("help.commUsage", {
     lngs: m.lang,
     comm: m.prefix + cmd
-  }), POLLUX.user.displayAvatarURL, "http://Pollux.fun/commands");
+  }), PLX.user.displayAvatarURL, "http://Pollux.fun/commands");
   emb.description($t("commands:help." + cmd, {
     lngs: m.lang,
     prefix: m.prefix

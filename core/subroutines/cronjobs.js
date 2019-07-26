@@ -3,7 +3,7 @@ const axios = require('axios')
 const { readFileSync } = require('fs');
 const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
-const g = require( '../utilities/Gearbox');
+const g = require( '../utilities/Gearbox/global');
 const DB = require( '../database/db_ops');
 const RSS = require('rss-parser');
 const parser = new RSS();
@@ -133,7 +133,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".users"]:bot.users.size}}).then(x=>x=null);
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".channels"]:bot.channels.size}}).then(x=>x=null);
 
-  let gchange = gear.gamechange();
+  let gchange = PLX.gamechange();
   //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
   //bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
     
@@ -145,7 +145,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
 
 const ONEhour = new CronJob('* */1 * * *', async () => {
 
-  POLLUX.microserver.microtasks.updateServerCache("all");
+  PLX.microserver.microtasks.updateServerCache("all");
 
 });
 
@@ -154,7 +154,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
   
   
   (async ()=>{
-    DB.feed.find({ server: { $in: POLLUX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
+    DB.feed.find({ server: { $in: PLX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
       serverFeeds.forEach(async svFd => {
         const serverData = await DB.servers.get(svFd.server);
         svFd.feeds.forEach(async feed => {
@@ -165,7 +165,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               const embed = await RSSembedGenerator(data.items[0],data);
               await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] }).catch(e=>null);
 
-              POLLUX.getChannel(feed.channel).send({embed});
+              PLX.getChannel(feed.channel).send({embed});
             }        
           }
           
@@ -195,7 +195,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               const ping = thisFeed.pings || svFd.pings || '';
               await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData}).catch(e=>null);
 
-              POLLUX.getChannel(thisFeed.channel).send({
+              PLX.getChannel(thisFeed.channel).send({
                 content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
                 ,embed
               });        
@@ -216,7 +216,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               data.items[0].media = null;
               await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':data.items[0] });        
               const ping = thisFeed.pings || svFd.pings || '';
-              POLLUX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}).catch(e=>null)).catch(e=>null);
+              PLX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}).catch(e=>null)).catch(e=>null);
             }
           }
         })
@@ -241,8 +241,8 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
     mutes.forEach(mtu=>{
       DB.servers.get(mtu.server.id).then(svData=>{
         DB.mutes.expire(Date.now());
-        let logSERVER = POLLUX.guilds.get(mtu.server);
-        let logUSER   = POLLUX.findUser(mtu.user);
+        let logSERVER = PLX.guilds.get(mtu.server);
+        let logUSER   = PLX.findUser(mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
         if (!logMEMBER) return;

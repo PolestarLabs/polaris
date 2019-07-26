@@ -49,7 +49,7 @@ const init = async  (msg, args) => {
                 break;
             case "user":
                 if (msg.args[2]) {
-                    Target = gear.getTarget(msg, 2);
+                    Target = PLX.getTarget(msg, 2);
                     query = { author: Target.id }
                 } else {
                     query = { author: msg.author.id }

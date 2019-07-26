@@ -12,7 +12,7 @@ const init = async function (msg) {
     let P =  {lngs: msg.lang};
     let helpkey = $t("helpkey",P)
     if (msg.content.split(" ")[1] == helpkey || msg.content.split(" ")[1] == "?" || msg.content.split(" ")[1] == "help") {
-        return gear.usage(cmd, msg, this.cat);
+        return PLX.usage(cmd, msg, this.cat);
     }
     //------------
 
@@ -21,9 +21,9 @@ const init = async function (msg) {
 
     if(["bb", "gg", "bg", "gb"].includes(msg.args[0])) {
         filter = msg.args[0]
-        Target = gear.getTarget(msg,1,false)
+        Target = PLX.getTarget(msg,1,false)
     }else{
-        Target = gear.getTarget(msg,0,false)
+        Target = PLX.getTarget(msg,0,false)
     }
     P.user = msg.author.username
     P.victim = Target ? Target.username : false;

@@ -7,7 +7,7 @@ const init = async function (msg,ext){
     const booru = require('../../utilities/BooruGetter');
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const QUALITY_CONTROL = "+score:>1+-rating:questionable+-ass+-breasts"
 

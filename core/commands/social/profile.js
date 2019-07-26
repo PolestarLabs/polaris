@@ -128,7 +128,7 @@ init = async (msg)=>{
 
   // NORMAL PROFILE -->
 
-  const Target = gear.getTarget(msg,0,true,true);
+  const Target = PLX.getTarget(msg,0,true,true);
   let Target_Database = await DB.users.findOne({id:Target.id});
 
 

@@ -10,7 +10,7 @@ const init = async function (message) {
 
 
 const P = {user:message.member.displayName,lang:message.lngs}
-  if(gear.autoHelper([$t("helpkey",P),"noargs"],{cmd,message,opt:this.cat}))return;
+  if(PLX.autoHelper([$t("helpkey",P),"noargs"],{cmd,message,opt:this.cat}))return;
 
   
   let requiredArgs = 2;

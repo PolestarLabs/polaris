@@ -10,7 +10,7 @@ const v={}
 
 
 const P = {user:message.member.username,lngs:message.lang,prefix:message.prefix}
-  if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
+  if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
 
 
 let DICE_REGEX = /([0-9]* *d[0-9]+)/g

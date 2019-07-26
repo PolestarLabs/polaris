@@ -161,7 +161,7 @@ function checkUse(DTMN, fbd, msg) {
                 case  fbd.includes(commandFile.cmd):
                     return "DISABLED";
                     break;
-                case msg.author.PLXpems > commandFile.perms:
+                case msg.author.PLX.pems > commandFile.perms:
                     return "NO ELEVATION";
                     break;
                 default:
@@ -205,7 +205,7 @@ console.log(message.author.tag)
 
    message.lang = [(final_payload.chanData||{}).LANGUAGE || ((final_payload.svData||{}).modules||{}).LANGUAGE || 'en', 'dev'];
    message.obtainTarget= arg => {
-      let fromMentionOrID = POLLUX.users.find(u=>u.id==arg.replace(/[^0-9]/g,''));
+      let fromMentionOrID = PLX.users.find(u=>u.id==arg.replace(/[^0-9]/g,''));
       if(fromMentionOrID) return fromMentionOrID;
       return message.guild.members.find(mem=>{
          if ([mem.username.toLowerCase(),(mem.nick||"\u200b").toLowerCase()].includes(arg.toLowerCase()))return true;

@@ -108,7 +108,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	const [fel,chip,you,me,bjk,stando,joker] = await Promise.all([
 		Picto.getCanvas(paths.Build + "/games/blackjack/feltro.png"),
 		Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"),
-		drawOpts.enemyStando ? Picto.getCanvas(_ASSETS + "dio.png") : Picto.getCanvas(POLLUX.user.displayAvatarURL),
+		drawOpts.enemyStando ? Picto.getCanvas(_ASSETS + "dio.png") : Picto.getCanvas(PLX.user.displayAvatarURL),
 		Picto.getCanvas(msg.author.displayAvatarURL),
 		bjkWIN 	? Picto.getCanvas(_ASSETS + "BLACKJACK-win.png") 
 				: bjkLOSE 
@@ -234,7 +234,7 @@ const init       = async (msg) => {
 
 		let arg = msg.args[0]
 
-		const polluxNick = msg.guild.member(POLLUX.user).nick || "Pollux"
+		const polluxNick = msg.guild.member(PLX.user).nick || "Pollux"
 		const playerName = msg.member.nick || msg.author.username;
 
 		const P = {lngs: msg.lang};
@@ -527,7 +527,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 	await ProcessHand(currentHand);
 	return hands;	
 }
-let hooks = POLLUX.commandOptions.defaultCommandOptions.hooks;
+let hooks = PLX.commandOptions.defaultCommandOptions.hooks;
 hooks.postExecution = (msg)=>	(new Blackjack(msg)).endGame();
 
 module.exports = {
@@ -549,7 +549,7 @@ module.exports = {
 			gen: DECK,
 			options: {
 				argsRequired:true,
-				invalidUsageMessage:  (msg)=> {gear.autoHelper( 'force', {msg, cmd: "decks", opt: "cosmetics" } )}
+				invalidUsageMessage:  (msg)=> {PLX.autoHelper( 'force', {msg, cmd: "decks", opt: "cosmetics" } )}
 			}
 		}
 	]

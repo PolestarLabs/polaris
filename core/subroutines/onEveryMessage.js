@@ -7,8 +7,8 @@ const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 module.exports = async msg => {
-  POLLUX.execQueue=POLLUX.execQueue.filter(itm=>itm.constructor != Promise);
-  POLLUX.execQueue.push(
+  PLX.execQueue=PLX.execQueue.filter(itm=>itm.constructor != Promise);
+  PLX.execQueue.push(
     Promise.all([
       levelChecks(msg),
       Drops(msg)

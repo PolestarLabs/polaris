@@ -145,7 +145,7 @@ msg.author.getDMChannel().then(dmChan=>{
       embed.title(helpol)
       embed.setColor("#eb4190")
       embed.description(heldesc)
-      embed.thumbnail(POLLUX.user.avatarURL)
+      embed.thumbnail(PLX.user.avatarURL)
       embed.field(":sos: " + supserv, suplink, false)
       embed.field(":hash: " + commlist, commlink, false)
       embed.field(":heart_decoration: " + inviteme, invitelink, false)

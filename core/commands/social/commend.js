@@ -9,12 +9,12 @@ const init = async function (msg){
     
     let P={lngs:msg.lang,prefix:msg.prefix}
 
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat,aliases:this.aliases}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat,aliases:this.aliases}))return;
     
-    let Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
+    let Target = PLX.getTarget(msg, 0, false)||PLX.getTarget(msg, 1, false);
 
     if(msg.args.includes("info")||msg.args.includes("status")||msg.args.includes("stats")){
-        if(msg.args.length !== 1)  Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
+        if(msg.args.length !== 1)  Target = PLX.getTarget(msg, 0, false)||PLX.getTarget(msg, 1, false);
         if(msg.args.length === 1)  Target = msg.author;
     } 
 

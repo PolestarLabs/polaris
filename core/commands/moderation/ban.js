@@ -5,13 +5,13 @@ const Gal = require('../../structures/Galleries')
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    let Target = gear.getTarget(msg,0,false,false);
+    let Target = PLX.getTarget(msg,0,false,false);
 
     const serverData = await DB.servers.get(msg.guild.id);
     P.imsorry = rand$t('responses.verbose.gomenasai')
-    if (!gear.modPass(msg.member,'banMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
+    if (!PLX.modPass(msg.member,'banMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
 
     if(!msg.args[0]){
         return msg.channel.send( $t('responses.errors.kinNone',P) );
@@ -109,10 +109,10 @@ const init = async function (msg){
 
     let post_reason = reason + `\n  [MOD: ${msg.author.tag}]`
 
-     POLLUX.banGuildMember(msg.guild.id,Target.id, clear ,post_reason).then(banned=>{
+     PLX.banGuildMember(msg.guild.id,Target.id, clear ,post_reason).then(banned=>{
 
             if (soft) {
-                POLLUX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL")
+                PLX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL")
         }
         embed.color = 0xDD8A55
         embed.description = _emoji('yep')+"  "+ $t('interface.kickban.'+(soft?"userSoftBanned":"userBanned"),P) +" "+ rand$t('interface.kickban.banFlavs',P)  + "\n``` "+reason+" ```"

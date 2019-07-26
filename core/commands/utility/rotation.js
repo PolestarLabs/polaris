@@ -35,8 +35,8 @@ const init = async function (message) {
     if (args === "league of legends" || args === "league" || args === "lol") lol();
     else if (args === "heroes of the storm" || args === "hots" || args === "hos" || args === "heroes") hots();
     else if (args === "smite") return message.reply("Smite does not provide rotations anymore.");
-    else if (args === "help" || args === helpkey) return gear.usage(cmd, message,this.cat);
-    else return gear.usage(cmd, message,this.cat);
+    else if (args === "help" || args === helpkey) return PLX.usage(cmd, message,this.cat);
+    else return PLX.usage(cmd, message,this.cat);
 
     function hots() {
         let rotation = [[]]

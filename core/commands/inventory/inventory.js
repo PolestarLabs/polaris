@@ -7,7 +7,7 @@ const INVOKERS   = new Map();
 const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
 
     const canvas = Picto.new(800,600);

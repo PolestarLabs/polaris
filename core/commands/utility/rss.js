@@ -1,5 +1,5 @@
 const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox');
+const gear = require('../../utilities/Gearbox/global');
 const YesNo = require('../../structures/YesNo');
 const RSS = require('rss-parser');
 const parser = new RSS();
@@ -8,7 +8,7 @@ const parser = new RSS();
 const init = async function (msg){
     
     const P={lngs:msg.lang,prefix:msg.prefix,command:this.cmd}
-    if(gear.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let feedData = await DB.feed.get({server: msg.guild.id});
     const RSSFiltered = feedData ? (feedData.feeds||[]).filter(fd=>fd.type=="rss") : [];
@@ -34,7 +34,7 @@ const init = async function (msg){
         let embed = await feedEmbed(feed.items[0],feed);
         P.channelID = `<#${channel}>`
         msg.channel.send(_emoji("yep"), $t('interface.feed.savedSubLastRSS',P));
-        return  POLLUX.getChannel(channel).send( {embed} );        
+        return  PLX.getChannel(channel).send( {embed} );        
         
     }
 

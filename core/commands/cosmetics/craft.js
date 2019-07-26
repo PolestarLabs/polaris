@@ -13,7 +13,7 @@ const init = async function (message) {
   setTimeout(f=>  message.author.crafting = false, 25000)
   //HELP TRIGGER
     let P={lngs:message.lang,}
-    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
   //------------
     
 if(message.author.crafting)return;

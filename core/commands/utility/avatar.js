@@ -6,9 +6,9 @@ const Picto = require('../../utilities/Picto');
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const Target = gear.getTarget(msg);
+    const Target = PLX.getTarget(msg);
 
     const embed = new gear.Embed()
         .image(Target.avatarURL)

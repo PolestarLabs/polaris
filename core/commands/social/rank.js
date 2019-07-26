@@ -9,9 +9,9 @@ const Canvas = require("canvas");
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-const TARGET = msg.guild.member(await gear.getTarget(msg));
+const TARGET = msg.guild.member(await PLX.getTarget(msg));
 
 let userData,serverData,selfLocal,LRpos;
 await Promise.all([

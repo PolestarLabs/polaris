@@ -4,10 +4,10 @@ const DB = require('../../database/db_ops');
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     let ServerDATA = await DB.servers.get(msg.guild.id);
-    const modPass = gear.modPass(msg.member,null, ServerDATA);
+    const modPass = PLX.modPass(msg.member,null, ServerDATA);
     if (!modPass) return msg.reply($t('CMD.moderationNeeded', P)).catch(e=>null);
 
     if ((/<#[0-9]{16,19}>/.test(msg.args[0]))){

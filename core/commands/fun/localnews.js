@@ -7,7 +7,7 @@ const Picto = require('../../utilities/Picto');
 const init = async function (msg) {
 
   let P = { lngs: msg.lang, prefix: msg.prefix }
-  if (gear.autoHelper([$t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  if (PLX.autoHelper([$t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   try {
     const canvas = Picto.new(700, 520);
@@ -28,7 +28,7 @@ const init = async function (msg) {
     let headline_tx = "" + (spot < 0 ? pre2 : pre2.slice(0, spot));
     let img_link
     try {
-      img_link = spot > -1 ? pre2.slice(spot) : (msg.mentions[0] || {}).displayAvatarURL || await gear.getChannelImg(msg);
+      img_link = spot > -1 ? pre2.slice(spot) : (msg.mentions[0] || {}).displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
       img_link = spot > -1 ? pre2.slice(spot) : ((msg.mentions[0] || msg.author).displayAvatarURL);
     }

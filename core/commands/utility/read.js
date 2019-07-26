@@ -8,7 +8,7 @@ const init = async function (message,cmdPiece=false) {
 
         i2b(message.args[0], async function (err, img) {
             if (err){
-                let nwurl = await gear.getChannelImg(message);
+                let nwurl = await PLX.getChannelImg(message);
                 if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
                 return i2b(nwurl,(err,b64)=> resolve(vere(b64.base64,message,cmdPiece)));
             }

@@ -7,15 +7,15 @@ const moment = require("moment");
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
-    if (msg.args.length < 2 ) return gear.autoHelper('force', {
+    if (msg.args.length < 2 ) return PLX.autoHelper('force', {
         cmd, msg, opt: this.cat
     });
 
 
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
-    let TARGET = gear.getTarget(msg,1,false);
+    let TARGET = PLX.getTarget(msg,1,false);
     if (TARGET instanceof Promise) TARGET = await TARGET;
 
     const [USERDATA,TARGETDATA] = await Promise.all([

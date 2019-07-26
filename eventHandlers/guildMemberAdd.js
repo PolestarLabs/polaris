@@ -39,7 +39,7 @@ module.exports = async (guild,member) =>{
         let url = `${paths.CDN}/generators/userio/in/${member.id}/${welcomeSkin||"minimal"}.png?text=${encodeURIComponent(txt)}`
       
         resolveFile(url).then(async buffer=>{
-            POLLUX.getChannel(welcomeChannel).send({content:welcomeText,embed}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
+            PLX.getChannel(welcomeChannel).send({content:welcomeText,embed}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
                 if(welcomeTimer) ms.deleteAfter(welcomeTimer);
             }).catch(console.error)
         }).catch(console.error);

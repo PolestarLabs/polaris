@@ -9,7 +9,7 @@ const init = async function (msg,programatic){
     delete require.cache[require.resolve('name-this-color')]
    
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ 
     let hexColor = (msg.args[0].match(hexRegex)||[])[0];

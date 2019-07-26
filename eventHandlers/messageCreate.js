@@ -10,18 +10,18 @@ module.exports = async function (msg) {
 
   
   if(msg.author.bot) return;
-  if(!POLLUX.ready) return;
+  if(!PLX.ready) return;
   
   //DEBUG -----------------------------------------------------
   
-  if(POLLUX.refreshing || POLLUX.beta){
+  if(PLX.refreshing || PLX.beta){
     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
      delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
-  if( (POLLUX.tapping || POLLUX.beta) && !global.piggyback){
-    let PEV =  POLLUX.tapping
-    if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || POLLUX.beta)
+  if( (PLX.tapping || PLX.beta) && !global.piggyback){
+    let PEV =  PLX.tapping
+    if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || PLX.beta)
 
       console.log(
         msg.author.tag.blue+`(${msg.author.id})\n    `.gray,
@@ -36,7 +36,7 @@ module.exports = async function (msg) {
 
   
   if(
-    POLLUX.user.id=="354285599588483082"&&
+    PLX.user.id=="354285599588483082"&&
     msg.author.id !== "88120564400553984" &&
     msg.author.id !== "320351832268472320" &&
     msg.author.id !== "103727554644418560" && 
@@ -62,7 +62,7 @@ module.exports = async function (msg) {
   };    
 
   if(
-      ( POLLUX.blacklistedServers.includes(msg.guild.id) ) ||
+      ( PLX.blacklistedServers.includes(msg.guild.id) ) ||
       ( typeof msg.channel.ignored && msg.channel.ignored === true && !msg.content.includes("unignore")) 
     )
     return void garbageC();    
@@ -119,17 +119,17 @@ async function commandResolve(msg,cacheUpdates,garbageC){
   if (msg.guild.globalPrefix !== false){
     if(msg.content.startsWith("p2!")) msg.prefix = "p2!";
   };
-  if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
+  if(msg.content.startsWith("<@"+PLX.user.id+"> ")) msg.prefix = "<@"+PLX.user.id+"> ";
   if(!msg.prefix && !msg.guild.prefix) await cacheUpdates;      
   if(msg.guild.prefix && msg.content.startsWith(msg.guild.prefix)) msg.prefix = msg.guild.prefix;
 
-  if(POLLUX.user.id == "354285599588483082"){
+  if(PLX.user.id == "354285599588483082"){
     if(msg.content.startsWith("=")) msg.prefix = "=";
     if(msg.content.startsWith("+")) return;
   }
 
   if (msg.prefix) {
-    if (POLLUX.blacklistedUsers.includes(msg.author.id) ) {
+    if (PLX.blacklistedUsers.includes(msg.author.id) ) {
       msg.addReaction(":BLACKLISTED_USER:406192511070240780");
       return void garbageC();
     }

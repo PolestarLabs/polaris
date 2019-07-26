@@ -373,10 +373,10 @@
 function emoji(moji){
 
     if(!emojibank[moji]){
-        let GLDS = POLLUX.guilds.size;
+        let GLDS = PLX.guilds.size;
         let resMoji
         while(GLDS--){
-            let emj= POLLUX.guilds.map(x=>x)[GLDS].emojis.find(e=>{
+            let emj= PLX.guilds.map(x=>x)[GLDS].emojis.find(e=>{
                 if (e.name == moji || e.name.includes(moji)) return true;
             }); 
             console.log({emj})
@@ -391,7 +391,7 @@ function emoji(moji){
 
 const globalEmojis = [];
 async function shallowEmojiBank(){
-  POLLUX.guilds.forEach(async G =>{    
+  PLX.guilds.forEach(async G =>{    
     G.emojis.forEach(async e =>{
       globalEmojis.push(e)
     })

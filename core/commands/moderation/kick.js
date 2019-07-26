@@ -5,13 +5,13 @@ const Gal = require('../../structures/Galleries')
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const Target = gear.getTarget(msg,0,false,false);
+    const Target = PLX.getTarget(msg,0,false,false);
 
     const serverData = await DB.servers.get(msg.guild.id);
     P.imsorry = rand$t('responses.verbose.gomenasai')
-    if (!gear.modPass(msg.member,'kickMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
+    if (!PLX.modPass(msg.member,'kickMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
 
     if(!msg.args[0]){
         return msg.channel.send( $t('responses.errors.kinNone',P) );
@@ -87,7 +87,7 @@ const init = async function (msg){
 
     let post_reason = reason + ` [MOD: ${msg.author.tag} `
 
-    POLLUX.kickGuildMember(msg.guild.id,Target.id,post_reason).then(m=>{
+    PLX.kickGuildMember(msg.guild.id,Target.id,post_reason).then(m=>{
         embed.color = 0x3355EE
         embed.description = _emoji('yep')+"  "+ $t('interface.kickban.userKicked',P) +"\n"+ rand$t('interface.kickban.kickFlavs',P)  + "\n``` "+reason+" ```"
         if(pre_msg){

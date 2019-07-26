@@ -1,5 +1,5 @@
 const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox');
+const gear = require('../../utilities/Gearbox/global');
 const YesNo = require('../../structures/YesNo');
 const axios = require('axios');
 
@@ -14,7 +14,7 @@ let parser = new RSS({
 const init = async function (msg){
     
     let P={lngs:msg.lang,prefix:msg.prefix,command:this.cmd}  
-    if(gear.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let feedData = await DB.feed.get({server: msg.guild.id});
 

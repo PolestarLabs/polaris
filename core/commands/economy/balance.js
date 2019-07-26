@@ -8,11 +8,11 @@ const cmd = 'balance';
 
 const init = async function (message) {
 
-    const Target = (await gear.getTarget(message))||message.author;
+    const Target = (await PLX.getTarget(message))||message.author;
     const emb = new gear.Embed();
 
     let P={lngs:message.lang}
-    if(gear.autoHelper([$t("helpkey",P)],{cmd,message,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P)],{cmd,message,opt:this.cat}))return;
 
     const bal =  $t('$.balance',P);
     /*

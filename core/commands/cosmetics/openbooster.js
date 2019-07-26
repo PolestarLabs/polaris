@@ -6,7 +6,7 @@ const fs = require('fs')
 const init = async function (msg) {
 
     let P={lngs:msg.lang,}
-    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
     
 
     const [userData,stickerData,boosterData] = await Promise.all([

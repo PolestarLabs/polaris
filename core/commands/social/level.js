@@ -36,7 +36,7 @@ const v={
   
 const Server = msg.guild;
 
-const Target = await gear.getTarget(msg);
+const Target = await PLX.getTarget(msg);
 const TARGET_DB   = await userDB.findOne({id:Target.id});
 const SV_DB       = await serverDB.findOne({id:Server.id});
 

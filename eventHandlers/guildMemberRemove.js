@@ -37,7 +37,7 @@ module.exports = async (guild,member) =>{
         let url = `${paths.CDN}/generators/userio/out/${member.id}/${fwellSkin||"minimal"}.png?text=${encodeURIComponent(txt)}`
         
         resolveFile(url).then(async buffer=>{
-            POLLUX.getChannel(fwellChannel).send({content:fwellText,embed}, (fwellImage ? file(buffer,"out.png") : null )).then(ms=>{
+            PLX.getChannel(fwellChannel).send({content:fwellText,embed}, (fwellImage ? file(buffer,"out.png") : null )).then(ms=>{
                 if(fwellTimer) ms.deleteAfter(fwellTimer).catch(e=>null);
             }).catch(e=>null)
         });

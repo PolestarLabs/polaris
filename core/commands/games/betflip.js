@@ -10,7 +10,7 @@ const init = async function (msg){
     const userData = DB.users.get(msg.author.id);
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const bet  = Math.abs(parseInt(msg.args[0]))
     let   call = msg.args[1] ? msg.args[1].toUpperCase() : null

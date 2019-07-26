@@ -7,7 +7,7 @@ const Picto = require('../../utilities/Picto');
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
     Target = msg.mentions[0] || {}
     let onepart = true;
     let textop;
@@ -26,7 +26,7 @@ const init = async function (msg){
     }
 
     if(msg.args[0] ==="^") {
-        let messageGrab = await gear.getMessage(msg);
+        let messageGrab = await PLX.getPreviousMessage(msg);
         if(messageGrab) textop = messageGrab.cleanContent;
         textbot = msg.args.slice(1).join(' ') 
         onepart = false;
@@ -34,7 +34,7 @@ const init = async function (msg){
 
     let messagebyID = [msg.args[0]].filter(arg=> arg&&!isNaN(arg)&&arg.length>10);
     if(messagebyID.length>0){
-        let newmes = await gear.getMessage(msg,messagebyID[0]);
+        let newmes = await PLX.getPreviousMessage(msg,messagebyID[0]);
         if(newmes) textop = newmes.cleanContent;        
         textbot = msg.args.slice(1).join(' ').replace(/[0-9]{10,}/g,"")
         onepart = false;
