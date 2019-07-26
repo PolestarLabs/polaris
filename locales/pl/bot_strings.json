@@ -444,7 +444,7 @@
         "generic": {
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
             "confirmDelete": "Potwierdzasz usunięcie?",
-            "alotWentOn": ""
+            "alotWentOn": "Wiele się stało tego dnia..."
         },
         "booster": {
             "checkStickersAt": "Oglądaj swoje naklejki i aktywuj je w {{dashboard}}",
