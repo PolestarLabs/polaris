@@ -1,14 +1,14 @@
 {
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "Kısmi Yüzük",
+        "description": "Güzeller güzeli bir evlilik yüzüğü yapmak için kullanılan yuvarlak bir metaller grubu"
     },
     "lootbox_C_O": {
-        "name": "",
+        "name": "Sıradan Define Sandığı",
         "description": ""
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Kozmetik Parça",
+        "description": "Kozmotik Parçaları karıştırıvermek için kullanılan ışık saçan bir kürek"
     }
 }
