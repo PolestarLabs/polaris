@@ -35,9 +35,9 @@ class Microserver{
                 });
             }
         })
-        let port = "90"+(POLLUX.cluster.id||"0").toString().padStart(2,"0") 
+        let port = "90"+(PLX.cluster.id||"0").toString().padStart(2,"0") 
         server.listen(Number(port) );
-        console.info("Shard cluster",POLLUX.cluster.name.yellow,"microserver listening at port",port.green)
+        console.info("Shard cluster",PLX.cluster.name.yellow,"microserver listening at port",port.green)
     }
 }
     

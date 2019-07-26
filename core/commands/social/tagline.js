@@ -1,10 +1,10 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const userData =  await DB.userDB.findOne({id:msg.author.id});
     const persotxt = msg.args.join(' ')  
@@ -12,7 +12,7 @@ const init = async function (msg){
     await DB.userDB.set(msg.author.id, {$set:{'modules.tagline':persotxt}});
     P.pstext=  "*```c\n"+persotxt+"```*",
     P.prefix=  msg.prefix,
-    embed = new gear.Embed
+    embed = new Embed
     embed.description = _emoji('yep') + rand$t('responses.verbose.interjections.acknowledged',P) + " " +  $t('profile.persotexUpdate',P) 
 
     msg.channel.send({embed})

@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -12,24 +12,24 @@ const init = async function (msg) {
     let P =  {lngs: msg.lang};
     let helpkey = $t("helpkey",P)
     if (msg.content.split(" ")[1] == helpkey || msg.content.split(" ")[1] == "?" || msg.content.split(" ")[1] == "help") {
-        return gear.usage(cmd, msg, this.cat);
+        return PLX.usage(cmd, msg, this.cat);
     }
     //------------
 
-    const embed = new gear.Embed;
+    const embed = new Embed;
     let Target, filter, variation="_";
 
     if(["bb", "gg", "bg", "gb"].includes(msg.args[0])) {
         filter = msg.args[0]
-        Target = gear.getTarget(msg,1,false)
+        Target = PLX.getTarget(msg,1,false)
     }else{
-        Target = gear.getTarget(msg,0,false)
+        Target = PLX.getTarget(msg,0,false)
     }
     P.user = msg.author.username
     P.victim = Target ? Target.username : false;
     console.log(Target)
 
-    if(gear.randomize(1,100)===100){
+    if(randomize(1,100)===100){
        
         let pic = await Gal.filteredOne('kiss','slap');
         let avgcolor = await require('../../utilities/Picto').avgColor(pic);
@@ -49,24 +49,24 @@ const init = async function (msg) {
     }
 
     if (marriedtarget) {
-        let noise = gear.randomize(0, 50);
-        let pris = gear.randomize(1, 0);
-        pris == 1 ? pris = gear.randomize(1, 0) : false;
+        let noise = randomize(0, 50);
+        let pris = randomize(1, 0);
+        pris == 1 ? pris = randomize(1, 0) : false;
         variation = USERDATA.lovepoints < 50 + noise ? "couple" : "wet";
-        if (gear.randomize(0, 5) == 1) variation = "cute";
+        if (randomize(0, 5) == 1) variation = "cute";
         Promise.all([
-            gear.userDB.findOneAndUpdate({
+            userDB.findOneAndUpdate({
                 id: message.author.id,
                 'married.id': userB_meta.id
             }, {$inc: {"modules.lovepoints": pris}}),
-            gear.userDB.findOneAndUpdate({
+            userDB.findOneAndUpdate({
                 id: userB_meta.id,
                 'married.id': message.author.id
             }, {$inc: {"modules.lovepoints": pris}})
         ]);
     };
-    if (gear.randomize(0, 5) == 1) variation = "couple";
-    if (gear.randomize(0, 10) == 1) variation = "wet";
+    if (randomize(0, 5) == 1) variation = "couple";
+    if (randomize(0, 10) == 1) variation = "wet";
         console.log((msg.args[0]||"_")+"."+variation)
     let kissImg = await Gal.filteredOne('kiss',(filter||"_")+"."+variation);
     let avgcolor = await require('../../utilities/Picto').avgColor(kissImg);

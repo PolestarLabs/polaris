@@ -1,5 +1,5 @@
 const cfg = require('../../config.json');
-const gear = require('../utilities/Gearbox');
+// const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require('fs').readdir);
 
 const commandRoutine = require('../subroutines/onEveryCommand');
@@ -14,7 +14,7 @@ const PERMS_CALC = function CommandPermission(msg){
         ? [cfg.owner]
         : msg.command.module == "_boStaff" 
             ? cfg.admins
-            : POLLUX.beta ? [cfg.owner] : cfg.admins;
+            : PLX.beta ? [cfg.owner] : cfg.admins;
     let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat))
     return (switches && uIDs);
 }
@@ -26,7 +26,7 @@ const DEFAULT_CMD_OPTS = {
             msg.command.cmd = msg.command.parentCommand.cmd
             msg.command.cat = msg.command.parentCommand.cat
         }
-        gear.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat} )
+        PLX.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat} )
     }
     ,cooldown: 2000     
     ,cooldownMessage: "Too Fast"
@@ -64,11 +64,11 @@ const registerOne = (folder, _cmd) => {
 
         if(commandFile.noCMD) return null;
 
-        const CMD = POLLUX.registerCommand(_cmd, commandFile.init, commandFile)
+        const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile)
         //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
-        POLLUX.commands[CMD.label].cmd = commandFile.cmd
-        POLLUX.commands[CMD.label].cat = commandFile.cat
-        POLLUX.commands[CMD.label].module = folder
+        PLX.commands[CMD.label].cmd = commandFile.cmd
+        PLX.commands[CMD.label].cat = commandFile.cat
+        PLX.commands[CMD.label].module = folder
         if (commandFile.subs) {
             commandFile.subs.forEach(sub => {
                 delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
@@ -100,7 +100,7 @@ const registerOne = (folder, _cmd) => {
 };
 const registerCommands = (rel) => {
     if (rel) {
-        Object.keys(POLLUX.commands).forEach(cmd => POLLUX.unregisterCommand(cmd))
+        Object.keys(PLX.commands).forEach(cmd => PLX.unregisterCommand(cmd))
     }
     readdirAsync('./core/commands').then(modules => {
         modules.forEach(async folder => {

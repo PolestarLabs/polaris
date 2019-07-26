@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 const Picto = require('../../utilities/Picto');
 
 const INVOKERS   = new Map();
@@ -7,7 +7,7 @@ const INVOKERS   = new Map();
 const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
 
     const canvas = Picto.new(800,600);
@@ -111,7 +111,7 @@ const init = async function (msg,args){
     Picto.setAndDraw(ctx,Picto.tag(ctx, a_bpk,    "100 24pt 'Panton Light'","#FFF"),XYZ.BPK.x-200, XYZ.BPK.y,XYZ.BPK.w,'left')
     Picto.setAndDraw(ctx,Picto.tag(ctx, a_lbx,    "100 24pt 'Panton Light'","#FFF"),XYZ.LBX.x-200, XYZ.LBX.y,XYZ.LBX.w,'left')
 
-   menumes =  await msg.channel.send( '',gear.file( canvas.toBuffer(),'inventory.png'));
+   menumes =  await msg.channel.send( '',file( canvas.toBuffer(),'inventory.png'));
    menumes.target = Target;
    args[10]=userData;
    args[11]=msg.prefix;

@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 const cmd = 'roll';
@@ -10,7 +10,7 @@ const v={}
 
 
 const P = {user:message.member.username,lngs:message.lang,prefix:message.prefix}
-  if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
+  if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
 
 
 let DICE_REGEX = /([0-9]* *d[0-9]+)/g
@@ -94,7 +94,7 @@ let notThisPls = $t("games.dice.exceedLim",P);
     let rollTotal = 0
     
     for (j=0;j<diceAmount;j++){
-      let rand = gear.randomize(1,diceFaces);
+      let rand = randomize(1,diceFaces);
       rollTotal+= rand
       if(!NOSTREAK){
         
@@ -180,10 +180,10 @@ if((final+overview+5).length>2000){
 
   message.channel.send(final_pre+overviewPre)
     .then(async mes=>{
-          await gear.wait(2);
+          await wait(2);
           mes.edit(""+final+overviewPre)
             .then(async me2=>{
-                   await gear.wait(1);
+                   await wait(1);
                    me2.edit(final+ overview)
           })
   }).catch(e=>message.reply(notThisPls))

@@ -1,8 +1,8 @@
-const gear = require(appRoot+"/core/utilities/Gearbox");
+// const gear = require(appRoot+"/core/utilities/Gearbox");
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
 const ECO = require(appRoot+"/core/archetypes/Economy");
-const DB = require(appRoot+"/core/database/db_ops");
+// const DB = require(appRoot+"/core/database/db_ops");
 const Picto = require(appRoot+"/core/utilities/Picto");
 const Timed = require(appRoot+"/core/structures/TimedUsage");
 const Premium = require(appRoot+"/core/utilities/Premium");
@@ -33,7 +33,7 @@ if(message.args[0]=="info"){
       let emblem = await Premium.getTier(Author);
       let myDaily = await Premium.getDaily(Author) || 125;
 
-      const embed = new gear.Embed;
+      const embed = new Embed;
       embed.setColor("#d83668");
       if (emblem) {
         embed.author(emblem.toUpperCase()+"-boosted Daily!","http://pollux.fun/images/donate/" + emblem + "-small.png")
@@ -147,7 +147,7 @@ if(message.args[0]=="info"){
         P.remaining=  moment.utc(r).fromNow(true)
         let dailyNope = $t('$.dailyNope',P);
         message.reply(_emoji('nope') + dailyNope);
-        let embed=new gear.Embed;
+        let embed=new Embed;
         embed.setColor('#e35555');
         embed.description(`
     ${_emoji('time')   } **${v.last}** ${ moment.utc(Daily.userDataStatic).fromNow()}
@@ -161,7 +161,7 @@ if(message.args[0]=="info"){
         let streakGoes = await Daily.keepStreak(msg.author);
         let streak = userDaily.streak;
 
-        let embe2=new gear.Embed;
+        let embe2=new Embed;
         embe2.setColor('#e35555')
         embe2.description(`
     ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily.last).fromNow()}

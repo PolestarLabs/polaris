@@ -4,7 +4,7 @@ const path = require('path');
 const Eris = require('eris');
 const MersenneTwister = require('./MersenneTwister');
 const generator = new MersenneTwister();
-const DB = require("../database/db_ops");
+// const DB = require("../database/db_ops");
 
 if (Eris.Embed){
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;

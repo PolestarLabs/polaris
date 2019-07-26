@@ -1,7 +1,7 @@
 const cmd = 'craft';
-const gear = require("../../utilities/Gearbox.js");
+// const gear = require("../../utilities/Gearbox.js");
 const YesNo = require('../../structures/YesNo').run;
-const DB = require("../../database/db_ops.js");
+// const DB = require("../../database/db_ops.js");
 const ECO = require("../../archetypes/Economy.js")
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -13,7 +13,7 @@ const init = async function (message) {
   setTimeout(f=>  message.author.crafting = false, 25000)
   //HELP TRIGGER
     let P={lngs:message.lang,}
-    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
   //------------
     
 if(message.author.crafting)return;
@@ -28,7 +28,7 @@ function noteno(item,extra){
   let [ITEMS,ALLITEMS] = await Promise.all([ DB.items.find({crafted:true}).lean().exec(), 
       DB.items.find({}).lean().exec()]);
   
-  let embed = new gear.Embed
+  let embed = new Embed
   embed.description=""
   embed.setColor('#71dbfa') 
   
@@ -112,7 +112,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('jade')+"**"+gear.miliarize(GC.jades,true)+'** x Jades';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('jade')+"**"+miliarize(GC.jades,true)+'** x Jades';
     }
       
       
@@ -124,7 +124,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('rubine')+"**"+gear.miliarize(GC.rubines,true)+'** x Rubines';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('rubine')+"**"+miliarize(GC.rubines,true)+'** x Rubines';
     }
       
       
@@ -137,7 +137,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('sapphire')+"**"+gear.miliarize(GC.sapphires,true)+'** x Sapphires';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('sapphire')+"**"+miliarize(GC.sapphires,true)+'** x Sapphires';
     }
       
       
@@ -149,7 +149,7 @@ function noteno(item,extra){
         materialName = material.id || material;
 
         amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
-        amtRequired = (material.amt || gear.count(MAT,materialName))
+        amtRequired = (material.amt || count(MAT,materialName))
 
       if (amtInPosession >= amtRequired){
         //message.reply('ok')

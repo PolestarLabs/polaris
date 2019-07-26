@@ -1,5 +1,5 @@
 
-const DB = require('../database/db_ops.js');
+// const DB = require('../database/db_ops.js');
 module.exports ={
   
   up:function(msg,pos){  

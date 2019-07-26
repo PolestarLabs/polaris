@@ -1,7 +1,7 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
@@ -9,12 +9,12 @@ const init = async function (msg){
     
     let P={lngs:msg.lang,prefix:msg.prefix}
 
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat,aliases:this.aliases}))return;
+    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat,aliases:this.aliases}))return;
     
-    let Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
+    let Target = PLX.getTarget(msg, 0, false)||PLX.getTarget(msg, 1, false);
 
     if(msg.args.includes("info")||msg.args.includes("status")||msg.args.includes("stats")){
-        if(msg.args.length !== 1)  Target = gear.getTarget(msg, 0, false)||gear.getTarget(msg, 1, false);
+        if(msg.args.length !== 1)  Target = PLX.getTarget(msg, 0, false)||PLX.getTarget(msg, 1, false);
         if(msg.args.length === 1)  Target = msg.author;
     } 
 
@@ -33,7 +33,7 @@ const init = async function (msg){
         let commendT3 = targetDataC.whoIn.map(u=>{
             return { name: metas.find(x=>x.id==u.id).meta.tag, amt: u.count}
         }) ;
-        let embed = new gear.Embed().
+        let embed = new Embed().
         color("#3b9ea5").thumbnail('https://pollux.fun/build/rank.png')
         .description(
         `__**Commend Info for ${Target.mention}**__
@@ -78,7 +78,7 @@ __**Top Commenders**__
         P.cmcount   = (targetData.modules.commend +1 )|| 0
         P.pplcount  = targetDataC.whoIn.length
 
-        let embed = new gear.Embed()
+        let embed = new Embed()
             .thumbnail('https://pollux.fun/build/rank.png')
             .color('#3b9ea5')
             .timestamp(new Date)
@@ -96,7 +96,7 @@ console.log(embed)
     let reject = function(msg,Daily,r){          
         P.remaining=  moment.utc(r).fromNow(true)
         let dailyNope = $t('responses.commend.cooldown',P);
-        let embed=new gear.Embed;
+        let embed=new Embed;
         embed.setColor('#e35555');
         embed.description(_emoji('nope') + dailyNope);
         return msg.channel.send({embed:embed});
@@ -107,7 +107,7 @@ console.log(embed)
         let userDaily = await Daily.userData(msg.author);
         let dailyAvailable = await Daily.dailyAvailable(msg.author);
         P.remaining = moment.utc(userDaily.last).add(Daily.day,'milisseconds').fromNow(true);
-        let embe2=new gear.Embed;
+        let embe2=new Embed;
         embe2.setColor('#3b9ea5')
         embe2.description(`
     ${_emoji('future') } ${dailyAvailable?_emoji('online')+$t('responses.commend.check_yes',P):_emoji('dnd')+$t('responses.commend.check_no',P)} 

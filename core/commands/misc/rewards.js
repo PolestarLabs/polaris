@@ -14,15 +14,15 @@ const STICKERS = [
   ,"jojollux"
 ]
 
-const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
 const ECO = require('../../archetypes/Economy')
 
 let last = STICKERS[STICKERS.length-1]
 let seclast = STICKERS[STICKERS.length-2]
 let thirdlast = STICKERS[STICKERS.length-3]
-let randompretwo = STICKERS[gear.randomize(STICKERS.length-2)]
-let random = STICKERS[gear.randomize(STICKERS.length-1)]
+let randompretwo = STICKERS[randomize(STICKERS.length-2)]
+let random = STICKERS[randomize(STICKERS.length-1)]
 let all = STICKERS
 
 
@@ -348,7 +348,7 @@ let dasveritas= message.guild.roles.get('421181998439333901');
 
 
 
-let embed = new gear.Embed;
+let embed = new Embed;
   
   embed.title(MONTHNAME+" Donators rewards");
   embed.setColor("#32363c");
@@ -385,10 +385,10 @@ let stickernames = await DB.cosmetics.find({id:{$in:pushmo},type:"sticker"},{nam
 let tiere = T.boxes[0].name.replace("lootbox_","").replace("_O","");
 embed.thumbnail("https://pollux.fun/build/"+T.title+".png");
 embed.description(`
-**${gear.capitalize(T.title) + (T.legacy?" Legacy":"")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS=='number'?`(${STATUS} Months Left)`:""}
+**${capitalize(T.title) + (T.legacy?" Legacy":"")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS=='number'?`(${STATUS} Months Left)`:""}
 
 ${_emoji('sapphire')} x ${T.SPH}
-${_emoji('jade')} x ${gear.miliarize(T.JDE)}
+${_emoji('jade')} x ${miliarize(T.JDE)}
 ${_emoji('loot')} x ${T.boxes[0].count} ${_emoji(tiere)}
 
 **STICKERS**
@@ -429,7 +429,7 @@ if(!((userData.counters.donateStreak||{})[T.title])){
 
   embed.description += `**Tier First-Time Sapphire Bonus**
 ${_emoji('sapphire')} x ${T.immediate}
-${_emoji('yep')} **${gear.capitalize(T.title)} Donator's Flair**
+${_emoji('yep')} **${capitalize(T.title)} Donator's Flair**
 `
   embed.description += "\n*Enable profile frame with `p!profile frame [on|off]`*\n"
 }

@@ -1,4 +1,4 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const init = async function (message) {
 
 let stuff = [
@@ -56,8 +56,8 @@ let stuff3 = [
   "Welcome to the *House of Fire*, please don't get yourself burnt."
 ]
 
-  let rand = gear.randomize(0, stuff.length - 1);
-  let rand2 = gear.randomize(0, stuff2.length - 1);
+  let rand = randomize(0, stuff.length - 1);
+  let rand2 = randomize(0, stuff2.length - 1);
   let thing =stuff[rand] // message.author.id === "169551262981816321" ? : 'a wet trout'
 
   

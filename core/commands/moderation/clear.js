@@ -1,15 +1,15 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let ServerDATA = await DB.servers.get(msg.guild.id);
-    const modPass = gear.modPass(msg.member,"manageMessages", ServerDATA);
+    const modPass = PLX.modPass(msg.member,"manageMessages", ServerDATA);
     if (!modPass) {
         return msg.reply($t('responses.errors.insuperms', P)).catch(console.error);
     };

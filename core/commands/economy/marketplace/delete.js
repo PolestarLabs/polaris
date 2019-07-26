@@ -1,4 +1,4 @@
-const DB = require('../../../database/db_ops');
+// const DB = require('../../../database/db_ops');
 const {Embed} = require('../../../utilities/Gearbox');
 const YesNo = require('../../../structures/YesNo').run;
 

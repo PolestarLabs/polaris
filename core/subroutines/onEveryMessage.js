@@ -2,13 +2,13 @@
 
 
 
-const DB = require('../database/db_ops');
-const gear = require('../utilities/Gearbox');
+// const DB = require('../database/db_ops');
+// const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 module.exports = async msg => {
-  POLLUX.execQueue=POLLUX.execQueue.filter(itm=>itm.constructor != Promise);
-  POLLUX.execQueue.push(
+  PLX.execQueue=PLX.execQueue.filter(itm=>itm.constructor != Promise);
+  PLX.execQueue.push(
     Promise.all([
       levelChecks(msg),
       Drops(msg)
@@ -25,7 +25,7 @@ async function incrementLocal(msg) {
 }
 
 async function incrementGlobal(msg) {  
-  if(gear.randomize(0,5)==3 && msg.content.length > 20){
+  if(randomize(0,5)==3 && msg.content.length > 20){
     await DB.users.set(msg.author.id,{$inc:{'modules.exp':1}});
   };  
 }
@@ -113,7 +113,7 @@ async function levelChecks(msg) {
     if (curLevel_G < userData.modules.level) {
       return;
       //console.log("DELEVEL");
-      //await gear.userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
+      //await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
 }
     if (curLevel_G > userData.modules.level) {
       await DB.userDB.set(msg.author.id,{$set:{'modules.level':curLevel_G}});

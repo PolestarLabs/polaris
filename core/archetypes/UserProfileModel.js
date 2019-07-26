@@ -1,15 +1,15 @@
 const {Member} = require('eris');
 const moment = require("moment");
-const DB = require('../database/db_ops')
+// const DB = require('../database/db_ops')
 
 class UserProfileModel{
     constructor(userData,discordMember){
   
       // Discord Data
-      if(!discordMember) discordMember = POLLUX.users.get(userData.id||userData);
+      if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
   
       if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
-      if(typeof discordMember === 'string') discordMember = POLLUX.users.get(discordMember);
+      if(typeof discordMember === 'string') discordMember = PLX.users.get(discordMember);
       const notMember = discordMember && discordMember.constructor != Member;
   
       this.ID = discordMember.id;
@@ -76,7 +76,7 @@ class UserProfileModel{
         if (!marriage) return resolve(null);
         const wifeID = marriage.users.find(usr=>usr!=this.ID);
         if (!wifeID) return resolve(null);
-        let discordWife = POLLUX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || {username: "Unknown", avatar: POLLUX.users.get(userID).defaultAvatarURL };
+        let discordWife = PLX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || {username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
   
         this.wife = {
           ring: marriage.ring,

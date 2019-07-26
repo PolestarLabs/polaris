@@ -1,7 +1,7 @@
 const cmd = 'synthetize';
 const fs = require("fs");
-const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const gear = require("../../utilities/Gearbox");
+// const DB = require("../../database/db_ops");
 const ECO = require("../../archetypes/Economy.js");
 //const locale = require(appRoot + '/utils/i18node');
 //const $t = locale.getT();
@@ -23,7 +23,7 @@ var init = async function (message) {
         lngs: message.lang
     });
     if (MSG.split(/ +/)[1] == helpkey || MSG.split(/ +/)[1] == "?" || MSG.split(/ +/)[1] == "help") {
-        return gear.usage(cmd, message, this.cat);
+        return PLX.usage(cmd, message, this.cat);
     }
 
     let YA = {
@@ -41,7 +41,7 @@ var init = async function (message) {
     let operation = message.args[0] || "bg";
     let target = message.args[1] || "random";
     const userData = await DB.users.findOne({id:message.author.id});
-    const embed = new gear.Embed;
+    const embed = new Embed;
     let hasIt, affordsIt, canBuy, payCoin, selectedItem, positive,obtainable;
 
     function gemCount(rar){
@@ -49,7 +49,7 @@ var init = async function (message) {
      }
    
     if (operation == "bg") {
-        BGBASE = gear.shuffle(BGBASE)
+        BGBASE = shuffle(BGBASE)
         selectedItem = BGBASE.find(bg => {
             if(!["c","u","r","sr","ur"].includes(target)){
                 if (bg.id === args) return true;
@@ -61,7 +61,7 @@ var init = async function (message) {
             if (bg.rarity.toLowerCase() === target) return true;
             return false;
         });
-        if (!selectedItem || target == "random") selectedItem = gear.shuffle(BGBASE)[28];
+        if (!selectedItem || target == "random") selectedItem = shuffle(BGBASE)[28];
         
         payCoin = "cosmo_gem_" + selectedItem.rarity
         hasIt = userData.modules.bgInventory.includes(selectedItem.code)
@@ -121,7 +121,7 @@ var init = async function (message) {
     
     
     if (operation == "medal") {
-        MEDALBASE = gear.shuffle(MEDALBASE)
+        MEDALBASE = shuffle(MEDALBASE)
         selectedItem = MEDALBASE.find(mdl => {
             if(!["c","u","r","sr","ur"].includes(target)){
                 if (mdl.id === args) return true;
@@ -133,7 +133,7 @@ var init = async function (message) {
             if (mdl.rarity.toLowerCase() === target) return true;
             return false;
         });
-        if (!selectedItem || target == "random") selectedItem = gear.shuffle(MEDALBASE)[28];
+        if (!selectedItem || target == "random") selectedItem = shuffle(MEDALBASE)[28];
         
         payCoin = "cosmo_gem_" + selectedItem.rarity
         hasIt = userData.modules.medalInventory.includes(selectedItem.icon)
@@ -194,7 +194,7 @@ var init = async function (message) {
     : "`Can't be synthetized 😦`", true)
     embed.image("attachment://synth.png")
 
-    const file = gear.file(await canvas.toBuffer(),"synth.png")
+    const file = file(await canvas.toBuffer(),"synth.png")
     const YesNo = require('../../structures/YesNo');
 
     message.channel.send({embed},file).then(async m => {

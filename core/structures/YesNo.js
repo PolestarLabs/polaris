@@ -1,4 +1,4 @@
-const gear = require("../utilities/Gearbox");
+// const gear = require("../utilities/Gearbox/global");
 module.exports = {
     run: async function yesNo(m,message,yes=false,no=false,timeout=false,options){
     options = options || {}

@@ -55,7 +55,7 @@ module.exports = {
             gen: open,
             options: {
                 argsRequired: true,
-                invalidUsageMessage: (msg) => { gear.autoHelper('force', { msg, cmd: "boosterpack", opt: "cosmetics" }) }
+                invalidUsageMessage: (msg) => { PLX.autoHelper('force', { msg, cmd: "boosterpack", opt: "cosmetics" }) }
             }
         }
     ]

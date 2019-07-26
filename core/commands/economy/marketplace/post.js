@@ -1,5 +1,5 @@
-const DB = require('../../../database/db_ops');
-const gear = require('../../../utilities/Gearbox');
+// const DB = require('../../../database/db_ops');
+// const gear = require('../../../utilities/Gearbox');
 const YesNo = require('../../../structures/YesNo').run;
 
 
@@ -29,7 +29,7 @@ const init = async function(msg,args){
 
         }
 
-        let embed = new gear.Embed
+        let embed = new Embed
         embed.title = "Marketplace Listing information"
         embed.description = `
         ${ _emoji("RBN") } **Rubine** Listings cost 300 RBN upfront

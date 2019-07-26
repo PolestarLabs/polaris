@@ -1,5 +1,5 @@
 
-const DB = require (appRoot + "/core/database/db_ops")
+// const DB = require (appRoot + "/core/database/db_ops")
 
 module.exports = async function run(msg,emoji,userID){
     
@@ -10,7 +10,7 @@ module.exports = async function run(msg,emoji,userID){
        
         let roleReaction = RCT.rolemoji.find(rlmj=>rlmj.emoji.includes(emoji.id)||rlmj.emoji.includes(emoji.name) )
         if (roleReaction){
-            POLLUX.removeGuildMemberRole(msg.channel.guild.id, userID, roleReaction.role, "Reaction Role")
+            PLX.removeGuildMemberRole(msg.channel.guild.id, userID, roleReaction.role, "Reaction Role")
         }
     });
 

@@ -1,15 +1,15 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
     let ServerDATA = await DB.servers.get(msg.guild.id);
-    const modPass = gear.modPass(msg.member,"manageMessages", ServerDATA);
+    const modPass = PLX.modPass(msg.member,"manageMessages", ServerDATA);
     if (!modPass) {
         return msg.reply($t('responses.errors.insuperms', P)).catch(console.error);
     };
@@ -73,8 +73,8 @@ const init = async function (msg){
         endMessage = `${revFil?"Filtered":"Purged %X"} messages including Links`
         filter =  mes=> mes.content.includes("http");
     }
-    else if(gear.getTarget(msg)){
-        Target = gear.getTarget(msg);
+    else if(PLX.getTarget(msg)){
+        Target = PLX.getTarget(msg);
         count = parseInt(msg.args[1]) || 100;
         endMessage = `${revFil?"Filtered":"Purged %X"} messages from user ${Target.tag}`
         filter = mes=>mes.author.id == Target.id;

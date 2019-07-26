@@ -1,6 +1,6 @@
-const gear = require('../../utilities/Gearbox')
+// const gear = require('../../utilities/Gearbox')
 
-const DB = require('../../database/db_ops')
+// const DB = require('../../database/db_ops')
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
 const cmd = 'leaderboards';
@@ -13,7 +13,7 @@ const init = async function (msg) {
     const Server  = msg.guild;
     const Author  = msg.author;
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t("helpkey",P)],{cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P)],{cmd,msg,opt:this.cat}))return;
 
 
     let Canvas = Picto.new(718,570);
@@ -54,7 +54,7 @@ const init = async function (msg) {
         return new Object({
             id: usr.id,
             name: _LOCAL? usr.nick || usr.name : usr.meta.username||usr.nick||usr.user.username,
-            avatar: Picto.getCanvas( self==="self"?msg.author.staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :POLLUX.users.find(u=>u.id==usr.id).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+            avatar: Picto.getCanvas( self==="self"?msg.author.staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :PLX.users.find(u=>u.id==usr.id).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
             exp: usr.modules.exp,
             level: usr.modules.level,
             tagline: usr.modules.tagline,
@@ -101,7 +101,7 @@ console.log(paths.BUILD+"/rank_mainframe.png")
 
         
         let _lvTag  = Picto.tag(ct,"LEVEL","300 "+(14-(sec?2:0))+"px 'Whitney HTF'","#FFF")
-        let _uid    = Picto.tag(ct,`${gear.miliarize(usr.rubines,true,' ')} 💎 | `+usr.id,"300 "+(12-(sec?2:0))+"px 'monospace'","#FFF5")
+        let _uid    = Picto.tag(ct,`${miliarize(usr.rubines,true,' ')} 💎 | `+usr.id,"300 "+(12-(sec?2:0))+"px 'monospace'","#FFF5")
         
         Picto.setAndDraw(ct,_uid,640,sec?70:81,450,'right');
         Picto.setAndDraw(ct,_lvTag,60,sec?18:20,45,'center');
@@ -163,7 +163,7 @@ console.log(paths.BUILD+"/rank_mainframe.png")
 
 
 
-    let FILE = gear.file(await Canvas.toBuffer(),"rank.png");
+    let FILE = file(await Canvas.toBuffer(),"rank.png");
     let message = _LOCAL ? ":trophy: **Local Leaderboards for "+msg.guild.name+"**" : ":trophy: **Global Leaderboards**"
     msg.channel.send(message,FILE)
     

@@ -1,12 +1,12 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
 const init = async function (msg){
     
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const userData = await DB.users.findOne({id:msg.author.id});
     const BGData = (await DB.cosmetics.find({type:'background', code:{$in:userData.modules.bgInventory}}))
@@ -28,7 +28,7 @@ const init = async function (msg){
             fragRar = thebg.rarity 
             fragAmt = FragConvert(thebg);
 
-            const embed = new gear.Embed()
+            const embed = new Embed()
             .thumbnail(`https://pollux.fun/backdrops/${thebg.code}.png`)
             .description(`
             Disenchant this ${_emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?

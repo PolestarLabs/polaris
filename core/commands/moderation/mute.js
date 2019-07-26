@@ -1,5 +1,5 @@
-const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const gear = require("../../utilities/Gearbox");
+// const DB = require("../../database/db_ops");
 //const locale = require(appRoot + '/utils/i18node');
 //const $t = locale.getT();
 
@@ -9,20 +9,20 @@ const init = async function (message) {
     const Server = message.guild;
     const Author = message.author;
     const Member = Server.member(Author);
-    let Target = gear.getTarget(message, 0, false);
+    let Target = PLX.getTarget(message, 0, false);
     const bot = message.botUser
 
     const P = {lngs: message.lang};
 
-    if (gear.autoHelper([$t("helpkey", P), 'noargs', ''], {cmd,message,opt: this.cat})) return;
-    if (message.args.length < 1) return gear.autoHelper('force', {cmd,message,opt: this.cat});
-    if ( !isNaN(message.args[0])  && message.args[0].length < 10) return gear.autoHelper('force', {cmd,message,opt: this.cat});
+    if (PLX.autoHelper([$t("helpkey", P), 'noargs', ''], {cmd,message,opt: this.cat})) return;
+    if (message.args.length < 1) return PLX.autoHelper('force', {cmd,message,opt: this.cat});
+    if ( !isNaN(message.args[0])  && message.args[0].length < 10) return PLX.autoHelper('force', {cmd,message,opt: this.cat});
 
     let ServerDATA = await DB.servers.get(Server.id);
 
 
     try {
-        const modPass = gear.modPass(Member,"kickMembers", ServerDATA);
+        const modPass = PLX.modPass(Member,"kickMembers", ServerDATA);
         if (!modPass) {
             return message.reply($t('CMD.moderationNeeded', P)).catch(console.error);
         };
@@ -147,7 +147,7 @@ const init = async function (message) {
             if (chanpoint) {
                 let id = Target.user.id
                 let mess = message
-                let emb = new gear.RichEmbed;
+                let emb = new RichEmbed;
 
                 emb.setThumbnail(Target.user.avatarURL)
                 emb.setTitle(":mute: " + MUTED);
@@ -165,10 +165,10 @@ const init = async function (message) {
                     embed: emb
                 }).catch(e => {
                     let a = (new Error);
-                    gear.errLog(e, __filename, a.stack.toString())
+                    errLog(e, __filename, a.stack.toString())
                 })
 
-                var RevokeEmb = new gear.RichEmbed;
+                var RevokeEmb = new RichEmbed;
 
                 RevokeEmb.setThumbnail(Target.user.avatarURL)
                 RevokeEmb.setTitle(":mute: " + UNMUTE);

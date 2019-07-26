@@ -1,5 +1,5 @@
 
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 
 const init = async function (msg,ext){
 
@@ -7,14 +7,14 @@ const init = async function (msg,ext){
     const booru = require('../../utilities/BooruGetter');
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const QUALITY_CONTROL = "+score:>1+-rating:questionable+-ass+-breasts"
 
     let tags = msg.args.join('+') || ''
     let source = "getRandom"
  
-    const embed = new gear.Embed();
+    const embed = new Embed();
         embed.color = 0xf44283;
         embed.footer(msg.author.tag,msg.author.avatarURL)
         embed.title("\\❤ \u2003 S a f e b o o r u \u2003 \\❤");
@@ -42,7 +42,7 @@ const init = async function (msg,ext){
 
     if(res){
         embed.image( res.file_url )
-        if(res.tags && (ext||{}).tags) embed.field ("Tags","`["+gear.shuffle(res.tags.slice(1)).split(' ').slice(0,10).join(']` `[')+"]`",true);
+        if(res.tags && (ext||{}).tags) embed.field ("Tags","`["+shuffle(res.tags.slice(1)).split(' ').slice(0,10).join(']` `[')+"]`",true);
         msg.channel.send({embed}).then(ms=>{
             ms.addReaction('👍').catch(e=>null)
             ms.addReaction('👎').catch(e=>null)

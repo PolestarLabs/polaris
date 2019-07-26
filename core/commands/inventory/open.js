@@ -32,7 +32,7 @@ module.exports={
             gen: require("./lootbox.js").open,
             options: {
                 argsRequired:true,
-                invalidUsageMessage:  (msg)=> {gear.autoHelper( 'force', {msg, cmd: "lootbox", opt: "cosmetics" } )}
+                invalidUsageMessage:  (msg)=> {PLX.autoHelper( 'force', {msg, cmd: "lootbox", opt: "cosmetics" } )}
             }
         },
         {
@@ -40,7 +40,7 @@ module.exports={
             gen: require("./boosterpack.js").open,
             options: {
                 argsRequired: true,
-                invalidUsageMessage: (msg) => { gear.autoHelper('force', { msg, cmd: "boosterpack", opt: "cosmetics" }) }
+                invalidUsageMessage: (msg) => { PLX.autoHelper('force', { msg, cmd: "boosterpack", opt: "cosmetics" }) }
             }
         }
     ]

@@ -1,9 +1,9 @@
 
-const gear = require('../../utilities/Gearbox')
+// const gear = require('../../utilities/Gearbox')
 const Picto = require('../../utilities/Picto')
 //const locale = require(appRoot+'/utils/i18node'); 
 //const $t = locale.getT();
-const DB = require("../../database/db_ops");
+// const DB = require("../../database/db_ops");
 const userDB=DB.users
 const serverDB=DB.servers
 
@@ -36,7 +36,7 @@ const v={
   
 const Server = msg.guild;
 
-const Target = await gear.getTarget(msg);
+const Target = await PLX.getTarget(msg);
 const TARGET_DB   = await userDB.findOne({id:Target.id});
 const SV_DB       = await serverDB.findOne({id:Server.id});
 
@@ -196,7 +196,7 @@ let l_exp,
   ctx.drawImage(local_roundel,0,0)
   ctx.drawImage(global_roundel,120,0)
 
-  await msg.channel.send('',gear.file(await canvas.toBuffer(),"leveli.png"));
+  await msg.channel.send('',file(await canvas.toBuffer(),"leveli.png"));
   
 }
     

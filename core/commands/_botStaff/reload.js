@@ -1,5 +1,5 @@
 const init = async function (msg,args){
-    POLLUX.registerCommands(true);
+    PLX.registerCommands(true);
     if(args[0] == "hard"){
         Object.keys(require.cache).forEach((R)=> {
             if(R.includes('node_modules'))  return;

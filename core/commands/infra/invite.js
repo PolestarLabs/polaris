@@ -1,11 +1,11 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    let embed = new gear.Embed
+    let embed = new Embed
     embed.setDescription(":love_letter: "+$t('CMD.inviteText', {lngs:msg.lang})+"("+paths.CDN+"/invite) !");
     embed.setColor("#ea7d7d")
 

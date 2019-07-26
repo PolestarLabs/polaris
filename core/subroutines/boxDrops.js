@@ -1,6 +1,6 @@
 
-const gear = require("../utilities/Gearbox");
-const DB = require("../database/db_ops");
+// const gear = require("../utilities/Gearbox");
+// const DB = require("../database/db_ops");
 const fs = require('fs')
 //const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events"); 
@@ -29,10 +29,10 @@ function convertToEvent(i,box) {
 module.exports = {
   lootbox: async function loot(trigger) {
 //const $t = locale.getT(); 
-if(POLLUX.beta){
+if(PLX.beta){
   if(trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653")  return false;
 }
-if(POLLUX.restarting)  return false;
+if(PLX.restarting)  return false;
 
 if(trigger.content=="pick" &&  !trigger.channel.natural){
  return    DB.users.set(trigger.author.id,{$inc:{'modules.exp':-10}});
@@ -57,7 +57,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
     }
     
     const v = {
-      dropLoot: $t("loot.lootDrop." + (gear.randomize(1, 5)), P) + $t("loot.lootPick", P).replace(prerf, ""),
+      dropLoot: $t("loot.lootDrop." + (randomize(1, 5)), P) + $t("loot.lootPick", P).replace(prerf, ""),
       disputing: $t("loot.contesting", P),
       oscarGoesTo: $t("loot.goesTo", P),
       gratz: $t("loot.congrats", P),
@@ -69,7 +69,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
     }
 
     let droprate = 777;
-    droprate = gear.randomize(_DROPMIN,_DROPMAX);
+    droprate = randomize(_DROPMIN,_DROPMAX);
 
     let BOX = { id:'lootbox_C_O', text:v.dropLoot, pic:"chest.png"}
     //console.log(droprate)
@@ -77,19 +77,19 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
 
     let iterations = eventChecks(serverDATA);
     for (i=0;i<iterations/5;i++){
-      droprate = gear.randomize(_DROPMIN , _DROPMAX);
+      droprate = randomize(_DROPMIN , _DROPMAX);
       if(droprate == 777) break;
     };
     if(droprate !== 777 && !trigger.guild.large ){
-      droprate = gear.randomize(_DROPMIN , _DROPMAX);
+      droprate = randomize(_DROPMIN , _DROPMAX);
     }
 
     if (EVENT){
-      let dropevent = gear.randomize(1, 5);
+      let dropevent = randomize(1, 5);
       if (dropevent >= 2) BOX = convertToEvent(false,BOX);
     }
 
-    let rarity = gear.randomize(0,_RAREMAX);
+    let rarity = randomize(0,_RAREMAX);
     switch (true){
       case rarity <=8:
         BOX.id  = "lootbox_UR_O";
@@ -132,7 +132,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       let lootMessage = await CHN.send(BOX.text,
         //paths.BUILD + (BOX.pic || "chest.png")
         //{file: (paths.BUILD + (BOX.pic || "chest.png")),name:"LOOTBOX.png"}
-        gear.file( await gear.resolveFile(paths.BUILD + (BOX.pic || "chest.png")) , "Lootbox.png")
+        file( await resolveFile(paths.BUILD + (BOX.pic || "chest.png")) , "Lootbox.png")
 
         ).catch(e=>false);
       if(!lootMessage) return false;
@@ -179,10 +179,10 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       ballotMessage.delete().catch(e=>{});
 
       let p_sz = pickers.length-1;
-      let rand =  gear.randomize(0,p_sz);
-          rand = gear.randomize(0,p_sz);
-          rand = gear.randomize(0,p_sz);
-      pickers=gear.shuffle(pickers)
+      let rand =  randomize(0,p_sz);
+          rand = randomize(0,p_sz);
+          rand = randomize(0,p_sz);
+      pickers=shuffle(pickers)
 
       let luckyOne = pickers[rand];
 
@@ -196,13 +196,13 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
       let goesto = await CHN.send(v.oscarGoesTo);
       let dramaMsg = await CHN.send(drama_message);
                     console.log(("WINNER PICKED!!!").green)
-      await gear.wait(4);
+      await wait(4);
 
       //dramaMsg.edit("||"+drama[rand]+"||");
-      //await gear.wait(1);
+      //await wait(1);
 
      /*
-      gear.dropHook.send("---\nLootbox Drop at **"+trigger.guild.name+"** ("+trigger.guild.id+") - `#"+trigger.channel.name+"` ("+trigger.channel.id+") \n Message to trigger: ```"+trigger.content+"```" +`
+      dropHook.send("---\nLootbox Drop at **"+trigger.guild.name+"** ("+trigger.guild.id+") - `#"+trigger.channel.name+"` ("+trigger.channel.id+") \n Message to trigger: ```"+trigger.content+"```" +`
 Participants:
 \`\`\`
 ${pickers.map(x=>x.name+" - "+x.id).join("\n")}

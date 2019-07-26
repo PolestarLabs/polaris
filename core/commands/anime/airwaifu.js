@@ -1,8 +1,8 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     msg.args = ["airplane","1girl"]
 
