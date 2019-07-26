@@ -1,6 +1,6 @@
 const {Member} = require('eris');
 const moment = require("moment");
-const DB = require('../database/db_ops')
+// const DB = require('../database/db_ops')
 
 class UserProfileModel{
     constructor(userData,discordMember){

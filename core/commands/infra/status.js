@@ -1,7 +1,7 @@
 // const gear = require('../../utilities/Gearbox');
 const {inspect} = require('util');
 const os = require('os');
-//const DB = require('../../database/db_ops');
+//// const DB = require('../../database/db_ops');
 
 const init = async function (msg){
     
@@ -12,12 +12,12 @@ const init = async function (msg){
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     
-let emb =    new gear.Embed
+let emb =    new Embed
 
  
 emb.color('#e83774')
 
-//let SHARDATA=(await gear.globalDB.get()).shardData;
+//let SHARDATA=(await globalDB.get()).shardData;
 
 let server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
 let user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
@@ -37,15 +37,15 @@ emb.thumbnail(PLX.user.avatarURL)
 
 emb.field('\u200b','𝚂𝚘𝚌𝚒𝚊𝚕 𝙸𝚗𝚏𝚘𝚛𝚖𝚊𝚝𝚒𝚘𝚗 ',false)
 
-emb.field(_emoji('mobo')+'   Servers',"```ml\n~"  +gear.miliarize( server_estimate_count, true) + "```", true)
-emb.field(':busts_in_silhouette:    Users',"```ml\n~" +gear.miliarize( user_estimate_count        ) + "```", true)
+emb.field(_emoji('mobo')+'   Servers',"```ml\n~"  +miliarize( server_estimate_count, true) + "```", true)
+emb.field(':busts_in_silhouette:    Users',"```ml\n~" +miliarize( user_estimate_count        ) + "```", true)
 
 
 emb.field('\u200b','𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚝𝚞𝚜 ',false)
 emb.field(_emoji('cog')+'   Websocket Ping         \u200b',"```ml\n"+ ping +"```", true)
 emb.field(_emoji('memslot')+'    RAM Usage',"```ml\n"+ram_usage+" MB```", true)
 
-//emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${gear.getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
+//emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
 emb.field(_emoji('mobo')+'  Servers in this Cluster         \u200b',"```css\n"+(`[S${msg.guild.shard.id}C${process.env.CLUSTER_ID}] ${PLX.guilds.size}`)+"```", true)
 emb.field(_emoji('cpu')+'   Cluster Uptime',"```ml\n"+(uptime)+"```", true)
 

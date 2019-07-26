@@ -30,7 +30,7 @@ const init = async function (message) {
     const args = message.content.split(/\s+/).slice(1).join(" ").toLowerCase()
     let rotation = []
     let secondRotation = []
-    let emb = new gear.Embed;
+    let emb = new Embed;
 
     if (args === "league of legends" || args === "league" || args === "lol") lol();
     else if (args === "heroes of the storm" || args === "hots" || args === "hos" || args === "heroes") hots();
@@ -122,7 +122,7 @@ request("https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_ke
                     
                 });    
             
-            emb = new gear.Embed();
+            emb = new Embed();
             emb.setColor('#064955')
 
             emb.footer(`© 2006 - ${(new Date).getYear()+1900} | Riot Games, Inc.`, "https://www.riotgames.com/darkroom/original/06fc475276478d31c559355fa475888c:af22b5d4c9014d23b550ea646eb9dcaf/riot-logo-fist-only.png")

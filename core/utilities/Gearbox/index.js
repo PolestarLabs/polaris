@@ -1,4 +1,4 @@
 module.exports = {
-    Global : require("./global.js")
+    Global : require("./global.js"),
     Client : require("./client.js")
-}
+} 

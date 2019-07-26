@@ -1,4 +1,4 @@
-const DB = require(appRoot+"/core/database/db_ops");
+// const DB = require(appRoot+"/core/database/db_ops");
 // const gear = require(appRoot+"/core/utilities/Gearbox");
 
 
@@ -27,7 +27,7 @@ const init = async function (message) {
     embed.setColor(log.transaction=="+"?'#60c143':'#e23232')
     embed.description(`
   **Transaction Info:**`)
-    embed.field("Amount",gear.miliarize(log.amt,true),true)
+    embed.field("Amount",miliarize(log.amt,true),true)
     embed.field("Type","`"+log.type+"`",true)
     if(log.to!="271394014358405121" && log.from!="271394014358405121") {
       let ouser = (await DB.userDB.findOne({id:log.to})).meta;

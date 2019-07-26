@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 const ECO = require('../../archetypes/Economy');
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
@@ -42,7 +42,7 @@ const init = async function (msg){
     let reject = function(msg,Daily,r){
         P.remaining=  moment.utc(r).fromNow(true)
         let dailyNope = $t('responses.give.cooldown',P);
-        let embed=new gear.Embed();
+        let embed=new Embed();
         embed.setColor('#e35555');
         embed.description = _emoji('nope') + dailyNope +P.remaining+" "+r;
         return msg.channel.send({embed:embed});
@@ -51,7 +51,7 @@ const init = async function (msg){
         let {last} = await Daily.userData(msg.author);
         let dailyAvailable = await Daily.dailyAvailable(msg.author);
 
-        let embe2=new gear.Embed();
+        let embe2=new Embed();
         embe2.setColor('#e35555')
         embe2.description=`
     ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
@@ -72,7 +72,7 @@ const init = async function (msg){
     let after = function(msg,Dly){
 
         ECO.transfer(msg.author.id,TARGET.id,Math.ceil(AMOUNT*0.95),"Rubine Transfer","RBN").then(payload=>{
-            embed=new gear.Embed();
+            embed=new Embed();
             embed.thumbnail(TARGET.avatarURL)
             embed.footer(msg.author.tag,msg.author.avatarURL)
             embed.image("https://cdn.discordapp.com/attachments/488142034776096772/586549151206998057/transfer.gif")

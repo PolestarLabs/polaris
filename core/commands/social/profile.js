@@ -1,7 +1,7 @@
 const UserProfileModel = require('../../archetypes/UserProfileModel');
 // const gear = require('../../utilities/Gearbox.js');
 const Picto = require('../../utilities/Picto.js');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 
 const XYZ ={
   global_roundel: {X: 680,  Y: 2},
@@ -210,11 +210,11 @@ try{
     }
     
     txt_type = "RUBINES"
-    txt.rubines = Picto.tag(ctx, gear.miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
     txt_type = "RANKS"
-    txt.globalRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    txt.localRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.localRank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.globalRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.localRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.localRank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
     let REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff")
 

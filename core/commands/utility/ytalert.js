@@ -1,4 +1,4 @@
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 // const gear = require('../../utilities/Gearbox/global');
 const YesNo = require('../../structures/YesNo');
 const axios = require('axios');
@@ -69,7 +69,7 @@ const init = async function (msg){
         
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
         let toDelete = feedData.feeds[target] || feedData.feeds.find(f=>f.url == target || f.url.includes(target) )
-        let embed = new gear.Embed;
+        let embed = new Embed;
         embed.description = `
                 URL: https://youtube.com/channel/${toDelete.url}
                 ${$t('terms.discord.channel')}: <#${toDelete.channel}>
@@ -108,7 +108,7 @@ const init = async function (msg){
 
 async function feedEmbed(item,data){
 
-    let embed = new gear.Embed;
+    let embed = new Embed;
     embed.color("#ee1010") 
     embed.title  = "**"+item.title+"**"
     embed.url    = item.link

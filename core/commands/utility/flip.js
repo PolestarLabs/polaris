@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 
 const init = async function (msg){
 
@@ -11,13 +11,13 @@ const init = async function (msg){
     let A1= paths.CDN + "/build/coins/befli_h_s.png"
     let B = paths.CDN + "/build/coins/befli_tails.gif"
     let B1= paths.CDN + "/build/coins/befli_t_s.png"
-    let rand = gear.randomize(1,59)
+    let rand = randomize(1,59)
 
     let res = rand % 2 === 0 ? A : B
     let res2 = rand % 2 === 0 ? A1 : B1
     let face = rand % 2 === 0 ? $t('terms.coinHeads') : $t('terms.coinTails')
 
-    let embed = new gear.Embed()
+    let embed = new Embed()
     embed.author(msg.author.tag + " flips a coin...",msg.author.avatarURL)
     embed.thumbnail(res)
     
@@ -26,7 +26,7 @@ const init = async function (msg){
         
         \u200b` 
         embed.thumbnail.url = res2
-        await gear.wait(5.5);
+        await wait(5.5);
         x.edit({embed})
 
     })

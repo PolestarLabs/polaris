@@ -67,7 +67,7 @@ const init = async function (msg){
         ctx.drawImage(await part1,0,0);
         Picto.setAndDraw(ctx,Picto.tag(ctx,textop,null,"#000"),142,52,240)
     }
-    await msg.channel.send( '',gear.file( await canvas.toBuffer(),'didyoumean.png'))
+    await msg.channel.send( '',file( await canvas.toBuffer(),'didyoumean.png'))
 
 
 }

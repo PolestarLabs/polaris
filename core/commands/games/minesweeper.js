@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
@@ -17,7 +17,7 @@ const init = async function (msg){
         
         for(let i = 0;i<SQ;i++){
             for (let j = 0;j<SQ;j++){
-                let rand = gear.randomize(0,SQ+5)
+                let rand = randomize(0,SQ+5)
                 if(minesTot <= 0) rand = 0;
                 if(arrGrid[i][j]=="||<a:aaaaaaaaaaa:432063835201994762>||") continue;
                 arrGrid[i][j] = (rand==1?"||<a:aaaaaaaaaaa:432063835201994762>||":"||:zero:||")

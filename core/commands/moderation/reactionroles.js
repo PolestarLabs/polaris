@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 
 const init = async function (msg,args){
 
@@ -14,7 +14,7 @@ const init = async function (msg,args){
     const arg4 = msg.args[4] // role    
 
     const serverData = await DB.servers.get(msg.guild.id,{'modules.MODROLE':1});
-    if(!PLX.modPass(msg.member,'manageRoles',serverData)) return msg.addReaction(gear.nope);   
+    if(!PLX.modPass(msg.member,'manageRoles',serverData)) return msg.addReaction(nope);   
 
     const rolefind = (x)=> (msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find(rl=> rl.id==msg.roleMentions[0]) );
 
@@ -135,7 +135,7 @@ module.exports={
 
 
 function list(ReactionData,msg){
-    let embed=new gear.Embed();
+    let embed=new Embed();
     MS=$t('terms.discord.message',{lngs:msg.lang})
     CH=$t('terms.discord.channel',{lngs:msg.lang})
     RL=$t('terms.discord.role_plural',{lngs:msg.lang})

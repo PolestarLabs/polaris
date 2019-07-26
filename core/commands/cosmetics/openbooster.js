@@ -1,6 +1,6 @@
 // const gear = require('../../utilities/Gearbox');
 const Picto = require('../../utilities/Picto.js');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 const fs = require('fs')
 
 const init = async function (msg) {
@@ -19,8 +19,8 @@ const init = async function (msg) {
    // if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
 
     function getRandomSticker(col,exc){
-        let pile = gear.shuffle( stickerData.filter(stk=> stk.series_id == col && stk.id!=exc) );
-        return pile[ gear.randomize(0,pile.length-1) ];
+        let pile = shuffle( stickerData.filter(stk=> stk.series_id == col && stk.id!=exc) );
+        return pile[ randomize(0,pile.length-1) ];
     }
 
     const stk1    = getRandomSticker(collection);
@@ -28,7 +28,7 @@ const init = async function (msg) {
     const stk1new = userData.modules.stickerInventory.includes(stk1.id);
     const stk2new = userData.modules.stickerInventory.includes(stk2.id);
 
-    const embed = new gear.Embed;
+    const embed = new Embed;
 
     const thisPack = boosterData.find(b=>b.id===collection+"_booster");
     P.boostername = thisPack.name;

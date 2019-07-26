@@ -10,7 +10,7 @@ const init = async function (msg){
 
     const Target = PLX.getTarget(msg);
 
-    const embed = new gear.Embed()
+    const embed = new Embed()
         .image(Target.avatarURL)
         .author(Target.tag, null, "https://pollux.fun/p/"+Target.id)
         .color(await(Picto.avgColor(Target.avatarURL)));

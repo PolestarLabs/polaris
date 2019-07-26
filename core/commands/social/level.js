@@ -3,7 +3,7 @@
 const Picto = require('../../utilities/Picto')
 //const locale = require(appRoot+'/utils/i18node'); 
 //const $t = locale.getT();
-const DB = require("../../database/db_ops");
+// const DB = require("../../database/db_ops");
 const userDB=DB.users
 const serverDB=DB.servers
 
@@ -196,7 +196,7 @@ let l_exp,
   ctx.drawImage(local_roundel,0,0)
   ctx.drawImage(global_roundel,120,0)
 
-  await msg.channel.send('',gear.file(await canvas.toBuffer(),"leveli.png"));
+  await msg.channel.send('',file(await canvas.toBuffer(),"leveli.png"));
   
 }
     

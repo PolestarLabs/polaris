@@ -4,7 +4,7 @@ const init = async function (msg){
 
     try{
     
-        let embed = new gear.Embed
+        let embed = new Embed
         embed.color('#f8a863')
         
         snipe = msg.channel.snipe
@@ -26,12 +26,12 @@ const init = async function (msg){
             
           }else{
           console.log('GOTCHA no typeof')
-          message.addReaction(gear.nope).catch()
+          message.addReaction(nope).catch()
           
         }
     }else{
         
-        message.addReaction(gear.nope).catch()
+        message.addReaction(nope).catch()
           console.log('GOTCHA no scope')
         }        
         

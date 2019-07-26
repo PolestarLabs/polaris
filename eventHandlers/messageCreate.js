@@ -2,7 +2,7 @@
 
 const meSubs = require('../core/subroutines/onEveryMessage.js');
 //const {BLACKLIST,YELLOWLIST,REDLIST} = require(paths.UTILS+'banLists.js');
-//const DB = require (appRoot + "/core/database/db_ops")
+//// const DB = require (appRoot + "/core/database/db_ops")
 //const Preprocessor =   require('../core/structures/LEGACY_CommandPreprocessor.js/index.js');
 
 module.exports = async function (msg) {

@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
@@ -26,7 +26,7 @@ const init = async function (msg){
         return msg.channel.send( $t('responses.errors.cantKickHim',P) );
     }
 
-    let embed = new gear.Embed();
+    let embed = new Embed();
         P.user = Target.tag
         //embed.author = $('interface.kickban.kickingUser',P);
         embed.author(`👢 Kicking user [${P.user}]`,Target.avatarURL);

@@ -102,7 +102,7 @@ const LANGFLAGS = {
 }
 
 const translate = require('@vitalets/google-translate-api');
-const DB = require("../database/db_ops");
+// const DB = require("../database/db_ops");
 
 module.exports = { 
     LANGNAMES : translate.languages,
@@ -124,7 +124,7 @@ module.exports = {
             }).then(res => {
                 let langFromPost = (langFrom || (res.from.language.iso||"en")).toLowerCase();
                 // const gear = require("../utilities/Gearbox");
-                const embed = new gear.Embed;
+                const embed = new Embed;
                 embed.title("Pollux Machine Translation 5000")
                 if(textToTrans.length>1015) embed.description = $t('responses.warnings.translationTexTooLong',{lngs:[langTo,langFrom,'en','dev']});
                 embed.field(`${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]}`, (textToTrans.length<1015?"*```tex\n":"") + textToTrans + "```*")

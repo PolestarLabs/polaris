@@ -1,7 +1,7 @@
 
 // const gear = require('../../utilities/Gearbox.js');
 const Picto = require('../../utilities/Picto.js');
-const DB = require('../../database/db_ops.js');
+// const DB = require('../../database/db_ops.js');
 const Canvas = require("canvas");
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -126,7 +126,7 @@ const init = async function (msg, options = {}) {
     const LANG = msg.lang
     const P = { lngs: LANG, interpolation: { 'escapeValue': false } };
 
-    let emb = new gear.Embed;
+    let emb = new Embed;
     emb.setColor("#f240a7");
     P.user = msg.member.displayName;
     
@@ -145,7 +145,7 @@ const init = async function (msg, options = {}) {
     }else{
       exportFile = './resources/sndres/zelda.mp3';
       connection=  false //await voiceChannel.join();
-      await gear.wait(3);
+      await wait(3);
 if(!connection)return;  
 //const dispatcher = connection.playStream(exportFile);
 
@@ -163,7 +163,7 @@ dispatcher.on('end', () => {
     const BOX = await BOXE.legacyfy;
 
 
-    gear.wait(5).then(x => {
+    wait(5).then(x => {
       sttup.delete().catch();
     });
 
@@ -176,7 +176,7 @@ dispatcher.on('end', () => {
 
     // let lootpic=await msg.channel.send('box')
 
-    let embed = new gear.Embed();
+    let embed = new Embed();
 
     embed.thumbnail(paths.CDN+"/build/LOOT/openbox.gif")
 
@@ -228,13 +228,13 @@ ${ej("retweet")} ${$t("loot.rerollRemain", P)} **${rerolls}**
 
       // lootpic.delete().catch(e=>'die silently');
       lootembed.delete().catch(e => 'die silently');
-      let emb = new gear.Embed;
+      let emb = new Embed;
       emb.setColor("#3251d0");
       emb.thumbnail(paths.CDN+"/build/LOOT/rerollbox.gif")
       emb.description = ej("retweet") + "" + $t("loot.rerolled", P);
 
       let q = await message.channel.send({ embed: emb });
-      await gear.wait(5);
+      await wait(5);
       q.delete().catch();
       message.author.looting = false;
       init(message, { issuer, thisRoll: thisRoll + 1, rerolls: rerolls - 1, event, boxaher, rarity: boxaher.split('_')[1] });
@@ -260,7 +260,7 @@ async function composeItem(currentItem, base, UDATA) {
     case "RUBINES":
     case "JADES":
       img = await Picto.getCanvas(paths.CDN + "/build/LOOT/" + (currentItem.emblem) + ".png");
-      qtd = await Picto.tag(base, "x" + gear.miliarize(currentItem.name, true), "34px 'Corporate Logo Rounded'", "#a0a0a0");
+      qtd = await Picto.tag(base, "x" + miliarize(currentItem.name, true), "34px 'Corporate Logo Rounded'", "#a0a0a0");
 
       break;
     case "BG":

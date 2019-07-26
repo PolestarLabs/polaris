@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 
 const init = async function (msg){
 
@@ -35,7 +35,7 @@ const init = async function (msg){
     let ReactionMenu = require('../../structures/ReactionMenu')
     let userData = await DB.users.get(msg.author.id);
     let frameOn = (userData.switches||{profileFrame:"unavailable"}).profileFrame
-    embed = new gear.Embed;
+    embed = new Embed;
     embed.title( ":tools: Profile Quick Edit")
     embed.description = "\u200b"
     embed.color(userData.modules.favcolor)
@@ -74,7 +74,7 @@ const init = async function (msg){
         if(res.index == 1){
             let forward = msg;
             forward.content = "+cmd frame toggle";
-            require("../social/profile").init(forward).then(r=> men.addReaction(gear.yep).catch() ).catch(err=> console.log(err) );
+            require("../social/profile").init(forward).then(r=> men.addReaction(yep).catch() ).catch(err=> console.log(err) );
             msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"profile frame toggle`"}});
             men.deleteAfter(3000)
         } 

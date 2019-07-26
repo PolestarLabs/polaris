@@ -129,7 +129,7 @@ const TAROT = require('../../archetypes/Tarot');
     
         for (i = 0; i < S.length; i++) {
           if (typeof S[i] !== 'string') {
-            finalString += S[i][gear.randomize(0, S[i].length - 1)]
+            finalString += S[i][randomize(0, S[i].length - 1)]
     
           } else {
             finalString += S[i]
@@ -159,7 +159,7 @@ const TAROT = require('../../archetypes/Tarot');
     
     
     
-        let embed = new gear.RichEmbed
+        let embed = new RichEmbed
     
         embed.attachFiles({
           attachment: await canvas.toBuffer(),

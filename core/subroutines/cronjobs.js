@@ -4,7 +4,7 @@ const { readFileSync } = require('fs');
 const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
 const g = require( '../utilities/Gearbox/global');
-const DB = require( '../database/db_ops');
+// const DB = require( '../database/db_ops');
 const RSS = require('rss-parser');
 const parser = new RSS();
 const tubeParser = new RSS({
@@ -134,7 +134,7 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
    //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".channels"]:bot.channels.size}}).then(x=>x=null);
 
   let gchange = PLX.gamechange();
-  //let sname = gear.getShardCodename(bot,Number(process.env.SHARD)+1)
+  //let sname = getShardCodename(bot,Number(process.env.SHARD)+1)
   //bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
     
 
@@ -185,7 +185,7 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               let response = await axios.get('https://api.twitch.tv/helix/users?login'+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(180).catch(e=>null);
               if(!response) return;
               const streamer = response.data[0];
-              const embed = new gear.Embed;
+              const embed = new Embed;
                     embed.thumbnail(streamer.profile_image_url);
                     embed.author(StreamData.title);
                     embed.image(StreamData.thumbnail_url.replace('{width}','400').replace('{height}','240'));
@@ -269,7 +269,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   discoin.fetch().then(async trades => {
     trades = JSON.parse(trades)
     if (!trades.length || trades.length === 0) return;
-    await gear.wait(Number(process.env.SHARD) * 2);
+    await wait(Number(process.env.SHARD) * 2);
     Promise.all(trades.map(td => resolveExchange(td, bot)));
   });
 */

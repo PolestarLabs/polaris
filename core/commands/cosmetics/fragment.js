@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
@@ -28,7 +28,7 @@ const init = async function (msg){
             fragRar = thebg.rarity 
             fragAmt = FragConvert(thebg);
 
-            const embed = new gear.Embed()
+            const embed = new Embed()
             .thumbnail(`https://pollux.fun/backdrops/${thebg.code}.png`)
             .description(`
             Disenchant this ${_emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?

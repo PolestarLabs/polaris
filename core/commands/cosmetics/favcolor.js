@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
@@ -21,7 +21,7 @@ const init = async function (msg){
             usery = await PLX.getTarget(msg,1);
 
         let uData = await DB.users.get(usery.id);            
-        let embed = new gear.Embed;
+        let embed = new Embed;
         let x;
         if(uData)
             x = uData.modules.favcolor;
@@ -37,7 +37,7 @@ const init = async function (msg){
       
       return msg.channel.send({embed});
     }
-        let embed = new gear.Embed;
+        let embed = new Embed;
         let USERDATA = await DB.users.get(msg.author.id);
         let x = USERDATA.modules.favcolor
         msg.args[0] = x

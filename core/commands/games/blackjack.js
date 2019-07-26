@@ -1,4 +1,4 @@
-const DB = require('../../database/db_ops.js')
+// const DB = require('../../database/db_ops.js')
 const Picto = require('../../utilities/Picto')
 // const gear = require('../../utilities/Gearbox.js')
 const deckManager = require("../inventory/decks.js")
@@ -147,7 +147,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	name_d.width > 100*2 ? wid = 100*2 : wid = name_d.width;
 	c.drawImage(name_d.item, 16*2 + 60*2, 102*2, wid, name_d.height)
 
-	let bet_img = Picto.tag(c, gear.miliarize( bet ), "900 40px 'Whitney HTF'", "#e6d084")
+	let bet_img = Picto.tag(c, miliarize( bet ), "900 40px 'Whitney HTF'", "#e6d084")
 	c.drawImage(bet_img.item, 110*2 - bet_img.width / 2, 170*2)
 	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 36px 'Whitney HTF'", "#4a8b45")
 	c.drawImage(bet_txt.item, 110*2 - bet_txt.width / 2, 150*2)
@@ -215,7 +215,7 @@ const DECK 		 = async (msg,args) => {
 				await DB.users.set(msg.author.id, { 'modules.skins.blackjack': targetDeck.localizer });
 				P.deckname =  _emoji('plxcards').no_space+"`"+targetDeck.name+"`";
 				let deckSwitchMessage = `${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeck',P)} ${rand$t('responses.verbose.opinion_decks',P)}`
-				if(gear.randomize(1,6) === 3 && $t('games.blackjack.switchdeckEgg',P).length > 1 ) deckSwitchMessage= `${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeckEgg',P)} ${_emoji('plxOof')}`;
+				if(randomize(1,6) === 3 && $t('games.blackjack.switchdeckEgg',P).length > 1 ) deckSwitchMessage= `${rand$t('responses.verbose.interjections.acknowledged')} ${$t('games.blackjack.switchdeckEgg',P)} ${_emoji('plxOof')}`;
 				return msg.channel.send(deckSwitchMessage)
 	} else {
 		return msg.channel.send("You don't own this deck yet.")
@@ -296,7 +296,7 @@ const init       = async (msg) => {
 			const noJoker 	 = {nojoker: true}
 			const balance 	 = USERDATA.modules.rubines;
 			const playerHand = blackjack.getHand(noJoker);
-			const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? gear.randomize(1,10)+"H" : card );
+			const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
 			let playerHands;
 
 			const drawOptions = {

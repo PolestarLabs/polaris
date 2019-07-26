@@ -1,7 +1,7 @@
 const cmd = 'background';
 const fs = require("fs");
 // const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const DB = require("../../database/db_ops");
 const ECO = require("../../archetypes/Economy.js");
 //const locale = require(appRoot + '/utils/i18node');
 //const $t = locale.getT();
@@ -29,7 +29,7 @@ var init = async function (message) {
   }
  
 
-  BGBASE = gear.shuffle(BGBASE)
+  BGBASE = shuffle(BGBASE)
   let selectedBG = BGBASE.find(bg=>{
     if(bg.id===args) return true;
     if(bg.code===args) return true;
@@ -38,9 +38,9 @@ var init = async function (message) {
     if(message.args.some(arg=> bg.tags.toLowerCase().includes(arg))) return true;
     return false;
   });
-  if(!selectedBG) selectedBG=gear.shuffle(BGBASE)[28];
+  if(!selectedBG) selectedBG=shuffle(BGBASE)[28];
  
-  const embed = new gear.Embed;
+  const embed = new Embed;
   
   embed.author("Background","https://pollux.fun/images/tiers/"+selectedBG.rarity+".png");
   embed.description =`

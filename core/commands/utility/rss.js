@@ -1,4 +1,4 @@
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 // const gear = require('../../utilities/Gearbox/global');
 const YesNo = require('../../structures/YesNo');
 const RSS = require('rss-parser');
@@ -46,7 +46,7 @@ const init = async function (msg){
         let target = msg.args[1];
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
         let toDelete = RSSFiltered[target] || feedData.feeds.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
-        let embed = new gear.Embed;
+        let embed = new Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
                 ${$t('terms.discord.channel')}: <#${toDelete.channel}>
@@ -84,7 +84,7 @@ const init = async function (msg){
 
 
 async function feedEmbed(item,data){
-    let embed = new gear.Embed;
+    let embed = new Embed;
     embed.color("#ff8a42") 
     embed.title  = item.title
     embed.url    = item.url || item.link || item.guid

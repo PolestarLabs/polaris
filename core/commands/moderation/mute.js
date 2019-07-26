@@ -1,5 +1,5 @@
 // const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const DB = require("../../database/db_ops");
 //const locale = require(appRoot + '/utils/i18node');
 //const $t = locale.getT();
 
@@ -147,7 +147,7 @@ const init = async function (message) {
             if (chanpoint) {
                 let id = Target.user.id
                 let mess = message
-                let emb = new gear.RichEmbed;
+                let emb = new RichEmbed;
 
                 emb.setThumbnail(Target.user.avatarURL)
                 emb.setTitle(":mute: " + MUTED);
@@ -165,10 +165,10 @@ const init = async function (message) {
                     embed: emb
                 }).catch(e => {
                     let a = (new Error);
-                    gear.errLog(e, __filename, a.stack.toString())
+                    errLog(e, __filename, a.stack.toString())
                 })
 
-                var RevokeEmb = new gear.RichEmbed;
+                var RevokeEmb = new RichEmbed;
 
                 RevokeEmb.setThumbnail(Target.user.avatarURL)
                 RevokeEmb.setTitle(":mute: " + UNMUTE);

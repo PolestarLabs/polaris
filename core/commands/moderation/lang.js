@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 const i18n = require('../../structures/Locales.js');
 
 const init = async function (msg,args) {

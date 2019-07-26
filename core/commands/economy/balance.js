@@ -1,5 +1,5 @@
 // const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const DB = require("../../database/db_ops");
 
 const cmd = 'balance';
 
@@ -9,7 +9,7 @@ const cmd = 'balance';
 const init = async function (message) {
 
     const Target = (await PLX.getTarget(message))||message.author;
-    const emb = new gear.Embed();
+    const emb = new Embed();
 
     let P={lngs:message.lang}
     if(PLX.autoHelper([$t("helpkey",P)],{cmd,message,opt:this.cat}))return;
@@ -39,11 +39,11 @@ const init = async function (message) {
   if(TARGERDATA){
 
     emb.description =
-`${gear.invisibar}
-${_emoji('RBN')} ${$t('keywords.RBN_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.rubines ,true)}**
-${_emoji('JDE')} ${$t('keywords.JDE_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.jades ,true)}**
-${_emoji('SPH')} ${$t('keywords.SPH_plural',{lngs:message.lang})}: **${gear.miliarize(TARGERDATA.modules.sapphires ,true)}**
-${_emoji('EVT')} ${"Event Tokens"}: **${gear.miliarize(TARGERDATA.eventGoodie || 0 , true)}**`
+`${invisibar}
+${_emoji('RBN')} ${$t('keywords.RBN_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.rubines ,true)}**
+${_emoji('JDE')} ${$t('keywords.JDE_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.jades ,true)}**
+${_emoji('SPH')} ${$t('keywords.SPH_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.sapphires ,true)}**
+${_emoji('EVT')} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0 , true)}**`
 
 
 lastTrans = await DB.audits.find({$or:[{from:TARGERDATA.id},{to:TARGERDATA.id}]}).sort({timestamp:-1}).limit(3);

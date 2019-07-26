@@ -1,5 +1,5 @@
 
-const DB = require (appRoot + "/core/database/db_ops")
+// const DB = require (appRoot + "/core/database/db_ops")
 
 module.exports = async function run(msg,emoji,userID){
     

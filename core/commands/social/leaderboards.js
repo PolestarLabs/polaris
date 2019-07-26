@@ -1,6 +1,6 @@
 // const gear = require('../../utilities/Gearbox')
 
-const DB = require('../../database/db_ops')
+// const DB = require('../../database/db_ops')
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
 const cmd = 'leaderboards';
@@ -101,7 +101,7 @@ console.log(paths.BUILD+"/rank_mainframe.png")
 
         
         let _lvTag  = Picto.tag(ct,"LEVEL","300 "+(14-(sec?2:0))+"px 'Whitney HTF'","#FFF")
-        let _uid    = Picto.tag(ct,`${gear.miliarize(usr.rubines,true,' ')} 💎 | `+usr.id,"300 "+(12-(sec?2:0))+"px 'monospace'","#FFF5")
+        let _uid    = Picto.tag(ct,`${miliarize(usr.rubines,true,' ')} 💎 | `+usr.id,"300 "+(12-(sec?2:0))+"px 'monospace'","#FFF5")
         
         Picto.setAndDraw(ct,_uid,640,sec?70:81,450,'right');
         Picto.setAndDraw(ct,_lvTag,60,sec?18:20,45,'center');
@@ -163,7 +163,7 @@ console.log(paths.BUILD+"/rank_mainframe.png")
 
 
 
-    let FILE = gear.file(await Canvas.toBuffer(),"rank.png");
+    let FILE = file(await Canvas.toBuffer(),"rank.png");
     let message = _LOCAL ? ":trophy: **Local Leaderboards for "+msg.guild.name+"**" : ":trophy: **Global Leaderboards**"
     msg.channel.send(message,FILE)
     

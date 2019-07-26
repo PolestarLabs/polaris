@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 const ECO = require('../../archetypes/Economy');
 const A = paths.CDN + "/build/coins/befli_heads.gif"
 const A1= paths.CDN + "/build/coins/befli_h_s.png"
@@ -34,7 +34,7 @@ const init = async function (msg){
         }
     }
     
-    let rand = gear.randomize(1,99)
+    let rand = randomize(1,99)
     let countercall = call == "HEADS" ? "TAILS" : "HEADS";
     let R  =    bet > 2500 
                     ? rand  > 60 + (bet/100>30?30:bet/100) 
@@ -64,7 +64,7 @@ const init = async function (msg){
     let res2 = R == "HEADS" ? A1 : B1
     let face = R == "HEADS" ? $t('terms.coinHeads',P) : $t('terms.coinTails',P)
 
-    let embed = new gear.Embed()
+    let embed = new Embed()
     embed.author(msg.author.tag + " flips a coin...",msg.author.avatarURL)
     embed.color("#eec60c")
     embed.thumbnail(res)
@@ -79,7 +79,7 @@ betting **${bet} ${currency}**
 and landed **${face}**!
 ` 
         embed.thumbnail.url = res2
-        await gear.wait(5.5);
+        await wait(5.5);
         P.prize = Math.ceil(bet * 1.5)
         P.currency = currency
         P.interjection = win ? rand$t('responses.verbose.interjections.yatta',P) : rand$t('responses.verbose.interjections.ohmy_negative',P)

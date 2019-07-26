@@ -1,4 +1,4 @@
-const DB = require('../core/database/db_ops')
+// const DB = require('../core/database/db_ops')
 const {resolveFile,file} = require('../core/utilities/Gearbox')
 
 module.exports = async (guild,member) =>{

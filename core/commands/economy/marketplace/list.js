@@ -1,4 +1,4 @@
-const DB = require('../../../database/db_ops');
+// const DB = require('../../../database/db_ops');
 // const gear = require('../../../utilities/Gearbox');
 const navigator = require('../../../structures/ReactionNavigator');
 
@@ -78,7 +78,7 @@ const init = async  (msg, args) => {
             else
                 return msg.channel.send(...args);
         }
-        let embed = new gear.Embed
+        let embed = new Embed
         embed.author("User Marketplace Listings", "", paths.CDN)
         if (tot_pages > 0) {
 
@@ -105,7 +105,7 @@ const init = async  (msg, args) => {
                 _emoji(item.rarity) + item.name,
                 `
         **\`${filter === 'mine' ? offer.id : item.type.toUpperCase()}\`**
-        ${offer.type == "sell" ? "Selling for: " : "Buying for: "} **${gear.miliarize(offer.price, 'soft')}**${_emoji(offer.currency)}
+        ${offer.type == "sell" ? "Selling for: " : "Buying for: "} **${miliarize(offer.price, 'soft')}**${_emoji(offer.currency)}
         [\\🔗 See entry on web](${paths.CDN}/shop/marketplace/entry/${offer.id})
                     `, true)
         }

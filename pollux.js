@@ -59,8 +59,11 @@ PLX.beta = process.env.NODE_ENV !== 'production'
 PLX.maintenance = process.env.maintenance
 PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] }
 
-Gearbox = require("./core/utilities/Gearbox");
+Gearbox = require("./core/utilities/Gearbox"); 
 Object.assign(global,Gearbox.Global);
+console.log({Gearbox})
+console.log(Gearbox.Global)
+console.log(global.randomize)
 Object.assign(PLX,Gearbox.Client);
 
 //=======================================//

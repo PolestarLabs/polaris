@@ -53,7 +53,7 @@ class GenericItemInventory{
                         return msg.channel.send(...args);
                 }
         
-                let embed = new gear.Embed
+                let embed = new Embed
                 embed.thumbnail(this.img)
                 embed.color = 0xEBBEFF
                 embed.footer((args[12]||msg).author.tag + `  |  [${page}/${tot_pages}]` ,(args[12]||msg).author.avatarURL)

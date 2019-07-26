@@ -9,7 +9,7 @@ module.exports = async (message,payload) => {
  
   
    let bot = POLLUX
-   let Database_bot = {}//await gear.userDB.findOne({id:bot.user.id});
+   let Database_bot = {}//await userDB.findOne({id:bot.user.id});
    let servData = payload.servData;
    let userData = payload.userData;
    let chanData = payload.chanData;
@@ -105,7 +105,7 @@ async function determine(msg) {
         if(imgreactions[query]){
           let rea
           if(imgreactions[query].constructor == Array){
-            rea = imgreactions[query][0] // [gear.randomize(0,imgreactions[query].length-1)];
+            rea = imgreactions[query][0] // [randomize(0,imgreactions[query].length-1)];
           }else{
             rea = imgreactions[query]
           }
