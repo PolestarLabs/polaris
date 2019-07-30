@@ -25,13 +25,13 @@ const init = async function (msg){
             //thebg = BGData.find(x=>x.code==bgTarget); 
             thebg = BGData[BGData.length-1]
 
-            fragRar = thebg.rarity 
-            fragAmt = FragConvert(thebg);
+            P.rarity_emoji = _emoji(thebg.rarity);
+            P.count = FragConvert(thebg);
 
             const embed = new Embed()
-            .thumbnail(`https://pollux.fun/backdrops/${thebg.code}.png`)
+            .thumbnail(`${paths.CDN}/backdrops/${thebg.code}.png`)
             .description(`
-            Disenchant this ${_emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?
+            ${$('interface.synthfrag.disenchant',P)}
             \`Code:\`\u200b***\`${thebg.code}\`***
             `)
             
@@ -49,9 +49,9 @@ const init = async function (msg){
 
                 YesNo.run(m,msg,positive,null,null,{
                     strings:{
-                        cancel:"Cancelled!",
+                        cancel:"Cancel",
                         confirm:"OK",
-                        timeout:"Timeout!"
+                        timeout:"Timeout"
                     }
                 }).then(c=> msg.author.crafting = false)
             })

@@ -42,16 +42,16 @@ var init = async function (message) {
  
   const embed = new Embed;
   
-  embed.author("Background","https://pollux.fun/images/tiers/"+selectedBG.rarity+".png");
+  embed.author("Background",paths.CDN+"/images/tiers/"+selectedBG.rarity+".png");
   embed.description =`
    **${ selectedBG.name}**
   \`${ selectedBG.code}\`
-  Get more Backgrounds at https://pollux.fun/bgshop
+  [${$t('responses.equip.getMoreBG',P)}](${paths.CDN}/bgshop)
   `
   _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity] 
-  embed.field("Price",  selectedBG.buyable&&!selectedBG.event ? _price : "`NOT FOR SALE`",true  )
-  embed.field("Droppable",  selectedBG.droppable ? _emoji('yep') :  _emoji('nope')+"x" ,true  )
-  if (selectedBG.event ) embed.field("Event","`"+selectedBG.event+"`",true);
+  embed.field($t('terms.price',P),  selectedBG.buyable&&!selectedBG.event ? _price : "`"+$t('responses.equip.NFSALE',P)+"`",true  )
+  embed.field($t('terms.droppable',P),  selectedBG.droppable ? _emoji('yep') :  _emoji('nope')+"x" ,true  )
+  if (selectedBG.event ) embed.field($t('terms.event',P),"`"+selectedBG.event+"`",true);
   else embed.field("\u200b","\u200b",true);
 
   const userData = await DB.users.get(message.author.id);
@@ -59,19 +59,19 @@ var init = async function (message) {
   let affordsIt = await ECO.checkFunds(message.author,_price);
   let canBuy  = selectedBG.buyable&&!selectedBG.event;
   if (hasIt){
-    embed.field("\u200b","You already have this Background. Equip it?",false);      
+    embed.field("\u200b",$t('responses.equip.equipOwned',P),false);      
   }else{
     
     if  (selectedBG.buyable&&!selectedBG.event){
       if (affordsIt)
-      embed.field("\u200b","Buy this Background?");
+      embed.field("\u200b",$t('responses.equip.buyThisBG',P));
       else
-      embed.field("\u200b","You cannot afford this Background");      
+      embed.field("\u200b",$t('interface.generic.cantAfford',P));      
     }
 
   }
 
-  let imageLink = "https://pollux.fun/backdrops/"+selectedBG.code+".png";
+  let imageLink = paths.CDN+"/backdrops/"+selectedBG.code+".png";
   const Picto = require(appRoot+'/core/utilities/Picto');
   embed.setColor(await Picto.avgColor(imageLink));
   embed.image(imageLink)
@@ -96,9 +96,9 @@ message.channel.send({embed}).then(async m => {
   if(!hasIt && affordsIt && canBuy ){
     YesNo.run(m,message,positive,null,null,{
       strings:{
-        cancel:"Cancelled!",
-        confirm:"Background acquired and equipped! 😉 ",
-        timeout:"Timeout!"
+        cancel:   $t('interface.generic.cancel',P),
+        confirm:  $t('responses.equip.successBG',P),
+        timeout:  $t('interface.generic.timeout',P),
       }
     })
   };
@@ -113,5 +113,5 @@ module.exports = {
   perms: 3,
   init: init,
   cat: 'cosmetics',
-  aliases: ["bg", "backdrop"]
+  aliases: ["bg", "backdrop","equip"]
 };
