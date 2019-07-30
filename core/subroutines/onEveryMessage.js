@@ -43,17 +43,20 @@ async function levelChecks(msg) {
   let   chanData    = DB.channels.get(msg.channel.id);
 
   await Promise.all([
-    userData = await userData,
-    servData = await servData,
-    chanData = await chanData
+    userData = (await userData) || (await DB.users.new(msg.user)),
+    servData = (await servData) || (await DB.servers.new(msg.guild)),
+    chanData = (await chanData) || (await DB.channels.new(msg.channel))
   ]);
 
-  if(!chanData.modules.LVUP || !userData ) {
+
+
+  if(chanData && !chanData.modules.LVUP || !userData ) {
     userData = null;
     servData = null;
     chanData = null;
     return;
   }
+
 
   const _FACTOR =  servData.modules.UPFACTOR||0.5;
   const _CURVE = 0.0427899
