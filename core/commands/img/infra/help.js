@@ -63,7 +63,7 @@ hEmbed.field(
 )
 hEmbed.field(
     "• "+  $t('interface.help.quick_didntask',P)  +":",
-    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+localnews <TXT> <IMG | @USER> \` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
+    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+localnews <TXT> <IMG or @USER> \` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
 )
 let tex22 = `\u200b
 ${$t('interface.help.greetings',P)}
