@@ -103,7 +103,7 @@ if(message.args[0]=="info"){
           await ECO.receive(Author.id,1,"daily_365streak","SPH","+");
         }
 
-        embed.description += "\n\n" + "*Streak: **"+hardStreak+"***."
+        embed.description += "\n\n" + "*Streak: **"+(hardStreak||0)+"***."
 
 
         embed.thumbnail( paths.CDN + "/build/daily/"+ ( gemstone=="S" ? "ringsaph" : gemstone + (hardStreak%10) ) + ".gif" );
