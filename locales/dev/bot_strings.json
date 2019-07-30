@@ -9,6 +9,9 @@
         "SPH": "Sapphire",
         "SPH_fullname": "Sapphire Shards",
         "SPH_plural": "Sapphires",
+        "synthGems": "Synthesis Gems",
+        "cosmoFragment": "Cosmo Fragment",
+        "cosmoFragment_plural": "Cosmo Fragments",
         "C": "Common",
         "U": "Uncommon",
         "R": "Rare",
@@ -58,6 +61,9 @@
         "bet": "Bet",
         "level": "Level",
         "levelUp": "Level Up!",
+        "price": "Price",
+        "droppable": "Droppable",
+        "event": "Event",
         "discord": {
             "message": "Message",
             "message_plural": "Messages",
@@ -227,6 +233,12 @@
             "failure": "Oh no, It seems something went wrong. I'm sorry."
         },
         "equip": {
+            "getMoreBG":"Get more Backgrounds",
+            "NFSALE":"NOT FOR SALE",
+            "equipOwned":"You already have this Background. Equip it?",
+            "buyThisBG":"Buy this Background?",
+            "successBG":"`Success!` Background acquired and equipped! 😉",
+
             "nomedals": "Oh? Seems you don't have any medals to equip. Perhaps you should buy some first?",
             "equipSlot": "Choose a slot to equip your brand new medal!",
             "timeout": "Did you not want to equip a Medal? Call me again when you want to equip one.",
@@ -397,9 +409,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem":"Crafting `{{item_name}}`",
             "noitem": "I couldn't find this item",
+            "noitemu": "Could not find this Item or anything like it",
+            "materialMissing": "There are missing materials in your inventory, I cannot craft this.",
+            "materialPresent": "All materials are available in your inventory, proceed with the crafting?",
             "didyoumean": "I couldn't find this item. By any chance do you mean one of these?",
             "didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?"
+            ,"timeout":"Timeout! You took too much to decide, the crafting furnace now is cold."
+            ,"cancel": "Cancelled! Did you just waste both of our times?"
+            ,"crafted": "Success! Look, here's you item! Brand new and shining~"
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
@@ -423,9 +442,19 @@
     },
     "interface": {
         "generic": {
+            "cancel":"Cancelled!",
+            "timeout":"Timeout!",
+            "cantAfford":"Ah, you can't afford this... :(",
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?",
-            "alotWentOn" : "A lot went on in this day..."
+            "alotWentOn" : "A lot went on in this day...",
+            "alreadyOwnThis" : "Hey, you already own this one!"
+        },
+        "synthfrag":{
+            "disenchant":"Disenchant this {{rarity_emoji}} background into **{{count}} $t(keywords.cosmoFragment)** ?"
+            ,"cosmeticSynth":"Cosmetic Item Synthesis"
+            ,"confirmSynth":"Do you want me to synthesize this?"
+            ,"nogemsforThis":"Looks like you don't have enough gems for this synthesis..."
         },
         "booster": {
             "checkStickersAt": "Check your stickers and equip them at the {{dashboard}}",
