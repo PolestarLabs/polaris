@@ -450,6 +450,18 @@
             "alotWentOn" : "A lot went on in this day...",
             "alreadyOwnThis" : "Hey, you already own this one!"
         },
+        "brackets":{
+            "maxRR":"Max limit for Roundrobin: 16"
+            ,"maxBK":"Max limit for Brackets: 32"
+            ,"RRt":":trophy: Round-Robin Brackets"
+            ,"BKt":":trophy: Tournament Brackets"
+            ,"match":"Match"
+            ,"round":"Round"
+            ,"preround":"Pre-Round"
+            ,"team":"TEAM {{X}}"
+            ,"winner":"Winner"
+            ,"bracketX":"Bracket {{AB}}"
+        },
         "synthfrag":{
             "disenchant":"Disenchant this {{rarity_emoji}} background into **{{count}} $t(keywords.cosmoFragment)** ?"
             ,"cosmeticSynth":"Cosmetic Item Synthesis"
@@ -554,7 +566,7 @@
         },
         "help": {
             "greetings": "\n**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n  •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n      The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n      The Universal Prefix is `plx!` and cannot be disabled. \n",
-            "basics": "\n  **The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!\n  ",
+            "basics": "\n  **The Basics** - Getting started with me is as easy as building your own particle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!\n  ",
             "cmdlist": "COMMAND LIST",
             "quick_getgo": "Commands you should know from the get-go",
             "quick_useful": " Commands you might find useful",
@@ -567,11 +579,11 @@
             "trythese": "Try one of these",
 
             "curr_info": "Currency Information",
-            "currency_overview": "My currency system is relatively complex and has several limitations and protective features. Every transaction is logged and can be traced easily, that ensures your hardwork will not be eclipsed by cheaters. We log over 30 thousand transactions every day.   \n        \n    •  Everyone starts with a bunch of **Jades** and **Rubines**, and with one **Lootbox**.\n\u200b\n",
-            "rubines_desc": "\n*My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃:Cr, used for pretty much everything!*\n        Can be obtained from Daily Bonuses (`daily`), Lootboxes (`+box`) and Gambling Games (`+blackjack`, `+slots`, etc.). As well as from trades with other users once you reach Level 5 and has at least a 10-day Daily Streak.\n",
+            "currency_overview": "My currency system is relatively complex and has several limitations and protective features. Every transaction is logged and can be traced easily, that ensures your hard work will not be eclipsed by cheaters. We log over 30 thousand transactions every day.   \n        \n    •  Everyone starts with a bunch of **Jades** and **Rubines**, and with one **Lootbox**.\n\u200b\n",
+            "rubines_desc": "\n*My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃Cr, used for pretty much everything!*\n        Can be obtained from Daily Bonuses (`{{prefix}}daily`), Lootboxes (`+box`) and Gambling Games (`+blackjack`, `+slots`, etc.). As well as from trades with other users once you reach Level 5 and have at least a 10-day Daily Streak.\n",
             "jades_desc": " *Crafting \"currency\", I use these faint-teal gems - otherwise worthless - to concoct special items just for you!*\n        Can be obtained from Lootboxes, destroying Items, donating, or buying.",
-            "sapphires_desc": "*Premium currency, deep-blue pieces of the finest Sapphire gemstones, used to craft special items or as a buying currency to exclusive stuff.*\n        Can be only obtained with donations, buying, and from special events. You get one Free Sapphire every 200 and 365 Dailies, and there's a 0.1% chance of getting one from Ultra Rare Lootboxes.",
-            "lootboxes_desc": "*Special chests that contain many goodies like Backgrounds, Medals, Rubines, and Sticker Boosters*\n        Can be only obtained leveling up or from random drops, drops occur based on chat activity.\n\n         **`⚠ Intentionally Spamming to force Loot Drops, cheating, or exchanging items with Alt-Accounts will get you banned from Pollux and other bots as well.`** \n",
+            "sapphires_desc": "*Premium currency, deep-blue pieces of the finest Sapphire gemstones, used to craft special items or as a buying currency for exclusive stuff.*\n        Can be only obtained with donations, buying, and from special events. You get one Free Sapphire every 200 and 365 Dailies, and there's a 0.1% chance of getting one from Ultra Rare Lootboxes.",
+            "lootboxes_desc": "*Special chests that contain many goodies like Backgrounds, Medals, Rubines, and Sticker Boosters*.\n        Can be only obtained leveling up or from random drops, drops occur based on chat activity.\n\n         **`⚠ Intentionally Spamming to force Loot Drops, cheating, or exchanging items with Alt-Accounts will get you banned from Pollux and other bots as well.`** \n",
             "end": "\n**The complete list of Commands can be found at <https://pollux.gg/commands>**\n\nCheck out our Partners at **<https://pollux.gg/partners>**\nSee or submit fan-created artwork at **<https://pollux.gg/fanart>**\nSee your public Profile at **<https://pollux.gg/profile/me>**\n\n**Cosmetics**\nBackground Shop **https://pollux.gg/bgshop**\nMedal Shop **https://pollux.gg/medalshop**\nCrafting Workshop **https://pollux.gg/crafting**\nVirtual Stickers **<https://pollux.gg/stickers>** (for IRL stickers check Support Server)\nEvents Information **<https://pollux.gg/events>**\n\nSupport me at **<https://patreon.com/Pollux>** or **<https://pollux.gg/donate>**\nFollow me on Twitter **<https://twitter.com/maidPollux>**\n\n---\n\n**For anything else, check the __Dashboard__: <https://pollux.gg/dashboard>**\nOr join my support server: **​ https://discord.gg/rEBCccS ​**\nInvite me to your server at **<https://pollux.gg/invite>**\n"
         }
     },
