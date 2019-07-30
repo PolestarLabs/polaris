@@ -7,15 +7,13 @@ const cmd = 'leaderboards';
 
 
 
-const init = async function (msg) {
+const init = async function (msg,args) {
     delete require.cache[require.resolve('../../utilities/Picto')]
     const Picto = require('../../utilities/Picto')
     const Server  = msg.guild;
     const Author  = msg.author;
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t("helpkey",P)],{cmd,msg,opt:this.cat}))return;
-
-
+  
     let Canvas = Picto.new(718,570);
     let ctx = Canvas.getContext('2d');
 
@@ -40,7 +38,7 @@ const init = async function (msg) {
         us.user = SMEM.user 
         return us;
     });
-    const _LOCAL = ['server','local','sv','here'].includes(msg.args[0]) || msg.content.includes('top');
+    const _LOCAL = ['server','local','sv','here'].includes(args[0]);
 
     const Ranks = _LOCAL ?  localUserRanks.map(rankify) : userRanks.map(rankify);
 
@@ -50,11 +48,11 @@ const init = async function (msg) {
      function rankify(usr,self){
         if(!usr) return ;
         if(!usr.meta) usr.meta = {};
-
+        let aviDummy = {staticAvatarURL:"https://cdn.discordapp.com/embed/avatars/0.png"}
         return new Object({
             id: usr.id,
             name: _LOCAL? usr.nick || usr.name : usr.meta.username||usr.nick||usr.user.username,
-            avatar: Picto.getCanvas( self==="self"?msg.author.staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :PLX.users.find(u=>u.id==usr.id).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+            avatar: Picto.getCanvas( self==="self"?(msg.author||aviDummy).staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :(PLX.users.find(u=>u.id==usr.id)||aviDummy).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
             exp: usr.modules.exp,
             level: usr.modules.level,
             tagline: usr.modules.tagline,
@@ -170,5 +168,4 @@ console.log(paths.BUILD+"/rank_mainframe.png")
 
 
 }
- module.exports = {pub:true,cmd: cmd, perms: 3, init: init, cat: 'social', aliases:["top","lb","lead"]};
-
+ module.exports = {pub:true,cmd: cmd, perms: 3, init: init, cat: 'social', aliases:["lb","lead"]};
