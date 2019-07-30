@@ -33,7 +33,6 @@ const DEFAULT_CMD_OPTS = {
     ,cooldownReturns: 2
     ,requirements: {custom:PERMS_CALC}
     ,permissionMessage: (msg)=>{msg.addReaction(_emoji('nope').reaction);return false} 
-    ,requirements: {custom:PERMS_CALC}
     ,hooks:  {
         preCommand: (m,a) => {
             m.args = a;
