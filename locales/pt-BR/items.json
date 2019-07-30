@@ -1,14 +1,14 @@
 {
     "partial_ring": {
         "name": "Anel Incompleto",
-        "description": ""
+        "description": "Um anel de metal abaulado usado para criar um belo anel de casamento"
     },
     "lootbox_C_O": {
-        "name": "",
+        "name": "Lootbox Comum",
         "description": ""
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Fragmento Cósmico",
+        "description": "Poeira brilhante usada para formar Fragmentos Cósmicos"
     }
 }
