@@ -36,16 +36,14 @@ try{
         .footer(""+result.hex )
 
         Picto.roundRect(ctx,10,10,120,120,20,"#"+hexColor);
-        let file = file(Canvas.toBuffer(),'color.png');
-        if(programatic) return {embed,file,hex:result.hex,name:result.title};
+        if(programatic) return {embed,file:file(Canvas.toBuffer(),'color.png'),hex:result.hex,name:result.title};
         
         msg.channel.send({embed},file)
         
     }else{
         if(programatic) {
             Picto.roundRect(ctx,10,10,120,120,20,"#000000");
-            let file = file(Canvas.toBuffer(),'color.png');
-          return  {embed,file,hex:"#000000",name:"INVALID COLOR"};
+          return  {embed,file:file(Canvas.toBuffer(),'color.png'),hex:"#000000",name:"INVALID COLOR"};
         } 
         msg.reply("`ERROR :: COLOR NOT FOUND`")
     }
