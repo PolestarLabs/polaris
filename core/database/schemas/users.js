@@ -122,8 +122,8 @@ const UserSchema = new mongoose.Schema({
           MP:{type:Number,default:100}
       },
       */
-     commend:Number,
-     commended:Number,
+     commend:{type:Number, index: true},
+     commended:{type:Number, index: true},
       fun: {
           waifu: Mixed,
           lovers: Mixed,
