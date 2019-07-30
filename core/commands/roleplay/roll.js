@@ -46,7 +46,6 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
   }
   
   variables.forEach(vari=>{
-    console.log('oks')
     let regex = new RegExp("\\b"+vari.tag+"\\b","g");
     rollEq = rollEq.replace(regex,(vari.value+" "))
    // message.reply("`"+rollEq+"`")

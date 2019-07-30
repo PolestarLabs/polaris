@@ -1,14 +1,11 @@
-// const DB = require(appRoot+"/core/database/db_ops");
-// const gear = require(appRoot+"/core/utilities/Gearbox");
-
-
-const init = async function (message) {
+const init = async function (msg, args) {
 
   const {Embed} = require('eris')
   const  embed= new Embed
-  let filterid=message.args[0]
+  let filterid= args[0]
   let log =  await DB.audits.get({transactionId:filterid});
-    let curr
+  if(!log) return msg.addReaction(_emoji('nope').reaction);
+  let curr;
     switch(log.currency){
       case "RBN":
         curr="rubine";
@@ -41,14 +38,14 @@ const init = async function (message) {
     embed.timestamp= ts
     embed.footer(log.transactionId)
 
-    message.channel.send({embed})
+    msg.channel.send({embed})
 
     }
 
  module.exports = {
     init,
     pub:false,
-    cmd: 'tlookup',
+    cmd: 'transactionlookup',
     perms: 3, 
     cat: 'infra', 
     aliases:['tlookup']

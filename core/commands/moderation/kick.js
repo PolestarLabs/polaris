@@ -101,7 +101,7 @@ const init = async function (msg){
         console.error(err)
     })
   
-    console.log({HMM:"B"})
+
 
 
 

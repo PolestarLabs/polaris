@@ -102,8 +102,8 @@ const init = async function (msg) {
     ctx.rotate(-0.296706)
     ctx.restore()
 
+    msg.delete().catch(e=> null)
 
-    msg.delete()
     await msg.channel.send('', file(await canvas.toBuffer(), 'localnews.png'))
 
   } catch (e) {

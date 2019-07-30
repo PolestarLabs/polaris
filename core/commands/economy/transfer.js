@@ -6,8 +6,8 @@ const moment = require("moment");
 
 const init = async function (msg){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    const P={lngs:msg.lang,prefix:msg.prefix}
+
     
     if (msg.args.length < 2 ) return PLX.autoHelper('force', {
         cmd, msg, opt: this.cat
@@ -17,6 +17,10 @@ const init = async function (msg){
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
     let TARGET = PLX.getTarget(msg,1,false);
     if (TARGET instanceof Promise) TARGET = await TARGET;
+
+    if(!TARGET) {        
+        return PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});
+    }    
 
     const [USERDATA,TARGETDATA] = await Promise.all([
         DB.users.get(msg.author.id),

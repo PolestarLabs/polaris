@@ -1,23 +1,17 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
-
 const Picto = require('../../utilities/Picto.js')
-const Canvas = require("canvas");
 
 const init = async function (msg){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    const P = {lngs:msg.lang,prefix:msg.prefix}
 
-const TARGET = msg.guild.member(await PLX.getTarget(msg));
 
-let userData,serverData,selfLocal,LRpos;
-await Promise.all([
-     userData = await DB.users.get(TARGET.id), 
-     serverData = await DB.servers.get(msg.guild.id), 
-     selfLocal = await DB.localranks.get({user:TARGET.id,server:msg.guild.id}), 
+    const TARGET = msg.guild.member(await PLX.getTarget(msg));
+
+    let userData,serverData,selfLocal,LRpos;
+    await Promise.all([
+        userData = await DB.users.get(TARGET.id), 
+        serverData = await DB.servers.get(msg.guild.id), 
+        selfLocal = await DB.localranks.get({user:TARGET.id,server:msg.guild.id}), 
     ]);
     
     if(!selfLocal || !userData){
@@ -54,7 +48,7 @@ await Promise.all([
     ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(_back,0,0)
     
-    let colorstrap = new Canvas.createCanvas(81, 600)
+    let colorstrap = Picto.new(81, 600)
     let cx = colorstrap.getContext("2d")
     cx.fillStyle = serverColor()
     cx.fillRect(0, 0, 82, 255);
@@ -106,5 +100,5 @@ module.exports={
     ,perms:3
     ,cat:'social'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:['mini','svpfp']
+    ,aliases:['mini','svpfp','minicard']
 }

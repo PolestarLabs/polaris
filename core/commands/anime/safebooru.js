@@ -1,10 +1,8 @@
-
-// const gear = require('../../utilities/Gearbox');
+const BOORU = require('../../utilities/BooruGetter');
 
 const init = async function (msg,ext){
 
-    delete require.cache[ require.resolve('../../utilities/BooruGetter')];
-    const booru = require('../../utilities/BooruGetter');
+    //delete require.cache[ require.resolve('../../utilities/BooruGetter')];
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
@@ -38,7 +36,7 @@ const init = async function (msg,ext){
         tags += QUALITY_CONTROL;
     }    
         
-    let res = await booru[source](tags).catch(e=>null);     
+    let res = await BOORU[source](tags).catch(e=>null);     
 
     if(res){
         embed.image( res.file_url )

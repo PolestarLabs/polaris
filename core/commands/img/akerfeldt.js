@@ -1,7 +1,7 @@
 const Gal = require("../../structures/Galleries");
 
 const init = async function(msg) {
-  embed = new Embed();
+  const embed = new Embed();
 
   let img = await Gal.randomOne("akerfeldt", true);
   let avgcolor = await require("../../utilities/Picto").avgColor(img);
@@ -25,14 +25,14 @@ module.exports = {
 async function aker(m) {
   switch (randomize(0, 3)) {
     case 0:
-        break;
+      break;
     case 1:
     case 2:
       return m.addReaction("a_de_akerfelt:468592458851418115");
     case 3:
       m.addReaction("🇸");
       m.addReaction("🇴");
-      m.addReaction(_emoji('R').reaction);
+      m.addReaction(_emoji("R").reaction);
       m.addReaction("🇷");
       m.addReaction("🅾");
       m.addReaction("🇼");

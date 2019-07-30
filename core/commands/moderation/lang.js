@@ -6,7 +6,7 @@ const init = async function (msg,args) {
 
     const P = {lngs: msg.lang};
 
-    const language = args[0]
+    const language = args[0].toString()
     const flag = args[1]
     const serverData = await DB.servers.get(msg.guild.id);
 

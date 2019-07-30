@@ -13,13 +13,13 @@ const init = async function (msg){
     if (!modPass) {
         return msg.reply($t('responses.errors.insuperms', P)).catch(console.error);
     };
-
-let bucket = (await msg.channel.getMessages( msg.args[0], msg.id)).map(m=>m.id);
+const AMT = Math.abs(parseInt(msg.args[0])) || 10;
+let bucket = (await msg.channel.getMessages( AMT, msg.id)).map(m=>m.id);
 
 msg.channel.send(`Deleting messages...`)
 msg.channel.deleteMessages(bucket).then(x=>{
     console.log(x);
-    msg.channel.send(`Deleted ${msg.args[0]} messages`)
+    msg.channel.send(`Deleted ${AMT} messages`)
 })
 
 }

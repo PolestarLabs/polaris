@@ -25,7 +25,7 @@ const init = async function (msg){
             }
         }
         ir++
-        console.log({minesTot,roll:ir})
+
     } 
 
     for(i = 0;i<SQ;i++){

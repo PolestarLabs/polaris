@@ -41,7 +41,7 @@ const init = async function (msg,args){
                     let role = rolefind(4);
                     argmoji =  arg3.replace("<:a:","").replace(">","").replace("<:","");
                     message.addReaction( argmoji ).then(ok=>{
-                        console.log({message:message.id,channel})
+
                         DB.reactRoles.set({message:message.id,channel,server:msg.guild.id}, {$addToSet:{'rolemoji':{role:role.id,emoji:argmoji }}} ).then(db=>{
                             msg.channel.send({
                                 content: success,

@@ -26,12 +26,12 @@ const init = async function (msg){
             
           }else{
           console.log('GOTCHA no typeof')
-          message.addReaction(nope).catch()
+          msg.addReaction(nope).catch()
           
         }
     }else{
         
-        message.addReaction(nope).catch()
+        msg.addReaction(nope).catch()
           console.log('GOTCHA no scope')
         }        
         

@@ -519,7 +519,7 @@ function emoji(moji) {
       let emj = PLX.guilds.map(x => x)[GLDS].emojis.find(e => {
         if (e.name == moji || e.name.includes(moji)) return true;
       });
-      console.log({ emj })
+
       if (emj) resMoji = `<${emj.animated ? "a" : ""}:${emj.name}:${emj.id}>`;
     }
     return resMoji || "\⬜"
