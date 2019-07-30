@@ -1,4 +1,4 @@
-const cmd = 'synthetize';
+const cmd = 'synthesize';
 const fs = require("fs");
 // const gear = require("../../utilities/Gearbox");
 // const DB = require("../../database/db_ops");
@@ -95,7 +95,7 @@ var init = async function (message) {
         } else {
             if (obtainable) {
                 if (affordsIt)
-                    embed.footer( "Synthetize this Background?");
+                    embed.footer( "synthesize this Background?");
                 else
                     embed.footer( "You don't have gems for this Background");
             }
@@ -164,7 +164,7 @@ var init = async function (message) {
         } else {
             if (obtainable) {
                 if (affordsIt)
-                    embed.footer( "Synthetize this Medal?");
+                    embed.footer( "synthesize this Medal?");
                 else
                     embed.footer( "You don't have gems for this Medal");
             }
@@ -191,7 +191,7 @@ var init = async function (message) {
     
     embed.field( obtainable?"Synthesis Gems":"\u200b", obtainable
     ? `  ${gemCount("C")} ${gemCount("U")} ${gemCount("R")} ${gemCount("SR")} ${gemCount("UR")}` 
-    : "`Can't be synthetized 😦`", true)
+    : "`Can't be synthesized 😦`", true)
     embed.image("attachment://synth.png")
 
     const file = file(await canvas.toBuffer(),"synth.png")
