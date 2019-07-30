@@ -31,7 +31,7 @@ const init = async function (msg){
             const embed = new Embed()
             .thumbnail(`${paths.CDN}/backdrops/${thebg.code}.png`)
             .description(`
-            ${$('interface.synthfrag.disenchant',P)}
+            ${$t('interface.synthfrag.disenchant',P)}
             \`Code:\`\u200b***\`${thebg.code}\`***
             `)
             

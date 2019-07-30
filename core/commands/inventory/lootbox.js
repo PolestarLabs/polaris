@@ -55,7 +55,7 @@ const open = async function (msg,args,userID){
     require("../cosmetics/loot.js").init(msg,{issuer:"pollux",rarity:args[0]}).catch(console.error).then(done=> LOOTING.delete(userID || msg.author.id, true) );
 }
 
-const reactionOption = (rar) => {    
+const reactionOption = (rar) => {     
     return {        
         emoji: _emoji(rar).reaction,
         type: "cancel",
