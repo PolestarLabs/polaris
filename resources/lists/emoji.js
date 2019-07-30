@@ -49,9 +49,9 @@ const POLARIS_UI = {
   BOOSTER: "<:BOOSTER:596658667345149954>",
 
   // Items Meta
-  market_ready: "<market_ready:601282812879831062>",
-  can_trade: "<can_trade:601282813177757726>",
-  can_destroy: "<can_destroy:601282813471490051>",
+  market_ready: "<:market_ready:601282812879831062>",
+  can_trade: "<:can_trade:601282813177757726>",
+  can_destroy: "<:can_destroy:601282813471490051>",
   deckie: "<:deckie:586933317077827594>",
   
   // ITEMS 
