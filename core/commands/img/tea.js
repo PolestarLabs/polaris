@@ -1,4 +1,3 @@
-const {Embed} = require('../../utilities/Gearbox');
 const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
