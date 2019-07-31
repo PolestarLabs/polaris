@@ -78,7 +78,7 @@ function noteno(item,extra){
   }
   
   P.item_name = crafted_item.name;
-  embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.noitem',P) )
+  embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.craftingItem',P) )
     
 
   const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
