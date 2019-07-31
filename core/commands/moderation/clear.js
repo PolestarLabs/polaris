@@ -1,7 +1,3 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
 
 const init = async function (msg){
 
@@ -20,7 +16,7 @@ msg.channel.send(`Deleting messages...`)
 msg.channel.deleteMessages(bucket).then(x=>{
     console.log(x);
     msg.channel.send(`Deleted ${AMT} messages`)
-})
+}).catch(e=>null)
 
 }
 module.exports={

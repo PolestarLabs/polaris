@@ -115,7 +115,7 @@ const TAROT = require('../../archetypes/Tarot');
     
         let img = await Tarot.drawSpread('persona3');
 
-        console.log(img)
+        console.log(img) 
 
         msg.channel.send('',{file:img.toBuffer(),name:'tarot.png'} )
 

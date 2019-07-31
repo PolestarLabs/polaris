@@ -19,9 +19,7 @@ const init = async function (msg,args,pollux){
         if (skin.startsWith("casino")) {
             let dkinfo = DECKDATA.find(dk=>dk.id===skin);
             if (dkinfo){
-                console.log(dkinfo.rarity+"dek")
                 CASINO.push(`${_emoji(dkinfo.rarity+"dek")} **${dkinfo.name}** \n \u2003\u2003 \\🆔\`${dkinfo.localizer}\``);
-                console.log(CASINO)
             }
         }
         if (skin.startsWith("tarot"))  {
@@ -49,7 +47,6 @@ const init = async function (msg,args,pollux){
     })
     embed.color("#6757a1");
     embed.thumbnail(paths.CDN+'/build/cards/deckie.png')
-console.log(embed)
     msg.channel.send({embed})
 
 

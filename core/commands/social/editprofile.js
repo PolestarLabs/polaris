@@ -62,7 +62,9 @@ const init = async function (msg){
     men = await msg.channel.send({embed})
 
     ReactionMenu(men,msg,["✏", (frameOn?"🔴":frameOn!=='unavailable'?"🔵":null),"📝", "🖌","🖼","🌐","🗃"],{time:20000}).then(res=>{
-        console.log(res)
+        
+        if(!res) return "CANCELLED!";
+
         if(res.index == 0){
             PROCESS_SUBRESPONSE(msg,"**TEXT** `One line of text`").then(res=>{
                 require("../social/tagline").init(res.forward);    

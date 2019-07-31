@@ -15,7 +15,16 @@ const PERMS_CALC = function CommandPermission(msg){
         : msg.command.module == "_boStaff" 
             ? cfg.admins
             : PLX.beta ? [cfg.owner] : cfg.admins;
-    let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat))
+    let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat));
+
+    let perms = msg.command.botPerms
+    if (perms){
+      delete require.cache[require.resolve('./PermsCheck.js')];
+      let permchk = require('./PermsCheck.js').run(msg.command.cat, msg, perms)
+      if (permchk !== 'ok') return false;
+    }
+
+
     return (switches && uIDs);
 }
 
@@ -68,6 +77,7 @@ const registerOne = (folder, _cmd) => {
         PLX.commands[CMD.label].cmd = commandFile.cmd
         PLX.commands[CMD.label].cat = commandFile.cat
         PLX.commands[CMD.label].module = folder
+        PLX.commands[CMD.label].botPerms = commandFile.botPerms
         if (commandFile.subs) {
             commandFile.subs.forEach(sub => {
                 delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];

@@ -1,6 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
 const Picto = require('../../utilities/Picto.js');
-// const DB = require('../../database/db_ops');
 const fs = require('fs')
 
 const init = async function (msg) {
@@ -24,6 +22,7 @@ const init = async function (msg) {
     }
 
     const stk1    = getRandomSticker(collection);
+    if(!stk1) return "Collection does not exist!";
     const stk2    = getRandomSticker(collection,stk1.id);
     const stk1new = userData.modules.stickerInventory.includes(stk1.id);
     const stk2new = userData.modules.stickerInventory.includes(stk2.id);

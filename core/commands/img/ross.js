@@ -2,7 +2,7 @@ const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
 
-    embed = new Embed();
+    const embed = new Embed();
 
     let img = await Gal.randomOne('ross',true);
     

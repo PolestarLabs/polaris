@@ -158,7 +158,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
               pickers.push({id:pickMsg.author.id, name:pickMsg.author.username, mention:`<@${pickMsg.author.id}>`});
               return;
             }else{
-              //pickMsg.delete().catch();
+              //pickMsg.delete().catch(e=>null);
             };
         }, {time: 15000});
 

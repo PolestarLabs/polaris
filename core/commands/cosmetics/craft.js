@@ -142,7 +142,7 @@ function noteno(item,extra){
         materialName = material.id || material;
 
         amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
-        amtRequired = (material.amt || count(MAT,materialName))
+        amtRequired = (material.amt || objCount(MAT,materialName))
 
       if (amtInPosession >= amtRequired){
         //message.reply('ok')

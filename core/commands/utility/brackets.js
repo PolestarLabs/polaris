@@ -95,7 +95,7 @@ module.exports={
 }
 
 
-function RR (n, entrants) {  
+function RR (n, entrants,P) {  
   let res = [];               
   if (!entrants) {
     entrants = [];

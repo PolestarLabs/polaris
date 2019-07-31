@@ -26,7 +26,7 @@ if(rec>30) return msg.reply("`Navigation Limit Reached`");
         authorOnly:msg.author.id,
         time
     }).catch(e=>{
-        m.removeReactions().catch();
+        m.removeReactions().catch(e=>null);
         if(embed && !avoidEdit){
             embed.color =16499716;        
             embed.footer ={text: strings.timeout};      
@@ -35,7 +35,7 @@ if(rec>30) return msg.reply("`Navigation Limit Reached`");
     });
 
     if (!reas || reas.length === 0 ) return;
-    m.removeReactions().catch();
+    m.removeReactions().catch(e=>null);
 
     if (!isFirst && reas.length === 1 && reas[0].emoji.name == "◀") {
         options=null;

@@ -30,7 +30,7 @@ module.exports = {
         time
       }  
     ).catch(e => {
-    m.removeReactions().catch();
+    m.removeReactions().catch(e=>null);
     if(embed && !avoidEdit){
       embed.color =16499716;
       if(deleteFields===true) embed.fields = [];
@@ -44,7 +44,7 @@ module.exports = {
   if (!reas || reas.length === 0 ) return;
 
   function cancellation(){
-    m.removeReactions().catch();
+    m.removeReactions().catch(e=>null);
     if(embed && !avoidEdit){
       embed.color = 16268605
       if(deleteFields===true) embed.fields = [];
@@ -62,7 +62,7 @@ module.exports = {
   
   if (reas.length === 1 && reas[0].emoji.id == YA.id) {
     if(embed && !avoidEdit){
-      m.removeReactions().catch();
+      m.removeReactions().catch(e=>null);
       embed.color = 1234499;
       if(deleteFields===true) embed.fields = [];
       embed.footer ={text: strings.confirm};

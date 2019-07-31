@@ -51,7 +51,7 @@ module.exports = function ReactionMenu(menu,msg,choices,options={}){
                 authorOnly:msg.author.id,
                 time
             }).catch(e=>{
-                menu.removeReactions().catch();
+                menu.removeReactions().catch(e=>null);
                 if(embed && !avoidEdit){
                     embed.color =16499716;        
                     embed.footer ={text: strings.timeout};      
@@ -60,7 +60,7 @@ module.exports = function ReactionMenu(menu,msg,choices,options={}){
             });
             
             if (!reas || reas.length === 0 ) return resolve(null);
-            menu.removeReactions().catch();
+            menu.removeReactions().catch(e=>null);
             if (reas.length === 1 && choices.find(c=> reas[0].emoji.name == c.name)  ) {
                 let res = choices.find(c=> reas[0].emoji.name == c.name);
                 return resolve(res);

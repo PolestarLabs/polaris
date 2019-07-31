@@ -100,7 +100,7 @@ module.exports = {
   capitalize: function capitalize(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   },
-  count: function count(array, what) {
+  objCount: function count(array, what) {
     let it = 0; //go
     array.forEach(i => i === what ? it++ : false);
     return it;

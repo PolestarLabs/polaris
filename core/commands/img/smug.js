@@ -3,7 +3,7 @@ const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
 
-    embed = new Embed();
+    const embed = new Embed();
     let img = {};
 
     if(msg.args[0] && !!parseInt(msg.args[0])){

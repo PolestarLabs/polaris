@@ -164,7 +164,7 @@ dispatcher.on('end', () => {
 
 
     wait(5).then(x => {
-      sttup.delete().catch();
+      sttup.delete().catch(e=>null);
     });
 
 
@@ -235,7 +235,7 @@ ${ej("retweet")} ${$t("loot.rerollRemain", P)} **${rerolls}**
 
       let q = await message.channel.send({ embed: emb });
       await wait(5);
-      q.delete().catch();
+      q.delete().catch(e=>null);
       message.author.looting = false;
       init(message, { issuer, thisRoll: thisRoll + 1, rerolls: rerolls - 1, event, boxaher, rarity: boxaher.split('_')[1] });
 
