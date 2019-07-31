@@ -222,17 +222,17 @@ const DECK 		 = async (msg,args) => {
 	}
 }
 
-const init       = async (msg) => {
+const init       = async (msg,args) => {
 		const USERDATA = await DB.users.get(msg.author.id);
 
-		if (msg.args[0] === "decks") return deckManager.init(msg, "casino");
+		if (args[0] === "decks") return deckManager.init(msg, "casino");
 
 		
 
 		const powerups = USERDATA.modules.powerups || {};
 		const myDeck = (USERDATA.modules.skins || {}).blackjack || "default";
 
-		let arg = msg.args[0]
+		let arg = args[0]
 
 		const polluxNick = msg.guild.member(PLX.user).nick || "Pollux"
 		const playerName = msg.member.nick || msg.author.username;
@@ -275,8 +275,10 @@ const init       = async (msg) => {
 			P.number = USERDATA.modules.rubines;
 			return msg.reply(v.insuFloor);
 		}
-		
 		const bet = Math.abs(parseInt(arg));
+
+		if(isNaN(bet)) {PLX.autoHelper('force',{cmd:'blackjack',msg,opt:'gambling'}); return};
+
 		if (bet && bet < 25) {
 			P.number = 25
 			return msg.reply(v.insu);
