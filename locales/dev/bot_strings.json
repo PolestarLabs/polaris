@@ -418,7 +418,7 @@
             "didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?"
             ,"timeout":"Timeout! You took too much to decide, the crafting furnace now is cold."
             ,"cancel": "Cancelled! Did you just waste both of our times?"
-            ,"crafted": "Success! Look, here's you item! Brand new and shining~"
+            ,"crafted": "Success! Look, here's your item! Brand new and shining~"
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
