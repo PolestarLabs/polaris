@@ -9,6 +9,9 @@
         "SPH": "Sapphire",
         "SPH_fullname": "",
         "SPH_plural": "Sapphires",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Common",
         "U": "Uncommon",
         "R": "Rare",
@@ -58,6 +61,9 @@
         "bet": "Bet",
         "level": "Level",
         "levelUp": "Level Up!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -224,6 +230,11 @@
             "failure": "Oh no, It seems something went wrong. I'm sorry."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Oh? Seems you don't have any medals to equip. Perhaps you should buy some first?",
             "equipSlot": "Choose a slot to equip your brand new medal!",
             "timeout": "Did you not want to equip a Medal? Call me again when you want to equip one.",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "",
-            "alotWentOn": ""
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "",
@@ -536,7 +576,7 @@
         },
         "help": {
             "greetings": "**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n •  The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n •  The Universal Prefix is `plx!` and cannot be disabled.",
-            "basics": "**The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!",
+            "basics": "",
             "cmdlist": "",
             "quick_getgo": "",
             "quick_useful": "Commands you might find useful",

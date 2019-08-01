@@ -9,6 +9,9 @@
         "SPH": "Saphir",
         "SPH_fullname": "",
         "SPH_plural": "Saphire",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Gewöhnlich",
         "U": "Ungewöhnlich ",
         "R": "Selten",
@@ -58,6 +61,9 @@
         "bet": "Wetten",
         "level": "Level",
         "levelUp": "Neues Level!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -224,6 +230,11 @@
             "failure": ""
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "",
             "equipSlot": "Wähle ein Slot, um deine brandneue Medaille zu platzieren.",
             "timeout": "Ich glaube du hast vergessen deine Medaillen auszurüsten. gib mir bescheid, wenn du bereit bist, sie auszurüsten~",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "\n {{target}} ist ein Mitglied seit: {{joinedstamp}}",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
-            "alotWentOn": ""
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "",

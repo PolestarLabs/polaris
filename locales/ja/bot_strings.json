@@ -9,6 +9,9 @@
         "SPH": "サファイア",
         "SPH_fullname": "サファイアのシャード",
         "SPH_plural": "サファイア",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "一般",
         "U": "風変り",
         "R": "レア",
@@ -58,6 +61,9 @@
         "bet": "ベット",
         "level": "レベル",
         "levelUp": "レベルアップ！",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "メッセージ",
             "message_plural": "メッセージ",
@@ -224,6 +230,11 @@
             "failure": "おっと...何かが間違っていた、申し訳ありません :["
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "",
             "equipSlot": "新しいメダルを装備するスロットを選択してください！",
             "timeout": "あなたはあなたのメダルを装備するのを忘れました。 あなたがそれらを装備したいときに私に電話してください〜",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{target}} その時以来のメンバーです： {{joinedstamp}}",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "削除を確認？",
-            "alotWentOn": ""
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "",

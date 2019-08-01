@@ -9,6 +9,9 @@
         "SPH": "Saphir",
         "SPH_fullname": "Fragments de Sapphire",
         "SPH_plural": "Saphirs",
+        "synthGems": "",
+        "cosmoFragment": "Fragment des cosmos",
+        "cosmoFragment_plural": "",
         "C": "Commun",
         "U": "Peu commun",
         "R": "Rare",
@@ -58,6 +61,9 @@
         "bet": "Pari",
         "level": "Niveau",
         "levelUp": "Niveau supérieur!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "Message",
             "message_plural": "Messages",
@@ -224,6 +230,11 @@
             "failure": "Ouuups~ Quelque chose ne s'est pas passé comme prévu... Désolé :<"
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Oh? Il semble que tu n'as aucun médaille à équiper. Peut-être tu devrais en acheter quelques?",
             "equipSlot": "Choisis un emplacement pou équiper ta nouvelle médaille!",
             "timeout": "Je pense que tu as oublié d'équiper tes médailles... Appelle-moi lorsque tu voudras le faire~",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "Je n'ai pas pu trouver cet article",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
-            "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?"
+            "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} est membre depuis: {{joinedstamp}} ",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler.",
             "confirmDelete": "Affirmer la suppression?",
-            "alotWentOn": ""
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "Vérifiez vos autocollants et équipez-les au {{dashboard}}",

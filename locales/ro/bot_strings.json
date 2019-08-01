@@ -9,6 +9,9 @@
         "SPH": "Safir",
         "SPH_fullname": "",
         "SPH_plural": "Safire",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Obisnuit",
         "U": "Neobisnuit",
         "R": "Rar",
@@ -58,6 +61,9 @@
         "bet": "Pariu",
         "level": "Nivel",
         "levelUp": "Nivel Nou!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -224,6 +230,11 @@
             "failure": "O nu, se pare ca s-a intamplat ceva. Imi pare rau."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "O? Se pare ca nu ai nici o medalie pe care sa o echipezi. Poate ar trebuii sa cumperi mai inai una?",
             "equipSlot": "Alegeti un slot pentru a va echipa noua medalie!",
             "timeout": "Nu ati vrut sa va echipati Medalia? Sunati-ma din nou cand decideti sa echipati una.",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} este membru din: {{joinedstamp}}",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
-            "alotWentOn": ""
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "",
