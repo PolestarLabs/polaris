@@ -25,7 +25,7 @@ module.exports = {
         ,["Elsword | p!help",0]
         ,["Grand Theft Auto V",0]
         ,["Ace Combat",0]
-        ,["Majhong | p!help",0]
+        ,["Mahjong | p!help",0]
         ,["Starcraft II",0]
         ,["Technical Death Metal",2]
         ,["Lineage II",0]
