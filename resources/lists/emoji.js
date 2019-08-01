@@ -77,6 +77,13 @@ const POLARIS_UI = {
 
 }
 
+const POLLUXES = {
+  plxOof : "<:plxOof:594739726435745814>",
+  PolluxChu : "<:PolluxChu:594739726418968576>",
+  plxYaY: "<:plxYaYforplebs:597169518296432641>",
+  plxYaYani: "<:plxYaYforplebs:597169518296432641>",
+}
+
 const BRANDS = {
   reddit: "<:reddit:510526878038360074>",
   twitter: "<:twitter:510526878139023380>",
@@ -507,7 +514,7 @@ const emojibank = {
   probius: "<:Probius:328606062917844994>"
 }
 
-Object.assign(emojibank,THIRD_PARTY,MISC,BRANDS,POLARIS_UI);
+Object.assign(emojibank,THIRD_PARTY,MISC,BRANDS,POLARIS_UI,POLLUXES);
 
 
 function emoji(moji) {
