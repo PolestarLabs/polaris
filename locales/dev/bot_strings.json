@@ -294,6 +294,23 @@
             "cantDestroy": "I can't destroy this.",
             "destroyed": "Item destroyed! This is what remained from it:"
         },
+        "marry":{
+            "needRing":"You need a Ring to propose, where are your manners?"
+            ,"ringTutorial":"*Currently you have no wedding rings to be used.*\n\nTo get a Ring, you need to craft one.\nFor that you have to buy a **Partial Ring** at the [**Crafting Workshop**]({{craftingURL}} \"Pollux Crafting Workshop!\") and spend either Rubines, Jades, or Sapphires, plus any additional materials to make a Jewel for it.\nYou can also spend all of them to make the ultimate gemstone wedding ring!\n\nCraft rings using `{{prefix}}craft`, start by crafting the **Partial Ring** (`{{prefix}}craft partial-ring`) then adding the gemstone of your choice with `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. These 4 are the *basic rings* made solely with gemstones, some items will allow you to make different rings!"
+            ,"noneOfThisRing": "Double-check your pockets, there's no such ring on your Inventory."
+            ,"availableRings": "Available rings are:"
+            ,"proposal" : "{{userA}} has proposed to **{{userB}}** with the **{{ringname}}**.\n{{userB}} do you accept?"
+            ,"actuallyNone": "Actually you have *none*{{'none' refers to 'rings'}}. Go get one! **Now!**"
+            ,"saidYes" : "{{userB}} said YES!"
+            ,"saidNo" : "{{userB}} said no..."
+            ,"saidNothing" : "{{userB}} ran away... look at them go... oh well... wanna drink something?"
+            ,"addToFeatured" : "Would you like to show {{userB}} as your featured lover in your ProfileCard?"
+            ,"addToFeatured2" : "{{userB}} Would you like to do the same with {{userA}}?"
+            ,"addToFeatured3" : "Display your new spouse in Profile Cards?"
+            ,"alreadyMarriedUp" : "Looks like you're already married to {{userB}}. Would you like to upgrade the ring from *{{ringA}}* to **{{ringB}}**?"
+            ,"alreadyMarriedInf" : "You're already married to {{userB}} with an identical or superior ring (*{{ringB}}*)! What are you trying to do?"
+            ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
+        },
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
