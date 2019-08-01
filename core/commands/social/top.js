@@ -10,8 +10,8 @@ const topCommend = async (m)=>
         let [CommendRank,myRankOut,myRankIn]   =await 
         Promise.all([
             DB.users.find({$or: [ {'modules.commend':{$gt:0}} , {'modules.commended':{$gt:0}} ] },{name:1,id:1,'modules.commend':1,'modules.commended':1 }).lean().exec(),
-            DB.users.find({'modules.commended':{$gt: userData.modules.commended }} ).countDocuments(),
-            DB.users.find({'modules.commend'  :{$gt: userData.modules.commend }} ).countDocuments()
+            DB.users.find({'modules.commended':{$gt: userData.modules.commended || 0 }} ).countDocuments(),
+            DB.users.find({'modules.commend'  :{$gt: userData.modules.commend || 0 }} ).countDocuments()
 
         ]);
 
@@ -24,14 +24,28 @@ const topCommend = async (m)=>
 
         let isUsr = (x)=>x.id===m.author.id;
 
-        let listCommend = commendSort.map( 
+        let listCommend = commendSort.slice(0,3).map( 
             x=> `:reminder_ribbon: *\`\u200b${(x.modules.commend||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
                 (isUsr(x)?"**":"")+
                 x.name.slice(0,16) + (x.name.length>15?"...":"") 
                 +(isUsr(x)?"**":"")
             }](${paths.CDN}/p/${x.id})*`)
 
-        let listCommenders = commendedSort.map( 
+        let listCommenders = commendedSort.slice(0,3).map( 
+            x=> `${ _emoji('token')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
+                (isUsr(x)?"**":"")+
+                x.name.slice(0,16) + (x.name.length>15?"...":"")
+                +(isUsr(x)?"**":"")
+             }](${paths.CDN}/p/${x.id})*`)
+
+        let listCommend2 = commendSort.slice(3,10).map( 
+            x=> `:reminder_ribbon: *\`\u200b${(x.modules.commend||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
+                (isUsr(x)?"**":"")+
+                x.name.slice(0,16) + (x.name.length>15?"...":"") 
+                +(isUsr(x)?"**":"")
+            }](${paths.CDN}/p/${x.id})*`)
+
+        let listCommenders2 = commendedSort.slice(3,10).map( 
             x=> `${ _emoji('token')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
                 (isUsr(x)?"**":"")+
                 x.name.slice(0,16) + (x.name.length>15?"...":"")
@@ -41,11 +55,14 @@ const topCommend = async (m)=>
 
 
         return {embed:{
+            thumbnail:{url:"https://pollux.fun/build/rank.png"},
             color:0x3b9ea5,
-            description: `:reminder_ribbon: **#${myRankOut}** (${userData.modules.commended}) | ${ _emoji('token')}**#${myRankIn}** (${userData.modules.commend})`,
+            description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankOut+1}** (${userData.modules.commend||0}) \u2003 | \u2003  ${ _emoji('token')}**#${myRankIn+1}** (${userData.modules.commended||0})`,
             fields:[
-                {name:"Top Commended",  value: listCommend.join('\n'),inline: true},
-                {name:"Top Commenders", value: listCommenders.join('\n'),inline: true}
+                {name:"Top Commended",  value: listCommend.join('\n').slice(0,1024),inline: true},
+                {name:"Top Commenders", value: listCommenders.join('\n').slice(0,1024),inline: true},
+                {name:"\u200b",  value: listCommend2.join('\n').slice(0,1024),inline: true},
+                {name:"\u200b", value: listCommenders2.join('\n').slice(0,1024),inline: true}
             ]
         }}
 

@@ -79,13 +79,13 @@ const init = async function (msg) {
     let status = async function (msg, Daily) {
         let userDaily = await Daily.userData(msg.author);
         let dailyAvailable = await Daily.dailyAvailable(msg.author);
-        P.remaining = moment.utc(userDaily.last).add(Daily.day, 'milisseconds').fromNow(true);
+        P.remaining = moment.utc(userDaily.last).add(Daily.day, 'milliseconds').fromNow(true);
         let embe2 = new Embed;
         embe2.setColor('#3b9ea5')
         embe2.description(`
     ${_emoji('future')} ${dailyAvailable ? _emoji('online') + $t('responses.commend.check_yes', P) : _emoji('dnd') + $t('responses.commend.check_no', P)} 
        
-    :reminder_ribbon: × **${userData.modules.inventory.find(i => i.id === "commendtoken").count || 0}**
+    :reminder_ribbon: × **${(userData.modules.inventory.find(i => i.id === "commendtoken") || {}).count || 0}**
          `)
         return msg.channel.send({ embed: embe2 });
     }
@@ -95,16 +95,18 @@ const init = async function (msg) {
 }
 
  
-const info = async (msg) => {
-
+const info = async (msg, args) => {
     let Target;
-    if (msg.args.length !== 1) Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
-    if (msg.args.length === 1) Target = msg.author;
+    if (args.length !== 0) Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
+    if (args.length === 0) Target = msg.author;
     if (Target == null) Target = msg.author;
-
-    const targetDataC = (await DB.commends.findOne({ id: Target.id }).lean().exec()) || { id: Target.id, whoIn: [], whoOut: [] };
     
-    let metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map(u => u.id) } }, { id: 1, meta: 1 }).lean().exec();
+    const [targetData,targetDataC] = await Promise.all([
+        (await DB.users.findOne({ id: Target.id })) || (await DB.users.new(Target)),
+        ((await DB.commends.findOne({ id: Target.id }).lean().exec()) || { id: Target.id, whoIn: [], whoOut: [] })
+    ]);
+
+    let metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map(u => u.id) } }, { id: 1, meta: 1 }).sort({amt:-1}).lean().exec();
     let commendT3 = targetDataC.whoIn.map(u => {
         return { name: metas.find(x => x.id == u.id).meta.tag, amt: u.count }
     });
