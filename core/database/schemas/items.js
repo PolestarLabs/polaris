@@ -22,6 +22,7 @@ const Item = new Schema({
   usefile:      {type:String,default:'notusable'},
   code:         String,
   misc:         Mixed,
+  subtype:       String,
   series:       String,
   filter:       String,
   crafted:       Boolean,
