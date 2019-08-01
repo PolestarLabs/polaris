@@ -325,7 +325,7 @@ if(message.author.id!=="88120564400553984"){
   if(userData.rewardsMonth >= MONTHCHECK && userData.donator == tier.title){
     return message.reply("You already claimed this month's rewards!");
   }
-  if(!useroles.has("421181998439333901")){
+  if(!useroles.includes("421181998439333901")){
     return message.reply("Your donation status is unconfirmed.");
   }
 }
