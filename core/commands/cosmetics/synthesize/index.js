@@ -59,7 +59,7 @@ var init = async function (message,args) {
 
     message.channel.send({embed},file(await canvas.toBuffer(),"synth.png")).then(async m => {
         if (!hasIt && affordsIt && canBuy) {
-            YesNo.run(m, message, positive, null, null, {
+            YesNo(m, message, positive, null, null, {
                 embed,
                 strings: {
                     cancel: "Cancel!",

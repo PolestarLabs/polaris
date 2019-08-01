@@ -84,7 +84,7 @@ var init = async function(msg, args) {
     }
 
     if (!hasIt && affordsIt && canBuy) {
-      YesNo.run(m, msg, positive, null, null, {
+      YesNo(m, msg, positive, null, null, {
         strings: {
           cancel: $t("interface.generic.cancel", P),
           confirm: $t("responses.equip.successBG", P),

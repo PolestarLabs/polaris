@@ -1,6 +1,6 @@
 // const DB = require('../../../database/db_ops');
 // const gear = require('../../../utilities/Gearbox');
-const YesNo = require('../../../structures/YesNo').run;
+const YesNo = require('../../../structures/YesNo');
 
 
 const init = async function(msg,args){

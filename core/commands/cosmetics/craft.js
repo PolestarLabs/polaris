@@ -1,5 +1,5 @@
 const cmd = 'craft';
-const YesNo = require('../../structures/YesNo').run;
+const YesNo = require('../../structures/YesNo');
 const ECO = require("../../archetypes/Economy.js")
 const diff = require('fast-diff');
 
@@ -91,7 +91,7 @@ function noteno(item,extra){
     embed.thumbnail(paths.CDN+"/build/items/"+ICON+".png")
     
     let CODE = crafted_item.code
-    let MAT = crafted_item.materials
+    let MAT = crafted_item.materials || []
     let GC = crafted_item.gemcraft
     let fails = 0
     let matDisplay = ""

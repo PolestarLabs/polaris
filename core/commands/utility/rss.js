@@ -54,7 +54,7 @@ const init = async function (msg){
         let confirm = await msg.channel.send({content:
             $t('interface.generic.confirmDelete',P),
             embed});
-        YesNo.run(confirm,msg,async (cc)=>{
+        YesNo(confirm,msg,async (cc)=>{
             await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
         });    
     }

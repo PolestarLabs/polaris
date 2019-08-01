@@ -47,7 +47,7 @@ const init = async function (msg){
                 }
 
 
-                YesNo.run(m,msg,positive,null,null,{
+                YesNo(m,msg,positive,null,null,{
                     strings:{
                         cancel:"Cancel",
                         confirm:"OK",
