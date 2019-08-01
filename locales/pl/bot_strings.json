@@ -9,6 +9,9 @@
         "SPH": "Szafir",
         "SPH_fullname": "Odłamki Szafirów",
         "SPH_plural": "Szafiry",
+        "synthGems": "Kryształy Syntezy",
+        "cosmoFragment": "Kosmiczny Fragment",
+        "cosmoFragment_plural": "Fragmenty Cosmo",
         "C": "Zwyczajne",
         "U": "Niezwykłe",
         "R": "Rzadki",
@@ -58,6 +61,9 @@
         "bet": "Obstawiać",
         "level": "Poziom",
         "levelUp": "Kolejny Poziom!",
+        "price": "Cena",
+        "droppable": "Zrzucalne",
+        "event": "Event",
         "discord": {
             "message": "Wiadomość",
             "message_plural": "Wiadomości",
@@ -224,6 +230,11 @@
             "failure": "Ojej! Wydaje się, że coś poszło nie tak. Przepraszam."
         },
         "equip": {
+            "getMoreBG": "Zdobądź więcej teł",
+            "NFSALE": "NIE NA SPRZEDAŻ",
+            "equipOwned": "Masz już te tło. Aktywować je?",
+            "buyThisBG": "Kupić te tło?",
+            "successBG": "`Sukces!` Tło zdobyte i aktywowane! 😉",
             "nomedals": "Oj? Nie masz żadnych medali do wyposażenia. Może najpierw należy je kupić?",
             "equipSlot": "Wybierz slot, w który włożysz swój medal.",
             "timeout": "Czyli nie chcesz wyposażyć się w Medal? Zadzwoń do mnie ponownie, gdy nabierzesz na niego ochotę. ",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "Tworzę `{{item_name}}`",
             "noitem": "Nie mogę znaleźć tego przedmiotu",
+            "noitemu": "Nie mogę znaleźć tego przedmiotu ani niczego podobnego",
+            "materialMissing": "Brakuje ci materiałów w ekwipunku, nie mogę tego stworzyć.",
+            "materialPresent": "Wszystkie materiały są w twoim ekwipunku, kontynuować?",
             "didyoumean": "Nie mogę znaleźć tego przedmiotu. Może chodzi Ci o jeden z tych?",
-            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?"
+            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?",
+            "timeout": "Koniec czasu! Za długo się decydowałeś, piec do tworzenia już jest chłodny.",
+            "cancel": "Anulowano! Czy ty traciłeś czas obojga z nas?",
+            "crafted": "Sukces! Patrz, tu jest twój przedmiot! Całkowicie nowy i błyszczący~"
         },
         "misc": {
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "Anulowano!",
+            "timeout": "Koniec czasu!",
+            "cantAfford": "Ah, nie stać cię na to... :(",
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
             "confirmDelete": "Potwierdzasz usunięcie?",
-            "alotWentOn": "Wiele się stało tego dnia..."
+            "alotWentOn": "Wiele się stało tego dnia...",
+            "alreadyOwnThis": "Hej, już to posiadasz!"
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "Mecz",
+            "round": "Runda",
+            "preround": "Prerunda",
+            "team": "DRUŻYNA {{X}}",
+            "winner": "Zwycięzca",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "Synteza Przedmiotów Upiększających",
+            "confirmSynth": "Chcesz abym to zsyntetyzowała?",
+            "nogemsforThis": "Wygląda na to że nie masz wystarczającej liczby kryształów potrzebnych do tej syntezy..."
         },
         "booster": {
             "checkStickersAt": "Oglądaj swoje naklejki i aktywuj je w {{dashboard}}",
@@ -536,7 +576,7 @@
         },
         "help": {
             "greetings": "\n**Witaj! Jestem Pollux. Nowa pokojówka przypisana do twojego serwera.**\nTutaj są wyjaśnienia kilku moich umiejętności:\n\n  • Domyślny Prefiks to `+`, możesz zmienić go za pomocą `+prefix <New Prefix>`. \n      Globalny Prefiks to `p!`, przydatny dla osób które nie znają twojego własnego prefiksu, może zostać wyłączony w **Panelu**. \n      Uniwersalny Prefiks to `plx!` i nie może zostać wyłączony.\n",
-            "basics": "\n  **Podstawy** - Rozpoczęcie przygody ze mną jest tak łatwe, jak zbudowanie przyspieszacza cząstek! ...Czekaj, nigdy takiego nie zbudowałeś(-łaś)? Cóż, żaden problem!\nOto tylko kilka z {{commandcount}} komend, które mam!\n  ",
+            "basics": "\n**Podstawy** - Rozpoczynanie pracy ze mną jest tak proste jak budowa własnego zderzacza cząsteczek! ...chwila, nigdy żadnego nie zbudowałeś? Żaden problem!\nTu masz kilka komend spośród {{commandcount}} które posiadam!\n  ",
             "cmdlist": "LISTA KOMEND",
             "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
             "quick_useful": " Komendy, które mogą okazać się użyteczne",
@@ -547,11 +587,11 @@
             "notenough": "Czy te małe pudełko ci nie wystarczy?",
             "trythese": "Wypróbuj jedno z tych",
             "curr_info": "Informacje o walucie",
-            "currency_overview": "Mój system pieniężny jest dosyć zwarty i ma kilka ograniczeń i funkcji zabezpieczających. Każda transakcja jest zapisywana i może być łatwo namierzona, co oznacza że twoja ciężka praca nie zostanie przyćmiona przez oszustów. Zapisujemy ponad 30 tysięcy transakcji każdego dnia.   \n        \n    • Każdy zaczyna z jakąś ilością **Żadów** i **Rubinów**, oraz z jedną **Skrzynką**.\n",
-            "rubines_desc": "\n*Moja główna waluta, jasnoróżowe kryształy zrobione z heksagonalnych skalenohedronów z Al₂O₃:Cr, używane prawie do wszystkiego!*\n        Może być zdobyta z Codziennych Bonusów (`daily`), Lootboxów (`+box`) i z Gier Hazardowych (`+blackjack`, `+slots`, etc.). Można ją również pozyskać za wymiany z innymi użytkownikami od razu jak osiągniesz 5 Poziom i masz co najmniej 10-dniowy Ciąg Codziennych Bonusów.\n",
+            "currency_overview": "Mój system pieniężny jest dosyć zwarty i ma kilka ograniczeń i funkcji zabezpieczających. Każda transakcja jest zapisywana i może być łatwo namierzona, co oznacza że twoja ciężka praca nie zostanie przyćmiona przez oszustów. Zapisujemy ponad 30 tysięcy transakcji każdego dnia.   \n        \n    • Każdy zaczyna z jakąś ilością **Żadów** i **Rubinów**, oraz z jedną **Skrzynką**\n",
+            "rubines_desc": "\n*Moja główna waluta, jasnoróżowe kryształy zrobione z heksagonalnych skalenohedronów z Al₂O₃:Cr, używane prawie do wszystkiego!*\n        Może być zdobyta z Codziennych Bonusów (`{{prefix}}daily`), Lootboxów (`+box`) i z Gier Hazardowych (`+blackjack`, `+slots`, etc.). Można ją również pozyskać za wymiany z innymi użytkownikami od razu jak osiągniesz 5 Poziom i masz co najmniej 10-dniowy Ciąg Codziennych Bonusów.\n",
             "jades_desc": " *\"Waluta\" do Tworzenia, używam tych lekko turkusowych kryształków - w innych przypadkach bezwartościowych - do tworzenia specjalnych przedmiotów dla ciebie!*\n        Może być zdobyta z Lootbox'ów, za niszczenie przedmiotów, wpłaty lub mogą być kupione.",
-            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyty za wpłaty, może być kupiony lub otrzymany za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
-            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach też.`** \n",
+            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyta za wpłaty, może być kupiona lub otrzymana za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
+            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach również.`** \n",
             "end": "\n**Kompletna lista Komend dostępna jest na <https://pollux.gg/commands>**\n\nObejrzyj naszych Partnerów na **<https://pollux.gg/partners>**\nZobacz lub prześlij arty stworzone przez fanów na **<https://pollux.gg/fanart>**\nZobacz swój publiczny profil na **<https://pollux.gg/profile/me>**\n\n**Dodatki**\nSklep z tłami **<https://pollux.gg/bgshop>**\nSklep z medalami **<https://pollux.gg/medalshop>**\nTworzenie przedmiotów **<https://pollux.gg/crafting>**\nWirtualne nalepki **<https://pollux.gg/stickers>** (Aby zdobyć prawdziwe naklejki wejdź na Serwer Support'u)\nInformacje o Event'ach **<https://pollux.gg/events>**\n\nWesprzyj mnie na **<https://patreon.com/Pollux>** lub **<https://pollux.gg/donate>**\nŚledź mnie na Twitterze **<https://twitter.com/maidPollux>**\n\n---\n\n**Dla czegokolwiek innego zobacz __Dashboard__:\n<https://pollux.gg/dashboard>**\nLub dołącz na serwer support'u: **<https://discord.gf/rEBCccS>**\nZaproś mnie na swój serwer pod adresem **<https://pollux.gg/invite>**\n"
         }
     },

@@ -9,6 +9,9 @@
         "SPH": "Sapphire",
         "SPH_fullname": "Şapir Parçacıkları",
         "SPH_plural": "Sapphireler",
+        "synthGems": "",
+        "cosmoFragment": "Kozmetik Parça",
+        "cosmoFragment_plural": "",
         "C": "Sıradan",
         "U": "Olağandışı",
         "R": "Nadir",
@@ -58,6 +61,9 @@
         "bet": "Bahis",
         "level": "Seviye",
         "levelUp": "Seviye yükseldi!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "İleti",
             "message_plural": "İletiler",
@@ -224,6 +230,11 @@
             "failure": "Olamaz, görünüşe göre bir şeyler yanlış gitti. Üzgünüm."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Peh, takacak hiç madalyan yok. Birazcık almaya ne dersin?",
             "equipSlot": "Madalyanı takacak bir yer seç!",
             "timeout": "Madalyon takmayı istememiş miydin? Bi' tane takmak istediğinde beni tekrardan çağır.",
@@ -390,9 +401,16 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "Bu eşyayı bulamadım",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "Bu eşyayı bulamadım. Bunlardan birini demek istemiş olabilirsin, belki?",
-            "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?"
+            "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
@@ -442,9 +460,31 @@
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
             "confirmDelete": "Silmeyi onaylıyor musun?",
-            "alotWentOn": "Bugün çok şeyler döndü..."
+            "alotWentOn": "Bugün çok şeyler döndü...",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
         },
         "booster": {
             "checkStickersAt": "{{dashboard}}'da etiketlerine göz atıp giy",
@@ -536,7 +576,7 @@
         },
         "help": {
             "greetings": "\n**Esenlikler diliyorum! Ben Pollux. Sunucunuza atanan yeni hizmetkârınız.**\nBuyurun size yeteneklerimin kısa bir açıklaması:\n\n  •Varsayılan Prefix: “+”dır, “+prefix <New Prefix>” yaparak değiştirebilirsin. \n      Küresel Prefix “p!”dir, Özgün Prefixini bilmeyen kullanıcılar için yararlıdır, **Dashboard**'da devre dışı bırakılabilir. \n      Evrensel Prefix “plx!”dir ve devre dışı bırakılamaz.\n",
-            "basics": "\n **Temeller** - Bana alışmak prototip hızlandırıcı kurmak kadar kolaydır! ... bir dakika, hiç kurmadın mı? Kafana takma!\n Bunlar {{commandcount}} sahip olduğum komutlardan sadece birazı!\n  ",
+            "basics": "",
             "cmdlist": "KOMUT LİSTESİ",
             "quick_getgo": "Başlamak için bilmen gereken komutlar",
             "quick_useful": " Kullanışlı bulabileceğin komutlar",
@@ -547,11 +587,11 @@
             "notenough": "Bu kutucuk yeterli değil mi?",
             "trythese": "Şunlardan birini dene",
             "curr_info": "Döviz Malumatı",
-            "currency_overview": "Döviz sistemim nispeten karmaşık ve çok sayıda limit ve koruyucu özellikleri var. Her işlem, işlenir ve izi kolayca sürülebilirdir, Bu, sıkı çalışmanın cambazlar tarafından gölgede bırakılmadığından emin olmamızı sağlar. Her gün 30 binden fazla işlem işliyoruz.   \n        \n    • Herkes biraz **Jade**, **Rubin** ve bir de **Define Sandığı** ile başlar\n",
-            "rubines_desc": "\n*Ana dövizim, açık-pembe mücevher taşları hemen hemen her şey için kullanılan özel altıgensel Al₂O₃:Cr scalenohedronların’dan oluşur!*\n        Günlük Ödüllerden (`daily`), Define Sandıklarından (`+box`) ve Kumar Oyunlarından (`+blackjack`, `+slots`, vb.) elde edilebilir. Beşinci seviyeye ulaşıp en az 10-günlük-ödül-serin olunca takaslardan da elde edebilirsin.\n",
+            "currency_overview": "",
+            "rubines_desc": "",
             "jades_desc": " *“Döviz” üretirken, özel eşyaları hazırlamak amacıyla bu soluk-mavisi mücevherleri -aksi takdirde değersiz- kullanıyorum sırf senin için!*\n        Define Sandıklarından, eşya yok ederek, bağış yapmakla, ya da satın almakla elde edilebilir.",
-            "sapphires_desc": "*Seçkin döviz, en kaliteli Şapir Mücevherlerinin koyu-mavi parçaları, özel eşyaları üretmek için ya da özel şeyleri almak için para birimi olarak kullanılır.*\n        Sadece bağış yaparak, satın alarak, ve özel etkinliklerden elde edilebilir. Her 200. ve 365. günlüklerinde Beleş Şapir kazanırsın, ve Ultra Nadir Define Sandıklarından %0.1 şansla düşürebilirsin.",
-            "lootboxes_desc": "*Arkaplan, Madalyon, Rubin ve Sticker Booster gibi birçok ganimetler bulunduran özel kutular*\n        Sadece seviye atlayarak ya da rastgele droplardan elde edilebilir. Droplar sohbet etkinliğine bağlı olarak olur.\n\n         **`⚠ Define Sandığı düşürmek için Kasten Spam yapmak, hile yapmak ya da alt hesaplarınla eşya değiş-tokuşu yapmak seni Polluxtan ve diğer botlardan bonlayacaktır.**\n",
+            "sapphires_desc": "",
+            "lootboxes_desc": "",
             "end": "\n**Komutların tam listesi <https://pollux.gg/commands> adresine bulunabilir.**\n\n**<https://pollux.gg/partners>** Adresinde Partnerlerimize göz atın\n**<https://pollux.gg/fanart>** Adresinde fan artlarınızı göster ya da gönder\n**<https://pollux.gg/profile/me>** Adresinde Herkese açık profilini bak\n\n**Kozmetikler**\nArkaplan Dükkânı **https://pollux.gg/bgshop**\nMadalyon Dükkânı **https://pollux.gg/medalshop**\nÜretim Atölyesi **https://pollux.gg/crafting**\nKanlı canlı Stickerlar **<https://pollux.gg/stickers>** (Gerçek Hayat Stickerları için Destek Sunucumuza göz atın)\nEtkinlik Malumatı **<https://pollux.gg/events>**\n\nBeni **<https://patreon.com/Pollux>** ya da **<https://pollux.gg/donate>** adreslerinden destekle\nBeni Twitterdan takip et **<https://twitter.com/maidPollux>**\n\n\n---\n\n**Başka herhangi bir şey için, __Dashboard__'a göz at: <https://pollux.gg/dashboard>**\nYa da destek sunucuma katıl: **​ https://discord.gg/rEBCccS ​**\n**<https://pollux.gg/invite>** Adresinde beni sunucuna davet et\n"
         }
     },
