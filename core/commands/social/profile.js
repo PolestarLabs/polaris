@@ -193,7 +193,7 @@ try{
         ctx, USERPROFILE.personalText,
         `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,
         TEXT[txt_type].COLOR,
-        XYZ.persotex.W, XYZ.persotex.H //255, 70
+        XYZ.persotex.W, XYZ.persotex.H,{paddingY:5} //255, 70
     );
 
     txt_type = "SIDEBAR"
@@ -481,7 +481,7 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
      
       if (bottomTag == "translator" && Target_Database.switches.translator) {
         let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
-        ctx.drawImage(flag, 160 + 313, 567, 32, 21);
+        ctx.drawImage(flag, 160 + 313, 573, 32, 21);
       }
       
       if (Target_Database.blacklisted && Target_Database.blacklisted != "") {

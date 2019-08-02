@@ -23,9 +23,11 @@ module.exports={
 
  tag: function tag(base, text, font, color,stroke) {
 
-        font = font || '14px Product,Sans'
+        font = font || '14px'         
+        font += ",'',Product Sans'" //KOREAN SUPPORT
         font += ",'DX아기사랑B' " //KOREAN SUPPORT
         font += ",'Corporate Logo Rounded' " //JAPANESE SUPPORT
+        font += ",sans-serif " 
         color = color || '#b4b4b8'
         base.font = font;
 
@@ -36,7 +38,8 @@ module.exports={
             let c = item.getContext("2d")
             c.antialias = 'subpixel';
             c.filter = 'best';
-            c.font = font;
+            c.font = base.font;
+            console.log(text,base.font)
             if(stroke){
               c.strokeStyle  = stroke.style;
               c.lineWidth   = stroke.line;
@@ -50,7 +53,10 @@ module.exports={
 
   block: function block(base, text, font, color, W, H, options) {
      
-       font = font || '14px Product,Sans'
+       font = font || '14px Product Sans'
+       font += ",'DX아기사랑B' " //KOREAN SUPPORT
+       font += ",'Corporate Logo Rounded' " //JAPANESE SUPPORT
+       font += ",sans-serif " 
        color = color || '#b4b4b4'
        base.font = font;
        W = W || 300;
@@ -60,13 +66,15 @@ module.exports={
        c.antialias = 'subpixel';
        c.filter = 'best';
        c.font = font;
+
+       console.log(text,font)
        c.fillStyle = color;
-       options = options || {
+       options = Object.assign({
          font: font || "bold 25px Arial, sans-serif",
          textAlign: "left",
          verticalAlign: "top",
          lineBreak: "auto",
-       };
+       },options||{});
 
        wrap(item, text, options);
        return {item: item,height: H,width: W}; // <-- i think H and W are redundant, need to check later
