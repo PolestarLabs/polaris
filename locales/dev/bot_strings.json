@@ -310,6 +310,7 @@
             ,"alreadyMarriedUp" : "Looks like you're already married to {{userB}}. Would you like to upgrade the ring from *{{ringA}}* to **{{ringB}}**?"
             ,"alreadyMarriedInf" : "You're already married to {{userB}} with an identical or superior ring (*{{ringB}}*)! What are you trying to do?"
             ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
+            ,"cantMarryPollux" : "No way! Shoo!"
         },
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",

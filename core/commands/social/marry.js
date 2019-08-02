@@ -1,7 +1,7 @@
 const YesNo = require("../../structures/YesNo.js");
 
 const init = async function(msg, args) {
-    const Target = PLX.findMember(msg.mentions[0].id, msg.guild.members);
+    const Target = PLX.findMember((msg.mentions[0]||{}).id, msg.guild.members);
 
     const P = {lngs: msg.lang, prefix: msg.prefix};
     const V = {};
@@ -11,7 +11,10 @@ const init = async function(msg, args) {
 
 
     if(Target.id == msg.author.id ){
-        return "can't marry self"
+        return  $t('responses.marry.cantMarrySelf',P)
+    }
+    if(Target.id == PLX.user.id ){
+        return  $t('responses.marry.cantMarryPollux',P)
     }
     
     const [userData,Rings] = await Promise.all([ DB.users.findOne({id:msg.author.id}), DB.items.find({subtype:'ring'}) ]);
@@ -105,7 +108,7 @@ const init = async function(msg, args) {
     }
 
 
-    await YesNo(proposal,msg,Accept,Reject,Timeout,{approver: Target.id, avoidEdit: true});
+    await YesNo(proposal,msg,Accept,Reject,Timeout,{ approver: Target.id, avoidEdit: true});
 
     if (!marriageFlow) return;
     const THIS_MARRIAGE_ID = (await DB.relationships.create("marriage",[ msg.author.id,Target.id ], msg.author.id ,RING.icon))._id;
@@ -174,7 +177,7 @@ const init = async function(msg, args) {
     }
 
      await Promise.all([
-          YesNo(featurePrompt ,msg,DoFeatThem,DontFeat(Target.id),DoFeatThem,{ avoidEdit: true})
+          YesNo(featurePrompt ,msg,DoFeatThem,DontFeat(Target.id),DoFeatThem,{ clearReacts:false, avoidEdit: true})
          ,YesNo(featurePrompt ,msg,DoFeatMe,DontFeat(msg.author.id),DoFeatMe,{approver: Target.id,clearReacts:false, avoidEdit: true})
      ]);
      featurePrompt.removeReactions().catch(e=>null)
