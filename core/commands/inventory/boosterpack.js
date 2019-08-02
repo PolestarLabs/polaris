@@ -6,6 +6,8 @@ const INVENTORY = require('../../archetypes/Inventory');
 
 const init = async function (msg, args, userID) {
     if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
+    msg.lang = msg.lang||[msg.channel.LANG];
+
     const P =  {lngs:msg.lang};
 
     const userInventory = new INVENTORY(userID || msg.author.id, "boosterpack");
