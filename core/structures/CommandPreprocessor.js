@@ -12,9 +12,9 @@ const POST_EXEC = function CommandPostExecution(msg,args,success){
 const PERMS_CALC = function CommandPermission(msg){
     let uIDs = msg.command.module == "_botOwner"  
         ? [cfg.owner]
-        : msg.command.module == "_boStaff" 
+        : msg.command.module == "_botStaff" 
             ? cfg.admins
-            : PLX.beta ? [cfg.owner] : cfg.admins;
+            : PLX.beta ? [ ] : [ ];
     let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat));
 
     let perms = msg.command.botPerms
@@ -23,9 +23,7 @@ const PERMS_CALC = function CommandPermission(msg){
       let permchk = require('./PermsCheck.js').run(msg.command.cat, msg, perms)
       if (permchk !== 'ok') return false;
     }
-
-
-    return (switches && uIDs);
+    return (switches && (!uIDs.length || uIDs.includes(msg.author.id))  );
 }
 
 const DEFAULT_CMD_OPTS = {
