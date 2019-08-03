@@ -92,11 +92,11 @@
         "advLogs": "詳細ログ",
         "logChan": "",
         "userJoin": "**{{user}}**がサーバーに入りました、よろしく！",
-        "userLeave": "",
+        "userLeave": "**{{user}}** が サーバーを**出ていきました**",
         "messDel": "{{channel}}でメッセージが**削除**されました",
         "messEdit": "{{user}} が  {{channel}}でメッセージを**編集** しました",
         "newChan": "新しい**チャンネル** が**作成**されました: {{channel}}",
-        "delChan": "",
+        "delChan": "**チャンネル** が **削除** されました: {{channel}}",
         "updtChan": "",
         "newRole": "新しい **役職** が**作成**されました: {{role}}",
         "uptRole": "",
@@ -294,7 +294,7 @@
             "ringTutorial": "",
             "noneOfThisRing": "",
             "availableRings": "",
-            "proposal": "",
+            "proposal": "{{userA}}が{{userB}}に{{ringname}}でプロポーズしました！\n{{userB}}ご返事は？",
             "actuallyNone": "",
             "saidYes": "",
             "saidNo": "",
@@ -304,8 +304,8 @@
             "addToFeatured3": "",
             "alreadyMarriedUp": "",
             "alreadyMarriedInf": "",
-            "cantMarrySelf": "",
-            "cantMarryPollux": ""
+            "cantMarrySelf": "私もいろんなことを見てきましたけど。。。貴方自身と結婚するのはやりすぎかと",
+            "cantMarryPollux": "有り得ない！あっち行って！"
         },
         "divorce": {
             "confirmdiag": "",
@@ -404,8 +404,8 @@
             "geiger": ":radioactive: ガイガーカウンターによると、このチャットガンの可能性は \n**{{percentage}}%** で **{{radiation}}μSv/h**",
             "kissed": "",
             "kissedSelf": "",
-            "kissedNone": "",
-            "kissFail": ""
+            "kissedNone": "{{user}} がキスを送りました~",
+            "kissFail": "{{user}} がキスを送ろうとしましたが逆に叩かれました。。。痛っ！"
         },
         "commend": {
             "noSelf": "",
@@ -419,12 +419,12 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "craftingItem": "",
+            "craftingItem": "{{item_name}} をクラフトします",
             "noitem": "このアイテムは見つかりませんでした",
             "noitemu": "",
             "materialMissing": "",
             "materialPresent": "",
-            "didyoumean": "",
+            "didyoumean": "このアイテムは見つかりませんでした。もしくはこちらのどれかなのでは？",
             "didyoumeanOne": "",
             "timeout": "",
             "cancel": "キャンセル！お互いの時間を無駄にしただけですよね",
@@ -492,7 +492,7 @@
             "RRt": "",
             "BKt": "",
             "match": "",
-            "round": "",
+            "round": "ラウンド",
             "preround": "",
             "team": "",
             "winner": "勝者",
@@ -512,7 +512,7 @@
             "waitingForReason": "",
             "noReason": "",
             "cancelled": "",
-            "userKicked": "",
+            "userKicked": "{{user}} を此処から*優しく*キックしました",
             "kickFlavs": [
                 "",
                 "",
