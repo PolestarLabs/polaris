@@ -134,6 +134,13 @@ const i18n = [{
     "name-e": "Turkish",
     "flag": ":flag_tr:",
     "site-flag": "TR"
+}, {
+    "code": ["id", "ind"],
+    "iso": "id",
+    "name": "Bahasa Indonesia",
+    "name-e": "Indonesian",
+    "flag": ":flag_id:",
+    "site-flag": "ID"
 }
 ]
 
