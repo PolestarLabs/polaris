@@ -3,7 +3,7 @@ global.DB = require("../../database/db_ops");
 module.exports = {
     getTarget: function getTarget(msg, argPos = 0, self = true, soft = false) {
 
-        if (msg.mentions.length > 0) return msg.mentions[0];
+        if (msg.mentions.length > 0) return msg.mentions[argPos]|| msg.mentions[0];
 
         if (!msg.args[argPos]) return self ? msg.author : null;
         let ID = msg.args[argPos].replace(/[^0-9]{16,19}$/g, '');
