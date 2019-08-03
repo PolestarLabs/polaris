@@ -9,9 +9,6 @@
         "SPH": "",
         "SPH_fullname": "",
         "SPH_plural": "",
-        "synthGems": "",
-        "cosmoFragment": "",
-        "cosmoFragment_plural": "",
         "C": "",
         "U": "",
         "R": "",
@@ -61,15 +58,12 @@
         "bet": "",
         "level": "",
         "levelUp": "Naik Level!",
-        "price": "",
-        "droppable": "",
-        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
-            "reaction": "Reaksi",
+            "reaction": "",
             "reaction_plural": "",
-            "role": "Peran",
+            "role": "",
             "role_plural": "",
             "server": "",
             "server_plural": "",
@@ -230,11 +224,6 @@
             "failure": ""
         },
         "equip": {
-            "getMoreBG": "",
-            "NFSALE": "",
-            "equipOwned": "",
-            "buyThisBG": "",
-            "successBG": "",
             "nomedals": "",
             "equipSlot": "Pilih slot untuk memakai medal baru milikmu!",
             "timeout": "",
@@ -288,24 +277,6 @@
             "destroyWhat": "",
             "cantDestroy": "",
             "destroyed": ""
-        },
-        "marry": {
-            "needRing": "",
-            "ringTutorial": "",
-            "noneOfThisRing": "",
-            "availableRings": "",
-            "proposal": "",
-            "actuallyNone": "",
-            "saidYes": "",
-            "saidNo": "",
-            "saidNothing": "",
-            "addToFeatured": "",
-            "addToFeatured2": "",
-            "addToFeatured3": "",
-            "alreadyMarriedUp": "",
-            "alreadyMarriedInf": "",
-            "cantMarrySelf": "",
-            "cantMarryPollux": ""
         },
         "divorce": {
             "confirmdiag": "",
@@ -419,16 +390,9 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "craftingItem": "",
             "noitem": "",
-            "noitemu": "",
-            "materialMissing": "",
-            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": "",
-            "timeout": "",
-            "cancel": "",
-            "crafted": ""
+            "didyoumeanOne": ""
         },
         "misc": {
             "memberSince": "{{targe}} telah menjadi anggota sejak: {{joinedstamp}}",
@@ -478,31 +442,9 @@
     },
     "interface": {
         "generic": {
-            "cancel": "",
-            "timeout": "",
-            "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
-            "alotWentOn": "",
-            "alreadyOwnThis": ""
-        },
-        "brackets": {
-            "maxRR": "",
-            "maxBK": "",
-            "RRt": "",
-            "BKt": "",
-            "match": "",
-            "round": "",
-            "preround": "",
-            "team": "",
-            "winner": "",
-            "bracketX": ""
-        },
-        "synthfrag": {
-            "disenchant": "",
-            "cosmeticSynth": "",
-            "confirmSynth": "",
-            "nogemsforThis": ""
+            "alotWentOn": ""
         },
         "booster": {
             "checkStickersAt": "",
