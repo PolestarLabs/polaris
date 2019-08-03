@@ -1,8 +1,4 @@
-// const gear = require("../utilities/Gearbox");
-// const DB   = require("../database/db_ops");
 const moment = require("moment");
-//const locale = require(appRoot+'/utils/i18node');
-//const $t = locale.getT();
 
 class DailyCmd{
     constructor(command, options) {

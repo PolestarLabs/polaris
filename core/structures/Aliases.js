@@ -1,3 +1,7 @@
+
+// LEGACY SUPPORT FILE
+
+
 const fs = require('fs');
 const ALIASES = {} /*{
     "sanctify": "santificar",

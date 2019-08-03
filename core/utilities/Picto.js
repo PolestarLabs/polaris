@@ -1,4 +1,3 @@
-//const cfg = require(appRoot+"/config.json");
 const Canvas = require('canvas');
 const Pixly = require('pixel-util');
 const wrap = require('canvas-text-wrapper').CanvasTextWrapper;

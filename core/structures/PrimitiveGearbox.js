@@ -1,3 +1,5 @@
+// LEGACY COMPAT FILE
+
 const fs = require('fs');
 
 module.exports = {

@@ -1,3 +1,5 @@
+// LEGACY
+
 const Eris = require('eris');
 
 module.exports = {

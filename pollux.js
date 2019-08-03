@@ -182,9 +182,9 @@ PLX.once("ready", async (msg) => {
         });
     }).catch(console.error);
 
-    PLX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth);
-    PLX.microserver.microtasks.updateServerCache("all");
-    PLX.microserver.microtasks.updateChannels("all");
+    //PLX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth);
+    //PLX.microserver.microtasks.updateServerCache("all");
+    //PLX.microserver.microtasks.updateChannels("all");
     PLX.registerCommands()
 
 })
@@ -239,7 +239,7 @@ PLX.setAvatar = async (url) => {
 PLX.findUser = (query) => {
     query = query.toLowerCase().trim();
 
-    if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
+    if (/^[0-9]{16,19}$/.test(query)) { 
         const user = PLX.users.get(query);
         if (user)
             return user;
@@ -253,7 +253,7 @@ PLX.findUser = (query) => {
 PLX.findMember = (query, members) => {
     query = query.toLowerCase().trim();
 
-    if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
+    if (/^[0-9]{16,19}$/.test(query)) {
         const member = members.get(query);
         if (member)
             return member;

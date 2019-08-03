@@ -1,3 +1,0 @@
-files:
-  - source: locales/dev/*.json
-    translation: /locales/%two_letters_code%/%file_name%.json

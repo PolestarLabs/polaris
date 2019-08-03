@@ -1,4 +1,6 @@
-// const DB = require('../database/db_ops');
+// LEGACY 
+
+
 module.exports = {
 
   updateMeta: async function (msg,command){      
