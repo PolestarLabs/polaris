@@ -3,11 +3,9 @@ global.DB = require("../../database/db_ops");
 module.exports = {
     getTarget: function getTarget(msg, argPos = 0, self = true, soft = false) {
 
-        if (msg.mentions.length > 0) return msg.mentions[argPos]|| msg.mentions[0];
-
         if (!msg.args[argPos]) return self ? msg.author : null;
-        let ID = msg.args[argPos].replace(/[^0-9]{16,19}$/g, '');
-        let user = PLX.users.find(usr => usr.id === ID)
+        let ID = msg.args[argPos].replace(/[^0-9]/g, '');
+        let user = PLX.users.find(usr => usr.id === ID);
 
         if (!user) {
             user = msg.guild.members.find(mbr =>
@@ -26,6 +24,7 @@ module.exports = {
 
             if (!user && self == true) user = msg.author;
         }
+        if (!user && msg.mentions.length > 0  ) return msg.mentions[argPos]||msg.mentions[0];
         if (!user) return null;
         DB.users.new(user.user || user);
         return user.user || user;
