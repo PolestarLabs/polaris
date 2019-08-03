@@ -1,0 +1,13 @@
+{
+    "crossAuth" : ""
+    ,"owner"     : ""
+    ,"admins"    : []
+    ,"mods"      : []
+    ,"token"     : ""
+    ,"dbURL"     : "mongodb://"
+    ,"discoin-"  : ""
+    ,"riot"      : ""
+    ,"twitch"    : ""
+    ,"google"    : ""
+
+}
