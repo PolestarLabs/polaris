@@ -67,9 +67,9 @@
         "discord": {
             "message": "",
             "message_plural": "",
-            "reaction": "",
+            "reaction": "Reaksi",
             "reaction_plural": "",
-            "role": "",
+            "role": "Peran",
             "role_plural": "",
             "server": "",
             "server_plural": "",

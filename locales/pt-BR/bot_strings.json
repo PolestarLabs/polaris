@@ -290,7 +290,7 @@
             "destroyed": "Item destruído! Isso foi o que sobrou dele:"
         },
         "marry": {
-            "needRing": "Você precisa de um Anel pra propor, onde estão suas maneiras?",
+            "needRing": "Você precisa de um Anel para propor, onde estão suas maneiras?",
             "ringTutorial": "*Você não tem nenhuma anel de casamento para ser usado.*\n\nPara conseguir um anel, você precisa fabricar um.\n\n> Pelo meu site, você pode comprar um **Anel Incompleto** na [**Oficina de Crafting**]({{craftingURL}} \"Oficina de Crafting da Pollux!\") e gastar Rubines, Jades ou Sapphires e algum material adicional para criar uma Joia para ele. Você também pode usar todos os seus recursos para criar o mais ofuscante, belo e majestoso anel de todos!\n\n> Usando o comando `{{prefix}}craft`, você precisa criar o **Anel Incompleto** (`{{prefix}}craft partial-ring`) e adicionar a gema de sua escolha com `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Esse 4 são os *anéis básicos* feitos somente com gemas. Outros itens permitirão que você faça anéis diferentes!\n",
             "noneOfThisRing": "Verifique seus bolsos de novo, porque não achei nada parecido no seu inventário.",
             "availableRings": "Os anéis disponíveis são:",
@@ -305,7 +305,7 @@
             "alreadyMarriedUp": "Parece que você já está casado com {{userB}}. Gostaria de atualizar o anel de *{{ringA}}* para **{{ringB}}**?",
             "alreadyMarriedInf": "Você já está casado com {{userB}} com um anel idêntico ou superior (*{{ringB}}*)! O que você está tentando fazer?",
             "cantMarrySelf": "Eu sou bem pra frente e tal, mas... casar consigo mesmo é um pouco demais, né?",
-            "cantMarryPollux": ""
+            "cantMarryPollux": "ATA! Sai daqui, sai!"
         },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",

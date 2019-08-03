@@ -305,7 +305,7 @@
             "alreadyMarriedUp": "",
             "alreadyMarriedInf": "",
             "cantMarrySelf": "Nie jestem staromodna czy coś, ale... Czy małżeństwo z samym sobą to już nie lekka przesada?",
-            "cantMarryPollux": ""
+            "cantMarryPollux": "Nie ma mowy! Sio!"
         },
         "divorce": {
             "confirmdiag": "Zgadzasz sie na wzięcie rozwodu z {{user}}? Opłata %EMJ% w wysokości **5000 Rubinów** zostanie pobrana od **każdego** z was. Wasze PunktyMiłości zostaną **podzielone na pół**!",
