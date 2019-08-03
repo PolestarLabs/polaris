@@ -289,6 +289,24 @@
             "cantDestroy": "Не мога да унищожа това.",
             "destroyed": "Предмета е унищожен! Ето какво остана от него:"
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Съгласен ли си да се разведеш с {{user}}? Данъците за развода са %EMJ% **5000 Рубина**, които ще бъдат взети от **двама ви** и вашите любовни точки ще бъдат **разделени на половина**!",
             "saidnope": "{{userB}} не иска развод. Можеш да наложиш този развод, като платиш %EMJ% **10000 Рубина** за да се свържа с адвокат, но ще загубите и двама всичките си **любовни точки***!",

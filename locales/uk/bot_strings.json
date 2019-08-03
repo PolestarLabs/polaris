@@ -289,6 +289,24 @@
             "cantDestroy": "Я не можу зруйнувати це.",
             "destroyed": "Предмет знищено! Ось що залишилося від нього:"
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Ви згодні отримати розлучееня з {{user}}? Збір у розмірі %EMJ% **5000 рубінів** *буде утримано* з вас. Обидва ваші LovePoint будут **вдвічі зменшені**, як добре!",
             "saidnope": "{{userB}} не хоче розлучення. Ви можете змусити його, заплативши %EMJ% **10000 рубінів** я можу викликати адвоката, але **ви обидва втратите всі свої LovePoints**!",

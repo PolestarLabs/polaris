@@ -289,6 +289,24 @@
             "cantDestroy": "",
             "destroyed": ""
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "{{userB}}不想離婚。你可以支付%EMJ%**10000紅寶石**來請律師打官司，但是你們將喪失**所有愛情點數**！",
