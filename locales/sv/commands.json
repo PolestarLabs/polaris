@@ -242,7 +242,7 @@
 		"decontaminate": "`{{prefix}}decontaminate [@någon (valbart)]`",
 		"eggtrade": "",
 		"lewd": "",
-		"marry": "Giftemål bygger på `{{prefix}}craft`, eftersom du måste ha en ring innan du kan fria.\n\nFör att gifta dig med din älskade, skriv `{{prefix}}marry @någon [ring]`. Det finns  4 olika typer av bröllopsringar, var och en är gjord utav olika ädelstenar värda olika mycket, för att visa upp hur fint erat äktenskap är. I framtiden, kommer mer värda ringar ge paret mer Love Points som dom kommer kunna spendera tillsamans\n\nExempelvis: `{{prefix}}marry @någon rubine` För att fria med en rubin ring.\n\nKräver Embed, hantera meddelanden och reaktionsbehörigheter.",
+		"marry": "",
 		"craft": "",
 		"divorce": ""
 	},

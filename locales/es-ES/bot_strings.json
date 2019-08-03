@@ -289,6 +289,24 @@
             "cantDestroy": "",
             "destroyed": ""
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "¿Estas de acuerdo en divorciarte de {{user}}? ¡Una cuota de %EMJ% **5000 Rubíes** sera descontada de **ambos**. Ambos de sus puntos de amor serán **reducidos a la mitad** tambíen!",
             "saidnope": "{{userB}} ¡no quiere divorciarse. Puedes forzar el divorcio pagando %EMJ% **10000 Rubíes** asi podre llamar a un abogado para resolver esto, pero ambos perderán **todos sus puntos de amor**!",

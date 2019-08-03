@@ -289,6 +289,24 @@
             "cantDestroy": "Eu não posso destruir isso.",
             "destroyed": "Item destruído! Isso foi o que sobrou dele:"
         },
+        "marry": {
+            "needRing": "Você precisa de um Anel pra propor, onde estão suas maneiras?",
+            "ringTutorial": "*Você não tem nenhuma anel de casamento para ser usado.*\n\nPara conseguir um anel, você precisa fabricar um.\n\n> Pelo meu site, você pode comprar um **Anel Incompleto** na [**Oficina de Crafting**]({{craftingURL}} \"Oficina de Crafting da Pollux!\") e gastar Rubines, Jades ou Sapphires e algum material adicional para criar uma Joia para ele. Você também pode usar todos os seus recursos para criar o mais ofuscante, belo e majestoso anel de todos!\n\n> Usando o comando `{{prefix}}craft`, você precisa criar o **Anel Incompleto** (`{{prefix}}craft partial-ring`) e adicionar a gema de sua escolha com `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Esse 4 são os *anéis básicos* feitos somente com gemas. Outros itens permitirão que você faça anéis diferentes!\n",
+            "noneOfThisRing": "Verifique seus bolsos de novo, porque não achei nada parecido no seu inventário.",
+            "availableRings": "Os anéis disponíveis são:",
+            "proposal": "{{userA}} pediu **{{userB}}** em casamento com o anel**{{ringname}}**.\n{{userB}}, você aceita?",
+            "actuallyNone": "Na verdade, você não tem nenhum. Vai arranjar um ! **A-G-O-R-A-!**",
+            "saidYes": "{{userB}} disse SIM!",
+            "saidNo": "{{userB}} dise não...",
+            "saidNothing": "{{userB}} fugiu de você... já está lá longe... ai ai... quer beber alguma coisa?",
+            "addToFeatured": "Gostaria de mostrar {{userB}} como seu amante em destaque em seu perfil?",
+            "addToFeatured2": "{{userB}}, gostaria de fazer o mesmo com {{userA}}?",
+            "addToFeatured3": "Mostrar seu novo amante no Cartão de Perfil?",
+            "alreadyMarriedUp": "Parece que você já está casado com {{userB}}. Gostaria de atualizar o anel de *{{ringA}}* para **{{ringB}}**?",
+            "alreadyMarriedInf": "Você já está casado com {{userB}} com um anel idêntico ou superior (*{{ringB}}*)! O que você está tentando fazer?",
+            "cantMarrySelf": "Eu sou bem pra frente e tal, mas... casar consigo mesmo é um pouco demais, né?",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",
             "saidnope": "{{userB}} não aceita o divórcio. Você pode forçar pagando %EMJ%**10000 Rubines** para que eu ligue para um amigo advogado que vai resolver essa pinimba, mas **vocês dois vão perder toda a Pontuação Mozão**!",
@@ -410,7 +428,7 @@
             "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?",
             "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de crafting esfriou.",
             "cancel": "Cancelado! Sério que você só queria desperdiçar meu tempo?",
-            "crafted": ""
+            "crafted": "Sucesso! Olhe, aqui está seu item! Novinho e brilhante~"
         },
         "misc": {
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
@@ -469,16 +487,16 @@
             "alreadyOwnThis": "Ei, você já tem esse item!"
         },
         "brackets": {
-            "maxRR": "",
-            "maxBK": "",
-            "RRt": "",
-            "BKt": "",
-            "match": "",
-            "round": "",
-            "preround": "",
-            "team": "",
-            "winner": "",
-            "bracketX": ""
+            "maxRR": "Limite Máximo para Pontos Corridos: 16",
+            "maxBK": "Limite máximo para Chaves: 32",
+            "RRt": ":trophy: Chaves das Partidas de Pontos Corridos",
+            "BKt": ":trophy: Chaves de Torneio",
+            "match": "Partida",
+            "round": "Round",
+            "preround": "Pré-Round",
+            "team": "TIME {{X}}",
+            "winner": "Ganhador",
+            "bracketX": "Chave {{AB}}"
         },
         "synthfrag": {
             "disenchant": "Desencantar este plano de fundo {{rarity_emoji}} em **{{count}} $t(keywords.cosmoFragment)**?",
@@ -576,7 +594,7 @@
         },
         "help": {
             "greetings": "**Saudações! Eu sou a Pollux. A nova maid nomeada para o seu servidor.**\nAqui está uma breve explicação sobre minhas habilidades:\n  • O Prefixo Padrão é `+`, você pode mudá-lo com `+prefix <Novo Prefixo>`. \n  • O Prefixo Global é `p!`, útil para usuários que não sabem o prefixo customizado, pode ser desabilitado no **Dashboard**.\n  • O Prefixo Universal é `plx!` e não pode ser desabilitado.",
-            "basics": "",
+            "basics": "\n  **O Básico** - Começar a se divertir comigo é simples como fazer malabarismo com costelinha de porco!\n...todo mundo já fez isso, é? Enfim, vamos ao que interessa!\n\nEsses são só alguns dos {{commandcount}} comandos que eu tenho!  \n",
             "cmdlist": "LISTA DE COMANDOS",
             "quick_getgo": "Comandos simples que você deve saber:",
             "quick_useful": " Comandos que você pode achar úteis:",
@@ -587,11 +605,11 @@
             "notenough": "Esta caixinha não é o bastante pra você?",
             "trythese": "Tente um desses:",
             "curr_info": "Informações de Economia",
-            "currency_overview": "",
-            "rubines_desc": "",
+            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.\n        \n    Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox*.\n",
+            "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`{{prefix}}daily`), Lootboxes (+box) e Joguinhos (+blackjack, +slots, etc.). Além de trocas com outros usuários, e assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de +daily de 10 dias.\n",
             "jades_desc": " *\"Moeda\" de Crafting: eu uso essas gemas verde-pálido – fora isso inúteis – para criar itens especiais, só pra você!*\n        Podem ser obtidas por Lootboxes, destruindo itens, doando ou comprando.",
-            "sapphires_desc": "",
-            "lootboxes_desc": "",
+            "sapphires_desc": "*Moeda Premium: fragmentos azul-vibrante das melhores gemas de Safira, usadas pra criar itens ou como moeda para comprar coisinhas exclusivas!*\n        Só pode ser obtida com doações, sendo compradas individualmente, ou por eventos especiais. Você ganha uma Safira a cada 200 ou 365 Dailies, e há uma chance de 0.1% de ganhá-las em Lootboxes Ultra Raras.",
+            "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*.\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **`Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`**\n",
             "end": "\n**A lista de Comandos completa pode ser achada em <https://pollux.gg/command>**\n\nVeja nossas Parceiros em: **<https://pollux.gg/partners>**\nVeja ou envie artes criadas for fãs em: **<https://pollux.gg/fanart>**\nVeja seu perfil público em: **<https://pollux.gg/profile/me>**\n\n**Cosméticos**\nLoja de planos de fundo: **https://pollux.gg/bgshop**\nLoja de medalhas: **https://pollux.gg/medalshop**\nOficina de Criação: **https://pollux.gg/crafting**\nStickers virtuais: **<https://pollux.gg/stickers>** (para stickers físicos, cheque o Servidor de Suporte)\nInformações sobre eventos: **<https://pollux.gg/events>**\n\nMe apoie em **<https://patreon.com/Pollux>** ou **<https://pollux.gg/donate>**\nMe siga no Twitter: **<https://twitter.com/maidPollux>**\n\n◉◎◈◎◉\n\n**Para outros assuntos, cheque o __Dashboard__: <https://pollux.gg/dashboard>**\nOu entre no meu servidor de suporte: **​ https://discord.gg/rEBCccS ​**\nMe convide para o seu servidor em: **<https://pollux.gg/invite>**\n"
         }
     },

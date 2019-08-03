@@ -1,6 +1,6 @@
 {
     "partial_ring": {
-        "name": "Pierścionek Składowy",
+        "name": "Pierścień Składowy",
         "description": "Okrągły kawałek metalu używany do stworzenia pięknego pierścionka zaręczynowego"
     },
     "lootbox_C_O": {
@@ -9,6 +9,6 @@
     },
     "cosmo_fragment": {
         "name": "Kosmiczny Fragment",
-        "description": "Błyszczący żużel służący do tworzenia Kosmicznych Fragmentów"
+        "description": "Błyszczący żwirek służący do tworzenia Kosmicznych Fragmentów"
     }
 }

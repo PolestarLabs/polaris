@@ -289,6 +289,24 @@
             "cantDestroy": "",
             "destroyed": ""
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Согласны ли вы развестись с {{user}}? Плата за развод в размере %EMJ%**5000 Рубинов** будет взиматься с **обоих**! Так же ваши LovePoints будут уменьшены **вдвое**!",
             "saidnope": "{{userB}} не хочет разводиться. Вы можете повлиять на это заплатив %EMJ%**10000 Рубинов**, для того чтобы я могла позвонить адвокату, чтобы разрешить это, но вы оба потеряете **все ваши LovePoints**!",

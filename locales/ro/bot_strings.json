@@ -289,6 +289,24 @@
             "cantDestroy": "Nu pot distruge asta.",
             "destroyed": "Obiect distrus! Asta este ce a ramas de la el:"
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Sunteti de acord sa divortati de catre {{user}}? O taxa de %EMJ% **5,000 Rubine** va fi aplicata **amandurora**. LovePoints-urile amandurora vor fi **injumatatite**!",
             "saidnope": "{{userB}} nu doreste divortul. Poti sa fortezi platind o taxa de %EMJ% **10,000 Rubine** pentru a apela la un avocat pentru a rezolva acest lucru, insa amandoi veti pierde **toate LovePoints-urile**!",

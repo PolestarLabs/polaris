@@ -51,7 +51,7 @@
 		"favcolor": "Profil Kartındaki Kenar Çubuğunun rengini bir Hex Kodu kullanarak değiştir",
 		"equip": "Başarımlardan kazandığın ya da satın aldığın madalyonları tak.",
 		"fausto": "Fausto Silva'yı çağırır, en büyük Brezilyalı TV sunucusu.",
-		"ramsay": "",
+		"ramsay": "İngiliz şef ve televizyon şovmeni Gordon Ramsayʼi fikirlerini belirtmesi için getirir.",
 		"feats": "En yeni komutları göster",
 		"shop": "Profilin için kozmetik satın al, belki başka bi' kaç tane eşya.",
 		"fortunecookie": "Fal kurabiyesi sana saçma sapan bir şey anlatacak",
@@ -242,7 +242,7 @@
 		"decontaminate": "`{{prefix}}decontaminate [@kullanıcı (isteğe bağlı)]`",
 		"eggtrade": "**Takas Yapmak**\n`{{prefix}}trade [Yumurta kodu] @birisi`\nÖrnek: `{{prefix}}trade U2 @birisi` *Aquamarine Pulse Egg*'i *@birisi* ile takas edecek\n\n**Takası kabul etmek**\nGelen bir takası *accept* ile cevap vermek için 30 saniyen var + bir tane yumurtanın Kodu, sadece karşılıklı takaslar kabul edilebilir.\n`accept SR1` *Aquamarine Pulse Egg* karşılığında *Dark Magician Egg*'i\ndeğiş-tokuş etmiş oacaksın.\n**Her iki saatte bir takas edebilirsin, yani dikkatli ol. __İptal olan takaslar da bekleme süresine etki eder!__**",
 		"lewd": "`{{prefix}}lewd`\nAyrıca hangi küratörden seçmeler istediğini de seçebilirsin! Komuttan sonra isimlerini yazman yeterli. Mesela, **Polllyanna** tarafından yapılmış şeyleri görmek için; `{{prefix}}lewd pollyanna` \n\nŞu anki küratör ekibimiz:\n{{squad}}",
-		"marry": "Evlilik direk olarak `{{prefix}}craft` ile alakalı, teklif yapabilmek için yüzüğe ihtiyacın var.\n\nVurulduğun kişi ile evlenmek için, `{{prefix}}marry @user [yüzük]`.  Evliliğinin ne kadar ihtişamlı olduğunu göstermek için evlenme yüzüklerinin 4 aşaması vardır, her biri farklı bir mücevher ile yapılır. Daha yüksek aşamadaki yüzükler çiftlere, gelecekte, daha fazla Aşk Puanı kazandırır.\n\nÖrneğin,  Rubine yüzük ile evlilik teklifi yapmak için: `{{prefix}}marry @birisi rubine`\n\nGömülü bağlantı, mesaj yönetme ve reaksiyon izinlerine ihtiyaç duyar",
+		"marry": "Evlilik, teklifi yapmak için yüzüğe ihtiyacın olduğundan direkt olarak `{{prefix}}craft` komutuna dayanır.\n\nSevdiceğin ile evlenmek için, `{{prefix}}marry @user [ring]` yap. Evlenme yüzüklerinin 4 aşaması vardır, evliliğinizin ne kadar ihtişamlı olduğunu göstermek için her biri farklı bir mücevher ile yapılır.\n\nÖrneğin: Rubin yüzükle aşk-ı ilân yapmak için `{{prefix}}marry @birisi rubine`.",
 		"craft": "`{{prefix}}craft [eşya kodu]`\nEşya kodları hakkındaki tüm bilgileri http://pollux.fun/crafting adresinde bulabilirsin.\n\nBir eşyayı üretmek için gerekli olan bütün materyallere sahip olmalısın, bazı materyallerin üretilmesi gerekir, yüksek seviye eşya yaparken otomatik olarak üretilmezler.",
 		"divorce": "Cümle âleme kimle evli olduğunu göstermek için `{{prefix}}divorce`. Tek bir kişi ya da hareminin olup olmadığını!\nO kişi ile boşanmak için `{{prefix}}divorce [@kullanıcı || Discord ID'si]`"
 	},

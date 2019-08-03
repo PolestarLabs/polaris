@@ -289,6 +289,24 @@
             "cantDestroy": "Je ne peux pas détruire cet article.",
             "destroyed": "Article détruit! Voici tout qui en reste:"
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "Acceptes-tu de divorcer {{user}}? Un frais de %EMJ%**5000 Rubines** serait chargé de **chaque personne**! Les points d'amour seront **chacun réduit par un demi**!",
             "saidnope": "{{userB}} ne veut pas un divorce. Tu peux le forcer en payant %EMJ%**10000 Rubines** pour que je puisse appeler un avocat pour le résoudre, mais vous deux perdrez **tous vos Points d'Amour**!",

@@ -289,6 +289,24 @@
             "cantDestroy": "전 이걸 삭제할 수 없습니다.",
             "destroyed": ""
         },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
         "divorce": {
             "confirmdiag": "{{user}} 와 이혼하는 것에 대해 동의하십니까? **둘 다** %EMJ% **5000 루빈** 이 차감됩니다. 두 명의 사랑포인트도 **반 동강** 날 거예요!",
             "saidnope": "{{userB}} 가 이혼을 원하지 않는답니다. %EMJ%**10000 루빈**을 냄으로서 이혼을 강요하여 제가 변호사를 부를 수는 있겠지만, 둘 다 **자신의 모든 사랑 포인트**를 잃게 될 거예요!",
