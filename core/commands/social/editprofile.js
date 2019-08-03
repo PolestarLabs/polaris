@@ -67,7 +67,7 @@ const init = async function (msg){
 
         if(res.index == 0){
             PROCESS_SUBRESPONSE(msg,"**TEXT** `One line of text`").then(res=>{
-                require("../social/tagline").init(res.forward);    
+                require("./tagline").init(res.forward);    
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"tagline "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })
@@ -76,20 +76,20 @@ const init = async function (msg){
         if(res.index == 1){
             let forward = msg;
             forward.content = "+cmd frame toggle";
-            require("../social/profile").init(forward).then(r=> men.addReaction(yep).catch() ).catch(err=> console.log(err) );
+            require("./profile").init(forward).then(r=> men.addReaction(yep).catch() ).catch(err=> console.log(err) );
             msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"profile frame toggle`"}});
             men.deleteAfter(3000)
         } 
         if(res.index == 2){
             PROCESS_SUBRESPONSE(msg, "**TEXT** `150 Characters of Text`").then(res=>{
-                require("../social/personaltxt").init(res.forward);  
+                require("./personaltext").init(res.forward);  
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"personaltxt "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })
         } 
         if(res.index == 3){
             PROCESS_SUBRESPONSE(msg,"**HEXCOLOR** `#000000`").then(res=>{
-                require("../cosmetics/favcolor").init(res.forward);  
+                require("./cosmetics/favcolor").init(res.forward);  
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"favcolor "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })        
@@ -115,7 +115,7 @@ const init = async function (msg){
                 men.deleteAfter(3000)
         } 
         
-    })
+    }) 
 
 
     
