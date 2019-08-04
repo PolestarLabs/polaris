@@ -60,10 +60,10 @@ class UserProfileModel{
           return resolve(false);
         }
       
-        let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
+        let svRankData = (await DB.localranks.get({user:this.ID,server:this.server})) ||{};
         this.thx = svRankData.thx || 0;
         this.localRank = await DB.localranks
-          .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
+          .find({server:this.server,exp:{$gt:svRankData.exp||0}}).countDocuments();
         return resolve(true);
       })
     }
