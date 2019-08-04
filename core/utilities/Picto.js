@@ -39,7 +39,6 @@ module.exports={
             c.antialias = 'subpixel';
             c.filter = 'best';
             c.font = base.font;
-            console.log(text,base.font)
             if(stroke){
               c.strokeStyle  = stroke.style;
               c.lineWidth   = stroke.line;
@@ -67,7 +66,6 @@ module.exports={
        c.filter = 'best';
        c.font = font;
 
-       console.log(text,font)
        c.fillStyle = color;
        options = Object.assign({
          font: font || "bold 25px Arial, sans-serif",
