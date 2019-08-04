@@ -1,7 +1,7 @@
-const init = async function (msg){
+const init = async function (msg,args){
 
     delete require.cache[require.resolve('../anime/safebooru')]
-    return require('../anime/safebooru').init(msg,{title:" ",color:0xff4c45, nsfw: true, tags:true});
+    return require('../anime/safebooru').init(msg,args,{title:" ",color:0xff4c45, nsfw: true, tags:true});
 
 }
 module.exports={

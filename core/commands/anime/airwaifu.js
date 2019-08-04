@@ -1,12 +1,9 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (msg){
+const init = async function (msg,args){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    args = ["airplane","1girl"]
 
-    msg.args = ["airplane","1girl"]
-
-    return require('./safebooru').init(msg,{title:":airplane: Airwaifu",color:0x63bbff});
+    return require('./safebooru').init(msg,args,{title:":airplane: Airwaifu",color:0x63bbff});
 
 }
 module.exports={

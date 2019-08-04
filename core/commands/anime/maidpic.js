@@ -1,12 +1,9 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (msg){
+const init = async function (msg,args){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    args = ["maid","rating:safe"]
 
-    msg.args = ["maid","rating:safe"]
-
-    return require('./safebooru').init(msg,{title:" ",color:0x2b2b3b});
+    return require('./safebooru').init(msg,args,{title:" ",color:0x2b2b3b});
 
 }
 module.exports={
