@@ -312,6 +312,48 @@
             ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
             ,"cantMarryPollux" : "No way! Shoo!"
         },
+        
+            "ship": {
+                "needTupipo": "The Love Calculator does not work with just one person, my dear.",
+                "need2diffpipo": "Unless this person is capable of Mitosis,they still count as one person, I need **two** people!"
+                ,"quotes":[
+                ["Oh. _Oh no._",
+                    "YOUR HOROSCOPES ARE NOT IN ALIGNMENT, PLEASE REFRAIN FROM FURTHER CONTACT."
+                ],
+                ["There was only a slight hesitation before that swipe left.",
+                    "Although you're familiar with each other, you don't want to get _that_ kind of familiar."
+                ],
+                ["You guys could work as a couple the same way a tomato could work in a salad.",
+                    "Hey! You don't hate each other! That's a start, right?"
+                ],
+                ["Ooh, what a spicy relationship. The spice is flour, maybe, but it's still a spice, isn't it?",
+                    "A few more dates and maybe some sparks will fly!"
+                ],
+                ["Woah, almost a match! ",
+                    "Every relationship can use a bit of work, I guess."
+                ],
+                ["It's a match! Your odds are about as good as mine!",
+                    "Mmm, I'd watch this slow burn romance as a movie."
+                ],
+                ["We're edging up into _like like_ territory!",
+                    "Cosying up, are we?"
+                ],
+                ["Psst, Flicky and I are betting on your success. Have you crafted a partial ring yet?",
+                    "Stop holding back! Confess your feelings!"
+                ],
+                ["I ship it!",
+                    "You cutie pies are just two peas in a pod!"
+                ],
+                ["Damn, you guys are almost _perfect_ for each other!",
+                    "So, which one of you is getting pregnant?"
+                ],
+                ["THE POWER COUPLE HAS ARRIVED.",
+                    "Soulmates! Amazing!"
+                ]
+            ]
+        },
+        
+        
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",

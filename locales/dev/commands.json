@@ -58,14 +58,12 @@
 		"menu": "[DISCONTINUED] A Cafe Menu",
 		"puto": "[BROKEN] Putômetro",
 		"saltlevel": "See how salty you or your friends are right now",
-		"ship": "Ship two of your friends, maybe they can arrange a wedding",
+		"ship": "A fancy love calculator! Ship two of your friends, maybe they can arrange a wedding",
 		"triggered": "Express your disgust",
-		"menesueco": "[BRAZILIAN VERSION-EXCLUSIVE] E se ele corresse?",
+		"menesueco": "E se ele corresse?",
 		"rotation": "Free Character Rotation for League of Legends, Heroes of the Storm, and Smite",
 		"otaco": "[BRAZILIAN VERSION-EXCLUSIVE] Invoque o Esqueleto seboso",
 		"pasquale": "[BRAZILIAN VERSION-EXCLUSIVE] Demonstre desprezo gramatical",
-		"ascii": "[BROKEN] Ascii Art Thing",
-		"cat": "Meow",
 		"morse": "*'WE GET SIGNAL'* Encode a message in Morse and send via voice-channel",
 		"say": "Make me say anything. Really",
 		"saytochannel": "Make me say anything, anywhere. Not really, but almost!",
@@ -78,7 +76,7 @@
 		"leave": "Leaves Voice Channel",
 		"next": "Next Song",
 		"np": "Now Playing",
-		"play": "Play a Song from Youtube [EXPERIMENTAL]",
+		"play": "Play a Song from Youtube",
 		"playlist": "Current Playlist",
 		"catgirl": "Nyan",
 		"personaltxt": "Change your personal text to show how cool you are",
@@ -110,10 +108,10 @@
 		"lootbox": "Check available lootboxes for you to open or open them directly.",
 		"vsauce": "Random Vsauce out-of-context clip",
 		"tarot": "Machine-generated fortune based on a Tarot spread",
-		"akerfeldt": "[DONATOR CUSTOM COMMAND] Images of Michael Åkerfeldt, for your everyday Opethic needs.",
-		"choque": "[DONATOR CUSTOM COMMAND] Choque de Cultura",
+		"akerfeldt": "[DONATOR COMMAND REQUEST] Images of Michael Åkerfeldt, for your everyday Opethic needs.",
+		"choque": "[DONATOR COMMAND REQUEST] Choque de Cultura",
 		"coffee": "Summons an Anime Coffee pic",
-		"tea": "[DONATOR CUSTOM COMMAND] Summons an Tea Coffee pic",
+		"tea": "[DONATOR COMMAND REQUEST] Summons an Tea Coffee pic",
 		"ross": "It's Ross, that Ross you're thinking.",
 		"smug": "Over 4000 Smug Anime Girls for you to send!",
 		"kiss": "Kiss your loved one, or just send kisses around.",
@@ -131,6 +129,8 @@
 		,"choose": "Choose N entries from a list of items, or among members of a Role"
 		,"brackets": "Create a quick table for your fancy in-house tournaments"
 		,"reactionroles": "Push for Role. Life has never been so easy!"
+		,"maidpic": "Posts a random Maid"
+		,"neko": "Posts a random Neko"
 	},
 	"usage": {
 		"reactionroles": "`{{prefix}}reactionroles [add|del|list|clear] [#channel] [Message ID] [EMOJI] [Role Name | @Role]`\nQuite an extensive command huh? Let's break it down:\n\nTo add a new Reaction for a Role to a message:\n`{{prefix}}reactionroles add #channel MESSAGE_ID :emoji: My Awesome Role`\n\nTo remove one or all Reaction bindings from a Message:\n`{{prefix}}reactionroles del MESSAGE_ID :emoji:` For one emoji/role pair only.\n`{{prefix}}reactionroles del MESSAGE_ID` For all emojis from that Message\n\nYou can see all Message/Role/Reaction bindings with `{{prefix}}reactionroles list`\n\nYou can nuke the entire thing with `{{prefix}}reactionroles clear`\n\nRequires the user to have either `MANAGE SERVER` or `MANAGE ROLES` permissions, or a Pollux ModRole",
@@ -197,7 +197,7 @@
 		"menu": "[Discontinued]",
 		"puto": "Only available on the following languages: [PT-BR]",
 		"saltlevel": "`{{prefix}}saltlevel @user`",
-		"ship": "`{{prefix}}ship @someguy @somegirl`",
+		"ship": "`{{prefix}}ship @friend1 @friend2` You can use their IDs if you don't want to ping them",
 		"triggered": "`{{prefix}}triggered [@someone]`",
 		"menesueco": "Only available on the following languages: [PT-BR]",
 		"rotation": "`{{prefix}}rotation [lol|hots|smite]`",
