@@ -121,20 +121,21 @@ function transfer(userFrom,userTo,amt,type = "SEND",currency = "RBN"){
   });
 };
 
-async function arbitraryAudit(from,to,type,tag="OTH",trans){
+async function arbitraryAudit(from,to,type,tag="OTH",trans,amt= 1){
   let now = Date.now();
       let payload = {
         subtype: "ARBITRARY",
         type: type,
-        currency: "OTH",
+        currency:  tag,
         transaction: trans || "!!",
         from: from.id||from,
         to: to.id||to,
         timestamp:now,
         transactionId: `${tag}${now.toString(32).toUpperCase()}`,
-        amt
+        amt 
       }
       await DB.audits.new(payload);
+      return payload;
 };
 
 module.exports= {
