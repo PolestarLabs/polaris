@@ -7,11 +7,11 @@ const init = async function (msg,args){
 
     let rand = args[2] || randomize(0,100);
 
-    const TargetA = PLX.getTarget(msg,0,!!args[0],true) || msg.guild.members.random().user;
-    const TargetB = PLX.getTarget(msg,1,false,true) || msg.guild.members.random().user;
+    const TargetA = PLX.getTarget(msg,0,false,true) || msg.guild.members.random().user;
+    const TargetB = PLX.getTarget(msg,1,!args[1],true) || msg.guild.members.random().user;
 
-    if( !(TargetA && TargetB) ) return $t('responses.ship.need2diffpipo',{lngs:msg.lang});
-    if(TargetA.id === TargetB.id) return $t('responses.ship.needTupipo',{lngs:msg.lang});
+    if( !(TargetA && TargetB) ) return $t('responses.ship.needTupipo',{lngs:msg.lang});
+    if(TargetA.id === TargetB.id) return $t('responses.ship.need2diffpipo',{lngs:msg.lang});
 
     const [randPic, mainframe, aviA, aviB] = await Promise.all([
         Picto.getCanvas(paths.CDN + `/build/ship/${Math.round(rand / 10)}.png`),
@@ -28,7 +28,12 @@ const init = async function (msg,args){
 
     ctx.drawImage(mainframe,0,0);
 
-    const SHIPNAME = TargetA.username.slice(0,TargetA.username.split(/\s+/)[0].length/2 +1) + TargetB.username.slice(TargetB.username.split(/\s+/)[0].length/2 +1);
+    function NameSplitter (name, end){
+        let slice = Math[end?"floor":"ceil"](name.split(/ +/)[0].length/2 );
+        return name.split(/ +/)[0].slice(end?slice:0,end?undefined:slice)
+    }
+
+    const SHIPNAME = NameSplitter(TargetA.username) + NameSplitter(TargetB.username,true);
     Picto.setAndDraw(
         ctx,Picto.tag(
             ctx,
