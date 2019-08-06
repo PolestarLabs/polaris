@@ -32,7 +32,7 @@ const topCommend = async (m)=>
             }](${paths.CDN}/p/${x.id})*`)
 
         let listCommenders = commendedSort.slice(0,3).map( 
-            x=> `${ _emoji('token')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
+            x=> `${ _emoji('plxcoin')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
                 (isUsr(x)?"**":"")+
                 x.name.slice(0,16) + (x.name.length>15?"...":"")
                 +(isUsr(x)?"**":"")
@@ -46,7 +46,7 @@ const topCommend = async (m)=>
             }](${paths.CDN}/p/${x.id})*`)
 
         let listCommenders2 = commendedSort.slice(3,10).map( 
-            x=> `${ _emoji('token')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
+            x=> `${ _emoji('plxcoin')}*\`\u200b${(x.modules.commended||0).toString().padStart(3,"\u2003")} \`\u2003[${ 
                 (isUsr(x)?"**":"")+
                 x.name.slice(0,16) + (x.name.length>15?"...":"")
                 +(isUsr(x)?"**":"")
@@ -57,7 +57,7 @@ const topCommend = async (m)=>
         return {embed:{
             thumbnail:{url:"https://pollux.fun/build/rank.png"},
             color:0x3b9ea5,
-            description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankOut+1}** (${userData.modules.commend||0}) \u2003 | \u2003  ${ _emoji('token')}**#${myRankIn+1}** (${userData.modules.commended||0})`,
+            description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankIn+1}** (${userData.modules.commend||0}) \u2003 | \u2003  ${ _emoji('plxcoin')}**#${myRankOut+1}** (${userData.modules.commended||0})`,
             fields:[
                 {name:"Top Commended",  value: listCommend.join('\n').slice(0,1024),inline: true},
                 {name:"Top Commenders", value: listCommenders.join('\n').slice(0,1024),inline: true},

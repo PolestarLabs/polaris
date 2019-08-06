@@ -26,6 +26,7 @@ const POLARIS_UI = {
       token_simplelarge: "<:token_simplelarge:550389035642912779>",
       token_flatlarge: "<:token_flatlarge:550389035848171521>",
       token_fulllarge: "<:token_fulllarge:550389036905398282>",
+  plxcoin: "<:token:597978242535915526>",
 
 
   __: "<:__:601288252867084318>",
