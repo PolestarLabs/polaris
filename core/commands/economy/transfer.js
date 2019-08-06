@@ -59,7 +59,7 @@ const init = async function (msg){
         embe2.setColor('#e35555')
         embe2.description=`
     ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
-    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(last).add(8,'hours').fromNow() }
+    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(last).add(4,'hours').fromNow() }
       `
             return msg.channel.send({embed:embe2});
     }
@@ -92,11 +92,12 @@ const init = async function (msg){
 
     }
 
-  Timed.init(msg,"transfer_rbn",{day:(8*60*60*1000)},after,reject,info,precheck);
+  Timed.init(msg,"transfer_rbn",{day:(4*60*60*1000)},after,reject,info,precheck);
 
 
 
 }
+
 module.exports={
     init
     ,pub:true

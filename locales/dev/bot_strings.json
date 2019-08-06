@@ -33,6 +33,7 @@
         "boosterpack_plural": "Boosterpacks"
     },
     "terms": {
+        "transferDenied": "Transfer Denied",
         "thanks": "thanks",
         "thanks_short": "thx",
         "thx": "$t(terms.thanks_short)",
@@ -315,7 +316,7 @@
         
             "ship": {
                 "needTupipo": "The Love Calculator does not work with just one person, my dear.",
-                "need2diffpipo": "Unless this person is capable of Mitosis,they still count as one person, I need **two** people!"
+                "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!"
                 ,"quotes":[
                 ["Oh. _Oh no._",
                     "YOUR HOROSCOPES ARE NOT IN ALIGNMENT, PLEASE REFRAIN FROM FURTHER CONTACT."

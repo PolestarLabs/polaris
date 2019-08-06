@@ -33,8 +33,6 @@ class DailyCmd{
 }
 exports.init = async function (message,cmd,opts,success,reject,info,presuccess) {
 
-
-console.log(message.lang)
   const P={lngs:message.lang}
   let lang = message.lang[0]
   moment.locale(lang);
@@ -58,7 +56,8 @@ console.log(message.lang)
   const embed = new Embed;
   embed.setColor("#d83668");
   if(message.args.includes('status')||message.args.includes('stats')){
-    if(info) return info (message,Daily);
+    let remain = userDaily+DAY;
+    if(info) return info (message,Daily,remain);
     let embe2=new Embed;
     embe2.setColor('#e35555')
     embe2.description(`
@@ -68,7 +67,7 @@ ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next
         return message.channel.send({embed:embe2});
   }
 
-  if(!dailyAvailable && Author.id!="88120564400553984"/**/){
+  if(!dailyAvailable && Author.id!="x88120564400553984"/**/){
     let remain = userDaily+DAY;
     Daily.userDataStatic = userDaily;
     return reject(message,Daily,remain);
