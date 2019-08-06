@@ -18,12 +18,13 @@ const init = async function (msg,args,ext){
         embed.description   = ext.description;
         embed.color         = ext.color;
         if (ext.tags) embed.description = tags?("`"+tags.replace(/_/g," ").replace(/\+/g,"` | `")+"`\n"):"";
-        if (ext.nsfw){
+        if (ext.nsfw && msg.channel.nsfw){
             endpoint = "getRandomLewd"
-            tags += "+score:>5+-loli+-child+-shota+-cgi+-3d+-webm+-bestiality" 
+            tags += "+-rating:safe+score:>5+-loli+-child+-shota+-cgi+-3d+-webm+-bestiality" 
         }else{
             tags += QUALITY_CONTROL 
         }
+        if(!msg.channel.nsfw)Embed.title="NSFW NOT ENABLED IN THIS CHANNEL";
     }else{
         embed.description   = tags?("`"+tags.replace(/_/g," ").replace(/\+/g,"` | `")+"`\n"):""
         tags += QUALITY_CONTROL;
@@ -38,7 +39,7 @@ const init = async function (msg,args,ext){
 console.log(enhancedRes)
 
     if(res && enhancedRes){
-        embed.image( res.file_url )
+        embed.image( enhancedRes.file_url )
         let elipsis = enhancedRes.tag_string_character.split(' ').length > 5 ? " (...)" :"";
         if(enhancedRes.tag_string_artist) embed.field ("Artist","**["+ enhancedRes.tag_string_artist.split(' ')[0].split('_').map(capitalize).join(' ')+`]()**`,true )
         if(enhancedRes.tag_string_character) embed.field ("Characters",enhancedRes.tag_string_character.split(' ').map(char=> char.split('_').map(capitalize).join(' ') ).slice(0,5).join(", ")+elipsis,true )
