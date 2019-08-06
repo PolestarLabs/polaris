@@ -67,14 +67,14 @@ ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next
         return message.channel.send({embed:embe2});
   }
 
-  if(!dailyAvailable && Author.id!="x88120564400553984"/**/){
+  if(!dailyAvailable && Author.id!="88120564400553984"/**/){
     let remain = userDaily+DAY;
     Daily.userDataStatic = userDaily;
     return reject(message,Daily,remain);
   };
   if(presuccess) {
-     let pre = await presuccess(message,Daily);
-    if (pre === false) return;
+    let pre = await presuccess(message,Daily);
+    if (pre !== true) return;
    }
 
   Author.dailing = true;

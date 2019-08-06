@@ -34,6 +34,8 @@
     },
     "terms": {
         "transferDenied": "Transfer Denied",
+        "TransactionFee": "Transaction Fee",
+        "TransactionID": "Transaction ID",
         "thanks": "thanks",
         "thanks_short": "thx",
         "thx": "$t(terms.thanks_short)",
@@ -485,6 +487,19 @@
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
             "aviOK": "Alright, I've changed my photo for you. You can change my propic again in {{cooldown}}",
             "colorChange": "Your favorite color has been saved!"
+        },
+        "transfer":{
+            "lastdly":"Last Box Transfer:",
+            "next":"Next Transfer available {{in X hours}}",
+            "next":"Next Transfer available in:",
+            "transferboxto": "Transferring  Box to {{userB}}"
+            ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
+            ,"timeout": "**Transfer Timed Out!**"
+            ,"cancel": "**Transfer Cancelled!**"
+            ,"success": "**{{boxname}}** transferred to {{userB}}"
+        },
+        "give":{
+            "cooldown":"Hold up! You can transfer again in {{remaining}}!"
         },
         "inventory": {
             "noSuchBox": "Look, I can't see this box in there and I'm sure you can't either.",

@@ -3,6 +3,7 @@ const YesNo = require("../../structures/YesNo");
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
 
+
 const init = async function(msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
@@ -37,11 +38,11 @@ const init = async function(msg, args) {
         `;
     return msg.channel.send({ embed: embe2 });
   };
-
   let precheck = async function(msg, Dly) {
+      
     const Target = msg.mentions[0] || PLX.findUser(args[1] || "");
-
-    const preRarity = args[0];
+    const preRarity = args[0]?args[0].toUpperCase():null;
+    
 
     const [userData, targetData, Boxes] = await Promise.all([
       DB.users.findOne({ id: msg.author.id }),
@@ -64,18 +65,19 @@ const init = async function(msg, args) {
       "```";
 
     const embed = {};
+    P.userB=`<@${Target.id}>`
     embed.description = `
-    Transferring  Box to <@${Target.id}>    
+    ${$t("responses.transfer.transferboxto", P)}   
     ${boxtats(userBoxList)}
     `;
-    embed.thumbnail = { url: Target.avatarURL + "?size=32" };
+    embed.thumbnail = { url: Target.avatarURL };
     embed.footer = { text: msg.author.tag, icon_url: msg.author.avatarURL };
 
     let prompt = await msg.channel.send({ embed });
 
     const timeout = () => {
       embed.color = 0xffc936;
-      embed.description = "**Transfer Timed Out!**";
+      embed.description = $t("responses.transfer.timeout", P);
       embed.thumbnail = {};
       embed.image = {
         url:
@@ -87,7 +89,7 @@ const init = async function(msg, args) {
     };
     const cancel = () => {
       embed.color = 0xff3636;
-      embed.description = "**Transfer Cancelled!**";
+      embed.description = $t("responses.transfer.cancel", P)
       embed.thumbnail = {};
       embed.image = {
         url:
@@ -118,16 +120,17 @@ const init = async function(msg, args) {
 
     responses[0].delete().catch(e => null);
     const R = Math.abs(Number(responses[0].content));
-    boxTransfer(userBoxList[R], R);
+    return boxTransfer(userBoxList[R], R);
 
     async function boxTransfer(CHOSENBOX, R) {
       if (CHOSENBOX.tradeable) {
+        P.boxname = CHOSENBOX.name
         embed.description = `
-            Transferring  **${CHOSENBOX.name}** to <@${Target.id}>    
+           ${$t("responses.transfer.transferthisboxto", P)}    
 
             ${boxtats(userBoxList, R, CHOSENBOX)}
 
-            **CONFIRM?**
+            ${$t("responses.trade.confirm10s", P).toUpperCase()}    
             `;
         await prompt.edit({ embed });
         const yes = async () => {
@@ -144,12 +147,10 @@ const init = async function(msg, args) {
           targetData.addItem(CHOSENBOX.id);
 
           embed.description = `
-                ${_emoji("yep")}**${CHOSENBOX.name}** transferred to <@${
-            Target.id
-          }>    
+                ${_emoji("yep")}${$t("responses.transfer.success", P)}    
 
-                Transaction Fee: **${250}${_emoji("RBN")}**
-                Transaction ID: \`${audit.transactionId}\`
+                ${$t('terms.TransactionFee')} **${250}${_emoji("RBN")}**
+                ${$t('terms.TransactionID')} \`${audit.transactionId}\`
                 `;
           embed.color = 0x2deb88;
           embed.image = {
@@ -160,7 +161,8 @@ const init = async function(msg, args) {
           return true;
         };
 
-        await YesNo(prompt, msg, yes, cancel, timeout);
+        return (await YesNo(prompt, msg, yes, cancel, timeout,{time:10e3}));
+         
         
       } else {
         embed.color = 0xff3636;
@@ -183,9 +185,14 @@ const init = async function(msg, args) {
   let after = async function(msg, Dly) {
     console.log("ok")
   }
+  if(msg.author.trading === true) {
+      msg.addReaction(_emoji('nope').reaction);
+      return;
+  }
+  msg.author.trading = true;
+  await Timed.init(msg,"transfer_box",{ day: 2 * 60 * 60 * 1000 },after,reject,info,precheck);
+  msg.author.trading = false;
 
-
-Timed.init(msg,"transfer_box",{ day: 2 * 60 * 60 * 1000 },after,reject,info,precheck);
 };
 
 module.exports = {
