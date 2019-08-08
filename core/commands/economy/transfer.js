@@ -4,22 +4,17 @@ const ECO = require('../../archetypes/Economy');
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
 
-const init = async function (msg){
+const init = async function (msg,args){
 
     const P={lngs:msg.lang,prefix:msg.prefix}
-
-    
-    if (msg.args.length < 2 ) return PLX.autoHelper('force', {
-        cmd, msg, opt: this.cat
-    });
-
 
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
     let TARGET = PLX.getTarget(msg,1,false);
     if (TARGET instanceof Promise) TARGET = await TARGET;
 
     if(!TARGET) {        
-        return PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});
+         PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});
+         return;
     }    
 
     const [USERDATA,TARGETDATA] = await Promise.all([
@@ -48,7 +43,7 @@ const init = async function (msg){
         let dailyNope = $t('responses.give.cooldown',P);
         let embed=new Embed();
         embed.setColor('#e35555');
-        embed.description = _emoji('nope') + dailyNope +P.remaining+" "+r;
+        embed.description = _emoji('nope') + dailyNope;
         return msg.channel.send({embed:embed});
     }
     let info = async function(msg,Daily){
@@ -82,9 +77,9 @@ const init = async function (msg){
             embed.image("https://cdn.discordapp.com/attachments/488142034776096772/586549151206998057/transfer.gif")
             embed.description =`
             
-            **${msg.author.username}** transfered **${AMOUNT}**${_emoji('RBN')} to **${TARGET.username}**
-            Transaction Fee: **${Math.floor(AMOUNT*0.05)}${_emoji('RBN')}**
-            Transaction ID: \`${payload.transactionId}\`
+            **${msg.author.username}** transferred **${AMOUNT}**${_emoji('RBN')} to **${TARGET.username}**
+            ${$t('terms.TransactionFee')}: **${Math.floor(AMOUNT*0.05)}${_emoji('RBN')}**
+            ${$t('terms.TransactionID')}: \`${payload.transactionId}\`
             
             `
             msg.channel.send({embed})
@@ -101,9 +96,13 @@ const init = async function (msg){
 module.exports={
     init
     ,pub:true
+    ,argsRequired:true
     ,cmd:'transfer'
     ,perms:3
     ,cat:'economy'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['give']
+    ,teleSubs:[
+        {label: 'box', path:'economy/givebox'}
+    ]
 }
