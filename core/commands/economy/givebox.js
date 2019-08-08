@@ -16,7 +16,7 @@ const init = async function(msg, args) {
     let dailyNope = $t("responses.give.cooldown", P);
     let embed = new Embed();
     embed.setColor("#e35555");
-    embed.description = _emoji("nope") + dailyNope + P.remaining + " " + r;
+    embed.description = _emoji("nope") + dailyNope  ;
     return msg.channel.send({ embed: embed });
   };
   let info = async function(msg, Daily,r) {
@@ -185,13 +185,10 @@ const init = async function(msg, args) {
   let after = async function(msg, Dly) {
     console.log("ok")
   }
-  if(msg.author.trading === true) {
-      msg.addReaction(_emoji('nope').reaction);
-      return;
-  }
-  msg.author.trading = true;
+  
+  msg.author.looting = true;
   await Timed.init(msg,"transfer_box",{ day: 2 * 60 * 60 * 1000 },after,reject,info,precheck);
-  msg.author.trading = false;
+  msg.author.looting = false;
 
 };
 
@@ -202,5 +199,6 @@ module.exports = {
   perms: 3,
   cat: "economy",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: []
+  aliases: [],
+  invalidUsageMessage:  (msg)=> {PLX.autoHelper( 'force', {msg, cmd: "transfer", opt: "economy" } )}
 };

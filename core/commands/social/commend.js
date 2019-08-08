@@ -6,8 +6,6 @@ const init = async function (msg) {
 
     let P = { lngs: msg.lang, prefix: msg.prefix }
 
-    if (PLX.autoHelper(['noargs', $t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat, aliases: this.aliases })) return;
-
     let Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
 
     if (msg.args.includes("info") || msg.args.includes("status") || msg.args.includes("stats")) {
@@ -22,9 +20,11 @@ const init = async function (msg) {
     if (Target == null) Target = msg.author;
 
 
+
     const userData = await DB.users.findOne({ id: msg.author.id });
     const targetData = (await DB.users.findOne({ id: Target.id })) || (await DB.users.new(Target));
     const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
+
 
     const preafter = async function preafter(M, D) {
         if ((userData.modules.inventory.find(itm => itm.id == 'commendtoken') || {}).count >= 1) {
@@ -36,6 +36,7 @@ const init = async function (msg) {
             msg.reply($t('responses.commend.noItem', P));
             return false;
         }
+        return true;
     }
 
     const after = async function after(msg, Dly) {

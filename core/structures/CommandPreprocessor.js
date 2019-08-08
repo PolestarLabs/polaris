@@ -16,7 +16,10 @@ const PERMS_CALC = function CommandPermission(msg){
             ? cfg.admins
             : PLX.beta ? [ ] : [ ];
     let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat));
-
+    if(msg.author.looting === true) {
+        msg.addReaction(_emoji('nope').reaction);
+        return false;
+    }
     let perms = msg.command.botPerms
     if (perms){
       delete require.cache[require.resolve('./PermsCheck.js')];
@@ -41,7 +44,7 @@ const DEFAULT_CMD_OPTS = {
     ,requirements: {custom:PERMS_CALC}
     ,permissionMessage: (msg)=>{msg.addReaction(_emoji('nope').reaction);return false} 
     ,hooks:  {
-        preCommand: (m,a) => {
+        preCommand: (m,a) => {            
             m.args = a;
             m.lang = [m.channel.LANG || (m.guild || {}).LANG || 'en', 'dev'];
         },
