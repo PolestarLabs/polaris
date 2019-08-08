@@ -491,7 +491,7 @@
         "transfer":{
             "lastdly":"Last Box Transfer:",
             "next":"Next Transfer available {{in X hours}}",
-            "next":"Next Transfer available in:",
+        
             "transferboxto": "Transferring  Box to {{userB}}"
             ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
             ,"timeout": "**Transfer Timed Out!**"

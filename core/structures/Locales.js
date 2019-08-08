@@ -141,6 +141,13 @@ const i18n = [{
     "name-e": "Indonesian",
     "flag": ":flag_id:",
     "site-flag": "ID"
+}, {
+    "code": ["owo", "uwu"],
+    "iso": "owo",
+    "name": "OwO",
+    "name-e": "OwO",
+    "flag": _emoji('owo'),
+    "site-flag": "OWO"
 }
 ]
 

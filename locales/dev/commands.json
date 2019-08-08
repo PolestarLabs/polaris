@@ -131,8 +131,10 @@
 		,"reactionroles": "Push for Role. Life has never been so easy!"
 		,"maidpic": "Posts a random Maid"
 		,"neko": "Posts a random Neko"
+		,"transfer": "Send Rubines or Boxes to a friend"
 	},
 	"usage": {
+		"transfer": "`{{prefix}}transfer [Amount] [@user]` Will transfer Rubines to @User. 4hs Cooldown\n\n`{{prefix}}transfer box [Rarity (optional)] [@user]` Will transfer a Lootbox to @User. 2hs Cooldown\n",
 		"reactionroles": "`{{prefix}}reactionroles [add|del|list|clear] [#channel] [Message ID] [EMOJI] [Role Name | @Role]`\nQuite an extensive command huh? Let's break it down:\n\nTo add a new Reaction for a Role to a message:\n`{{prefix}}reactionroles add #channel MESSAGE_ID :emoji: My Awesome Role`\n\nTo remove one or all Reaction bindings from a Message:\n`{{prefix}}reactionroles del MESSAGE_ID :emoji:` For one emoji/role pair only.\n`{{prefix}}reactionroles del MESSAGE_ID` For all emojis from that Message\n\nYou can see all Message/Role/Reaction bindings with `{{prefix}}reactionroles list`\n\nYou can nuke the entire thing with `{{prefix}}reactionroles clear`\n\nRequires the user to have either `MANAGE SERVER` or `MANAGE ROLES` permissions, or a Pollux ModRole",
 		"brackets": "`{{prefix}}brackets (-rr ) [number | list of entrants (comma-separated) | role <@role | Role Name> ]`\n\n`{{prefix}}brackets 10` Generates Regular Brackets for 10 Teams (With pre-matches for Byes) (max.32)\n`{{prefix}}brackets -rr role Tournament` Generates a Round-Robin Match Table for all members in the @Tournament role (max.16)\n`{{prefix}}brackets team 1, team 2, team 3, team 4` Generates Regular Brackets for the listed teams (max.32)",
 
