@@ -7,6 +7,33 @@ const Schema = mongoose.Schema
 const Mixed = Schema.Types.Mixed;
 const utils = require('../../structures/PrimitiveGearbox.js');
 
+
+
+
+
+const UserCollection = new Schema({
+  from: String,
+  to: String,
+  type: String,
+  currency: String,
+  transaction: String,
+  amt: Number,
+  timestamp: Number,
+  transactionId: String 
+});
+
+
+const usercols     = mongoose.model('UserCollection', UserCollection, 'usercollections');
+usercols.set     =  utils.dbSetter;
+usercols.get     =  utils.dbGetter; 
+usercols.new = payload => {
+    let aud = new usercols(payload);
+    aud.save((err) => {
+      if (err) return console.error(err);       
+    });
+ }  
+
+
 const Audit = new Schema({
   from: String,
   to: String,
@@ -17,6 +44,18 @@ const Audit = new Schema({
   timestamp: Number,
   transactionId: String 
 });
+
+
+  const audit     = mongoose.model('Audit', Audit, 'transactions');
+      audit.set     =  utils.dbSetter;
+      audit.get     =  utils.dbGetter; 
+      audit.new = payload => {
+          let aud = new audit(payload);
+          aud.save((err) => {
+            if (err) return console.error(err);
+            console.log("[NEW AUDIT]".blue,payload);
+          });
+       }  
 
 const Buyable = new Schema({
   id:String,
@@ -212,4 +251,4 @@ const RelationShipModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
+module.exports={ usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
