@@ -4,7 +4,7 @@ module.exports={
     ,cmd:'marketplace'
     ,perms:3
     ,cat:'economy'
-    ,botPerms:['attachFiles','embedLinks','manageReactions']
+    ,botPerms:['attachFiles','embedLinks','manageMessages']
     ,aliases:['market','mkt']
     ,argsRequired: true
     ,subs: ['list','post','delete']
