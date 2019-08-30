@@ -12,14 +12,8 @@ const utils = require('../../structures/PrimitiveGearbox.js');
 
 
 const UserCollection = new Schema({
-  from: String,
-  to: String,
-  type: String,
-  currency: String,
-  transaction: String,
-  amt: Number,
-  timestamp: Number,
-  transactionId: String 
+  id: String,
+  collections: Mixed
 });
 
 
@@ -46,16 +40,6 @@ const Audit = new Schema({
 });
 
 
-  const audit     = mongoose.model('Audit', Audit, 'transactions');
-      audit.set     =  utils.dbSetter;
-      audit.get     =  utils.dbGetter; 
-      audit.new = payload => {
-          let aud = new audit(payload);
-          aud.save((err) => {
-            if (err) return console.error(err);
-            console.log("[NEW AUDIT]".blue,payload);
-          });
-       }  
 
 const Buyable = new Schema({
   id:String,
