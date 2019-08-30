@@ -4,7 +4,6 @@
 /bower_components/
 /node_modules/
 /config.json
-asciiPollux.js
 /.vscode/
 *.psd
 *.ai
