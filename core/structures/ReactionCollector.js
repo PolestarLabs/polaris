@@ -2,8 +2,8 @@ const EventEmitter = require("events").EventEmitter;
 class ReactionCollector extends EventEmitter {
 	constructor(message, filter, options = {}) {
 		super();
-		this.options = typeof filter !== Function ? filter : options;
-		this.filter  = typeof filter !== Function ? null : filter;
+		this.options = typeof filter !== "function" ? filter : options;
+		this.filter  = typeof filter !== "function" ? null : filter;
 		this.message = message;
 		this.ended = false;
 		this.collected = [];
@@ -11,6 +11,7 @@ class ReactionCollector extends EventEmitter {
 		this.listener = (message,emoji,userID) => this.verify(message,emoji,userID);
 		this.bot.on("messageReactionAdd", this.listener);
 		if(this.options.time) setTimeout(()=>this.stop("time"), this.options.time);
+		else setTimeout(()=>this.stop("time"), 10000);
 	}
 
 	verify(message,emoji,userID) {
@@ -21,7 +22,7 @@ class ReactionCollector extends EventEmitter {
         }
 
         let reaction = {
-          message,emoji,userID,author:message.author
+          message,emoji,userID,author:PLX.users.find(u=>u.id == userID)
         }
 
 		if(!this.filter || this.filter(reaction)) {
@@ -37,7 +38,6 @@ class ReactionCollector extends EventEmitter {
 		if(this.ended) return;
 		this.ended = true;
 		this.bot.removeListener("messageReactionAdd", this.listener);
-
 		this.emit("end", this.collected, reason);
 	}
 }

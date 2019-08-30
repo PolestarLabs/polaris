@@ -38,7 +38,7 @@ async function levelChecks(msg) {
 
 
 
-  let   userData    = DB.users.get(msg.author.id);
+  let   userData    = DB.users.findOne({id:msg.author.id});
   let   servData    = DB.servers.get(msg.guild.id);
   let   chanData    = DB.channels.get(msg.channel.id);
 
@@ -149,7 +149,7 @@ async function levelChecks(msg) {
 
       //delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
       msg.author.getDMChannel().then(dmChan=>{
-        if (userData.switches.LVUPDMoptout===true) return;
+        if (!userData.switches||userData.switches.LVUPDMoptout===true) return;
         dmChan.createMessage("**+1** x "+_emoji('loot')+_emoji(polizei)+' Level Up Bonus!');
       })
       //require("./modules/dev/levelUp_infra.js").init(msg);
