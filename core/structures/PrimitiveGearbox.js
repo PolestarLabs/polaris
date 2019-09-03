@@ -41,7 +41,9 @@ module.exports = {
          query = {'id':query.toString()};
        };
        if(!typeof project) project = {_id:0};
-       return resolve(this.findOne(query,project).lean().exec());
+       let data = await this.findOne(query,project).lean().exec();
+       if (data === null) return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
+       return resolve(data);
      })
    }
 
