@@ -12,18 +12,18 @@
         "synthGems": "Kryształy Syntezy",
         "cosmoFragment": "Kosmiczny Fragment",
         "cosmoFragment_plural": "Kosmiczne Fragmenty",
-        "C": "Zwyczajne",
-        "U": "Niezwykłe",
+        "C": "Zwyczajny",
+        "U": "Niezwykły",
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki",
         "thevoid": "pustka",
         "evToken": "Token Wydarzenia",
-        "evToken_plural": "Tokeny Eventowe",
+        "evToken_plural": "Tokeny Wydarzenia",
         "lootbox": "Skrzynka",
         "lootbox_plural": "Skrzynki",
         "consumable": "Przedmiot Zużywalny",
-        "consumable_plural": "Przedmiot Zużywalny",
+        "consumable_plural": "Przedmioty Zużywalne",
         "junk": "Śmieci",
         "junk_plural": "Śmieci",
         "key": "Przedmioty-Klucze",
@@ -33,6 +33,9 @@
         "boosterpack_plural": "Boosterpacki"
     },
     "terms": {
+        "transferDenied": "Transfer Odrzucony",
+        "TransactionFee": "Opłata od Transakcji",
+        "TransactionID": "ID Transakcji",
         "thanks": "dzięki",
         "thanks_short": "dzk",
         "thx": "$t(terms.thanks_short)",
@@ -55,7 +58,7 @@
         "reason": "Powód",
         "banned": "Zbanowany",
         "kicked": "Wyrzucony",
-        "usage": "Stosowanie",
+        "usage": "Zatosowanie",
         "module": "Moduł",
         "inst": "Instrukcje",
         "bet": "Obstawiać",
@@ -63,7 +66,7 @@
         "levelUp": "Kolejny Poziom!",
         "price": "Cena",
         "droppable": "Zrzucalne",
-        "event": "Event",
+        "event": "Wydarzenie",
         "discord": {
             "message": "Wiadomość",
             "message_plural": "Wiadomości",
@@ -71,8 +74,8 @@
             "reaction_plural": "Reakcje",
             "role": "Rola",
             "role_plural": "Role",
-            "server": "Serwer\n",
-            "server_plural": "Serwer\n",
+            "server": "Serwer",
+            "server_plural": "Serwer",
             "member": "Członek",
             "member_plural": "Członkowie",
             "user": "Użytkownik",
@@ -93,8 +96,8 @@
         "logChan": "Logi Ogólne",
         "userJoin": "**{{user}}** właśnie **dołączył(-ła)** na Serwer",
         "userLeave": "**{{user}}** właśnie **upuścił(-ła)** Serwer",
-        "messDel": "**Usunięto** wiadomość w {{channel}}",
-        "messEdit": "{{user}} **edytował** swoją wiadomość w {{channel}}",
+        "messDel": "**Usunięto** wiadomość na {{channel}}",
+        "messEdit": "{{user}} **edytował** swoją wiadomość na {{channel}}",
         "newChan": "Nowy **kanał** został ** został stworzony**: {{channel}}",
         "delChan": "**Kanał** został **usunięty**: {{channel}}",
         "updtChan": "Kanał **{{channel}}** został **zaktualizowany**",
@@ -104,19 +107,19 @@
         "revokeBan": "Cofnięto bana **{{user}}**",
         "usrNick": "Od teraz **{{user}}** to **{{newuser}}**",
         "usrPhoto": "**{{user}}** zmienił swoją profilówkę",
-        "usrRoles": "Zmieniono role {{user}}",
+        "usrRoles": "Zmieniono rolę {{user}}",
         "gSets": "Ustawienia serwera zostały zmienione"
     },
     "responses": {
         "errors": {
             "iNeedThesePerms": "Następujące uprawnienia nie są już obecne, aby kontynuować poprawnie:\n{{PERMSLIST}}",
-            "denied": "Nie masz uprawnień do korzystania z tego. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
+            "denied": "Nie masz uprawnień, aby z tego korzystać. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
             "disabledModule": "no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo.",
             "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawdłowa ;~;",
             "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając \n'{{prefix}}stats'",
             "moderationNeeded": "Przepraszam, ale nie możesz użyć tej komendy. Potrzebujesz uprawnienia **Zarządzanie Serwerem**, lub musisz być przypisany do roli z uprawnieniami Moderatora/Administratora (Ustaw ją używając: `{{prefix}}modrole [@Rola])'",
             "chooseAmod": "Wybierz moduł.",
-            "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę również ciebie wykopać.",
+            "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę wykopać również ciebie.",
             "kin404": "Nie mogę znaleźć tej osoby. Czy ona już odeszła? Być może była tylko częścią twojej wyobraźni.",
             "unmutable": "Nieważne co mówisz, wyciszę ta osobę.",
             "unperm": "Nie mam uprawnień, aby to zrobić. Być może powinieneś dać mi uprawnienia, zanim polecisz mi coś zrobić.",
@@ -167,7 +170,7 @@
                     "Dobrze.",
                     "Dobrze!",
                     "Zrozumiano!",
-                    "Poprawnie.",
+                    "Przyjęłam.",
                     "Dobrze!",
                     "Słodko!",
                     "Ok!",
@@ -285,27 +288,77 @@
         },
         "items": {
             "confirmDestroy": "Jesteś pewny że chcesz zniszczyć ten przedmiot?",
-            "destroyWhat": "Zniszczyć, co?",
+            "destroyWhat": "Zniszczyć, ale co?",
             "cantDestroy": "Nie mogę tego zniszczyć.",
             "destroyed": "Przedmiot zniszczony! Oto co z niego zostało:"
         },
         "marry": {
             "needRing": "Musisz mieć Pierścionek aby się oświadczyć, gdzie twoje maniery?",
-            "ringTutorial": "",
+            "ringTutorial": "*Aktualnie nie posiadasz żadnych pierścieni zaręczynowych gotowych do użycia.*\n\nAby zdobyć pierścień musisz go stworzyć.\nAby tego dokonać musisz kupić **Pierścień Składowy** w [**Warsztacie do Tworzenia**]\n({{craftingURL}} \"Pollux'owy Warsztat do Tworzenia!\") i wydać na niego Rubiny, Żady albo Szafiry, plus konkretne materiały, aby wykonać z nich brylant do pierścienia.\nMożesz też wydać każde z nich, aby wykonać niesamowity pierścionek z klejnotów!\n\nTwórz pierścienie używając `{{prefix}}craft`, zacznij tworząc **Pierścień Składowy** (`{{prefix}}craft partial-ring`) a następnie dodając klejnot wedle uznania używając `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Te 4 to *pierścienie podstawowe* stworzone wyłącznie z klejnotów, niektóre przedmioty pozwolą tworzyć ci kolejne pierścienie!",
             "noneOfThisRing": "Sprawdź swoje kieszenie jeszcze raz, takiego pierścionka nie ma w twoim Ekwipunku.",
             "availableRings": "Dostępne pierścienie to:",
             "proposal": "{{userA}} oświadcza się **{{userB}}** za pomocą **{{ringname}}**.\n{{userB}} zgadzasz się?",
-            "actuallyNone": "",
+            "actuallyNone": "Aktualnie nie masz *żadnego*. Zdobądź jednego! **Teraz!**",
             "saidYes": "{{userB}} powiedział TAK!",
             "saidNo": "{{userB}} powiedział nie...",
             "saidNothing": "{{userB}} uciekł... patrz jak biegnie... cóż... napijesz się czegoś?",
             "addToFeatured": "Chcesz pokazać {{userB}} jako wyróżnionego kochanka w swoim Profilu?",
             "addToFeatured2": "{{userB}} Chcesz zrobić to samo z {{userA}}?",
-            "addToFeatured3": "",
-            "alreadyMarriedUp": "",
-            "alreadyMarriedInf": "",
+            "addToFeatured3": "Wyświetlać twoją nową drugą połówkę w Profilu?",
+            "alreadyMarriedUp": "Wygląda na to że już jesteś w związku z {{userB}}. Czy chcesz ulepszyć pierścień z *{{ringA}}* na **{{ringB}}**?",
+            "alreadyMarriedInf": "Już jesteś w związku z {{userB}} z takim samym lub lepszym pierścieniem (*{{ringB}}*)! Co ty próbujesz osiągnąć?",
             "cantMarrySelf": "Nie jestem staromodna czy coś, ale... Czy małżeństwo z samym sobą to już nie lekka przesada?",
             "cantMarryPollux": "Nie ma mowy! Sio!"
+        },
+        "ship": {
+            "needTupipo": "Kalkulator Miłości nie działa tylko z jedną osobą, kochaniutki.",
+            "need2diffpipo": "Dopóki ta osoba nie ma możliwości mitozy, ciągle liczy się jako jedna osoba, potrzebuję **dwóch** osób!",
+            "quotes": [
+                [
+                    "Oh. _Oh nie._",
+                    "WASZE HOROSKOPY SĄ W INNYM UŁOŻENIU, ZREZYGNUJCIE Z DALSZEGO KONTAKTU."
+                ],
+                [
+                    "Zawahanie było tylko chwilowe przed przesunięciem w lewo.",
+                    "Pomimo, że jesteście ze sobą całkiem blisko nie chcecie być znajomymi w ten sposób."
+                ],
+                [
+                    "Wasza dwójka sprawdzi się w związku jak pomidor w sałatce.",
+                    "Hej! Nie nienawidzicie się! To już jest jakiś dobry początek, racja?"
+                ],
+                [
+                    "Ooh, ale doprawiona relacja. Przyprawą może być mąka, niewykluczone, ale to ciągle przyprawa, racja?",
+                    "Jeszcze kilka randek i może jakieś iskry zaczną lecieć!"
+                ],
+                [
+                    "Woah, prawie jesteście dopasowani! ",
+                    "Każdy związek wymaga trochę pracy, tak myślę."
+                ],
+                [
+                    "Jesteście dopasowani! Wasze szanse są niemal tak wysokie jak moje!",
+                    "Mmm, obejrzałabym ten powolny, płomienny romans jako film."
+                ],
+                [
+                    "Jesteśmy blisko strefy _wzajemnego polubienia_!",
+                    "Przytulamy się, czyż nie?"
+                ],
+                [
+                    "Psst, Flicky i ja stawiamy na Twój sukces. Czy utworzyłeś już ten częściowy pierścień?",
+                    "Przestań to ukrywać! Wyznaj swoje uczucia!"
+                ],
+                [
+                    "Shipuję to!",
+                    "Wy słodziaki jesteście tak jak dwa ziarnka groszku w skórce!"
+                ],
+                [
+                    "Cholercia, jesteście dla siebie niemal _idealni_!",
+                    "Więc która z was zajdzie w ciążę?"
+                ],
+                [
+                    "PARA MOCY PRZYBYŁA.",
+                    "Bratnia Dusza! Niesamowite!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Zgadzasz sie na wzięcie rozwodu z {{user}}? Opłata %EMJ% w wysokości **5000 Rubinów** zostanie pobrana od **każdego** z was. Wasze PunktyMiłości zostaną **podzielone na pół**!",
@@ -401,7 +454,7 @@
             "decon": "{{user}} sam się dezynfekuje.",
             "decon2": "{{user}} dezynfekuje {{user2}}.",
             "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
-            "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**",
+            "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%** z **{{radiation}}μSv/h** ",
             "kissed": "{{user}} całuje {{victim}}~",
             "kissedSelf": "{{user}} pocałował samego siebie bo jest taką narcystyczną s*ką~",
             "kissedNone": "{{user}} przesyła całusy~",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
             "aviOK": "W porządku, zmieniłam moje zdjęcie dla ciebie. Możesz ponownie zmienić moje zdjęcie profilowe za {{cooldown}}",
             "colorChange": "Twój ulubiony kolor został zapisany!"
+        },
+        "transfer": {
+            "lastdly": "Ostatni Transfer Skrzynki:",
+            "next": "Następny Transfer możliwy {{in X hours}}",
+            "transferboxto": "Transferuję Skrzynkę dla {{userB}}",
+            "transferthisboxto": "Transferuję **{{boxname}}** dla {{userB}} ",
+            "timeout": "**Transfer Wygasł!**",
+            "cancel": "**Transfer Anulowany!**",
+            "success": "**{{boxname}}** przetransferowano {{userB}}"
+        },
+        "give": {
+            "cooldown": "Powoli! Następny transfer możesz wykonać za {{remaining}}!"
         },
         "inventory": {
             "noSuchBox": "Spójrz, nie widzę tam tego pudełka i jestem pewna że ty też.",
@@ -487,19 +552,19 @@
             "alreadyOwnThis": "Hej, już to posiadasz!"
         },
         "brackets": {
-            "maxRR": "",
-            "maxBK": "",
-            "RRt": "",
-            "BKt": "",
+            "maxRR": "Maksymalny limit dla systemu kołowego: 16",
+            "maxBK": "Maksymalny limit dla Tabelek Turniejowych: 32",
+            "RRt": ":trophy: Tabelki Systemu Kołowego",
+            "BKt": ":trophy: Tabelki Turniejowe",
             "match": "Mecz",
             "round": "Runda",
-            "preround": "Pre-runda",
+            "preround": "Przedrunda",
             "team": "DRUŻYNA {{X}}",
             "winner": "Zwycięzca",
-            "bracketX": ""
+            "bracketX": "Tabelka {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "",
+            "disenchant": "Użyć magii by rozbić te tło {{rarity_emoji}} na **{{count}}$t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Synteza Przedmiotów Upiększających",
             "confirmSynth": "Chcesz abym to zsyntetyzowała?",
             "nogemsforThis": "Wygląda na to że nie masz wystarczającej liczby kryształów potrzebnych do tej syntezy..."
@@ -574,9 +639,7 @@
             "timeout": "Czas na potwierdzenie Atomówki się skończył!",
             "completed": "Informacje o serwerze zostały pomyślnie wyczyszczone i zresetowane. Spróbuj użyć **+serverinfo**, aby sprawdzić, czy wszystko zostało poprawnie zresetowane. Nie ponoszę odpowiedzialności za żadne późniejsze skażenie oparem nuklearnym."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Reakcyjne Role dla {{server}}",
             "removeAll": "Usunęłam stąd cały Rejestr Reakcji. Musisz jednak manualnie wyczyścić reakcje z wiadomości.",
@@ -687,9 +750,9 @@
             "Niesamowite! Zobacz, co znalazłem!",
             "Hej, jestem pewna, że chcesz tu widzieć Lootbox'a."
         ],
-        "lootPick": "Macie **__20 sekund__**, aby się po niego zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
+        "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
         "goesTo": "Koniec czasu! Zobaczmy, kto otrzyma to Pudełko.\n**Ten Loot Box zostanie rozlosowany pomiędzy:**",
-        "congrats": "Dobra robota! Skrzynka została dodana do twojego ekwipunku. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
+        "congrats": "Dobra robota! Skrzynka została dodana do twojego **Ekwipunku**. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
         "opening": "{{user}} otworzył Pudełko...",
         "contains": "Ta {{adjective}} skrzynka zawiera",
         "options": "Możesz go zachować lub rerollnąć, płacąc {{amt}}",
@@ -711,7 +774,7 @@
         "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz."
     },
     "eastereggs": {
-        "konodioda": "Myślałeś, że to Pollux, **ale to było ME, DIO**!",
+        "konodioda": "Myślałeś, że to Pollux, **ale to byłem JA, ZIOM**!",
         "vacuum": "**{{user}}** podarował **+1Rep** w Pustkę. Do tej pory wrzucono tam {{amount}} reputacji."
     },
     "seasonal": {
