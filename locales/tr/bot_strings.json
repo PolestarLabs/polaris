@@ -33,6 +33,9 @@
         "boosterpack_plural": "Hızlandırıcılar"
     },
     "terms": {
+        "transferDenied": "Transfer Reddedildi",
+        "TransactionFee": "İşlem Ödeneği",
+        "TransactionID": "İşlem ID'si",
         "thanks": "Teşekkür ederim.",
         "thanks_short": "tşk",
         "thx": "$t(terms.thanks_short)",
@@ -291,11 +294,11 @@
         },
         "marry": {
             "needRing": "Aşk-ı ilân edebilmek için yüzüğe ihtiyacın var, azıcık haysiyet ya.",
-            "ringTutorial": "",
-            "noneOfThisRing": "",
-            "availableRings": "",
-            "proposal": "",
-            "actuallyNone": "",
+            "ringTutorial": "*Elân kullanabileceğin hiçbir evlilik yüzüğün yok.*\n\nBir yüzük elde edebilmek için, yüzüğü üretmen gerekir.\nBunun için [Crafting Workshop]({{craftingURL}} “Pollux Crafting Workshop!”) adresinden **Partial Ring** alman gerekir ve yüzüğe taç olacak bir mücevher için ya Rubin ya Jade ya da Şapir artı başka başka materyaller harcaman gerekir. \nAyrıca hepsini harcayarak nihai mücevhertaşı evlilik yüzüğünü de oluşturabilirsin!\n\nYüzükleri `{{prefix}}craft` komutunu kullanarak oluştur, **Partial Ring** oluşturarak başla (`{{prefix}}craft partial-ring`) ve `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]` yaparak istediğin mücevhertaşını ekleyip devam et. Bu 4'ü yalnızca mücevher taşları ile yapılan *temel yüzüklerdir*, bazı eşyalar farklı farklı yüzükler yapmanıza müsaade edecek!",
+            "noneOfThisRing": "Ceplerini bir kere daha kolaçan et, Envanterinde öyle bir yüzük yok.",
+            "availableRings": "Mevcut yüzükler:",
+            "proposal": "{{userA}} **{{ringname}}** yüzüğü ile **{{userB}}** kişisine aşk-ı ilân etti.\n{{userB}} Kabul ediyor musun?",
+            "actuallyNone": "Aslında *bir tanen* bile yok\nHadi! Hemen **şimdi** kap bir tane",
             "saidYes": "{{userB}} EVET dedi!",
             "saidNo": "{{userB}} hayır dedi...",
             "saidNothing": "{{userB}} kaçtı gitti... arkalarından bakmak kalır bize... aga be... bir şeyler içer miydin?",
@@ -303,9 +306,59 @@
             "addToFeatured2": "{{userB}} Peki sen {{userA}} ile aynı şeyi istiyor musun?",
             "addToFeatured3": "Profil Kartlarında yeni eşini gösterelim mi?",
             "alreadyMarriedUp": "Görünüşe bakılırsa {{userB}} ile zaten evlisin. Yüzüğü *{{ringA}}* seviyesinden **{{ringB}}** seviyesine çıkarmak ister miydin?",
-            "alreadyMarriedInf": "",
-            "cantMarrySelf": "",
-            "cantMarryPollux": ""
+            "alreadyMarriedInf": "Hâli hazırda {{userB}} kullanıcısıyla özdeş veya daha iyi bir yüzükle (*{{ringB}}*) evlisin! Ne yapmaya çalışıyorsun?",
+            "cantMarrySelf": "Modern bir hayat vizyonuna sahibim falan da... kendinle evlenmek biraz fazla değil mi sence de?",
+            "cantMarryPollux": "Hayatta olmaz! Kış kış!"
+        },
+        "ship": {
+            "needTupipo": "Aşk ölçer tek bir kişi ile çalışmıyor, tatlım.",
+            "need2diffpipo": "Karyokinez yapamadıkları sürece, tek bir kişi olarak sayılırlar, **iki** kişiye ihtiyacım var!",
+            "quotes": [
+                [
+                    "Ah. _Olamaz._",
+                    "BURÇLARINIZ EŞLEŞMİYOR, LÜTFEN BİRBİRİNİZİ GÖRMEKTEN KAÇININ."
+                ],
+                [
+                    "O tokat geçirilmeden önce sadece ufak bir duraksama vardı.",
+                    "Birbirinizle tanışık olsanız da, _o tür_ bir tanışıklığa girişmek istemezsiniz."
+                ],
+                [
+                    "Bir domatesin salatada nasılsa siz de öylesiniz.",
+                    "Hop! Birbirinizden nefret etmiyorsunuz! Bu da bir başlangıçtır, değil mi?"
+                ],
+                [
+                    "Oo, ne dil yakan ilişki ama. Baharat hamurunda var bu ilişkinin, bir dakika, öyle şey olur mu ki? Aman, neyse.",
+                    "Birkaç randevu daha ve belki elektriklenmeler uçuşur!"
+                ],
+                [
+                    "Vay, neredeyse eşleşiyordunuz! ",
+                    "Her ilişki bir çaba istermiş."
+                ],
+                [
+                    "Eşleştiniz! Şansınız neredeyse benimki kadar iyi!",
+                    "Mmm, bu yavaşça ölen romantizmi bir film olarak izlemek isterdim."
+                ],
+                [
+                    "_karşılıklı sevenler_ topraklarına gidiyoruz!",
+                    "Yakınlaşıloruz, he?"
+                ],
+                [
+                    "Şşt, Flicky ve ben başaracağınıza yatırıyoruz. Partial Ring oluşturdun mu?",
+                    "Kendini tutma! İlân et aşkını!"
+                ],
+                [
+                    "Shipliyorum sizi!",
+                    "Sizi sevimli şeyler aynı bulaşık tabletinin iki tarafı gibisiniz!"
+                ],
+                [
+                    "Öff, birbiriniz için neredeyse _mükemmelsiniz_!",
+                    "Ee, hanginiz hamile olacak olan?"
+                ],
+                [
+                    "GÜÇ ÇİFTİ GELMİŞ HOŞ GELMİŞ.",
+                    "Ruh ikizleri! Müthiş!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "{{user}} kişisinden boşanmayı onaylıyor musun? \n**ikinizden de** %EMJ%**5000 Rubin** boşanma vergisi alınacak! İkinizin de aşk puanı **yarıya** inecek!",
@@ -419,21 +472,33 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "craftingItem": "",
+            "craftingItem": "`{{item_name}}` oluşturuluyor",
             "noitem": "Bu eşyayı bulamadım",
-            "noitemu": "",
-            "materialMissing": "",
-            "materialPresent": "",
+            "noitemu": "Bu veya benzeri herhangi bir eşya bulamadım",
+            "materialMissing": "Envanterinde eksik eşyalar var, bunu üretemiyorum.",
+            "materialPresent": "Envanterinde tüm materyaller var, üretime devam?",
             "didyoumean": "Bu eşyayı bulamadım. Bunlardan birini demek istemiş olabilirsin, belki?",
             "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?",
-            "timeout": "",
-            "cancel": "",
-            "crafted": ""
+            "timeout": "Zaman doldu! Çok fazla düşündün, üretim ocağı soğudu.",
+            "cancel": "İptal! Az önce ikimizin de zamanını mı yedin sen?",
+            "crafted": "Başarılı! Bak, işte eşyan! Yepyeni ve pırıl pırıl parlıyor~"
         },
         "misc": {
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
             "aviOK": "Pekâlâ, senin için fotoğrafımı değiştirdim. Profil fotoğrafımı {{cooldown}} içerisinde tekrar değiştirebilirsin.",
             "colorChange": "Favori Rengin Kaydedildi!"
+        },
+        "transfer": {
+            "lastdly": "Son Kutu Transferi:",
+            "next": "Bir sonraki transfer {{in X hours}} sonra",
+            "transferboxto": "{{userB}} kullanıcısına Kutu Transfer ediliyor",
+            "transferthisboxto": "**{{boxname}}** {{userB}} kullanıcısına Transfer ediliyor ",
+            "timeout": "**Transfer Süresi Doldu!**",
+            "cancel": "**Transfer İptal Edildi!**",
+            "success": "**{{boxname}}** {{userB}} kullanıcısına Transfer edildi"
+        },
+        "give": {
+            "cooldown": "Bekle! {{remaining}} sonra tekrar transfer edebilirsin!"
         },
         "inventory": {
             "noSuchBox": "Bak, bu kutuyu orada göremiyorum ve eminim ki sen de göremiyorsun.",
@@ -478,31 +543,31 @@
     },
     "interface": {
         "generic": {
-            "cancel": "",
-            "timeout": "",
-            "cantAfford": "",
+            "cancel": "İptal Edildi!",
+            "timeout": "Süre Doldu!",
+            "cantAfford": "Yaa, buna paran yetmiyor... :(",
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
             "confirmDelete": "Silmeyi onaylıyor musun?",
             "alotWentOn": "Bugün çok şeyler döndü...",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "Hey, zaten sende bundan var!"
         },
         "brackets": {
-            "maxRR": "",
-            "maxBK": "",
-            "RRt": "",
-            "BKt": "",
-            "match": "",
-            "round": "",
-            "preround": "",
-            "team": "",
-            "winner": "",
-            "bracketX": ""
+            "maxRR": "Roundrobin için maks limit: 16",
+            "maxBK": "Çizelge oyunu için maks limit: 32",
+            "RRt": ":trophy: Round-Robin Çizelgeleri",
+            "BKt": ":trophy: Turnuva Çizelgeleri",
+            "match": "Eşleşme",
+            "round": "Tur",
+            "preround": "Tur-Öncesi",
+            "team": "{{X}} TAKIMI",
+            "winner": "Kazanan",
+            "bracketX": "Çizelge {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "",
-            "cosmeticSynth": "",
-            "confirmSynth": "",
-            "nogemsforThis": ""
+            "disenchant": "Bu {{rarity_emoji}} arkaplanı **{{count}} $t(keywords.cosmoFragment)** için parçala?",
+            "cosmeticSynth": "Kozmetik Eşya Sentezi",
+            "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
+            "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
         },
         "booster": {
             "checkStickersAt": "{{dashboard}}'da etiketlerine göz atıp giy",
@@ -574,9 +639,7 @@
             "timeout": "Nükleer bombanın süresi geçti!",
             "completed": "Sunucu bilgileri başarılı bir şekilde silindi ve sıfırlandı. Her şeyin tam olarak silindiğini görmek için **+serverinfo**'yu kullanmayı dene. Herhangi bir nükleer-sonrası-durumdan ben sorumlu değilim."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "{{server}} Sunucusundaki Tepki Rolleri",
             "removeAll": "Tepki Girişlerinin hepsini buradan yok ettim. Ama iletilerdeki tepkileri kendi ellerinle temizlemen gerekecek.",
@@ -594,7 +657,7 @@
         },
         "help": {
             "greetings": "\n**Esenlikler diliyorum! Ben Pollux. Sunucunuza atanan yeni hizmetkârınız.**\nBuyurun size yeteneklerimin kısa bir açıklaması:\n\n  •Varsayılan Prefix: “+”dır, “+prefix <New Prefix>” yaparak değiştirebilirsin. \n      Küresel Prefix “p!”dir, Özgün Prefixini bilmeyen kullanıcılar için yararlıdır, **Dashboard**'da devre dışı bırakılabilir. \n      Evrensel Prefix “plx!”dir ve devre dışı bırakılamaz.\n",
-            "basics": "",
+            "basics": "\n**Temeller** -Benimle işe başlamak kendi elektron hızlandırıcını oluşturmak kadar kolaydır! ...bir dakika, hiç kendi başına bir tane oluşturmadın mı? Eh, sıkıntı yok!\nBunlar sahip olduğum {{commandcount}} komuttan sadece birazı!\n  ",
             "cmdlist": "KOMUT LİSTESİ",
             "quick_getgo": "Başlamak için bilmen gereken komutlar",
             "quick_useful": " Kullanışlı bulabileceğin komutlar",
@@ -605,10 +668,10 @@
             "notenough": "Bu kutucuk yeterli değil mi?",
             "trythese": "Şunlardan birini dene",
             "curr_info": "Döviz Malumatı",
-            "currency_overview": "",
-            "rubines_desc": "",
+            "currency_overview": "Döviz sistemim nispeten karmaşık ve çok sayıda limit ve koruyucu özellikleri var. Her işlem, kaydedilir ve izi kolayca sürülebilirdir, Bu, sıkı çalışmanın cambazlar tarafından gölgede bırakılmadığından emin olmamızı sağlar. Her gün 30 binden fazla işlem işliyoruz.   \n        \n    • Herkes biraz **Jade**, **Rubin** ve bir de **Define Sandığı** ile başlar\n",
+            "rubines_desc": "\n*Ana dövizim, açık-pembe mücevher taşları hemen hemen her şey için kullanılan özel altıgensel Al₂O₃Cr scalenohedronların’dan oluşur!*\n        Günlük Ödüllerden (`{{prefix}}daily`), Define Sandıklarından (`+box`) ve Kumar Oyunlarından (`+blackjack`, `+slots`, vb.) elde edilebilir. Beşinci seviyeye ulaşıp en az 10-günlük-ödül-serin olunca takaslardan da elde edebilirsin.\n",
             "jades_desc": " *“Döviz” üretirken, özel eşyaları hazırlamak amacıyla -aksi takdirde değersiz- bu soluk-mavisi mücevherleri  kullanıyorum sırf senin için!*\n        Define Sandıklarından, eşya yok ederek, bağış yapmakla, ya da satın almakla elde edilebilir.",
-            "sapphires_desc": "",
+            "sapphires_desc": "*Seçkin döviz, en kaliteli Şapir Mücevherlerinin koyu-mavi parçaları, özel eşyaları üretmek için ya da özel şeyleri almak için para birimi olarak kullanılır.*\n        Sadece bağış yaparak, satın alarak, ve özel etkinliklerden elde edilebilir. Her 200. ve 365. günlüklerinde Beleş Şapir kazanırsın, ve Ultra Nadir Define Sandıklarından %0.1 şansla düşürebilirsin.",
             "lootboxes_desc": "*Arkaplan, Madalyon, Rubin ve Sticker Booster gibi birçok ganimetler bulunduran özel kutular*\n        Sadece seviye atlayarak ya da rastgele droplardan elde edilebilir. Droplar sohbet etkinliğine bağlı olarak gerçekleşir.\n\n         **`⚠ Define Sandığı düşürmek için Kasten Spam yapmak, hile yapmak ya da alt hesaplarınla eşya değiş-tokuşu yapmak seni Polluxtan ve diğer botlardan banlayacaktır.**\n",
             "end": "\n**Komutların tam listesi <https://pollux.gg/commands> adresine bulunabilir.**\n\n**<https://pollux.gg/partners>** Adresinde Partnerlerimize göz atın\n**<https://pollux.gg/fanart>** Adresinde fan artlarınızı göster ya da gönder\n**<https://pollux.gg/profile/me>** Adresinde Herkese açık profilini bak\n\n**Kozmetikler**\nArkaplan Dükkânı **https://pollux.gg/bgshop**\nMadalyon Dükkânı **https://pollux.gg/medalshop**\nÜretim Atölyesi **https://pollux.gg/crafting**\nKanlı canlı Stickerlar **<https://pollux.gg/stickers>** (Gerçek Hayat Stickerları için Destek Sunucumuza göz atın)\nEtkinlik Malumatı **<https://pollux.gg/events>**\n\nBeni **<https://patreon.com/Pollux>** ya da **<https://pollux.gg/donate>** adreslerinden destekle\nBeni Twitterdan takip et **<https://twitter.com/maidPollux>**\n\n\n---\n\n**Başka herhangi bir şey için, __Dashboard__'a göz at: <https://pollux.gg/dashboard>**\nYa da destek sunucuma katıl: **​ https://discord.gg/rEBCccS ​**\n**<https://pollux.gg/invite>** Adresinde beni sunucuna davet et\n"
         }
