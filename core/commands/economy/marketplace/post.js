@@ -140,7 +140,6 @@ const init = async function(msg,args){
             payload = await AllChecks();
             if(FULLCHECKS(payload)){
                 payload.LISTING = {
-                    id: require('md5')(Date.now()),
                     item_id, item_type: itemType, price, currency, author: msg.author.id,
                     timestamp: Date.now(), type: operation
                 }
