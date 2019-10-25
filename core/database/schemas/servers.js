@@ -34,6 +34,7 @@ const ServerSchema = new mongoose.Schema({
             },
             LVUP:       {type:Boolean, default:true},
             LVUP_local: {type:Boolean, default:false},
+            autoRoleStack: {type:Boolean, default:true},
             DROPS:      {type:Boolean, default:true},
             ANNOUNCE:   {type:Boolean, default:true},
             PREFIX:     {type:String,  default:"+"},
