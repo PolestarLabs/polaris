@@ -7,7 +7,7 @@ const init = async function(msg,args){
        
         // buy type id
 
-        let operation   = (filter||"").toLowerCase()        //  BUY / SELL
+        let operation   = (args[0]||"").toLowerCase()        //  BUY / SELL
         if(operation && !['buy','sell','info'].includes(operation.toLowerCase())) {
             msg.args.unshift(' ')
             operation = "sell"
@@ -41,9 +41,9 @@ const init = async function(msg,args){
         `
  
         async function AllChecks(){
-            userData = DB.users.get(msg.author.id);
+            const userData = DB.users.findOne({id:msg.author.id});
             
-            checkItem = function(userData, type,id,transaction){
+            const checkItem = function(userData, type,id,transaction){
                 pass = true;
                 reason = "";
                 prequery = false;
@@ -82,7 +82,7 @@ const init = async function(msg,args){
 
                 return {pass,reason,prequery, query }
             }
-            checkSales = function(userData,type,id){
+            const checkSales = function(userData,type,id){
                 let forRBN = true;
                 let forSPH = true;
                 if(userData.modules.rubines < 300)      forRBN = false;
@@ -132,16 +132,16 @@ const init = async function(msg,args){
             return validOperation && validType && item_id && (validItem||checkCosmetic) && price && validCurrency && itemStatus.pass && saleStatus["for"+currency]
         }
 
-        console.log(await AllChecks())
         
       let {validOperation , validType , validItem,checkCosmetic, validCurrency, itemStatus,saleStatus} = await AllChecks();
 
         const confirm = async function(cancellation){
             payload = await AllChecks();
+            if(!payload.pass) return;
             if(FULLCHECKS(payload)){
                 payload.LISTING = {
                     item_id, item_type: itemType, price, currency, author: msg.author.id,
-                    timestamp: Date.now(), type: operation
+                    type: operation
                 }
                 payload.pollux = true;
                
@@ -188,7 +188,7 @@ Use it to share your listing elsewhere!
             });
             
         }else{
-
+            if (operation == "info") return;
             abort();
      
         }
