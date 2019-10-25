@@ -16,6 +16,7 @@ module.exports = {
                 if(!thisServer) return;
                 thisServer.LANG = sv.modules.LANGUAGE;
                 thisServer.DISABLED = sv.modules.DISABLED;         
+                thisServer.disaReply = sv.respondDisabled ;             
                 PLX.registerGuildPrefix(sv.id ,[sv.modules.PREFIX||'+',(sv.globalPrefix?'p!':'plx!'),'plx!'])
                 if(!sv.cluster) DB.servers.set({id:sv.id},{cluster:PLX.cluster.id});
                 return {meta: thisServer.name, id: sv.id}

@@ -26,6 +26,7 @@ const PERMS_CALC = function CommandPermission(msg){
       let permchk = require('./PermsCheck.js').run(msg.command.cat, msg, perms)
       if (permchk !== 'ok') return false;
     }
+    if (!switches) msg.commandDeny = true;
     return (switches && (!uIDs.length || uIDs.includes(msg.author.id))  );
 }
 
@@ -42,7 +43,7 @@ const DEFAULT_CMD_OPTS = {
     ,cooldownMessage: "Too Fast"
     ,cooldownReturns: 2
     ,requirements: {custom:PERMS_CALC}
-    ,permissionMessage: (msg)=>{msg.addReaction(_emoji('nope').reaction);return false} 
+    ,permissionMessage: (msg)=>{console.log(msg.commandDeny);msg.commandDeny ? msg.channel.send($t("responses.toggle.disabledComSer",{lngs:msg.lang})) : msg.addReaction(_emoji('nope').reaction);return false} 
     ,hooks:  {
         preCommand: (m,a) => {            
             m.args = a;
