@@ -1,5 +1,7 @@
 const init = async function(msg, args, streak) {
+    
   let rounds = args[0] || 10;
+  if(rounds>30) rounds = 30;
   let diff = Number(args[1]) || false;
   let theme = (args[2] || "").toLowerCase();
   let cround = 0;
@@ -10,10 +12,13 @@ const init = async function(msg, args, streak) {
   if (theme && theme != "")
     QUESTIONS = QUESTIONS.filter(q => q.allcats.toLowerCase().includes(theme));
 
+    if(msg.channel.trivia) return msg.reply("Theres already a game going on here!");
   await triviaRun();
 
   async function triviaRun() {
+    msg.channel.trivia = true;
     if (QUESTIONS.length == 0 || cround > rounds) {
+        msg.channel.trivia = false;
       return msg.channel.send({
         content: "no more questions",
         embed: {
@@ -23,19 +28,23 @@ const init = async function(msg, args, streak) {
         }
       });
     }
+   
+
     let rand = randomize(1, QUESTIONS.length) - 1;
     let Q = QUESTIONS[rand];
     QUESTIONS = QUESTIONS.filter((v, i) => i != rand);
-    let levels = ["VERY EASY", "EASY", "MEDIUM", "HARD", "VERY HARD"];
+    let levels = ["Braindead", "My mom can do it", "Lemme think", "Goddammit", "What in tarnation"];
 
     let embed = {
       description:
-        Q.question +
-        `
-    **Category:** ${Q.category}
-    Level: **${levels[-1 + Number(Q.level) || 0]}**
-    `
+       "*```css\n"+ Q.question +"```*" 
     };
+    embed.description +="\n\u200b"
+    embed.fields = []
+    embed.fields[0] = { name: "Category", value: Q.allcats ,inline:true}
+    embed.fields[1] = { name: "Difficulty", value:` **${levels[-1 + Number(Q.level) || 0]}**` ,inline:true}
+
+    embed.title =  `Trivia: Round ${cround+1}/${rounds}`;
 
     msg.channel.send({ embed }).then(async m2 => {
       let responses = await m2.channel.awaitMessages(
@@ -43,31 +52,39 @@ const init = async function(msg, args, streak) {
         { maxMatches: 1, time: 15e3 }
       );
 
+      cround++;
+
       if (responses.length == 0) {
-        msg.reply("timeout");
+        msg.channel.send("Nobody got it. :( ");
         return triviaRun();
-      }
+      }else{}
 
       let { correct, response } = correctCheck(responses[0], Q);
+      if(responses[0].content =="abort" && responses[0].author==msg.author){
+        msg.channel.trivia = false;
+        return msg.channel.send("Game cancelled!");
+      }
 
       let responder = responses[0].author;
 
-      cround++;
+      
 
-      embed.footer = { text: `Round ${cround}/${rounds}` };
+      
       if (correct) {
         if (scores[responder.id]) scores[responder.id].score += 1;
         else scores[responder.id] = { name: responder.username, score: 1 };
-        embed.color = 0x00cc00;
+        embed.color = 0x33FE55;
+        embed.footer = {text:responder.username + " got it!",icon_url:responder.avatarURL}
         m2.edit({ embed });
       } else {
         if (!scores[responder.id])
           scores[responder.id] = { name: responder.username, score: 0 };
-        embed.color = 0xcc0000;
+        embed.color = 0xFF3355;
         m2.edit({ embed });
       }
       await wait(1);
       if (cround < rounds) return triviaRun();
+      msg.channel.trivia = false;
       msg.channel.send({
         embed: {
           fields: Object.keys(scores).map(i => {
@@ -79,6 +96,8 @@ const init = async function(msg, args, streak) {
   }
   function correctCheck(res, Q) {
     if (res.author.bot) return { end: false };
+    if (res.content === "abort" && res.author.id == msg.author.id) return { end: true };
+
     let response = res.content
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
