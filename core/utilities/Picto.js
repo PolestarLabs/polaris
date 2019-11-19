@@ -188,7 +188,7 @@ XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
     const canvas_proto = new Canvas.createCanvas(size,size);
     const context = canvas_proto.getContext('2d');
     function TColor(rgbColor) {
-        rgbColor = rgbColor.replace(/\s/g, "");
+        rgbColor = (rgbColor||"#F55595").replace(/\s/g, "");
         const arrRGB = new Array(3);
         if (rgbColor.indexOf("rgb") > -1) {
             const colorReg = /\s*\d+,\s*\d+,\s*\d+/i;
