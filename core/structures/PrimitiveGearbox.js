@@ -42,7 +42,7 @@ module.exports = {
        };
        if(!typeof project) project = {_id:0};
        let data = await this.findOne(query,project).lean().exec();
-       if (data === null) return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
+       if (data === null) resolve(null);//return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
        return resolve(data);
      })
    }

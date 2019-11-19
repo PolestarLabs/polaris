@@ -33,7 +33,8 @@ module.exports = async function (msg) {
   
   //-----------------------------------------------------------
   
-
+  meSubs(msg);
+return;
   
   if(
     PLX.user.id=="354285599588483082"&&
@@ -45,7 +46,6 @@ module.exports = async function (msg) {
     msg.author.id !== "163200584189476865"
     )
     return;
-    meSubs(msg);
     return;// temp for command client
   if (!msg.guild) return; //DM Stuff?
 

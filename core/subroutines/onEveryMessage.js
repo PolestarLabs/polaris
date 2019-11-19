@@ -43,7 +43,7 @@ async function levelChecks(msg) {
   let   chanData    = DB.channels.get(msg.channel.id);
 
   await Promise.all([
-    userData = (await userData) || (await DB.users.new(msg.user)),
+    userData = (await userData) || (await DB.users.new(msg.author)),
     servData = (await servData) || (await DB.servers.new(msg.guild)),
     chanData = (await chanData) || (await DB.channels.new(msg.channel))
   ]);
