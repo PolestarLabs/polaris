@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "",
             "cantMarryPollux": ""
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} tag {{joinedstamp}} óta",
             "aviOK": "Oké-zsoké, ez az új képem. Legközelebb {{cooldown}} múlva változtathatod meg a profilképem",
             "colorChange": "A kedvenc színedet elmentettem!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "",
             "completed": ""
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",

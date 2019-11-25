@@ -33,6 +33,9 @@
         "boosterpack_plural": "حزم تعزيز"
     },
     "terms": {
+        "transferDenied": "تم رفض النقل",
+        "TransactionFee": "رسوم التحويل",
+        "TransactionID": "معرف المعاملة",
         "thanks": "شكرا",
         "thanks_short": "شكرا",
         "thx": "",
@@ -97,23 +100,23 @@
         "messEdit": "{{user}} لقد اتم **تحرير** رسالته في {{channel}}",
         "newChan": "تم **انشاء** **قناة**:{{channel}}",
         "delChan": "تم **حذف** **قناة**:{{channel}}",
-        "updtChan": "",
-        "newRole": "",
-        "uptRole": "",
-        "delRole": "",
-        "revokeBan": "",
-        "usrNick": "",
-        "usrPhoto": "",
-        "usrRoles": "",
-        "gSets": ""
+        "updtChan": "القناة **{{channel}}**تم **تحديثها**",
+        "newRole": "**رتبة جديدو**تم **انشاءها**:{{role}}",
+        "uptRole": "رتب {{user}} تم تحديثها",
+        "delRole": "**دور** تم **حذفه**:{{role}}",
+        "revokeBan": "تم إلغاء الحضر على **{{user}}**",
+        "usrNick": "من الأن فصاعداً **{{user}}** يطلقون على انفسهم **{{newuser}} **",
+        "usrPhoto": "**{{user}}** غير صورته الشخصية",
+        "usrRoles": "تم تحديث الأدوار {{user}}",
+        "gSets": "تم تعديل إعدادات الخادم"
     },
     "responses": {
         "errors": {
-            "iNeedThesePerms": "",
-            "denied": "انت غير مؤهل لاستخدام هذا. هذا الامر يتطلب رتبه اعلى من  {{rankNeed}}, رتبتك هي  {{rankMe}}.  تواصل مع اونر السيرفر او تواصل مع مودز السيرفر .",
-            "disabledModule": "no_entry_sign: سيدنا اعلت ",
-            "genericInvalid": "اوووه نو -_- . الامر غير صالح :((",
-            "prefixChng": "دام كذا , الان البركفس حقي هو {{prefix}} , جرب هذا `{{prefix}}stats`",
+            "iNeedThesePerms": "63/5000\nالأذون التالية غير موجودة للمتابعة بشكل صحيح{{PERMSLIST}}",
+            "denied": "ليس مسموح لك استخدام هذا الأمر, هذا الأمر يتطلب هذه المرتبة {{rankNeed}} هذه هي مرتبتك {{rankMe}}, تواصل مع مالك الخادم او أحد المشرفين في الخادم.",
+            "disabledModule": ":no_entry_sign: وقد اعلن سيدنا {{module}} انه ممنوع هنا,هذا سيء.",
+            "genericInvalid": "معليش الأمر ذا ما يشتغل ;~;",
+            "prefixChng": "دام كذا, الان البركفس حقي هو {{prefix}}, جرب هذا `{{prefix}}stats`. ",
             "moderationNeeded": "",
             "chooseAmod": "",
             "kinNone": "يجب ان تخبرني من يجب ان اطرد، بالطبع، يمكنني ان اطردك.",
@@ -126,7 +129,7 @@
             "nosuchrole": "أم ، لم أجد هذا الدور ، اكتب اسمه بالضبط من فضلك.",
             "kbanNone": "أحتاج إلى هدف للحظر ، يمكنني دائمًا حظرك بدلاً من ذلك.",
             "cantKickHim": "",
-            "cantKickSelf": "",
+            "cantKickSelf": "يا غبي ما يمديك تطرد نفسك من المكان :joy: او تحضر نفسك منه!",
             "superRoleNope": "",
             "banNone": "أحتاج إلى هدف للحظر ، يمكنني دائمًا حظرك بدلاً من ذلك.",
             "unpermB": "",
@@ -173,7 +176,7 @@
                     "حسنا!",
                     "",
                     "",
-                    ""
+                    "تم."
                 ],
                 "yatta": [
                     "ياى!",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "",
             "cantMarryPollux": ""
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} هذا العضو هنا منذ: {{joinedstamp}}\n",
             "aviOK": "اوككيي-دوكي , صورتي الجديده الان هي هذي . انت تقدر تقدر صورتي القميله مرثانيه في  {{cooldown}}",
             "colorChange": ""
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "",
             "completed": ""
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -600,7 +663,7 @@
             "quick_useful": "",
             "quick_enjoy": "",
             "quick_didntask": "",
-            "avail_cmd": "",
+            "avail_cmd": "الأوامر المتاحة",
             "avail_cmdlist": "",
             "notenough": "",
             "trythese": "",

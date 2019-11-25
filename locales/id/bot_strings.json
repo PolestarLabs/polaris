@@ -33,6 +33,9 @@
         "boosterpack_plural": "Bungkusan Kartu"
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "terimakasih",
         "thanks_short": "ty",
         "thx": "",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "Aku sangatlah modern, tetapi... menikahi diri sendiri itu terlalu gila kan?",
             "cantMarryPollux": "Tidak mungkin! huss!"
         },
+        "ship": {
+            "needTupipo": "Kalkulator Cinta ini tidak dapat bekerja hanya pada satu orang, sayang.",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "Oh. __Oh tidak.__",
+                    "HOROSKOPMU TIDAKLAH SEJAJAR. TOLONG JANGAN MENGHUBUNGI LAGI."
+                ],
+                [
+                    "Hanya ada sedikit keraguan sebelum geseran kiri itu.",
+                    "Meskipun kamu kenal satu sama lain, kamu tidak akan mau masuk ke jenis keakraban _itu_."
+                ],
+                [
+                    "Kalian bisa bekerja secara berpasangan sama halnya seperti tomat dengan salad.",
+                    "Hei! kalian jangan membenci satu sama lain! Itu adalah permulaan, kan?"
+                ],
+                [
+                    "Ooh, hubungan yang sangat menarik. Bumbunya tepung, mungkin sih, tapi tetaplah sebuah bumbu, ya kan?",
+                    "Beberapa kencan lagi dan mungkin akan ada bunga api yang berterbangan!"
+                ],
+                [
+                    "Woah, hampir cocok! ",
+                    "Aku kira, setiap hubungan bisa menggunakan setidaknya sedikit usaha."
+                ],
+                [
+                    "Cocok sekali! peluangmu sama bagusnya sepertiku!",
+                    "Mmm, aku akan menonton film romansa ini yang perlahan terbakar."
+                ],
+                [
+                    "Kita menepi __bagaikan__ teritori!",
+                    "Apakah kita menyamankan diri?"
+                ],
+                [
+                    "Psst, Flicky dan aku sedang bertaruh pada kesuksesanmu. Apakah kamu sudah membuat sebuah Cincin Sebelah?",
+                    "Berhenti menahan diri! Tunjukan perasaanmu!"
+                ],
+                [
+                    "Aku akan memasangkannya!",
+                    "Kalian hanyalah sejoli bunga di sebuah pod!"
+                ],
+                [
+                    "Asiapp, kalian hampir sangat _sempurna_ sebagai pasangan!",
+                    "Jadi, siapakah diantara kamu yang akan hamil?"
+                ],
+                [
+                    "KEKUATAN CINTA TELAH DATANG.",
+                    "Pasangan Hidup! Mantap!"
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "Apakah kamu setuju untuk menerima perceraian dari {{user}}? Biaya %EMJ% **5000 Rubi** akan dikenakan dari kedua belah pihak. LovePoints kalian akan dipotong setengah juga!",
             "saidnope": "{{userB}} tidak mau diceraikan. Kamu bisa memaksanya dengan menyogok %EMJ%**10000 Rubi** agar aku bisa memanggil seorang pengacara untuk menyelesaikan ini, tetapi kalian akan kehilangan **semua LovePoints** !",
@@ -435,16 +488,28 @@
             "aviOK": "Oke, demi kamu aku mengganti fotoku. Kamu bisa menggantinya lagi pada {{cooldown}}",
             "colorChange": "Warna favoritmu telah tersimpan!"
         },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
         "inventory": {
             "noSuchBox": "Lihat, aku tidak bisa melihat kotak ini disitu dan aku yakin kamu sendiri juga ngga bisa.",
             "noSuchBooster": "Aku tidak melihat booster ini di inventorimu. Mungkin kamu kehilangannya di dalam sampah ini.",
             "noSuchItem": "Aku bisa melihat banyak barang di inventorimu, terkecuali item itu.",
-            "browsingBox": "Ini adalah inventori **Lootbox**mu\n*Buka untuk menerima berbagai macam barang keren!*",
-            "browsingBooster": "Ini adalah inventori **Booster Pack**mu\n*Kamu bisa membukanya untuk memperoleh Stiker Profil*",
-            "browsingCONSUMABLE": "Ini adalah adalah inventori **Consumable Items**mu\n*Mereka punya penggunaan yang terbatas atau habis setelah penggunaan, beberapa bisa digunakan secara langsung*",
-            "browsingJUNK": "Ini adalah inventori **Junk Items**mu\n*Barang-barang ini biasanya ngga berfaedah sama sekali, tapi mungkin bisa berguna di situasi tertentu.*",
-            "browsingKEY": "Ini adalah inventori **Key Items**mu\n*Barang-barang ini bisa membuka beberapa fitur dari perintah lain atau keseluruhan modul.*",
-            "browsingMATERIAL": "Ini adalah inventori **Crafting Material Items**mu\n*Kamu bisa menggunakannya untuk membuat suatu barang.*",
+            "browsingBox": "Ini adalah inventori **Lootbox** mu\n*Buka untuk menerima berbagai macam barang keren!*",
+            "browsingBooster": "Ini adalah inventori **Booster Pack** mu\n*Kamu bisa membukanya untuk memperoleh Stiker Profil*",
+            "browsingCONSUMABLE": "Ini adalah adalah inventori **Consumable Items** mu\n*Mereka punya penggunaan yang terbatas atau habis setelah penggunaan, beberapa bisa digunakan secara langsung*",
+            "browsingJUNK": "Ini adalah inventori **Junk Items** mu\n*Barang-barang ini biasanya ngga berfaedah sama sekali, tapi mungkin bisa berguna di situasi tertentu.*",
+            "browsingKEY": "Ini adalah inventori **Key Items** mu\n*Barang-barang ini bisa membuka beberapa fitur dari perintah lain atau keseluruhan modul.*",
+            "browsingMATERIAL": "Ini adalah inventori **Crafting Material Items** mu\n*Kamu bisa menggunakannya untuk membuat suatu barang.*",
             "emptyJokes": [
                 "Isi inventori ini dengan air matamu karena kosong.",
                 "Tidak ada apapun di inventori ini selain laba-laba.\nMereka semua menatap padamu dan bertepuk tangan. Bravo.",
@@ -574,9 +639,7 @@
             "timeout": "Waktu Atur Ulang Habis!",
             "completed": "Info Server telah sukses di hapus dan diatur ulang. Coba gunakan **+serverinfo** untuk memeriksa jika sudah benar telah diatur ulang. Aku tidak tanggung jawab jika ada yang salah."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Peran Reaksi untuk {{server}}",
             "removeAll": "Aku telah menghapus semua Registri Reaksi di sini. Tetapi kamu harus menghapus reaksi dari pesan-pesan tersebut secara manual.",
