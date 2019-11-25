@@ -11,7 +11,7 @@ const init = async function (msg, args) {
     return false;
   });
   if (!mdl) return msg.reply('medal not found.');
-  const imageLink = `${paths.CDN}/images/medals/${mdl.icon}.png`;
+  const imageLink = `${paths.CDN}/medals/${mdl.icon}.png`;
 
   const embed = new Embed()
   .author('Medals', `${paths.CDN}/images/tiers/${mdl.rarity}.png`)
