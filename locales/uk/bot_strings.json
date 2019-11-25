@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "дякую",
         "thanks_short": "дяка",
         "thx": "$t(terms.thanks_short)",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "",
             "cantMarryPollux": ""
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "Ви згодні отримати розлучееня з {{user}}? Збір у розмірі %EMJ% **5000 рубінів** *буде утримано* з вас. Обидва ваші LovePoint будут **вдвічі зменшені**, як добре!",
             "saidnope": "{{userB}} не хоче розлучення. Ви можете змусити його, заплативши %EMJ% **10000 рубінів** я можу викликати адвоката, але **ви обидва втратите всі свої LovePoints**!",
@@ -434,6 +487,18 @@
             "memberSince": "{{Target}} є учасником з: {{joinedstamp}}",
             "aviOK": "Добре, я поміняла своє фото для вас. Ви зможете поміняти моє фото профілю знову через {{cooldown}}",
             "colorChange": "Ваш улюблений колір збережений!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "Час для відправки ядерної бомби пройшло!",
             "completed": "Серверна інформація була успішно стерта і скинута. Використовуйте **+ serverinfo**, щоб побачити, що все було правильно скинуто. Я більше не буду відповідальна за подальше ядерне забруднення."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",

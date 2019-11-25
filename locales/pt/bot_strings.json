@@ -15,7 +15,7 @@
         "C": "Comum",
         "U": "Incomum",
         "R": "Raro",
-        "SR": "Super Raro",
+        "SR": "Tri Bagual",
         "UR": "Ultra Raro",
         "thevoid": "vazio",
         "evToken": "",
@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
@@ -208,7 +211,7 @@
                 "ohmy_negative": [
                     "",
                     "",
-                    "",
+                    "Mas que barbaridade...",
                     "",
                     "",
                     ""
@@ -306,6 +309,56 @@
             "alreadyMarriedInf": "",
             "cantMarrySelf": "",
             "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} é um membro desde: {{joinedstamp}}",
             "aviOK": "Oki-doki, a minha nova foto é esta. Tu podes mudar a minha foto outra vez em {{cooldown}}",
             "colorChange": ""
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "Tempo de nuke esgotado!",
             "completed": "As informações do servidor foram completamente limpas e resetadas. Tenta usar **+serverinfo** para ver se tudo foi resetado bem. Eu não sou responsável por alguma contaminação de Fallout Nuclear."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -600,7 +663,7 @@
             "quick_useful": "",
             "quick_enjoy": "",
             "quick_didntask": "",
-            "avail_cmd": "Comandos Disponíveis",
+            "avail_cmd": "Comandos Disponíves ",
             "avail_cmdlist": "",
             "notenough": "",
             "trythese": "",

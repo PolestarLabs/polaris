@@ -33,13 +33,16 @@
         "boosterpack_plural": "Boosteripaketit"
     },
     "terms": {
+        "transferDenied": "Siirto kumottu",
+        "TransactionFee": "Käsittelymaksu",
+        "TransactionID": "Rahansiirron ID",
         "thanks": "kiitos",
         "thanks_short": "kiitti",
         "thx": "",
         "total": "Yhteensä",
-        "amount": "",
-        "overview": "",
-        "dashboard": "",
+        "amount": "Määrä",
+        "overview": "Yleiskatsaus",
+        "dashboard": "Hallintasivu",
         "coinHeads": "Kruuna",
         "coinTails": "Klaava",
         "qnt": "Määrä",
@@ -74,7 +77,7 @@
             "server": "Serveri",
             "server_plural": "Serveri",
             "member": "Jäsen",
-            "member_plural": "",
+            "member_plural": "Jäsenet",
             "user": "Käyttäjä",
             "user_plural": "Käyttäjät",
             "channel": "Kanava",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "Olen melko moderni ja niin edelleen, mutta... itsensä naiminen on vähän liikaa, eikö sinustakin?",
             "cantMarryPollux": "Ei tosiaankaan! Hus!"
         },
+        "ship": {
+            "needTupipo": "Rakkausmittari ei toimi vain yhdellä ihmisellä, kultaseni.",
+            "need2diffpipo": "Ellei tämä henkilö kykene mitoosiin, hän on edelleen vain yksi ihminen, tarvitsen **kaksi** ihmistä!",
+            "quotes": [
+                [
+                    "Ai. _Voi ei._",
+                    "HOROSKOOPPINNE EIVÄT SOVI YHTEEN, OLKAA HYVÄT JA VÄLTTÄKÄÄ ENEMPÄÄ KONTAKTIA."
+                ],
+                [
+                    "Vain hetken epäröinti ennen vasemmalle pyyhkäisyä.",
+                    "Vaikka te tunnette toisenne, ette halua tuntea toisianne _sillä_ tavalla."
+                ],
+                [
+                    "Te voisitte toimia parina kuten tomaatti toimii salaatissa.",
+                    "Hei! Te ette vihaa toisianne! On sekin alku, vai mitä?"
+                ],
+                [
+                    "Ooh, kuinka mausteinen suhde. Mauste on ehkä jauhot, mutta on se silti mauste, vai?",
+                    "Muutamat treffit lisää, ja ehkä kipinöitä alkaa lentää!"
+                ],
+                [
+                    "Voah, melkein match! ",
+                    "Jokainen suhde vaatii vähän työtä, luulisin."
+                ],
+                [
+                    "Se on match! Mahdollisuutesi ovat suurinpiirtein yhtä hyvät kuin minun!",
+                    "Mmm, katsoisin tätä hitaasti palavaa romanssia elokuvana."
+                ],
+                [
+                    "Lähentelemme sellaista aluetta, jossa on kyse _sillä tavalla_ tykkäämisestä!",
+                    "Onkos täällä meneillään jotain halimista?"
+                ],
+                [
+                    "Psst, Flicky ja minä lyömme vetoa teidän onnistumisestanne. Joko olet tehnyt osittaisen sormuksen?",
+                    "Älä pidättele! Tunnusta tunteesi!"
+                ],
+                [
+                    "Shippaan!",
+                    "Te söpöläiset olette kuin paita ja peppu!"
+                ],
+                [
+                    "Hitto, te olette melkein _täydellisiä_ toisillenne!",
+                    "Joten, kumpi teistä on tulossa raskaaksi?"
+                ],
+                [
+                    "VOIMAPARI ON SAAPUNUT.",
+                    "Sielunkumppaneita! Upeaa!"
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "Hyväksytkö ottavasi eron käyttäjästä {{user}}? Maksu %EMJ% **5000 Rubiinia** veloitetaan teiltä **molemmilta**. Teidän molempien Love-pisteet myös **puolitetaan**!",
             "saidnope": "{{userB}} ei halua erota. Voit tehdä sen väkisin maksamalla %EMJ%**10000 Rubiinia**, jotta voin soittaa lakimiehen selvittämään tämän, mutta te molemmat menetätte **kaikki Love-pisteenne**!",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} on ollut jäsen {{joinedstamp}} lähtien",
             "aviOK": "Selvä, olen vaihtanut kuvani. Voit vaihtaa proffakuvani uudestaan {{cooldown}} kuluttua",
             "colorChange": "Lempivärisi on tallennettu!"
+        },
+        "transfer": {
+            "lastdly": "Viimeisin laatikkosiirto:",
+            "next": "Seuraava siirto saatavilla {{in X hours}}",
+            "transferboxto": "Siirretään laatikkoa käyttäjälle {{userB}}",
+            "transferthisboxto": "Siirretään **{{boxname}}** käyttäjälle {{userB}} ",
+            "timeout": "**Siirron aikakatkaisu!**",
+            "cancel": "**Siirto peruttu!**",
+            "success": "**{{boxname}}** siirretty käyttäjälle {{userB}}"
+        },
+        "give": {
+            "cooldown": "Odota! Voit siirtää uudestaan {{remaining}} kuluttua!"
         },
         "inventory": {
             "noSuchBox": "Kuule, minä en näe tällaista laatikkoa missään, etkä taida nähdä sitä itsekään.",
@@ -574,149 +639,147 @@
             "timeout": "Ydinaseen aikakatkaisu!",
             "completed": "Serverin tiedot on tyhjennetty ja nollattu onnistuneesti. Kokeile käyttää **+serverinfo** nähdäksesi, nollattiinko kaikki oikein. En ole vastuussa ydinlaskeuman saastuttavuudesta."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "{{server}} Reaktio-roolit",
             "removeAll": "Olen poistanut kaikki reaktiorekisterit täältä. Mutta sinun täytyy poistaa reaktiot itse viesteistä manuaalisesti.",
             "removed": "Tämä reaktio on poistettu~",
-            "noroleshere": "",
-            "removedAllFrom": "",
-            "noReactionDel": "",
-            "success": ""
+            "noroleshere": "Tällä serverillä ei ole reaktiorooleja.",
+            "removedAllFrom": "Kaikki reaktiot poistettu kohteesta {{ID}}~",
+            "noReactionDel": "Poistaaksesi roolireaktion, käytä `{{prefix}}reactionroles del [VIESTIN ID] [EMOJI]`. Jätä pois `EMOJI`, jos haluat poistaa kaikki reaktiot myös siitä viestistä~",
+            "success": "Reaktioroolit nähdään tässä viestissä:"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
-            "ichoose": ""
+            "picking": "Valitaan... {{as in 'picking from a list'}}",
+            "complete": "Valmis!",
+            "lessthan2": "Tarvitsen vähintään kaksi asiaa, joista valita...",
+            "ichoose": "Valitsen **{{list_item}}**!"
         },
         "help": {
-            "greetings": "",
-            "basics": "",
-            "cmdlist": "",
-            "quick_getgo": "",
-            "quick_useful": "",
-            "quick_enjoy": "",
-            "quick_didntask": "",
+            "greetings": "\n**Tervehdys! Olen Pollux. Serverillesi määrätty uusi palvelusneito.**\n\n  • Oletusetuliitteeni on `+`, voit vaihtaa sen käyttämällä `+prefix <uusi etuliite>`.\n  Globaali etuliite on `p!`, se on hyödyllinen käyttäjille, jotka eivät tiedä kustomoitua etuliitettäsi. Sen saa pois käytöstä kojelaudalla, **Dashboard**. \n  Universaali etuliite on `plx!`, ja sitä ei saa pois käytöstä.\n",
+            "basics": "\n**Perusteet** - Alkuun pääseminen kanssani on yhtä helppoa kuin oman hiukkaskiihdyttiminen rakentaminen! ...hetko, et ole koskaan rakentanut sellaista itse? No, ei ongelmaa!\nTässä on vain osa {{commandcount}} -käskyistä, joita minulla on!  ",
+            "cmdlist": "LISTA KÄSKYISTÄ",
+            "quick_getgo": "Käskyt, jotka sinun pitäisi tietää alusta lähtien",
+            "quick_useful": " Käskyt, joista saattaa olla sinulle hyötyä",
+            "quick_enjoy": "Käskyt, joiden kanssa voi olla kiva pelleillä",
+            "quick_didntask": " Käskyt, joita et pyytänyt",
             "avail_cmd": "",
-            "avail_cmdlist": "",
-            "notenough": "",
-            "trythese": "",
-            "curr_info": "",
-            "currency_overview": "",
-            "rubines_desc": "",
-            "jades_desc": "",
-            "sapphires_desc": "",
-            "lootboxes_desc": "",
-            "end": ""
+            "avail_cmdlist": "Lista käskyistä on tällä hetkellä saatavilla ja tuettu ({{commandcount}}).",
+            "notenough": "Eikö tämä pieni laatikko riitä?",
+            "trythese": "Kokeile jotain näistä",
+            "curr_info": "Valuutta informaatio",
+            "currency_overview": "Valuuttasysteemini on melko monimutkainen, ja sillä on useita rajoituksia ja suojaavia ominaisuuksia. Jokainen siirto kirjataan ja pystytään jäljittämään helposti, mikä varmistaa, että huijarit eivät jätä kovaa työtäsi varjoonsa. Me kirjaamme yli 30 tuhatta siirtoa joka päivä. \n\n    • Jokainen aloittaa joukolla **Jadeja** ja **Rubiineja**, sekä yhdellä **Yllätyslaatikolla**.\n",
+            "rubines_desc": "\n*Päävaluuttani, kirkkaan pinkit jalokivet, jotka on tehty erityisistä kuusikulmaisista Al₂O₃Cr monitahokkaista, joita käytetään melkeinpä kaikkeen!*\n   Niitä saa Päivittäisistä bonuksista (`{{prefix}}daily`), Yllätyslaatikoista (`+box`) ja Uhkapeleistä (`+blackjack`, `+slots`, jne.) sekä vaihdoista muiden käyttäjien kanssa, kunhan olet saavuttanut tason 5 ja sinulla on vähintään 10 päivän Päivittäisputki.\n",
+            "jades_desc": " *Käsityö \"valuutta\", käytän näitä haalean sinivihreitä jalokiviä - muutoin arvottomia - sekoittaakseni erityisiä esineitä juuri sinulle!*\n        Saatavilla Yllätyslaatikoista, Esineiden tuhoamisesta, lahjoittamalla tai ostamalla.",
+            "sapphires_desc": "*Premium-valuutta, syvän sinisiä kappaleita hienoimmista Safiiri-jalokivistä, joita käytetään erityisten esineiden valmistamiseen ja valuutalle eksklusiivisten asioiden ostamiseen.*\n        Saatavilla vain lahjoituksista, ostamalla ja erityisistä tapahtumista. Joka 200. ja 365. Päivittäinen antaa sinulle yhden ilmaisen Safiirin, ja myös Ultraharvinaisista Yllätyslaatikoista on 0,1% mahdollisuus saada sellainen.",
+            "lootboxes_desc": "*Erityisiä arkkuja, jotka sisältävät monia hienouksia, kuten Taustakuvia, Mitaleja, Rubiineja ja Tarraboostereita*.\n        Saatavilla vain pääsemällä uudelle tasolle ja satunnaisista pudotuksista, joita tapahtuu chatin aktiivisuuden perusteella.\n\n         **`⚠ Tarkoituksellinen spammaaminen Yllätyslaatikoiden pakottamiseksi, huijaaminen tai esineiden vaihtaminen vaihtoehtoisilla tileillä johtaa bannaamiseesi Polluxista sekä muista boteista.`**\n",
+            "end": "\n**Koko käskylista on löydettävissä osoitteessa <https://pollux.gg/commands>**\n\nTsekkaa Kumppanimme osoitteessa **<https://pollux.gg/partners>**\nKatsele tai lähetä fanitaidetta osoitteessa **<https://pollux.gg/fanart>**\nKatso julkista profiiliasi osoitteessa **<https://pollux.gg/profile/me>**\n\n**Kosmetiikka**\nTaustakuvakauppa **https://pollux.gg/bgshop**\nMitalikauppa **https://pollux.gg/medalshop**\nKäsityöpaja **https://pollux.gg/crafting**\nVirtuaalitarrat **<https://pollux.gg/stickers>** (tsekkaa tukiserveri IRL-tarroja varten)\nInformaatiota tapahtumista <https://pollux.gg/events>\n\nTue minua osoitteessa **<https://patreon.com/Pollux>** tai **<https://pollux.gg/donate>**\nSeuraa minua Twitterissä **<https://twitter.com/maidPollux>**\n\n---\n\n**Kaikkea muuta varten, tsekkaa __Dashboard__: <https://pollux.gg/dashboard>**\nTai liity tukiserverilleni: **​ https://discord.gg/rEBCccS ​**\nKutsu minut serverillesi osoitteessa **<https://pollux.gg/invite>**\n"
         }
     },
     "games": {
         "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
+            "title": "Arvaa lippu",
+            "youhave10": "Sinulla on 10 sekuntia aikaa arvata maa, jolle tämä lippu kuuluu. **MENOKSI!**",
+            "wellDone": "{{interjection}} **{{user}}** keksi sen! Oikea vastaus on **{{country}}**",
+            "noGuess": "{{interjectionB}} Näköjään kukaan ei arvannut sitä... Parempi tuuri seuraavalla kerralla!"
         },
         "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
+            "coinVictory": "{{interjection}} Sinä voitit! Palkintosi on **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
+            "coinDefeat": "{{interjection}} Näytät hävinneen...parempi tuuri seuraavalla kerralla!"
         },
         "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
+            "userRolledSome": "**{{user}}** heitti noppaa:",
+            "userRolled": "**{{user}}** heitti **`{{numDice}}`**...",
+            "neutralRolled": "Heitetään **`{{numDice}}`**...",
+            "andGot": "ja sai **{{val}}**!",
+            "rollsWere": "Heitot olivat:",
+            "invalidRoll": "Epäkelpo heittoyhtälö -- Vain noppaa heitetään!",
+            "onlyRoll5": "Voit heittää vain 5 eri noppaa kerrallaan!",
+            "limit25": "Noppaputki voidaan näyttää 25 heittoon asti.",
+            "noDiceRolled": "Odotas, minulla ei ole noppia, joita heittää, käytä `{{prefix}}roll help`, jos et ole varma, mitä olet tekemässä~",
+            "exceedLim": "Tämä heitto ylittää merkkirajan, yritä käyttää `-nostreak` jättääksesi heittoarvot pois"
         },
         "blackjack": {
-            "ongoing": "",
-            "newgame": "",
-            "result": "",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "",
-            "stand": "",
-            "split": "",
-            "double": "",
-            "pass": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
+            "ongoing": "Sinun todella pitäisi päättää yksi peli ennen kuin yrität aloittaa toisen.",
+            "newgame": "Blackjackia, vai? Sinun pitäisi jo tuntea säännöt, joten aloitetaan.",
+            "result": "Tulos:",
+            "bust": "Bust",
+            "youwin": "Onnittelut! Sinä voitit, tämän kerran.",
+            "youlose": "Oho? Minä voitin, harmi sinulle.",
+            "hit": "Vastaa kirjoittamalla `hit` vetääksesi yhden uuden kortin,",
+            "stand": "Jää",
+            "split": "`split` jakaaksesi kätesi",
+            "double": "`double` tuplataksesi panoksesi ja vetääksesi vielä yhden kortin,",
+            "pass": "tai `stand` ohittaaksesi.",
+            "splitbreak": "Jakojen erittely:",
+            "switchdeck": "Nyt me pelaamma BlackJackia käyttäen **{{deckname}}** -pakkaa!",
+            "switchdeckEgg": "Nyt pelaamme BlackJackia käyttäen paskaa- Tai siis **pakkaa** {{deckname}}!\nOMG olen niin pahoillani!",
+            "even": "Näyttää siltä, että menimme tasan, ota rubiinisi takaisin."
         },
         "slots": {
-            "takePrize": "",
-            "_minor": "",
-            "_mid": "",
-            "_major": "",
-            "_ultimate_1": "",
-            "_ultimate_2": "",
-            "_ultimate_3": "",
-            "kommunism": "",
-            "pollux_jackpot": "",
-            "lucky": "",
-            "jackpot": "",
-            "bonanza": "",
-            "potato": "",
-            "zero_1": "",
-            "zero_2": "",
-            "zero_3": ""
+            "takePrize": "Palkintosi tästä on **%$%** %emj%",
+            "_minor": "Parempi kuin ei mitään, vai?",
+            "_mid": "Ei huono, mutta ei mahtavakaan",
+            "_major": "Niin lähellä!",
+            "_ultimate_1": "Upeaa! :heart:",
+            "_ultimate_2": "Olet niin onnekas!!! :heart:",
+            "_ultimate_3": "Voitko uskoa tätä?! :heart:",
+            "kommunism": "Kommunisti-jackpot! Palkintosi on jaettu eteenpäin väen kesken, saat 3x mitä he saavat.",
+            "pollux_jackpot": "Oi voi, näyttää olevan kolme minua. Ehkä ansaitset jotain... extraa.",
+            "lucky": "Onnekkaat seiskat, hyvin tehty.",
+            "jackpot": "Palkintosi lisäksi olet saanut myös 100 sormusta ja yhden extra-elämän",
+            "bonanza": "Niin paljon Rubiineja! Toivottavasti et suunnittele, että pistäisit minut kantamaan nämä kaikki.",
+            "potato": "Perunoita... Voin varmaan tehdä sinulle näistä jotain.",
+            "zero_1": "Oi voi, näyttää siltä, että kaikki Rubiinisi ovat nyt minun.",
+            "zero_2": "Ei yhtäkään osumaa? Harmillista.",
+            "zero_3": "Ehkä jos yrität uudestaan, saatat voittaa jotain?"
         },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
+        "ceilingBet": "Et voi panostaa enempää kuin **{{number}}** $t(keywords.RBN_plural) tässä pelissä.",
+        "tryAgain": "Yritä uudelleen?",
+        "alreadyPlaying": "Odotas! Me pelaamme jo!"
     },
     "loot": {
-        "rareDrop": "",
-        "suprareDrop": "",
-        "ultraRareDrop": "",
+        "rareDrop": "Tiedätkö, mikä tämä on? Se on **HARVINAINEN** Yllätyslaatikko!",
+        "suprareDrop": "{{interjection}} **SUPER HARVINAINEN** Yllätyslaatikko!",
+        "ultraRareDrop": "En voi uskoa tätä, **ULTRA HARVINAINEN** Yllätyslaatikko on pudonnut! Et ehkä näe sellaista toiste!",
         "lootDrop": [
-            "",
-            "",
-            "",
-            "",
-            "",
-            ""
+            "Oho, Yllätyslaatikko on juuri ilmestynyt tälle kanavalle!",
+            "Mitä? Onko tuo Yllätyslaatikko?",
+            "Joku näyttää pudottaneen tänne Yllätyslaatikon.",
+            "Sori, kun keskeytän, mutta huomasiko kukaan tätä Yllätyslaatikkoa lojumassa täällä?",
+            "Upeaa! Katsokaa, mitä minä olen löytänyt!",
+            "Hei, olen aika varma, että haluat nähdä tämän Yllätyslaatikon täällä."
         ],
-        "lootPick": "",
-        "goesTo": "",
-        "congrats": "",
-        "opening": "",
-        "contains": "",
-        "options": "",
-        "keep": "",
-        "reroll": "",
-        "rerolled": "",
-        "noMoreRolls": "",
-        "noFunds": "",
-        "rerollRemain": "",
-        "addedRubines": "",
-        "addedJades": "",
-        "addedMedal": "",
-        "addedSticker": "",
-        "addedBG": "",
-        "duplicateExchange": "",
-        "morons": "",
-        "contesting": "",
-        "eventDrop": "",
-        "notThisbox": ""
+        "lootPick": "Teillä kaikilla on **__20 sekuntia__** aikaa kiistellä siitä! Kirjoita `{{prefix}}pick` saadaksesi mahdollisuuden voittaa se!",
+        "goesTo": "Aika loppui! Katsotaan, kuka saa tämän laatikon.\n**Tämä Yllätyslaatikko arvotaan heidän välillään:**",
+        "congrats": "Hyvin tehty! Laatikko on lisätty **Tavaraluetteloosi**. Voit avata sen käyttämällä `{{prefix}}lootbox` -käskyä.",
+        "opening": "{{user}} avasi Yllätyslaatikkonsa...",
+        "contains": "Tämä {{adjective}} Yllätyslaatikko sisältää",
+        "options": "Voit joko pitää sen tai arpoa sen uudelleen maksamalla {{amt}}",
+        "keep": "Pidä se",
+        "reroll": "Arvo se uudelleen",
+        "rerolled": "Uusi yritys, arvotaan laatikon sisältöä uudelleen...",
+        "noMoreRolls": "Et voi enää arpoa laatikkoa uudelleen, joudut tyytymään tähän tulokseen.",
+        "noFunds": "Tarvitset enemmän Rubiineja arpoaksesi uudelleen, ehkä seuraavalla kerralla.",
+        "rerollRemain": "Uudelleenarvontoja jäljellä:",
+        "addedRubines": "{{X}} Rubiinia on lisätty saldoosi",
+        "addedJades": "{{X}} Jadea on lisätty pussiisi",
+        "addedMedal": "**{{itm}}** Mitali on lisätty mitalitaskuusi",
+        "addedSticker": "*{{itm}}** Tarra on lisätty tarra-albumiisi",
+        "addedBG": "Taustakuva `[code:{{itm}}]` on lisätty taustakuvakansioosi",
+        "duplicateExchange": "Kaksoiskappale {{tpe}} `{{itm}}` on vaihdettu {{X}} Rubiiniin",
+        "morons": "Annat yllätyslaatikon mennä sivusuun? Mitä oikein puhun, tietenkin annoit.",
+        "contesting": "Tätä laatikkoa tavoittelevat:",
+        "eventDrop": "Ja lisää tulee! Tämä laatikko on **TAPAHTUMALAATIKKO**, mikä tarkoittaa: *'erityisiä hienouksia sisällä'!**",
+        "notThisbox": "Sinulla ei näytä olevan tuota laatikkoa. Kokeile `{{prefix}}lootbox` uudestaan nähdäksesi omistamasi laatikot."
     },
     "eastereggs": {
-        "konodioda": "",
-        "vacuum": ""
+        "konodioda": "Luulit sen olevan Pollux, **mutta se olin MINÄ, DIO**!",
+        "vacuum": "**{{user}}** on antanut **+1 Rep** tyhjyyteen. Sinne on heitetty tähän mennessä {{amount}} mainepistettä."
     },
     "seasonal": {
-        "checkPin": "",
-        "reactThis": ""
+        "checkPin": "Tsekkaa kiinnitetyt viestit lisätietoja varten",
+        "reactThis": "Reagoi tähän viestiin saadaksesi roolit automaattisesti"
     },
-    "helpkey": ""
+    "helpkey": "apua"
 }

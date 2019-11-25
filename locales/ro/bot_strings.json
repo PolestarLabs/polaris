@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "",
             "cantMarryPollux": ""
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "Sunteti de acord sa divortati de catre {{user}}? O taxa de %EMJ% **5,000 Rubine** va fi aplicata **amandurora**. LovePoints-urile amandurora vor fi **injumatatite**!",
             "saidnope": "{{userB}} nu doreste divortul. Poti sa fortezi platind o taxa de %EMJ% **10,000 Rubine** pentru a apela la un avocat pentru a rezolva acest lucru, insa amandoi veti pierde **toate LovePoints-urile**!",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} este membru din: {{joinedstamp}}",
             "aviOK": "Oki-doki, noua mea fotografie este acesta. Puteti schimba sa scimbati profilul din nou in {{cooldown}}",
             "colorChange": "Culoarea ta preferată a fost salvată!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "Timpul bombei nucleare a expirat",
             "completed": "Informatia a fost stears si resetat cu succes. Incercati sa utilizati **+ serverinfo** pentru a vedea daca totul a fost resetat corect. Nu sunt raspunzator de contaminarea ulterioara a norului readioactiv.\n"
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",

@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "$t(terms.thanks_short)",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "",
             "cantMarryPollux": ""
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "{{user}} 와 이혼하는 것에 대해 동의하십니까? **둘 다** %EMJ% **5000 루빈** 이 차감됩니다. 두 명의 사랑포인트도 **반 동강** 날 거예요!",
             "saidnope": "{{userB}} 가 이혼을 원하지 않는답니다. %EMJ%**10000 루빈**을 냄으로서 이혼을 강요하여 제가 변호사를 부를 수는 있겠지만, 둘 다 **자신의 모든 사랑 포인트**를 잃게 될 거예요!",
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} 은 {{joinedstamp}} 부터 이 곳의 멤버였습니다.",
             "aviOK": "Ok, 나는 당신을 위해 나의 그림을 바꿨다. 프로필 사진을 다시 변경할 수 있습니다  에서 {{cooldown}}.",
             "colorChange": "좋아하는 색깔이 저장되었습니다!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "핵무기가 초과되었습니다!",
             "completed": "서버 정보를 성공적으로 지우고 재설정했습니다. **+serverinfo** 를 사용하여 모든 것이 제대로 재설정되었는지 확인하십시오. 나는 이후에 핵 낙진 오염에 대한 책임을지지 않습니다."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
