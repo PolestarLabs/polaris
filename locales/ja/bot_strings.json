@@ -33,6 +33,9 @@
         "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "ありがとう",
         "thanks_short": "",
         "thx": "",
@@ -307,6 +310,56 @@
             "cantMarrySelf": "私もいろんなことを見てきましたけど。。。貴方自身と結婚するのはやりすぎかと",
             "cantMarryPollux": "有り得ない！あっち行って！"
         },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -434,6 +487,18 @@
             "memberSince": "{target}} その時以来のメンバーです： {{joinedstamp}}",
             "aviOK": "私の新しい写真は今これです。 私のプロフィール画像は{{cooldown}}で再び変更できます",
             "colorChange": "私はあなたがこの賭けを取り戻すことはできないと思っています...あなたは{{number}}ルビンを手に入れました"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -574,9 +639,7 @@
             "timeout": "爆撃がタイムアウト！",
             "completed": "サーバー情報が正常に消去され、リセットされました。 **+serverinfo** を使用して、すべてが正しくリセットされたかどうかを確認してください。 私は、その後の 核廃絶 汚染の責任を負いません。"
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",

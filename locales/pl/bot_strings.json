@@ -263,7 +263,7 @@
             "unverified": "Nie jesteś zweryfikowany, aby dokonywać wymian.\nZweryfikuj się na stronie [http://discoin.sidetrip.xyz/verify]",
             "userLimit": "Twój limit wymian na dziś został osiągnięty!",
             "globalLimit": "Osiągnąłeś limit Discoin, spróbuj ponownie jutro.",
-            "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie spełniły swojego Przeznaczenia.",
+            "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie dotarły do celu.",
             "ex-succ": "Wymiana powiodła się!"
         },
         "langIntro": {

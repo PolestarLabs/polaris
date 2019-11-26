@@ -33,6 +33,9 @@
         "boosterpack_plural": "Boosterpacks"
     },
     "terms": {
+        "transferDenied": "Transferência Negada",
+        "TransactionFee": "Taxa de Transação",
+        "TransactionID": "ID da Transação",
         "thanks": "valeu~",
         "thanks_short": "vlw",
         "thx": "$t(terms.thanks_short)",
@@ -295,17 +298,67 @@
             "noneOfThisRing": "Verifique seus bolsos de novo, porque não achei nada parecido no seu inventário.",
             "availableRings": "Os anéis disponíveis são:",
             "proposal": "{{userA}} pediu **{{userB}}** em casamento com o anel**{{ringname}}**.\n{{userB}}, você aceita?",
-            "actuallyNone": "Na verdade, você não tem nenhum. Vai arranjar um ! **A-G-O-R-A-!**",
+            "actuallyNone": "Na verdade, você não tem nenhum. Vai arranjar um! **A-G-O-R-A-!**",
             "saidYes": "{{userB}} disse SIM!",
-            "saidNo": "{{userB}} dise não...",
+            "saidNo": "{{userB}} disse não...",
             "saidNothing": "{{userB}} fugiu de você... já está lá longe... ai ai... quer beber alguma coisa?",
-            "addToFeatured": "Gostaria de mostrar {{userB}} como seu amante em destaque em seu perfil?",
+            "addToFeatured": "Gostaria de mostrar {{userB}} como seu amante em destaque no seu perfil?",
             "addToFeatured2": "{{userB}}, gostaria de fazer o mesmo com {{userA}}?",
             "addToFeatured3": "Mostrar seu novo amante no Cartão de Perfil?",
             "alreadyMarriedUp": "Parece que você já está casado com {{userB}}. Gostaria de atualizar o anel de *{{ringA}}* para **{{ringB}}**?",
             "alreadyMarriedInf": "Você já está casado com {{userB}} com um anel idêntico ou superior (*{{ringB}}*)! O que você está tentando fazer?",
             "cantMarrySelf": "Eu sou bem pra frente e tal, mas... casar consigo mesmo é um pouco demais, né?",
             "cantMarryPollux": "ATA! Sai daqui, sai!"
+        },
+        "ship": {
+            "needTupipo": "A Calculadora de Amor não funciona com apenas uma pessoa, querido.",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "Vish. _Aí não, em..._",
+                    "SEUS HORÓSCOPOS NÃO SÃO COMPATÍVEIS, FAVOR ABSTER-SE DE QUALQUER CONTATO FUTURO."
+                ],
+                [
+                    "Bom, a fila anda, né?",
+                    "Mesmo que vocês se conheçam, vocês não querem se conhecer _tanto_ assim."
+                ],
+                [
+                    "Vocês dois poderiam funcionar como um casal tão bem como sorvete numa salada.",
+                    "Ei! Vocês não se odeiam... Já é um começo, né?"
+                ],
+                [
+                    "É, dá pra sentir uma química. Tipo vinagre com bicarbonato de sódio. Dá aquela espumada, mas nada demais.",
+                    "Mais alguns encontros e talvez algumas faíscas vão surgir entre vocês!"
+                ],
+                [
+                    "Uau, quase um match! ",
+                    "Toda relação precisa de um pouco de trabalho, eu acho."
+                ],
+                [
+                    "É um match! A sorte de vocês está quase tão boa quanto a minha!",
+                    "Hmmm, eu assistiria esse drama romântico em um cinema fácil fácil."
+                ],
+                [
+                    "Só entre a gente em, mas acho que esses dois tão querendo se pegar de jeito.",
+                    "O amor está no ar~"
+                ],
+                [
+                    "Pssiu, eu e o Flicky estamos apostando em vocês. Já fizeram o anel de casamento?",
+                    "Não se segura! Confesse seus sentimentos!"
+                ],
+                [
+                    "Eu S-H-I-P-O demais!",
+                    "Vocês dois são dois pãezinhos de ló!"
+                ],
+                [
+                    "Nossa, vocês são quase _perfeitos_ um para o outro!",
+                    "Então, qual de vocês vai cortar o bolo?"
+                ],
+                [
+                    "O CASALZÃO DA POR%@ CHEGOU.",
+                    "Almas gêmeas! Incrível!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",
@@ -426,7 +479,7 @@
             "materialPresent": "Todos os materiais estão disponíveis no seu inventário, prosseguir com o crafting?",
             "didyoumean": "Eu não consegui achar esse item. Por acaso, está falando de algum desses?",
             "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?",
-            "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de crafting esfriou.",
+            "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de forja esfriou.",
             "cancel": "Cancelado! Sério que você só queria desperdiçar meu tempo?",
             "crafted": "Sucesso! Olhe, aqui está seu item! Novinho e brilhante~"
         },
@@ -434,6 +487,18 @@
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
             "aviOK": "Tá bom, troquei minha foto por essa daqui. Você pode me pedir pra trocar de foto de novo em: {{cooldown}}",
             "colorChange": "Sua cor favorita foi salva!"
+        },
+        "transfer": {
+            "lastdly": "Última Transferência de Lootbox:",
+            "next": "Próxima transferência disponível {{in X hours}}",
+            "transferboxto": "Transferindo Lootbox para {{userB}}",
+            "transferthisboxto": "Transferindo **{{boxname}}** para {{userB}} ",
+            "timeout": "**Acabou o tempo!**",
+            "cancel": "Transferência Cancelada",
+            "success": "**{{boxname}}** transferida para {{userB}}"
+        },
+        "give": {
+            "cooldown": "Peraí! Você só pode transferir novamente em {{remaining}}!"
         },
         "inventory": {
             "noSuchBox": "Olha, eu não vejo nenhuma caixa desse tipo aqui e tenho certeza que você também não.",
@@ -487,9 +552,9 @@
             "alreadyOwnThis": "Ei, você já tem esse item!"
         },
         "brackets": {
-            "maxRR": "Limite Máximo para Pontos Corridos: 16",
-            "maxBK": "Limite máximo para Chaves: 32",
-            "RRt": ":trophy: Chaves das Partidas de Pontos Corridos",
+            "maxRR": "Limite Máximo para Torneio de Pontos Corridos: 16",
+            "maxBK": "Limite máximo para Chaves de Torneio: 32",
+            "RRt": ":trophy: Chaves do Torneio de Pontos Corridos",
             "BKt": ":trophy: Chaves de Torneio",
             "match": "Partida",
             "round": "Round",
@@ -500,7 +565,7 @@
         },
         "synthfrag": {
             "disenchant": "Desencantar este plano de fundo {{rarity_emoji}} em **{{count}} $t(keywords.cosmoFragment)**?",
-            "cosmeticSynth": "Síntese de Cosméticos",
+            "cosmeticSynth": "Síntese de Itens Cosméticos",
             "confirmSynth": "Você quer que eu sintetize isto?",
             "nogemsforThis": "Parece que você não tem gemas suficientes para a síntese..."
         },
@@ -509,7 +574,7 @@
             "title": "{{boostername}} Stickers Booster"
         },
         "kickban": {
-            "waitingForReason": "ainda esperando pela razão...",
+            "waitingForReason": "Ainda esperando pela razão...",
             "noReason": "Nenhuma razão especificada. Cancelado.",
             "cancelled": "Cancelado pelo moderador",
             "userKicked": "Eu dei um chute *de leve* em {{user}} pra fora daqui.",
@@ -574,9 +639,7 @@
             "timeout": "Nuke Timeout! Nada foi alterado",
             "completed": "Informações do servidor apagadas e redefinidas com sucesso. Tente usar **+serverinfo** para ver se tudo foi redefinido adequadamente. Eu não me responsabilizo por qualquer contaminação radioativa futura."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Cargos por Reação de {{server}}:",
             "removeAll": "Eu removi todos os Registros de Reações daqui. Mas você terá que limpar manualmente as reações das próprias mensagens.",
@@ -605,7 +668,7 @@
             "notenough": "Esta caixinha não é o bastante pra você?",
             "trythese": "Tente um desses:",
             "curr_info": "Informações de Economia",
-            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.\n        \n    Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox*.\n",
+            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, o que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.\n        \n    Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox*.\n",
             "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`{{prefix}}daily`), Lootboxes (+box) e Joguinhos (+blackjack, +slots, etc.). Além de trocas com outros usuários, e assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de +daily de 10 dias.\n",
             "jades_desc": " *\"Moeda\" de Crafting: eu uso essas gemas verde-pálido – fora isso inúteis – para criar itens especiais, só pra você!*\n        Podem ser obtidas por Lootboxes, destruindo itens, doando ou comprando.",
             "sapphires_desc": "*Moeda Premium: fragmentos azul-vibrante das melhores gemas de Safira, usadas pra criar itens ou como moeda para comprar coisinhas exclusivas!*\n        Só pode ser obtida com doações, sendo compradas individualmente, ou por eventos especiais. Você ganha uma Safira a cada 200 ou 365 Dailies, e há uma chance de 0.1% de ganhá-las em Lootboxes Ultra Raras.",
