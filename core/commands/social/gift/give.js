@@ -5,7 +5,7 @@ const init = async function (msg,args){
     if(inventory.length < 1) return "No gifts to be opened!";
     if(!target) return "You must mention who you want to send this to!";
     
-    let gift = inventory[ Number(args[1]||0)-1 ||inventory.length-1];
+    let gift = inventory[ Number(args[1]||1)-1 ||inventory.length-1];
  
     await DB.gifts.updateOne({_id:gift._id},{$set:{holder:target}});
  

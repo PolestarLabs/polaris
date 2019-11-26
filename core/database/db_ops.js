@@ -27,6 +27,7 @@ const
        ,alerts         : miscDB.alert
        ,feed           : miscDB.feed
        ,usercols       : miscDB.usercols
+       ,gifts          : miscDB.gift
    /////////////////////////////////////////////////////
    ,cosmetics     : require('./schemas/cosmetics.js')
    ,collectibles  : require('./schemas/collectibles.js')

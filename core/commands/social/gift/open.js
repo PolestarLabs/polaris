@@ -5,8 +5,9 @@ const init = async function (msg,args){
     if(inventory.length < 1) return "No gifts to be opened!";
     
     const userData = await DB.users.get(msg.author.id);
-    let gift = inventory[ Number(args[1]||0)-1 ||inventory.length-1];
+    let gift = inventory[ Number(args[1]||1)-1 ||inventory.length-1];
 
+ 
 
     let giftMetadata={}
     let metadata
@@ -53,7 +54,7 @@ const init = async function (msg,args){
 
     if(gift.type != 'item' && gift.type != 'gems' ){
 
-        if(userData.modules[giftMetadata.inv].includes(gift.item) ){
+        if(!userData.modules[giftMetadata.inv].includes(gift.item) ){
             await DB.gifts.remove({_id:gift._id});
             //await DB.users.set( msg.author.id, {$addToSet:{ ['modules.'+giftMetadata.inv ]:gift.item } } );
             
