@@ -10,7 +10,7 @@
     "@google-cloud/vision": "^0.23.0",
     "@vitalets/google-translate-api": "^3.0.0",
     "bufferutil": "^4.0.0",
-    "canvas": "^2.0.0-alpha.12",
+    "canvas": "^2.6.0",
     "canvas-text-wrapper": "^0.10.2",
     "cheerio": "^1.0.0-rc.2",
     "cron": "^1.5.1",
