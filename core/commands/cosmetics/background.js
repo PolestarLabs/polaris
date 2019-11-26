@@ -13,7 +13,7 @@ var init = async function(msg, args) {
     if (bg.code === args) return true;
     if (args.includes(bg.code)) return true;
     if (msg.args.some(arg => bg.name.toLowerCase().includes(arg))) return true;
-    if (msg.args.some(arg => bg.tags.toLowerCase().includes(arg))) return true;
+    if (msg.args.some(arg => (bg.tags||'').toLowerCase().includes(arg))) return true;
     return false;
   });
   if (!selectedBG) selectedBG = shuffle(BGBASE)[28];
