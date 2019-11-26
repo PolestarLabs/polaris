@@ -113,6 +113,23 @@ const RelationShipModel = new Schema({
 },{ strict: false });
 
 
+
+const GiftItem = new Schema({
+  id:String,
+  creator: String,
+  holder: String,
+  type: String, // Cosmetic | Item
+  querystring: Mixed,
+  icon: {type: String, default: 'wrap'},
+  message: String,
+  
+},{ strict: false });
+
+const gift    = mongoose.model('Gift', GiftItem, 'GIFTS');
+gift.set    =  utils.dbSetter;
+gift.get    =  utils.dbGetter; 
+
+
   const audit     = mongoose.model('Audit', Audit, 'transactions');
       audit.set     =  utils.dbSetter;
       audit.get     =  utils.dbGetter; 
@@ -235,4 +252,4 @@ const RelationShipModel = new Schema({
         })
       }
 
-module.exports={ usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
+module.exports={ gift, usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
