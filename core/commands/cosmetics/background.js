@@ -101,5 +101,6 @@ module.exports = {
   perms: 3,
   init: init,
   cat: "cosmetics",
-  aliases: ["bg", "backdrop", "equip"]
+  aliases: ["bg", "backdrop", "equip"],
+  botPerms:['attachFiles','embedLinks']
 };
