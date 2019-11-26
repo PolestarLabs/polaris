@@ -274,7 +274,7 @@ function postConnect(x) {
     // POST STATS TO LISTS
 }
 
-PLX.connect().then( postConnect );
+PLX.connect().then( postConnect ).catch(console.error);
 
 process.on("uncaughtException", err => {
     console.error(" UNCAUGHT EXCEPTION ".bgRed)
