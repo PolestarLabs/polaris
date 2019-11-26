@@ -9,19 +9,21 @@ const POST_EXEC = function CommandPostExecution(msg,args,success){
     if(success) return null;
     return "exec fail"
 }
+
 const PERMS_CALC = function CommandPermission(msg){
     let uIDs = msg.command.module == "_botOwner"  
         ? [cfg.owner]
         : msg.command.module == "_botStaff" 
             ? cfg.admins
             : PLX.beta ? [ ] : [ ];
-    let switches = !((msg.guild.DISABLED||[]).includes(msg.command.label) || (msg.guild.DISABLED||[]).includes(msg.command.cat));
+    let GUILD = msg.guild||{}
+    let switches = !((GUILD.DISABLED||[]).includes(msg.command.label) || (GUILD.DISABLED||[]).includes(msg.command.cat));
     if(msg.author.looting === true) {
         msg.addReaction(_emoji('nope').reaction);
         return false;
     }
     let perms = msg.command.botPerms
-    if (perms){
+    if (perms && msg.channel.permissionsOf){
       delete require.cache[require.resolve('./PermsCheck.js')];
       let permchk = require('./PermsCheck.js').run(msg.command.cat, msg, perms)
       if (permchk !== 'ok') return false;
