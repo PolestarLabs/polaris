@@ -17,7 +17,7 @@ const startCollector = async (game, msg) => {
   const result = await game.handleInput(response[0].content)
   console.log(result)
   if (result.lost) return msg.reply(`I won! The word was ||${game.word}||.`)
-  if (result.won) return msg.reply(`You won this time, but I will win the next one.\nThe word was ${game.word}.`)
+  if (result.won) return msg.reply(`You won this time, but I will win the next one.\nThe word was ${game.word.toUpperCase()}.`)
   await msg.channel.sendMessage(`${result.correct ? 'Correct answer!' : 'Wrong answer...'}\n\`${result.wordBoard.join(' ')}\`\nYour word is a type of **${game.theme}**.\nYou have ${result.chances} chance(s) left.\nUsed letters: \`\`\`${result.usedLetters.join(', ')}\`\`\``)
   startCollector(game, msg)
 }
