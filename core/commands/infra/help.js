@@ -39,7 +39,7 @@ const init = async msg => {
           inviteme  = $t('help.inviteme', P),
           useful    = $t('help.useful',   P);
     
-      let commlink = "https://www.pollux.gg/commands";
+      let commlink = "https://beta.pollux.gg/commands";
       let suplink = "https://pollux.gg/support";
       let invitelink = "https://pollux.gg/invite";
     
