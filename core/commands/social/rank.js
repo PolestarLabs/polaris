@@ -36,7 +36,7 @@ const init = async function (msg){
     await Promise.all([
         _back  = await Picto.getCanvas(paths.BUILD+"/profile/mainframe_mini.png")
         ,_bg  = await Picto.getCanvas(paths.CDN+"/backdrops/"+userData.modules.bgID+".png")
-        ,_flair  = await Picto.getCanvas(paths.CDN+"/flairs/"+userData.modules.flairTop+".png")
+        ,_flair  = await Picto.getCanvas(paths.CDN+"/flairs/"+(userData.modules.flairTop||'default')+".png")
         ,_mask  = await Picto.getCanvas(paths.BUILD+"/profile/bgmask.png")
         ,_roundel  = await Picto.XChart(120,percent, userData.modules.favcolor, undefined,level,$t("website.level", P))
         ,_hexavat  = await Picto.makeHex(210,TARGET.avatarURL)
