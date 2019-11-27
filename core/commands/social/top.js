@@ -61,8 +61,10 @@ const topCommend = async (m)=>
             fields:[
                 {name:"Top Commended",  value: listCommend.join('\n').slice(0,1024),inline: true},
                 {name:"Top Commenders", value: listCommenders.join('\n').slice(0,1024),inline: true},
+                {name:'\u200b',value:'\u200b',inline:true},
                 {name:"\u200b",  value: listCommend2.join('\n').slice(0,1024),inline: true},
                 {name:"\u200b", value: listCommenders2.join('\n').slice(0,1024),inline: true}
+                ,{name:'\u200b',value:'\u200b',inline:true}
             ]
         }}
 
