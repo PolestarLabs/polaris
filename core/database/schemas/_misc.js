@@ -77,6 +77,15 @@ const ReactionRoles = new Schema({
   rolemoji:Array,  
 },{ strict: false });
 
+const PaidRoles = new Schema({
+  server:String,
+  role:String,
+  price:String,
+  temp:Number,
+  unique: Mixed
+
+},{ strict: false });
+
 const FanartModel = new Schema({
         id:String,
         src:String,
@@ -177,6 +186,18 @@ gift.get    =  utils.dbGetter;
   const reactRoles    = mongoose.model('ReactionRoles', ReactionRoles, 'ReactionRoles');
         reactRoles.set    =  utils.dbSetter;
         reactRoles.get    =  utils.dbGetter; 
+
+        
+  const paidroles    = mongoose.model('PaidRoles', PaidRoles, 'PaidRoles');
+        paidroles.set    =  utils.dbSetter;
+        paidroles.get    =  utils.dbGetter; 
+        paidroles.new = payload => {
+          let aud = new paidroles(payload);
+          aud.save((err) => {
+            if (err) return console.error(err);
+            console.log("[NEW PAID ROLE]".blue,payload);
+          });
+      }    
         
   const global    = mongoose.model('Global', Globals, 'globals');
       global.set  = function(alter){
@@ -252,4 +273,4 @@ gift.get    =  utils.dbGetter;
         })
       }
 
-module.exports={ gift, usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
+module.exports={ gift,paidroles, usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 

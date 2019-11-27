@@ -233,6 +233,35 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   /* EVERY 1 MINUTE */
   //======================================================================================
 
+  DB.temproles.find({expires: {$lte: Date.now()} })
+  .then(temps => {
+    temps.forEach(tprl=>{
+      DB.servers.get(tprl.server.id).then(svData=>{
+        await DB.mutes.expire(Date.now());
+        let logSERVER = PLX.guilds.get(tprl.server);
+        let logUSER   = PLX.findUser(tprl.user);
+        if(!logSERVER||!logUSER) return;
+        let logMEMBER = logSERVER.member(logUSER);
+        if (!logMEMBER) return;
+        logMEMBER.removeRole(tprl.role,"Temporary Role").catch(err=>"Die Silently");
+        
+        if (svData.dDATA || svData.logging) {
+          return;
+          //delete require.cache[require.resolve('./modules/dev/logs_infra.js')]
+          let log = require('./modules/dev/logs_infra.js');
+          log.init({
+            bot,
+            server: logSERVER,
+            member: logMEMBER,
+            user: logUSER,
+            logtype: "usrUnmute"
+          });
+        }      
+      })
+    })
+  });
+
+
   /* Manage Mutes */ //================================
   DB.mutes.find({expires: {$lte: Date.now()} })
   .then(mutes => {
