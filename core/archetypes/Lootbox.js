@@ -49,7 +49,7 @@ class LootboxItem{
         { $match: {$or:queries} },
         { $sample: {size: 1}}
       ]).then(res=>{
-        res = res[0]
+        res = res[0] ||{}
         if(!res) this.content = null;
         res.id    ?this.id   = res.id             : res._id;
         res.name  ?this.name = res.name           : null;
