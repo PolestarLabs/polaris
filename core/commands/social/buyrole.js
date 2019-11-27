@@ -16,7 +16,7 @@ const init = async function (msg,args){
 
     }
     
-    const userData   = await DB.users.get();
+    const userData   = await DB.users.get(msg.author.id);
   
     let finder = (args[0]||"").toLowerCase();
     
