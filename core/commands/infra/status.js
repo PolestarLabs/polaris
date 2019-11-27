@@ -57,7 +57,7 @@ emb.field('Support Server' ,':question:  [Pollux\'s Mansion]('+paths.CDN+'/suppo
 emb.field('Twitter'        ,'<:twitter:510526878139023380>  [@maidPollux](https://twitter.com/maidPollux)    \u200b', true)
 emb.field('Subreddit'      ,'<:reddit:510526878038360074>   [/r/Pollux](https://reddit.com/r/Pollux)    \u200b', true)
 
-emb.footer("❤\u2003 Powered by "+os.cpus().length+"x "+os.cpus()[1].model )
+emb.footer("Falkenstein - DE\u2003❤ Powered by "+os.cpus().length+"x "+os.cpus()[1].model ,   `https://beta.pollux.gg/build/guessing/guessflags/germany.png`)
 
 
   msg.channel.send({embed:emb})
