@@ -3,7 +3,7 @@ const init = async function (msg,args){
     const inventory = await DB.gifts.find({holder:msg.author.id}).lean().exec();
 
     return {embed:{
-        description: inventory.map(it=> `🎁 **${it._id}** Packed by <@${it.creator}>`).join('\n')
+        description: inventory.map(it=> `${it.emoji} **${it._id}** Packed by <@${it.creator}>`).join('\n')        
     }}
    
 

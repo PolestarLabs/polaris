@@ -9,9 +9,13 @@ const init = async function (msg,args){
  
     await DB.gifts.updateOne({_id:gift._id},{$set:{holder:target}});
  
+    let emojiId = gift.emoji.replace('>','').split(':')[2].trim();
 
-    return {embed:{
-        description:  `🎁 <@${msg.author.id}> sent **a gift** to <@${target}>` 
+    return {
+        embed:{
+        description:  `\u200b
+        🎁 <@${msg.author.id}> sent **a gift** to <@${target}>` 
+        ,thumbnail:{url: `https://cdn.discordapp.com/emojis/${emojiId}.png`}
     }}
    
 

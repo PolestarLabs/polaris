@@ -50,13 +50,14 @@ const init = async function (msg,args){
     }
 
 
-
+    let emojiId = gift.emoji.replace('>','').split(':')[2].trim();
+  
 
     if(gift.type != 'item' && gift.type != 'gems' ){
 
         if(!userData.modules[giftMetadata.inv].includes(gift.item) ){
             await DB.gifts.remove({_id:gift._id});
-            //await DB.users.set( msg.author.id, {$addToSet:{ ['modules.'+giftMetadata.inv ]:gift.item } } );
+            await DB.users.set( msg.author.id, {$addToSet:{ ['modules.'+giftMetadata.inv ]:gift.item } } );
             
             return {
                 embed:{
@@ -64,10 +65,10 @@ const init = async function (msg,args){
                     Contents: ${gift.type}
                     **${giftMetadata.rarity}** ${giftMetadata.name}
                     Message:*\`\`\`
-                    ${gift.message||'- - -'}
+${gift.message||'- - -'}
                     \`\`\`*
                     `,
-                    thumbnail:  giftMetadata.thumb?{url: giftMetadata.thumb }:null,
+                    thumbnail:{url: `https://cdn.discordapp.com/emojis/${emojiId}.png`},
                     image:      giftMetadata.img?{url: giftMetadata.img }:null,
                 }
             }
