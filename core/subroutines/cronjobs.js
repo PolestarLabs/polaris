@@ -233,17 +233,17 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   /* EVERY 1 MINUTE */
   //======================================================================================
 
-  DB.temproles.find({expires: {$lte: Date.now()} })
+  DB.temproles.find({expires: {$lte: Date.now()} }).lean().exec()
   .then(temps => {
     temps.forEach(tprl=>{
-      DB.servers.get(tprl.server.id).then(svData=>{
-        await DB.mutes.expire(Date.now());
+      DB.servers.get(tprl.server.id).then(async svData=>{
         let logSERVER = PLX.guilds.get(tprl.server);
         let logUSER   = PLX.findUser(tprl.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
         if (!logMEMBER) return;
-        logMEMBER.removeRole(tprl.role,"Temporary Role").catch(err=>"Die Silently");
+        await DB.temproles.expire({U:tprl.user,S:tprl.server});
+        await logMEMBER.removeRole(tprl.role,"Temporary Role").catch(err=>"Die Silently");
         
         if (svData.dDATA || svData.logging) {
           return;
