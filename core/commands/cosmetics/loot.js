@@ -469,6 +469,7 @@ async function renderBooster(stk) {
 
 function invent_merge(item, message, UDATA) {
 
+  message.author.looting = false;
   let iMETA = item;
 
   return new Promise(async resolve => {
