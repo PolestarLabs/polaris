@@ -76,6 +76,17 @@ const POLARIS_UI = {
     plxbjk2x: "<:plxbjk2x:598795449117310988>",
     plxtarot: "<:plxtarot:598833296570449921>",
 
+  // GIFT
+    gift_Y_S:"<:gift_Y_S:648769996201263105>",
+    gift_Y_R:"<:gift_Y_R:648769995601608714>",
+    gift_Y_B:"<:gift_Y_B:648769996201263154>",
+    gift_R_S:"<:gift_R_S:648769996046073875>",
+    gift_R_R:"<:gift_R_R:648769995613929472>",
+    gift_R_B:"<:gift_R_B:648769995576442890>",
+    gift_P_S:"<:gift_P_S:648769996381487146>",
+    gift_P_R:"<:gift_P_R:648769995630837760>",
+    gift_P_B:"<:gift_P_B:648769996968820766>"
+
 }
 
 const POLLUXES = {
