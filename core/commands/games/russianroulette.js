@@ -111,6 +111,6 @@ module.exports = {
   argsRequired: true,
   perms: 3,
   cat: 'games',
-  botPerms: ['attachFiles'],
+  botPerms: ['attachFiles','embedLinks','manageMessages'],
   aliases: ['rr', 'roletarussa']
 };
