@@ -58,7 +58,7 @@ const startPlayerCollector = async (msg) => {
            verifiedPlayers.push({ id: m.author.id, name: m.author.username, money: parseInt(m.content.split(' ')[1]) }) &&
            msg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map(a => a.money).reduce((a, b) => a + b)} rubines\n**Players**\n${verifiedPlayers.map(a => `- **${a.name}** - ${a.money} rubines\n`)}`)
   }
-  const collector = await msg.channel.awaitMessages(filter, { time: 20 * 60 * 1000, maxMatches: 5 });
+  const collector = await msg.channel.awaitMessages(filter, { time: 20e3, maxMatches: 5 });
   return verifiedPlayers
 }
 
