@@ -54,7 +54,7 @@ const startPlayerCollector = async (msg) => {
            !verifiedPlayers.filter(a => a.id === m.author.id)[0] &&
            !isNaN(m.content.split(' ')[1]) &&
            parseInt(m.content.split(' ')[1]) > 0 &&
-           await economy.checkFunds(m.author.id, parseInt(m.content.split(' ')[1])) &&
+           (await economy.checkFunds(m.author.id, parseInt(m.content.split(' ')[1]))) &&
            verifiedPlayers.push({ id: m.author.id, name: m.author.username, money: parseInt(m.content.split(' ')[1]) }) &&
            msg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map(a => a.money).reduce((a, b) => a + b)} rubines\n**Players**\n${verifiedPlayers.map(a => `- **${a.name}** - ${a.money} rubines\n`)}`)
   }
