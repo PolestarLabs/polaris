@@ -16,7 +16,7 @@ const init = async function (msg, args) {
 		return startMultiplayerLoop(msg, shuffle(players));
 	}
 
-	if (isNaN(parseInt(args[0]))) return msg.reply('you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.');
+	if ( !parseInt(args[0]) ) return msg.reply('you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.');
 
 	const urf = await ECO.checkFunds(msg.author.id, parseInt(args[0]))
 	if (!urf) return msg.reply('you don\'t have all this money to waste with russian roulette.');
