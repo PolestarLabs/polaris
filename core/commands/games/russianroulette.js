@@ -1,6 +1,5 @@
-const cmd = 'russianroulette';
 const RussianRoulette = require(appRoot + '/core/archetypes/RussianRoulette.js');
-const economy = require(appRoot + '/core/archetypes/Economy.js');
+const ECO = require(appRoot + '/core/archetypes/Economy.js');
 
 const init = async function (msg, args) {
   if (args[0] === 'multiplayer') {
@@ -14,9 +13,9 @@ const init = async function (msg, args) {
 
   if (isNaN(parseInt(args[0]))) return msg.reply('you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.')
 
-  const urf = await economy.checkFunds(msg.author.id, parseInt(args[0]))
+  const urf = await ECO.checkFunds(msg.author.id, parseInt(args[0]))
   if (!urf) return msg.reply('you don\'t have all this money to waste with russian roulette.')
-  economy.pay(msg.author.id, parseInt(args[0]))
+  ECO.pay(msg.author.id, parseInt(args[0]))
 
   const game = new RussianRoulette(msg, parseInt(args[0]))
 
@@ -31,7 +30,7 @@ const startGameCollector = async (msg) => {
   if (result.invalidInput) return msg.channel.send('You **have** to say shoot or stop. Game stopped, and I\'m not returning your money back.')
   if (result.stopped) {
     const better = parseInt(msg.args[0]) > result.currentValue
-    if (better) economy.pay(msg.author.id, result.currentValue, 'RUSSIANROULETTE')
+    if (better) ECO.pay(msg.author.id, result.currentValue, 'RUSSIANROULETTE')
     return msg.channel.send(better ? `You're a quitter!\n I added **${result.currentValue} rubines** to your account. Sigh.` : 'You\'re a quitter!\nI haven\'t changed anything because you didn\'t even played.')
   }
 
@@ -39,7 +38,7 @@ const startGameCollector = async (msg) => {
   if (result.lost) {
     return message.edit(`BOOM! Someone got shot...\nYou lost your money. RIP.`)
   } else if (result.won) {
-    economy.receive(msg.author.id, parseInt(msg.args[0]) * 1.5, 'RUSSIANROULETTE')
+    ECO.receive(msg.author.id, parseInt(msg.args[0]) * 1.5, 'RUSSIANROULETTE')
     return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.maxValue}** rubines to your account.`)
   }
 
@@ -54,12 +53,12 @@ const startPlayerCollector = async (msg) => {
            !verifiedPlayers.filter(a => a.id === m.author.id)[0] &&
            !isNaN(m.content.split(' ')[1]) &&
            parseInt(m.content.split(' ')[1]) > 0 &&
-           (await economy.checkFunds(m.author.id, parseInt(m.content.split(' ')[1]))) &&
+           (await ECO.checkFunds(m.author.id, parseInt(m.content.split(' ')[1]))) &&
            verifiedPlayers.push({ id: m.author.id, name: m.author.username, money: parseInt(m.content.split(' ')[1]) }) &&
            msg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map(a => a.money).reduce((a, b) => a + b)} rubines\n**Players**\n${verifiedPlayers.map(a => `- **${a.name}** - ${a.money} rubines\n`)}`)
   }
   const collector = await msg.channel.awaitMessages(filter, { time: 20e3, maxMatches: 5 });
-  return verifiedPlayers
+  return verifiedPlayers 
 }
 
 const startMultiplayerLoop = async (msg, players) => {
@@ -79,7 +78,7 @@ const startMultiplayerLoop = async (msg, players) => {
       const rst = game.handleInput('shoot')
       if (rst.lost) {
         players = shuffle(players.filter(a => a.id !== player.id))
-        await economy.pay(player.id, player.money, 'RUSSIANROULETTE');
+        await ECO.pay(player.id, player.money, 'RUSSIANROULETTE');
         lost = player
       }
       await wait(3);
@@ -94,7 +93,7 @@ const startMultiplayerLoop = async (msg, players) => {
       await wait(3);
     }
     if (players.length === 1) {
-      economy.receive(players[0].id, value, 'RUSSIANROULETTE')
+      ECO.receive(players[0].id, value, 'RUSSIANROULETTE')
       return message.channel.send(`Game over, you all! ${players[0].name} won.`)
       finished = true
     }
@@ -107,7 +106,7 @@ const startMultiplayerLoop = async (msg, players) => {
 
 module.exports = {
   init,
-  cmd,
+  cmd: "russianroulette",
   argsRequired: true,
   perms: 3,
   cat: 'games',
