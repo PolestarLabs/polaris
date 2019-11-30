@@ -10,16 +10,16 @@ const init = async function (msg, args) {
 	if (args[0] === 'multiplayer') {
 		await msg.channel.send(`Ok, multiplayer mode.\nTo join the match, just use \`join <how many rubines you are using>\`.\n**The match starts in __20 seconds__.**`);
 		const players = await startPlayerCollector(await msg.channel.send('**Total of rubines in the pool:** 0 rubines\n**Players**\n---') );
-		if (players.length === 1) return msg.channel.send('If only 1 person is going to play, you should use singleplayer mode.')
-		if (players.length === 0) return msg.channel.send('No one joined. I\'m not playing this alone.')
+		if (players.length === 1) return msg.channel.send('If only 1 person is going to play, you should use singleplayer mode.');
+		if (players.length === 0) return msg.channel.send('No one joined. I\'m not playing this alone.');
 		await msg.channel.send(`**Time's up!** Let's get started.\nPlayers: \`\`\`${players.map(a => a.name).join(', ')}\`\`\``);
-		return startMultiplayerLoop(msg, shuffle(players))
+		return startMultiplayerLoop(msg, shuffle(players));
 	}
 
-	if (isNaN(parseInt(args[0]))) return msg.reply('you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.')
+	if (isNaN(parseInt(args[0]))) return msg.reply('you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.');
 
 	const urf = await ECO.checkFunds(msg.author.id, parseInt(args[0]))
-	if (!urf) return msg.reply('you don\'t have all this money to waste with russian roulette.')
+	if (!urf) return msg.reply('you don\'t have all this money to waste with russian roulette.');
 	ECO.pay(msg.author.id, parseInt(args[0]))
 
 	const game = new RussianRoulette(msg, parseInt(args[0]))
@@ -30,24 +30,24 @@ const init = async function (msg, args) {
 
 const startGameCollector = async (msg) => {
 	const response = await msg.channel.awaitMessages(m => m.author.id === msg.author.id, {
-		time: 30000,
+		time: 30e3,
 		maxMatches: 1
 	});
-	if (!response[0]) return msg.reply('you haven\'t said your action in 30 seconds! Stopping the game.')
+	if (!response[0]) return msg.reply('you haven\'t said your action in 30 seconds! Stopping the game.');
 	const result = await game.handleInput(response[0].content)
-	if (result.invalidInput) return msg.channel.send('You **have** to say shoot or stop. Game stopped, and I\'m not returning your money back.')
+	if (result.invalidInput) return msg.channel.send('You **have** to say shoot or stop. Game stopped, and I\'m not returning your money back.');
 	if (result.stopped) {
 		const better = parseInt(msg.args[0]) > result.currentValue
 		if (better) ECO.pay(msg.author.id, result.currentValue, 'RUSSIANROULETTE')
-		return msg.channel.send(better ? `You're a quitter!\n I added **${result.currentValue} rubines** to your account. Sigh.` : 'You\'re a quitter!\nI haven\'t changed anything because you didn\'t even played.')
+		return msg.channel.send(better ? `You're a quitter!\n I added **${result.currentValue} rubines** to your account. Sigh.` : 'You\'re a quitter!\nI haven\'t changed anything because you didn\'t even played.');
 	}
 
 	const message = await msg.channel.send('Let\'s see if you\'re going to die now...')
 	if (result.lost) {
-		return message.edit(`BOOM! Someone got shot...\nYou lost your money. RIP.`)
+		return message.edit(`BOOM! Someone got shot...\nYou lost your money. RIP.`);
 	} else if (result.won) {
 		ECO.receive(msg.author.id, parseInt(msg.args[0]) * 1.5, 'RUSSIANROULETTE')
-		return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.maxValue}** rubines to your account.`)
+		return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.maxValue}** rubines to your account.`);
 	}
 
 	await message.edit(`*\*no bullet noise\**\nNo bullet this time (${result.rounds} rounds remaining)...\nYou currently have **${result.currentValue} rubines.**\nUse \`shoot\` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\nUse \`stop\` to stop here and get your money.`)
@@ -73,7 +73,7 @@ const startPlayerCollector = async (msg) => {
 		time: 20e3,
 		maxMatches: 5
 	});
-	return verifiedPlayers
+	return verifiedPlayers;
 }
 
 const startMultiplayerLoop = async (msg, players) => {
@@ -109,7 +109,7 @@ const startMultiplayerLoop = async (msg, players) => {
 		}
 		if (players.length === 1) {
 			ECO.receive(players[0].id, value, 'RUSSIANROULETTE')
-			return message.channel.send(`Game over, you all! ${players[0].name} won.`)
+			return message.channel.send(`Game over, you all! ${players[0].name} won.`);
 			finished = true
 		}
 		_p = 0
