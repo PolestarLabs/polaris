@@ -4,12 +4,16 @@ const ECO = require(appRoot + '/core/archetypes/Economy.js');
 
 const init = async function (msg, args) {
 
-	if (args[0] === 'multiplayer') {
+	if (args[0] === 'multiplayer' ||args[0] === 'mp' ) {
 		await msg.channel.send(`Ok, multiplayer mode.\nTo join the match, just use \`join <how many rubines you are using>\`.\n**The match starts in __20 seconds__.**`);
 		const players = await startPlayerCollector(await msg.channel.send('**Total of rubines in the pool:** 0 rubines\n**Players**\n---') );
 		if (players.length === 1) return msg.channel.send('If only 1 person is going to play, you should use singleplayer mode.');
 		if (players.length === 0) return msg.channel.send('No one joined. I\'m not playing this alone.');
-		await msg.channel.send(`**Time's up!** Let's get started.\nPlayers: \`\`\`${players.map(a => a.name).join(', ')}\`\`\``);
+		await msg.channel.send({embed:{
+			description:`**Time's up!** Let's get started.\nPlayers: \`\`\`${players.map(a => a.name).join(', ')}\`\`\``,
+			image:{url:`${paths.CDN}/build/games/russian_roulette/load1_.gif`}
+		}
+	});
 		return startMultiplayerLoop(msg, shuffle(players));
 	}
 
@@ -90,14 +94,23 @@ const startMultiplayerLoop = async (msg, players) => {
 	while (!finished) {
 
 		const game = new RussianRoulette(null, 0)
-		let content = `**Round ${round}**\n`
-		const message = await msg.channel.send(content);
+		let gameFrame = {
+			embed:{
+				title:  `**Round ${round}**\n`,
+				description: "",
+				image:{url:""},
+				color:0x2b2b3b
+			}
+		}
+
+		const message = await msg.channel.send(gameFrame);
 		let _p = 0
 
 		while (_p < players.length) {
 			const player = players[_p]
-			content += `${player.name}'s turn.... `
-			await message.edit(content);
+			gameFrame.embed.description += `${player.name}'s turn.... `
+			//gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
+			await message.edit(gameFrame);
 			const rst = game.handleInput('shoot')
 			if (rst.lost) {
 				players = shuffle(players.filter(a => a.id !== player.id))
@@ -107,10 +120,17 @@ const startMultiplayerLoop = async (msg, players) => {
 
 			await wait(3);
 
-			if (lost) content += `BOOM! ${player.name} is dead.`;
-			else content += '*no bullet noise*\n';
+			if (lost) {
+				gameFrame.embed.description += `BOOM! ${player.name} is dead.`;
+				gameFrame.embed.color = 0x521723
+				gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/shot_.gif`
+			} else {
+				gameFrame.embed.description += '*no bullet noise*\n';
+				gameFrame.embed.color = 0x32437d
+				gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/blank_.gif`
+			}
 
-			await message.edit(content);
+			await message.edit(gameFrame);
 
 			if (lost) _p = players.length + 1;
 			else _p++; 	// Stop the forEach loop, the bullet is now gone
@@ -120,14 +140,28 @@ const startMultiplayerLoop = async (msg, players) => {
 
 		if (players.length === 1) {
 			await ECO.receive(players[0].id, value, 'RUSSIANROULETTE');
-			message.channel.send(`Game over, you all! ${players[0].name} won.`)
+
+			gameFrame.embed.title = `Show is over, kids!`
+			gameFrame.embed.description = `${players[0].name} stands victorious!`
+			gameFrame.embed.color = 0x608a6d
+			gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`
+
+			msg.channel.send(gameFrame)
 			finished = true
 			return
 		}
 
+		message.deleteAfter(3000).catch(e=>null);
 		_p = 0
 
-		await message.channel.send('End of the round! **Results:**\n' + (lost ? `${lost.name} was the loser. RIP.` : 'No one died this time...') + '\nStarting the next round.');
+		await msg.channel.send({
+			embed:{
+				title: 'End of the round!',
+				description: '**Results:**\n' + (lost ? `${lost.name} was the loser. RIP.` : 'No one died this time...') + '\nStarting the next round.',
+				thumbnail:{url:`${paths.CDN}/build/games/russian_roulette/miniload.gif`}
+			}
+		}).then(m=>m.deleteAfter(5000));
+				
 		lost = null
 		round++
 	}
