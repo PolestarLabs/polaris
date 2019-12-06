@@ -21,22 +21,21 @@ module.exports = async (guild,member) =>{
         }catch(err){
             embed = null
         }   
-        welcomeText =welcomeText[0]
+        welcomeText =welcomeText[0]||welcomeText;
         
         let welcomeChannel = svData.modules.GREET.channel
         let welcomeSkin    = svData.modules.GREET.type
         let welcomeImage    = svData.modules.GREET.image
-        console.log(embed)
         welcomeImage&&embed? embed.image={url:"attachment://in.png"}: null;
-
-
-        const P={ lngs: [svData.modules.LANGUAGE,"dev"] };
+        
+        
+        const P={ lngs: [svData.modules.LANGUAGE || "en", "dev"] };
         let txt = $t('logs.userJoin',P).replace(/\*/g,"");
         
         let url = `${paths.CDN}/generators/userio/in/${member.id}/${welcomeSkin||"minimal"}.png?text=${encodeURIComponent(txt)}`
       
         resolveFile(url).then(async buffer=>{
-            PLX.getChannel(welcomeChannel).send({content:welcomeText,embed}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
+            PLX.getChannel(welcomeChannel).send({content:welcomeText}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
                 if(welcomeTimer) ms.deleteAfter(welcomeTimer);
             }).catch(console.error)
         }).catch(console.error);

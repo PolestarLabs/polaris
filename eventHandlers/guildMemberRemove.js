@@ -21,16 +21,16 @@ module.exports = async (guild,member) =>{
         }catch(err){
             embed = null
         }
-        fwellText = fwellText[0]
+        fwellText = fwellText[0]||fwellText
         
         let fwellChannel = svData.modules.FWELL.channel
         let fwellSkin    = svData.modules.FWELL.type
         let fwellImage    = svData.modules.FWELL.image
         fwellImage&&embed? embed.image={url:"attachment://out.png"}: null;
 
-        const P={ lngs: [svData.modules.LANGUAGE,"dev"] };
+        const P={ lngs: [svData.modules.LANGUAGE,"dev"] };        
         let txt = $t('logs.userLeave',P).replace(/\*/g,"");
-
+        
         let url = `${paths.CDN}/generators/userio/out/${member.id}/${fwellSkin||"minimal"}.png?text=${encodeURIComponent(txt)}`
         
         resolveFile(url).then(async buffer=>{
