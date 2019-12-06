@@ -1,5 +1,5 @@
-const gear = require("../utilities/Gearbox");
-const DB   = require("../database/db_ops");
+// const gear = require("../utilities/Gearbox");
+// const DB   = require("../database/db_ops");
 const moment = require("moment");
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
@@ -33,8 +33,6 @@ class DailyCmd{
 }
 exports.init = async function (message,cmd,opts,success,reject,info,presuccess) {
 
-
-console.log(message.lang)
   const P={lngs:message.lang}
   let lang = message.lang[0]
   moment.locale(lang);
@@ -55,15 +53,16 @@ console.log(message.lang)
   const userDaily   = (await Daily.userData(Author)).last||1;
   const dailyAvailable = await Daily.dailyAvailable(Author);
 
-  const embed = new gear.Embed;
+  const embed = new Embed;
   embed.setColor("#d83668");
   if(message.args.includes('status')||message.args.includes('stats')){
-    if(info) return info (message,Daily);
-    let embe2=new gear.Embed;
+    let remain = userDaily+DAY;
+    if(info) return info (message,Daily,remain);
+    let embe2=new Embed;
     embe2.setColor('#e35555')
     embe2.description(`
-${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
-${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }
+${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
+${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }
   `)
         return message.channel.send({embed:embe2});
   }
@@ -74,12 +73,12 @@ ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')
     return reject(message,Daily,remain);
   };
   if(presuccess) {
-     let pre = await presuccess(message,Daily);
-    if (pre === false) return;
+    let pre = await presuccess(message,Daily);
+    if (pre !== true) return;
    }
 
   Author.dailing = true;
-  await gear.wait(1);
+  await wait(1);
   let now = Date.now();
   DB.users.set(Author.id, {$set:{['counters.'+Daily.command+'.last']:now}});
   if (Daily.streak && await Daily.keepStreak(Author)){

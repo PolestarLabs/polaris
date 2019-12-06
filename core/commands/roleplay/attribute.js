@@ -1,7 +1,7 @@
 
-const gear = require("../../utilities/Gearbox");
+// const gear = require("../../utilities/Gearbox");
 //const locale = require(appRoot+'/utils/i18node');
-const DB = require('../../database/db_ops');
+// const DB = require('../../database/db_ops');
 //const $t = locale.getT();
 const cmd = 'attribute';
 
@@ -10,7 +10,7 @@ const init = async function (message) {
 
 
 const P = {user:message.member.displayName,lang:message.lngs}
-  if(gear.autoHelper([$t("helpkey",P),"noargs"],{cmd,message,opt:this.cat}))return;
+  if(PLX.autoHelper([$t("helpkey",P),"noargs"],{cmd,message,opt:this.cat}))return;
 
   
   let requiredArgs = 2;
@@ -61,7 +61,7 @@ const P = {user:message.member.displayName,lang:message.lngs}
   USERDATA = await DB.users.findOne({id:message.author.id});
   
   vars = USERDATA.switches.variables;
-  let embed = new gear.Embed;
+  let embed = new Embed;
   embed.title("Attributes")
   for ( i in vars){
     let vi = vars[i]

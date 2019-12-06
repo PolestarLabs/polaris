@@ -9,23 +9,40 @@
         "SPH": "Szafir",
         "SPH_fullname": "Odłamki Szafirów",
         "SPH_plural": "Szafiry",
-        "C": "Zwyczajne",
-        "U": "Niezwykłe",
+        "synthGems": "Kryształy Syntezy",
+        "cosmoFragment": "Kosmiczny Fragment",
+        "cosmoFragment_plural": "Kosmiczne Fragmenty",
+        "C": "Zwyczajny",
+        "U": "Niezwykły",
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki",
+        "thevoid": "pustka",
+        "evToken": "Token Wydarzenia",
+        "evToken_plural": "Tokeny Wydarzenia",
         "lootbox": "Skrzynka",
         "lootbox_plural": "Skrzynki",
-        "thevoid": "pustka",
-        "evToken": "Token Wydarzenia"
+        "consumable": "Przedmiot Zużywalny",
+        "consumable_plural": "Przedmioty Zużywalne",
+        "junk": "Śmieci",
+        "junk_plural": "Śmieci",
+        "key": "Przedmioty-Klucze",
+        "material": "Materiał",
+        "material_plural": "Materiały",
+        "boosterpack": "Boosterpack",
+        "boosterpack_plural": "Boosterpacki"
     },
     "terms": {
+        "transferDenied": "Transfer Odrzucony",
+        "TransactionFee": "Opłata od Transakcji",
+        "TransactionID": "ID Transakcji",
         "thanks": "dzięki",
         "thanks_short": "dzk",
         "thx": "$t(terms.thanks_short)",
         "total": "W sumie",
         "amount": "Ilość",
         "overview": "Podgląd",
+        "dashboard": "Panel",
         "coinHeads": "Reszka",
         "coinTails": "Orzeł",
         "qnt": "Ilość",
@@ -41,12 +58,15 @@
         "reason": "Powód",
         "banned": "Zbanowany",
         "kicked": "Wyrzucony",
-        "usage": "Stosowanie",
+        "usage": "Zatosowanie",
         "module": "Moduł",
         "inst": "Instrukcje",
         "bet": "Obstawiać",
         "level": "Poziom",
         "levelUp": "Kolejny Poziom!",
+        "price": "Cena",
+        "droppable": "Zrzucalne",
+        "event": "Wydarzenie",
         "discord": {
             "message": "Wiadomość",
             "message_plural": "Wiadomości",
@@ -54,8 +74,8 @@
             "reaction_plural": "Reakcje",
             "role": "Rola",
             "role_plural": "Role",
-            "server": "Serwer\n",
-            "server_plural": "Serwer\n",
+            "server": "Serwer",
+            "server_plural": "Serwer",
             "member": "Członek",
             "member_plural": "Członkowie",
             "user": "Użytkownik",
@@ -76,8 +96,8 @@
         "logChan": "Logi Ogólne",
         "userJoin": "**{{user}}** właśnie **dołączył(-ła)** na Serwer",
         "userLeave": "**{{user}}** właśnie **upuścił(-ła)** Serwer",
-        "messDel": "**Usunięto** wiadomość w {{channel}}",
-        "messEdit": "{{user}} **edytował** swoją wiadomość w {{channel}}",
+        "messDel": "**Usunięto** wiadomość na {{channel}}",
+        "messEdit": "{{user}} **edytował** swoją wiadomość na {{channel}}",
         "newChan": "Nowy **kanał** został ** został stworzony**: {{channel}}",
         "delChan": "**Kanał** został **usunięty**: {{channel}}",
         "updtChan": "Kanał **{{channel}}** został **zaktualizowany**",
@@ -87,19 +107,19 @@
         "revokeBan": "Cofnięto bana **{{user}}**",
         "usrNick": "Od teraz **{{user}}** to **{{newuser}}**",
         "usrPhoto": "**{{user}}** zmienił swoją profilówkę",
-        "usrRoles": "Zmieniono role {{user}}",
+        "usrRoles": "Zmieniono rolę {{user}}",
         "gSets": "Ustawienia serwera zostały zmienione"
     },
     "responses": {
         "errors": {
             "iNeedThesePerms": "Następujące uprawnienia nie są już obecne, aby kontynuować poprawnie:\n{{PERMSLIST}}",
-            "denied": "Nie masz uprawnień do korzystania z tego. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
+            "denied": "Nie masz uprawnień, aby z tego korzystać. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
             "disabledModule": "no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo.",
             "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawdłowa ;~;",
             "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając \n'{{prefix}}stats'",
             "moderationNeeded": "Przepraszam, ale nie możesz użyć tej komendy. Potrzebujesz uprawnienia **Zarządzanie Serwerem**, lub musisz być przypisany do roli z uprawnieniami Moderatora/Administratora (Ustaw ją używając: `{{prefix}}modrole [@Rola])'",
             "chooseAmod": "Wybierz moduł.",
-            "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę również ciebie wykopać.",
+            "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę wykopać również ciebie.",
             "kin404": "Nie mogę znaleźć tej osoby. Czy ona już odeszła? Być może była tylko częścią twojej wyobraźni.",
             "unmutable": "Nieważne co mówisz, wyciszę ta osobę.",
             "unperm": "Nie mam uprawnień, aby to zrobić. Być może powinieneś dać mi uprawnienia, zanim polecisz mi coś zrobić.",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Wydaje mi się, że Rola jest już na liście.",
             "nosuchrole": "Um, nie znalazłam tej roli, proszę wpisz nazwę dokładnie.",
             "kbanNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
+            "cantKickHim": "Oh, obawiam się że nie mogę zrobić tego tej osobie. Nie mogę ranić moich zwierzchników.",
+            "cantKickSelf": "Nie możesz zbanować lub wyrzucić samego siebie, króliczku!",
             "superRoleNope": "Wygląda na to, że **{{user}}** nie ma roli **{{group}}**.",
             "banNone": "Potrzebuję osoby, która ma zostać zbanowana, ale zawsze mogę cię zbanować.",
             "unpermB": "Wydaje mi się, że nie mam wystarczających uprawnień, aby to przetworzyć.",
@@ -120,7 +142,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Hej! Przetłumaczony tekst nie może przekraczać __1000 Znaków__**\n Lecz nie martw się, przycięłam tekst dla ciebie~",
-            "open1": "Przepraszam, otwórz to czasownik uprzedni, co oznacza, że ​​powinieneś mi powiedzieć, co otworzyć~ Spróbuj jednej z następujących opcji:",
+            "open1": "Przepraszam, ale *\"otwierać\"* to czasownik przechodni, co oznacza że musisz mi powiedzieć co otworzyć~ Spróbuj z którymś z tych:",
             "open2": "Wybacz, ale to nie jest coś, co mogę (lub chcę) otworzyć. Ale jestem pewna, że mogę otworzyć ci jedną z tych rzeczy: ",
             "timesOutIn": "To zajmie {{s}} sekund",
             "enterVoiceBetterExperience": "Aby odczuć ~pełnię wrażeń~ musisz być na kanale głosowym."
@@ -131,6 +153,15 @@
                 "Sekundkę...",
                 "Chwileczkę, proszę..."
             ],
+            "opinion_decks": [
+                "Dobry wybór!",
+                "To jedna z moich ulubionych~",
+                "Wolę ten poprzedni.",
+                "Nieźle.",
+                "Ta jest szczęśliwa.",
+                "Zwróć karty nienaruszone.",
+                "Umyj ręce przed użyciem tych kart."
+            ],
             "interjections": {
                 "acknowledged": [
                     "Ok.",
@@ -139,7 +170,7 @@
                     "Dobrze.",
                     "Dobrze!",
                     "Zrozumiano!",
-                    "Poprawnie.",
+                    "Przyjęłam.",
                     "Dobrze!",
                     "Słodko!",
                     "Ok!",
@@ -202,6 +233,11 @@
             "failure": "Ojej! Wydaje się, że coś poszło nie tak. Przepraszam."
         },
         "equip": {
+            "getMoreBG": "Zdobądź więcej teł",
+            "NFSALE": "NIE NA SPRZEDAŻ",
+            "equipOwned": "Masz już te tło. Aktywować je?",
+            "buyThisBG": "Kupić te tło?",
+            "successBG": "`Sukces!` Tło zdobyte i aktywowane! 😉",
             "nomedals": "Oj? Nie masz żadnych medali do wyposażenia. Może najpierw należy je kupić?",
             "equipSlot": "Wybierz slot, w który włożysz swój medal.",
             "timeout": "Czyli nie chcesz wyposażyć się w Medal? Zadzwoń do mnie ponownie, gdy nabierzesz na niego ochotę. ",
@@ -227,7 +263,7 @@
             "unverified": "Nie jesteś zweryfikowany, aby dokonywać wymian.\nZweryfikuj się na stronie [http://discoin.sidetrip.xyz/verify]",
             "userLimit": "Twój limit wymian na dziś został osiągnięty!",
             "globalLimit": "Osiągnąłeś limit Discoin, spróbuj ponownie jutro.",
-            "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie spełniły swojego Przeznaczenia.",
+            "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie dotarły do celu.",
             "ex-succ": "Wymiana powiodła się!"
         },
         "langIntro": {
@@ -252,9 +288,77 @@
         },
         "items": {
             "confirmDestroy": "Jesteś pewny że chcesz zniszczyć ten przedmiot?",
-            "destroyWhat": "Zniszczyć, co?",
+            "destroyWhat": "Zniszczyć, ale co?",
             "cantDestroy": "Nie mogę tego zniszczyć.",
             "destroyed": "Przedmiot zniszczony! Oto co z niego zostało:"
+        },
+        "marry": {
+            "needRing": "Musisz mieć Pierścionek aby się oświadczyć, gdzie twoje maniery?",
+            "ringTutorial": "*Aktualnie nie posiadasz żadnych pierścieni zaręczynowych gotowych do użycia.*\n\nAby zdobyć pierścień musisz go stworzyć.\nAby tego dokonać musisz kupić **Pierścień Składowy** w [**Warsztacie do Tworzenia**]\n({{craftingURL}} \"Pollux'owy Warsztat do Tworzenia!\") i wydać na niego Rubiny, Żady albo Szafiry, plus konkretne materiały, aby wykonać z nich brylant do pierścienia.\nMożesz też wydać każde z nich, aby wykonać niesamowity pierścionek z klejnotów!\n\nTwórz pierścienie używając `{{prefix}}craft`, zacznij tworząc **Pierścień Składowy** (`{{prefix}}craft partial-ring`) a następnie dodając klejnot wedle uznania używając `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Te 4 to *pierścienie podstawowe* stworzone wyłącznie z klejnotów, niektóre przedmioty pozwolą tworzyć ci kolejne pierścienie!",
+            "noneOfThisRing": "Sprawdź swoje kieszenie jeszcze raz, takiego pierścionka nie ma w twoim Ekwipunku.",
+            "availableRings": "Dostępne pierścienie to:",
+            "proposal": "{{userA}} oświadcza się **{{userB}}** za pomocą **{{ringname}}**.\n{{userB}} zgadzasz się?",
+            "actuallyNone": "Aktualnie nie masz *żadnego*. Zdobądź jednego! **Teraz!**",
+            "saidYes": "{{userB}} powiedział TAK!",
+            "saidNo": "{{userB}} powiedział nie...",
+            "saidNothing": "{{userB}} uciekł... patrz jak biegnie... cóż... napijesz się czegoś?",
+            "addToFeatured": "Chcesz pokazać {{userB}} jako wyróżnionego kochanka w swoim Profilu?",
+            "addToFeatured2": "{{userB}} Chcesz zrobić to samo z {{userA}}?",
+            "addToFeatured3": "Wyświetlać twoją nową drugą połówkę w Profilu?",
+            "alreadyMarriedUp": "Wygląda na to że już jesteś w związku z {{userB}}. Czy chcesz ulepszyć pierścień z *{{ringA}}* na **{{ringB}}**?",
+            "alreadyMarriedInf": "Już jesteś w związku z {{userB}} z takim samym lub lepszym pierścieniem (*{{ringB}}*)! Co ty próbujesz osiągnąć?",
+            "cantMarrySelf": "Nie jestem staromodna czy coś, ale... Czy małżeństwo z samym sobą to już nie lekka przesada?",
+            "cantMarryPollux": "Nie ma mowy! Sio!"
+        },
+        "ship": {
+            "needTupipo": "Kalkulator Miłości nie działa tylko z jedną osobą, kochaniutki.",
+            "need2diffpipo": "Dopóki ta osoba nie ma możliwości mitozy, ciągle liczy się jako jedna osoba, potrzebuję **dwóch** osób!",
+            "quotes": [
+                [
+                    "Oh. _Oh nie._",
+                    "WASZE HOROSKOPY SĄ W INNYM UŁOŻENIU, ZREZYGNUJCIE Z DALSZEGO KONTAKTU."
+                ],
+                [
+                    "Zawahanie było tylko chwilowe przed przesunięciem w lewo.",
+                    "Pomimo, że jesteście ze sobą całkiem blisko nie chcecie być znajomymi w ten sposób."
+                ],
+                [
+                    "Wasza dwójka sprawdzi się w związku jak pomidor w sałatce.",
+                    "Hej! Nie nienawidzicie się! To już jest jakiś dobry początek, racja?"
+                ],
+                [
+                    "Ooh, ale doprawiona relacja. Przyprawą może być mąka, niewykluczone, ale to ciągle przyprawa, racja?",
+                    "Jeszcze kilka randek i może jakieś iskry zaczną lecieć!"
+                ],
+                [
+                    "Woah, prawie jesteście dopasowani! ",
+                    "Każdy związek wymaga trochę pracy, tak myślę."
+                ],
+                [
+                    "Jesteście dopasowani! Wasze szanse są niemal tak wysokie jak moje!",
+                    "Mmm, obejrzałabym ten powolny, płomienny romans jako film."
+                ],
+                [
+                    "Jesteśmy blisko strefy _wzajemnego polubienia_!",
+                    "Przytulamy się, czyż nie?"
+                ],
+                [
+                    "Psst, Flicky i ja stawiamy na Twój sukces. Czy utworzyłeś już ten częściowy pierścień?",
+                    "Przestań to ukrywać! Wyznaj swoje uczucia!"
+                ],
+                [
+                    "Shipuję to!",
+                    "Wy słodziaki jesteście tak jak dwa ziarnka groszku w skórce!"
+                ],
+                [
+                    "Cholercia, jesteście dla siebie niemal _idealni_!",
+                    "Więc która z was zajdzie w ciążę?"
+                ],
+                [
+                    "PARA MOCY PRZYBYŁA.",
+                    "Bratnia Dusza! Niesamowite!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Zgadzasz sie na wzięcie rozwodu z {{user}}? Opłata %EMJ% w wysokości **5000 Rubinów** zostanie pobrana od **każdego** z was. Wasze PunktyMiłości zostaną **podzielone na pół**!",
@@ -350,7 +454,7 @@
             "decon": "{{user}} sam się dezynfekuje.",
             "decon2": "{{user}} dezynfekuje {{user2}}.",
             "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
-            "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**",
+            "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%** z **{{radiation}}μSv/h** ",
             "kissed": "{{user}} całuje {{victim}}~",
             "kissedSelf": "{{user}} pocałował samego siebie bo jest taką narcystyczną s*ką~",
             "kissedNone": "{{user}} przesyła całusy~",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "Tworzę `{{item_name}}`",
             "noitem": "Nie mogę znaleźć tego przedmiotu",
+            "noitemu": "Nie mogę znaleźć tego przedmiotu ani niczego do niego podobnego",
+            "materialMissing": "Brakuje ci materiałów w ekwipunku, nie mogę tego stworzyć.",
+            "materialPresent": "Wszystkie materiały są w twoim ekwipunku, kontynuować?",
             "didyoumean": "Nie mogę znaleźć tego przedmiotu. Może chodzi Ci o jeden z tych?",
-            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?"
+            "didyoumeanOne": "Coś tu się nie zgadza... Czy to jest to czego szukasz, mój drogi?",
+            "timeout": "Koniec czasu! Za długo się decydowałeś, piec do tworzenia już jest chłodny.",
+            "cancel": "Anulowano! Czy ty traciłeś czas obojga z nas?",
+            "crafted": "Sukces! Patrz, tu jest twój przedmiot! Całkowicie nowy i błyszczący~"
         },
         "misc": {
             "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
             "aviOK": "W porządku, zmieniłam moje zdjęcie dla ciebie. Możesz ponownie zmienić moje zdjęcie profilowe za {{cooldown}}",
             "colorChange": "Twój ulubiony kolor został zapisany!"
+        },
+        "transfer": {
+            "lastdly": "Ostatni Transfer Skrzynki:",
+            "next": "Następny Transfer możliwy {{in X hours}}",
+            "transferboxto": "Transferuję Skrzynkę dla {{userB}}",
+            "transferthisboxto": "Transferuję **{{boxname}}** dla {{userB}} ",
+            "timeout": "**Transfer Wygasł!**",
+            "cancel": "**Transfer Anulowany!**",
+            "success": "**{{boxname}}** przetransferowano {{userB}}"
+        },
+        "give": {
+            "cooldown": "Powoli! Następny transfer możesz wykonać za {{remaining}}!"
+        },
+        "inventory": {
+            "noSuchBox": "Spójrz, nie widzę tam tego pudełka i jestem pewna że ty też.",
+            "noSuchBooster": "Nie widzę tego Booster'a w twoim ekwipunku. Pewnie gdzieś zaginęła w tym bałaganie.",
+            "noSuchItem": "Widzę masę rzeczy w twoim ekwipunku, poza tą konkretną.",
+            "browsingBox": "To twój Zbiór **Lootboxów**\n*Otwórz je i zdobądź masę fajnych rzeczy!*",
+            "browsingBooster": "To twój Zbiór **Boosterpacków**\n*Możesz je otworzyć aby uzyskać naklejki na profil*",
+            "browsingCONSUMABLE": "To jest twój Zbiór **Przedmiotów Zużywanych**\n*Mają ograniczone działanie albo znikają po użyciu, cześć może być użyta bezpośrednio.*",
+            "browsingJUNK": "To twój Zbiór **Śmieciowych Przedmiotów**\n*Te przedmioty właściwie nie mają żadnego celu, jednakże w konkretnch sytuacjach mogą być użyteczne.*",
+            "browsingKEY": "To twój Zbiór **Przedmiotów-Kluczy**\n*Te przedmioty mogą odblokować szczególne właściwości niektórych komend a nawet całych modułów*",
+            "browsingMATERIAL": "To jest Twój Zbiór **Materiałów Do Tworzenia**\n*Możesz je wykorzystać do tworzenia innych przedmiotów*",
+            "emptyJokes": [
+                "Wypełnij ten ekwipunek swoimi łzami gdyż jest pusty.",
+                "W twoim ekwipunku nie ma nic poza pająkami.\nGapią się na ciebie i klaszczą. Brawo.",
+                "Ekwipunek masz pusty jak serce.",
+                "Nie ma tu nic. Idź dalej.",
+                "Ten ekwipunek zawiera: rozczarowanie.",
+                "<Wstaw tu przedmiot>",
+                "...Nie, ciągle pusty.",
+                "Twój ekwipunek jest pusty, ale możesz wypełnić go łzami.",
+                "Musisz być cholernie dobrze nastawiony skoro sądzisz że pojawi się tu więcej rzeczy.",
+                "Ten ekwipunek jest oh bardzo pusty.",
+                "Masz....Masę niczego",
+                "Nigdzie nie znajdziesz lepszego pustego ekwipunku.",
+                "Otwierasz pusty ekwipunek i patrzysz do środka. Ekwipunek gapi się na ciebie wyzywająco.",
+                "Ten ekwipunek jest teraz pełny rozczarowania...",
+                "Gapisz się w otchłań, otchłań gapi się w ciebie.",
+                "\"FEED ME SEYMOUR\"",
+                "Otwarłeś ekwipunek na znajomy widok nicości. Jak mogłeś to przegapić!",
+                "Ten ekwipunek wygląda na smutny i opróżniony bo jest pusty.",
+                "Jeśli odpowiednio długo zapatrzysz się w ekwipunek, ekwipunek zapatrzy się w ciebie.",
+                "Ten ekwipunek niegdyś pełen był niewyobrażalnych skarbów. Wówczas zjawiłeś się ty...",
+                "Ten ekwipunek strajkuje do odwołania",
+                "Kłębowisko turla się z jednej strony ekwipunku na drugą",
+                "Kiedy otwierasz pusty ekwipunek, to spora liczba uwięzionych, krzyczących dusz wywirowuje się z niego... To raczej normalka.",
+                "Ekwipunek jest pusty, ale przynajmniej wewnątrz wygląda pięknie. Obszyty aksamitem i wogóle.",
+                "Nic nie ma w tym ekwipunku, ale możesz wyobrazić sobie rzeczy które MOGŁYBY się tu znajdować...",
+                "Pomimo pustki w ekwipunku po otwarciu go zostałeś ostrzelany konfetti! Jej!",
+                "Ten ekwipunek jest tak pusty jak moja kreatywność po napisaniu tych wszystkich tekstów"
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "Anulowano!",
+            "timeout": "Koniec czasu!",
+            "cantAfford": "Ah, nie stać cię na to... :(",
             "clicktoconfirm": "Kliknij ✔ aby potwierdzić twój wybór, albo ✖ żeby anulować.",
-            "confirmDelete": "Potwierdzasz usunięcie?"
+            "confirmDelete": "Potwierdzasz usunięcie?",
+            "alotWentOn": "Wiele się stało tego dnia...",
+            "alreadyOwnThis": "Hej, już to posiadasz!"
+        },
+        "brackets": {
+            "maxRR": "Maksymalny limit dla systemu kołowego: 16",
+            "maxBK": "Maksymalny limit dla Tabelek Turniejowych: 32",
+            "RRt": ":trophy: Tabelki Systemu Kołowego",
+            "BKt": ":trophy: Tabelki Turniejowe",
+            "match": "Mecz",
+            "round": "Runda",
+            "preround": "Przedrunda",
+            "team": "DRUŻYNA {{X}}",
+            "winner": "Zwycięzca",
+            "bracketX": "Tabelka {{AB}}"
+        },
+        "synthfrag": {
+            "disenchant": "Użyć magii by rozbić te tło {{rarity_emoji}} na **{{count}}$t(keywords.cosmoFragment)** ?",
+            "cosmeticSynth": "Synteza Przedmiotów Upiększających",
+            "confirmSynth": "Chcesz abym to zsyntetyzowała?",
+            "nogemsforThis": "Wygląda na to że nie masz wystarczającej liczby kryształów potrzebnych do tej syntezy..."
+        },
+        "booster": {
+            "checkStickersAt": "Oglądaj swoje naklejki i aktywuj je w {{dashboard}}",
+            "title": "Paczka Nalepek {{boostername}}"
+        },
+        "kickban": {
+            "waitingForReason": "czekam na podanie powodu...",
+            "noReason": "Powód nie został określony. Przerwano",
+            "cancelled": "Anulowane przez moderatora",
+            "userKicked": "*Spokojnie* usunęłam stąd {{user}}.",
+            "kickFlavs": [
+                "Na tyle spokojnie że może powrócić.",
+                "Mam nadzieję że jeszcze umie po tym siadać.",
+                "Nie próbuj tego w domu.",
+                "Żadne zwierzę nie ucierpiało.",
+                "Wszystko będzie z nimi dobrze... Chyba."
+            ],
+            "userBanned": "Właśnie *niezbyt delikatnie* zbanowałam {{user}}. Ta osoba już nigdy nie będzie tu mile widziana,",
+            "userSoftBanned": "Właśnie *delikatnie* zbanowałam {{user}}. Niestety nie mogę kompletnie wymazać tej osoby,",
+            "banFlavs": [
+                "Mam nadzieję że nadepnie na LEGO.",
+                "teraz możesz się z niego pośmiać.",
+                "kto jest następny?",
+                "nie bądźcie jak ta osoba, dzieci."
+            ],
+            "includeReason": "Zapomniałeś powiedzieć mi *dlaczego* ta osoba jest karana.\nOpisz powód poniżej: `(20s)`",
+            "userKickError": "Coś poszlo nie tak, oof."
         },
         "feed": {
             "newYoutube": "**{{tuber}} właśnie wrzucił filmik!** Obejrzyj go tu:",
+            "newTwitchStatus": "**{{streamer}}** zaczął stream!",
             "noDefault": "Nie powiedziałeś mi na którym kanale wysyłać wiadomości oraz nie ustawiłeś domyślnego kanału.",
             "urlPresent": "Już obserwuję posty z tego miejsca, więc po prostu zaktualizuję kanał docelowy~",
             "noFeed": "Na tym Serwerze nie ma ustawionych zródeł",
@@ -405,7 +619,7 @@
             "feedLimitRSS": "Ten serwer może mieć tylko **5** kanałów RSS jednocześnie.",
             "feedLimitTwitch": "Ten serwer może mieć powiadomienia tylko z **2** kanałów na Twitch' u jednocześnie.",
             "feedLimitYoutube": "Ten serwer może mieć alerty tylko z **1** kanału YouTube naraz.",
-            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu, rozważ [Donating]({{donationLink}}) lub [applying for Pollux Partnership]({{partnershipLink}})"
+            "donateToIncrease": "Jeśli potrzebujesz wyższego limitu, rozważ dotację lub zgłoszenie się do Partnerstwa z Pollux'em"
         },
         "autoRolesforThis": "Role, które każdy może sobie przypisać:",
         "daily": {
@@ -425,9 +639,7 @@
             "timeout": "Czas na potwierdzenie Atomówki się skończył!",
             "completed": "Informacje o serwerze zostały pomyślnie wyczyszczone i zresetowane. Spróbuj użyć **+serverinfo**, aby sprawdzić, czy wszystko zostało poprawnie zresetowane. Nie ponoszę odpowiedzialności za żadne późniejsze skażenie oparem nuklearnym."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Reakcyjne Role dla {{server}}",
             "removeAll": "Usunęłam stąd cały Rejestr Reakcji. Musisz jednak manualnie wyczyścić reakcje z wiadomości.",
@@ -445,7 +657,7 @@
         },
         "help": {
             "greetings": "\n**Witaj! Jestem Pollux. Nowa pokojówka przypisana do twojego serwera.**\nTutaj są wyjaśnienia kilku moich umiejętności:\n\n  • Domyślny Prefiks to `+`, możesz zmienić go za pomocą `+prefix <New Prefix>`. \n      Globalny Prefiks to `p!`, przydatny dla osób które nie znają twojego własnego prefiksu, może zostać wyłączony w **Panelu**. \n      Uniwersalny Prefiks to `plx!` i nie może zostać wyłączony.\n",
-            "basics": "\n  **Podstawy** - Rozpoczęcie przygody ze mną jest tak łatwe, jak zbudowanie przyspieszacza cząstek! ...Czekaj, nigdy takiego nie zbudowałeś(-łaś)? Cóż, żaden problem!\nOto tylko kilka z {{commandcount}} komend, które mam!\n  ",
+            "basics": " *Podstawy** - Rozpoczynanie pracy ze mną jest tak proste jak budowa własnego zderzacza cząsteczek! ...chwila, nigdy żadnego nie zbudowałeś? Żaden problem!\nTu masz kilka komend spośród {{commandcount}} które posiadam!\n  ",
             "cmdlist": "LISTA KOMEND",
             "quick_getgo": "Komendy, które powinieneś(-nnaś) znać na starcie",
             "quick_useful": " Komendy, które mogą okazać się użyteczne",
@@ -457,10 +669,10 @@
             "trythese": "Wypróbuj jedno z tych",
             "curr_info": "Informacje o walucie",
             "currency_overview": "Mój system pieniężny jest dosyć zwarty i ma kilka ograniczeń i funkcji zabezpieczających. Każda transakcja jest zapisywana i może być łatwo namierzona, co oznacza że twoja ciężka praca nie zostanie przyćmiona przez oszustów. Zapisujemy ponad 30 tysięcy transakcji każdego dnia.   \n        \n    • Każdy zaczyna z jakąś ilością **Żadów** i **Rubinów**, oraz z jedną **Skrzynką**.\n",
-            "rubines_desc": "\n*Moja główna waluta, jasnoróżowe kryształy zrobione z heksagonalnych skalenohedronów z Al₂O₃:Cr, używane prawie do wszystkiego!*\n        Może być zdobyta z Codziennych Bonusów (`daily`), Lootboxów (`+box`) i z Gier Hazardowych (`+blackjack`, `+slots`, etc.). Można ją również pozyskać za wymiany z innymi użytkownikami od razu jak osiągniesz 5 Poziom i masz co najmniej 10-dniowy Ciąg Codziennych Bonusów.\n",
+            "rubines_desc": "\n*Moja główna waluta, jasnoróżowe kryształy zrobione z heksagonalnych skalenohedronów z Al₂O₃:Cr, używane prawie do wszystkiego!*\n        Może być zdobyta z Codziennych Bonusów (`{{prefix}}daily`), Lootboxów (`+box`) i z Gier Hazardowych (`+blackjack`, `+slots`, etc.). Można ją również pozyskać za wymiany z innymi użytkownikami od razu jak osiągniesz 5 Poziom i masz co najmniej 10-dniowy Ciąg Codziennych Bonusów.\n",
             "jades_desc": " *\"Waluta\" do Tworzenia, używam tych lekko turkusowych kryształków - w innych przypadkach bezwartościowych - do tworzenia specjalnych przedmiotów dla ciebie!*\n        Może być zdobyta z Lootbox'ów, za niszczenie przedmiotów, wpłaty lub mogą być kupione.",
-            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyty za wpłaty, może być kupiony lub otrzymany za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
-            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach też.`** \n",
+            "sapphires_desc": "*Waluta premium, granatowe cząstki najczystszych klejnotów Szafirów, używane do tworzenia specjalnych przedmiotów lub jako waluta do kupowania ekskluzywnych rzeczy.*\n        Może zostać zdobyta za wpłaty, może być kupiona lub otrzymana za specjalne event'y. Dostajesz Darmowego Szafira z każdą 200 i 365 Codzienną Nagrodę, jest też 0.1% szansa na zdobycie go z Ultra Rzadkich Lootbox'ów.",
+            "lootboxes_desc": "*Specjalne skrzynie mogą zawierać wiele rzeczy takich jak Tła, Medale, Rubiny czy Paczki Nalepek*\n        Mogą zostać zdobyte tylko za levelowanie w górę lub z losowych zrzutów, zależą one od aktywności czatu.\n\n         **`⚠ Spamowanie z premedytacją aby wywołać Zrzuty Skrzyń, oszukiwanie, lub wymiana przedmiotów z multikontami spowodują że zostaniesz zbanowany w systemie Pollux'a i ewentualnie w innych botach również.`** \n",
             "end": "\n**Kompletna lista Komend dostępna jest na <https://pollux.gg/commands>**\n\nObejrzyj naszych Partnerów na **<https://pollux.gg/partners>**\nZobacz lub prześlij arty stworzone przez fanów na **<https://pollux.gg/fanart>**\nZobacz swój publiczny profil na **<https://pollux.gg/profile/me>**\n\n**Dodatki**\nSklep z tłami **<https://pollux.gg/bgshop>**\nSklep z medalami **<https://pollux.gg/medalshop>**\nTworzenie przedmiotów **<https://pollux.gg/crafting>**\nWirtualne nalepki **<https://pollux.gg/stickers>** (Aby zdobyć prawdziwe naklejki wejdź na Serwer Support'u)\nInformacje o Event'ach **<https://pollux.gg/events>**\n\nWesprzyj mnie na **<https://patreon.com/Pollux>** lub **<https://pollux.gg/donate>**\nŚledź mnie na Twitterze **<https://twitter.com/maidPollux>**\n\n---\n\n**Dla czegokolwiek innego zobacz __Dashboard__:\n<https://pollux.gg/dashboard>**\nLub dołącz na serwer support'u: **<https://discord.gf/rEBCccS>**\nZaproś mnie na swój serwer pod adresem **<https://pollux.gg/invite>**\n"
         }
     },
@@ -499,6 +711,9 @@
             "split": "`split`, aby podzielić rękę",
             "double": "`double`, aby podwoić swoją stawkę i dobrać ostatnią kartę,",
             "pass": "lub \"stand\", aby go przekazać.",
+            "splitbreak": "Podział Splitów:",
+            "switchdeck": "Teraz zagramy w BlackJack'a przy użyciu talii **{{deckname}}**!",
+            "switchdeckEgg": "",
             "even": "Wygląda na to, że się tutaj zepsuliśmy, trzymaj swoje Rubiny z powrotem."
         },
         "slots": {
@@ -535,9 +750,9 @@
             "Niesamowite! Zobacz, co znalazłem!",
             "Hej, jestem pewna, że chcesz tu widzieć Lootbox'a."
         ],
-        "lootPick": "Macie **__20 sekund__**, aby się po niego zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
+        "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
         "goesTo": "Koniec czasu! Zobaczmy, kto otrzyma to Pudełko.\n**Ten Loot Box zostanie rozlosowany pomiędzy:**",
-        "congrats": "Dobra robota! Skrzynka została dodana do twojego ekwipunku. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
+        "congrats": "Dobra robota! Skrzynka została dodana do twojego **Ekwipunku**. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
         "opening": "{{user}} otworzył Pudełko...",
         "contains": "Ta {{adjective}} skrzynka zawiera",
         "options": "Możesz go zachować lub rerollnąć, płacąc {{amt}}",
@@ -559,7 +774,7 @@
         "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz."
     },
     "eastereggs": {
-        "konodioda": "Myślałeś, że to Pollux, **ale to było ME, DIO**!",
+        "konodioda": "Myślałeś, że to Pollux, **ale to byłem JA, ZIOM**!",
         "vacuum": "**{{user}}** podarował **+1Rep** w Pustkę. Do tej pory wrzucono tam {{amount}} reputacji."
     },
     "seasonal": {

@@ -1,0 +1,14 @@
+{
+    "partial_ring": {
+        "name": "Anillo Parcial",
+        "description": "Una banda metálica que se utiliza para crear hermosos anillos de boda"
+    },
+    "lootbox_C_O": {
+        "name": "Caja Común",
+        "description": ""
+    },
+    "cosmo_fragment": {
+        "name": "Fragmento de Cosmo",
+        "description": "Especie de gravilla brillante que se utiliza para crear Fragmentos de Cosmo"
+    }
+}

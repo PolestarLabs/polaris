@@ -1,23 +1,17 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
-
 const Picto = require('../../utilities/Picto.js')
-const Canvas = require("canvas");
 
 const init = async function (msg){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    const P = {lngs:msg.lang,prefix:msg.prefix}
 
-const TARGET = msg.guild.member(await gear.getTarget(msg));
 
-let userData,serverData,selfLocal,LRpos;
-await Promise.all([
-     userData = await DB.users.get(TARGET.id), 
-     serverData = await DB.servers.get(msg.guild.id), 
-     selfLocal = await DB.localranks.get({user:TARGET.id,server:msg.guild.id}), 
+    const TARGET = msg.guild.member(await PLX.getTarget(msg));
+
+    let userData,serverData,selfLocal,LRpos;
+    await Promise.all([
+        userData = await DB.users.get(TARGET.id), 
+        serverData = await DB.servers.get(msg.guild.id), 
+        selfLocal = await DB.localranks.get({user:TARGET.id,server:msg.guild.id}), 
     ]);
     
     if(!selfLocal || !userData){
@@ -42,7 +36,7 @@ await Promise.all([
     await Promise.all([
         _back  = await Picto.getCanvas(paths.BUILD+"/profile/mainframe_mini.png")
         ,_bg  = await Picto.getCanvas(paths.CDN+"/backdrops/"+userData.modules.bgID+".png")
-        ,_flair  = await Picto.getCanvas(paths.CDN+"/flairs/"+userData.modules.flairTop+".png")
+        ,_flair  = await Picto.getCanvas(paths.CDN+"/flairs/"+(userData.modules.flairTop||'default')+".png")
         ,_mask  = await Picto.getCanvas(paths.BUILD+"/profile/bgmask.png")
         ,_roundel  = await Picto.XChart(120,percent, userData.modules.favcolor, undefined,level,$t("website.level", P))
         ,_hexavat  = await Picto.makeHex(210,TARGET.avatarURL)
@@ -54,7 +48,7 @@ await Promise.all([
     ctx.globalCompositeOperation = "source-over";
     ctx.drawImage(_back,0,0)
     
-    let colorstrap = new Canvas.createCanvas(81, 600)
+    let colorstrap = Picto.new(81, 600)
     let cx = colorstrap.getContext("2d")
     cx.fillStyle = serverColor()
     cx.fillRect(0, 0, 82, 255);
@@ -91,7 +85,7 @@ await Promise.all([
     
     function serverColor(){
         let roles = msg.guild.member(TARGET).roles.filter(x=> msg.guild.roles.find(y=>y.id==x).color )
-        let color = msg.guild.roles.find(x=>x.id==roles.sort((a,b)=> msg.guild.roles.find(y=>y.id==b).position - msg.guild.roles.find(y=>y.id==a).position)[0]).color
+        let color = (msg.guild.roles.find(x=>x.id==roles.sort((a,b)=> msg.guild.roles.find(y=>y.id==b).position - msg.guild.roles.find(y=>y.id==a).position)[0]) || {color:0xf53258 }).color
         return "#"+ Number(color).toString(16)
     }
     
@@ -106,5 +100,5 @@ module.exports={
     ,perms:3
     ,cat:'social'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:['mini','svpfp']
+    ,aliases:['mini','svpfp','minicard']
 }

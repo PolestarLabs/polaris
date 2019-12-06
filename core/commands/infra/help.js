@@ -1,4 +1,4 @@
-const {Embed,autoHelper} = require("../../utilities/Gearbox");
+
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
 
@@ -39,7 +39,7 @@ const init = async msg => {
           inviteme  = $t('help.inviteme', P),
           useful    = $t('help.useful',   P);
     
-      let commlink = "https://www.pollux.gg/commands";
+      let commlink = "https://beta.pollux.gg/commands";
       let suplink = "https://pollux.gg/support";
       let invitelink = "https://pollux.gg/invite";
     
@@ -63,7 +63,7 @@ hEmbed.field(
 )
 hEmbed.field(
     "• "+  $t('interface.help.quick_didntask',P)  +":",
-    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+localnews <TXT> <IMG | @USER> \` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
+    `- \`+ross\` |\`+cage\` |\`+tea\` |\`+localnews <TXT> <IMG or @USER> \` | \`+slap\` | \`+saltlevel <@USER>\` | \`+akerfeldt\` | \`+airwaifu\``
 )
 let tex22 = `\u200b
 ${$t('interface.help.greetings',P)}
@@ -145,7 +145,7 @@ msg.author.getDMChannel().then(dmChan=>{
       embed.title(helpol)
       embed.setColor("#eb4190")
       embed.description(heldesc)
-      embed.thumbnail(POLLUX.user.avatarURL)
+      embed.thumbnail(PLX.user.avatarURL)
       embed.field(":sos: " + supserv, suplink, false)
       embed.field(":hash: " + commlist, commlink, false)
       embed.field(":heart_decoration: " + inviteme, invitelink, false)

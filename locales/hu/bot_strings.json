@@ -9,23 +9,40 @@
         "SPH": "",
         "SPH_fullname": "",
         "SPH_plural": "",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Gyakori",
         "U": "Rendkívüli",
         "R": "Ritka",
         "SR": "Szuper Ritka",
         "UR": "Ultra Ritka",
+        "thevoid": "",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "",
         "lootbox_plural": "",
-        "thevoid": "",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
         "total": "",
         "amount": "Mennyiség",
         "overview": "Áttekintés",
+        "dashboard": "",
         "coinHeads": "",
         "coinTails": "",
         "qnt": "",
@@ -47,6 +64,9 @@
         "bet": "Tét",
         "level": "Szint",
         "levelUp": "Szintet léptél!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Úgy látszik, hogy ez a Role már rajta van a listán.",
             "nosuchrole": "",
             "kbanNone": "Mondd meg, hogy kit bannoljak ki, mielőtt te lennél az áldozatom.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "Úgy látszik **{{user}}** nem rendelkezik a **{{group}}** Role-lal!",
             "banNone": "Mondd meg, hogy kit bannoljak ki, mielőtt te lennél az áldozatom.",
             "unpermB": "Nekem úgy látszik, hogy nincs elég engedélyem, hogy megcsináljam ezt.",
@@ -128,6 +150,15 @@
         "verbose": {
             "jas": [
                 "Oki, már csinálom is...",
+                "",
+                ""
+            ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
                 "",
                 ""
             ],
@@ -202,6 +233,11 @@
             "failure": ""
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "",
             "equipSlot": "Válaszd ki, hogy hova tegyen a vadonatúj érmedet!",
             "timeout": "Azt hiszem, hogy elfelejtetted kitenni a érmeidet. Hívj nyugodtan, ha mégis kitennéd őket~",
@@ -255,6 +291,74 @@
             "destroyWhat": "",
             "cantDestroy": "",
             "destroyed": ""
+        },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} tag {{joinedstamp}} óta",
             "aviOK": "Oké-zsoké, ez az új képem. Legközelebb {{cooldown}} múlva változtathatod meg a profilképem",
             "colorChange": "A kedvenc színedet elmentettem!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
+            "newTwitchStatus": "",
             "noDefault": "",
             "urlPresent": "",
             "noFeed": "",
@@ -425,9 +639,7 @@
             "timeout": "",
             "completed": ""
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -499,6 +711,9 @@
             "split": "",
             "double": "",
             "pass": "",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

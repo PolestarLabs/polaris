@@ -1,7 +1,7 @@
 {
     "commands": "コマンド",
-    "commCat": "コマンドカテゴリ",
-    "chooseLang": "言語を選択する",
+    "commCat": "コマンドカテゴリー",
+    "chooseLang": "",
     "support": "サポート",
     "info": "情報",
     "global": "グローバル",

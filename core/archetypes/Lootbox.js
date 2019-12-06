@@ -1,249 +1,173 @@
-const {randomize,shuffle} = require("../utilities/Gearbox.js");
-const {cosmetics,items} = require("../database/db_ops.js");
+/**************************/
+//          ODDS          //
+/**************************/
 
-let DROPPABLE_BGS;
-let DROPPABLE_MEDALS;
-let DROPPABLE_BOOSTERS;
+const {LootRates: RATES} = require(appRoot+"/GlobalNumbers.js")
 
-const VALUES ={C:1,U:2,R:3,SR:4,UR:5};
+const itmODDS  = RATES.itemType
+const rarODDS  = RATES.rarity
+const gemRATES = RATES.gems
 
-//GET LIST OF PUBLIC cosmetics
-async function getCatalogs(){
-  return Promise.all([
-    DROPPABLE_BGS       = await cosmetics.find({
-      event:{$exists:false},
-      type:"background",
-      droppable:true,
-      public:true
-    }),
-    DROPPABLE_MEDALS    = await cosmetics.find({
-      event:{$exists:false},
-      type:"medal",
-      droppable:true,
-      public:true
-    }),
-    DROPPABLE_BOOSTERS  = await items.find({
-      event:{$exists:false},
-      type:"boosterpack",
-      droppable:true,
-      //public:true
+const POPULATE = (pile,no,pushee)=>{while(no--) pile.push(pushee); return pile};
+
+const itmPILE = []
+Object.keys(itmODDS).forEach(i=> POPULATE(itmPILE,itmODDS[i],i) );
+const rarPILE = []
+Object.keys(rarODDS).forEach(i=> POPULATE(rarPILE,rarODDS[i],i) );
+
+//=================================================================
+
+class LootboxItem{
+  #filter;
+  #bypass;
+  constructor(t,r,p){
+    this.type   = t == "BKG"  ? "background" 
+                    : t == "MDL" ? "medal"
+                      : t == "BPK" ? (this.collection="items", "boosterpack")
+                        : t == "ITM" ? (this.collection="items", p.itemType)
+                          : ["RBN","JDE","SPH"].includes(t) ? "gems" : null;
+
+    this.rarity = r || "C";
+    this.exclusive  = p.exclusive || null;
+    this.event  = p.event  || null;
+    this.#filter = p.filter || null;
+    this.#bypass = p.bypass || [];
+  }
+  
+  fetchFrom(collection){
+    collection = collection || this.collection || "cosmetics";
+    this.loaded= new Promise(resolve=>{
+      const query = {rarity: this.rarity};
+      this.event   ? query.filter = this.event  : null;
+      this.#filter ? query.event  = this.#filter : '';
+      query.droppable = !this.#bypass.includes("droppable");
+      query.public    = !this.#bypass.includes("public");
+      query.type      = this.type;
+      let queries = [query];
+      if (this.exclusive) queries.push({exclusive:this.exclusive});
+      DB[collection].aggregate([
+        { $match: {$or:queries} },
+        { $sample: {size: 1}}
+      ]).then(res=>{
+        res = res[0] ||{}
+        if(!res) this.content = null;
+        res.id    ?this.id   = res.id             : res._id;
+        res.name  ?this.name = res.name           : null;
+        res.code  ?this.code = res.code           : null;
+        res.icon  ?this.icon = res.icon           : null;
+        res.BUNDLE?this.release_pack = res.BUNDLE : null;
+        this.isPublic = res.public;
+        resolve(this);
+        this.loaded = true;        
+      })
+    });
+    return this.loaded;
+  }
+
+  calculateGems(gem){
+    let noise = randomize(-250,250);
+    this.amount = gem === "SPH" ? 1 : Math.floor( (gemRATES[this.rarity] + noise) * (gem=='JDE'?8:1));
+    this.currency = gem
+    return this.amount;
+  }
+
+  getOne(col){
+    this.item = shuffle(shuffle(col))[0];
+  }
+
+}
+
+class Lootbox{
+  #size;
+  #filter;     
+  constructor(rar,options={}){
+    this.rarity     = rar;
+    this.content    = [];
+    this.timestamp  = Date.now();
+    this.event      = options.event  || false;
+    this.#size      = options.size   || 3;
+    this.#filter    = options.filter || false;
+
+    let rarArray = Lootbox._shuffle(rarPILE).slice(0,2).concat(rar);
+    let eveArray = Lootbox._shuffle([false,this.event,false]);
+    let itmArray = Lootbox._shuffle(itmPILE).slice(0,3);
+    let fltArray = Lootbox._shuffle([false,this.#filter,false]);
+
+    const contentBlueprint = Lootbox._shuffle([
+      { rarity: rarArray[0], event: eveArray[0], item: itmArray[0], filter: fltArray[0] },
+      { rarity: rarArray[1], event: eveArray[1], item: itmArray[1], filter: fltArray[1] },
+      { rarity: rarArray[2], event: eveArray[2], item: itmArray[2], filter: fltArray[2] },
+    ]);
+    
+    this.content = contentBlueprint.map(cbl=>{
+      let Item = new LootboxItem(cbl.item,cbl.rarity,cbl);
+      if(Item.collection) Item.fetchFrom(Item.collection);
+      else if(Item.type != "gems") Item.fetchFrom();
+      else Item.calculateGems(cbl.item)
+      return Item;
     })
-  ]);
-};
-
-//GET LIST OF EVENT cosmetics
-async function getEventCatalogs(E){
-  return Promise.all([
-    DROPPABLE_BGS      = await cosmetics.find({
-      event:E,
-      type:"background",
-      droppable:true,
-      public:true
-    }),
-    DROPPABLE_MEDALS   = await cosmetics.find({
-      event:E,
-      type:"medal",
-      droppable:true,
-      public:true
-    }),
-    DROPPABLE_BOOSTERS = await items.find({
-      //event:E,
-      type:"boosterpack",
-      //droppable:true,
-      //public:true
+    
+    
+    this.compileVisuals = new Promise(resolve=>{
+      this.visuals = new Array(3);
+      let completed = 0
+      this.content.forEach(async (ct,i,a)=>{
+        await ct.loaded;
+        if(ct.type == 'background')  this.visuals[i] = (paths.CDN+`/backdrops/${ct.code}.png`);
+        if(ct.type == 'medal')       this.visuals[i] = (paths.CDN+`/medals/${ct.icon}.png`);
+        if(ct.collection == 'items') this.visuals[i] = (paths.CDN+`/build/items/${ct.icon}.png`);
+        if(ct.type == 'gems')        this.visuals[i] = (paths.CDN+`/build/LOOT/${ct.currency}_${ct.rarity}.png`);
+        
+        if(++completed ==a.length){
+          resolve(null)
+          delete this.compileVisuals;
+        }
+      })
     })
-  ]);
-};
 
-//GET RANDOM RARITY
-function getRandomRar(){
-  let rand=randomize(0,1000);
-  switch(true){
-    case rand > 920:
-      return "UR";
-    case rand > 800:
-      return "SR"
-    case rand > 650:
-      return "R"
-    case rand > 400:
-      return "U"
-    default:
-      return"C"
-  }
-};
 
-//GET RANDOM DROP TYPE
-function getRandomType(R) {
-  let rand = randomize(0, 1000);
-  switch (true) {
-    case rand == 1000 && R == "UR":
-      return "SAPPHIRE";
-    case rand > 850:
-      return "BOOSTER";
-    case rand > 700:
-      return "BG"
-    case rand > 500:
-      return "MEDAL"
-    case rand > 350:
-      return "RUBINES"
-    default:
-      return "JADES"
-  }
-};
-
-//RAFFLING FROM CATALOG
-function raffle(catalog){
-  let l=catalog.length;
-  let rand_raf = randomize(0,l-1);
-  let res = catalog[rand_raf];
-  if (!res) res = catalog[0];
-  return res;
-};
-
-function getBackground(options,catalog){  
-  //console.error({catalog})
-  let catalogFilter = catalog.filter(it=>it.rarity == options.rarity);
-  //console.error({catalogFilter})
-  let item_info = raffle(catalogFilter); 
-  if(!item_info)throw (catalogFilter);
-  let res  = {
-    item    : item_info.code,
-    rarity  : item_info.rarity,
-    emblem  : options.type,
-    name    : item_info.name,
-  }
-  return res;
-}
-function getMedal(options,catalog){  
-  let catalogFilter = catalog.filter(it=>it.rarity == options.rarity);
+    this.legacyfy = new Promise(resolve=>{
+      this.legacy = []
+      let completed = 0
+      this.content.forEach(async (ct,i,a)=>{
+        await ct.loaded;
+        this.legacy.push({
+          item:   ct.type == "boosterpack"?ct.id: ct.code || ct.icon ||ct.id || ct.amount ,
+          rarity: ct.rarity,
+          emblem: legacyEmblem(ct),
+          type:   legacyEmblem(ct,true),
+          name:   ct.name ||ct.amount|| ct.icon || ct.code || ct.id,
+        })
+        if( ++completed == a.length){
+          resolve(this.legacy)
+          delete this.legacyfy
+        }
+      })
+    })     
+  }  
   
-  console.log({catalogFilter})
-  
-  let item_info = raffle(catalogFilter); 
-  if(!item_info) item_info = raffle(catalog); 
-  
-  let res  = {
-    item    : item_info.icon,
-    rarity  : item_info.rarity,
-    emblem  : options.type,
-    name    : item_info.name,
-  }
-  return res;
-}
-function getBooster(options,catalog){  
-  let catalogFilter = catalog.filter(it=>it.rarity == options.rarity);
-  console.error({catalog})
-  let item_info = raffle(catalogFilter); 
-  let res  = {
-    item    : item_info.id,
-    SSS     : item_info.icon,
-    rarity  : item_info.rarity,
-    emblem  : "STAMP",
-    name    : item_info.name,
-  }
-  return res;
+  static _shuffle(arr) {
+    const newArr = arr.slice();
+    arr.forEach((_,i)=>{
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = newArr[i];
+      newArr[i] = newArr[j];
+      newArr[j] = temp;
+    })
+    return newArr;
+  }  
+
 }
 
-//====================================================
-//         GET LOOT ITEM
-//====================================================
 
-async function getItem(options){
-  
-  options = options || {};
-  let   _FILTER = options.filter || false;
-  let   _EVENT  = options.event  || false;
-  const _RARITY = options.rarity || "C";
-  let  _TYPE    = options.type   || getRandomType(_RARITY);
-  
-  if(typeof _FILTER === 'string' && _FILTER =="false") _FILTER = false;
-  if(typeof _EVENT  === 'string' && _EVENT  =="false") _EVENT  = false;
-  
-  await getCatalogs();
-  if (_EVENT) await getEventCatalogs(_EVENT);
-  
-  if (_EVENT && _FILTER) {
-    DROPPABLE_BGS      = DROPPABLE_BGS.filter(bg=> bg.filter === _FILTER);
-    DROPPABLE_MEDALS   = DROPPABLE_MEDALS.filter(md=> md.filter === _FILTER);
-    //DROPPABLE_BOOSTERS = DROPPABLE_BOOSTERS.filter(bt=> bt.filter === _FILTER);
-  };
-
-  let finalItem = {};  
-  
-  // GEM DROPS -----> 
-
-  let amountdrop= [250,500,850,1100,1320,1880][VALUES[_RARITY]];
-  let noise = randomize(25,250);
-
-  if(_TYPE=="SAPPHIRE"){
-    finalItem.item   = 1
-    finalItem.emblem = _TYPE.replace+"_"+_RARITY
-    finalItem.name   = 1
-  }
-  if(_TYPE=="RUBINES"){
-    finalItem.item   = amountdrop+noise
-    finalItem.emblem = _TYPE.replace("S","")+"_"+_RARITY
-    finalItem.name   = amountdrop+noise
-  }
-  if(_TYPE=="JADES"){
-    finalItem.item   = (amountdrop+500-noise)*5
-    finalItem.emblem = _TYPE.replace("S","")+"_"+_RARITY
-    finalItem.name   = (amountdrop+500-noise)*7
-  }
-  
-  // COSMETIC DROPS ----->  
-  
-  if (_TYPE == "BG")      finalItem = getBackground(options,DROPPABLE_BGS);
-  if (_TYPE == "BOOSTER") finalItem = getBooster(options,DROPPABLE_BOOSTERS);
-  if (_TYPE == "MEDAL")   finalItem = getMedal(options,DROPPABLE_MEDALS);  
-  
-  finalItem.type   = _TYPE;
-  finalItem.rarity = _RARITY;
-  
-  return finalItem;
-  
+function legacyEmblem(ct,mini){
+  if(ct.type == "medal")       return "MEDAL";
+  if(ct.type == "background")  return "BG";
+  if(ct.type == "boosterpack") return mini ? "BOOSTER"    : "STAMP";
+  if(ct.currency == "RBN")     return mini ? "RUBINES"  : "RUBINE_"   +ct.rarity;
+  if(ct.currency == "JDE")     return mini ? "JADES"    : "JADE_"     +ct.rarity;
+  if(ct.currency == "SPH")     return mini ? "SAPPHIRE" : "SAPPHIRE_" +ct.rarity;
 }
 
-async function Lootbox(options) {
 
-  let result = []
-  options = options || {};
-  options.rarity = options.rarity || "C";
-  options.event  = options.event  || false;
-  options.size   = options.size   || 3;
-  options.filter = options.filter || false;
-  
-  let refined_options = {    
-    rarity : getRandomRar(),
-    event  : false,
-    filter : false,
-    type   : getRandomType(options.rarity)
-  }
-  
-
-  //RARITY MANDATORY
-      refined_options.rarity = options.rarity
-      refined_options.type   = getRandomType(options.rarity);
-      result.push(await getItem(refined_options));
-  //EVENT  MANDATORY
-      refined_options.type   = getRandomType(options.rarity);
-      refined_options.rarity = getRandomRar();
-    if (options.event) {
-      refined_options.event = options.event
-      refined_options.filter = options.filter
-      
-      result.push(await getItem(refined_options));
-    }else{
-      refined_options.type   = getRandomType(options.rarity);
-      refined_options.rarity = getRandomRar();
-      result.push(await getItem(refined_options));
-    }
-  //LAST
-  refined_options.type   = getRandomType(options.rarity);
-  refined_options.rarity = getRandomRar();
-  result.push(await getItem(refined_options));
-
-  return shuffle(result);
-}
-
-module.exports={Lootbox}
+module.exports={Lootbox,LootboxItem}

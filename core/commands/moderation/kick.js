@@ -1,17 +1,17 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 const Gal = require('../../structures/Galleries')
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const Target = gear.getTarget(msg,0,false,false);
+    const Target = PLX.getTarget(msg,0,false,false);
 
     const serverData = await DB.servers.get(msg.guild.id);
     P.imsorry = rand$t('responses.verbose.gomenasai')
-    if (!gear.modPass(msg.member,'kickMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
+    if (!PLX.modPass(msg.member,'kickMembers',serverData)) return msg.channel.send( $t('responses.errors.insuperms',P) );
 
     if(!msg.args[0]){
         return msg.channel.send( $t('responses.errors.kinNone',P) );
@@ -26,22 +26,22 @@ const init = async function (msg){
         return msg.channel.send( $t('responses.errors.cantKickHim',P) );
     }
 
-    let embed = new gear.Embed();
+    let embed = new Embed();
         P.user = Target.tag
         //embed.author = $('interface.kickban.kickingUser',P);
         embed.author(`👢 Kicking user [${P.user}]`,Target.avatarURL);
         embed.footer(msg.author.tag, msg.author.avatarURL);
         embed.timestamp( new Date() );
         embed.color = 0x36393f
-        embed.thumbnail(await Gal.randomOne('kick',true));
-        embed.description = gear.emoji('loading') + rand$t('responses.verbose.jas',P);
+        embed.thumbnail(await Gal.randomOne('kick',true).catch(e=>null));
+        embed.description = _emoji('loading') + rand$t('responses.verbose.jas',P);
         
     let reason;
     let pre_msg
     if(msg.args.length == 1){
 
         embed.description = "*```"+ $t('interface.kickban.waitingForReason',P) +"```*"
-        pre_msg = await msg.channel.send({content: gear.emoji('loading') + $t('interface.kickban.includeReason',P)  ,embed});
+        pre_msg = await msg.channel.send({content: _emoji('loading') + $t('interface.kickban.includeReason',P)  ,embed});
         const resp = await msg.channel.awaitMessages(msg2 => msg2.author.id === msg.author.id
             , {maxMatches: 1,time: 30e3}
         );
@@ -76,15 +76,20 @@ const init = async function (msg){
         return;
     }
 
+  
+
     if(!pre_msg){
         pre_msg =  await msg.channel.send({embed});
     }
 
-    let post_reason = reason + `\n  [MOD: ${msg.author.tag}]`
 
-    POLLUX.kickGuildMember(msg.guild.id,Target.id,post_reason).then(m=>{
+
+
+    let post_reason = reason + ` [MOD: ${msg.author.tag} `
+
+    PLX.kickGuildMember(msg.guild.id,Target.id,post_reason).then(m=>{
         embed.color = 0x3355EE
-        embed.description = gear.emoji('yep')+"  "+ $t('interface.kickban.userKicked',P) +"\n"+ rand$t('interface.kickban.kickFlavs',P)  + "\n``` "+reason+" ```"
+        embed.description = _emoji('yep')+"  "+ $t('interface.kickban.userKicked',P) +"\n"+ rand$t('interface.kickban.kickFlavs',P)  + "\n``` "+reason+" ```"
         if(pre_msg){
             pre_msg.edit({content:'',embed})
         }else{
@@ -93,6 +98,7 @@ const init = async function (msg){
         
     }).catch(err=>{
         msg.channel.send( $t('interface.kickban.userKickError',P) )
+        console.error(err)
     })
   
 

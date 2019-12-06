@@ -6,26 +6,43 @@
         "JDE": "Jade",
         "JDE_fullname": "Jadelerin Tozu",
         "JDE_plural": "Jadeler",
-        "SPH": "Sapphire",
+        "SPH": "Şapir",
         "SPH_fullname": "Şapir Parçacıkları",
-        "SPH_plural": "Sapphireler",
+        "SPH_plural": "Şapirler",
+        "synthGems": "Sentezli Mücevherler",
+        "cosmoFragment": "Kozmetik Parça",
+        "cosmoFragment_plural": "Kozmetik Parçacıklar",
         "C": "Sıradan",
         "U": "Olağandışı",
         "R": "Nadir",
         "SR": "Süper Nadir",
         "UR": "Ultra Nadir",
+        "thevoid": "hiçlik",
+        "evToken": "Etkinlik Jetonu",
+        "evToken_plural": "Etkinlik Jetonları",
         "lootbox": "Define Sandığı",
         "lootbox_plural": "Define Sandıkları",
-        "thevoid": "hiçlik",
-        "evToken": "Etkinlik Jetonu"
+        "consumable": "Sarf Malzeme",
+        "consumable_plural": "Sarf Malzemeler",
+        "junk": "Çöp",
+        "junk_plural": "Çöp",
+        "key": "Anahtar Eşyalar",
+        "material": "Malzeme",
+        "material_plural": "Malzemeler",
+        "boosterpack": "Hızlandırıcı",
+        "boosterpack_plural": "Hızlandırıcılar"
     },
     "terms": {
+        "transferDenied": "Transfer Reddedildi",
+        "TransactionFee": "İşlem Ödeneği",
+        "TransactionID": "İşlem ID'si",
         "thanks": "Teşekkür ederim.",
         "thanks_short": "tşk",
         "thx": "$t(terms.thanks_short)",
         "total": "Toplam",
         "amount": "Miktar",
         "overview": "Genel Bakış",
+        "dashboard": "Panel",
         "coinHeads": "Tura",
         "coinTails": "Yazı",
         "qnt": "Nicelik",
@@ -47,6 +64,9 @@
         "bet": "Bahis",
         "level": "Seviye",
         "levelUp": "Seviye yükseldi!",
+        "price": "Fiyat",
+        "droppable": "Atılabilir",
+        "event": "Etkinlik",
         "discord": {
             "message": "İleti",
             "message_plural": "İletiler",
@@ -68,8 +88,8 @@
     },
     "logs": {
         "responsible": "Sorumlu",
-        "wasbanned": "**banlanmıştı**",
-        "waskicked": "**atılmıştı**",
+        "wasbanned": "**yasaklandı**",
+        "waskicked": "**atıldı**",
         "modLogs": "Moderatör log'u",
         "actLogs": "Etkinlik Kayıtları",
         "advLogs": "Gelişmiş Loglar",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Görünüşe göre rol zaten listelenmiş.",
             "nosuchrole": "Şey, bu rolü bulamadım, rolün ismini harfi harfine yaz, lütfen.",
             "kbanNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
+            "cantKickHim": "O kişiye ne yazık ki bunu yapamıyorum. Üst devrelerime yamuk yapamam.",
+            "cantKickSelf": "Kendine ban atamaz veya kickleyemezsin ama!",
             "superRoleNope": "Görünüşe göre **{{user}}** kişisi role sahip değil **{{group}}**.",
             "banNone": "Banlamak için bir hedefe ihtiyacım var. Onun yerine seni banlayabilirdim.",
             "unpermB": "Görünüşe göre bunu yapabilecek izne sahip değilim.",
@@ -120,7 +142,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hop! Çeviri metni __1000 Karakteri__ geçemez\nAma dert etme. Senin için metni ayırdım~",
-            "open1": "Pardon, açmak geçişli bir fiil, bu da demek oluyor ki bana neyi açmam gerektiğini söylemelisin~ Şu seçeneklerden birini dene:",
+            "open1": "Kusura bakma ama, *“aç(mak)”* geçişli bir fiil, bu da demek oluyor ki bana *neyi* açmam gerektiğini söylemen gerek~ Şu seçeneklerden birini dene:",
             "open2": "Kusura bakma ama bu açabileceğim (ya da açmak isteyeceğim) bir şey değil. Ama eminim ki sana şunlardan birini açabilirim: ",
             "timesOutIn": "Bu, {{s}} saniye boyunca timeout atacak",
             "enterVoiceBetterExperience": "Tam deneyim için bir ses kanalında olman ~lâzım~."
@@ -131,6 +153,15 @@
                 "Bi' saniye...",
                 "Bir dakika, lütfen..."
             ],
+            "opinion_decks": [
+                "İyi seçim!",
+                "Bu en sevdiklerimden~",
+                "Bir öncekini daha çok sevmiştim.",
+                "Fena değil.",
+                "Bundan bal akıyor.",
+                "Lütfen kartları zarar görmemiş hâlde getirin.",
+                "Kartları kullanmadan önce ellerini yıka."
+            ],
             "interjections": {
                 "acknowledged": [
                     "Peki.",
@@ -140,7 +171,7 @@
                     "Taamam!",
                     "Anlaşıldı!",
                     "Olumlu.",
-                    "İyi!",
+                    "Güzel!",
                     "Çok güzel!",
                     "Tamam!",
                     "Her şey hazır!",
@@ -161,7 +192,7 @@
                 ],
                 "gomenasai": [
                     "Üzgünüm,",
-                    "Çok utahdırıcı,",
+                    "Çok utandırıcı,",
                     "Ah, pardon,",
                     "Özür dilerim,",
                     "Benim hatam,",
@@ -169,7 +200,7 @@
                     "Pardon,"
                 ],
                 "ohmy_positive": [
-                    "Amanım!",
+                    "Amanın!",
                     "Vay be!",
                     "Ay!",
                     "Bak!",
@@ -178,7 +209,7 @@
                     "İnanılmaz!"
                 ],
                 "ohmy_negative": [
-                    "Amanım!",
+                    "Amanın!",
                     "Uuuuh...",
                     "Ah...",
                     "Olamaz!",
@@ -202,6 +233,11 @@
             "failure": "Olamaz, görünüşe göre bir şeyler yanlış gitti. Üzgünüm."
         },
         "equip": {
+            "getMoreBG": "Daha fazla Arkaplan sahibi ol",
+            "NFSALE": "SATILIK DEĞİL",
+            "equipOwned": "Hâli hazırda bu Arkaplana sahipsin. Takmak ister misin?",
+            "buyThisBG": "Arkaplanı al?",
+            "successBG": "`Başarılı!` Arkaplan tedarik edildi ve takıldı! 😉",
             "nomedals": "Peh, takacak hiç madalyan yok. Birazcık almaya ne dersin?",
             "equipSlot": "Madalyanı takacak bir yer seç!",
             "timeout": "Madalyon takmayı istememiş miydin? Bi' tane takmak istediğinde beni tekrardan çağır.",
@@ -255,6 +291,74 @@
             "destroyWhat": "Yok mu edeyim? Neyi?",
             "cantDestroy": "Bunu yok edemem.",
             "destroyed": "Eşya yok edildi! Ardından kalanlar:"
+        },
+        "marry": {
+            "needRing": "Aşk-ı ilân edebilmek için yüzüğe ihtiyacın var, azıcık haysiyet ya.",
+            "ringTutorial": "*Elân kullanabileceğin hiçbir evlilik yüzüğün yok.*\n\nBir yüzük elde edebilmek için, yüzüğü üretmen gerekir.\nBunun için [Crafting Workshop]({{craftingURL}} “Pollux Crafting Workshop!”) adresinden **Partial Ring** alman gerekir ve yüzüğe taç olacak bir mücevher için ya Rubin ya Jade ya da Şapir artı başka başka materyaller harcaman gerekir. \nAyrıca hepsini harcayarak nihai mücevhertaşı evlilik yüzüğünü de oluşturabilirsin!\n\nYüzükleri `{{prefix}}craft` komutunu kullanarak oluştur, **Partial Ring** oluşturarak başla (`{{prefix}}craft partial-ring`) ve `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]` yaparak istediğin mücevhertaşını ekleyip devam et. Bu 4'ü yalnızca mücevher taşları ile yapılan *temel yüzüklerdir*, bazı eşyalar farklı farklı yüzükler yapmanıza müsaade edecek!",
+            "noneOfThisRing": "Ceplerini bir kere daha kolaçan et, Envanterinde öyle bir yüzük yok.",
+            "availableRings": "Mevcut yüzükler:",
+            "proposal": "{{userA}} **{{ringname}}** yüzüğü ile **{{userB}}** kişisine aşk-ı ilân etti.\n{{userB}} Kabul ediyor musun?",
+            "actuallyNone": "Aslında *bir tanen* bile yok\nHadi! Hemen **şimdi** kap bir tane",
+            "saidYes": "{{userB}} EVET dedi!",
+            "saidNo": "{{userB}} hayır dedi...",
+            "saidNothing": "{{userB}} kaçtı gitti... arkalarından bakmak kalır bize... aga be... bir şeyler içer miydin?",
+            "addToFeatured": "{{userB}} kullanıcısını ProfilKardında gösterilen aşkın olarak göstermek istiyor musun?",
+            "addToFeatured2": "{{userB}} Peki sen {{userA}} ile aynı şeyi istiyor musun?",
+            "addToFeatured3": "Profil Kartlarında yeni eşini gösterelim mi?",
+            "alreadyMarriedUp": "Görünüşe bakılırsa {{userB}} ile zaten evlisin. Yüzüğü *{{ringA}}* seviyesinden **{{ringB}}** seviyesine çıkarmak ister miydin?",
+            "alreadyMarriedInf": "Hâli hazırda {{userB}} kullanıcısıyla özdeş veya daha iyi bir yüzükle (*{{ringB}}*) evlisin! Ne yapmaya çalışıyorsun?",
+            "cantMarrySelf": "Modern bir hayat vizyonuna sahibim falan da... kendinle evlenmek biraz fazla değil mi sence de?",
+            "cantMarryPollux": "Hayatta olmaz! Kış kış!"
+        },
+        "ship": {
+            "needTupipo": "Aşk ölçer tek bir kişi ile çalışmıyor, tatlım.",
+            "need2diffpipo": "Karyokinez yapamadıkları sürece, tek bir kişi olarak sayılırlar, **iki** kişiye ihtiyacım var!",
+            "quotes": [
+                [
+                    "Ah. _Olamaz._",
+                    "BURÇLARINIZ EŞLEŞMİYOR, LÜTFEN BİRBİRİNİZİ GÖRMEKTEN KAÇININ."
+                ],
+                [
+                    "O tokat geçirilmeden önce sadece ufak bir duraksama vardı.",
+                    "Birbirinizle tanışık olsanız da, _o tür_ bir tanışıklığa girişmek istemezsiniz."
+                ],
+                [
+                    "Bir domatesin salatada nasılsa siz de öylesiniz.",
+                    "Hop! Birbirinizden nefret etmiyorsunuz! Bu da bir başlangıçtır, değil mi?"
+                ],
+                [
+                    "Oo, ne dil yakan ilişki ama. Baharat hamurunda var bu ilişkinin, bir dakika, öyle şey olur mu ki? Aman, neyse.",
+                    "Birkaç randevu daha ve belki elektriklenmeler uçuşur!"
+                ],
+                [
+                    "Vay, neredeyse eşleşiyordunuz! ",
+                    "Her ilişki bir çaba istermiş."
+                ],
+                [
+                    "Eşleştiniz! Şansınız neredeyse benimki kadar iyi!",
+                    "Mmm, bu yavaşça ölen romantizmi bir film olarak izlemek isterdim."
+                ],
+                [
+                    "_karşılıklı sevenler_ topraklarına gidiyoruz!",
+                    "Yakınlaşıloruz, he?"
+                ],
+                [
+                    "Şşt, Flicky ve ben başaracağınıza yatırıyoruz. Partial Ring oluşturdun mu?",
+                    "Kendini tutma! İlân et aşkını!"
+                ],
+                [
+                    "Shipliyorum sizi!",
+                    "Sizi sevimli şeyler aynı bulaşık tabletinin iki tarafı gibisiniz!"
+                ],
+                [
+                    "Öff, birbiriniz için neredeyse _mükemmelsiniz_!",
+                    "Ee, hanginiz hamile olacak olan?"
+                ],
+                [
+                    "GÜÇ ÇİFTİ GELMİŞ HOŞ GELMİŞ.",
+                    "Ruh ikizleri! Müthiş!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "{{user}} kişisinden boşanmayı onaylıyor musun? \n**ikinizden de** %EMJ%**5000 Rubin** boşanma vergisi alınacak! İkinizin de aşk puanı **yarıya** inecek!",
@@ -342,7 +446,7 @@
             "nsfwNope": ":no_entry_sign: NSFW komutları bu kanalda açık değil, seni hınzır.",
             "nsfwNofunds": "Yaramaz şeyler almak için yeterli Rubinin yok. Hele bi' **5**Rubinle gel de iki laf edelim. (`{{prefix}}daily` kullanarak Rubin kazan.)",
             "nsfwCheckout": "5 {{emoji}} bakiyenden tahsil edildi.",
-            "airwaifu": "\n :airplane: This Aerowaifu has been carefully curated for you.",
+            "airwaifu": " :airplane: Bu Areowaifu tamamen senin için oluşturuldu :) ",
             "leadUnap": "Burada kendini göremiyorsan `{{prefix}}profile` yazarak seviyeni gör. Herkes zirvede olamaz tabii ki. ",
             "position": "Bu sıralamadakı pozisyonun:",
             "usethisfor": "{{srr}} için |p!rank {{scope}}| yaz",
@@ -368,44 +472,154 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "`{{item_name}}` oluşturuluyor",
             "noitem": "Bu eşyayı bulamadım",
+            "noitemu": "Bu veya benzeri herhangi bir eşya bulamadım",
+            "materialMissing": "Envanterinde eksik eşyalar var, bunu üretemiyorum.",
+            "materialPresent": "Envanterinde tüm materyaller var, üretime devam?",
             "didyoumean": "Bu eşyayı bulamadım. Bunlardan birini demek istemiş olabilirsin, belki?",
-            "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?"
+            "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?",
+            "timeout": "Zaman doldu! Çok fazla düşündün, üretim ocağı soğudu.",
+            "cancel": "İptal! Az önce ikimizin de zamanını mı yedin sen?",
+            "crafted": "Başarılı! Bak, işte eşyan! Yepyeni ve pırıl pırıl parlıyor~"
         },
         "misc": {
             "memberSince": "{{target}} {{joinedstamp}} süredir üye.",
             "aviOK": "Pekâlâ, senin için fotoğrafımı değiştirdim. Profil fotoğrafımı {{cooldown}} içerisinde tekrar değiştirebilirsin.",
             "colorChange": "Favori Rengin Kaydedildi!"
+        },
+        "transfer": {
+            "lastdly": "Son Kutu Transferi:",
+            "next": "Bir sonraki transfer {{in X hours}} sonra",
+            "transferboxto": "{{userB}} kullanıcısına Kutu Transfer ediliyor",
+            "transferthisboxto": "**{{boxname}}** {{userB}} kullanıcısına Transfer ediliyor ",
+            "timeout": "**Transfer Süresi Doldu!**",
+            "cancel": "**Transfer İptal Edildi!**",
+            "success": "**{{boxname}}** {{userB}} kullanıcısına Transfer edildi"
+        },
+        "give": {
+            "cooldown": "Bekle! {{remaining}} sonra tekrar transfer edebilirsin!"
+        },
+        "inventory": {
+            "noSuchBox": "Bak, bu kutuyu orada göremiyorum ve eminim ki sen de göremiyorsun.",
+            "noSuchBooster": "Bu Hızlandırıcıyı envanterinde göremiyorum. Bu dağınıklıkta tabii kaybetmişsindir.",
+            "noSuchItem": "Envanterinde zirilyon tane şey görebiliyorum ama dediğin o şey yok.",
+            "browsingBox": "Bu, **Define Sandığı** Envanterin\n*Fişek ödüller kazanmak için bunları aç!*",
+            "browsingBooster": "Bu, **Hızlandırıcı** Envanterin\n*Profil Çıkarmaları elde etmek için bunları açabilirsin*",
+            "browsingCONSUMABLE": "Bu, **Sarf Malzemeleri** Envanterin\n*Sınırlı kullanım şekilleri vardır ya da kullandıktan sonra yok olurlar, bazıları direkt olarak kullanılabilir.*",
+            "browsingJUNK": "Bu, **Çöp Eşyalar** Envanterin\n*Bu eşyalar neredeyse hiçbir şeye yaramıyor ama bazı durumlarda kullanılabilirler.*",
+            "browsingKEY": "Bu, **Anahtar Eşyalar** Envanterin\n*Bu eşyalar bazı komutları veya bütünüyle modüllerin belli özelliklerini açar.*",
+            "browsingMATERIAL": "Bu, **Zanaat Malzemeleri** Envanterin\n*Başka eşyalar üretmek için bunları kullanabilirsin.*",
+            "emptyJokes": [
+                "Bu envanteri ağlayarak doldur çünkü bomboş.",
+                "Örümcek dışında hiçbir şey yok bu Envanterde. Hepsi sana bakıyor ve seni alkışlıyor. Bravo.",
+                "Envanter senin kadar boş.",
+                "Burada görülecek bir şey yok. Uza.",
+                "Bu Envanterin içeriği: Hayâl kırıklığı.",
+                "<Buraya eşya yerleştiriniz>",
+                "...Yok, hâlâ bomboş.",
+                "Envanter bomboş ama artık göz yaşlarınla doldurabilirsin.",
+                "Eşyaların birdenbire envanterinde çıkavereceğini düşünüyorsan acınası derecede optimistiksin.",
+                "Bu envanter çok ama aşırı boş.",
+                "Tam anlamıyla....kocaman bir hiçe sahipsin",
+                "Hiçbir yerde daha boş bir envanter bulamayacaksın.",
+                "Boş Envanterini açıyorsun ve içerisine bakıyorsun. Envanter suçlarmışçasına geri bakıyor.",
+                "Bu Envanter artık tam bir hayâl kırıklığı...",
+                "Dipsiz uçurumdan aşağıya bakıyorsun, uçurum da sana geri bakıyor.",
+                "\"BESLE BENİ SEYMOUR\"",
+                "Envanterini o tanıdık hiçliğe açıyorsun. Of nasıl da özlemişsindir!",
+                "Bu envanter boş kaldı diye hüzünlü ve yıkık gözüküyor.",
+                "Yeterince uzun bir süre envanterine dik dik bakarsan, o da sana dik dik bakmaya başlıyor.",
+                "Bu envanter bir zamanlar güzel güzel ganilerle doluydu. Sonra sen geldin...",
+                "Bu Envanter fark edilene dek grevde",
+                "Bir tane kuru çalı envanterin bir köşesinden diğerine yuvarlanıyor",
+                "Boş envanterini açtığın gibi, birkaç tane tutsak kalmış ruh, çığlıklar içerisinde dışarıya çıkıyor...\nTamamen normal.",
+                "Envanter boş ama en azından iç görünüşü çok güzel. Kadifeden falan ya hani.",
+                "Envanterde hiçbir şey yok ama içerisinde OLABİLECEK bütün o şeyleri düşünsene...",
+                "Envanterde hiçbir şey olmasa da envanteri açmak sana konfeti banyosu yaptırdı. Yaşasın!",
+                "Bu envanter tüm bu mesajları yazdıktan sonraki yaratıcılığım kadar boş"
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "İptal Edildi!",
+            "timeout": "Süre Doldu!",
+            "cantAfford": "Yaa, buna paran yetmiyor... :(",
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
-            "confirmDelete": ""
+            "confirmDelete": "Silmeyi onaylıyor musun?",
+            "alotWentOn": "Bugün çok şeyler döndü...",
+            "alreadyOwnThis": "Hey, zaten sende bundan var!"
+        },
+        "brackets": {
+            "maxRR": "Roundrobin için maks limit: 16",
+            "maxBK": "Çizelge oyunu için maks limit: 32",
+            "RRt": ":trophy: Round-Robin Çizelgeleri",
+            "BKt": ":trophy: Turnuva Çizelgeleri",
+            "match": "Eşleşme",
+            "round": "Tur",
+            "preround": "Tur-Öncesi",
+            "team": "{{X}} TAKIMI",
+            "winner": "Kazanan",
+            "bracketX": "Çizelge {{AB}}"
+        },
+        "synthfrag": {
+            "disenchant": "Bu {{rarity_emoji}} arkaplanı **{{count}} $t(keywords.cosmoFragment)** için parçala?",
+            "cosmeticSynth": "Kozmetik Eşya Sentezi",
+            "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
+            "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
+        },
+        "booster": {
+            "checkStickersAt": "{{dashboard}}'da etiketlerine göz atıp giy",
+            "title": "{{boostername}} Etiket Güçlendirici"
+        },
+        "kickban": {
+            "waitingForReason": "bir neden girilmesi için bekleniyor...",
+            "noReason": "Herhangi bir neden belirtilmedi. Fesih edildi",
+            "cancelled": "Moderatör tarafından iptal edildi",
+            "userKicked": "{{user}} kullanıcısını *nazikçe* buradan def ettim.",
+            "kickFlavs": [
+                "Tekrardan girebilecekleri kadar nazik bir biçimde.",
+                "Umarım hâlâ oturabiliyorlardır.",
+                "Bunu evde denemeyin.",
+                "Hiçbir hayvana zarar verilmedi.",
+                "İyiler iyi... galiba, yani."
+            ],
+            "userBanned": "{{user}} kullanıcısını *nakibar* bir biçimde banladım. Bu kişi artık burada pek hoş karşılanmayacak,",
+            "userSoftBanned": "{{user}} kullanıcısını *medeni* bir biçimde banladım. Ne yazık ki bu kişinin bütün varlığını silemedim,",
+            "banFlavs": [
+                "İnşallah LEGO'nun üzerine basarlar.",
+                "bak şimdi onunla dalga geçebilirsin.",
+                "sıradaki kim?",
+                "bunun gibileri örnek almayın, çocuklar."
+            ],
+            "includeReason": "Bana bu kişiyi *neden* cezalandırdığını söylemeyi unuttun.\nNedeni aşağıda belirt: `(20s)`",
+            "userKickError": "Bin terslik oluştu. öf."
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
-            "urlPresent": "",
-            "noFeed": "",
-            "noTube": "",
-            "noTwitch": "",
-            "stateIDorURL": "",
-            "listRemove": "",
-            "channelUpdate": "",
-            "invalidRSS": "",
-            "invalidTwitch": "",
-            "invalidYoutube": "",
-            "listShowRSS": "",
-            "listShowTwitch": "",
-            "listShowYoutube": "",
-            "savedSubLastRSS": "",
-            "savedSubLastTwitch": "",
-            "savedSubLastYoutube": "",
-            "feedLimitRSS": "",
-            "feedLimitTwitch": "",
-            "feedLimitYoutube": "",
-            "donateToIncrease": ""
+            "newYoutube": "**{{tuber}} Yeni bir video yayınladı!** Şuradan bir göt at:",
+            "newTwitchStatus": "**{{streamer}}** Canlı yayında!",
+            "noDefault": "Bana hangi kanala paylaşmam gerektiğini söylemedin ve varsayılan bir kanal da yok.",
+            "urlPresent": "Zaten bundan gelen paylaşımları takip ediyorum, bunun yerine paylaşım kanalını yenileyeceğim~",
+            "noFeed": "Bu Sunucuda bir Kaynak ayarlanmamış",
+            "noTube": "Bu Sunucuda YouTube bildirimleri ayarlanmamış",
+            "noTwitch": "Bu Sunucuda Twitch alarmları ayarlanmamış",
+            "stateIDorURL": "Buradan silmem için bana bir ID veya URL vermeyi unuttun. Eğer unuttuysan `{{prefix}}{{command}} listesini` kontrol edebilirsin~",
+            "listRemove": "Bir tanesini silmek için `{{prefix}}{{command}} sil [Index #]` komutunu dene",
+            "channelUpdate": "Varsayılan paylaşım Kanalını {{channelID}} olarak ayarladım!",
+            "invalidRSS": "Hop, Bu doğru bir RSS adresi değil! Doğru yaptığından emin ol.",
+            "invalidTwitch": "Bak. o isimde öyle bir Twitch kullanıcısı yok. Ne yazdığına doğru düzgün bir bak!",
+            "invalidYoutube": "Şey, bu pek de YouTube kanalı gibi gözükmüyor. En azından benim bildiğim gibi değil...",
+            "listShowRSS": "Bu Sunucunun RSS Kaynak Listesi",
+            "listShowTwitch": "Bu Sunucuda paylaşılan Twitch Kullanıcıları",
+            "listShowYoutube": "Bu Sunucudaki Yeni YouTube videosu alarmları",
+            "savedSubLastRSS": "**Kaydedildi**! {{channelID}} kanalında bu Kaynaktan gelen en taze Paylaşımları atıyorum. Daha fazlası her **30 dakika** içerisinde kontrol edilecek",
+            "savedSubLastTwitch": "**Kaydedildi**! - {{channelID}} Kanalında o Kanal her canlı yayına çıktığında bir bildirim paylaşılacak. Her **15 Dakikada** bir kontrol edilir",
+            "savedSubLastYoutube": "**Kaydedildi**! - Bu Kanaldan en taze videoları {{channelID}} Kanalında paylaşıyorum. Her **1 saatte** bir kontrol edilir",
+            "feedLimitRSS": "Bu sunucunun aynı anda en fazla **5** RSS Kaynağı olabilir.",
+            "feedLimitTwitch": "Bu sunucu aynı anda en fazla **2** Twitch Kanalı takip edebilir.",
+            "feedLimitYoutube": "Bu sunucunun aynı anda sadece **1** tane YouTube Kanalı alarmı olabilir.",
+            "donateToIncrease": "Daha fazla limite ihtiyaç duyuyorsan. [Bağış yapmayı] ({{donationLink}}) veya [Pollux partnerliğine] katılmayı ({{partnershipLink}}) göz önünde bulundur"
         },
         "autoRolesforThis": "Bu sunucu için kendinden atanılabilir roller",
         "daily": {
@@ -425,9 +639,7 @@
             "timeout": "Nükleer bombanın süresi geçti!",
             "completed": "Sunucu bilgileri başarılı bir şekilde silindi ve sıfırlandı. Her şeyin tam olarak silindiğini görmek için **+serverinfo**'yu kullanmayı dene. Herhangi bir nükleer-sonrası-durumdan ben sorumlu değilim."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "{{server}} Sunucusundaki Tepki Rolleri",
             "removeAll": "Tepki Girişlerinin hepsini buradan yok ettim. Ama iletilerdeki tepkileri kendi ellerinle temizlemen gerekecek.",
@@ -445,7 +657,7 @@
         },
         "help": {
             "greetings": "\n**Esenlikler diliyorum! Ben Pollux. Sunucunuza atanan yeni hizmetkârınız.**\nBuyurun size yeteneklerimin kısa bir açıklaması:\n\n  •Varsayılan Prefix: “+”dır, “+prefix <New Prefix>” yaparak değiştirebilirsin. \n      Küresel Prefix “p!”dir, Özgün Prefixini bilmeyen kullanıcılar için yararlıdır, **Dashboard**'da devre dışı bırakılabilir. \n      Evrensel Prefix “plx!”dir ve devre dışı bırakılamaz.\n",
-            "basics": "\n **Temeller** - Bana alışmak prototip hızlandırıcı kurmak kadar kolaydır! ... bir dakika, hiç kurmadın mı? Kafana takma!\n Bunlar {{commandcount}} sahip olduğum komutlardan sadece birazı!\n  ",
+            "basics": "\n**Temeller** -Benimle işe başlamak kendi elektron hızlandırıcını oluşturmak kadar kolaydır! ...bir dakika, hiç kendi başına bir tane oluşturmadın mı? Eh, sıkıntı yok!\nBunlar sahip olduğum {{commandcount}} komuttan sadece birazı!\n  ",
             "cmdlist": "KOMUT LİSTESİ",
             "quick_getgo": "Başlamak için bilmen gereken komutlar",
             "quick_useful": " Kullanışlı bulabileceğin komutlar",
@@ -456,11 +668,11 @@
             "notenough": "Bu kutucuk yeterli değil mi?",
             "trythese": "Şunlardan birini dene",
             "curr_info": "Döviz Malumatı",
-            "currency_overview": "Döviz sistemim nispeten karmaşık ve çok sayıda limit ve koruyucu özellikleri var. Her işlem, işlenir ve izi kolayca sürülebilirdir, Bu, sıkı çalışmanın cambazlar tarafından gölgede bırakılmadığından emin olmamızı sağlar. Her gün 30 binden fazla işlem işliyoruz.   \n        \n    • Herkes biraz **Jade**, **Rubin** ve bir de **Define Sandığı** ile başlar\n",
-            "rubines_desc": "\n*Ana dövizim, açık-pembe mücevher taşları hemen hemen her şey için kullanılan özel altıgensel Al₂O₃:Cr scalenohedronların’dan oluşur!*\n        Günlük Ödüllerden (`daily`), Define Sandıklarından (`+box`) ve Kumar Oyunlarından (`+blackjack`, `+slots`, vb.) elde edilebilir. Beşinci seviyeye ulaşıp en az 10-günlük-ödül-serin olunca takaslardan da elde edebilirsin.\n",
-            "jades_desc": " *“Döviz” üretirken, özel eşyaları hazırlamak amacıyla bu soluk-mavisi mücevherleri -aksi takdirde değersiz- kullanıyorum sırf senin için!*\n        Define Sandıklarından, eşya yok ederek, bağış yapmakla, ya da satın almakla elde edilebilir.",
+            "currency_overview": "Döviz sistemim nispeten karmaşık ve çok sayıda limit ve koruyucu özellikleri var. Her işlem, kaydedilir ve izi kolayca sürülebilirdir, Bu, sıkı çalışmanın cambazlar tarafından gölgede bırakılmadığından emin olmamızı sağlar. Her gün 30 binden fazla işlem işliyoruz.   \n        \n    • Herkes biraz **Jade**, **Rubin** ve bir de **Define Sandığı** ile başlar\n",
+            "rubines_desc": "\n*Ana dövizim, açık-pembe mücevher taşları hemen hemen her şey için kullanılan özel altıgensel Al₂O₃Cr scalenohedronların’dan oluşur!*\n        Günlük Ödüllerden (`{{prefix}}daily`), Define Sandıklarından (`+box`) ve Kumar Oyunlarından (`+blackjack`, `+slots`, vb.) elde edilebilir. Beşinci seviyeye ulaşıp en az 10-günlük-ödül-serin olunca takaslardan da elde edebilirsin.\n",
+            "jades_desc": " *“Döviz” üretirken, özel eşyaları hazırlamak amacıyla -aksi takdirde değersiz- bu soluk-mavisi mücevherleri  kullanıyorum sırf senin için!*\n        Define Sandıklarından, eşya yok ederek, bağış yapmakla, ya da satın almakla elde edilebilir.",
             "sapphires_desc": "*Seçkin döviz, en kaliteli Şapir Mücevherlerinin koyu-mavi parçaları, özel eşyaları üretmek için ya da özel şeyleri almak için para birimi olarak kullanılır.*\n        Sadece bağış yaparak, satın alarak, ve özel etkinliklerden elde edilebilir. Her 200. ve 365. günlüklerinde Beleş Şapir kazanırsın, ve Ultra Nadir Define Sandıklarından %0.1 şansla düşürebilirsin.",
-            "lootboxes_desc": "*Arkaplan, Madalyon, Rubin ve Sticker Booster gibi birçok ganimetler bulunduran özel kutular*\n        Sadece seviye atlayarak ya da rastgele droplardan elde edilebilir. Droplar sohbet etkinliğine bağlı olarak olur.\n\n         **`⚠ Define Sandığı düşürmek için Kasten Spam yapmak, hile yapmak ya da alt hesaplarınla eşya değiş-tokuşu yapmak seni Polluxtan ve diğer botlardan bonlayacaktır.**\n",
+            "lootboxes_desc": "*Arkaplan, Madalyon, Rubin ve Sticker Booster gibi birçok ganimetler bulunduran özel kutular*\n        Sadece seviye atlayarak ya da rastgele droplardan elde edilebilir. Droplar sohbet etkinliğine bağlı olarak gerçekleşir.\n\n         **`⚠ Define Sandığı düşürmek için Kasten Spam yapmak, hile yapmak ya da alt hesaplarınla eşya değiş-tokuşu yapmak seni Polluxtan ve diğer botlardan banlayacaktır.**\n",
             "end": "\n**Komutların tam listesi <https://pollux.gg/commands> adresine bulunabilir.**\n\n**<https://pollux.gg/partners>** Adresinde Partnerlerimize göz atın\n**<https://pollux.gg/fanart>** Adresinde fan artlarınızı göster ya da gönder\n**<https://pollux.gg/profile/me>** Adresinde Herkese açık profilini bak\n\n**Kozmetikler**\nArkaplan Dükkânı **https://pollux.gg/bgshop**\nMadalyon Dükkânı **https://pollux.gg/medalshop**\nÜretim Atölyesi **https://pollux.gg/crafting**\nKanlı canlı Stickerlar **<https://pollux.gg/stickers>** (Gerçek Hayat Stickerları için Destek Sunucumuza göz atın)\nEtkinlik Malumatı **<https://pollux.gg/events>**\n\nBeni **<https://patreon.com/Pollux>** ya da **<https://pollux.gg/donate>** adreslerinden destekle\nBeni Twitterdan takip et **<https://twitter.com/maidPollux>**\n\n\n---\n\n**Başka herhangi bir şey için, __Dashboard__'a göz at: <https://pollux.gg/dashboard>**\nYa da destek sunucuma katıl: **​ https://discord.gg/rEBCccS ​**\n**<https://pollux.gg/invite>** Adresinde beni sunucuna davet et\n"
         }
     },
@@ -499,6 +711,9 @@
             "split": "Elini ayırmak için, `split`",
             "double": "Son bir kart çekip bahsini iki katına çıkarmak için, `double`",
             "pass": "Ya da elini geçirmek için, `stand`",
+            "splitbreak": "Bölüşüm Dağılımı:",
+            "switchdeck": "Şimdi **{{deckname}}** destesini kullanarak yirmibir oynayacağız!",
+            "switchdeckEgg": "Şimdi elimizle oynayacağız (hayır o anlamda değil.) {{deckname}} **destesiyle** yani. Ne fesat adamsın.",
             "even": "Patladık gibi, al, rubinlerin senin olsun."
         },
         "slots": {

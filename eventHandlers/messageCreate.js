@@ -1,23 +1,27 @@
+
+
 const meSubs = require('../core/subroutines/onEveryMessage.js');
-const {BLACKLIST,YELLOWLIST,REDLIST} = require(paths.UTILS+'banLists.js');
-const DB = require (appRoot + "/core/database/db_ops")
-const Preprocessor =   require('../core/structures/CommandPreprocessor.js');
+//const {BLACKLIST,YELLOWLIST,REDLIST} = require(paths.UTILS+'banLists.js');
+//// const DB = require (appRoot + "/core/database/db_ops")
+//const Preprocessor =   require('../core/structures/LEGACY_CommandPreprocessor.js/index.js');
 
 module.exports = async function (msg) {
 
+
+  
   if(msg.author.bot) return;
-  if(!POLLUX.ready) return;
+  if(!PLX.ready) return;
   
   //DEBUG -----------------------------------------------------
   
-  if(POLLUX.refreshing || POLLUX.beta){
-     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
+  if(PLX.refreshing || PLX.beta){
+    delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
      delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
-  if( (POLLUX.tapping || POLLUX.beta) && !global.piggyback){
-    let PEV =  POLLUX.tapping
-    if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || POLLUX.beta)
+  if( (PLX.tapping || PLX.beta) && !global.piggyback){
+    let PEV =  PLX.tapping
+    if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || PLX.beta)
 
       console.log(
         msg.author.tag.blue+`(${msg.author.id})\n    `.gray,
@@ -29,10 +33,11 @@ module.exports = async function (msg) {
   
   //-----------------------------------------------------------
   
-
+  meSubs(msg);
+return;
   
   if(
-    POLLUX.user.id=="354285599588483082"&&
+    PLX.user.id=="354285599588483082"&&
     msg.author.id !== "88120564400553984" &&
     msg.author.id !== "320351832268472320" &&
     msg.author.id !== "103727554644418560" && 
@@ -41,7 +46,7 @@ module.exports = async function (msg) {
     msg.author.id !== "163200584189476865"
     )
     return;
-    
+    return;// temp for command client
   if (!msg.guild) return; //DM Stuff?
 
   let _chanData = dataChecks('channel',msg.channel),
@@ -57,7 +62,7 @@ module.exports = async function (msg) {
   };    
 
   if(
-      ( POLLUX.blacklistedServers.includes(msg.guild.id) ) ||
+      ( PLX.blacklistedServers.includes(msg.guild.id) ) ||
       ( typeof msg.channel.ignored && msg.channel.ignored === true && !msg.content.includes("unignore")) 
     )
     return void garbageC();    
@@ -70,19 +75,19 @@ module.exports = async function (msg) {
 async function dataChecks(type,ent){
     return new Promise(async resolve =>{
       if(type==="user"){
-        DB.users.findOne({id:ent.id}, {id:1,blacklisted:1} ).then(user=>{
+        DB.users.findOne({id:ent.id}, {id:1,blacklisted:1} ).lean().exec().then(user=>{
           if(!user) return resolve(DB.users.new(ent));
           return resolve(user);
         });
       };
       if(type==="server"){
-        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1} ).then(server=>{
+        DB.servers.findOne({id:ent.id}, {id:1,'modules.PREFIX':1,'modules.LANGUAGE':1 ,'modules.DISABLED':1,'modules.logging':1,'respondDisabled':1} ).lean().exec().then(server=>{
           if(!server) return resolve(DB.servers.new(ent));
           return resolve(server);
         });
       };
       if(type==="channel"){
-        DB.channels.findOne({id:ent.id}, {id:1,ignored:1,LANGUAGE:1} ).then(channel=>{
+        DB.channels.findOne({id:ent.id}, {id:1,ignored:1,LANGUAGE:1,'modules.DISABLED':1} ).then(channel=>{
           if(!channel) return resolve(DB.channels.new(ent));
           return resolve(channel);
         });
@@ -96,6 +101,9 @@ async function serverCacheUpdate(server,instance){
   instance.prefix = server.modules.PREFIX     || '+'
   instance.language = server.modules.LANGUAGE || 'en'
   instance.globalPrefix = server.globalPrefix || false
+  instance.DISABLED = server.modules.DISABLED || []
+  instance.respondDisabled = server.respondDisabled || true
+  instance.logging = server.logging || false
 }
 
 async function channelCacheUpdate(channel,instance){
@@ -103,6 +111,7 @@ async function channelCacheUpdate(channel,instance){
   if (!channel) return null;
   instance.language = channel.LANGUAGE || null;
   instance.ignored = channel.ignored || false;  
+  instance.DISABLED = channel.modules.DISABLED || []
 }
 
 async function commandResolve(msg,cacheUpdates,garbageC){
@@ -110,23 +119,23 @@ async function commandResolve(msg,cacheUpdates,garbageC){
   if (msg.guild.globalPrefix !== false){
     if(msg.content.startsWith("p2!")) msg.prefix = "p2!";
   };
-  if(msg.content.startsWith("<@"+POLLUX.user.id+"> ")) msg.prefix = "<@"+POLLUX.user.id+"> ";
+  if(msg.content.startsWith("<@"+PLX.user.id+"> ")) msg.prefix = "<@"+PLX.user.id+"> ";
   if(!msg.prefix && !msg.guild.prefix) await cacheUpdates;      
   if(msg.guild.prefix && msg.content.startsWith(msg.guild.prefix)) msg.prefix = msg.guild.prefix;
 
-  if(POLLUX.user.id == "354285599588483082"){
+  if(PLX.user.id == "354285599588483082"){
     if(msg.content.startsWith("=")) msg.prefix = "=";
     if(msg.content.startsWith("+")) return;
   }
 
   if (msg.prefix) {
-    if (POLLUX.blacklistedUsers.includes(msg.author.id) ) {
+    if (PLX.blacklistedUsers.includes(msg.author.id) ) {
       msg.addReaction(":BLACKLISTED_USER:406192511070240780");
       return void garbageC();
     }
-    Preprocessor.run(msg, {});
+    Preprocessor(msg, {}).catch(e=>null);
     
   }else{
-    meSubs.run(msg);
+    meSubs(msg);
   };
 }

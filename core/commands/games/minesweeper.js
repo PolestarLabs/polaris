@@ -1,12 +1,12 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
 
     minesTot = parseInt(msg.args[1]) || 10
@@ -17,7 +17,7 @@ const init = async function (msg){
         
         for(let i = 0;i<SQ;i++){
             for (let j = 0;j<SQ;j++){
-                let rand = gear.randomize(0,SQ+5)
+                let rand = randomize(0,SQ+5)
                 if(minesTot <= 0) rand = 0;
                 if(arrGrid[i][j]=="||<a:aaaaaaaaaaa:432063835201994762>||") continue;
                 arrGrid[i][j] = (rand==1?"||<a:aaaaaaaaaaa:432063835201994762>||":"||:zero:||")
@@ -25,7 +25,7 @@ const init = async function (msg){
             }
         }
         ir++
-        console.log({minesTot,roll:ir})
+
     } 
 
     for(i = 0;i<SQ;i++){

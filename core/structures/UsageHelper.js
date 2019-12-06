@@ -20,16 +20,16 @@ exports.run = function run(cmd, m, third) {
   let emb = new Embed;
   try {
     emb.setColor($d[third].color)
+    emb.thumbnail($d[third].thumb)
   } catch (e) {
     emb.setColor("#eee")
   }
  
-  emb.thumbnail($d[third].thumb)
   emb.footer(`${v.mod}: ${v.name} | ${third.toUpperCase()} > ${cmd}`, "https://png.icons8.com/puzzle/color/16");
   emb.author($t("help.commUsage", {
     lngs: m.lang,
     comm: m.prefix + cmd
-  }), POLLUX.user.displayAvatarURL, "http://Pollux.fun/commands");
+  }), PLX.user.displayAvatarURL, "http://Pollux.fun/commands");
   emb.description($t("commands:help." + cmd, {
     lngs: m.lang,
     prefix: m.prefix

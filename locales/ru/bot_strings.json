@@ -9,23 +9,40 @@
         "SPH": "Сапфир",
         "SPH_fullname": "",
         "SPH_plural": "Сапфиры",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Обычное",
         "U": "Необыкновенное\n",
         "R": "Редкое",
         "SR": "Очень Редкое",
         "UR": "Невероятно Редкое",
+        "thevoid": "не учитывать",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "не учитывать",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
         "total": "",
         "amount": "Количество",
         "overview": "Обзор",
+        "dashboard": "Информационная доска",
         "coinHeads": "Орел",
         "coinTails": "Решка",
         "qnt": "Количество",
@@ -47,6 +64,9 @@
         "bet": "Ставка",
         "level": "Уровень",
         "levelUp": "Повышение уровня!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Кажется, такая роль уже существует.",
             "nosuchrole": "",
             "kbanNone": "Мне нужна цель, которую я могла бы забанить, но я всегда могу забанить вас вместо этого.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "Кажется, **{{user}}** не относится к этой **{{group}}** роли.",
             "banNone": "Мне нужна цель, которую я могла бы забанить, но я всегда могу забанить вас вместо этого.",
             "unpermB": "Кажется, у меня нет разрешений чтобы сделать это.",
@@ -130,6 +152,15 @@
                 "Оки, делаю...",
                 "Секунду...",
                 "Подождите, пожалуйста..."
+            ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             ],
             "interjections": {
                 "acknowledged": [
@@ -202,6 +233,11 @@
             "failure": "О нет, кажется, что - то пошло не так. Простите."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Оу? У вас нет медалей, которые вы можете экипировать. Может, вам, для начала, нужно их купить?",
             "equipSlot": "Выберите слот, чтобы экипировать вашу совсем новую медаль!",
             "timeout": "Не хотели ли вы экипировать медаль? Позовите меня снова, когда захотите экипировать какую - нибудь из них.",
@@ -255,6 +291,74 @@
             "destroyWhat": "",
             "cantDestroy": "",
             "destroyed": ""
+        },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Согласны ли вы развестись с {{user}}? Плата за развод в размере %EMJ%**5000 Рубинов** будет взиматься с **обоих**! Так же ваши LovePoints будут уменьшены **вдвое**!",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} является участником с: {{joinedstamp}}",
             "aviOK": "Хорошо, я поменяла свое фото для вас. Вы сможете поменять мое фото профиля снова через {{cooldown}}",
             "colorChange": "Ваш любимый цвет сохранен!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
+            "newTwitchStatus": "",
             "noDefault": "",
             "urlPresent": "",
             "noFeed": "",
@@ -425,9 +639,7 @@
             "timeout": "Время отправки ядерной бомбы вышло!",
             "completed": "Серверная информация была успешно стерта и сброшена. Используйте **+serverinfo**, чтобы увидеть, что все было правильно сброшено. Я больше не буду ответственна за последующее ядерное загрязнение."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -499,6 +711,9 @@
             "split": "`split` чтобы разделить вашу руку,",
             "double": "",
             "pass": "или `stand`, чтобы пропустить.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

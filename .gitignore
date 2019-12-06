@@ -1,17 +1,17 @@
 # https://git-scm.com/docs/gitignore
 # https://help.github.com/articles/ignoring-files
 # Example .gitignore files: https://github.com/github/gitignore
-/bower_components/
-/node_modules/
-/config.json
-asciiPollux.js
-/.vscode/
+bower_components/*
+node_modules/*
+config.json
+.vscode/*
 *.psd
 *.ai
 *.bat
 *.mp3
 *.wav
 *.png
-core/commands/social/profile - Copy.js
 tunnel.js
 rewinder.js
+Pollux-9b33db6de8e0.json
+node_modules

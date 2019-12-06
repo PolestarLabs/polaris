@@ -1,5 +1,4 @@
-const axios = require('axios' )
-const {randomize} = require('../utilities/Gearbox')
+const axios = require('axios')
 
 module.exports = {
 
@@ -8,13 +7,11 @@ module.exports = {
         
         if(dlink){
             URL = paths.CDN+"/random/redir/"+gallery+"?json=1"
-            const response = await axios.get(URL, {
-              
-            });         
+            const response = await axios.get(URL);
             return response.data; 
         }
         const response = await axios.get(URL, {
-            headers: { 'Accept': '*' },
+            headers: { 'Accept': '*'},
             responseType: 'arraybuffer'
         });         
         return response.data;       

@@ -1,15 +1,12 @@
 
-const {shuffle,Embed,autoHelper} = require('../../utilities/Gearbox');
+const init = async function (msg,args){
 
-const init = async function (msg){
-
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    const P={lngs:msg.lang,prefix:msg.prefix}
 
     N= Math.abs(parseInt(msg.args[0]) || parseInt(msg.args[1])) || 0;
     ENTS = msg.args[2] ? msg.args : null;
 
-    let rolefind = (x)=> msg.guild.roles.find(rl => msg.args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()); 
+    let rolefind = (x)=> msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()); 
     if(
         msg.args[0]==='role' && msg.args[1] && (msg.roleMentions.length>0 || rolefind(1) ) ||
         msg.args[1]==='role' && msg.args[2] && (msg.roleMentions.length>0 || rolefind(2) ) 
@@ -33,43 +30,44 @@ const init = async function (msg){
     
 
     if(N>16 && display_RR){
-        return msg.channel.send("Max limit for Roundrobin: 16")
+        return msg.channel.send($t('interface.brackets.maxRR',P))
     }
     if(N>32){
-        return msg.channel.send("Max limit for Brackets: 32")
+        return msg.channel.send($t('interface.brackets.maxBK',P))
     }
 
     ENTS = ENTS?shuffle(ENTS):ENTS
-    ROUNDROBIN = RR(N,ENTS)
-    BRACKETS = BK(N,ENTS)
+    ROUNDROBIN = RR(N,ENTS,P)
+    BRACKETS = BK(N,ENTS,P)
     BRACKET_MATCHES = BRACKETS.matches
 
 
 
     embed = new Embed();
     embed.color("#ee2052")
-    embed.title = ":trophy: Round-Robin Brackets"
+    embed.title = $t('interface.brackets.RRt')
     embed2 = new Embed();
     embed2.color("#20c2ee")
-    embed2.title = ":trophy: Tournament Brackets"
+    embed2.title =  $t('interface.brackets.BKt')
 
     for(j=0;j<ROUNDROBIN.length;j++){
         round = []
         for(i=0;i<ROUNDROBIN[j].length;i++){
-            round.push(`\u200b \u2003 \`Match ${i+1}\`\u2003 🔸 **${ROUNDROBIN[j][i][0]} \u2000** × **\u2000 ${ROUNDROBIN[j][i][1]}** `)
+            round.push(`\u200b \u2003 \`${$t('interface.brackets.match',P)} ${i+1}\`\u2003 🔸 **${ROUNDROBIN[j][i][0]} \u2000** × **\u2000 ${ROUNDROBIN[j][i][1]}** `)
         }
-        embed.field(`Round ${j+1}`,round.join('\n'),true )
+        embed.field(`${$t('interface.brackets.round',P)} ${j+1}`,round.join('\n'),true )
     }
 
     wingmap = (v,i,t,s,e)=> `\u200b  \`${t} ${s+i+1}\`\n\u2003 ${e||''} **${v[0]} \u2000**×**\u2000 ${v[1]}**`
     if(BRACKETS.byes.length>0){
-        embed2.field("Pre-Round",BRACKETS.byes.slice(0,BRACKETS.byes.length/2).map((v,i)=>wingmap(v,i,"PRE",0,'▫')).join('\n') ,true )  
+        embed2.field($t('interface.brackets.preround',P)+" (PRE)",BRACKETS.byes.slice(0,BRACKETS.byes.length/2).map((v,i)=>wingmap(v,i,"PRE",0,'▫')).join('\n') ,true )  
         embed2.field("\u200b",BRACKETS.byes.slice(BRACKETS.byes.length/2).map((v,i)=>wingmap(v,i,"PRE",Math.floor(BRACKETS.byes.length/2),'▫')).join('\n') ,true )  
         embed2.field("\u200b","\u200b" ,false )  
     }
-
-    embed2.field("Bracket A",BRACKET_MATCHES.slice(0,BRACKET_MATCHES.length/2).map((v,i)=>wingmap(v,i,"Match",0,':red_circle:')).join('\n') ,true )  
-    embed2.field("Bracket B",BRACKET_MATCHES.slice(BRACKET_MATCHES.length/2)  .map((v,i)=>wingmap(v,i,"Match",BRACKET_MATCHES.length/2,':large_blue_circle:')).join('\n') ,true )
+    P.AB = "A";
+    embed2.field($t('interface.brackets.bracketX',P),BRACKET_MATCHES.slice(0,BRACKET_MATCHES.length/2).map((v,i)=>wingmap(v,i,$t('interface.brackets.match'),0,':red_circle:')).join('\n') ,true )  
+    P.AB = "B";
+    embed2.field($t('interface.brackets.bracketX',P),BRACKET_MATCHES.slice(BRACKET_MATCHES.length/2)  .map((v,i)=>wingmap(v,i,$t('interface.brackets.match'),BRACKET_MATCHES.length/2,':large_blue_circle:')).join('\n') ,true )
 
 
     
@@ -93,14 +91,15 @@ module.exports={
     ,cat:'util'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['bkt','bracket','tournament']
+    ,argsReqed: true
 }
 
 
-function RR (n, entrants) {  
+function RR (n, entrants,P) {  
   let res = [];               
   if (!entrants) {
     entrants = [];
-    for (var k = 1; k <= n; k++) { entrants.push("TEAM "+k) }
+    for (var k = 1; k <= n; k++) { P.X=k; entrants.push($t('interface.brackets.team',P)) }
   } 
 
 
@@ -115,11 +114,12 @@ function RR (n, entrants) {
   return res;
 };
 
-function BK (n, entrants){
+function BK (n, entrants,P){
     let res = [];
     if (!entrants) {
         entrants = [];
-        for (var k = 1; k <= n; k++) { entrants.push("TEAM "+k) }
+       
+        for (var k = 1; k <= n; k++) {  P.X=k; entrants.push($t('interface.brackets.team',P)) }
     }
     
     isPowerOf = (n,p) =>{
@@ -140,7 +140,7 @@ function BK (n, entrants){
     }
     
     for (i=0;roundzero&&i<roundzero.length/2;i++){
-        entrants.push("\u200b**▫**`PRE #"+(i+1)+"`** Winner **\u200b")
+        entrants.push("\u200b**▫**`PRE #"+(i+1)+"`** "+$t('interface.brackets.winner',P)+" **\u200b")
         n--        
     }
 

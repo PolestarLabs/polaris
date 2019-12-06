@@ -51,6 +51,7 @@
 		"favcolor": "Ändra färgen på din profil's sidofält med hjälp av en Hex-kod",
 		"equip": "----- medaljer som du har fått från Prestationer eller köpt från affären.",
 		"fausto": "Framkallar Fausto Silva, den bästa Tv-show värden i Brasilien",
+		"ramsay": "",
 		"feats": "Visar de senaste kommandonen",
 		"shop": "Köp dekoration till din profil, kanske till och med några andra saker.",
 		"fortunecookie": "En lyckokaka som kommer berätta något helt nonsens till dig",
@@ -241,7 +242,7 @@
 		"decontaminate": "`{{prefix}}decontaminate [@någon (valbart)]`",
 		"eggtrade": "",
 		"lewd": "",
-		"marry": "Giftemål bygger på `{{prefix}}craft`, eftersom du måste ha en ring innan du kan fria.\n\nFör att gifta dig med din älskade, skriv `{{prefix}}marry @någon [ring]`. Det finns  4 olika typer av bröllopsringar, var och en är gjord utav olika ädelstenar värda olika mycket, för att visa upp hur fint erat äktenskap är. I framtiden, kommer mer värda ringar ge paret mer Love Points som dom kommer kunna spendera tillsamans\n\nExempelvis: `{{prefix}}marry @någon rubine` För att fria med en rubin ring.\n\nKräver Embed, hantera meddelanden och reaktionsbehörigheter.",
+		"marry": "",
 		"craft": "",
 		"divorce": ""
 	},

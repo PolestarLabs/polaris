@@ -9,23 +9,40 @@
         "SPH": "Sapphire",
         "SPH_fullname": "",
         "SPH_plural": "Sapphires",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Common",
         "U": "Uncommon",
         "R": "Rare",
         "SR": "Super Rare",
         "UR": "Ultra Rare",
+        "thevoid": "void",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "Lootbox",
         "lootbox_plural": "Lootboxes",
-        "thevoid": "void",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
         "total": "Total",
         "amount": "Amount",
         "overview": "Overview",
+        "dashboard": "Dashboard",
         "coinHeads": "Heads",
         "coinTails": "Tails",
         "qnt": "Quantity",
@@ -47,6 +64,9 @@
         "bet": "Bet",
         "level": "Level",
         "levelUp": "Level Up!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Seems that Role is already on the list.",
             "nosuchrole": "Um, I couldn't find this role, type it's name exactly please.",
             "kbanNone": "I need a target to ban, I could always ban you instead.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "It seems **{{user}}** does not have the Role **{{group}}**.",
             "banNone": "I need a target to ban, I could always ban you instead.",
             "unpermB": "I don't seem to have enough perms to process this.",
@@ -120,7 +142,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\nBut don't worry, I've trimmed the text for you~",
-            "open1": "Excuse me, open is a transitive verb, which means you should tell me what to open~ Try one of these options: ",
+            "open1": "",
             "open2": "",
             "timesOutIn": "This will timeout in {{s}} seconds",
             "enterVoiceBetterExperience": "You have to be in a voice channel for the full ~experience~."
@@ -130,6 +152,15 @@
                 "Okay, Doing it now...",
                 "Just a second...",
                 "One moment, please..."
+            ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             ],
             "interjections": {
                 "acknowledged": [
@@ -202,13 +233,18 @@
             "failure": "Oh no, It seems something went wrong. I'm sorry."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Oh? Seems you don't have any medals to equip. Perhaps you should buy some first?",
             "equipSlot": "Choose a slot to equip your brand new medal!",
             "timeout": "Did you not want to equip a Medal? Call me again when you want to equip one.",
             "cancelled": "Well, if you're not going to equip a Medal now, why did you call me?",
             "youSure": "Going to equip it there?",
             "choose": "Choose a Medal to equip onto your Profilecard",
-            "success": "Beautiful! now you have a brand new medal on your Profilecard~",
+            "success": "Beautiful! Now you have a brand new medal on your Profilecard~",
             "unequipSuccess": "Ok, the medal has been unequipped.",
             "unequipChoose": "Which medal are you going to remove?",
             "unequipConfirm": "Is this the one you want to unequip?",
@@ -255,6 +291,74 @@
             "destroyWhat": "Destroy what?",
             "cantDestroy": "I can't destroy this.",
             "destroyed": "Item destroyed! This is what remains of it:"
+        },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Do you agree to get divorced from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
             "aviOK": "Alright, I've changed my photo for you. You can change my propic again in {{cooldown}}",
             "colorChange": "Your favorite color has been saved!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
+            "newTwitchStatus": "",
             "noDefault": "",
             "urlPresent": "",
             "noFeed": "",
@@ -425,9 +639,7 @@
             "timeout": "Nuke Timed Out!",
             "completed": "Server Info has been successfully wiped and reset. Try using **+serverinfo** to see if everything was properly reset. I'm not responsible for any afterward Nuclear Fallout contamination."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -445,7 +657,7 @@
         },
         "help": {
             "greetings": "**Greetings! I'm Pollux. The new maid assigned to your server.**\nHere's some quick explanations of my abilities:\n\n •  The Default Prefix is `+`, you can change it with `+prefix <New Prefix>`. \n •  The Global Prefix is `p!`, useful for users that don't know your custom prefix, can be disabled at the **Dashboard**. \n •  The Universal Prefix is `plx!` and cannot be disabled.",
-            "basics": "**The Basics** - Getting started with me is as easy as building your own parcticle accelerator! ...wait, you never built one yourself? Well, no problem!\nThese are just a few of the {{commandcount}} commands I have!",
+            "basics": "",
             "cmdlist": "",
             "quick_getgo": "",
             "quick_useful": "Commands you might find useful",
@@ -499,6 +711,9 @@
             "split": "`split` to Split your hand,",
             "double": "`double` to double your bet and draw one last card,",
             "pass": "or `stand` to pass.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": "Seems that we broke even, here, have your rubines back."
         },
         "slots": {

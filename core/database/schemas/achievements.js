@@ -24,7 +24,7 @@ MODEL.award = (user,achiev) => {
   const userDB = require('./users.js');
   return new Promise(async resolve => {
     await userDB
-      .updateOne({'id': user.id || user},{$addToSet: {'modules.achievements' : achiev}}).then(res=>{
+      .updateOne({'id': user.id || user},{$push: {'modules.achievements' : {id:achiev,unlocked:Date.now()}}}).then(res=>{
       return resolve(res)
     });
     })    

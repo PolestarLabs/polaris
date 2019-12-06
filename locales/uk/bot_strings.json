@@ -9,23 +9,40 @@
         "SPH": "Сапфір",
         "SPH_fullname": "",
         "SPH_plural": "Сапфіри",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Загальний",
         "U": "Рідкісний",
         "R": "Рідкісний",
         "SR": "Дуже рідкісний",
         "UR": "Ультра Рідкісний",
+        "thevoid": "Недійсний",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "Скарбничка",
         "lootbox_plural": "Скарбнички",
-        "thevoid": "Недійсний",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "дякую",
         "thanks_short": "дяка",
         "thx": "$t(terms.thanks_short)",
         "total": "Усього",
         "amount": "Кількість",
         "overview": "Огляд",
+        "dashboard": "Інформаційна дошка",
         "coinHeads": "Орел",
         "coinTails": "Рішка",
         "qnt": "Кількість",
@@ -47,6 +64,9 @@
         "bet": "Поставити",
         "level": "Рівень",
         "levelUp": "Підвищення рівня!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Здається, така роль вже існує.",
             "nosuchrole": "",
             "kbanNone": "Мені потрібна мета, яку я могла б забанити, але я завжди можу забанити вас замість цього.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "Здається, **{{user}}** не відноситься до цієї **{{group}}** ролі.",
             "banNone": "Мені потрібна мета, яку я могла б забанити, але я завжди можу забанити вас замість цього.",
             "unpermB": "Здається, у мене немає дозволів щоб зробити це.",
@@ -130,6 +152,15 @@
                 "Оки, роблю ...",
                 "Одну секунду...",
                 "Один момент, будь ласка..."
+            ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
             ],
             "interjections": {
                 "acknowledged": [
@@ -202,6 +233,11 @@
             "failure": "О ні, здаєтся, що - щось пішло не так. Вибачте."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "Оу? Здаєтся у вас немає медалей, які ви можете екіпірувати. Може, вам для початку їх потрібно купити?",
             "equipSlot": "Виберіть слот, щоб екіпірувати вашу зовсім нову медаль!",
             "timeout": "Чи не хотіли ви екіпірувати медаль? Покличте мене знову, коли захочете екіпірувати яку - небудь з них.",
@@ -255,6 +291,74 @@
             "destroyWhat": "Що зруйнувати?",
             "cantDestroy": "Я не можу зруйнувати це.",
             "destroyed": "Предмет знищено! Ось що залишилося від нього:"
+        },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Ви згодні отримати розлучееня з {{user}}? Збір у розмірі %EMJ% **5000 рубінів** *буде утримано* з вас. Обидва ваші LovePoint будут **вдвічі зменшені**, як добре!",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{Target}} є учасником з: {{joinedstamp}}",
             "aviOK": "Добре, я поміняла своє фото для вас. Ви зможете поміняти моє фото профілю знову через {{cooldown}}",
             "colorChange": "Ваш улюблений колір збережений!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "Натисніть ✔ щоб підтвердити свій вибір, ❌ щоб відмінити.",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
+            "newTwitchStatus": "",
             "noDefault": "",
             "urlPresent": "",
             "noFeed": "",
@@ -425,9 +639,7 @@
             "timeout": "Час для відправки ядерної бомби пройшло!",
             "completed": "Серверна інформація була успішно стерта і скинута. Використовуйте **+ serverinfo**, щоб побачити, що все було правильно скинуто. Я більше не буду відповідальна за подальше ядерне забруднення."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -499,6 +711,9 @@
             "split": "`Split` щоб розділити ваш hand,",
             "double": "`double` щоб подвоїти твою ставку та взяти останню карту,",
             "pass": "або `stand`, щоб пропустити.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

@@ -1,11 +1,11 @@
 const decks = new Map();
 const games = new Map();
-const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-const suits = ['C', 'D', 'H', 'S'];
-const DECK_TEMPLATE = suits
-  .map(suit => ranks.concat(ranks)
-    .concat(ranks)
-    .concat(ranks)
+const RANKS = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const SUITS = ['C', 'D', 'H', 'S'];
+const DECK_TEMPLATE = SUITS
+  .map(suit => RANKS.concat(RANKS)
+    .concat(RANKS)
+    //.concat(RANKS)
     .map(rank => rank + suit)
   ).reduce((array, arr) => array.concat(arr));
 
@@ -21,23 +21,36 @@ class Blackjack {
   }
   hit(hand,powerups) {
     if (this.deck.length === 0) {
+      
       if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
         this.deck = decks.get(this.guildID);
       } else {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
         decks.set(this.guildID, this.deck);
+        this.deck.push("JOKER-default");
+        this.deck = Blackjack._shuffle(this.deck);
       }
-      this.deck.push("JOKER-default");
-      if(powerups && powerups.jokers){
-        let jokers = powerups.jokers.length ||0
-        while (jokers--){
-          this.deck.push(powerups.jokers[jokers]);
-        }
+      
+      this.jokersLoaded = true;
+      this.deck = Blackjack._shuffle(this.deck);
+    }
+   
+    if(powerups && powerups.jokers){
+
+      let jokers = powerups.jokers.length ||0
+      while (jokers--){
+        this.deck.push(powerups.jokers[jokers]);
+        this.deck = Blackjack._shuffle(this.deck);
       }
     }
     
-
-    this.deck = Blackjack._shuffle(this.deck);
+    if(powerups&&powerups.nojoker){
+      let incr = 0;
+      while(this.deck[this.deck.length-1].includes("JOKER")){
+        this.deck = Blackjack._shuffle(this.deck);
+        if (incr > 5) break;
+      }
+    }
     hand.push(this.deck.pop());
     return hand;
   }
@@ -70,7 +83,7 @@ class Blackjack {
   static handValue(hand) {
     let value = 0;
     let aces = 0;
-    if(hand.find(card=>card.startsWith("JOKER"))){
+    if(hand.find(card=> card && card.startsWith("JOKER"))){
       return hand.find(card=>card.startsWith("JOKER"));
     }
     hand.forEach(card => {
@@ -86,9 +99,9 @@ class Blackjack {
   }
   static _cardValue(card) {
     if(card==="JOKER"){
-      return 0
+      return 99
     }
-    const index = ranks.indexOf(card.slice(0, -1));
+    const index = RANKS.indexOf(card.slice(0, -1));
     if (index === 0) return 11;
     return index >= 10 ? 10 : index + 1;
   }

@@ -1,22 +1,21 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 const ECO = require('../../archetypes/Economy');
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
 
-const init = async function (msg){
+const init = async function (msg,args){
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
-    
-    if (msg.args.length < 2 ) return gear.autoHelper('force', {
-        cmd, msg, opt: this.cat
-    });
-
+    const P={lngs:msg.lang,prefix:msg.prefix}
 
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
-    let TARGET = gear.getTarget(msg,1,false);
+    let TARGET = PLX.getTarget(msg,1,false);
     if (TARGET instanceof Promise) TARGET = await TARGET;
+
+    if(!TARGET) {        
+         PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});
+         return;
+    }    
 
     const [USERDATA,TARGETDATA] = await Promise.all([
         DB.users.get(msg.author.id),
@@ -42,20 +41,20 @@ const init = async function (msg){
     let reject = function(msg,Daily,r){
         P.remaining=  moment.utc(r).fromNow(true)
         let dailyNope = $t('responses.give.cooldown',P);
-        let embed=new gear.Embed();
+        let embed=new Embed();
         embed.setColor('#e35555');
-        embed.description = gear.emoji('nope') + dailyNope +P.remaining+" "+r;
+        embed.description = _emoji('nope') + dailyNope;
         return msg.channel.send({embed:embed});
     }
     let info = async function(msg,Daily){
         let {last} = await Daily.userData(msg.author);
         let dailyAvailable = await Daily.dailyAvailable(msg.author);
 
-        let embe2=new gear.Embed();
+        let embe2=new Embed();
         embe2.setColor('#e35555')
         embe2.description=`
-    ${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
-    ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(last).add(8,'hours').fromNow() }
+    ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(last).fromNow()}
+    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(last).add(4,'hours').fromNow() }
       `
             return msg.channel.send({embed:embe2});
     }
@@ -72,15 +71,15 @@ const init = async function (msg){
     let after = function(msg,Dly){
 
         ECO.transfer(msg.author.id,TARGET.id,Math.ceil(AMOUNT*0.95),"Rubine Transfer","RBN").then(payload=>{
-            embed=new gear.Embed();
+            embed=new Embed();
             embed.thumbnail(TARGET.avatarURL)
             embed.footer(msg.author.tag,msg.author.avatarURL)
             embed.image("https://cdn.discordapp.com/attachments/488142034776096772/586549151206998057/transfer.gif")
             embed.description =`
             
-            **${msg.author.username}** transfered **${AMOUNT}**${gear.emoji('RBN')} to **${TARGET.username}**
-            Transaction Fee: **${Math.floor(AMOUNT*0.05)}${gear.emoji('RBN')}**
-            Transaction ID: \`${payload.transactionId}\`
+            **${msg.author.username}** transferred **${AMOUNT}**${_emoji('RBN')} to **${TARGET.username}**
+            ${$t('terms.TransactionFee')}: **${Math.floor(AMOUNT*0.05)}${_emoji('RBN')}**
+            ${$t('terms.TransactionID')}: \`${payload.transactionId}\`
             
             `
             msg.channel.send({embed})
@@ -88,17 +87,22 @@ const init = async function (msg){
 
     }
 
-  Timed.init(msg,"transfer_rbn",{day:(8*60*60*1000)},after,reject,info,precheck);
+  Timed.init(msg,"transfer_rbn",{day:(4*60*60*1000)},after,reject,info,precheck);
 
 
 
 }
+
 module.exports={
     init
     ,pub:true
+    ,argsRequired:true
     ,cmd:'transfer'
     ,perms:3
     ,cat:'economy'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['give']
+    ,teleSubs:[
+        {label: 'box', path:'economy/givebox'}
+    ]
 }

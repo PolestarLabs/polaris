@@ -1,9 +1,9 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
 
     if(msg.args[0] === "embed"){
@@ -14,10 +14,10 @@ const init = async function (msg){
         }
         let userEmbed = JSON.parse(msg.content.substr(msg.content.indexOf('embed')+5).trim());
         msg.channel.send(userEmbed.embed?userEmbed:{embed:userEmbed})
-        msg.delete().catch()
+        msg.delete().catch(e=>null)
     }else{
         msg.channel.send(msg.content.split(/ +/).slice(1).join(' '))
-        msg.delete().catch()
+        msg.delete().catch(e=>null)
     }
 }
 

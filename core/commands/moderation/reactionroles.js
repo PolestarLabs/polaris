@@ -1,10 +1,10 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 
-const init = async function (msg){
+const init = async function (msg,args){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
 
     const subcommand = msg.args[0]
@@ -14,9 +14,9 @@ const init = async function (msg){
     const arg4 = msg.args[4] // role    
 
     const serverData = await DB.servers.get(msg.guild.id,{'modules.MODROLE':1});
-    if(!gear.modPass(msg.member,'manageRoles',serverData)) return msg.addReaction(gear.nope);   
+    if(!PLX.modPass(msg.member,'manageRoles',serverData)) return msg.addReaction(nope);   
 
-    const rolefind = (x)=> (msg.guild.roles.find(rl => msg.args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find(rl=> rl.id==msg.roleMentions[0]) );
+    const rolefind = (x)=> (msg.guild.roles.find(rl => args.slice(x).join(' ').toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find(rl=> rl.id==msg.roleMentions[0]) );
 
     let ACK = rand$t('responses.verbose.interjections.acknowledged',P)+" ";
     let YATT = rand$t('responses.verbose.interjections.yatta',P)+" ";
@@ -36,12 +36,12 @@ const init = async function (msg){
         try{
         if (/^<#[0-9]{11,19}>$/.test(arg1)){
             let channel = msg.channelMentions[0];     
-            POLLUX.getMessage(channel,arg2).then(message=>{
+            PLX.getMessage(channel,arg2).then(message=>{
                 if( msg.guild.roles.find(r=>r.id== rolefind(4).id )){
                     let role = rolefind(4);
                     argmoji =  arg3.replace("<:a:","").replace(">","").replace("<:","");
                     message.addReaction( argmoji ).then(ok=>{
-                        console.log({message:message.id,channel})
+
                         DB.reactRoles.set({message:message.id,channel,server:msg.guild.id}, {$addToSet:{'rolemoji':{role:role.id,emoji:argmoji }}} ).then(db=>{
                             msg.channel.send({
                                 content: success,
@@ -66,7 +66,8 @@ const init = async function (msg){
                 }
 
             }).catch(e=>{
-                msg.channel.send(noReactionsMessageError);           
+                msg.channel.send(nosuchrole);
+                console.log(e)
             })
         }else{
             return msg.channel.send(noChannelError)
@@ -74,7 +75,7 @@ const init = async function (msg){
         
         }catch(err){
             console.error(err);
-            return msg.channel.send(gear.emoji('nope') + "**ERROR** Please Contact Support~")
+            return msg.channel.send(_emoji('nope') + "**ERROR** Please Contact Support~")
         }
         
         return null;
@@ -92,13 +93,13 @@ const init = async function (msg){
             let reactionItem = messageReactionData.rolemoji.find(e=>e.emoji==emojiQuery);           
             if(arg2 && reactionItem ){
                 DB.reactRoles.set({server:msg.guild.id,message:arg1},{$pull:{rolemoji:reactionItem}});
-                POLLUX.removeMessageReaction(messageReactionData.channel,arg1,emojiQuery).catch(e=>null);
+                PLX.removeMessageReaction(messageReactionData.channel,arg1,emojiQuery).catch(e=>null);
                 msg.channel.send(reactionRemoveSuccess);
                 
             }else{
                 msg.channel.send("")
                 await DB.reactRoles.remove({server:msg.guild.id,message:arg1});
-                POLLUX.removeMessageReactions(messageReactionData.channel,arg1).catch(e=>null);
+                PLX.removeMessageReactions(messageReactionData.channel,arg1).catch(e=>null);
                 P.id = arg1
                 msg.channel.send(ACK+$t('interface.reactroles.removedAllFrom',P));               
                 
@@ -134,7 +135,7 @@ module.exports={
 
 
 function list(ReactionData,msg){
-    let embed=new gear.Embed();
+    let embed=new Embed();
     MS=$t('terms.discord.message',{lngs:msg.lang})
     CH=$t('terms.discord.channel',{lngs:msg.lang})
     RL=$t('terms.discord.role_plural',{lngs:msg.lang})

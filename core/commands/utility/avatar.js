@@ -1,4 +1,4 @@
-const gear = require('../../utilities/Gearbox');
+// const gear = require('../../utilities/Gearbox');
 const Picto = require('../../utilities/Picto');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -6,11 +6,11 @@ const Picto = require('../../utilities/Picto');
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const Target = gear.getTarget(msg);
+    const Target = PLX.getTarget(msg);
 
-    const embed = new gear.Embed()
+    const embed = new Embed()
         .image(Target.avatarURL)
         .author(Target.tag, null, "https://pollux.fun/p/"+Target.id)
         .color(await(Picto.avgColor(Target.avatarURL)));

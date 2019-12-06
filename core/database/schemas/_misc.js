@@ -7,6 +7,27 @@ const Schema = mongoose.Schema
 const Mixed = Schema.Types.Mixed;
 const utils = require('../../structures/PrimitiveGearbox.js');
 
+
+
+
+
+const UserCollection = new Schema({
+  id: String,
+  collections: Mixed
+});
+
+
+const usercols     = mongoose.model('UserCollection', UserCollection, 'usercollections');
+usercols.set     =  utils.dbSetter;
+usercols.get     =  utils.dbGetter; 
+usercols.new = payload => {
+    let aud = new usercols(payload);
+    aud.save((err) => {
+      if (err) return console.error(err);       
+    });
+ }  
+
+
 const Audit = new Schema({
   from: String,
   to: String,
@@ -17,6 +38,8 @@ const Audit = new Schema({
   timestamp: Number,
   transactionId: String 
 });
+
+
 
 const Buyable = new Schema({
   id:String,
@@ -90,6 +113,23 @@ const RelationShipModel = new Schema({
 },{ strict: false });
 
 
+
+const GiftItem = new Schema({
+  id:String,
+  creator: String,
+  holder: String,
+  type: String, // Cosmetic | Item
+  querystring: Mixed,
+  icon: {type: String, default: 'wrap'},
+  message: String,
+  
+},{ strict: false });
+
+const gift    = mongoose.model('Gift', GiftItem, 'GIFTS');
+gift.set    =  utils.dbSetter;
+gift.get    =  utils.dbGetter; 
+
+
   const audit     = mongoose.model('Audit', Audit, 'transactions');
       audit.set     =  utils.dbSetter;
       audit.get     =  utils.dbGetter; 
@@ -155,24 +195,11 @@ const RelationShipModel = new Schema({
       marketplace.set    =  utils.dbSetter;
       marketplace.get    =  utils.dbGetter; 
       marketplace.new = payload => {
-        marketplace.findOne({
-          id: payload.id
-        }, (err, newUser) => {
-          if (err) {
-            console.error(err)
-          }
-          if (newUser) {
-            // Nothing
-          } else {
-            let cmmd = new marketplace({
-              id: payload.id,
-            });
-            cmmd.save((err) => {
-              if (err) return console.error(err);
-              console.log("[NEW MARKET POST]".blue);
-            });
-          }
-        })
+        let aud = new marketplace(payload);
+        aud.save((err) => {
+          if (err) return console.error(err);
+          console.log("[NEW MARKETPLACE ENTRY]".blue,payload);
+        });
       }
 
   const relationships    = mongoose.model('Relationship', RelationShipModel, 'relationships');
@@ -225,4 +252,4 @@ const RelationShipModel = new Schema({
         })
       }
 
-module.exports={ audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
+module.exports={ gift, usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 

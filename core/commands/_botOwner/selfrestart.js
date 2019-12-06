@@ -1,6 +1,6 @@
 
 const init = async function (){
-    process.exit()
+   PLX.softKill()
 }
 
 module.exports={
@@ -10,5 +10,5 @@ module.exports={
     ,perms:3
     ,cat:'dev'
     ,botPerms:[ ]
-    ,aliases:[]
+    ,aliases:['rst']
 }

@@ -9,23 +9,40 @@
         "SPH": "Safir",
         "SPH_fullname": "",
         "SPH_plural": "Safire",
+        "synthGems": "",
+        "cosmoFragment": "",
+        "cosmoFragment_plural": "",
         "C": "Obisnuit",
         "U": "Neobisnuit",
         "R": "Rar",
         "SR": "Super Rar",
         "UR": "Ultra Rar",
+        "thevoid": "vid",
+        "evToken": "",
+        "evToken_plural": "",
         "lootbox": "",
         "lootbox_plural": "Lootbox-uri",
-        "thevoid": "vid",
-        "evToken": ""
+        "consumable": "",
+        "consumable_plural": "",
+        "junk": "",
+        "junk_plural": "",
+        "key": "",
+        "material": "",
+        "material_plural": "",
+        "boosterpack": "",
+        "boosterpack_plural": ""
     },
     "terms": {
+        "transferDenied": "",
+        "TransactionFee": "",
+        "TransactionID": "",
         "thanks": "",
         "thanks_short": "",
         "thx": "",
         "total": "Total",
         "amount": "Cantitate",
         "overview": "Prezentare generală",
+        "dashboard": "",
         "coinHeads": "Cap",
         "coinTails": "Cozi",
         "qnt": "Cantitate",
@@ -47,6 +64,9 @@
         "bet": "Pariu",
         "level": "Nivel",
         "levelUp": "Nivel Nou!",
+        "price": "",
+        "droppable": "",
+        "event": "",
         "discord": {
             "message": "",
             "message_plural": "",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Pare ca Rolul este deja in lista.",
             "nosuchrole": "",
             "kbanNone": "Am nevoie de or tinta pe care sa o interzic, as putea sa te interzic pe tine oricand.",
+            "cantKickHim": "",
+            "cantKickSelf": "",
             "superRoleNope": "**{{user}}** nu are Rolul **{{group}}**.",
             "banNone": "Am nevoie de or tinta pe care sa o interzic, as putea sa te interzic pe tine oricand.",
             "unpermB": "Se pare ca nu am destule permisiuni pentru a procesa acest lucru.",
@@ -128,6 +150,15 @@
         "verbose": {
             "jas": [
                 "Bene, doar o secunda...",
+                "",
+                ""
+            ],
+            "opinion_decks": [
+                "",
+                "",
+                "",
+                "",
+                "",
                 "",
                 ""
             ],
@@ -202,6 +233,11 @@
             "failure": "O nu, se pare ca s-a intamplat ceva. Imi pare rau."
         },
         "equip": {
+            "getMoreBG": "",
+            "NFSALE": "",
+            "equipOwned": "",
+            "buyThisBG": "",
+            "successBG": "",
             "nomedals": "O? Se pare ca nu ai nici o medalie pe care sa o echipezi. Poate ar trebuii sa cumperi mai inai una?",
             "equipSlot": "Alegeti un slot pentru a va echipa noua medalie!",
             "timeout": "Nu ati vrut sa va echipati Medalia? Sunati-ma din nou cand decideti sa echipati una.",
@@ -255,6 +291,74 @@
             "destroyWhat": "Distruge ce?",
             "cantDestroy": "Nu pot distruge asta.",
             "destroyed": "Obiect distrus! Asta este ce a ramas de la el:"
+        },
+        "marry": {
+            "needRing": "",
+            "ringTutorial": "",
+            "noneOfThisRing": "",
+            "availableRings": "",
+            "proposal": "",
+            "actuallyNone": "",
+            "saidYes": "",
+            "saidNo": "",
+            "saidNothing": "",
+            "addToFeatured": "",
+            "addToFeatured2": "",
+            "addToFeatured3": "",
+            "alreadyMarriedUp": "",
+            "alreadyMarriedInf": "",
+            "cantMarrySelf": "",
+            "cantMarryPollux": ""
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Sunteti de acord sa divortati de catre {{user}}? O taxa de %EMJ% **5,000 Rubine** va fi aplicata **amandurora**. LovePoints-urile amandurora vor fi **injumatatite**!",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "",
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
             "didyoumean": "",
-            "didyoumeanOne": ""
+            "didyoumeanOne": "",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} este membru din: {{joinedstamp}}",
             "aviOK": "Oki-doki, noua mea fotografie este acesta. Puteti schimba sa scimbati profilul din nou in {{cooldown}}",
             "colorChange": "Culoarea ta preferată a fost salvată!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "",
+            "noSuchBooster": "",
+            "noSuchItem": "",
+            "browsingBox": "",
+            "browsingBooster": "",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "",
-            "confirmDelete": ""
+            "confirmDelete": "",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "",
+            "title": ""
+        },
+        "kickban": {
+            "waitingForReason": "",
+            "noReason": "",
+            "cancelled": "",
+            "userKicked": "",
+            "kickFlavs": [
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "userBanned": "",
+            "userSoftBanned": "",
+            "banFlavs": [
+                "",
+                "",
+                "",
+                ""
+            ],
+            "includeReason": "",
+            "userKickError": ""
         },
         "feed": {
             "newYoutube": "",
+            "newTwitchStatus": "",
             "noDefault": "",
             "urlPresent": "",
             "noFeed": "",
@@ -425,9 +639,7 @@
             "timeout": "Timpul bombei nucleare a expirat",
             "completed": "Informatia a fost stears si resetat cu succes. Incercati sa utilizati **+ serverinfo** pentru a vedea daca totul a fost resetat corect. Nu sunt raspunzator de contaminarea ulterioara a norului readioactiv.\n"
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "",
             "removeAll": "",
@@ -499,6 +711,9 @@
             "split": "",
             "double": "",
             "pass": "",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

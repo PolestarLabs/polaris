@@ -9,23 +9,40 @@
         "SPH": "Safira",
         "SPH_fullname": "Fragmentos de Safira",
         "SPH_plural": "Safiras",
+        "synthGems": "Gemas de Síntese",
+        "cosmoFragment": "Fragmento Cósmico",
+        "cosmoFragment_plural": "Fragmentos Cósmicos",
         "C": "Comum",
         "U": "Incomum",
         "R": "Raro",
         "SR": "Super Raro",
         "UR": "Ultra Raro",
+        "thevoid": "void",
+        "evToken": "Token de Evento",
+        "evToken_plural": "Tokens de Evento",
         "lootbox": "Caixa",
         "lootbox_plural": "Caixas",
-        "thevoid": "void",
-        "evToken": "Token de Evento"
+        "consumable": "Consumível",
+        "consumable_plural": "Consumíveis",
+        "junk": "Tralha",
+        "junk_plural": "Tralhas",
+        "key": "Itens-Chave",
+        "material": "Material",
+        "material_plural": "Materiais",
+        "boosterpack": "Boosterpack",
+        "boosterpack_plural": "Boosterpacks"
     },
     "terms": {
+        "transferDenied": "Transferência Negada",
+        "TransactionFee": "Taxa de Transação",
+        "TransactionID": "ID da Transação",
         "thanks": "valeu~",
         "thanks_short": "vlw",
         "thx": "$t(terms.thanks_short)",
         "total": "Total",
         "amount": "Quantidade",
         "overview": "Geral",
+        "dashboard": "Painel",
         "coinHeads": "Cara",
         "coinTails": "Coroa",
         "qnt": "Quantidade",
@@ -47,6 +64,9 @@
         "bet": "Aposta",
         "level": "Nível",
         "levelUp": "Level Up!",
+        "price": "Custo",
+        "droppable": "Dropável",
+        "event": "Evento",
         "discord": {
             "message": "Mensagem",
             "message_plural": "Mensagens",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Ei, desculpa, esse Cargo já está incluído!",
             "nosuchrole": "Oxe, não consegui achar esse cargo. Digite o nome certinho, por favorzinho.",
             "kbanNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
+            "cantKickHim": "Eu meio que não posso fazer nada com essa pessoa. Não tenho permissão para prejudicar meus superiores.",
+            "cantKickSelf": "Você não pode banir ou expulsar a si mesmo, bobinho!",
             "superRoleNope": "**{{user}}** não faz parte do Cargo **{{group}}**!",
             "banNone": "Tu precisa me dizer no cu de quem eu vou enfiar esse martelo ~~antes que eu enfie no teu~~!",
             "unpermB": "Rapaz, acho que não tenho Permissões para processar este comando.",
@@ -120,7 +142,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Ei! O texto a ser traduzido não pode exceder __1000 Caracteres__!**\n Mas relaxa, eu aparei o texto pra você~",
-            "open1": "Dá licença, é que \"open\" é um verbo transitivo, o que significa que você tem que me dizer *o que* abrir~ Tente uma dessas opções, xuxu:",
+            "open1": "Desculpe-me, mas *\"open\"* é um verbo transitivo, o que significa que você precisa me dizer *o que* tenho que abrir~ Tente uma dessas opções:",
             "open2": "Foi mal, mas isso não é algo que eu consiga (ou queira) abrir. Mas tenho certeza que posso abrir um desses pra você: ",
             "timesOutIn": "Você tem {{s}} segundos antes que a ação padrão seja tomada",
             "enterVoiceBetterExperience": "Entre num canal de voz para ter a experiência completa desse comando~"
@@ -130,6 +152,15 @@
                 "OK, só um segundinho...",
                 "Só um segundinho...",
                 "Um momentinho, por gentileza..."
+            ],
+            "opinion_decks": [
+                "Boa escolha!",
+                "Esse é um dos meus favoritos~~",
+                "Eu gostava mais do outro...",
+                "É, dá pro gasto.",
+                "Esse é pra dar sorte.",
+                "Faça o favor de me devolver esse baralho intacto.",
+                "Lave suas mãos antes de usar essas cartas."
             ],
             "interjections": {
                 "acknowledged": [
@@ -202,6 +233,11 @@
             "failure": "Opsie! Acho que deu errado. Desculpa. :<"
         },
         "equip": {
+            "getMoreBG": "Obtenha mais Planos de Fundo",
+            "NFSALE": "NÃO ESTÁ À VENDA",
+            "equipOwned": "Você já tem este plano de fundo. Deseja equipá-lo?",
+            "buyThisBG": "Comprar este Plano de Fundo?",
+            "successBG": "`Sucesso!' Plano de fundo adquirido e equipado! 😉",
             "nomedals": "Você não tem medalhas pra equipar não, amigx... Mas pode comprar algumas!",
             "equipSlot": "Escolhe aí o Slot para equipar sua nova medalha!",
             "timeout": "Acho que você esqueceu de terminar de equipar. Quando quiser de novo me chama!",
@@ -255,6 +291,74 @@
             "destroyWhat": "Destruir o quê?",
             "cantDestroy": "Eu não posso destruir isso.",
             "destroyed": "Item destruído! Isso foi o que sobrou dele:"
+        },
+        "marry": {
+            "needRing": "Você precisa de um Anel para propor, onde estão suas maneiras?",
+            "ringTutorial": "*Você não tem nenhuma anel de casamento para ser usado.*\n\nPara conseguir um anel, você precisa fabricar um.\n\n> Pelo meu site, você pode comprar um **Anel Incompleto** na [**Oficina de Crafting**]({{craftingURL}} \"Oficina de Crafting da Pollux!\") e gastar Rubines, Jades ou Sapphires e algum material adicional para criar uma Joia para ele. Você também pode usar todos os seus recursos para criar o mais ofuscante, belo e majestoso anel de todos!\n\n> Usando o comando `{{prefix}}craft`, você precisa criar o **Anel Incompleto** (`{{prefix}}craft partial-ring`) e adicionar a gema de sua escolha com `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Esse 4 são os *anéis básicos* feitos somente com gemas. Outros itens permitirão que você faça anéis diferentes!\n",
+            "noneOfThisRing": "Verifique seus bolsos de novo, porque não achei nada parecido no seu inventário.",
+            "availableRings": "Os anéis disponíveis são:",
+            "proposal": "{{userA}} pediu **{{userB}}** em casamento com o anel**{{ringname}}**.\n{{userB}}, você aceita?",
+            "actuallyNone": "Na verdade, você não tem nenhum. Vai arranjar um! **A-G-O-R-A-!**",
+            "saidYes": "{{userB}} disse SIM!",
+            "saidNo": "{{userB}} disse não...",
+            "saidNothing": "{{userB}} fugiu de você... já está lá longe... ai ai... quer beber alguma coisa?",
+            "addToFeatured": "Gostaria de mostrar {{userB}} como seu amante em destaque no seu perfil?",
+            "addToFeatured2": "{{userB}}, gostaria de fazer o mesmo com {{userA}}?",
+            "addToFeatured3": "Mostrar seu novo amante no Cartão de Perfil?",
+            "alreadyMarriedUp": "Parece que você já está casado com {{userB}}. Gostaria de atualizar o anel de *{{ringA}}* para **{{ringB}}**?",
+            "alreadyMarriedInf": "Você já está casado com {{userB}} com um anel idêntico ou superior (*{{ringB}}*)! O que você está tentando fazer?",
+            "cantMarrySelf": "Eu sou bem pra frente e tal, mas... casar consigo mesmo é um pouco demais, né?",
+            "cantMarryPollux": "ATA! Sai daqui, sai!"
+        },
+        "ship": {
+            "needTupipo": "A Calculadora de Amor não funciona com apenas uma pessoa, querido.",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "Vish. _Aí não, em..._",
+                    "SEUS HORÓSCOPOS NÃO SÃO COMPATÍVEIS, FAVOR ABSTER-SE DE QUALQUER CONTATO FUTURO."
+                ],
+                [
+                    "Bom, a fila anda, né?",
+                    "Mesmo que vocês se conheçam, vocês não querem se conhecer _tanto_ assim."
+                ],
+                [
+                    "Vocês dois poderiam funcionar como um casal tão bem como sorvete numa salada.",
+                    "Ei! Vocês não se odeiam... Já é um começo, né?"
+                ],
+                [
+                    "É, dá pra sentir uma química. Tipo vinagre com bicarbonato de sódio. Dá aquela espumada, mas nada demais.",
+                    "Mais alguns encontros e talvez algumas faíscas vão surgir entre vocês!"
+                ],
+                [
+                    "Uau, quase um match! ",
+                    "Toda relação precisa de um pouco de trabalho, eu acho."
+                ],
+                [
+                    "É um match! A sorte de vocês está quase tão boa quanto a minha!",
+                    "Hmmm, eu assistiria esse drama romântico em um cinema fácil fácil."
+                ],
+                [
+                    "Só entre a gente em, mas acho que esses dois tão querendo se pegar de jeito.",
+                    "O amor está no ar~"
+                ],
+                [
+                    "Pssiu, eu e o Flicky estamos apostando em vocês. Já fizeram o anel de casamento?",
+                    "Não se segura! Confesse seus sentimentos!"
+                ],
+                [
+                    "Eu S-H-I-P-O demais!",
+                    "Vocês dois são dois pãezinhos de ló!"
+                ],
+                [
+                    "Nossa, vocês são quase _perfeitos_ um para o outro!",
+                    "Então, qual de vocês vai cortar o bolo?"
+                ],
+                [
+                    "O CASALZÃO DA POR%@ CHEGOU.",
+                    "Almas gêmeas! Incrível!"
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",
@@ -368,23 +472,133 @@
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "Criando `{{item_name}}`",
             "noitem": "Não consegui encontrar este item",
+            "noitemu": "Não consegui achar esse item ou algo parecido.",
+            "materialMissing": "Há materiais faltando no seu inventário, eu não posso criar isso.",
+            "materialPresent": "Todos os materiais estão disponíveis no seu inventário, prosseguir com o crafting?",
             "didyoumean": "Eu não consegui achar esse item. Por acaso, está falando de algum desses?",
-            "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?"
+            "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?",
+            "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de forja esfriou.",
+            "cancel": "Cancelado! Sério que você só queria desperdiçar meu tempo?",
+            "crafted": "Sucesso! Olhe, aqui está seu item! Novinho e brilhante~"
         },
         "misc": {
             "memberSince": "{{target}} é membro desde: {{joinedstamp}}",
             "aviOK": "Tá bom, troquei minha foto por essa daqui. Você pode me pedir pra trocar de foto de novo em: {{cooldown}}",
             "colorChange": "Sua cor favorita foi salva!"
+        },
+        "transfer": {
+            "lastdly": "Última Transferência de Lootbox:",
+            "next": "Próxima transferência disponível {{in X hours}}",
+            "transferboxto": "Transferindo Lootbox para {{userB}}",
+            "transferthisboxto": "Transferindo **{{boxname}}** para {{userB}} ",
+            "timeout": "**Acabou o tempo!**",
+            "cancel": "Transferência Cancelada",
+            "success": "**{{boxname}}** transferida para {{userB}}"
+        },
+        "give": {
+            "cooldown": "Peraí! Você só pode transferir novamente em {{remaining}}!"
+        },
+        "inventory": {
+            "noSuchBox": "Olha, eu não vejo nenhuma caixa desse tipo aqui e tenho certeza que você também não.",
+            "noSuchBooster": "Não vejo esse Booster em seu inventário. Você deve ter perdido ele nessa bagunça.",
+            "noSuchItem": "Consigo ver aquele monte de tralha no seu inventário, mas nada desse item em particular...",
+            "browsingBox": "Esse é seu Inventário de **Lootboxes**\n*Abra-os para conseguir várias coisinhas legais!*",
+            "browsingBooster": "Esse é seu Inventário de **Booster Packs**\n*Você pode abrí-los para conseguir Stickers para seu perfil*",
+            "browsingCONSUMABLE": "Esse é seu Inventário de **Consumíveis**\n*Eles têm uso limitado ou desaparecem após o uso, alguns podem ser usados diretamente.*",
+            "browsingJUNK": "Este é o seu inventário de **Tralhas**\n*Estes itens geralmente não servem nenhum propósito, mas podem ser usados em algumas situações.*",
+            "browsingKEY": "Esse é seu Inventário de **Itens-Chave**\n*Estes itens desbloqueiam certos recursos de outros comandos ou módulos inteiros.*",
+            "browsingMATERIAL": "Esse é seu Inventário de **Materiais de Crafting**\n*Você pode usá-los para criar outros itens.*",
+            "emptyJokes": [
+                "Encha esse inventário com suas lágrimas, pois está bem vazio.",
+                "Não tem nada neste Inventário além de aranhas.\nElas todas te encaram e aplaudem. _Bravo!_",
+                "O inventário está tão vazio quanto seu coração.",
+                "Nada pra ver aqui. Segue o baile.",
+                "Esse inventário contém: decepção.",
+                "<Insira um item aqui>",
+                "...necas de pitibiriba.",
+                "O inventário está vazio, mas você ainda pode enchê-lo com suas lágrimas.",
+                "Você deve estar bem otimista pra pensar que os itens vão do nada brotar nesse inventário.",
+                "Esse inventário tá vazio pra c#@&**$.",
+                "Você tem... um monte de nada, parabéns.",
+                "Você não vai achar um inventário vazio mais chique que esse em nenhum lugar.",
+                "Você abre o inventário vazio e encara o fundo. O inventário olha de volta friamente.",
+                "Agora esse inventário só tá cheio de decepção...",
+                "Você olha para o abismo, e o abismo olha de volta para você.",
+                "\"FEED ME SEYMOUR\"",
+                "Você abre o inventário à visão familiar do nada. Tenho certeza que sentiu falta disso!",
+                "Agora que está vazio, esse inventário parece triste e solitário.",
+                "Quando você olha o suficiente pro inventário vazio, o inventário olha de volta para você.",
+                "Esse inventário um dia já foi cheio de tesouros maravilhosos. Daí tu chegou...",
+                "Esse inventário está em greve até que cumpra as reivindicações:\n• parar de ser pobre;\n• arranjar uns itens maneiros.",
+                "*Um único tufo de poeira rola de um lado do inventário para o outro*",
+                "Enquanto você abre o inventário vazio, várias almas aprisionadas saem gritando em um turbilhão de fumaça verde... Deve ser normal, eu acho.",
+                "O inventário está vazio, mas pelo menos o interior parece muito bom. Forrado em veludo e tudo mais.",
+                "Não tem nada aqui, mas imagina tudo que PODERIA ter...",
+                "Mesmo não havendo nada aqui, um monte de confete colorido explode em seu rosto! Yay!",
+                "Esse inventário está tão vazio como minha criatividade depois de escrever todas essas mensagens"
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "Cancelado!",
+            "timeout": "Tempo esgotado!",
+            "cantAfford": "Ah, você não tem o suficiente... :(",
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
-            "confirmDelete": "Confirmar exclusão?"
+            "confirmDelete": "Confirmar exclusão?",
+            "alotWentOn": "Muita coisa rolou nesse dia...",
+            "alreadyOwnThis": "Ei, você já tem esse item!"
+        },
+        "brackets": {
+            "maxRR": "Limite Máximo para Torneio de Pontos Corridos: 16",
+            "maxBK": "Limite máximo para Chaves de Torneio: 32",
+            "RRt": ":trophy: Chaves do Torneio de Pontos Corridos",
+            "BKt": ":trophy: Chaves de Torneio",
+            "match": "Partida",
+            "round": "Round",
+            "preround": "Pré-Round",
+            "team": "TIME {{X}}",
+            "winner": "Ganhador",
+            "bracketX": "Chave {{AB}}"
+        },
+        "synthfrag": {
+            "disenchant": "Desencantar este plano de fundo {{rarity_emoji}} em **{{count}} $t(keywords.cosmoFragment)**?",
+            "cosmeticSynth": "Síntese de Itens Cosméticos",
+            "confirmSynth": "Você quer que eu sintetize isto?",
+            "nogemsforThis": "Parece que você não tem gemas suficientes para a síntese..."
+        },
+        "booster": {
+            "checkStickersAt": "Verifique seus stickers e equipe-os na {{dashboard}}",
+            "title": "{{boostername}} Stickers Booster"
+        },
+        "kickban": {
+            "waitingForReason": "Ainda esperando pela razão...",
+            "noReason": "Nenhuma razão especificada. Cancelado.",
+            "cancelled": "Cancelado pelo moderador",
+            "userKicked": "Eu dei um chute *de leve* em {{user}} pra fora daqui.",
+            "kickFlavs": [
+                "Fui gentil o bastante para ainda conseguirem voltar andando.",
+                "Espero que ainda consiga sentar depois disso.",
+                "Não tentem isso em casa, crianças.",
+                "Nenhum animal foi machucado.",
+                "Nada que um pouco de xarope não resolva... Eu acho."
+            ],
+            "userBanned": "Eu *não-tão-de-leve* bani {{user}}. Essa pessoa não é mais bem-vinda aqui,",
+            "userSoftBanned": "Eu *gentilmente* botei {{user}} pra fora daqui. É uma pena que não consegui obliterá-lo totalmente,",
+            "banFlavs": [
+                "Espero que essa criatura mentecapta pise em um LEGO.",
+                "agora vocês podem zoar esse a*ban*tesma.",
+                "quem é o próximo?",
+                "não sejam como esse estrupício, crianças."
+            ],
+            "includeReason": "Você se esqueceu de me dizer o *porquê* dessa pessoa estar sendo punida.\nEscreva a razão abaixo: `(20s)`",
+            "userKickError": "Algo deu errado, vish."
         },
         "feed": {
             "newYoutube": "**{{tuber}} postou um novo vídeo!** Dê uma olhadinha em:",
+            "newTwitchStatus": "**{{streamer}}** está ao vivo agora!",
             "noDefault": "Você não me disse qual canal postar e não há nenhum canal padrão definido.",
             "urlPresent": "Eu já estou cuidando das postagens desse aí, mas vou atualizar o canal de destino~",
             "noFeed": "Não há Feeds configurados neste Servidor",
@@ -425,9 +639,7 @@
             "timeout": "Nuke Timeout! Nada foi alterado",
             "completed": "Informações do servidor apagadas e redefinidas com sucesso. Tente usar **+serverinfo** para ver se tudo foi redefinido adequadamente. Eu não me responsabilizo por qualquer contaminação radioativa futura."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Cargos por Reação de {{server}}:",
             "removeAll": "Eu removi todos os Registros de Reações daqui. Mas você terá que limpar manualmente as reações das próprias mensagens.",
@@ -445,7 +657,7 @@
         },
         "help": {
             "greetings": "**Saudações! Eu sou a Pollux. A nova maid nomeada para o seu servidor.**\nAqui está uma breve explicação sobre minhas habilidades:\n  • O Prefixo Padrão é `+`, você pode mudá-lo com `+prefix <Novo Prefixo>`. \n  • O Prefixo Global é `p!`, útil para usuários que não sabem o prefixo customizado, pode ser desabilitado no **Dashboard**.\n  • O Prefixo Universal é `plx!` e não pode ser desabilitado.",
-            "basics": "\n **Os Básicos** – Começar sua jornada comigo é fácil como fazer malabarismo com costelinha de porco!\n...todo mundo já fez isso, né? Enfim, vamos ao que interessa!\n\nEsses são só alguns dos {{commandcount}} comandos que você pode me dar!\n ",
+            "basics": "\n  **O Básico** - Começar a se divertir comigo é simples como fazer malabarismo com costelinha de porco!\n...todo mundo já fez isso, é? Enfim, vamos ao que interessa!\n\nEsses são só alguns dos {{commandcount}} comandos que eu tenho!  \n",
             "cmdlist": "LISTA DE COMANDOS",
             "quick_getgo": "Comandos simples que você deve saber:",
             "quick_useful": " Comandos que você pode achar úteis:",
@@ -456,11 +668,11 @@
             "notenough": "Esta caixinha não é o bastante pra você?",
             "trythese": "Tente um desses:",
             "curr_info": "Informações de Economia",
-            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.   \n        \n    • Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox**.\n​\n",
-            "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`daily`), Lacais (`+box`) e Joguinhos (`+blackjack`, `+slots`, etc.). Além de trocas com outros usuários, assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de `+daily` de 10 dias.\n \n",
-            "jades_desc": " *\"Moeda\" de Crafting: eu uso essas frágeis gemas – sem valor além disso – para criar itens especiais, só pra você!*\n        Pode ser obtida de Lootboxes, destruindo itens, doando ou comprando.",
+            "currency_overview": "Meu sistema de moeda é relativamente complexo e tem várias limitações e características de proteção. Cada transação é registrada e pode ser rastreada facilmente, o que garante que seu trabalho duro não será eclipsado por trapaceiros. Registramos mais de 30 mil transações todos os dias.\n        \n    Todo mundo começa com um punhado de **Jades** e **Rubines**, e com uma **Lootbox*.\n",
+            "rubines_desc": "\n*Minha moeda principal, gemas rosa-brilhante feitas de scalenohedrons hexagonais especiais de Al₂O₃:Cr, usadas para praticamente tudo!*\n        Pode ser obtida a partir de Bônus Diários (`{{prefix}}daily`), Lootboxes (+box) e Joguinhos (+blackjack, +slots, etc.). Além de trocas com outros usuários, e assim que você alcançar o Nível 5 e tiver pelo menos uma Sequência de +daily de 10 dias.\n",
+            "jades_desc": " *\"Moeda\" de Crafting: eu uso essas gemas verde-pálido – fora isso inúteis – para criar itens especiais, só pra você!*\n        Podem ser obtidas por Lootboxes, destruindo itens, doando ou comprando.",
             "sapphires_desc": "*Moeda Premium: fragmentos azul-vibrante das melhores gemas de Safira, usadas pra criar itens ou como moeda para comprar coisinhas exclusivas!*\n        Só pode ser obtida com doações, sendo compradas individualmente, ou por eventos especiais. Você ganha uma Safira a cada 200 ou 365 Dailies, e há uma chance de 0.1% de ganhá-las em Lootboxes Ultra Raras.",
-            "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **` Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`** \n",
+            "lootboxes_desc": "*Baús especiais que contêm muitos mimos como Fundos, Medalhas, Rubines e Boosters de Sticker*.\n        Só podem ser obtidos subindo de nível ou de drops aleatórios, drops acontecem com base na atividade do chat.\n\n         **`Spamming intencional para forçar drop de Caixas, trapaças ou troca de itens com Contas Alternativas pode te fazer ser banido da Pollux e de outros bots também.`**\n",
             "end": "\n**A lista de Comandos completa pode ser achada em <https://pollux.gg/command>**\n\nVeja nossas Parceiros em: **<https://pollux.gg/partners>**\nVeja ou envie artes criadas for fãs em: **<https://pollux.gg/fanart>**\nVeja seu perfil público em: **<https://pollux.gg/profile/me>**\n\n**Cosméticos**\nLoja de planos de fundo: **https://pollux.gg/bgshop**\nLoja de medalhas: **https://pollux.gg/medalshop**\nOficina de Criação: **https://pollux.gg/crafting**\nStickers virtuais: **<https://pollux.gg/stickers>** (para stickers físicos, cheque o Servidor de Suporte)\nInformações sobre eventos: **<https://pollux.gg/events>**\n\nMe apoie em **<https://patreon.com/Pollux>** ou **<https://pollux.gg/donate>**\nMe siga no Twitter: **<https://twitter.com/maidPollux>**\n\n◉◎◈◎◉\n\n**Para outros assuntos, cheque o __Dashboard__: <https://pollux.gg/dashboard>**\nOu entre no meu servidor de suporte: **​ https://discord.gg/rEBCccS ​**\nMe convide para o seu servidor em: **<https://pollux.gg/invite>**\n"
         }
     },
@@ -499,6 +711,9 @@
             "split": "`split` para dividir sua mão,",
             "double": "`double` para dobrar sua aposta e puxar uma última carta,",
             "pass": "ou `stand` para passar.",
+            "splitbreak": "Detalhamento dos Splits:",
+            "switchdeck": "Agora vamos jogar BlackJack usando o baralho **{{deckname}}**!",
+            "switchdeckEgg": "Agora vamos jogar BlackJack usando o caralho– digo, o **baralho** {{deckname}}!\nAi meu deus que horror dsclp!",
             "even": "Parece que empatamos, então aqui estão seus Rubines."
         },
         "slots": {

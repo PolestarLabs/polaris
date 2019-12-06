@@ -1,16 +1,15 @@
-const gear = require("../utilities/Gearbox");
-module.exports = {
-    run: async function yesNo(m,message,yes=false,no=false,timeout=false,options){
+// const gear = require("../utilities/Gearbox/global");
+module.exports =  async function yesNo(m,message,yes=false,no=false,timeout=false,options){
     options = options || {}
     let embed = options.embed|| (m.embeds||[])[0] || false;
     let avoidEdit = options.avoidEdit || !embed  || false;
+    let clearReacts = typeof options.clearReacts == 'undefined' || options.clearReacts;
     let time = options.time || 15000;
     let deleteFields = typeof options.deleteFields ? options.deleteFields : true;
-    console.log(avoidEdit)
     let strings = options.strings || {}
-        strings.confirm =strings.confirm|| "OK"
-        strings.timeout   =strings.timeout|| "TIMEOUT"
-        strings.cancel    =strings.cancel|| "CANCEL"
+        strings.confirm   = "✔️" + (strings.confirm|| "")
+        strings.timeout   = "🕑" + (strings.timeout|| "")
+        strings.cancel    = "❌" + (strings.cancel || "")
 
         
     let YA = {
@@ -26,11 +25,12 @@ module.exports = {
           m.addReaction(NA.r);
     const reas = await m.awaitReactions( {
         maxMatches: 1,
-        authorOnly:message.author.id,
+        authorOnly: options.approver || message.author.id,
         time
       }  
     ).catch(e => {
-    m.removeReactions().catch();
+      if(clearReacts)
+        m.removeReactions().catch(e=>null);
     if(embed && !avoidEdit){
       embed.color =16499716;
       if(deleteFields===true) embed.fields = [];
@@ -38,13 +38,14 @@ module.exports = {
       
       m.edit({embed});
     }
-    if (timeout && typeof timeout == 'function')  return timeout();
+    if (timeout && typeof timeout == 'function')  return timeout(m);
     else if (timeout)  return timeout;
   });
   if (!reas || reas.length === 0 ) return;
 
   function cancellation(){
-    m.removeReactions().catch();
+    if(clearReacts)
+      m.removeReactions().catch(e=>null);
     if(embed && !avoidEdit){
       embed.color = 16268605
       if(deleteFields===true) embed.fields = [];
@@ -52,7 +53,7 @@ module.exports = {
       
       m.edit({embed}) 
     }
-    if (no && typeof no == 'function')  return no();
+    if (no && typeof no == 'function')  return no(m);
     else if (no)  return no;
   }
   
@@ -61,15 +62,15 @@ module.exports = {
   }
   
   if (reas.length === 1 && reas[0].emoji.id == YA.id) {
+    if(clearReacts)
+      m.removeReactions().catch(e=>null);
     if(embed && !avoidEdit){
-      m.removeReactions().catch();
       embed.color = 1234499;
       if(deleteFields===true) embed.fields = [];
       embed.footer ={text: strings.confirm};
       m.edit({embed});
     }
-      if (yes && typeof yes == 'function')  return yes(cancellation);
+      if (yes && typeof yes == 'function')  return yes(cancellation,m);
       else if (yes)  return yes;
   } 
   }
-}

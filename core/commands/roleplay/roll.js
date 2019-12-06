@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 const cmd = 'roll';
@@ -10,19 +10,19 @@ const v={}
 
 
 const P = {user:message.member.username,lngs:message.lang,prefix:message.prefix}
-  if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
+  if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,message,opt:this.cat}))return;
 
 
 let DICE_REGEX = /([0-9]* *d[0-9]+)/g
 let DICE_EMOTES={
   "2": "<:exchange:446901834246782976>",
-  "4":     gear.emoji("d4"),
-  "6":     gear.emoji("d6"),
-  "8":     gear.emoji("d8"),
-  "10":    gear.emoji("d10"),
-  "12":    gear.emoji("d12"),
-  "20":    gear.emoji("d20"),
-  "any":   gear.emoji("d20")
+  "4":     _emoji("d4"),
+  "6":     _emoji("d6"),
+  "8":     _emoji("d8"),
+  "10":    _emoji("d10"),
+  "12":    _emoji("d12"),
+  "20":    _emoji("d20"),
+  "any":   _emoji("d20")
 }
 
 
@@ -32,7 +32,7 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
 
   
   const userDATA = await DB.users.get({id:message.author.id});
-  let variables = (userDATA.switches||{}).variables//||[]).filter(va=> !isNaN(Number(va.value)));
+  let variables = (userDATA.switches||{}).variables ||[] //||[]).filter(va=> !isNaN(Number(va.value)));
  
   let counter = 0
   while(rollEq.includes("!")){
@@ -46,7 +46,6 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
   }
   
   variables.forEach(vari=>{
-    console.log('oks')
     let regex = new RegExp("\\b"+vari.tag+"\\b","g");
     rollEq = rollEq.replace(regex,(vari.value+" "))
    // message.reply("`"+rollEq+"`")
@@ -94,7 +93,7 @@ let notThisPls = $t("games.dice.exceedLim",P);
     let rollTotal = 0
     
     for (j=0;j<diceAmount;j++){
-      let rand = gear.randomize(1,diceFaces);
+      let rand = randomize(1,diceFaces);
       rollTotal+= rand
       if(!NOSTREAK){
         
@@ -180,10 +179,10 @@ if((final+overview+5).length>2000){
 
   message.channel.send(final_pre+overviewPre)
     .then(async mes=>{
-          await gear.wait(2);
+          await wait(2);
           mes.edit(""+final+overviewPre)
             .then(async me2=>{
-                   await gear.wait(1);
+                   await wait(1);
                    me2.edit(final+ overview)
           })
   }).catch(e=>message.reply(notThisPls))

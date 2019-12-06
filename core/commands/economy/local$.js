@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 const ECO = require("../../archetypes/Economy");
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -7,7 +7,7 @@ const ECO = require("../../archetypes/Economy");
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     msg.author.customCurr = msg.author.customCurr || {}
     msg.author.customCurr[msg.guild.id] =  msg.author.customCurr[msg.guild.id] || 0
@@ -69,7 +69,7 @@ const init = async function (msg){
         Icon: ${pIcon}
         Investment: ${pInvest}
         Pool: ${pPool}
-        **Rate:** ${pIcon}1\`${pCode}\` = ${gear.emoji('RBN')}${pInvest/pVolume}\`RBN\`
+        **Rate:** ${pIcon}1\`${pCode}\` = ${_emoji('RBN')}${pInvest/pVolume}\`RBN\`
         
         `)
 

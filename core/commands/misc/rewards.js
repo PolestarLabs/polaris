@@ -14,15 +14,15 @@ const STICKERS = [
   ,"jojollux"
 ]
 
-const DB = require('../../database/db_ops');
-const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
 const ECO = require('../../archetypes/Economy')
 
 let last = STICKERS[STICKERS.length-1]
 let seclast = STICKERS[STICKERS.length-2]
 let thirdlast = STICKERS[STICKERS.length-3]
-let randompretwo = STICKERS[gear.randomize(STICKERS.length-2)]
-let random = STICKERS[gear.randomize(STICKERS.length-1)]
+let randompretwo = STICKERS[randomize(STICKERS.length-2)]
+let random = STICKERS[randomize(STICKERS.length-1)]
 let all = STICKERS
 
 
@@ -325,7 +325,7 @@ if(message.author.id!=="88120564400553984"){
   if(userData.rewardsMonth >= MONTHCHECK && userData.donator == tier.title){
     return message.reply("You already claimed this month's rewards!");
   }
-  if(!useroles.has("421181998439333901")){
+  if(!useroles.includes("421181998439333901")){
     return message.reply("Your donation status is unconfirmed.");
   }
 }
@@ -348,7 +348,7 @@ let dasveritas= message.guild.roles.get('421181998439333901');
 
 
 
-let embed = new gear.Embed;
+let embed = new Embed;
   
   embed.title(MONTHNAME+" Donators rewards");
   embed.setColor("#32363c");
@@ -385,11 +385,11 @@ let stickernames = await DB.cosmetics.find({id:{$in:pushmo},type:"sticker"},{nam
 let tiere = T.boxes[0].name.replace("lootbox_","").replace("_O","");
 embed.thumbnail("https://pollux.fun/build/"+T.title+".png");
 embed.description(`
-**${gear.capitalize(T.title) + (T.legacy?" Legacy":"")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS=='number'?`(${STATUS} Months Left)`:""}
+**${capitalize(T.title) + (T.legacy?" Legacy":"")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS=='number'?`(${STATUS} Months Left)`:""}
 
-${gear.emoji('sapphire')} x ${T.SPH}
-${gear.emoji('jade')} x ${gear.miliarize(T.JDE)}
-${gear.emoji('loot')} x ${T.boxes[0].count} ${gear.emoji(tiere)}
+${_emoji('sapphire')} x ${T.SPH}
+${_emoji('jade')} x ${miliarize(T.JDE)}
+${_emoji('loot')} x ${T.boxes[0].count} ${_emoji(tiere)}
 
 **STICKERS**
 ${stickernames.map(f=>f.name).join(" • ")}
@@ -428,15 +428,15 @@ if(!((userData.counters.donateStreak||{})[T.title])){
   ECO.receive(message.author,T.immediate,"Donator's Rewards: Immediate","SPH")
 
   embed.description += `**Tier First-Time Sapphire Bonus**
-${gear.emoji('sapphire')} x ${T.immediate}
-${gear.emoji('yep')} **${gear.capitalize(T.title)} Donator's Flair**
+${_emoji('sapphire')} x ${T.immediate}
+${_emoji('yep')} **${capitalize(T.title)} Donator's Flair**
 `
   embed.description += "\n*Enable profile frame with `p!profile frame [on|off]`*\n"
 }
 
 embed.description += `📶 **Streak:** ${((userData.counters.donateStreak||{}).total || 0 )+1} (${((userData.counters.donateStreak||{})[T.title] || 0 )+1} as ${[T.title]})`
 
-message.channel.send({content: gear.emoji('yep')+" All set! Rewards added!",embed});
+message.channel.send({content: _emoji('yep')+" All set! Rewards added!",embed});
 
 }
 module.exports={

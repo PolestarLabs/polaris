@@ -1,8 +1,8 @@
-const gear = require(appRoot+"/core/utilities/Gearbox");
+// const gear = require(appRoot+"/core/utilities/Gearbox");
 //const locale = require(appRoot+'/utils/i18node');
 //const $t = locale.getT();
 const ECO = require(appRoot+"/core/archetypes/Economy");
-const DB = require(appRoot+"/core/database/db_ops");
+// const DB = require(appRoot+"/core/database/db_ops");
 const Picto = require(appRoot+"/core/utilities/Picto");
 const Timed = require(appRoot+"/core/structures/TimedUsage");
 const Premium = require(appRoot+"/core/utilities/Premium");
@@ -33,7 +33,7 @@ if(message.args[0]=="info"){
       let emblem = await Premium.getTier(Author);
       let myDaily = await Premium.getDaily(Author) || 125;
 
-      const embed = new gear.Embed;
+      const embed = new Embed;
       embed.setColor("#d83668");
       if (emblem) {
         embed.author(emblem.toUpperCase()+"-boosted Daily!","http://pollux.fun/images/donate/" + emblem + "-small.png")
@@ -61,14 +61,14 @@ if(message.args[0]=="info"){
         ]);
 
         let dailyGet = $t('$.dailyGet',P).replace("100", "**" + myDaily + "**")
-        embed.setDescription("\n" + gear.emoji('rubine') + dailyGet);
+        embed.setDescription("\n" + _emoji('rubine') + dailyGet);
 
         let gemstone = ""
 
         if ((hardStreak%10) == 0) {          
 
           let dailyStreak = $t('$.dailyStreak', P).replace("500", "**500**")
-          embed.description += "\n" + (gear.emoji('ticket') + dailyStreak)
+          embed.description += "\n" + (_emoji('ticket') + dailyStreak)
 
             await ECO.receive(Author.id,500,"daily_10streak","RBN");
 
@@ -79,7 +79,7 @@ if(message.args[0]=="info"){
           if((hardStreak%10)!=0) gemstone="j";
          
           let dailyStreak = $t('interface.daily.dailyStreakJades', P)
-          embed.description += "\n" + (gear.emoji('jade') + dailyStreak)
+          embed.description += "\n" + (_emoji('jade') + dailyStreak)
 
           await ECO.receive(Author.id,1000,"daily_3streak","JDE","+");
         }
@@ -89,7 +89,7 @@ if(message.args[0]=="info"){
           gemstone="S"
           
           let dailyStreak = $t('interface.daily.dailyStreakSapphs', P)
-          embed.description += "\n" + (gear.emoji('sapphire') + dailyStreak)
+          embed.description += "\n" + (_emoji('sapphire') + dailyStreak)
 
           await ECO.receive(Author.id,1,"daily_250streak","SPH");
         }
@@ -98,12 +98,12 @@ if(message.args[0]=="info"){
           gemstone="S"
          
           let dailyStreak = $t('interface.daily.dailyStreakSapphs', P)
-          embed.description += "\n" + (gear.emoji('sapphire') + dailyStreak)
+          embed.description += "\n" + (_emoji('sapphire') + dailyStreak)
 
           await ECO.receive(Author.id,1,"daily_365streak","SPH","+");
         }
 
-        embed.description += "\n\n" + "*Streak: **"+hardStreak+"***."
+        embed.description += "\n\n" + "*Streak: **"+(hardStreak||0)+"***."
 
 
         embed.thumbnail( paths.CDN + "/build/daily/"+ ( gemstone=="S" ? "ringsaph" : gemstone + (hardStreak%10) ) + ".gif" );
@@ -132,7 +132,7 @@ if(message.args[0]=="info"){
         
         
         if (userData.spdaily && userData.spdaily.amt){
-          embed.addField(Author.dDATA.spdaily.title,"+"+Author.dDATA.spdaily.amt+gear.emoji('rubine'));
+          embed.addField(Author.dDATA.spdaily.title,"+"+Author.dDATA.spdaily.amt+_emoji('rubine'));
           await ECO.receive(message.author.id,Author.dDATA.spdaily.amt,"special_daily_boost","RBN","+");
         }
 
@@ -146,12 +146,12 @@ if(message.args[0]=="info"){
           
         P.remaining=  moment.utc(r).fromNow(true)
         let dailyNope = $t('$.dailyNope',P);
-        message.reply(gear.emoji('nope') + dailyNope);
-        let embed=new gear.Embed;
+        message.reply(_emoji('nope') + dailyNope);
+        let embed=new Embed;
         embed.setColor('#e35555');
         embed.description(`
-    ${gear.emoji('time')   } **${v.last}** ${ moment.utc(Daily.userDataStatic).fromNow()}
-    ${gear.emoji('expired')} **${v.expirestr}** ${moment.utc(Daily.userDataStatic+Daily.expiration).fromNow() }
+    ${_emoji('time')   } **${v.last}** ${ moment.utc(Daily.userDataStatic).fromNow()}
+    ${_emoji('expired')} **${v.expirestr}** ${moment.utc(Daily.userDataStatic+Daily.expiration).fromNow() }
         `);
         return message.channel.send({embed:embed});
     }
@@ -161,13 +161,13 @@ if(message.args[0]=="info"){
         let streakGoes = await Daily.keepStreak(msg.author);
         let streak = userDaily.streak;
 
-        let embe2=new gear.Embed;
+        let embe2=new Embed;
         embe2.setColor('#e35555')
         embe2.description(`
-    ${gear.emoji('time')   } ${gear.emoji('offline')} **${v.last}** ${ moment.utc(userDaily.last).fromNow()}
-    ${gear.emoji('future') } ${dailyAvailable?gear.emoji('online'):gear.emoji('dnd')} **${v.next}** ${ moment.utc(userDaily.last).add(20,'hours').fromNow() }
-    ${gear.emoji('expired')} ${streakGoes?gear.emoji('online'):gear.emoji('dnd')} **${v.expirestr}** ${streakGoes ? moment.utc(userDaily.last+Daily.expiration).fromNow() +" !": "I have bad news for you..." }
-    ${gear.emoji('expense')} ${gear.emoji('offline')} **${v.streakcurr}** \`${streak }x\`(Hard) | \`${streak%10 }x\`(Soft)
+    ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily.last).fromNow()}
+    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily.last).add(20,'hours').fromNow() }
+    ${_emoji('expired')} ${streakGoes?_emoji('online'):_emoji('dnd')} **${v.expirestr}** ${streakGoes ? moment.utc(userDaily.last+Daily.expiration).fromNow() +" !": "I have bad news for you..." }
+    ${_emoji('expense')} ${_emoji('offline')} **${v.streakcurr}** \`${streak }x\`(Hard) | \`${streak%10 }x\`(Soft)
       `)
             return message.channel.send({embed:embe2});
     }

@@ -9,23 +9,40 @@
         "SPH": "Saphir",
         "SPH_fullname": "Fragments de Sapphire",
         "SPH_plural": "Saphirs",
+        "synthGems": "Synthèse de bijoux",
+        "cosmoFragment": "Fragment des cosmos",
+        "cosmoFragment_plural": "Fragment des cosmos",
         "C": "Commun",
         "U": "Peu commun",
         "R": "Rare",
         "SR": "Extra Rare",
         "UR": "Ultra Rare",
+        "thevoid": "nul",
+        "evToken": "Jeton d’événement",
+        "evToken_plural": "Jeton d’événement",
         "lootbox": "Lootbox",
         "lootbox_plural": "Des lootbox",
-        "thevoid": "nul",
-        "evToken": "Jeton d’événement"
+        "consumable": "Consommable",
+        "consumable_plural": "Consommables",
+        "junk": "Camelote",
+        "junk_plural": "Déchets",
+        "key": "Articles clés",
+        "material": "Matériel",
+        "material_plural": "Matériaux",
+        "boosterpack": "Booster",
+        "boosterpack_plural": "Boosters"
     },
     "terms": {
+        "transferDenied": "Transfert refusé",
+        "TransactionFee": "Frais d'opération",
+        "TransactionID": "Identification d'opération",
         "thanks": "merci",
         "thanks_short": "mrc",
         "thx": "$t(terms.thanks_short)",
         "total": "Total",
         "amount": "Montant",
         "overview": "Vue générale",
+        "dashboard": "Tableau de bord",
         "coinHeads": "Faces",
         "coinTails": "Piles",
         "qnt": "Quantité",
@@ -47,6 +64,9 @@
         "bet": "Pari",
         "level": "Niveau",
         "levelUp": "Niveau supérieur!",
+        "price": "Prix",
+        "droppable": "Largable",
+        "event": "Événement",
         "discord": {
             "message": "Message",
             "message_plural": "Messages",
@@ -108,6 +128,8 @@
             "roleAlreadyHere": "Eh, oh, môssieur, ce rôle existe déjà!",
             "nosuchrole": "Mmmhh... Je n'ai pas pu trouver ce grade... Fais attention à la casse.",
             "kbanNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
+            "cantKickHim": "Je ne peux pas faire ceci à cette personne. Je suis défendue de nuire mes supérieurs.",
+            "cantKickSelf": "Tu ne peux pas t'enlever ni exclure!",
             "superRoleNope": "**{{user}}** n'a pas le rôle **{{group}}**!",
             "banNone": "Dis-moi à qui je dois foutre ce marteau dans le cul, avant que je le mette dans le tiens!",
             "unpermB": "Ah, à priori je n'ai pas assez de permissions pour faire ceci...",
@@ -120,7 +142,7 @@
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hé! Texte de traduction ne doit pas dépasser __1000 caractères__**\nN'inquiète pas, j'ai taillé la texte pour toi~",
-            "open1": "Pardon, ouvrir est une verbe transitive, donc tu dois me dire quoi ouvrir~ Essaye un de ces options:",
+            "open1": "Pardon, *\"open\"* est une verbe transitive, donc tu dois me dire *quoi* ouvrir~ Essaye un de ces options:",
             "open2": "Désolé, mais je ne peux pas (ou nne veut pas) ouvrir. Mais je peux toujours ouvrir pour vous: ",
             "timesOutIn": "Cela expirera dans {{s}} secondes",
             "enterVoiceBetterExperience": "Tu dois être dans un salon vocal pour l'expérience complète~."
@@ -130,6 +152,15 @@
                 "Yep, deux secondes...",
                 "Un moment...",
                 "Veuillez patienter..."
+            ],
+            "opinion_decks": [
+                "Bon choix!",
+                "C'est un de mes favoris~",
+                "J'ai mieux aimé le précédent.",
+                "Pas pire.",
+                "Celui-ci est pour la chance.",
+                "Veuillez retourner les cartes intactes.",
+                "Lavez vos mains avant d'utiliser ces cartes."
             ],
             "interjections": {
                 "acknowledged": [
@@ -202,6 +233,11 @@
             "failure": "Ouuups~ Quelque chose ne s'est pas passé comme prévu... Désolé :<"
         },
         "equip": {
+            "getMoreBG": "Obtenir plus de bannières",
+            "NFSALE": "PAS POUR LA VENTE",
+            "equipOwned": "Vous avez déjà cette bannière. Équipe-la ?",
+            "buyThisBG": "Acheter cette bannière?",
+            "successBG": "`Succès!` Bannière obtenue et équipée! 😉",
             "nomedals": "Oh? Il semble que tu n'as aucun médaille à équiper. Peut-être tu devrais en acheter quelques?",
             "equipSlot": "Choisis un emplacement pou équiper ta nouvelle médaille!",
             "timeout": "Je pense que tu as oublié d'équiper tes médailles... Appelle-moi lorsque tu voudras le faire~",
@@ -255,6 +291,74 @@
             "destroyWhat": "Détruire quoi?",
             "cantDestroy": "Je ne peux pas détruire cet article.",
             "destroyed": "Article détruit! Voici tout qui en reste:"
+        },
+        "marry": {
+            "needRing": "Vous avez besoin d'une bague pour proposer, n'est-ce pas?",
+            "ringTutorial": "*Vous n'avez aucune bague présentement disponible.*\n\nPour obtenir une bague, vous avez besoin d'en fabriquer. \nPour cela vous devez fabriquer une **bague partielle* au [**Atelier**]({{craftingURL}} \"Atelier Pollux!\") et dépenser que soit des Jades, Rubines, ou Saphirs, et tout autre matériel pour faire un bijou pour la bague.\nTu peux aussi en dépenser un peu de tout pour faire la bague ultime!\n\nFabrique des bagues en utilisant `{{prefix}}craft`. Commence en fabriquant la **Bague Partielle** (`{{prefix}}craft partial-ring`) et ensuite ajoute le bijou de ton choix utilisant `{{prefix}}carft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. Ces quatre sont les *bagues simples* fabriquées seulement des bijoux. Autres articles vont te permettre de fabriquer encore plus de bagues!",
+            "noneOfThisRing": "Vérifie tes poches, tu n'as aucune bague de ce sort dans ton inventaire.",
+            "availableRings": "Les bagues disponibles sont:",
+            "proposal": "{{userA}} a proposé à **{{userB}}** avec la **{{ringname}}**\n{{userB}} acceptes-tu le mariage?",
+            "actuallyNone": "Actuellement, tu n'as *aucune*{{'none' refers to 'rings'}}. Vas-en chercher! **VITE!**",
+            "saidYes": "{{userB}} a dit OUI!",
+            "saidNo": "{{userB}} a dit non...",
+            "saidNothing": "{{userB}} s'est enfuit... bien rapidement... oh bien... tu veux boire quelque chose?",
+            "addToFeatured": "Souhaites-tu afficher {{userB}} comme votre amant vedette sur ta carte de profil?",
+            "addToFeatured2": "{{userB}} Souhaites-tu faire le même avec {{userA}}?",
+            "addToFeatured3": "Afficher votre nouveau partenaire sur ta carte de profil?",
+            "alreadyMarriedUp": "Il semble que t'es déjà marié à {{userB}}. Veux-tu revaloriser ta bague de *{{ringA}}* à **{{ringB}}**?",
+            "alreadyMarriedInf": "T'es déjà marié(e) à {{userB}} avec une bague identique ou supérieure (*{{ringB}}*)! Que veux-tu faire?",
+            "cantMarrySelf": "Je suis assez au courant mais... de se marier est un peu trop n'est-ce pas?",
+            "cantMarryPollux": "Pas du tout! Shoo!"
+        },
+        "ship": {
+            "needTupipo": "",
+            "need2diffpipo": "",
+            "quotes": [
+                [
+                    "Oh. _Oh non._",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "Woah, presque un couple! ",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ],
+                [
+                    "",
+                    ""
+                ]
+            ]
         },
         "divorce": {
             "confirmdiag": "Acceptes-tu de divorcer {{user}}? Un frais de %EMJ%**5000 Rubines** serait chargé de **chaque personne**! Les points d'amour seront **chacun réduit par un demi**!",
@@ -359,53 +463,163 @@
         "commend": {
             "noSelf": "Non, je refuse de vous féliciter. Vous devriez en avoir honte !",
             "give": "**{{author}}** recommande par la présente **{{target}}** à la dépense d'un jeton.",
-            "totals": "",
-            "topcom": "",
-            "cooldown": "",
-            "check_no": "",
-            "check_yes": "",
-            "noItem": "",
+            "totals": "{{target}} a été loué **{{cmcount}} fois** jusqu'à présent par **{{pplcount}} gens différents**",
+            "topcom": "Les plus grands souteneurs de {{target}} sont:",
+            "cooldown": "Vous avez déjà épuisé votre louange, essayez à nouveau en {{remaining}}",
+            "check_no": "Votre prochain louange peut être fait en {{remaining}}",
+            "check_yes": "Tu peux encore louer maintenant si t'as des jetons disponibles!",
+            "noItem": "T'as besoin d'un jeton de louage, et t'en n'as pas. T'en as besoin de louer quelqu'un.",
             "commendationLimit": ""
         },
         "crafting": {
+            "craftingItem": "",
             "noitem": "Je n'ai pas pu trouver cet article",
-            "didyoumean": "",
-            "didyoumeanOne": ""
+            "noitemu": "",
+            "materialMissing": "",
+            "materialPresent": "",
+            "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
+            "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?",
+            "timeout": "",
+            "cancel": "",
+            "crafted": ""
         },
         "misc": {
             "memberSince": "{{target}} est membre depuis: {{joinedstamp}} ",
             "aviOK": "D'acc, ma nouvelle photo est donc celle-ci! Tu pourras la changer à nouveau dans {{cooldown}} ",
             "colorChange": "Ta couleur favorite a été sauvegardée!"
+        },
+        "transfer": {
+            "lastdly": "",
+            "next": "",
+            "transferboxto": "",
+            "transferthisboxto": "",
+            "timeout": "",
+            "cancel": "",
+            "success": ""
+        },
+        "give": {
+            "cooldown": ""
+        },
+        "inventory": {
+            "noSuchBox": "Eh bien, je ne peux pas voir cette boîte là et je suis sur que tu n'en vois rien aussi.",
+            "noSuchBooster": "Je vois pas ce Booster dans ton inventaire. Tu l'as probablement perdu dans ce dégât.",
+            "noSuchItem": "Je peux identifier une pléthore d'articles dans ton inventaire, sauf cet article particulier.",
+            "browsingBox": "Voici ton inventaire de **Coffres**\n*Ouvre-les pour recevoir des prix!*",
+            "browsingBooster": "Ceci est ton inventaire de **Boosters**\n*Tu peux les ouvrir pour obtenir des collants pour ton profil*",
+            "browsingCONSUMABLE": "",
+            "browsingJUNK": "",
+            "browsingKEY": "",
+            "browsingMATERIAL": "",
+            "emptyJokes": [
+                "",
+                "",
+                "",
+                "",
+                "Cet inventaire contient: la déception.",
+                "",
+                "... Encore vide.",
+                "L'inventaire est vide, mais vous pouvez le remplir avec vos larmes.",
+                "T'es tellement optimiste si tu penses que plus d'articles vont simplement apparaître dans cet inventaire.",
+                "Cet inventaire est si tellement vide.",
+                "T'as... un gros lot de rien",
+                "Vous ne trouverez aucun inventaire vide plus fin.",
+                "Vous ouvrez l'inventaire vide et fixe l'intérieur. La vide retourne votre regard.",
+                "Cet inventaire est maintenant plein de déception...",
+                "Vous fixez l'abîme, l'abîme vous fixe en retour.",
+                "",
+                "Vous ouvrez l'inventaire à la vue familière de rien. Oh comment elle a vous manqué!",
+                "Cet inventaire semble triste et défragé maintenant qu'il est vide.",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         }
     },
     "interface": {
         "generic": {
+            "cancel": "",
+            "timeout": "",
+            "cantAfford": "",
             "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler.",
-            "confirmDelete": ""
+            "confirmDelete": "Affirmer la suppression?",
+            "alotWentOn": "",
+            "alreadyOwnThis": ""
+        },
+        "brackets": {
+            "maxRR": "",
+            "maxBK": "",
+            "RRt": "",
+            "BKt": "",
+            "match": "",
+            "round": "",
+            "preround": "",
+            "team": "",
+            "winner": "",
+            "bracketX": ""
+        },
+        "synthfrag": {
+            "disenchant": "",
+            "cosmeticSynth": "",
+            "confirmSynth": "",
+            "nogemsforThis": ""
+        },
+        "booster": {
+            "checkStickersAt": "Vérifiez vos autocollants et équipez-les au {{dashboard}}",
+            "title": "{{boostername}} Booster de collants"
+        },
+        "kickban": {
+            "waitingForReason": "en attente de l'entrée de la raison...",
+            "noReason": "Aucune raison n'a été spécifiée. Annulée",
+            "cancelled": "Annulé par le modérateur",
+            "userKicked": "J'ai enlevé {{user}} **gentiment** d'ici.",
+            "kickFlavs": [
+                "Assez gentillement pour les laisser y retourner.",
+                "J'espère qu'ils pourront encore s'asseoir après cela.",
+                "Les enfants, ne faîtes pas ça chez vous!",
+                "Aucun animal n'a été nui.",
+                "Ils survivront... Je pense."
+            ],
+            "userBanned": "J'ai exclu {{user}} *pas-aussi-gentiment.** Cette personne n'est plus invitée ici,",
+            "userSoftBanned": "J'ai exclu {{user}} **gentiment**. Raté, je n'ai pas pu complètement l'anéantir",
+            "banFlavs": [
+                "J'espère qu'ils marchent sur les LEGO.",
+                "Tu peux maintenant les moquer.",
+                "Qui est le prochain?",
+                "Ne les ressemblez pas{{'them' refers to 'this person'}}, les enfants."
+            ],
+            "includeReason": "T'as oublié de me dire *pourquoi* cette personne est punie. \nDéclare la raison ci-dessous: `(20s)`",
+            "userKickError": "Une erreur s'est produite, ouf."
         },
         "feed": {
-            "newYoutube": "",
-            "noDefault": "",
-            "urlPresent": "",
-            "noFeed": "",
-            "noTube": "",
-            "noTwitch": "",
-            "stateIDorURL": "",
-            "listRemove": "",
-            "channelUpdate": "",
-            "invalidRSS": "",
-            "invalidTwitch": "",
-            "invalidYoutube": "",
-            "listShowRSS": "",
-            "listShowTwitch": "",
-            "listShowYoutube": "",
-            "savedSubLastRSS": "",
-            "savedSubLastTwitch": "",
-            "savedSubLastYoutube": "",
-            "feedLimitRSS": "",
-            "feedLimitTwitch": "",
-            "feedLimitYoutube": "",
-            "donateToIncrease": ""
+            "newYoutube": "***{{tuber}} a publié un nouveau vidéo!** Aller la voir ici:",
+            "newTwitchStatus": "**{{streamer}}** est en ligne maintenant!",
+            "noDefault": "Tu ne m'a pas dit à quel canal afficher et il n'y a pas non plus de chaîne par défaut.",
+            "urlPresent": "Je surveille déjà les messages de celui-ci, alors je vais changer le salon de destination~",
+            "noFeed": "Il n'a aucun fil RSS configuré dans ce serveur",
+            "noTube": "Il n'y a aucun alertes YouTube configurées dans ce serveur",
+            "noTwitch": "Il n'y a aucun alertes Twitch configurées dans ce serveur",
+            "stateIDorURL": "T'as oublié de me donner un identifiant ou URL à enlever d'ici. Vérifie la liste `{{prefix}}{{command}}` si t'as les oublié~",
+            "listRemove": "Pour en enlever un, essaye `{{prefix}}{{command}} remove [# d'Indexe]`",
+            "channelUpdate": "J'ai défini le canal d'affichage défaut à {{channelID}}!",
+            "invalidRSS": "Hé, il ne s'agit pas d'une adresse RSS valide ! Assure-toi que tu le fais correctement.",
+            "invalidTwitch": "Hélas, il n'existe pas un compte Twitch de ce nom. Vérifie attentivement ce que tu tapes!",
+            "invalidYoutube": "Ouais, ça ne ressemble pas à un canal YouTube. Au moins, à partir de mes connaissances...",
+            "listShowRSS": "Liste de fils RSS pour ce serveur",
+            "listShowTwitch": "Diffusions Twitch affichés dans ce serveur",
+            "listShowYoutube": "Nouvelles alertes YouTube pour ce serveur",
+            "savedSubLastRSS": "**Sauvegardé!** - Soumettant les derniers messages de ce fil à {{channelID}}. Les suivants vont être verifiés à chaque **30 minutes**",
+            "savedSubLastTwitch": "**Sauvegardé!** - Une alerte va être affichée à {{channelID}} quand ce salon est en directe. Vérifié à chaque **15 minutes**",
+            "savedSubLastYoutube": "**Sauvegardé!** - Soumettant la dernière vidéo de ce salon à {{channelID}}. Vérifié à chaque **1 heure**",
+            "feedLimitRSS": "Ce serveur ne peut avoir que **5** fils RSS à la fois.",
+            "feedLimitTwitch": "Ce serveur ne peut suivre que **2** comptes Twitch à la fois.",
+            "feedLimitYoutube": "Ce serveur ne peut suivre que **1** canal YouTube à la fois.",
+            "donateToIncrease": "Si vous avez besoin d'une limite supérieure, considérez [Donating]({{donationLink}}) ou [applying for Pollux Partnership]({{partnershipLink}})"
         },
         "autoRolesforThis": "Rôles auto-assibles sur ce serveur.",
         "daily": {
@@ -414,7 +628,7 @@
             "streakcurr": "Série courante:",
             "expirestr": "Temps à l'expiration:",
             "dailyStreakJades": "{{emoji}} Et voici **+1000 Jades** d'extra pour 3 jours d'affilée! Youpi!",
-            "dailyStreakSapphs": "",
+            "dailyStreakSapphs": "{{emoji}} **+1 saphir** pour 250 quotidiens continus!",
             "availableDaily": "Maintenant disponible!"
         },
         "nuke": {
@@ -425,23 +639,21 @@
             "timeout": "Temps d'attente pour la nuke dépassé!",
             "completed": "Les infos serveurs ont correctement été remises à zéro. Essayez d'utiliser **+serverinfo** pour voir si tout est bien revenu aux valeurs par défaut. Je ne suis pas responsable d'une quelconque infection nucléaire."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
-            "reactrolesfor": "",
-            "removeAll": "",
-            "removed": "",
-            "noroleshere": "",
-            "removedAllFrom": "",
+            "reactrolesfor": "Rôles de réaction pour {{server}}",
+            "removeAll": "J'ai supprimé tout régistres de réaction d'ici. Tu dois effacer à main les réactions propres des messages.",
+            "removed": "Cette réaction a été supprimé~",
+            "noroleshere": "Il n'y a aucun role de réaction pour ce serveur.",
+            "removedAllFrom": "Supprimé toutes les réactions de {{ID}}~",
             "noReactionDel": "",
-            "success": ""
+            "success": "Les rôles de réaction seront vus dans ce message :"
         },
         "shuffle": {
-            "picking": "",
-            "complete": "",
-            "lessthan2": "",
-            "ichoose": ""
+            "picking": "Sélection... {{as in 'picking from a list'}}",
+            "complete": "Fini!",
+            "lessthan2": "J'ai besoin d'au moins deux choses à choisir...",
+            "ichoose": "Je choisis **{{list_item}}**!"
         },
         "help": {
             "greetings": "",
@@ -499,6 +711,9 @@
             "split": "`split` pour partager ta main,␣",
             "double": "",
             "pass": "ou `stand` pour passer.",
+            "splitbreak": "",
+            "switchdeck": "",
+            "switchdeckEgg": "",
             "even": ""
         },
         "slots": {

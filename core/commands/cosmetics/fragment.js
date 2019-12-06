@@ -1,14 +1,14 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
 const init = async function (msg){
     
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const userData = await DB.users.get(msg.author.id);
+    const userData = await DB.users.findOne({id:msg.author.id});
     const BGData = (await DB.cosmetics.find({type:'background', code:{$in:userData.modules.bgInventory}}))
     const bgTarget=msg.args[0];
     const FragConvert = function FragConvert(item){
@@ -25,13 +25,13 @@ const init = async function (msg){
             //thebg = BGData.find(x=>x.code==bgTarget); 
             thebg = BGData[BGData.length-1]
 
-            fragRar = thebg.rarity 
-            fragAmt = FragConvert(thebg);
+            P.rarity_emoji = _emoji(thebg.rarity);
+            P.count = FragConvert(thebg);
 
-            const embed = new gear.Embed()
-            .thumbnail(`https://pollux.fun/backdrops/${thebg.code}.png`)
+            const embed = new Embed()
+            .thumbnail(`${paths.CDN}/backdrops/${thebg.code}.png`)
             .description(`
-            Disenchant this ${gear.emoji(fragRar)} background into **${fragAmt} Cosmo Fragments** ?
+            ${$t('interface.synthfrag.disenchant',P)}
             \`Code:\`\u200b***\`${thebg.code}\`***
             `)
             
@@ -47,11 +47,11 @@ const init = async function (msg){
                 }
 
 
-                YesNo.run(m,msg,positive,null,null,{
+                YesNo(m,msg,positive,null,null,{
                     strings:{
-                        cancel:"Cancelled!",
+                        cancel:"Cancel",
                         confirm:"OK",
-                        timeout:"Timeout!"
+                        timeout:"Timeout"
                     }
                 }).then(c=> msg.author.crafting = false)
             })

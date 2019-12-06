@@ -1,9 +1,6 @@
-const {shuffle,Embed,autoHelper,wait,usage} = require('../../utilities/Gearbox');
-
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     let target = Math.abs(parseInt(msg.args[0])) ||1;
     let trueArgs = msg.args.slice(target?1:0).join(' ').split(',');

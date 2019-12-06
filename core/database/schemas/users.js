@@ -122,8 +122,8 @@ const UserSchema = new mongoose.Schema({
           MP:{type:Number,default:100}
       },
       */
-     commend:Number,
-     commended:Number,
+     commend:{type:Number, index: true},
+     commended:{type:Number, index: true},
       fun: {
           waifu: Mixed,
           lovers: Mixed,
@@ -171,7 +171,13 @@ UserSchema.methods.upCommend = function upCommend(USER,amt=1){
   })
 }
 
-UserSchema.methods.amtItem = function amountItem(itemId){
+UserSchema.methods.hasItem = function hasItem(itemId){
+  return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count >= 1;
+}
+
+UserSchema.methods.amtItem = function amountItem(itemId,search){
+  //find solution for itemtype search
+  //if(search)  return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count || 0;
   return (this.modules.inventory.find(itm=>itm.id == itemId)||{}).count || 0;
 }
 

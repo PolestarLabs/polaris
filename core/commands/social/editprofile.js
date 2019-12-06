@@ -1,10 +1,10 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const subcommand = msg.args[0]
     
@@ -35,14 +35,14 @@ const init = async function (msg){
     let ReactionMenu = require('../../structures/ReactionMenu')
     let userData = await DB.users.get(msg.author.id);
     let frameOn = (userData.switches||{profileFrame:"unavailable"}).profileFrame
-    embed = new gear.Embed;
+    embed = new Embed;
     embed.title( ":tools: Profile Quick Edit")
     embed.description = "\u200b"
     embed.color(userData.modules.favcolor)
     embed.field("✏ "+"Change Personal Text"
                 ,"\u200b \u2003  *\""+userData.modules.tagline+"\"*",true)
     embed.field(`${frameOn===true?"🔴":frameOn===false?"🔵":"🚫"} ${"Toggle Propic Frame"}`
-                ,""+(frameOn===true? gear.emoji('yep')+" **ON**" :frameOn===false? gear.emoji('nope')+"**OFF**" :"🚫"),true)
+                ,""+(frameOn===true? _emoji('yep')+" **ON**" :frameOn===false? _emoji('nope')+"**OFF**" :"🚫"),true)
     embed.field("📝 "+"Change Personal Text"
                 ," ```"+userData.modules.persotext+"```");
     embed.field("🖌 "+"Change Fav Color"
@@ -62,10 +62,12 @@ const init = async function (msg){
     men = await msg.channel.send({embed})
 
     ReactionMenu(men,msg,["✏", (frameOn?"🔴":frameOn!=='unavailable'?"🔵":null),"📝", "🖌","🖼","🌐","🗃"],{time:20000}).then(res=>{
-        console.log(res)
+        
+        if(!res) return "CANCELLED!";
+
         if(res.index == 0){
             PROCESS_SUBRESPONSE(msg,"**TEXT** `One line of text`").then(res=>{
-                require("../social/tagline").init(res.forward);    
+                require("./tagline").init(res.forward);    
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"tagline "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })
@@ -74,20 +76,20 @@ const init = async function (msg){
         if(res.index == 1){
             let forward = msg;
             forward.content = "+cmd frame toggle";
-            require("../social/profile").init(forward).then(r=> men.addReaction(gear.yep).catch() ).catch(err=> console.log(err) );
+            require("./profile").init(forward).then(r=> men.addReaction(yep).catch() ).catch(err=> console.log(err) );
             msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"profile frame toggle`"}});
             men.deleteAfter(3000)
         } 
         if(res.index == 2){
             PROCESS_SUBRESPONSE(msg, "**TEXT** `150 Characters of Text`").then(res=>{
-                require("../social/personaltxt").init(res.forward);  
+                require("./personaltext").init(res.forward);  
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"personaltxt "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })
         } 
         if(res.index == 3){
             PROCESS_SUBRESPONSE(msg,"**HEXCOLOR** `#000000`").then(res=>{
-                require("../cosmetics/favcolor").init(res.forward);  
+                require("./cosmetics/favcolor").init(res.forward);  
                 msg.channel.send({embed:{description:"Launching command `"+msg.prefix+"favcolor "+(res?res.string:"")+"`"}});
                 men.deleteAfter(3000)
             })        
@@ -113,7 +115,7 @@ const init = async function (msg){
                 men.deleteAfter(3000)
         } 
         
-    })
+    }) 
 
 
     

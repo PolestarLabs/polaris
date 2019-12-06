@@ -1,5 +1,5 @@
-const gear = require('../../utilities/Gearbox');
-const DB = require('../../database/db_ops');
+// const gear = require('../../utilities/Gearbox');
+// const DB = require('../../database/db_ops');
 const Picto = require('../../utilities/Picto');
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
@@ -7,7 +7,7 @@ const Picto = require('../../utilities/Picto');
 const init = async function (msg) {
 
   let P = { lngs: msg.lang, prefix: msg.prefix }
-  if (gear.autoHelper([$t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  if (PLX.autoHelper([$t('helpkey', P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   try {
     const canvas = Picto.new(700, 520);
@@ -28,7 +28,7 @@ const init = async function (msg) {
     let headline_tx = "" + (spot < 0 ? pre2 : pre2.slice(0, spot));
     let img_link
     try {
-      img_link = spot > -1 ? pre2.slice(spot) : (msg.mentions[0] || {}).displayAvatarURL || await gear.getChannelImg(msg);
+      img_link = spot > -1 ? pre2.slice(spot) : (msg.mentions[0] || {}).displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
       img_link = spot > -1 ? pre2.slice(spot) : ((msg.mentions[0] || msg.author).displayAvatarURL);
     }
@@ -40,7 +40,7 @@ const init = async function (msg) {
       verticalAlign: 'top',
       textAlign: "left",
     }
-    if (!headline_tx || headline_tx.length == 0 && gear.randomize(0, 3) > 1) {
+    if (!headline_tx || headline_tx.length == 0 && randomize(0, 3) > 1) {
       if (!global.fakeFeed) {
         setTimeout(()=>global.fakeFeed = null, 30000); 
         let RSS = require('rss-parser');
@@ -53,9 +53,9 @@ const init = async function (msg) {
               'http://feeds.bbci.co.uk/news/world/asia/rss.xml',
             ]
             let ogs = require('open-graph-scraper');
-            rand = gear.randomize(0, sources.length - 1);
+            rand = randomize(0, sources.length - 1);
             let feed = await parser.parseURL(sources[rand]);
-            rand2 = gear.randomize(0, 5)
+            rand2 = randomize(0, 5)
             headline_tx = feed.items[rand2].title;
             let results = await ogs({ 'url': feed.items[rand2].link });
             img_link = results.data.ogImage.url;
@@ -102,9 +102,9 @@ const init = async function (msg) {
     ctx.rotate(-0.296706)
     ctx.restore()
 
+    msg.delete().catch(e=> null)
 
-    msg.delete()
-    await msg.channel.send('', gear.file(await canvas.toBuffer(), 'localnews.png'))
+    await msg.channel.send('', file(await canvas.toBuffer(), 'localnews.png'))
 
   } catch (e) {
     console.error(e)

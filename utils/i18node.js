@@ -1,4 +1,4 @@
-  var reroute;
+var reroute;
 module.exports = {
     getT: function getT(){
         return reroute;
@@ -7,9 +7,10 @@ module.exports = {
         reroute = t;
     },
 
-    rand: function rand(string, fun,params){
+    rand: function rand(string,params){
         let loc = reroute
-        let rand = Math.floor(Math.random() * (loc(string,{returnObjects:true}).length));       
+        let rand = Math.floor(Math.random() * (loc(string,{returnObjects:true}).length));    
+        console.log({string,rand,params})   
         return loc(string+"."+rand,params);
     },
 };

@@ -1,62 +1,72 @@
-const gear = require('../../utilities/Gearbox');
-const Picto = require('../../utilities/Picto');
-const DB = require('../../database/db_ops');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
+const Picto = require("../../utilities/Picto");
 
-const init = async function (msg,programatic){
+const init = async function(msg, programatic) {
+  delete require.cache[require.resolve("name-this-color")];
 
-    delete require.cache[require.resolve('name-this-color')]
-   
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(gear.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+  let P = { lngs: msg.lang, prefix: msg.prefix };
+  if (
+    PLX.autoHelper(["noargs", $t("helpkey", P)], {
+      cmd: this.cmd,
+      msg,
+      opt: this.cat
+    })
+  )
+    return;
 
-    let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/ 
-    let hexColor = (msg.args[0].match(hexRegex)||[])[0];
-    let result
-try{
-    const colors = require('name-this-color');
-    result = hexColor ? colors(hexColor) :[{title:"Invalid Color (Defaults to Black)",hex:"#000000"}];
-}catch(e){
-    result = [{title:"Invalid Color (Defaults to Black)",hex:"#000000"}]
-}
- console.log({result})
+  let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  let hexColor = (msg.args[0].match(hexRegex) || [])[0];
+  let result;
+  try {
+    const colors = require("name-this-color");
+    result = hexColor
+      ? colors(hexColor)
+      : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+  } catch (e) {
+    result = [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+  }
 
-    let embed = new gear.Embed(),
-        Canvas = Picto.new(140,140),
-        ctx = Canvas.getContext('2d');
+  let embed = new Embed(),
+    Canvas = Picto.new(140, 140),
+    ctx = Canvas.getContext("2d");
 
-    if(result){
- result = result[0]
-       // let RGB = colors.rgb(result[0])
-        embed
-        .author(result.title,"https://png.icons8.com/paint-brush/dusk/64")
-        .color(result.hex )
-        .image("attachment://color.png")
-        .footer(""+result.hex )
+  if (result) {
+    result = result[0];
+    // let RGB = colors.rgb(result[0])
+    embed
+      .author(result.title, "https://png.icons8.com/paint-brush/dusk/64")
+      .color(result.hex)
+      .image("attachment://color.png")
+      .footer("" + result.hex);
 
-        Picto.roundRect(ctx,10,10,120,120,20,"#"+hexColor);
-        let file = gear.file(Canvas.toBuffer(),'color.png');
-        if(programatic) return {embed,file,hex:result.hex,name:result.title};
-        
-        msg.channel.send({embed},file)
-        
-    }else{
-        if(programatic) {
-            Picto.roundRect(ctx,10,10,120,120,20,"#000000");
-            let file = gear.file(Canvas.toBuffer(),'color.png');
-          return  {embed,file,hex:"#000000",name:"INVALID COLOR"};
-        } 
-        msg.reply("`ERROR :: COLOR NOT FOUND`")
+    Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#" + hexColor);
+    if (programatic)
+      return {
+        embed,
+        file: file(Canvas.toBuffer(), "color.png"),
+        hex: result.hex,
+        name: result.title
+      };
+
+    msg.channel.send({ embed }, file);
+  } else {
+    if (programatic) {
+      Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");
+      return {
+        embed,
+        file: file(Canvas.toBuffer(), "color.png"),
+        hex: "#000000",
+        name: "INVALID COLOR"
+      };
     }
-
-}
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'color'
-    ,perms:3
-    ,cat:'util'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
-}
+    msg.reply("`ERROR :: COLOR NOT FOUND`");
+  }
+};
+module.exports = {
+  init,
+  pub: true,
+  cmd: "color",
+  perms: 3,
+  cat: "util",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: []
+};

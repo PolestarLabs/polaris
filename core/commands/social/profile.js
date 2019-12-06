@@ -1,7 +1,7 @@
-const gear = require('../../utilities/Gearbox.js');
+const UserProfileModel = require('../../archetypes/UserProfileModel');
+// const gear = require('../../utilities/Gearbox.js');
 const Picto = require('../../utilities/Picto.js');
-const DB = require('../../database/db_ops');
-const moment = require("moment");
+// const DB = require('../../database/db_ops');
 
 const XYZ ={
   global_roundel: {X: 680,  Y: 2},
@@ -90,96 +90,6 @@ const TEXT={
   }       
 };
 
-class UserProfileModel{
-  constructor(userData,discordMember){
-
-    // Discord Data
-    const {Member} = require('eris');
-    if(!discordMember) discordMember = POLLUX.users.get(userData.id||userData);
-    if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
-    if(typeof discordMember === 'string') discordMember = POLLUX.users.get(discordMember);
-    const notMember = discordMember && discordMember.constructor != Member;
-
-    this.ID = discordMember.id;
-    this.server = notMember ? null : discordMember.guild.id;
-    this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;
-    this.avatar = notMember ? discordMember.avatarURL : discordMember.user.avatarURL;
-    this.bot = discordMember.bot;
-    
-    // Pollux User Data
-    if(!userData || !userData.modules) {
-      userData = {modules:{}};
-      this.PARTIAL = true;
-    }
-
-    this.favColor     = /^#[0-9,A-F,a-f]{6}$/.test(userData.modules.favcolor) ? userData.modules.favcolor : "#dd5383";
-    this.tagline      = userData.modules.tagline  || ""; 
-    this.background   = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userData.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"; 
-    this.personalText = userData.modules.persotext|| "";
-    this.exp          = userData.modules.exp      || 0;
-    this.level        = userData.modules.level    || 0;
-    this.percent      = XPercent(this.exp,this.level) || 0;
-    this.sticker      = userData.modules.sticker  || null;
-    this.flair        = userData.modules.flairTop || 'default';
-    this.rubines      = userData.modules.rubines  || 0;
-    this.medals       = userData.modules.medals   || [];
-    this.marriage     = userData.featuredMarriage || null;
-    this.commend     = userData.modules.commend  || 0;
-    this.countryFlag  = (userData.personal||{}).country || null;
-    this.profileFrame = userData.switches && userData.switches.profileFrame === true ? userData.donator : null;
-    
-    if(this.medals.length>0){
-      let valid_medals = this.medals.filter(mdl=>mdl&&mdl!="0").map(v=> this.medals.indexOf(v) );
-      let arrange = valid_medals.length <= 4 ? valid_medals.length : 9; 
-      this.medalsArrangement = {style:arrange,valid:valid_medals}
-    }      
-  }
-
-  get globalRank (){
-     return DB.users
-        .find({"modules.exp": {$gt: this.exp},blacklisted: {$exists: false}}).countDocuments();
-  }
-
-  get localData (){
-    return new Promise(async resolve=>{
-      if (!this.server){
-        this.thx = "---"
-        this.localRank = "---"
-        return resolve(false);
-      }
-    
-      let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
-      this.thx = svRankData.thx || 0;
-      this.localRank = await DB.localranks
-        .find({server:svRankData.server,exp:{$gt:svRankData.exp}}).countDocuments();
-      return resolve(true);
-    })
-  }
-
-  get wifeData (){
-    return new Promise(async resolve=>{
-      if (this.wife) return resolve(this.wife);
-      if (!this.marriage) return resolve(null);
-      const marriage = await DB.relationships.findOne({type:'marriage', _id: this.marriage });
-      if (!marriage) return resolve(null);
-      const wifeID = marriage.users.find(usr=>usr!=this.ID);
-      if (!wifeID) return resolve(null);
-      let discordWife = POLLUX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || {username: "Unknown", avatar: POLLUX.users.get(userID).defaultAvatarURL };
-
-      this.wife = {
-        ring: marriage.ring,
-        initiative: marriage.initiative === this.ID,
-        lovepoints: marriage.lovepoints||0,
-        since:  moment.utc(marriage.since).fromNow(true),
-        wifeName: discordWife.username,
-        wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512","size=64")
-      }
-      resolve(this.wife);
-    });
-  }
-
-}
-
 
 init = async (msg)=>{
 
@@ -218,9 +128,14 @@ init = async (msg)=>{
 
   // NORMAL PROFILE -->
 
-  const Target = gear.getTarget(msg,0,true,true);
-  let Target_Database = await DB.users.get(Target.id);
-  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],msg.guild.member(Target));
+  const Target = PLX.getTarget(msg,0,true,true);
+  let Target_Database = await DB.users.findOne({id:Target.id});
+
+
+ 
+
+  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?msg.guild.member(Target):Target));
+  //console.log(USERPROFILE)
   await Promise.all([
     await USERPROFILE.wifeData,
     await USERPROFILE.localData    
@@ -278,7 +193,7 @@ try{
         ctx, USERPROFILE.personalText,
         `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,
         TEXT[txt_type].COLOR,
-        XYZ.persotex.W, XYZ.persotex.H //255, 70
+        XYZ.persotex.W, XYZ.persotex.H,{paddingY:5} //255, 70
     );
 
     txt_type = "SIDEBAR"
@@ -295,11 +210,11 @@ try{
     }
     
     txt_type = "RUBINES"
-    txt.rubines = Picto.tag(ctx, gear.miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
     txt_type = "RANKS"
-    txt.globalRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    txt.localRank = Picto.tag(ctx, "#"+gear.miliarize(USERPROFILE.localRank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.globalRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.localRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.localRank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
     let REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff")
 
@@ -535,9 +450,7 @@ try{
   });
 
     //=========================================
-    //=========================================
     ///             HONORIFICS
-    //=========================================
     //=========================================
 
     
@@ -568,7 +481,7 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
      
       if (bottomTag == "translator" && Target_Database.switches.translator) {
         let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
-        ctx.drawImage(flag, 160 + 313, 567, 32, 21);
+        ctx.drawImage(flag, 160 + 313, 573, 32, 21);
       }
       
       if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
@@ -643,12 +556,4 @@ async function FINALIZE(msg,canvas){
     name: "profile.png"
   })
 
-}
-function XPercent(X, Lv, f = 0.0427899) {
-  let toNEXT = Math.trunc(Math.pow((Lv + 1) / f, 2));
-  let toTHIS = Math.trunc(Math.pow(Lv / f, 2));
-  let PACE = toNEXT - toTHIS;
-  let PROGRESS = X - toTHIS
-  let percent = PROGRESS / PACE;
-  return percent;
 }

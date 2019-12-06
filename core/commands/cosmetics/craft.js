@@ -1,19 +1,15 @@
 const cmd = 'craft';
-const gear = require("../../utilities/Gearbox.js");
-const YesNo = require('../../structures/YesNo').run;
-const DB = require("../../database/db_ops.js");
+const YesNo = require('../../structures/YesNo');
 const ECO = require("../../archetypes/Economy.js")
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
 const diff = require('fast-diff');
 
 const init = async function (message) {
   try{
     
   setTimeout(f=>  message.author.crafting = false, 25000)
-    //HELP TRIGGER
+  //HELP TRIGGER
     let P={lngs:message.lang,}
-    if(gear.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
+    if(PLX.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
   //------------
     
 if(message.author.crafting)return;
@@ -22,12 +18,10 @@ function noteno(item,extra){
   message.reply("")
 }
 
-    //message.reply("pos: 127, cfstatus: 1")
-    let noteno_feed = []
-    
-  let ITEMS = await DB.items.find({crafted:true});
+  let [ITEMS,ALLITEMS] = await Promise.all([ DB.items.find({crafted:true}).lean().exec(), 
+      DB.items.find({}).lean().exec()]);
   
-  let embed = new gear.Embed
+  let embed = new Embed
   embed.description=""
   embed.setColor('#71dbfa') 
   
@@ -63,7 +57,7 @@ function noteno(item,extra){
       let sorry = rand$t('responses.verbose.interjections.gomenasai',P)
       let res = DYM.length===1?$t('responses.crafting.didyoumeanOne',P):$t('responses.crafting.didyoumeanOne',P);
       if(DYM.length>0){
-        let step_message = await message.channel.send(sorry+res+"\n • "+DYM.join('\n • '));
+        let step_message = await message.channel.send(sorry+" "+res+"\n> • "+DYM.join('\n> • '));
         if(DYM.length>1) return;
         if ( (await YesNo(step_message,message,true,false,null)) === true){
           crafted_item=ITEMS[0]
@@ -71,7 +65,7 @@ function noteno(item,extra){
           return;
         }
       }else{
-        return message.channel.send("Could not find this Item or anything like it");
+        return message.channel.send($t('responses.crafting.noitemu',P));
       }
     
 }
@@ -83,8 +77,8 @@ function noteno(item,extra){
     return message.reply($t('responses.crafting.noitem',P));
   }
   
-  
-  embed.title((crafted_item||{emoji:0}).emoji+" Crafting `: "+crafted_item.name+"`")
+  P.item_name = crafted_item.name;
+  embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.craftingItem',P) )
     
 
   const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
@@ -94,10 +88,10 @@ function noteno(item,extra){
     let NAME = crafted_item.name
     
     let ICON = crafted_item.icon || '';
-    embed.thumbnail("http://pollux.fun/build/items/"+ICON+".png")
+    embed.thumbnail(paths.CDN+"/build/items/"+ICON+".png")
     
     let CODE = crafted_item.code
-    let MAT = crafted_item.materials
+    let MAT = crafted_item.materials || []
     let GC = crafted_item.gemcraft
     let fails = 0
     let matDisplay = ""
@@ -111,7 +105,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('jade')+"**"+gear.miliarize(GC.jades,true)+'** x Jades';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('jade')+"**"+miliarize(GC.jades,true)+'** x '+ $t('keywords.JDE',P);
     }
       
       
@@ -123,7 +117,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('rubine')+"**"+gear.miliarize(GC.rubines,true)+'** x Rubines';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('rubine')+"**"+miliarize(GC.rubines,true)+'** x '+ $t('keywords.RBN',P);
     }
       
       
@@ -136,7 +130,7 @@ function noteno(item,extra){
         icona='nope'
         fails+=1
       }
-      matDisplay+="\n"+gear.emoji(icona)+" | "+gear.emoji('sapphire')+"**"+gear.miliarize(GC.sapphires,true)+'** x Sapphires';
+      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('sapphire')+"**"+miliarize(GC.sapphires,true)+'** x '+ $t('keywords.SPH',P);
     }
       
       
@@ -148,7 +142,7 @@ function noteno(item,extra){
         materialName = material.id || material;
 
         amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
-        amtRequired = (material.amt || gear.count(MAT,materialName))
+        amtRequired = (material.amt || objCount(MAT,materialName))
 
       if (amtInPosession >= amtRequired){
         //message.reply('ok')
@@ -157,16 +151,16 @@ function noteno(item,extra){
         icona='nope';
         fails+=1
       }
-        matDisplay+="\n"+gear.emoji(icona)+" | "+ITEMS.find(x=>x.id==materialName).emoji+ITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
+        matDisplay+="\n"+_emoji(icona)+" | "+ALLITEMS.find(x=>x.id==materialName).emoji+ALLITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
     })
     if (fails > 0 ) {
       embed.setColor('#ed3a19');
-      craftExplan = "\n\nThere are missing materials in your inventory, I cannot craft this."
+      craftExplan = "\n\n" + $t('responses.crafting.materialMissing',P)
       embed.description= matDisplay +  craftExplan
       message.author.crafting = false;
       message.channel.send({embed})
     }else{
-      craftExplan = "\n\nAll materials are available in your inventory, proceed with the crafting?"
+      craftExplan = "\n\n"+$t('responses.crafting.materialPresent',P)
       embed.description=matDisplay+ craftExplan
       message.channel.send({embed}).then(async m=>{
 
@@ -184,7 +178,7 @@ function noteno(item,extra){
           ).catch(e => {
               embed.setColor("#ffd900")
               embed.description = matDisplay
-              embed.footer("Crafting Timed Out!")
+              embed.footer($t('responses.crafting.timeout',P))
               m.edit({embed})
               m.removeReactions().catch()
               return message.author.crafting = false;
@@ -194,7 +188,7 @@ function noteno(item,extra){
 
           if (reas.length === 1&&reas[0].emoji.id==NA.id) {
             embed.setColor("#db4448")
-            embed.footer("Crafting Cancelled!")
+            embed.footer($t('responses.crafting.cancel',P))
             embed.description = matDisplay
             m.edit({embed})
             m.removeReactions().catch()
@@ -223,7 +217,7 @@ function noteno(item,extra){
             message.author.crafting = false;
             embed.setColor("#78eb87")
             embed.description = matDisplay
-            embed.footer("Item Crafted!")
+            embed.footer($t('responses.crafting.crafted',P))
             m.removeReactions().catch()
             return m.edit({embed});
           }

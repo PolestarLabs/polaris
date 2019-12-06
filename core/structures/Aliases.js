@@ -320,17 +320,17 @@ const ALIASES = {} /*{
   ,"pfl":"profilelink"
 };*/
 
-console.log({ALIASES})
 
-void function init(){
 
+function getAliases(){
 let files = fs.readdirSync(appRoot + "/core/commands")
-
 for (let i = 0; i < files.length; i++) {
-  let filedir = appRoot + "/core/commands/" + files[i]
+  try{
 
+    let filedir = appRoot + "/core/commands/" + files[i]
+    
   let module_commands = fs.readdirSync(filedir)
-
+  
   for (let j in module_commands){
     let command = require(filedir+"/"+module_commands[j]);
     let aliases = command.aliases || []
@@ -338,10 +338,15 @@ for (let i = 0; i < files.length; i++) {
       ALIASES[aliases[k]] = module_commands[j].split('.')[0];
     }
   }
-
+}catch(e){
 }
 
-}();
+}
+  return ALIASES;
+}
 
 
-module.exports = ALIASES;
+
+module.exports = () =>{  
+  return getAliases()
+};

@@ -1,254 +1,132 @@
-const fs = require('fs');
-const i18node = require(appRoot+'/utils/i18node');
-const cfg = require(appRoot+'/config.json');
+const cfg = require('../../config.json');
+// const gear = require('../utilities/Gearbox/global');
+const readdirAsync = Promise.promisify(require('fs').readdir);
 
+const commandRoutine = require('../subroutines/onEveryCommand');
+const CMD_FOLDER = "../commands/"
 
-exports.run = async (message,payload) => {
-
-
-  
-  
-  let bot = POLLUX
-   let Database_bot = "x"//await gear.userDB.findOne({id:bot.user.id});
-   let servData = payload.servData;
-   let userData = payload.userData;
-   let chanData = payload.chanData;
-   let targData = payload.targData;
-   
-   
-   let forbiddens = ((chanData||{}).modules||{}).DISABLED||[];
-   
-  const _commandMetadata = determine(message)
-  const _MODULE = _commandMetadata.module;
-  
-   if(_MODULE == "_botOwner"){
-     if (message.author.id !== cfg.owner) return message.addReaction('nope:339398829088571402')
-   }
-   if(_MODULE == "_botStaff"){
-      if (message.author.id !== cfg.owner && !cfg.admins.includes(message.author.id)) return message.addReaction('nope:339398829088571402')
-    }
-    
-    //console.log(_commandMetadata)
-    
-    if(!_commandMetadata) return; // No Command Metadata Found
-
-  //Global Reactions===================
-  if(_commandMetadata.reaction){
-    if (forbiddens.includes(_MODULE)) return; // Module Blocked
-    // is Usable in Channel/Server ?
-    if (checkUse(_commandMetadata, {chanData,servData}, message)!==true){
-      return; // Insert Warning here;
-    }
-    return message.channel.send({file: _commandMetadata.reaction});
-  }
-  //===================================
-
-  if (forbiddens) {
-    if (forbiddens.includes(_MODULE)) {
-      return message.reply("Module Disabled")
-    }
-  };
-
-
-
-  let $t = i18node.getT();
-  switch (checkUse(_commandMetadata, {chanData,servData}, message)) {
-    case "NONSFW":
-      message.reply($t('CMD.not-a-NSFW-channel', {
-        lngs: message.lang
-      }))
-      break;
-
-    case "DISABLED":
-      if (servData.disaReply!=false) {
-        message.reply($t('CMD.disabledModule', {
-          lngs: message.lang,
-          module: message.content.substr(message.prefix.length).split(' ')[0]
-        }))
-      }
-      break;
-
-    case "NO ELEVATION":
-      message.reply($t('CMD.insuperms', {
-        lngs: message.lang,
-        prefix: message.prefix
-      }))
-      break;
-
-    case false:
-      return null;
-      break;
-    case true:
-      let final_payload = {
-        Database_bot,
-        servData,
-        userData,
-        chanData,
-        targData
-      };
-      return commandRun(_commandMetadata, message, final_payload); //aqui nóis vai!
-      break;
-  }
-
+const POST_EXEC = function CommandPostExecution(msg,args,success){
+    if(success) return null;
+    return "exec fail"
 }
 
-function determine(msg) {
-        let query = msg.content.substr(msg.prefix.length).split(' ')[0];
-
-        let imgreactions = []//require("./imgreactions.js").out;
-
-        if(imgreactions[query]){
-          let rea
-          if(imgreactions[query].constructor == Array){
-            rea = imgreactions[query][0] // [gear.randomize(0,imgreactions[query].length-1)];
-          }else{
-            rea = imgreactions[query]
-          }
-            return {
-                reaction: rea,
-                path: null,
-                module: "img",
-                cat: "instant"
-            }
-        }
-
-        let aliases = require("./Aliases")//JSON.parse(fs.readFileSync("./core/aliases.json", 'utf8'));
-
-        let command;
-        if (aliases[query]) command = aliases[query].toLowerCase();
-        else command = query.toLowerCase();
-
-        let path = ""
-        let files = fs.readdirSync(appRoot + "/core/commands")
-
-        for (i = 0; i < files.length; i++) {
-            let filedir = appRoot + "/core/commands/" + files[i]
-
-            let morefiles = fs.readdirSync(filedir  )
-            if (morefiles.indexOf(command + ".js") > -1) {
-
-
-                let pathTo = filedir + "/" + command + ".js";
-                let comm = require(pathTo)
-
-                    comm.path= pathTo
-                    comm.module = files[i]
-                    comm.reaction = false
-               return comm
-            }
-        }
-        return false
-
+const PERMS_CALC = function CommandPermission(msg){
+    let uIDs = msg.command.module == "_botOwner"  
+        ? [cfg.owner]
+        : msg.command.module == "_botStaff" 
+            ? cfg.admins
+            : PLX.beta ? [ ] : [ ];
+    let GUILD = msg.guild||{}
+    let switches = !((GUILD.DISABLED||[]).includes(msg.command.label) || (GUILD.DISABLED||[]).includes(msg.command.cat));
+    if(msg.author.looting === true) {
+        msg.addReaction(_emoji('nope').reaction);
+        return false;
     }
-function checkUse(DTMN, DB, msg) {
-
-        try {
-            let commandFile = require(DTMN.path);
-            switch (true) {
-              case !msg.channel.nsfw && commandFile.cat.toLowerCase() == "nsfw" :
-                    return "NONSFW";
-                    break;
-                //case  DB.chanData.modules.DISABLED.includes(commandFile.cat):
-                //case  DB.chanData.modules.DISABLED.includes(DTMN.module):
-                case  false://DB.chanData.modules.DISABLED.includes(commandFile.cmd):
-                    return "DISABLED";
-                    break;
-                case msg.author.PLXpems > commandFile.perms:
-                    return "NO ELEVATION";
-                    break;
-                default:
-                    return true;
-                    break;
-            }
-        } catch (err) {
-            return false;
-            console.error((err.stack).blue);
-        }
-    }
-async function commandRun(command, message, final_payload) {
-console.log(command)
-console.log(message.author.tag)
-    //COMMAND COOLDOWN
-
-   const {Bucket} = require('eris');
-   if(!message.author.ratelimit) {
-    message.author.ratelimit = new Bucket(11,15000,{latency:1552});
-   }
-   if(!message.author.ratelimitHour) {
-    message.author.ratelimitHour = new Bucket(150,3600000,{latency:500});
-   }
-   let ratelimit = message.author.ratelimit;
-   let ratelimitDay = message.author.ratelimitHour;
-   message.author.ratelimitHour.queue(f=>null);
-   message.author.ratelimit.queue(f=>null);
-   if (ratelimitDay.tokens == ratelimitDay.tokenLimit) {
-     message.reply(":hourglass_flowing_sand: You reached the limit of hourly commands, please come back in one hour.");
-     return null;
-   }
-   if (ratelimit.tokens == ratelimit.tokenLimit) {
-    message.reply(":hourglass_flowing_sand: Pls slow down!").then(m => m.deleteAfter(5552));
-    return null;
-   }
-
-   //Set Command-Usable Params
-   message.args = message.content.substr(message.prefix.length).split(/ +/).slice(1);
-   message.quoteArgs = (message.cleanContent.match(/".*"/)||[null])[0]
-   if (message.quoteArgs) message.quoteArgs = message.quoteArgs.replace(/"/g,""); 
-
-   message.lang = [(final_payload.chanData||{}).LANGUAGE || ((final_payload.svData||{}).modules||{}).LANGUAGE || 'en', 'dev'];
-   message.obtainTarget= arg => {
-      let fromMentionOrID = POLLUX.users.find(u=>u.id==arg.replace(/[^0-9]/g,''));
-      if(fromMentionOrID) return fromMentionOrID;
-      return message.guild.members.find(mem=>{
-         if ([mem.username.toLowerCase(),(mem.nick||"\u200b").toLowerCase()].includes(arg.toLowerCase()))return true;
-         if (mem.username.toLowerCase().startsWith(arg.toLowerCase()) || (mem.nick||"\u200b").toLowerCase().startsWith(arg.toLowerCase()))return true;
-         return false;
-      })
-   };
-
-  if (command.cat) {
-    let perms = command.botPerms
-    if (perms){
+    let perms = msg.command.botPerms
+    if (perms && msg.channel.permissionsOf){
       delete require.cache[require.resolve('./PermsCheck.js')];
-      let permchk = require('./PermsCheck.js').run(command.cat, message, perms)
-      if (permchk !== 'ok') return console.error(permchk);
+      let permchk = require('./PermsCheck.js').run(msg.command.cat, msg, perms)
+      if (permchk !== 'ok') return false;
     }
-  }
-
-  //Refresh Command
-  delete require.cache[require.resolve(command.path)];
-  //const minibuster =require('./minibuster.js');
-
-  if(global.piggyback && message.author.id!=="88120564400553984") return; 
-
-  const commandRoutine = require('../subroutines/onEveryCommand');
-  await message.channel.sendTyping();
-  if(command.ratelimit){
-    if(!message.author.ratelimitCMD || !message.author.ratelimitCMD[command.cmd]) {
-      message.author.ratelimitCMD ? null : message.author.ratelimitCMD = {};
-      message.author.ratelimitCMD[command.cmd] = new Bucket(command.ratelimit.times ,command.ratelimit.hours * 3600000,{latency:60000});
-    } 
-    message.author.ratelimitCMD[command.cmd].queue(f=>null);
-    let ratelimit = message.author.ratelimitCMD[command.cmd];
-    if (ratelimit.tokens == ratelimit.tokenLimit) {
-      message.reply(":hourglass_flowing_sand: `Command ratelimit reached!`").then(m => m.deleteAfter(5552));
-      return null;
-    }
-  }
-  await Promise.all([
-      commandRoutine.updateMeta(message,command),
-      commandRoutine.saveStatistics(message,command),
-      commandRoutine.administrateExp(message.author.id,command),
-      commandRoutine.commLog(message,command),
-      command.init(message)
-    ]);
-
-
-  message       = null;
-  final_payload = null;
-  command       = null;
-
-  return true;
-
+    if (!switches) msg.commandDeny = true;
+    return (switches && (!uIDs.length || uIDs.includes(msg.author.id))  );
 }
 
+const DEFAULT_CMD_OPTS = {
+    caseInsensitive: true
+    ,invalidUsageMessage: (msg)=> {
+        if(msg.command.parentCommand){
+            msg.command.cmd = msg.command.parentCommand.cmd
+            msg.command.cat = msg.command.parentCommand.cat
+        }
+        PLX.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat} )
+    }
+    ,cooldown: 2000     
+    ,cooldownMessage: "Too Fast"
+    ,cooldownReturns: 2
+    ,requirements: {custom:PERMS_CALC}
+    ,permissionMessage: (msg)=>{console.log(msg.commandDeny);msg.commandDeny ? msg.channel.send($t("responses.toggle.disabledComSer",{lngs:msg.lang})) : msg.addReaction(_emoji('nope').reaction);return false} 
+    ,hooks:  {
+        preCommand: (m,a) => {            
+            m.args = a;
+            m.lang = [m.channel.LANG || (m.guild || {}).LANG || 'en', 'dev'];
+        },
+        postCheck: (m,a,chk) => {
+            if(!chk) return null;
+            m.channel.sendTyping();
+            commandRoutine.commLog(m, m.command)
+            commandRoutine.updateMeta(m, m.command)
+        },
+        postCommand: (m,a,response) => {
+            commandRoutine.saveStatistics(m, m.command)
+            commandRoutine.administrateExp(m.author.id, m.command)
+        }
+    }
+    ,errorMessage: "ERROR! Aaaaa!"
+    ,hidden : false
+}
+
+
+const registerOne = (folder, _cmd) => {
+    try {
+        delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))]
+        let commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
+        //commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };      
+        commandFile.hidden = !commandFile.pub //legacy port
+
+        if(commandFile.noCMD) return null;
+
+        const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile)
+        //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
+        PLX.commands[CMD.label].cmd = commandFile.cmd
+        PLX.commands[CMD.label].cat = commandFile.cat
+        PLX.commands[CMD.label].module = folder
+        PLX.commands[CMD.label].botPerms = commandFile.botPerms
+        if (commandFile.subs) {
+            commandFile.subs.forEach(sub => {
+                delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
+                let subCfile = require(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`);
+
+                CMD.registerSubcommand(sub, subCfile.init, subCfile)
+            })
+        }
+        if (commandFile.teleSubs) {
+            commandFile.teleSubs.forEach(TELE => {
+                delete require.cache[require.resolve(`${CMD_FOLDER}/${TELE.path}`)];
+                let subCfile = require(`${CMD_FOLDER}/${TELE.path}`);
+
+                CMD.registerSubcommand(TELE.label, (msg,args)=>subCfile.init(msg,args,TELE.pass), subCfile)
+            })
+        }
+        if (commandFile.autoSubs) {
+            commandFile.autoSubs.forEach(AUTOSUB => {              
+                CMD.registerSubcommand(AUTOSUB.label, AUTOSUB.gen, AUTOSUB.options)
+            })
+        }
+        CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage)
+
+    } catch (e) {
+        console.info( " SoftERR ".bgYellow ,_cmd.padEnd(20, ' ').yellow,e.message.red)
+        //console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
+        //console.error("\r                                " + e.message.red)
+    }
+};
+const registerCommands = (rel) => {
+    if (rel) {
+        Object.keys(PLX.commands).forEach(cmd => PLX.unregisterCommand(cmd))
+    }
+    readdirAsync('./core/commands').then(modules => {
+        modules.forEach(async folder => {
+            let commands = (await readdirAsync('./core/commands/' + folder)).map(_c => _c.split('.')[0]);
+            commands.forEach(_cmd => registerOne(folder, _cmd));
+        })
+    })
+};
+
+
+module.exports = {
+    registerCommands,
+    commandRoutine,
+    registerOne,
+    DEFAULT_CMD_OPTS
+}

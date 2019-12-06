@@ -1,17 +1,21 @@
-const gear = require("../../utilities/Gearbox");
-const DB = require("../../database/db_ops");
+// const gear = require("../../utilities/Gearbox");
+// const DB = require("../../database/db_ops");
 const {Embed}= require('eris');
 const clean = (text) => {
-  return typeof text === "string" ? text
-    .replace(/`/g, `\`${String.fromCharCode(8203)}`)
-    .replace(/@/g, `@${String.fromCharCode(8203)}`)
-    .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]") :
-    text;
+
+  let output = (typeof text === "string" ? text
+  .replace(/`/g, `\`${String.fromCharCode(8203)}`)
+  .replace(/@/g, `@${String.fromCharCode(8203)}`)
+    .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]") :   
+    JSON.stringify(text,null,2)).slice(0,1800);
+
+    console.log(output.length)
+    return output
 }
 
 
 
-const init = async msg => {
+const init = async (msg) => {
 let depth_param = 0
   if(msg.args[0] === "-depth"){
     depth_param = parseInt(msg.args[1]);
@@ -46,6 +50,7 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
      let output ="<:yep:339398829050953728>"+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
      let embed = new Embed({description:output});
      embed.setColor("#2bce64")
+     console.log(JSON.stringify(embed).length)
      return msg.channel.createMessage({embed})
   } catch (e) {
      let output ="<:nope:339398829088571402>"+invisibar+ `\`\`\`ml\n${clean(e)}\`\`\``;

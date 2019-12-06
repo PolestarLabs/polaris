@@ -2,17 +2,17 @@
 
 
 
-const DB = require('../database/db_ops');
-const gear = require('../utilities/Gearbox');
+// const DB = require('../database/db_ops');
+// const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
-exports.run = async msg => {
-  POLLUX.execQueue=POLLUX.execQueue.filter(itm=>itm.constructor != Promise);
-  POLLUX.execQueue.push(
+module.exports = async msg => {
+  PLX.execQueue=PLX.execQueue.filter(itm=>itm.constructor != Promise);
+  PLX.execQueue.push(
     Promise.all([
       levelChecks(msg),
       Drops(msg)
-    ]).then(()=>null)
+    ]) 
   )
 
 };
@@ -25,7 +25,7 @@ async function incrementLocal(msg) {
 }
 
 async function incrementGlobal(msg) {  
-  if(gear.randomize(0,5)==3 && msg.content.length > 20){
+  if(randomize(0,5)==3 && msg.content.length > 20){
     await DB.users.set(msg.author.id,{$inc:{'modules.exp':1}});
   };  
 }
@@ -38,22 +38,25 @@ async function levelChecks(msg) {
 
 
 
-  let   userData    = DB.users.get(msg.author.id);
+  let   userData    = DB.users.findOne({id:msg.author.id});
   let   servData    = DB.servers.get(msg.guild.id);
   let   chanData    = DB.channels.get(msg.channel.id);
 
   await Promise.all([
-    userData = await userData,
-    servData = await servData,
-    chanData = await chanData
+    userData = (await userData) || (await DB.users.new(msg.author)),
+    servData = (await servData) || (await DB.servers.new(msg.guild)),
+    chanData = (await chanData) || (await DB.channels.new(msg.channel))
   ]);
 
-  if(!chanData.modules.LVUP || !userData ) {
+
+
+  if(chanData && !chanData.modules.LVUP || !userData ) {
     userData = null;
     servData = null;
     chanData = null;
     return;
   }
+
 
   const _FACTOR =  servData.modules.UPFACTOR||0.5;
   const _CURVE = 0.0427899
@@ -113,7 +116,7 @@ async function levelChecks(msg) {
     if (curLevel_G < userData.modules.level) {
       return;
       //console.log("DELEVEL");
-      //await gear.userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
+      //await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
 }
     if (curLevel_G > userData.modules.level) {
       await DB.userDB.set(msg.author.id,{$set:{'modules.level':curLevel_G}});
@@ -146,8 +149,8 @@ async function levelChecks(msg) {
 
       //delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
       msg.author.getDMChannel().then(dmChan=>{
-        if (userData.switches.LVUPDMoptout===true) return;
-        dmChan.createMessage("**+1** x "+gear.emoji('loot')+gear.emoji(polizei)+' Level Up Bonus!');
+        if (!userData.switches||userData.switches.LVUPDMoptout===true) return;
+        dmChan.createMessage("**+1** x "+_emoji('loot')+_emoji(polizei)+' Level Up Bonus!');
       })
       //require("./modules/dev/levelUp_infra.js").init(msg);
 }

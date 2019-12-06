@@ -51,6 +51,7 @@
 		"favcolor": "Cambia el color de la barra lateral de la TarjetaDePerfil desde un Hex Code",
 		"equip": "¡Equipa medallas de tus Logros u otras compradas en la Tienda!",
 		"fausto": "Invoca a Fausto Silva, El mas grande anfitrión de programas de TV Brasileña",
+		"ramsay": "",
 		"feats": "Muestra los comandos más recientes",
 		"shop": "Compra cosméticos para tu perfil, tal vez hasta otros artículos.",
 		"fortunecookie": "Una galleta de la fortuna que te dice alguna locura",
@@ -241,7 +242,7 @@
 		"decontaminate": "`{{prefix}}decontaminate [@usuario (opcional)]`",
 		"eggtrade": "**Haciendo un Intercambio**\n`{{prefix}}trade [ID del huevo] @miembro`\nE.g.`{{prefix}}trade U2 @miembro` Intercambiará *Huevo Aquamarine Pulse* con *@Miembro*\n\n**Aceptando un Intercambio**\nPara aceptar una propuesta de Intercambio, tienes 30s para responder la oferta con \"accept\" + el ID de uno de tus huevos, solo se permiten intercambios mutuos.\n`accept SR1` Mandará *Huevo Dark Magician* como intercambio de *Huevo Aquamarine Pulse* enviado por el primer usuario.\n\n**Solo puedes intercambiar cada 2 horas, así que ten cuidado. __¡Intercambios fallidos consumirán tu cooldown!__**",
 		"lewd": "`{{prefix}}lewd`\n¡También puedes escoger de que selector querras ver las imágenes escogidas! Tan solo escribe su nombre despues del comando como `{{prefix}}lewd pollyanna` por ejemplo, para solo ver contenido escogido por **Pollyanna**.\n\n Nuestro equipo de seleccionadores actual es:\n {{squad}}",
-		"marry": "Casarse depende directamente de `{{prefix}}craft`, ya que necesitas un anillo antes de poder declararte.\n\nPara casarte con tu amado o amada, haz `{{prefix}}marry @usuario [ring]`. Hay 4 rangos de anillos de boda, cada uno hecho de diferentes gemas, para alardear de tu elegante matrimonio. En el futuro, anillos de mas alto rango proveerán a la pareja de mas Love Points que podrán usar juntos.\n\nEjemplo de uso: `{{prefix}}marry @alguien rubine` para declararte con un anillo de Rubine.\n\nRequiere Permisos de Embed, Manage Messages y Reaction.",
+		"marry": "",
 		"craft": "`{{prefix}}craft [código del item]`\nPuedes ver el código del item y toda la información en http://pollux.fun/crafting.\n\nPara craftear un item necesitas poseer todos los materiales requeridos, algunos materiales necesitan ser crafteados para estar disponibles, esos no son autocrafteados cuando creas un item de alto rango.",
 		"divorce": "`{{prefix}}divorce` Para mostrar a todo el mundo con quien te has casado, ya sea una persona o todo un harén!\n`{{prefix}}divorce [@usuario || Discord ID]` Para divorciarte de esa persona."
 	},

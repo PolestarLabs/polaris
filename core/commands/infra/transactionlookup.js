@@ -1,14 +1,11 @@
-const DB = require(appRoot+"/core/database/db_ops");
-const gear = require(appRoot+"/core/utilities/Gearbox");
-
-
-const init = async function (message) {
+const init = async function (msg, args) {
 
   const {Embed} = require('eris')
   const  embed= new Embed
-  let filterid=message.args[0]
+  let filterid= args[0]
   let log =  await DB.audits.get({transactionId:filterid});
-    let curr
+  if(!log) return msg.addReaction(_emoji('nope').reaction);
+  let curr;
     switch(log.currency){
       case "RBN":
         curr="rubine";
@@ -21,13 +18,13 @@ const init = async function (message) {
         break;
     }
 
-    let tuser = log.from == "271394014358405121"? (await DB.users.findOne({id:log.to})).meta : (await DB.users.findOne({id:log.from})).meta;
+    let tuser = log.from == "271394014358405121"? (await DB.users.get({id:log.to})).meta : (await DB.users.findOne({id:log.from})).meta;
     embed.author(tuser.tag,('https://www.pollux.fun/images/'+"rubine"+'.png'),"https://pollux.fun/profile/"+log.from)
   console.log(embed.author)
     embed.setColor(log.transaction=="+"?'#60c143':'#e23232')
     embed.description(`
   **Transaction Info:**`)
-    embed.field("Amount",gear.miliarize(log.amt,true),true)
+    embed.field("Amount",miliarize(log.amt,true),true)
     embed.field("Type","`"+log.type+"`",true)
     if(log.to!="271394014358405121" && log.from!="271394014358405121") {
       let ouser = (await DB.userDB.findOne({id:log.to})).meta;
@@ -41,14 +38,14 @@ const init = async function (message) {
     embed.timestamp= ts
     embed.footer(log.transactionId)
 
-    message.channel.send({embed})
+    msg.channel.send({embed})
 
     }
 
  module.exports = {
     init,
     pub:false,
-    cmd: 'tlookup',
+    cmd: 'transactionlookup',
     perms: 3, 
     cat: 'infra', 
     aliases:['tlookup']
