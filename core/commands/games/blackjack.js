@@ -159,6 +159,12 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	let num_d = Picto.tag(c, SCORE_B, "900 36px 'Whitney HTF',Sans", "#fff")
 	c.drawImage(num_d.item, 16*2 + 60*2, 99*2 + 20*2)
 
+	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase(), "900 40px 'Panton Black'", "#ea2e2e")
+	
+	c.rotate(-.5)
+	if (Number(SCORE_B) > 21) c.drawImage(BUSTED.item,  40*2, 160*2);
+	if (Number(SCORE_A) > 21) c.drawImage(BUSTED.item, 130*2, 250*2);
+	c.rotate( .5)	
 
 	if (jkrWIN) {
 		c.drawImage(bjk, 0, 0,800,600)
@@ -175,12 +181,6 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 		c.drawImage(you, 8*2, 110*2, 60*2, 60*2)
 	}
 
-	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase(), "900 40px 'Panton Black'", "#ea2e2e")
-	
-	c.rotate(-.5)
-	if (Number(SCORE_B) > 21) c.drawImage(BUSTED.item,  40*2, 160*2);
-	if (Number(SCORE_A) > 21) c.drawImage(BUSTED.item, 130*2, 250*2);
-	c.rotate( .5)	
 
 	drawOpts.enemyStando ? c.drawImage(stando, 0, 0,800,600) : null;
 
