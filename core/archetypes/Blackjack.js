@@ -5,7 +5,7 @@ const SUITS = ['C', 'D', 'H', 'S'];
 const DECK_TEMPLATE = SUITS
   .map(suit => RANKS.concat(RANKS)
     .concat(RANKS)
-    .concat(RANKS)
+    //.concat(RANKS)
     .map(rank => rank + suit)
   ).reduce((array, arr) => array.concat(arr));
 
@@ -21,26 +21,29 @@ class Blackjack {
   }
   hit(hand,powerups) {
     if (this.deck.length === 0) {
+      
       if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
         this.deck = decks.get(this.guildID);
       } else {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
         decks.set(this.guildID, this.deck);
+        this.deck.push("JOKER-default");
+        this.deck = Blackjack._shuffle(this.deck);
       }
-      this.deck.push("JOKER-default");
-      this.deck = Blackjack._shuffle(this.deck);
-
-      if(powerups && powerups.jokers){
-        let jokers = powerups.jokers.length ||0
-        while (jokers--){
-          this.deck.push(powerups.jokers[jokers]);
-          this.deck = Blackjack._shuffle(this.deck);
-        }
-      }
+      
       this.jokersLoaded = true;
-    }    
+      this.deck = Blackjack._shuffle(this.deck);
+    }
+   
+    if(powerups && powerups.jokers){
 
-    this.deck = Blackjack._shuffle(this.deck);
+      let jokers = powerups.jokers.length ||0
+      while (jokers--){
+        this.deck.push(powerups.jokers[jokers]);
+        this.deck = Blackjack._shuffle(this.deck);
+      }
+    }
+    
     if(powerups&&powerups.nojoker){
       let incr = 0;
       while(this.deck[this.deck.length-1].includes("JOKER")){

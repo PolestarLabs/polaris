@@ -291,32 +291,37 @@ const init       = async (msg,args) => {
 		}
 
 		const blackjack = new Blackjack(msg);
-
+		
 		return msg.channel.send(
 			v.NEWGAME.replace("%usr%", msg.member.displayName).replace("%bt%", bet)
-		).then(async () => {
-			const noJoker 	 = {nojoker: true}
-			const balance 	 = USERDATA.modules.rubines;
-			const playerHand = blackjack.getHand(noJoker);
-			const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
-			let playerHands;
-
-			const drawOptions = {
-				v: v,
-				b: bet,
-				B: balance,
-				p: playerName,
-				d: polluxNick,
-				m: msg
-			}
-
-			let playerHandValueCalc = Blackjack.handValue(playerHand);
-
+			).then(async () => {
+				powerups.nojoker = true;
+				const balance 	 = USERDATA.modules.rubines;
+				const playerHand = blackjack.getHand(powerups);
+				powerups.nojoker = false;
+				const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
+				let playerHands;
+				
+				const drawOptions = {
+					v: v,
+					b: bet,
+					B: balance,
+					p: playerName,
+					d: polluxNick,
+					m: msg
+				}
+				if(msg.author.id=="88120564400553984"){
+					blackjack.deck[blackjack.deck.length-2]="JOKER-persona5"
+					console.log(blackjack.deck.slice(55))
+				}
+				let playerHandValueCalc = Blackjack.handValue(playerHand);
+				 
 			if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER")) {
 				playerHands = await getFinalHand(blackjack, playerHand, dealerHand, myDeck, powerups, drawOptions);
 				const result = gameResult(Blackjack.handValue(playerHands[0]), 0);
 				const noHit = playerHands.length === 1 && result === 'bust';
-				while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) blackjack.hit(dealerHand,noJoker);
+				
+				while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) blackjack.hit(dealerHand,{nojoker:true});
 			}else{
 				playerHands = [playerHand];
 			}			
@@ -331,6 +336,8 @@ const init       = async (msg,args) => {
 
 			const H_DATA = {}
 			let doubles=0;
+			let hasJoker = false;
+			let gameJokers = []
 			let splitExplain = []
 			playerHands.forEach((hand, i) => {
 
@@ -349,6 +356,11 @@ const init       = async (msg,args) => {
 					H_DATA.result = playerHands.length === 1 ? `** ${msg.member.displayName}**` : ` ${result.replace(/(^\w|\s\w)/g, ma => ma.toUpperCase())}${result !== 'push' ? `, ${lossOrGain}` : `, ${"Rubines"}"} back`}\n`
 				multiHAND_DATA.push(H_DATA)
 				winnings += Number(lossOrGain)
+				if ( playerValue.toString().includes("JOKER") ) {
+					hasJoker = true;
+					gameJokers.push(playerValue.toString())
+				}
+				
 				RESULT_EMOJI = (res) => playerValue.toString().includes("JOKER") ? _emoji('plxbjkjkr') : playerValue == "Blackjack" ? _emoji('plxbjkbjk') : res == "push"? _emoji('plxbjkpush') : res=="loss"? _emoji('plxbjkloss') :res=="bust"? _emoji('plxbjkbust') :res=="Dealer bust"? _emoji('plxbjkwin') : res.toLowerCase() == "blackjack"? _emoji('plxbjkbjk') : _emoji('plxbjkwin');
 				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}`)
 			});
@@ -386,6 +398,20 @@ const init       = async (msg,args) => {
 			if(splitExplain.length > 1){
 				msg.channel.send(`**${$t('games.blackjack.splitbreak',P)}**\n`+splitExplain.join('\n'))
 			}
+
+			// JOKER EFFECTS GO HERE
+			if(hasJoker === true){
+
+				gameJokers.forEach((JKR,i)=>{
+
+					msg.channel.send("`"+JKR+"` eff -- immediate -- J:"+i+"/"+gameJokers.length);
+
+
+				})
+
+			}
+
+
 		});
 
 
@@ -422,6 +448,8 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 	async function ProcessHand(currentHand) {
 		if (!currentHand) return Promise.resolve(true);
 		const nextHand = () => currentHand = hands[hands.indexOf(currentHand) + 1];
+	
+
 		if (currentHand.length === 1) blackjack.hit(currentHand, powerups);
 		if (Blackjack.handValue(currentHand) === 'Blackjack') {
 			nextHand();
