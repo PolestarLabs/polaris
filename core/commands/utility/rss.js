@@ -21,7 +21,6 @@ const init = async function (msg){
         if(!feed) return msg.channel.send( $t('interface.feed.invalidRSS',P) );
         channel = destination || msg.channel.id; //feedData.defaultChannel;
         feed.items = feed.items.filter(x=>x.link.startsWith('http'));
-
         if(!channel) return msg.channel.send( $t('interface.feed.noDefault',P) );
         
         let payload = {type: "rss", url: str, last: feed.items[0], channel: channel};
@@ -30,10 +29,14 @@ const init = async function (msg){
             await DB.feed.set({server:msg.guild.id,url:str},{$set:{channel} });
             return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
+        let embed = await feedEmbed(feed.items[0],feed);
         payload.server= msg.guild.id
+        payload.thumb = feed.image.url
+        payload.name = feed.title || feed.image.title
+        console.log(feed.title)
+
         await DB.feed.new(payload);
 
-        let embed = await feedEmbed(feed.items[0],feed);
         P.channelID = `<#${channel}>`
         msg.channel.send(_emoji("yep")+ $t('interface.feed.savedSubLastRSS',P));
         return  PLX.getChannel(channel).send( {embed} );        
