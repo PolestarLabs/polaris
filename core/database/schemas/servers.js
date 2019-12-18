@@ -17,6 +17,7 @@ const ServerSchema = new mongoose.Schema({
         logging: {type:Boolean, default:false},
         imgwelcome: {type:Boolean, default:false},
         splitLogs:{type:Boolean, default:false},
+        switches: Mixed,
         modules: {
             BUSTER:Mixed,
             shitpostFeed:Mixed,
