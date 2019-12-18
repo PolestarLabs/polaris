@@ -10,8 +10,8 @@ const init = async function (msg){
     const P={lngs:msg.lang,prefix:msg.prefix,command:this.cmd}
     if(PLX.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
-    let feedData = await DB.feed.get({server: msg.guild.id});
-    const RSSFiltered = feedData ? (feedData.feeds||[]).filter(fd=>fd.type=="rss") : [];
+    const feedData = await DB.feed.find({server: msg.guild.id, type:'rss'}).lean().exec();
+     
 
     // +RSS add (LINK) 
     if(msg.args[0]=== "add"){
@@ -19,21 +19,24 @@ const init = async function (msg){
         let destination = msg.channelMentions[0]
         let feed = await parser.parseURL(str).catch(e=>false);
         if(!feed) return msg.channel.send( $t('interface.feed.invalidRSS',P) );
-        channel = destination || feedData.defaultChannel;
-        
+        channel = destination || msg.channel.id; //feedData.defaultChannel;
+        feed.items = feed.items.filter(x=>x.link.startsWith('http'));
+
         if(!channel) return msg.channel.send( $t('interface.feed.noDefault',P) );
         
         let payload = {type: "rss", url: str, last: feed.items[0], channel: channel};
 
-        if(feedData && feedData.feeds.find(fdd=> fdd.url == str)){
-            await DB.feed.set({server:msg.guild.id,'feeds.url':str},{'feeds.$.channel':channel });
+        if(feedData && feedData.find(fdd=> fdd.url == str)){
+            await DB.feed.set({server:msg.guild.id,url:str},{$set:{channel} });
             return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
+        payload.server= msg.guild.id
+        await DB.feed.new(payload);
 
-        await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
         let embed = await feedEmbed(feed.items[0],feed);
         P.channelID = `<#${channel}>`
-        msg.channel.send(_emoji("yep"), $t('interface.feed.savedSubLastRSS',P));
+        msg.channel.send(_emoji("yep")+ $t('interface.feed.savedSubLastRSS',P));
+        console.log({embed})
         return  PLX.getChannel(channel).send( {embed} );        
         
     }
@@ -42,10 +45,10 @@ const init = async function (msg){
 
     // +RSS remove (LINK || index) 
     if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
-        if (!feedData || RSSFiltered.length == 0) return msg.channel.send( $t('interface.feed.noFeed',P) );
+        if (!feedData || feedData.length == 0) return msg.channel.send( $t('interface.feed.noFeed',P) );
         let target = msg.args[1];
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
-        let toDelete = RSSFiltered[target] || feedData.feeds.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
+        let toDelete = feedData[target] || feedData.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
         let embed = new Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
@@ -55,15 +58,16 @@ const init = async function (msg){
             $t('interface.generic.confirmDelete',P),
             embed});
         YesNo(confirm,msg,async (cc)=>{
-            await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
+            //await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
+            await DB.feed.deleteOne({server:msg.guild.id, url: toDelete.url });        
         });    
     }
 
     if(msg.args[0]=== "list"){        
-        if(feedData && RSSFiltered.length > 0){
+        if(feedData && feedData.length > 0){
             msg.channel.send(`
             **${_emoji('todo')+ $t('interface.feed.listShowRSS',P) }**
-\u2003${RSSFiltered.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
+\u2003${feedData.map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` <${x.url}> @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',P)}*
 `)
@@ -74,7 +78,7 @@ const init = async function (msg){
     // +RSS defaultchannel (#channel) 
     if(msg.args[0]=== "channel"){
         let channel =  msg.channelMentions[0]
-        await DB.feed.set({server:msg.guild.id},{$set:{defaultChannel:channel}});
+        await DB.servers.set({id:msg.guild.id},{$set:{'modules.defaultRSSChannel':channel}});
         P.channelID = `<#${channel}>`;
         msg.channel.send( rand$t('responses.verbose.interjections.acknowledged',P)+ $t('interface.feed.channelUpdate',P) )
     }
@@ -96,7 +100,7 @@ async function feedEmbed(item,data){
     let ogs = require('open-graph-scraper');
     let results = await ogs({ 'url': item.guid  }).catch(e=>{return false});
     let img_link = results ? results.data.ogImage.url: null;  
-    if(img_link) embed.image = {url:img_link};
+    if(img_link) embed.image = {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link};
     return embed;
   }
 

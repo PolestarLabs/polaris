@@ -16,7 +16,7 @@ const init = async function (msg){
     let P={lngs:msg.lang,prefix:msg.prefix,command:this.cmd}  
     if(PLX.autoHelper(["noargs",$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
     
-    let feedData = await DB.feed.get({server: msg.guild.id});
+    let feedData = await DB.feed.find({server: msg.guild.id, type:'youtube'});
 
 
     // +RSS add (LINK)  
@@ -40,14 +40,14 @@ const init = async function (msg){
         
         let payload = {type: "youtube", url: channelID, last: youtubeChannel.items[0], channel: channel};
 
-        if(feedData && feedData.feeds.find(fdd=> fdd.url == channelID)){
-            await DB.feed.set({server:msg.guild.id,'feeds.url':channelID},{'feeds.$.channel':channel });
+        if(feedData && feedData.find(fdd=> fdd.url == channelID)){
+            await DB.feed.set({server:msg.guild.id, url:channelID},{$set:{channel:channel} });
             return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
         let embed = await feedEmbed(payload.last,youtubeChannel );
         payload.last.media = null;
-        console.log(payload)
-        await DB.feed.set({server:msg.guild.id},{$addToSet:{feeds:payload}});
+        payload.server = msg.guild.id;
+        await DB.feed.new( payload );
         
 
         P.tuber = embed.author.name;
@@ -64,11 +64,11 @@ const init = async function (msg){
     }
     // +RSS remove (LINK || index) 
     if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
-        if (!feedData || feedData.feeds.length == 0) return msg.channel.send( $t('interface.feed.noTube',P) );
+        if (!feedData || feedData.length == 0) return msg.channel.send( $t('interface.feed.noTube',P) );
         let target = msg.args[1];
         
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
-        let toDelete = feedData.feeds[target] || feedData.feeds.find(f=>f.url == target || f.url.includes(target) )
+        let toDelete = feedData[target] || feedData.find(f=>f.url == target || f.url.includes(target) )
         let embed = new Embed;
         embed.description = `
                 URL: https://youtube.com/channel/${toDelete.url}
@@ -78,15 +78,17 @@ const init = async function (msg){
             $t('interface.generic.confirmDelete',P),
             embed});
         YesNo(confirm,msg,async (cc)=>{
-            await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
+            //await DB.feed.set({server:msg.guild.id},{$pull:{feeds:toDelete}});            
+            await DB.feed.deleteOne({server:msg.guild.id, url:toDelete.url});
         });    
     }
 
-    if(msg.args[0]=== "list"){        
-        if(feedData && feedData.feeds.length > 0){
+    if(msg.args[0]=== "list"){     
+        console.log(feedData,feedData.length )   
+        if(feedData && feedData.length > 0){
             msg.channel.send(`
             **${_emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
-\u2003${feedData.feeds.filter(x=>x.type==="youtube").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` https://youtube.com/channel/${x.url} @ <#${x.channel}>`).join('\n\u2003')}        
+\u2003${feedData.filter(x=>x.type==="youtube").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` https://youtube.com/channel/${x.url} @ <#${x.channel}>`).join('\n\u2003')}        
 
 *${$t('interface.feed.listRemove',P)}*
 `)

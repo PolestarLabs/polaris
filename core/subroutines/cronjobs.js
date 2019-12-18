@@ -152,16 +152,16 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
   
   
   (async ()=>{
-    DB.feed.find({ server: { $in: PLX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
-      serverFeeds.forEach(async svFd => {
-        const serverData = await DB.servers.get(svFd.server);
-        svFd.feeds.forEach(async feed => {
+    DB.feed.find({ server: { $in: PLX.guilds.map(g => g.id) } }).lean().exec().then(async serverFeeds => {
+      const serverData = await DB.servers.get(serverFeeds.server);
+      serverFeeds.forEach(async feed => {
+         
           if (feed.type === 'rss'){
             const data = await parser.parseURL(feed.url).timeout(250).catch(e=>null);
             if(!data) return;
             if (data.items[0] && feed.last.guid != data.items[0].guid) {
               const embed = await RSSembedGenerator(data.items[0],data);
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':feed.url},{'feeds.$.last':data.items[0] }).catch(e=>null);
+              await DB.feed.updateOne({server:serverFeeds.server,url:feed.url},{$set:{last: data.items[0]} }).catch(e=>null);
 
               PLX.getChannel(feed.channel).send({embed});
             }        
@@ -190,8 +190,8 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
                     embed.timestamp(StreamData.started_at);
                     embed.color("#6441A4");
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
-              const ping = thisFeed.pings || svFd.pings || '';
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':StreamData}).catch(e=>null);
+              const ping = thisFeed.pings || serverFeeds.pings || '';
+              await DB.feed.updateOne({server:serverFeeds.server,'feeds.url':thisFeed.url},{ $set:{last:StreamData}} ).catch(e=>null);
 
               PLX.getChannel(thisFeed.channel).send({
                 content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
@@ -212,12 +212,12 @@ const FIFTEENminute = new CronJob('*/15 * * * *', async () => {
               ${$t("interface.feed.newYoutube",P)}
               ${data.items[0].link}`
               data.items[0].media = null;
-              await DB.feed.updateOne({server:svFd.server,'feeds.url':thisFeed.url},{'feeds.$.last':data.items[0] });        
-              const ping = thisFeed.pings || svFd.pings || '';
+              await DB.feed.updateOne({server:serverFeeds.server,url: thisFeed.url},{ $set:{last: data.items[0]} });        
+              const ping = thisFeed.pings || serverFeeds.pings || '';
               PLX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}).catch(e=>null)).catch(e=>null);
             }
           }
-        })
+        
       })
     })    
   })()

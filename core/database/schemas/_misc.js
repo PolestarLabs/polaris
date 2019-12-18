@@ -142,18 +142,22 @@ gift.get    =  utils.dbGetter;
        }    
 
   const FeedModel = new Schema({
-    server:{type:String,unique:true},
-    defaultChannel: String,
-    feeds: [{
-      type: {type: String}, // RSS, TWITCH, YouTube
+    server:String,
+      type: String, // RSS, TWITCH, YouTube
       url: String,
       last: Mixed,
       channel: String,
-    }]
   })     
   const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
        feed.set    =  utils.dbSetter;
        feed.get    =  utils.dbGetter; 
+       feed.new = payload => {
+        let ff = new feed(payload);
+        ff.save((err) => {
+          if (err) return console.error(err);
+          console.log("[NEW FEED ENTRY]".blue,payload);
+        });
+      }
 
   const AlertsModel = new Schema({
     type: {type:String}, // RECURRING, ONETIME
