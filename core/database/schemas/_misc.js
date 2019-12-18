@@ -147,6 +147,7 @@ gift.get    =  utils.dbGetter;
       url: String,
       last: Mixed,
       channel: String,
+      thumb: String
   })     
   const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
        feed.set    =  utils.dbSetter;

@@ -36,7 +36,6 @@ const init = async function (msg){
         let embed = await feedEmbed(feed.items[0],feed);
         P.channelID = `<#${channel}>`
         msg.channel.send(_emoji("yep")+ $t('interface.feed.savedSubLastRSS',P));
-        console.log({embed})
         return  PLX.getChannel(channel).send( {embed} );        
         
     }

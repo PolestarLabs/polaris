@@ -51,7 +51,6 @@ const init = async function (msg){
         
 
         P.tuber = embed.author.name;
-        console.log(embed.author)
         let LastVideoLink = `
         ${$t("interface.feed.newYoutube", P)}
         ${payload.last.link}`
@@ -83,8 +82,7 @@ const init = async function (msg){
         });    
     }
 
-    if(msg.args[0]=== "list"){     
-        console.log(feedData,feedData.length )   
+    if(msg.args[0]=== "list"){      
         if(feedData && feedData.length > 0){
             msg.channel.send(`
             **${_emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
@@ -110,6 +108,7 @@ const init = async function (msg){
 
 async function feedEmbed(item,data){
 
+    
     let embed = new Embed;
     embed.color("#ee1010") 
     embed.title  = "**"+item.title+"**"
@@ -118,6 +117,11 @@ async function feedEmbed(item,data){
     embed.timestamp(item.pubDate)
     embed.description     = (item.media['media:description'][0] || "" ).split('\n')[0]
     embed.footer("YouTube", "https://unixtitan.net/images/youtube-clipart-gta-5.png")
+
+    let ogs = require('open-graph-scraper');
+    let results = await ogs({ 'url':  data.link  }).catch(e=>{console.error(e);return false});
+    let img_link = results ? results.data.ogImage.url: null;  
+    if(img_link) embed.thumbnail = {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link};
 
     return embed;
   }
