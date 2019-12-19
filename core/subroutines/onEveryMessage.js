@@ -50,7 +50,7 @@ async function levelChecks(msg) {
 
 
 
-  if(chanData && !chanData.modules.LVUP || !userData ) {
+  if(  (servData.switches||{}).chLvlUpOff && servData.switches.chLvlUpOff.includes(msg.channel.id) || !userData ) {
     userData = null;
     servData = null;
     chanData = null;
@@ -69,7 +69,7 @@ async function levelChecks(msg) {
   let curLevel_local = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
   //let forNext_local = Math.trunc(Math.pow(((LOCAL_RANK.level||0) + 1) / _FACTOR, 2));
 
-  if (!(servData.modules.BYPASS || chanData.modules.BYPASS)){
+  if ( !((servData.switches||{}).chExpOff && servData.switches.chExpOff.includes(msg.channel.id))  ){
     incrementLocal(msg);
     incrementGlobal(msg);
   };

@@ -46,7 +46,12 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
 
     const SVR = trigger.guild;
     const CHN = trigger.channel;
-    const serverDATA = await DB.servers.findOne({id:SVR.id},{"modules.LOCALRANK":0});
+    const serverDATA = await DB.servers.findOne({id:SVR.id},{"modules.LOCALRANK":0}).lean().exec();
+
+    if(   (serverDATA.switches||{}).chLootboxOff && serverDATA.switches.chLootboxOff.includes(trigger.channel.id) ) return;
+
+
+
     let prerf = serverDATA.modules.PREFIX || "+";
     const _DROPMIN   = 1
     const _DROPMAX   = 1000;
