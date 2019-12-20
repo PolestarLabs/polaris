@@ -157,7 +157,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
         const serverData = await DB.servers.get(feed.server);
         
           if (feed.type === 'rss'){
-            const data = await parser.parseURL(feed.url).timeout(250).catch(e=>null);
+            const data = await parser.parseURL(feed.url).timeout(950).catch(e=>null);
             if(!data) return;
             data.items = data.items.filter(x=>x.link.startsWith('http'));
             if (data.items[0] && feed.last.guid != data.items[0].guid) {
@@ -171,7 +171,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
           if (feed.type === 'twitch'){
             const thisFeed = feed;
  
-            let response = await axios.get('https://api.twitch.tv/helix/streams?user_login='+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(800).catch(e=>null);            
+            let response = await axios.get('https://api.twitch.tv/helix/streams?user_login='+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(3000).catch(e=>null);            
    
             if(!response) return;
             const StreamData = (response.data||{}).data[0];
@@ -184,7 +184,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
                 thisFeed.last.started_at === StreamData.started_at
                 )
             ){
-              let response = await axios.get('https://api.twitch.tv/helix/users?login='+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(800).catch(e=>null);
+              let response = await axios.get('https://api.twitch.tv/helix/users?login='+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(3000).catch(e=>null);
               if(!response) return;
               const streamer = response.data[0] || response.data.data[0];
               const embed = new Embed;
@@ -194,8 +194,9 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
                     embed.timestamp(StreamData.started_at);
                     embed.color("#6441A4");
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev'], streamer: streamer.display_name };   
-              const ping = thisFeed.pings || feed.pings || '';
-              await DB.feed.updateOne({server:feed.server,url:thisFeed.url},{$set:{last:StreamData, thumb: streamer.profile_image_url }}).catch(e=>null);
+              const ping = thisFeed.pings || thisFeed.pings || '';
+
+              await DB.feed.updateOne({server:thisFeed.server,url:thisFeed.url},{$set:{last:StreamData, thumb: streamer.profile_image_url }}).catch(console.error);
 
               PLX.getChannel(thisFeed.channel).send({
                 content : `${ping}`+$t('interface.feed.newTwitchStatus',P) +` <https://twitch.tv/${streamer.login}>`
@@ -207,7 +208,8 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
           if (feed.type === 'youtube'){
             const thisFeed = feed;
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
-            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url).timeout(120).catch(e=>null);
+            const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url).timeout(3120).catch(e=>null);
+ 
             if (data && data.items[0] && thisFeed.last.link !== data.items[0].link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
@@ -216,8 +218,8 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
               ${$t("interface.feed.newYoutube",P)}
               ${data.items[0].link}`
               data.items[0].media = null;
-              await DB.feed.updateOne({server:feed.server, url:thisFeed.url},{ $set:{last:data.items[0],thumb: embed.thumbnail.url}});        
-              const ping = thisFeed.pings || feed.pings || '';
+              await DB.feed.updateOne({server:thisFeed.server, url:thisFeed.url},{ $set:{last:data.items[0],thumb: embed.thumbnail.url}}).catch(console.error);        
+              const ping = thisFeed.pings || thisFeed.pings || '';
               PLX.getChannel(thisFeed.channel).send( {content:ping+LastVideoLink}).then(m=>m.channel.send({embed}).catch(e=>null)).catch(e=>null);
             }
           }
