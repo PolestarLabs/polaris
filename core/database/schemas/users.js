@@ -240,6 +240,8 @@ MODEL.new = userDATA => {
 
 
 
-MODEL.set = utils.dbSetter;
-MODEL.get = utils.dbGetter;
+MODEL.check = utils.dbChecker;
+MODEL.set   = utils.dbSetter;
+MODEL.get   = utils.dbGetter;
+
 module.exports = MODEL;
