@@ -14,7 +14,7 @@ class DailyCmd{
     }
 
     async userData(user){
-        const USERDATA    = await DB.users.findOne({id:user.id});
+        const USERDATA    = await DB.users.get({id:user.id},undefined,'users');
         const userDaily   = (USERDATA.counters||{})[this.command] || {last:1, streak: 1 };
         return userDaily;
     }
