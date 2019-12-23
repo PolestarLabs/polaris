@@ -35,14 +35,24 @@ module.exports = {
      })
    },
 
-   dbGetter : function(query,project){
+   dbChecker : async function(query){
+       if(['string','number'].includes(typeof query)){
+         query = {'id':query.toString()};
+       };
+       if(!typeof alter) resolve (false);
+       else resolve (true);
+   },
+
+   dbGetter : function(query,project,createNew){
      return new Promise(async resolve=>{
        if(['string','number'].includes(typeof query)){
          query = {'id':query.toString()};
        };
        if(!typeof project) project = {_id:0};
        let data = await this.findOne(query,project).lean().exec();
-       if (data === null) resolve(null);//return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
+
+       if (!data && createNew) return resolve( await this.new(PLX[createNew].find(u=>u.id === query.id))  );
+       if (data === null) return resolve(null);//return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
        return resolve(data);
      })
    }
