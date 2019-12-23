@@ -26,7 +26,7 @@ const P = {user:message.member.displayName,lang:message.lngs}
   let tag    = message.args[1]
   let value  = message.args.slice(2).join(" ")
   
-  let USERDATA = await DB.users.findOne({id:message.author.id});
+  let USERDATA = await DB.users.getFull({id:message.author.id});
   let vars = (USERDATA.switches||{variables:[]}).variables
   
   if(["add","set"].includes(action)){
@@ -58,7 +58,7 @@ const P = {user:message.member.displayName,lang:message.lngs}
     }
     }
   
-  USERDATA = await DB.users.findOne({id:message.author.id});
+  USERDATA = await DB.users.getFull({id:message.author.id});
   
   vars = USERDATA.switches.variables;
   let embed = new Embed;

@@ -7,8 +7,8 @@ class UserProfileModel{
   
       // Discord Data
       if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
-  
-      if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
+      
+      if(userData && (userData.constructor.modelName !== "UserDB" && userData.type!="udata") ) discordMember = userData;
       if(typeof discordMember === 'string') discordMember = PLX.users.get(discordMember);
       const notMember = discordMember && discordMember.constructor != Member;
   
@@ -17,6 +17,9 @@ class UserProfileModel{
       this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;
       this.avatar = notMember ? discordMember.avatarURL : discordMember.user.avatarURL;
       this.bot = discordMember.bot;
+
+      console.log(this.avatar);
+      console.log({notMember  });
       
       // Pollux User Data
       if(!userData || !userData.modules) {

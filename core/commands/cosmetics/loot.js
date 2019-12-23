@@ -51,7 +51,7 @@ const init = async function (msg, options = {}) {
 
   delete require.cache[require.resolve("../../archetypes/Lootbox.js")];
   const LOOT = require("../../archetypes/Lootbox.js");
-  let USERDATA = await DB.users.findOne({ id: msg.author.id });
+  let USERDATA = await DB.users.getFull({ id: msg.author.id });
 
 
   let thisRoll = (options || { thisroll: 0 }).thisRoll || 0;

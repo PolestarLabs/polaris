@@ -8,7 +8,7 @@ const init = async function (msg) {
     
 
     const [userData,stickerData,boosterData] = await Promise.all([
-        DB.users.findOne({id:msg.author.id}),
+        DB.users.getFull({id:msg.author.id}),
         DB.cosmetics.find({type:'sticker'}),
         DB.items.find({type:'boosterpack'}),
     ]);

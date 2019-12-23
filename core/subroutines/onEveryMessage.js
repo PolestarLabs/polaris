@@ -26,7 +26,7 @@ async function incrementLocal(msg) {
 
 async function incrementGlobal(msg) {  
   if(randomize(0,5)==3 && msg.content.length > 20){
-    let userData = await DB.users.findOne({id:msg.author.id},{_id:1}).lean().exec();
+    let userData = await DB.users.getFull({id:msg.author.id},{_id:1}).lean().exec();
     if(!userData) return null;
     await DB.users.set(msg.author.id,{$inc:{'modules.exp':1}});
   };  
@@ -40,7 +40,7 @@ async function levelChecks(msg) {
 
 
 
-  let   userData    = DB.users.findOne({id:msg.author.id});
+  let   userData    = DB.users.getFull({id:msg.author.id});
   let   servData    = DB.servers.get(msg.guild.id);
 
   await Promise.all([

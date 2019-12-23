@@ -45,8 +45,8 @@ const init = async function(msg, args) {
     
 
     const [userData, targetData, Boxes] = await Promise.all([
-      DB.users.findOne({ id: msg.author.id }),
-      DB.users.findOne({ id: Target.id }),
+      DB.users.getFull({ id: msg.author.id }),
+      DB.users.getFull({ id: Target.id }),
       DB.items.find({ type: "box" })
     ]);
 

@@ -81,7 +81,8 @@ function noteno(item,extra){
   embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.craftingItem',P) )
     
 
-  const userData = await DB.users.findOne({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
+  const userData = await DB.users.getFull({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
+  
   //message.reply("`console res`")
   if(crafted_item){
     let ID = crafted_item.id

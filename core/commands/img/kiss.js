@@ -48,7 +48,7 @@ const init = async function(msg) {
     embed.description = ":hearts: " + $t("responses.forFun.kissedSelf", P);
 
   if (Target) {
-    var USERDATA = await DB.users.findOne({ id: msg.author.id });
+    var USERDATA = await DB.users.getFull({ id: msg.author.id });
     var marriedtarget = USERDATA.married.find(us => us.id == Target.id);
   }
 

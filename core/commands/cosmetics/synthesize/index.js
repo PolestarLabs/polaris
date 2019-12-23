@@ -29,7 +29,7 @@ var init = async function (message,args) {
 
     let operation = message.args[0] || "bg";
     let target = message.args[1] || "random";
-    const userData = await DB.users.findOne({id:message.author.id});
+    const userData = await DB.users.getFull({id:message.author.id});
     const embed = new Embed;
     let hasIt, affordsIt, canBuy,  selectedItem, positive,obtainable;
 

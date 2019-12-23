@@ -242,9 +242,10 @@ MODEL.new = userDATA => {
 
 
 
-MODEL.cat   = 'users'
-MODEL.check = utils.dbChecker;
-MODEL.set   = utils.dbSetter;
-MODEL.get   = utils.dbGetter;
+MODEL.cat     = 'users'
+MODEL.check   = utils.dbChecker;
+MODEL.set     = utils.dbSetter;
+MODEL.get     = utils.dbGetter;
+MODEL.getFull = utils.dbGetterFull;
 
 module.exports = MODEL;

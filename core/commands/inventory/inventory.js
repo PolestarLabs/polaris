@@ -37,7 +37,7 @@ const init = async function (msg,args){
     let [_baseline,hex,userData,itemData ] = await Promise.all([    
           Picto.getCanvas(paths.CDN+"/build/invent/inventframe.png")
         , Picto.makeHex(175,Target.avatarURL)        
-        , DB.users.findOne({id:Target.id},{
+        , DB.users.getFull({id:Target.id},{
             'modules.inventory'         :1,
             'modules.flairsInventory'   :1,
             'modules.bgInventory'       :1,

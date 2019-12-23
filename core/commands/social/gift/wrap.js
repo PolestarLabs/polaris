@@ -4,7 +4,7 @@ const init = async function (msg,args){
 
     let itemType = args[0];
     let itemId = args[1];
-    const userData = await DB.users.findOne({id:msg.author.id});
+    const userData = await DB.users.getFull({id:msg.author.id});
 
     let destroystring = {}
     let giftItem = {

@@ -16,7 +16,7 @@ module.exports = async function (msg) {
   
   if(PLX.refreshing || PLX.beta){
     delete require.cache[require.resolve('../core/structures/CommandPreprocessor.js')]
-     delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
+    delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
   if( (PLX.tapping || PLX.beta) && !global.piggyback){
@@ -75,7 +75,7 @@ return;
 async function dataChecks(type,ent){
     return new Promise(async resolve =>{
       if(type==="user"){
-        DB.users.findOne({id:ent.id}, {id:1,blacklisted:1} ).lean().exec().then(user=>{
+        DB.users.getFull({id:ent.id}, {id:1,blacklisted:1} ).lean().exec().then(user=>{
           if(!user) return resolve(DB.users.new(ent));
           return resolve(user);
         });

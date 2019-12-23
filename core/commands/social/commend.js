@@ -21,8 +21,8 @@ const init = async function (msg) {
 
 
 
-    const userData = await DB.users.findOne({ id: msg.author.id });
-    const targetData = (await DB.users.findOne({ id: Target.id })) || (await DB.users.new(Target));
+    const userData = await DB.users.getFull({ id: msg.author.id });
+    const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
     const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
 
@@ -103,7 +103,7 @@ const info = async (msg, args) => {
     if (Target == null) Target = msg.author;
     
     const [targetData,targetDataC] = await Promise.all([
-        (await DB.users.findOne({ id: Target.id })) || (await DB.users.new(Target)),
+        (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
         ((await DB.commends.findOne({ id: Target.id }).lean().exec()) || { id: Target.id, whoIn: [], whoOut: [] })
     ]);
 

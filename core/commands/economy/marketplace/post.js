@@ -41,7 +41,7 @@ const init = async function(msg,args){
         `
  
         async function AllChecks(){
-            const userData = DB.users.findOne({id:msg.author.id});
+            const userData = DB.users.getFull({id:msg.author.id});
             
             const checkItem = function(userData, type,id,transaction){
                 pass = true;

@@ -218,7 +218,7 @@ Winner:\`${JSON.stringify(luckyOne)}\
 `)
       */
       trigger.channel.deleteMessages(responses.map(x=>x.id));
-      await DB.users.findOne({id:luckyOne.id}).then(userdata=>userdata.addItem(BOX.id) );
+      await DB.users.getFull({id:luckyOne.id}).then(userdata=>userdata.addItem(BOX.id) );
       console.log(("BOX ADDED!!!").green)
       goesto.delete().catch(e=>false);
       dramaMsg.delete().catch(e=>false);
