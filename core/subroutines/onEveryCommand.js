@@ -1,7 +1,7 @@
 // const DB = require('../database/db_ops');
 module.exports = {
 
-  updateMeta: async function (msg,command){      
+  updateMeta: async function (msg,command){
     await DB.userDB.updateMeta(msg.author);
     await DB.serverDB.updateMeta(msg.guild);
     return null;
@@ -20,7 +20,7 @@ module.exports = {
   administrateExp: async function (usID,command){
     
     let EXP = command.exp || 1;
-    return DB.users.set(usID,{$inc:{'modules.exp':EXP}});
+    return DB.users.updateOne({id:usID},{$inc:{'modules.exp':EXP}},{upsert:false}).lean().exec();
 
   },
 

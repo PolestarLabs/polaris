@@ -26,6 +26,8 @@ async function incrementLocal(msg) {
 
 async function incrementGlobal(msg) {  
   if(randomize(0,5)==3 && msg.content.length > 20){
+    let userData = await DB.users.findOne({id:msg.author.id},{_id:1}).lean().exec();
+    if(!userData) return null;
     await DB.users.set(msg.author.id,{$inc:{'modules.exp':1}});
   };  
 }
@@ -40,12 +42,10 @@ async function levelChecks(msg) {
 
   let   userData    = DB.users.findOne({id:msg.author.id});
   let   servData    = DB.servers.get(msg.guild.id);
-  let   chanData    = DB.channels.get(msg.channel.id);
 
   await Promise.all([
-    userData = (await userData) || (await DB.users.new(msg.author)),
+    userData = (await userData),
     servData = (await servData) || (await DB.servers.new(msg.guild)),
-    chanData = (await chanData) || (await DB.channels.new(msg.channel))
   ]);
 
 
@@ -53,7 +53,6 @@ async function levelChecks(msg) {
   if(  (servData.switches||{}).chLvlUpOff && servData.switches.chLvlUpOff.includes(msg.channel.id) || !userData ) {
     userData = null;
     servData = null;
-    chanData = null;
     return;
   }
 
@@ -85,7 +84,13 @@ async function levelChecks(msg) {
   if (curLevel_local > LOCAL_RANK.level) {
     await DB.localranks.set({user:msg.author.id,server:msg.guild.id},{$set:{level:curLevel_local}});
     
-      if(servData.modules.LVUP_local && chanData.modules.LVUP) msg.channel.send("Level Up! >> "+curLevel_local);
+      if(
+        servData.modules.LVUP_local &&
+        !(servData.switches||{chLvlUpOff:[]}).chLvlUpOff.includes(msg.channel.id)
+      ) 
+          msg.channel.send("Level Up! >> "+curLevel_local);
+      
+
       if(servData.modules.AUTOROLES){
 
         //ADD AUTOROLES
@@ -159,7 +164,7 @@ async function levelChecks(msg) {
 
     userData = null;
     servData = null;
-    chanData = null;
+
 
 
 }
