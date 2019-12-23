@@ -214,13 +214,16 @@ MODEL.updateMeta = U => {
 
 
 MODEL.new = userDATA => {
-  MODEL.findOne({id: userDATA.id}, (err, newUser) => {
-    if (err) {
+  return new Promise(resolve=>{
+
+    MODEL.findOne({id: userDATA.id}, (err, newUser) => {
+      if (err) {
         console.error(err)
-    }
-    if (newUser) {
-      // Nothing
-    } else {
+      }
+      if (newUser) {
+        return resolve(newUser);
+        
+      } else {
         let user = new MODEL({
           id: userDATA.id,
           name:userDATA.username,
@@ -230,16 +233,16 @@ MODEL.new = userDATA => {
           if (err) return console.error(err);
           //console.log("[NEW USER]".blue,userDATA.tag.yellow,`(ID:${userDATA.id})`);
           MODEL.updateMeta(userDATA);
+          return resolve(user);           
         });
-    }
-  });
-
-  return MODEL.findOne({id:userDATA.id})
+      }
+    });   
+  })
 }
 
 
 
-
+MODEL.cat   = 'users'
 MODEL.check = utils.dbChecker;
 MODEL.set   = utils.dbSetter;
 MODEL.get   = utils.dbGetter;

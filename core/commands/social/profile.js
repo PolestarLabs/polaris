@@ -129,9 +129,12 @@ init = async (msg)=>{
   // NORMAL PROFILE -->
 
   const Target = PLX.getTarget(msg,0,true,true);
-  let Target_Database = await DB.users.findOne({id:Target.id});
+  let Target_Database = await DB.users.get({id:Target.id});
 
-
+  console.log({Target_Database})
+  
+  if(Target_Database) Target_Database.type = 'udata';
+  
  
 
   const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?msg.guild.member(Target):Target));
