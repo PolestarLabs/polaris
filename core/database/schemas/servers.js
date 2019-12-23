@@ -168,6 +168,8 @@ MODEL.findOne({id: svDATA.id}, (err, guild) => {
    }
 });
 }
+
+MODEL.cat   = 'guilds'
 MODEL.set = utils.dbSetter;
 MODEL.get = utils.dbGetter;
 module.exports = MODEL;
