@@ -1,14 +1,7 @@
-
-
-
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema 
 const Mixed = Schema.Types.Mixed;
 const utils = require('../../structures/PrimitiveGearbox.js');
-
-
-
 
 
 const UserCollection = new Schema({
@@ -150,25 +143,25 @@ gift.get    =  utils.dbGetter;
           });
        }    
 
-  const FeedModel = new Schema({
-    server:String,
-      type: String, // RSS, TWITCH, YouTube
-      url: String,
-      last: Mixed,
-      channel: String,
-      thumb: String,
-      name: String
-  })     
-  const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
-       feed.set    =  utils.dbSetter;
-       feed.get    =  utils.dbGetter; 
-       feed.new = payload => {
-        let ff = new feed(payload);
-        ff.save((err) => {
-          if (err) return console.error(err);
-          console.log("[NEW FEED ENTRY]".blue,payload);
-        });
-      }
+       const FeedModel = new Schema({
+        server:String,
+          type: String, // RSS, TWITCH, YouTube
+          url: String,
+          last: Mixed,
+          channel: String,
+          thumb: String,
+          name: String
+      })     
+      const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
+           feed.set    =  utils.dbSetter;
+           feed.get    =  utils.dbGetter; 
+           feed.new = payload => {
+            let ff = new feed(payload);
+            ff.save((err) => {
+              if (err) return console.error(err);
+              console.log("[NEW FEED ENTRY]".blue,payload);
+            });
+          }
 
   const AlertsModel = new Schema({
     type: {type:String}, // RECURRING, ONETIME
