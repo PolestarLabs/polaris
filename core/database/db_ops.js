@@ -23,6 +23,7 @@ const
        ,control        : miscDB.control
        ,marketplace    : miscDB.marketplace
        ,reactRoles     : miscDB.reactRoles
+       ,paidroles      : miscDB.paidroles
        ,relationships  : miscDB.relationships
        ,alerts         : miscDB.alert
        ,feed           : miscDB.feed
@@ -34,6 +35,7 @@ const
    ,items         : require('./schemas/items.js')
    ,achievements  : require('./schemas/achievements.js')
    ,mutes         : require('./schemas/mutes.js')
+   ,temproles     : require('./schemas/temproles.js')
    
    
    ,users:    userDB
