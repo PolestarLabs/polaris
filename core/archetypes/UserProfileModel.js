@@ -37,6 +37,7 @@ class UserProfileModel{
       this.sticker      = userData.modules.sticker  || null;
       this.flair        = userData.modules.flairTop || 'default';
       this.rubines      = userData.modules.rubines  || 0;
+      this.sapphires    = userData.modules.sapphires  || 0;
       this.medals       = userData.modules.medals   || [];
       this.marriage     = userData.featuredMarriage || null;
       this.commend     = userData.modules.commend  || 0;

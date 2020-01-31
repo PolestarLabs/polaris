@@ -5,16 +5,17 @@ const Picto = require('../../utilities/Picto.js');
 
 const XYZ ={
   global_roundel: {X: 680,  Y: 2},
-  persotex    : {W: 270, H: 70, X:515, Y:492 - 126 },
+  persotex    : {W: 270, H: 76, X:515, Y:492 - 125 },
   wifeRect    : {X:100,Y:1,W:314,H:65,R:37},
   wifeName    : {X:165 ,Y:  7 ,W:183 ,A:'left'   },
   lovepoints  : {X:165 ,Y: 35 ,W:183 ,A:'left'   },
   wifeSince   : {X:350 ,Y: 35 ,W:183 ,A:'right'  },
   commend     : {X: 53 ,Y: 25 ,W: 80 ,A:'center' },
   name        : {X:325 ,Y:268 ,W:420 ,A:'left'   },
-  medals      : {X:98,Y: 370                     },
+  medals      : {X:98,Y: 378                     },
   tagline     : {X:332 ,Y:310 ,W:440 ,A:'left'   },
-  rubines     : {X:706 ,Y:519 ,W:440             },
+  rubines     : {X:706 ,Y:521 ,W:440             },
+  sapphires   : {X:706 ,Y:521 ,W:440             },
   globalRank  : {X:588 ,Y:462 ,W: 80 ,A: 'right' },
   localRank   : {X:725 ,Y:462 ,W: 80 ,A: 'right' },
   background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
@@ -65,10 +66,10 @@ const TEXT={
     COLOR: "#fdfdfd"
   },
   PERSOTEX:{
-    SIZE: '11pt',
+    SIZE: 16,
     WEIGHT: '',
-    FAMILY: 'Whitney HTF Light',
-    COLOR: "#fff",
+    FAMILY: ' ',
+    COLOR: "#AAC",
   },
   SIDEBAR:{
     SIZE: 40,
@@ -83,10 +84,10 @@ const TEXT={
     COLOR: "#ffffff"
   },
   RUBINES:{
-    SIZE: 30,
-    WEIGHT: 900,
-    FAMILY:'Whitney HTF Light',
-    COLOR: "#fdfdfd"
+    SIZE: 26,
+    WEIGHT: 400,
+    FAMILY:'Corporate Logo Rounded',
+    COLOR: "#CCE"
   }       
 };
 
@@ -162,13 +163,14 @@ try{
     img.background   = Picto.getCanvas(paths.CDN + "/backdrops/"            + USERPROFILE.background   + ".png");
     img.flair        = Picto.getCanvas(paths.CDN + "/flairs/"               + USERPROFILE.flair        + ".png");
     img.sticker      = Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
-    img.flag         = Picto.getCanvas(paths.CDN + "/images/flags/"         + USERPROFILE.countryFlag  + ".png");
+    img.flag         = Picto.getCanvas(paths.CDN + "/build/flags/"         + USERPROFILE.countryFlag  + ".png");
     img.aviFrame     = Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
     img.medals       = USERPROFILE.medals.map(mdl=> new Object({
                                   canvas: Picto.getCanvas(paths.CDN + "/medals/"+mdl+".png"),
                                   index: USERPROFILE.medals.indexOf(mdl)
                                 }) );    
     img.iconRubine     = Picto.getCanvas(paths.CDN + "/images/gems/rubine_full.png");
+    img.iconSapphire   = Picto.getCanvas(paths.CDN + "/images/gems/sapphire_full.png");
     img.global_roundel = Picto.XChart(120, USERPROFILE.percent, USERPROFILE.favColor, false, USERPROFILE.level);
     img.hex_frame = Picto.makeHex(250);
     img.hex_pic = Picto.makeHex(210, USERPROFILE.avatar);
@@ -214,6 +216,7 @@ try{
     
     txt_type = "RUBINES"
     txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.sapphires = Picto.tag(ctx, miliarize(USERPROFILE.sapphires) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
     txt_type = "RANKS"
     txt.globalRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.rank) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
@@ -359,7 +362,10 @@ try{
   let rubine_n_roundel = (async () =>{
     if (!Target.bot){
       ctx.drawImage(txt.rubines.item, XYZ.rubines.X - txt.rubines.width, XYZ.rubines.Y);
-      ctx.drawImage( (await img.iconRubine), XYZ.rubines.X +10, XYZ.rubines.Y);
+      ctx.drawImage( (await img.iconRubine), XYZ.rubines.X +10, XYZ.rubines.Y, 40,32);
+
+      ctx.drawImage(txt.sapphires.item, XYZ.sapphires.X - txt.sapphires.width - txt.rubines.width - 50, XYZ.sapphires.Y);
+      ctx.drawImage( (await img.iconSapphire), XYZ.sapphires.X +10 - txt.rubines.width - 50 , XYZ.sapphires.Y, 28,32);
       z="global_roundel"
       ctx.drawImage( (await img[z])  ,XYZ[z].X, XYZ[z].Y )
       return true;
