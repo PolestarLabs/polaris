@@ -162,17 +162,18 @@ dispatcher.on('end', () => {
     const BOXE = new LOOT.Lootbox(boxparams.rarity, boxparams);
     const BOX = await BOXE.legacyfy;
 
-
+    
     wait(5).then(x => {
       sttup.delete().catch(e=>null);
     });
 
 
     //==>
-
+ 
     let LootData = await drawBox(BOX, message, USERDATA);
 
     let LootMeta = LootData.LOOTS;
+ 
 
     // let lootpic=await msg.channel.send('box')
 

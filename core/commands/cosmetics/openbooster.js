@@ -45,6 +45,10 @@ const init = async function (msg) {
     embed.thumbnail(paths.CDN + `/build/boosters/showcase/${collection}.png`)
     embed.footer(msg.author.tag,msg.author.avatarURL)
 
+    await Promise.all([
+        userData.update({$addToSet:{'modules.stickerInventory':{$each:[stk1.id,stk2.id]}}})
+        ,userData.removeItem(thisPack.id)
+    ]);
     msg.channel.send({embed});
 
 };

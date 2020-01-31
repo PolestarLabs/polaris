@@ -36,6 +36,7 @@ const
    ,achievements  : require('./schemas/achievements.js')
    ,mutes         : require('./schemas/mutes.js')
    ,temproles     : require('./schemas/temproles.js')
+   ,promocodes    : require('./schemas/promocodes.js')
    
    
    ,users:    userDB
