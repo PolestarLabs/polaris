@@ -75,7 +75,13 @@ console.log(paths.BUILD+"/rank_mainframe.png")
         ct.fillStyle = usr.color;
         ct.fillRect(0,1,45,sec?80:100);    
     ct.drawImage(await usr.avatar,90,2,sec?80:90,sec?80:90);
-    ct.drawImage(await usr.bg,255,-50,400,206);
+    try{
+        ct.drawImage(await usr.bg,255,-50,400,206);
+    }catch(e){
+        console.error(e)
+        console.error("ERRORED BG".bgRed+usr.bg)
+    }
+
         ct.fillStyle = "rgba(45, 63, 77,0.1)"
         ct.fillRect(255,-50,400,206);        
         let EXP = Picto.tag(ct,usr.exp,"400 "+(18-(sec?2:0))+"px 'Whitney HTF'","#FFF")
