@@ -12,7 +12,7 @@ const init = async function (msg){
     })
 
     console.log(newInventory)
-
+    msg.channel.send("```js\n"+JSON.stringify(newInventory).replace(/},/g,'},\n').slice(0,1990)+"```")
 
 }
 module.exports={

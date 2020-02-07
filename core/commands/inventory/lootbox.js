@@ -7,7 +7,7 @@ const LOOTING    = new Map();
 const init = async function (msg,args,userID){
     
     if(userID && (args[10]||{}).id != userID) return "Only the owner can see inside";
-    msg.lang = msg.lang||[msg.channel.LANG];
+    msg.lang = msg.lang||[msg.channel.LANG||'en', 'dev'];
 
 
     const userInventory = new INVENTORY(userID||msg.author.id,"box");
@@ -35,6 +35,7 @@ const init = async function (msg,args,userID){
     if(userID) return response;
     let res = await msg.channel.send(response);
     INVOKERS.set(userID || msg.author.id, res.id );
+    console.log('end')
     return res;
      
 }
