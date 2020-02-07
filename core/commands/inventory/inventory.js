@@ -74,7 +74,14 @@ const init = async function (msg,args){
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
-        let itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        let itemType;
+        try{
+            itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        }catch(err){
+            console.error(err)
+            console.error(itemData,itm)
+            itemType = 'other'
+        }
         if(!types[itemType]) types[itemType] = 0;
         types[itemType] += (itm.count || 0);
     });
