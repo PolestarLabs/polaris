@@ -19,7 +19,7 @@ const XYZ ={
   globalRank  : {X:588 ,Y:462 ,W: 80 ,A: 'right' },
   localRank   : {X:725 ,Y:462 ,W: 80 ,A: 'right' },
   background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
-  sticker     : {X: 320 ,Y: 395 ,W:220, H: 220    },
+  sticker     : {X: 323 ,Y: 397 ,W:215, H: 215    },
   avatar      : {X: 6,  Y: 123},
   flair       : {X: 235,  Y: 245, W:100, H:120},
   flag     : {X: 748,  Y: 280},
