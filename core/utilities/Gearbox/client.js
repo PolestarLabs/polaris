@@ -103,6 +103,7 @@ module.exports = {
         key = options.opt;
         cmd = options.cmd;
         opt = options.opt;
+        scope = options.scope;
         aliases = options.aliases;
       };
   
@@ -114,16 +115,16 @@ module.exports = {
       ) {
         //this.usage(cmd,message,opt,aliases);
         let usage = require("../../structures/UsageHelper.js");
-        usage.run(cmd, message, opt);
+        usage.run(cmd, message, opt, options);
         return true;
       } else {
         return false;
       }
     },
-    usage: function usage(cmd, m, third) {
+    usage: function usage(cmd, m, third, sco) {
       delete require.cache[require.resolve("../../structures/UsageHelper.js")];
       let usage = require("../../structures/UsageHelper.js");
-      usage.run(cmd, m, third);
+      usage.run(cmd, m, third, sco);
     },
   
   
