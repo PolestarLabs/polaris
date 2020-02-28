@@ -17,7 +17,7 @@ const init = async function(msg) {
 module.exports = {
   init,
   pub: true,
-  cmd: "reamen",
+  cmd: "ramen",
   perms: 3,
   cat: "img",
   botPerms: ["embedLinks"],
