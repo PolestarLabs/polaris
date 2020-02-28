@@ -38,8 +38,11 @@ const DEFAULT_CMD_OPTS = {
         if(msg.command.parentCommand){
             msg.command.cmd = msg.command.parentCommand.cmd
             msg.command.cat = msg.command.parentCommand.cat
+            msg.command.scope = msg.command.parentCommand.scope
+            msg.command.related = msg.command.parentCommand.related
+            msg.command.aliases = msg.command.parentCommand.aliases
         }
-        PLX.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat} )
+        PLX.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat, aliases: msg.command.aliases, scope: msg.command.scope, related: msg.command.related} )
     }
     ,cooldown: 2000     
     ,cooldownMessage: "Too Fast"
@@ -62,7 +65,16 @@ const DEFAULT_CMD_OPTS = {
             commandRoutine.administrateExp(m.author.id, m.command)
         }
     }
-    ,errorMessage: "ERROR! Aaaaa!"
+    ,errorMessage: (x,y)=>{ 
+        console.log(x,y)
+        return {
+                embed:{
+                    description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n "
+                    ,thumbnail:{url:paths.CDN+'/build/assorted/error_aaa.gif?'}
+                    ,color: 0xF05060
+                }
+            }
+        }
     ,hidden : false
 }
 
@@ -80,6 +92,8 @@ const registerOne = (folder, _cmd) => {
         //console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
         PLX.commands[CMD.label].cmd = commandFile.cmd
         PLX.commands[CMD.label].cat = commandFile.cat
+        PLX.commands[CMD.label].scope = commandFile.scope
+        PLX.commands[CMD.label].related = commandFile.related
         PLX.commands[CMD.label].module = folder
         PLX.commands[CMD.label].botPerms = commandFile.botPerms
         if (commandFile.subs) {
