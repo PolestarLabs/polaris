@@ -102,7 +102,7 @@ const init = async function(msg,args){
                 _emoji("SPH")+"Sapphire Listing Eligibility",
                 saleStatus.forSPH?itemStatus.pass?_emoji('yep'):itemStatus.reason:_emoji('nope') ,true)
 
-            if(operation == "info"){
+            if(operation == "info" || operation == ""){
                 return msg.channel.send({embed})
             }
 
@@ -188,7 +188,7 @@ Use it to share your listing elsewhere!
             });
             
         }else{
-            if (operation == "info") return;
+            if (operation == "info" || operation == "") return;
             abort();
      
         }
@@ -197,7 +197,7 @@ Use it to share your listing elsewhere!
 
 module.exports = {
     init,
-    argsRequired: true,
+    argsRequired: false,
     caseInsensitive: true,
     cooldown: 8000,
     hooks: {
