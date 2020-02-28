@@ -37,16 +37,17 @@ emb.thumbnail(PLX.user.avatarURL)
 
 emb.field('\u200b','𝚂𝚘𝚌𝚒𝚊𝚕 𝙸𝚗𝚏𝚘𝚛𝚖𝚊𝚝𝚒𝚘𝚗 ',false)
 
-emb.field(_emoji('mobo')+'   Servers',"```ml\n~"  +miliarize( server_estimate_count, true) + "```", true)
-emb.field(':busts_in_silhouette:    Users',"```ml\n~" +miliarize( user_estimate_count        ) + "```", true)
+emb.field(_emoji('mobo')+'  Estimated Servers',"```ml\n~"  +miliarize( server_estimate_count, true) + "```", true)
+emb.field(':busts_in_silhouette:   Active Users',"```ml\n~" +miliarize( user_estimate_count        ) + "```", true)
 
 
 emb.field('\u200b','𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚝𝚞𝚜 ',false)
-emb.field(_emoji('cog')+'   Websocket Ping         \u200b',"```ml\n"+ ping +"```", true)
-emb.field(_emoji('memslot')+'    RAM Usage',"```ml\n"+ram_usage+" MB```", true)
+emb.field(_emoji('cog')+'  Websocket Latency',"```ml\n"+ ping +"```", true)
+emb.field(_emoji('memslot')+'  Memory Heap',"```ml\n"+ram_usage+" MB```", true)
 
+emb.field('\u200b','\u200b',false)
 //emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
-emb.field(_emoji('mobo')+'  Servers in this Cluster         \u200b',"```css\n"+(`[S${msg.guild.shard.id}C${process.env.CLUSTER_ID}] ${PLX.guilds.size}`)+"```", true)
+emb.field(_emoji('mobo')+'  Cluster Svs         \u200b',"```css\n"+(`[${PLX.cluster.name}-${process.env.CLUSTER_ID}] ${PLX.guilds.size}`)+"```", true)
 emb.field(_emoji('cpu')+'   Cluster Uptime',"```ml\n"+(uptime)+"```", true)
 
 emb.field('\u200b'         ,'𝙻𝚒𝚗𝚔𝚜 ',false)
@@ -57,7 +58,7 @@ emb.field('Support Server' ,':question:  [Pollux\'s Mansion]('+paths.CDN+'/suppo
 emb.field('Twitter'        ,'<:twitter:510526878139023380>  [@maidPollux](https://twitter.com/maidPollux)    \u200b', true)
 emb.field('Subreddit'      ,'<:reddit:510526878038360074>   [/r/Pollux](https://reddit.com/r/Pollux)    \u200b', true)
 
-emb.footer("Falkenstein - DE\u2003❤ Powered by "+os.cpus().length+"x "+os.cpus()[1].model ,   `https://beta.pollux.gg/build/guessing/guessflags/germany.png`)
+emb.footer("Falkenstein - DE\u2003❤ Powered by "+os.cpus().length+"x "+os.cpus()[1].model ,   `${paths.CDN}/build/guessing/guessflags/germany.png`)
 
 
   msg.channel.send({embed:emb})
