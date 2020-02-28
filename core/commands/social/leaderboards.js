@@ -19,9 +19,9 @@ const init = async function (msg,args) {
 
     //DATA NEEDED
     let svData    = DB.servers.get(Server.id),
-        localRanks= DB.localranks.find({server:msg.guild.id}).sort({'exp':-1}).limit(5),
+        localRanks= DB.localranks.find({server:msg.guild.id, user:{$in:Server.members.map(x=>x.id)} }).sort({'exp':-1}).limit(5),
         userData  = DB.users.get(Author.id),
-        userRanks = DB.users.find({}).sort({'modules.exp':-1}).limit(5);
+        userRanks = DB.users.find({}).sort({'modules.exp':-1}).limit(5).lean().exec();
         
         await Promise.all([svdata=await svData, userData=await userData, userRanks=await userRanks,localRanks=await localRanks]);
         let localUsers= await DB.users.find({id:{$in:localRanks.map(u=>u.user)}});
@@ -29,6 +29,7 @@ const init = async function (msg,args) {
     const localUserRanks = localRanks.map(index=> {
 
         let SMEM = Server.members.find(mem=>mem.id===index.user);
+       
  
         let us=localUsers.find(u=>u.id===index.user)||SMEM||{};
         if(!us.modules) us.modules={};
