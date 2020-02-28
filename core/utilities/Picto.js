@@ -135,7 +135,7 @@ module.exports={
    roundRect: function roundRect(ctx, x=0, y=0, width=10, height=10, radius=5, fill="#FFF", stroke=false) {
  
   if (typeof radius === 'number') {
-    radius = {tl: radius, tr: radius, br: radius, bl: radius};
+    radius = typeof radius == 'object'?radius:{tl: radius, tr: radius, br: radius, bl: radius};
   } else {
     var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
     for (var side in defaultRadius) {
@@ -152,9 +152,18 @@ module.exports={
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
   ctx.lineTo(x, y + radius.tl);
   ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-  ctx.closePath();
-  if (fill) {
-    typeof fill== "string" ? ctx.fillStyle = fill : false;
+  if (fill && typeof fill== 'object' ) {
+    ctx.save();
+    ctx.clip();
+    ctx.drawImage(fill, x,y,width,height)
+    ctx.closePath();
+    ctx.restore();
+  }else{
+    ctx.closePath();
+  }
+
+  if (fill && typeof fill== "string") {
+    ctx.fillStyle = fill 
     ctx.fill();
 }
 if (stroke) {
@@ -179,7 +188,7 @@ setAndDraw: function setAndDraw(ct,img,x,y,maxW=300,align='left'){
 
 
 
-XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
+XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level",font) {
     const color = TColor(colorX);
     const pi = Math.PI;
     let startR = pi * 3 / 2, endR = pToR(pcent) * pi;
@@ -258,7 +267,7 @@ XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
     context.fillStyle = 'rgba(' + color + ',1)'; ;
 
 
-    context.font = "900 18px 'Whitney HTF'";
+    context.font = font || "900 18px Panton";
 
     const t = (pcent * 100).toFixed(0) + "%";
     let WW =  context.measureText(t+"%").width
@@ -266,20 +275,22 @@ XChart: async function XChart(size, pcent, colorX,pic,lvthis,term = "level") {
 
 
 
-    let label = await this.tag(context, term.toUpperCase(),false,"#222");
-    let tg = await this.tag(context,lvthis,"900 56px 'Whitney HTF'","#363636");
+    let label = this.tag(context, term.toUpperCase(),false,"#222");
+    lvthis = lvthis > 999 ? miliarize(lvthis,false,' ') : lvthis; 
+    let tg = this.tag(context,lvthis,"900 56px 'Panton Black'","#363636");
 
     let f = .8
     let lx = (size/2) - (label.width/2/f)
     let ly = (size/2) - (label.height*1.5)
     let lh=label.height/f
     let lw=label.width/f
+    let tW = tg.width;
+    if (tW > size) tW = size-12;
+    let x = (size/2) - (tW/2)
+    let y = (size/2) - (tg.height/2) +7
 
-    let x = (size/2) - (tg.width/2)
-    let y = (size/2) - (tg.height/2)
-
-    await context.drawImage(label.item,lx,15,lw,lh);
-    await context.drawImage(tg.item,x,y,tg.width,tg.height);
+    context.drawImage(label.item,lx,15,lw,lh);
+    context.drawImage(tg.item,x,y,tW,tg.height);
 
     return canvas_proto
 
