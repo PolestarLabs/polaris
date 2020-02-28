@@ -25,10 +25,10 @@ const init = async function (msg){
         textbot = msg.args.join(' ').replace(/<@[0-9]*>/g,"")
     }
 
-    if(msg.args[0] ==="^") {
+    if(msg.args.includes("^")) {
         let messageGrab = await PLX.getPreviousMessage(msg);
         if(messageGrab) textop = messageGrab.cleanContent;
-        textbot = msg.args.slice(1).join(' ') 
+        textbot = msg.args.filter(a=>a!='^').join(' ') 
         onepart = false;
     }
 
