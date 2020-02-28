@@ -27,7 +27,7 @@ const init = async msg => {
             let morefiles = fs.readdirSync(filedir  )
             morefiles.forEach(file=>{
                 let cmdOptions =  require( filedir+"/"+file );
-                commands.push({name: file.split('.')[0],cat:cmdOptions.cat ,pub:cmdOptions.pub,group:files[i]}); 
+                commands.push( Object.assign({name: file.split('.')[0],group:files[i]},cmdOptions) ); 
             })
         } 
 
@@ -39,9 +39,9 @@ const init = async msg => {
           inviteme  = $t('help.inviteme', P),
           useful    = $t('help.useful',   P);
     
-      let commlink = "https://beta.pollux.gg/commands";
-      let suplink = "https://pollux.gg/support";
-      let invitelink = "https://pollux.gg/invite";
+      let commlink = paths.CDN+"/commands";
+      let suplink = paths.CDN+"/support";
+      let invitelink = paths.CDN+"/invite";
     
 
       const hEmbed = new Embed;
@@ -129,7 +129,8 @@ if(msg.args[0]==='commands'){
 
 let argCom = commands.find(cmd=> cmd.name === msg.args[0])
 if(argCom){
-    return autoHelper('force', {cmd:msg.args[0],msg,opt: argCom.cat});
+    console.log(argCom)
+    return PLX.autoHelper('force',  Object.assign({cmd:msg.args[0],msg,opt: argCom.cat},argCom) ) && undefined;
 }
 
     
