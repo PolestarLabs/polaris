@@ -3,23 +3,28 @@
 
         "nsfw": {
             "color": "#240d12",
-            "thumb": "https://png.icons8.com/porn-folder/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/porn-folder.png"
+        },
+
+        "anime": {
+            "color": "#f04055",
+            "thumb": "https://img.icons8.com/%ICONSET%/250/hiragana-ma.png"
         },
         "roleplay": {
             "color": "#e2934f",
-            "thumb": "https://png.icons8.com/sword/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/sword.png"
         },
         "mod": {
             "color": "#322be5",
-            "thumb": "https://png.icons8.com/sheriff/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/sheriff.png"
         },
         "$": {
             "color": "#51ba8e",
-            "thumb": "https://png.icons8.com/money/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/money.png"
         },
         "game": {
             "color": "#9288c9",
-            "thumb": "https://png.icons8.com/game-controller/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/game-controller.png"
         },
         "rubine": {
             "color": "#ff3636",
@@ -27,55 +32,55 @@
         },
         "cosmetics": {
             "color": "#ff6ed2",
-            "thumb": "https://png.icons8.com/bow-tie/color/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/bow-tie.png"
         },
         "social": {
             "color": "#24409f",
-            "thumb": "https://png.icons8.com/new-contact/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/new-contact.png"
         },
         "img": {
             "color": "#2582b4",
-            "thumb": "https://png.icons8.com/stack-of-photos/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/stack-of-photos.png"
         },
         "dev": {
             "color": "#2a2a2a",
-            "thumb": "https://png.icons8.com/code/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/code.png"
         },
         "own": {
             "color": "#00ff3b",
-            "thumb": "https://png.icons8.com/code/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/code.png"
         },
         "easteregg": {
             "color": "#ea5db4",
-            "thumb": "https://png.icons8.com/easter-egg/color/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/easter-egg.png"
         },
         "language": {
             "color": "#61b149",
-            "thumb": "https://png.icons8.com/world-map/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/world-map.png"
         },
         "fun": {
             "color": "#ffd23e",
-            "thumb": "https://png.icons8.com/cocktail/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/cocktail.png"
         },
         "memes": {
             "color": "#4d49b2",
-            "thumb": "https://png.icons8.com/paper-plane/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/paper-plane.png"
         },
         "gambling": {
             "color": "#f45656",
-            "thumb": "https://png.icons8.com/cards/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/cards.png"
         },
         "infra": {
             "color": "#6d4e81",
-            "thumb": "https://png.icons8.com/database/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/database.png"
         },
         "misc": {
             "color": "#d0d4ea",
-            "thumb": "https://png.icons8.com/cardboard-box/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/cardboard-box.png"
         },
         "util": {
             "color": "#e24f4f",
-            "thumb": "https://png.icons8.com/swiss-army-knife/dusk/40"
+            "thumb": "https://img.icons8.com/%ICONSET%/250/swiss-army-knife.png"
         },
       "halloween": {
             "color": "#e2934f",
