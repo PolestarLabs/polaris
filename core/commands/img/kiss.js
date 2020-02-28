@@ -24,7 +24,9 @@ const init = async function(msg) {
     Target = PLX.getTarget(msg, 1, false);
   } else {
     Target = PLX.getTarget(msg, 0, false);
-  }
+    if (["bb", "gg", "bg", "gb"].includes(msg.args[1]))   filter = msg.args[1];
+  } 
+  
   P.user = msg.author.username;
   P.victim = Target ? Target.username : false;
   console.log(Target);
