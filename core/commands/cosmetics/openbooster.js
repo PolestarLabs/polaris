@@ -56,7 +56,7 @@ const init = async function (msg) {
 
 module.exports = {
     init
-    , pub: true
+    , pub: false
     , cmd: 'openbooster'
     , perms: 3
     , cat: 'cosmetics'
