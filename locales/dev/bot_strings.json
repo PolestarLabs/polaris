@@ -30,7 +30,13 @@
         "material": "Material",
         "material_plural": "Materials",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacks"
+        "boosterpack_plural": "Boosterpacks",
+        "medal": "Medal",
+        "medal_plural": "Medals",
+        "sticker": "Sticker",
+        "sticker_plural": "Stickers",
+        "background": "Background",
+        "background_plural": "Backgrounds"
     },
     "terms": {
         "transferDenied": "Transfer Denied",
@@ -539,7 +545,8 @@
             ,"bracketX":"Bracket {{AB}}"
         },
         "synthfrag":{
-            "disenchant":"Disenchant this {{rarity_emoji}} background into **{{count}} $t(keywords.cosmoFragment)** ?"
+            "magifrag":"Cosmetics Fragmentation",
+            "disenchant":"Would you like to disenchant this?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n into **{{count}} $t(keywords.cosmoFragment)** ?"
             ,"cosmeticSynth":"Cosmetic Item Synthesis"
             ,"confirmSynth":"Do you want me to synthesize this?"
             ,"nogemsforThis":"Looks like you don't have enough gems for this synthesis..."
