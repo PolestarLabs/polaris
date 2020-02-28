@@ -20,17 +20,16 @@ const init = async function (msg) {
       lngs: msg.lang
     }
 
-    let pre = msg.content.split(/ +/).slice(1).join(' ')
-    let regex = /^(.*[A-z,0-9])/
+    let LINK      = (msg.args.join(' ').match(/(http[^ |^>]+)/gm)||[''])[0];
+    let MENTION   = (msg.args.join(' ').match(/(<@[0-9]+>)/gm)||[''])[0];
+    let HEADLINE  = msg.args.join(' ').replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, '');
 
-    let pre2 = pre.match(regex) ? pre.match(regex)[0] : ""
-    let spot = pre2.indexOf('http')
-    let headline_tx = "" + (spot < 0 ? pre2 : pre2.slice(0, spot));
-    let img_link
+    let img_link = LINK;
+    
     try {
-      img_link = spot > -1 ? pre2.slice(spot) : (msg.mentions[0] || {}).displayAvatarURL || await PLX.getChannelImg(msg);
+      if(!LINK) img_link = (msg.mentions[0] || {}).displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
-      img_link = spot > -1 ? pre2.slice(spot) : ((msg.mentions[0] || msg.author).displayAvatarURL);
+      if(!LINK) img_link = (msg.mentions[0] || msg.author).displayAvatarURL;
     }
 
     let lnOptions = {
@@ -40,7 +39,7 @@ const init = async function (msg) {
       verticalAlign: 'top',
       textAlign: "left",
     }
-    if (!headline_tx || headline_tx.length == 0 && randomize(0, 3) > 1) {
+    if (!HEADLINE || HEADLINE.length == 0 && randomize(0, 3) > 1) {
       if (!global.fakeFeed) {
         setTimeout(()=>global.fakeFeed = null, 30000); 
         let RSS = require('rss-parser');
@@ -56,11 +55,11 @@ const init = async function (msg) {
             rand = randomize(0, sources.length - 1);
             let feed = await parser.parseURL(sources[rand]);
             rand2 = randomize(0, 5)
-            headline_tx = feed.items[rand2].title;
+            HEADLINE = feed.items[rand2].title;
             let results = await ogs({ 'url': feed.items[rand2].link });
             img_link = results.data.ogImage.url;
 
-            global.fakeFeed = { link: img_link, title: headline_tx };
+            global.fakeFeed = { link: img_link, title: HEADLINE };
 
           } catch (e) {
             
@@ -68,15 +67,15 @@ const init = async function (msg) {
         })();
       }else{
         img_link  = global.fakeFeed.link
-        headline_tx = global.fakeFeed.title        
+        HEADLINE = global.fakeFeed.title        
       }
     }
       
-      const [newspap, headline, pic] = await Promise.all([
-    Picto.getCanvas(paths.BUILD + 'localman.png'),
-    Picto.block(ctx, headline_tx||"Lorem Ipsum", 0, "#242020", 470, 90, lnOptions),
-    Picto.getCanvas(img_link)
-  ]);
+    const [newspap, headline, pic] = await Promise.all([
+      Picto.getCanvas(paths.BUILD + 'localman.png'),
+      Picto.block(ctx, HEADLINE||"Lorem Ipsum", 0, "#242020", 470, 90, lnOptions),
+      Picto.getCanvas(img_link)
+    ]);
 
 
     ctx.drawImage(newspap, 00, 0);
