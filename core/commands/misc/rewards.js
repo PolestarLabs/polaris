@@ -414,7 +414,7 @@ await Promise.all([
 ]) 
     
 
-if(!(userData.counters.donateStreak||{}).total){    
+if(!((userData.counters||{}).donateStreak||{}).total){    
  // await userDB.set(message.author.id,{
  //   $inc:{"modules.sapphires":T.immediate}
  // });
