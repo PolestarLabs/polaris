@@ -18,6 +18,21 @@ module.exports = {
 
   Embed: Eris.Embed,
   RichEmbed: this.Embed, // legacy comp
+
+  weightedRand:  (wArr = [-1]) => {
+    let ttWgt = 0,
+    i, rand;  
+  for (i of wArr) {
+    ttWgt += i;
+  }  
+  rand = Math.random() * ttWgt;  
+  for (i in wArr) {
+    if (rand < wArr[i]) return i; 
+    rand -=  wArr[i];
+  }  
+  return -1;
+},
+
   randomize: function randomize(min, max, seed = Date.now()) {
     let RAND = generator.random(seed);
     return Math.floor(RAND * (max - min + 1) + min);
