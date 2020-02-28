@@ -267,6 +267,32 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
     })
   });
 
+  /* Manage Reminders */ //================================
+  DB.feed.find({expires: {$lte: Date.now()} }).lean().exec()
+  .then(reminders=>{
+    reminders.forEach(async rem=>{
+      try{
+
+        // url = userID      
+        let destChannel = PLX.getChannel(rem.channel) || (await PLX.getDMChannel(rem.url));
+        await DB.feed.deleteOne({_id:rem._id});
+        await destChannel.createMessage({content:(rem.channel=='dm'?'':`<@${rem.url}>` ) , embed:
+        {
+          title: '<:alarm:446901834305634304> REMINDER:'
+          ,description: rem.name
+          ,timestamp: new Date()
+          ,color: 0xcc2233
+          ,thumbnail: {url:'https://visualpharm.com/assets/601/Stopwatch-595b40b65ba036ed117d167a.svg'}
+        }
+      });
+      }catch(e){
+        await DB.feed.deleteOne({_id:rem._id});
+        console.error("REMOVED FAULTY REMINDER")
+        console.error(e)
+      }
+    })    
+  })
+
 
   /* Manage Mutes */ //================================
   DB.mutes.find({expires: {$lte: Date.now()} })
