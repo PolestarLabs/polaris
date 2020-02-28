@@ -12,9 +12,9 @@ module.exports = {
 
         selectedItem = BASE.find(item => {
             if (!["c", "u", "r", "sr", "ur"].includes(target)) {
-                if (item.id === args) return true;
-                if (item.icon === args) return true;
-                if (args.includes(item.icon)) return true;
+                if (item.id === target) return true;
+                if (item.icon === target) return true;
+                if (target.includes(item.icon)) return true;
                 if (args.some(arg => item.name.toLowerCase().includes(arg))) return true;
                 if (args.some(arg => (item.tags || "").toLowerCase().includes(arg))) return true;
             }
@@ -30,6 +30,8 @@ module.exports = {
 console.log( { payCoin, canBuy, affordsIt, obtainable },2)
         return { payCoin, canBuy, affordsIt, obtainable };
     },
+
+    
     SynthPrompt: function SynthPrompt(hasIt, embed, obtainable, affordsIt, P) {
         if (hasIt) {
             embed.footer($t('interface.generic.alreadyOwnThis', P));
