@@ -30,5 +30,6 @@ module.exports = {
   perms: 3,
   cat: "fun",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["salty", "saltlevel"]
+  aliases: ["salty", "saltlevel"],
+  scope: 'requireTag'
 };
