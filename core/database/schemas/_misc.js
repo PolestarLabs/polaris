@@ -150,9 +150,11 @@ gift.get    =  utils.dbGetter;
           last: Mixed,
           channel: String,
           thumb: String,
-          name: String
+          name: String,
+          expires: Number,
+          repeat: Number
       })     
-      const feed    = mongoose.model('Fees', FeedModel, 'Feeds');
+      const feed    = mongoose.model('Feeds', FeedModel, 'Feeds');
            feed.set    =  utils.dbSetter;
            feed.get    =  utils.dbGetter; 
            feed.new = payload => {
