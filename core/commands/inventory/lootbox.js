@@ -76,7 +76,7 @@ module.exports={
     ,perms:3
     ,cat:'inventory'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:['box']
+    ,aliases:['box','boxes']
     ,autoSubs:[
         {
             label: 'open',
