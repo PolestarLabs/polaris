@@ -524,6 +524,7 @@
     },
     "interface": {
         "generic": {
+            "deleted":"Deleted:",
             "cancel":"Cancelled!",
             "timeout":"Timeout!",
             "cantAfford":"Ah, you can't afford this... :(",
@@ -531,6 +532,17 @@
             "confirmDelete": "Confirm Delete?",
             "alotWentOn" : "A lot went on in this day...",
             "alreadyOwnThis" : "Hey, you already own this one!"
+        },
+        "reminders":{
+            "currentActive": "These are your current active reminders:",
+            "noneToDelete": "No reminders to delete!",
+            "maxActive": "You can only have **{{count}}** active reminders at a time!",
+            "errorWhen": "Sorry, this is confusing. I didn't understand *when* you want me to remind that.",
+            "errorTARDIS": "Excuse me time traveler, I cannot go to the past to remind you of what you already forgot.",
+            "reminderOk" : "Ok I'll remind you of {{appointment}} by **{{time}} (UTC)** {{location}}",
+            "reminderChannel" : "at {{channel}}",
+            "reminderDMs" : "in your DMs"
+
         },
         "brackets":{
             "maxRR":"Max limit for Roundrobin: 16"
