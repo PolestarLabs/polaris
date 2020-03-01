@@ -96,7 +96,7 @@ Received **${newAmt}** **RBN**(*Pollux Rubines*) converted from **${src}**(*${co
 //======================================================================================
 
 
-exports.run = async function(bot){
+exports.run = async function(){
   
   console.log("• ".blue,"Loading CRON subroutines...");
 
