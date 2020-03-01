@@ -2,6 +2,8 @@ let mongoose = require('mongoose');
 let utils = require('../../structures/PrimitiveGearbox.js');
 const Mixed = mongoose.Schema.Types.Mixed;
 
+global.USERCACHE = new Map();
+
 const UserSchema = new mongoose.Schema({
   id: {type:String,required: true,index:{unique:true}},
   name: String,
@@ -17,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   //CONTROL
   personal:Mixed,
   tag:  String,
-
+  hidden: Boolean,
+  
   //COUNTERS
   eventDaily:Number,
   eventGoodie:Number,
@@ -245,7 +248,30 @@ MODEL.new = userDATA => {
 MODEL.cat     = 'users'
 MODEL.check   = utils.dbChecker;
 MODEL.set     = utils.dbSetter;
-MODEL.get     = utils.dbGetter;
+MODEL.get     = function(query,project,avoidNew){
+
+  let userFromCache = USERCACHE.get(query.id || query);
+  let userFromDatabase =
+  new Promise(async resolve=>{
+
+    if(['string','number'].includes(typeof query)){
+      query = {'id':query.toString()};
+    };
+    if(!typeof project) project = {_id:0};
+    let data = await this.findOne(query,project).lean().exec();
+
+    if (!data && !!this.cat) return resolve(  await this.new(PLX[this.cat].find(u=>u.id === query.id)) );
+    if (data === null) return resolve(null);//return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
+    
+    USERCACHE.set(data.id,data)
+    
+    return resolve(data);
+  });
+
+  if(userFromCache) return userFromCache;
+  else return userFromDatabase;
+
+},
 MODEL.getFull = utils.dbGetterFull;
 
 module.exports = MODEL;

@@ -17,9 +17,6 @@ class UserProfileModel{
       this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;
       this.avatar = notMember ? discordMember.avatarURL : discordMember.user.avatarURL;
       this.bot = discordMember.bot;
-
-      console.log(this.avatar);
-      console.log({notMember  });
       
       // Pollux User Data
       if(!userData || !userData.modules) {
@@ -53,7 +50,7 @@ class UserProfileModel{
   
     get globalRank (){
        return DB.users
-          .find({"modules.exp": {$gt: this.exp},blacklisted: {$exists: false}}).countDocuments();
+          .find({"modules.exp": {$gt: this.exp} },{} ).countDocuments().exec();
     }
   
     get localData (){
@@ -67,7 +64,7 @@ class UserProfileModel{
         let svRankData = (await DB.localranks.get({user:this.ID,server:this.server})) ||{};
         this.thx = svRankData.thx || 0;
         this.localRank = await DB.localranks
-          .find({server:this.server,exp:{$gt:svRankData.exp||0}}).countDocuments();
+          .find({server:this.server,exp:{$gt:svRankData.exp||0}},{}).countDocuments().exec();
         return resolve(true);
       })
     }

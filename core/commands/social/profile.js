@@ -92,9 +92,15 @@ const TEXT={
 };
 
 const {performance} = require('perf_hooks');
-init = async (msg)=>{
 
-  msg.runtime = performance.now();
+init = async (msg)=>{
+  msg.runtime_internal = performance.now();
+  
+  let startimer = Date.now();
+
+  _benchmark=(s)=>{
+    console.log(s.blue  + (Date.now() - startimer) + 'ms' )
+  }     
   
   // PROFILE FRAME
   if (msg.content.split(/ +/).slice(1)[0] == "frame") {
@@ -126,32 +132,22 @@ init = async (msg)=>{
       frame ? switchoff() : switchon();
     }
     return;
-  }
-
+  }  
   // NORMAL PROFILE -->
-
   const Target = PLX.getTarget(msg,0,true,true);
   let Target_Database = await DB.users.get({id:Target.id});
 
-  console.log({Target_Database})
-  
   if(Target_Database) Target_Database.type = 'udata';
   
- 
-
   const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?msg.guild.member(Target):Target));
-  //console.log(USERPROFILE)
-  await Promise.all([
-    await USERPROFILE.wifeData,
-    await USERPROFILE.localData    
-  ]);
-  USERPROFILE.rank = (await USERPROFILE.globalRank)+1;
+
+
+
 
 try{
 
   //============================  CANVAS START   ===================//
 
-    const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
     const canvas = Picto.new(800,600);
     const ctx = canvas.getContext('2d');
 
@@ -175,13 +171,8 @@ try{
     img.global_roundel = Picto.XChart(120, USERPROFILE.percent, USERPROFILE.favColor, false, USERPROFILE.level);
     img.hex_frame = Picto.makeHex(250);
     img.hex_pic = Picto.makeHex(210, USERPROFILE.avatar);
-    
-    if(isMarried) {
-      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
-      //img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
-      img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/items/ring_"+USERPROFILE.wife.ring+".png")
-    }
 
+    
 //==========================================
 //                      Gather Graphic Text
 //==========================================
@@ -202,11 +193,32 @@ try{
         TEXT[txt_type].COLOR,
         XYZ.persotex.W, XYZ.persotex.H,{lineHeight:'20px',paddingY:5} //255, 70
     );
-
+    
+    txt_type = "RUBINES"
+    txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.sapphires = Picto.tag(ctx, miliarize(USERPROFILE.sapphires) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    txt_type = "RANKS"
+    const [,gRank] = await Promise.all([USERPROFILE.localData,USERPROFILE.globalRank,USERPROFILE.wifeData]);
+    
+    USERPROFILE.rank = gRank+1;
+    txt.globalRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.rank||1) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    txt.localRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.localRank||1) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
+    
+    
     txt_type = "SIDEBAR"
     txt.commend = Picto.tag(ctx, USERPROFILE.commend,      `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     txt.thx = Picto.tag(ctx, USERPROFILE.thx,              `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     
+    let REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff")
+
+    
+    const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
+    if(isMarried) {
+      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
+      //img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
+      img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/items/ring_"+USERPROFILE.wife.ring+".png")
+    }
     if(isMarried){
       txt_type = "WIFENAME"
       txt.wifeName = Picto.tag(ctx, USERPROFILE.wife.wifeName,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
@@ -215,16 +227,6 @@ try{
       txt.lovepoints = Picto.tag(ctx, USERPROFILE.wife.lovepoints+" LVP",             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
       txt.wifeSince = Picto.tag(ctx, USERPROFILE.wife.since,                  `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
     }
-    
-    txt_type = "RUBINES"
-    txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    txt.sapphires = Picto.tag(ctx, miliarize(USERPROFILE.sapphires) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    
-    txt_type = "RANKS"
-    txt.globalRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.rank||1) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    txt.localRank = Picto.tag(ctx, "#"+miliarize(USERPROFILE.localRank||1) ,             `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,TEXT[txt_type].COLOR);
-    
-    let REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff")
 
   //=========================================
   //                      DRAW BACKROP (IMG)
@@ -236,7 +238,12 @@ try{
 
   let backdrop = new Promise(async resolveAll =>{
    
+    
+
     let backmost = new Promise(async resolveBack =>{
+
+      
+
       const canvas = Picto.new(800,600);
       const ctx = canvas.getContext('2d');
       img.background.then(async IMG=>{
@@ -319,7 +326,12 @@ try{
 
     }
 
+    
+
     Promise.all([backmost,sticker]).then(array=>{
+
+      
+
       if(array[1])
         ctx.drawImage(array[1] , XYZ.sticker.X - 10 -10, XYZ.sticker.Y - 25 -8,  XYZ.sticker.W,  XYZ.sticker.H);
       ctx.globalCompositeOperation = "destination-over";
@@ -363,6 +375,8 @@ try{
 
  let foreground = new Promise(async resolveAll=> {
 
+  
+
   const canvas = Picto.new(800,600);
   const ctx = canvas.getContext('2d');   
 
@@ -395,10 +409,12 @@ try{
   }
 
     Promise.all([rubine_n_roundel,flair]).then(arr=>{
+      
       resolveAll(canvas)
     });
  });
     
+ 
  if (USERPROFILE.medalsArrangement && USERPROFILE.medalsArrangement.valid.length>0 ){
    valid_medals = USERPROFILE.medalsArrangement.style
    valid  = USERPROFILE.medalsArrangement.valid
@@ -446,30 +462,38 @@ try{
       
       let ind = 0
       let row = 0
-      medalie = await Promise.all(img.medals.map(x=>x.canvas));
-      while (ind < 8) {
-        let col = 0
-        while (col < 3) {          
-          if (img.medals[ind]) {            
+      Promise.all(img.medals.map(x=>x.canvas)).then(medalie=>{
+
+        while (ind < 8) {
+          let col = 0
+          while (col < 3) {          
+            if (img.medals[ind]) {            
               ctx.drawImage(medalie[ind], x + 68 * col, y + 68 * row, 64, 64);
+            }
+            ind = ind + 1;
+            ++col;
           }
-          ind = ind + 1;
-          ++col;
+          ++row;
         }
-        ++row;
-      }
+      });
     } 
   }
+  
 
   let hexes = new Promise(async resolve=>{
+    
     const canvas3 = Picto.new(800,600);
     const ctx3 = canvas3.getContext('2d');
     ctx3.drawImage(await img.hex_frame, XYZ.avatar.X, XYZ.avatar.Y);
     ctx3.drawImage(await img.hex_pic,   XYZ.avatar.X + XYZ.offset_hex, XYZ.avatar.Y + XYZ.offset_hex);
     if (USERPROFILE.profileFrame) {
-      ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
+      try{
+        //ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
+      }catch(e){}
+      
       resolve(canvas3);
     }else{
+      
         resolve(canvas3);
     }
   });
@@ -478,8 +502,12 @@ try{
     ///             HONORIFICS
     //=========================================
 
-process.nextTick(()=>{    
+    
+    setImmediate(()=>{    
+      
 Promise.all([backdrop,foreground,hexes]).then(async arr=>{
+
+  
 
   ctx.globalCompositeOperation = "destination-over";
   ctx.drawImage( arr[0] , 0 , 0 )
@@ -522,9 +550,16 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
       console.error(e)
     }
 
+
+
     img = null;
     txt = null;
     Target_Database = null;
+
+
+    
+ 
+
 
     FINALIZE(msg, canvas);
 
@@ -575,16 +610,18 @@ module.exports = {
 };
 
 async function FINALIZE(msg,canvas){  
-  console.log(canvas)
-  let buff = await canvas.toBuffer();
+  setImmediate( async ()=> {
+    
+  let buff = canvas.toBuffer('image/png', { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+  
   let messageToSend = '';
   let noimg = false;
   if(msg.content.includes('-ni')) noimg = true  
-  if(msg.content.includes('-bm')) messageToSend = (noimg?'**No-IMG**':'')+' `⏱️'+((performance.now()-msg.runtime)/1000).toFixed(3)+'s`' ;
+  if(msg.content.includes('-bm')) messageToSend = (noimg?'**No-IMG**':'')+' `⏱️'+((performance.now()-msg.runtime_internal)/1000).toFixed(3)+'s`' ;
 
   await msg.channel.createMessage(messageToSend, noimg ? null :{
     file: buff,
     name: "profile.png"
   })
-
+  });
 }
