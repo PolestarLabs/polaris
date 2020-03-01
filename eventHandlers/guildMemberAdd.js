@@ -1,9 +1,9 @@
 module.exports = async (guild,member) =>{
-    Promise.all([DB.servers.get(guild.id),DB.users.get(member.id)]).timeout(500).then( ([svData,userData]) => {
+    Promise.all([DB.servers.get(guild.id),DB.users.get(member.id)]).timeout(800).then( ([svData,userData]) => {
 
         
 
-        if(!svData.modules.GREET.enabled) return null;
+        if(!svData || !svData.modules.GREET.enabled) return null;
         
 
         let welcomeTimer   = svData.modules.GREET.timer
@@ -27,13 +27,13 @@ module.exports = async (guild,member) =>{
         
         welcomeText[0] = welcomeText[0].replace(/[^<]#([^ |^>|^"]+)/g, (m,p1)=>'<#'+(guild.channels.find(x=>x.name == p1)||{id:'0000000'}).id+'>' )
 
-let embed 
-try{
-    embed = JSON.parse(welcomeText[1]) || null;
-}catch(err){
-    console.error(err)
-    embed = undefined
-}   
+        let embed 
+        try{
+            embed = JSON.parse(welcomeText[1]) || null;
+        }catch(err){
+            console.error(err)
+            embed = undefined
+        }   
 
         welcomeText =welcomeText[0]||welcomeText;
         
@@ -41,8 +41,6 @@ try{
         let welcomeSkin    = svData.modules.GREET.type
         let welcomeImage    = svData.modules.GREET.image
         welcomeImage&&embed? embed.image={url:"attachment://in.png"}: null;
-
- 
 
         embed.color = embed.color == 0 ? parseInt((userData.modules.favcolor||'#FF3355').replace('#',''),16) : embed.color;
         
@@ -54,11 +52,11 @@ try{
         resolveFile(url).then(async buffer=>{
  
             PLX.getChannel(welcomeChannel).send({content:welcomeText, embed}, (welcomeImage ? file(buffer,"in.png") : null)).then(ms=>{
-                if(welcomeTimer) ms.deleteAfter(welcomeTimer);
+                if(welcomeTimer) ms.deleteAfter(welcomeTimer).catch(e=>null);
             }).catch(console.error)
         }).catch(console.error);
 
-    });
+    }).catch(e=>null);
 }
 
 
