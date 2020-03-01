@@ -1,9 +1,3 @@
-
-
-
-
-// const DB = require('../database/db_ops');
-// const gear = require('../utilities/Gearbox');
 const Drops = require('./boxDrops').lootbox;
 
 module.exports = async msg => {
@@ -24,7 +18,7 @@ async function incrementLocal(msg) {
   });  
 }
 
-async function incrementGlobal(msg) {  
+async function incrementGlobal(msg) {
   if(randomize(0,5)==3 && msg.content.length > 20){
     let userData = await DB.users.getFull({id:msg.author.id},{_id:1});
     if(!userData) return null;
@@ -34,6 +28,7 @@ async function incrementGlobal(msg) {
 
 async function levelChecks(msg) {
 
+  
   if (msg.author.bot) return;
 
   if (msg.guild.id === "110373943822540800") return;
@@ -48,7 +43,7 @@ async function levelChecks(msg) {
     servData = (await servData) || (await DB.servers.new(msg.guild)),
   ]);
 
-
+  if(!servData) return null;
 
   if(  (servData.switches||{}).chLvlUpOff && servData.switches.chLvlUpOff.includes(msg.channel.id) || !userData ) {
     userData = null;
@@ -70,7 +65,7 @@ async function levelChecks(msg) {
 
   if ( !((servData.switches||{}).chExpOff && servData.switches.chExpOff.includes(msg.channel.id))  ){
     incrementLocal(msg);
-    incrementGlobal(msg);
+    //incrementGlobal(msg);
   };
   
   if(global.piggyback) return;
