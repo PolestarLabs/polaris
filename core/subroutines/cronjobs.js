@@ -150,6 +150,7 @@ const ONEhour = new CronJob('* */1 * * *', async () => {
 
 const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
   
+  PLX.updateBlacklists(DB);
   
   (async ()=>{
     DB.feed.find({ server: { $in: PLX.guilds.map(g => g.id) } }).lean().exec().then(serverFeeds => {
