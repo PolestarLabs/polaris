@@ -148,6 +148,21 @@
             "insuperms": "{{imsorry}} I can't do that for you if you don't have permission yourself.",
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
         },
+        "cooldown":{
+            "generic": [    
+                "Hang on, I need a minute!",
+                "I'm not a printer, please slow down!",
+                "Try again in a few seconds, please.",
+                "Please hold.",
+                "Too many commands!",
+                "Aaah! Slow down!",
+                "I only have so many fingers to push so many buttons! Relax!",
+                "What's the rush?!",
+                "I need a moment to breathe!",
+                "Honey, please, one at a time.",
+                "*You're going too fast senpai uwu I can't take it uwu*"   
+              ]
+        },
         "warnings": {
             "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\n But don't worry, I've trimmed the text for you~",
             "open1": "Excuse me, but *\"open\"* is a transitive verb, which means you should tell me *what* to open~ Try one of these options:",
