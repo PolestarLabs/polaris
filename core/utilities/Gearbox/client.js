@@ -8,6 +8,7 @@ module.exports = {
         let user = PLX.users.find(usr => usr.id === ID);
 
         if (!user) {
+            
             user = msg.guild.members.find(mbr =>
                 mbr.username.toLowerCase() == msg.args[argPos].toLowerCase() ||
                 (mbr.nick || "").toLowerCase() == msg.args[argPos].toLowerCase()
@@ -23,10 +24,11 @@ module.exports = {
                 );
 
             if (!user && self == true) user = msg.author;
+            user.noDB = true;
         }
         if (!user && msg.mentions.length > 0  ) return msg.mentions[argPos]||msg.mentions[0];
         if (!user) return null;
-        DB.users.new(user.user || user);
+        if(user.noDB) DB.users.new(user.user || user);
         return user.user || user;
     },
     //Get IMG from Channel MSGs
