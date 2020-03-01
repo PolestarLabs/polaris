@@ -507,7 +507,6 @@ try{
       
 Promise.all([backdrop,foreground,hexes]).then(async arr=>{
 
-  
 
   ctx.globalCompositeOperation = "destination-over";
   ctx.drawImage( arr[0] , 0 , 0 )
@@ -550,16 +549,9 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
       console.error(e)
     }
 
-
-
     img = null;
     txt = null;
     Target_Database = null;
-
-
-    
- 
-
 
     FINALIZE(msg, canvas);
 
