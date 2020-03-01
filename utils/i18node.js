@@ -9,8 +9,9 @@ module.exports = {
 
     rand: function rand(string,params){
         let loc = reroute
-        let rand = Math.floor(Math.random() * (loc(string,{returnObjects:true}).length));    
-        console.log({string,rand,params})   
-        return loc(string+"."+rand,params);
+        let options = loc(string,{returnObjects:true},params);
+        let rand = Math.floor(Math.random() * (options.length));
+        
+        return options[rand]
     },
 };
