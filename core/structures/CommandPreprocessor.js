@@ -1,4 +1,7 @@
 const cfg = require('../../config.json');
+const {performance} = require('perf_hooks');
+let runtimeOutput = (rtm)=> (rtm*1000<1000?Math.floor(rtm*1000)+"μs ":rtm<1000?(rtm.toFixed(2))+"ms ":(rtm/1000).toFixed(2)+"s ");
+
 // const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require('fs').readdir);
 
@@ -11,11 +14,16 @@ const POST_EXEC = function CommandPostExecution(msg,args,success){
 }
 
 const PERMS_CALC = function CommandPermission(msg){
-    let uIDs = msg.command.module == "_botOwner"  
+    if (PLX.blacklistedUsers.includes(msg.author.id) ) {
+        msg.addReaction(":BLACKLISTED_USER:406192511070240780");
+        return false;
+    }
+
+    let uIDs = msg.command.module == "_botOwner"
         ? [cfg.owner]
-        : msg.command.module == "_botStaff" 
+        : msg.command.module == "_botStaff" || msg.command.module == "dev" 
             ? cfg.admins
-            : PLX.beta ? [ ] : [ ];
+            : [ ];
     let GUILD = msg.guild||{}
     let switches = !((GUILD.DISABLED||[]).includes(msg.command.label) || (GUILD.DISABLED||[]).includes(msg.command.cat));
     if(msg.author.looting === true) {
@@ -29,7 +37,7 @@ const PERMS_CALC = function CommandPermission(msg){
       if (permchk !== 'ok') return false;
     }
     if (!switches) msg.commandDeny = true;
-    return (switches && (!uIDs.length || uIDs.includes(msg.author.id))  );
+    return (switches && (!uIDs.length || uIDs.includes(msg.author.id)) );
 }
 
 const DEFAULT_CMD_OPTS = {
@@ -44,15 +52,16 @@ const DEFAULT_CMD_OPTS = {
         }
         PLX.autoHelper( 'force', {msg, cmd: msg.command.cmd, opt: msg.command.cat, aliases: msg.command.aliases, scope: msg.command.scope, related: msg.command.related} )
     }
-    ,cooldown: 2000     
-    ,cooldownMessage: "Too Fast"
+    ,cooldown: 3456.777
+    ,cooldownMessage: msg => "⏱ "+rand$t( [`responses.cooldown.${msg.command.cmd}`,'responses.cooldown.generic'] ,{lngs:msg.lang})
     ,cooldownReturns: 2
-    ,requirements: {custom:PERMS_CALC}
-    ,permissionMessage: (msg)=>{console.log(msg.commandDeny);msg.commandDeny ? msg.channel.send($t("responses.toggle.disabledComSer",{lngs:msg.lang})) : msg.addReaction(_emoji('nope').reaction);return false} 
+    ,requirements:  {custom:PERMS_CALC}
+    ,permissionMessage: (msg)=>{msg.commandDeny ? msg.channel.send($t("responses.toggle.disabledComSer",{lngs:msg.lang})) : msg.addReaction(_emoji('nope').reaction);} 
     ,hooks:  {
         preCommand: (m,a) => {            
             m.args = a;
             m.lang = [m.channel.LANG || (m.guild || {}).LANG || 'en', 'dev'];
+            m.runtime = performance.now();
         },
         postCheck: (m,a,chk) => {
             if(!chk) return null;
@@ -63,10 +72,13 @@ const DEFAULT_CMD_OPTS = {
         postCommand: (m,a,response) => {
             commandRoutine.saveStatistics(m, m.command)
             commandRoutine.administrateExp(m.author.id, m.command)
+            if(m.content.includes('--bmk'))
+                m.channel.send({embed:{
+                    description: "⏱ "+runtimeOutput(performance.now()-m.runtime), color: 0x3355cc
+                }});
         }
     }
-    ,errorMessage: (x,y)=>{ 
-        console.log(x,y)
+    ,errorMessage: ()=>{ 
         return {
                 embed:{
                     description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n "
