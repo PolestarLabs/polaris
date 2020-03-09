@@ -3,6 +3,9 @@ process.stdout.write('\033c');
 console.log(require('./asciiPollux.js').ascii());
 //===========================================
 
+const {performance} = require('perf_hooks');
+let runtime = performance.now();
+
 global.clusterNames = require("./clusters.json");
 global.GNums        = require('./GlobalNumbers.js');
 global.Promise      = require('bluebird');
@@ -18,6 +21,7 @@ const mongoose      = require('mongoose');
 const colors        = require('colors');
 
 const readdirAsync  = Promise.promisify(require('fs').readdir);
+const WebhookDigester = require('./WebhookDigester.js');
 
 //Eris Mods-----//
 require('./core/structures/ReactionCollector.js')(ERIS);
@@ -55,13 +59,14 @@ global.PLX= new Eris.CommandClient(cfg.token, {
         defaultHelpCommand: false,
         ignoreBots: true,
         defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
-        prefix: ["plx!", "p!", "+", "@mention"]
+        prefix: ["plx!b-", "p!b-", "+b-", "@mention"]
     });
 
 PLX.engine = Eris;
 PLX.beta = process.env.NODE_ENV !== 'production'
 PLX.maintenance = process.env.maintenance
 PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] }
+global.hook = new WebhookDigester(PLX);
 
 Gearbox = require("./core/utilities/Gearbox"); 
 Object.assign(global,Gearbox.Global);
@@ -85,7 +90,7 @@ PLX.updateBlacklists = (DB) => {
     return Promise.all([
         DB.users.find({ 'blacklisted': { $exists: true } }, { id: 1, _id: 0 }).lean().exec(),
         DB.servers.find({ 'blacklisted': { $exists: true } }, { id: 1, _id: 0 }).lean().exec()
-    ]).then((users, servers) => {
+    ]).then(([users, servers]) => {
         PLX.blacklistedUsers = (users || []).map(usr => usr.id);
         PLX.blacklistedServers = (servers || []).map(svr => svr.id);
     });
@@ -99,10 +104,15 @@ console.info("• ".blue, "Connecting to Database...");
 
 mongoose.connect(cfg.dbURL, {
     useNewUrlParser: true,
-    reconnectTries: Number.MAX_VALUE,
-    reconnectInterval: 1000,
+    reconnectTries: 5,
+    reconnectInterval: 10000,
     keepAlive: 1,
-    connectTimeoutMS: 30000,
+    connectTimeoutMS: 8000,
+    useUnifiedTopology: true,
+    promiseLibrary: global.Promise,
+    poolSize: 16,
+    bufferMaxEntries: 64
+    
 }, (err) => {
     if (err) return console.error(err, "• ".red + 'Failed to connect to Database!');
 });
@@ -116,7 +126,16 @@ db.once('open', function () {
         console.log("• ".blue, "Blacklist Loaded!");
     })
 });
-
+db.on('reconnected', function(){
+    hook.ok("**RECONNECTED:** Database connection recovered.")
+})
+db.on('reconnectFailed', function(){
+    hook.error( "**CRITICAL:** Database shutdown detected. All reconnection attempts failed.");
+    setTimeout(()=> PLX.softKill(),6000);
+})
+db.on('disconnected', function(){
+    hook.warn("**ATTENTION:** Database possible shutdown detected. Attempting recovery.")
+})
 
 //Translation Engine ------------- <
 global.translateEngineStart = ()=>{
@@ -151,6 +170,7 @@ global.translateEngineStart = ()=>{
             console.log("• ".green, "Translation Engine Loaded")
 
             multilang.setT(t);
+            global.i18n = i18next;
             global.$t = multilang.getT()
             global.rand$t = multilang.rand
         });
@@ -168,7 +188,7 @@ translateEngineStart();
 PLX.once("ready", async (msg) => {
 
     console.log(" READY ".bold.bgCyan);
-
+    require('./core/subroutines/cronjobs.js').run();
     if (PLX.shard) {
         PLX.user.setStatus('online');
         console.log(("● ".green) + 'Shard' + (1 + PLX.shard.id) + '/' + PLX.shard.count + " [ONLINE]")
@@ -182,10 +202,32 @@ PLX.once("ready", async (msg) => {
         });
     }).catch(console.error);
 
-    PLX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth);
-    PLX.microserver.microtasks.updateServerCache("all");
-    PLX.microserver.microtasks.updateChannels("all");
     PLX.registerCommands()
+    try{
+
+        PLX.microserver = new (require('./core/archetypes/Microserver'))(cfg.crossAuth);
+        PLX.microserver.microtasks.updateServerCache("all");
+        PLX.microserver.microtasks.updateChannels("all");
+
+
+    }catch(e){
+        console.error(e)
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+        console.error("ERROR MTASK")
+    }
+
+        hook.info(`**INFO:** Cluster connected and all shards reported online!
+            Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`
+        )
 
 })
 
@@ -268,13 +310,14 @@ PLX.findMember = (query, members) => {
 
 function postConnect(x) {
     console.log("Discord Client Connected".cyan)
-    
-    require('./core/subroutines/cronjobs.js').run();
-
     // POST STATS TO LISTS
 }
+    
 
-PLX.connect().then( postConnect ).catch(console.error);
+setTimeout(()=>{
+    PLX.connect().then( postConnect ).catch(console.error);
+}, CLUSTER_ID * SHARDS_PER_CLUSTER * 12000 )
+
 
 process.on("uncaughtException", err => {
     console.error(" UNCAUGHT EXCEPTION ".bgRed)
