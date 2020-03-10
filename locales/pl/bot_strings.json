@@ -12,8 +12,8 @@
         "synthGems": "Kryształy Syntezy",
         "cosmoFragment": "Kosmiczny Fragment",
         "cosmoFragment_plural": "Kosmiczne Fragmenty",
-        "C": "Zwyczajny",
-        "U": "Niezwykły",
+        "C": "Pospolity",
+        "U": "Niepospolity",
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki",
@@ -30,7 +30,13 @@
         "material": "Materiał",
         "material_plural": "Materiały",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacki"
+        "boosterpack_plural": "Boosterpacki",
+        "medal": "Medal",
+        "medal_plural": "Medale",
+        "sticker": "Naklejka",
+        "sticker_plural": "Naklejki",
+        "background": "Tło",
+        "background_plural": "Tła"
     },
     "terms": {
         "transferDenied": "Transfer Odrzucony",
@@ -58,7 +64,7 @@
         "reason": "Powód",
         "banned": "Zbanowany",
         "kicked": "Wyrzucony",
-        "usage": "Zatosowanie",
+        "usage": "Zastosowanie",
         "module": "Moduł",
         "inst": "Instrukcje",
         "bet": "Obstawiać",
@@ -114,9 +120,9 @@
         "errors": {
             "iNeedThesePerms": "Następujące uprawnienia nie są już obecne, aby kontynuować poprawnie:\n{{PERMSLIST}}",
             "denied": "Nie masz uprawnień, aby z tego korzystać. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
-            "disabledModule": "no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo.",
-            "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawdłowa ;~;",
-            "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając \n'{{prefix}}stats'",
+            "disabledModule": ":no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo z jego strony.",
+            "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawidłowa ;~;",
+            "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając '{{prefix}}stats' ",
             "moderationNeeded": "Przepraszam, ale nie możesz użyć tej komendy. Potrzebujesz uprawnienia **Zarządzanie Serwerem**, lub musisz być przypisany do roli z uprawnieniami Moderatora/Administratora (Ustaw ją używając: `{{prefix}}modrole [@Rola])'",
             "chooseAmod": "Wybierz moduł.",
             "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę wykopać również ciebie.",
@@ -139,6 +145,21 @@
             "emojiError": "Nie mogłam dodać tego Emoji. Sprawdź uprawnienia do reakcji albo czy Emoji jest poprawne...",
             "insuperms": "{{imsorry}}, ale nie mogę tego dla ciebie zrobić, jeżeli nie masz odpowiednich uprawnień.",
             "not-a-NSFW-channel": "Ten kanał nie jest ustawiony na NSFW. Nie zostawiaj swoich \"prac\" wszędzie."
+        },
+        "cooldown": {
+            "generic": [
+                "Zaczekaj, potrzebuję chwili!",
+                "Nie jestem drukarką, zwolnij!",
+                "Spróbuj za parę sekund, proszę.",
+                "Proszę o wstrzymanie.",
+                "Za dużo komend!",
+                "Aaah! Zwolnij!",
+                "Mam tylko tyle palców, żeby wcisnąć tyle przycisków! Odpocznij!",
+                "Co to za pośpiech?!",
+                "Potrzebuję chwili na odetchnięcie!",
+                "Słoneczko, proszę, pojedynczo.",
+                "*Jesteś zbyt szybki senpai uwu nie daję rady uwu*"
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Hej! Przetłumaczony tekst nie może przekraczać __1000 Znaków__**\n Lecz nie martw się, przycięłam tekst dla ciebie~",
@@ -228,7 +249,7 @@
             "didban": "*Grzecznie* poprosiłam {{target}} aby wyszedł(-ła). **Powód:** *{{reason}}* Daj mi chwilkę, a posprzątam ten syf."
         },
         "logs": {
-            "success": "Gotowe! Ustawiłem {{channel}} jako kanał dla {{CHNTYPE}}!",
+            "success": "Gotowe! Ustawiłam {{channel}} jako kanał dla {{CHNTYPE}}!",
             "successDelete": "W porządku. {{channel}} nie jest już kanałem dla {{CHNTYPE}}.",
             "failure": "Ojej! Wydaje się, że coś poszło nie tak. Przepraszam."
         },
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "Usunięte:",
             "cancel": "Anulowano!",
             "timeout": "Koniec czasu!",
             "cantAfford": "Ah, nie stać cię na to... :(",
@@ -550,6 +572,16 @@
             "confirmDelete": "Potwierdzasz usunięcie?",
             "alotWentOn": "Wiele się stało tego dnia...",
             "alreadyOwnThis": "Hej, już to posiadasz!"
+        },
+        "reminders": {
+            "currentActive": "To są twoje aktywne przypomnienia:",
+            "noneToDelete": "Brak przypomnień do usunięcia!",
+            "maxActive": "Może mieć tylko **{{count}}** aktywnych przypomnień na raz!",
+            "errorWhen": "Przepraszam, to trochę poplątane. Nie zrozumiałam *kiedy* mam ci to przypomnieć.",
+            "errorTARDIS": "Wybacz podróżniku czasu, nie mogę wrócić do przeszłości, aby przypomnieć ci o tym, o czym już zapomniałeś.",
+            "reminderOk": "Ok, przypomnę ci o {{appointment}} o godzinie **{{time}}(UTC)** {{location}}",
+            "reminderChannel": "na {{channel}}",
+            "reminderDMs": "w twoich DMach"
         },
         "brackets": {
             "maxRR": "Maksymalny limit dla systemu kołowego: 16",
@@ -564,7 +596,8 @@
             "bracketX": "Tabelka {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "Użyć magii by rozbić te tło {{rarity_emoji}} na **{{count}}$t(keywords.cosmoFragment)** ?",
+            "magifrag": "Fragmenty Kosmetyków",
+            "disenchant": "Czy chcesz to odczarować?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n na **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Synteza Przedmiotów Upiększających",
             "confirmSynth": "Chcesz abym to zsyntetyzowała?",
             "nogemsforThis": "Wygląda na to że nie masz wystarczającej liczby kryształów potrzebnych do tej syntezy..."
@@ -713,7 +746,7 @@
             "pass": "lub \"stand\", aby go przekazać.",
             "splitbreak": "Podział Splitów:",
             "switchdeck": "Teraz zagramy w BlackJack'a przy użyciu talii **{{deckname}}**!",
-            "switchdeckEgg": "",
+            "switchdeckEgg": "Teraz zagramy w BlackJacja przy użyciu **talii** {{deckname}}. Na stole ląduje twoja dup- TWOJE RUBINY! MIAŁAM NA MYŚLI **TWOJE RUBINY**! Naprawdę przepraszam...",
             "even": "Wygląda na to, że się tutaj zepsuliśmy, trzymaj swoje Rubiny z powrotem."
         },
         "slots": {
@@ -747,7 +780,7 @@
             "Co? Czy to jest Pudełeczko?",
             "Ktoś chyba upuścił tutaj Pudełeczko.",
             "Nie przeszkadzam? Widział ktoś tutaj leżące Pudełeczko?",
-            "Niesamowite! Zobacz, co znalazłem!",
+            "Niesamowite! Zobacz, co znalazłam!",
             "Hej, jestem pewna, że chcesz tu widzieć Lootbox'a."
         ],
         "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",

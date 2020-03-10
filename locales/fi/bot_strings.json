@@ -30,7 +30,13 @@
         "material": "Materiaali",
         "material_plural": "Materiaalit",
         "boosterpack": "Boosteripaketti",
-        "boosterpack_plural": "Boosteripaketit"
+        "boosterpack_plural": "Boosteripaketit",
+        "medal": "",
+        "medal_plural": "Mitalit",
+        "sticker": "",
+        "sticker_plural": "Tarrat",
+        "background": "",
+        "background_plural": "Taustakuvat"
     },
     "terms": {
         "transferDenied": "Siirto kumottu",
@@ -139,6 +145,21 @@
             "emojiError": "En voinut lisätä tätä emojia. Tarkista reaktio-oikeudet tai se, onko emoji validi...",
             "insuperms": "{{imsorry}} en voi tehdä tuota sinulle, jos sinulla itselläsi ei ole siihen oikeutta.",
             "not-a-NSFW-channel": "Tätä kanavaa ei ole asettu NSFW-kanavaksi. Älä jättele \"taidetöitäsi\" kaikkialle."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hei! Käännösteksti ei voi ylittää __1000 merkkiä__**\n Mutta älä huoli, olen karsinut tekstiä puolestasi~",
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "Peruutettu!",
             "timeout": "Aikakatkaisu!",
             "cantAfford": "Ah, sinulla ei ole varaa tähän... :(",
@@ -550,6 +572,16 @@
             "confirmDelete": "Vahvista poisto?",
             "alotWentOn": "Tänä päivänä tapahtui paljon...",
             "alreadyOwnThis": "Hei, sinä omistat tämän jo!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Roundrobin-turnauksen maksimiraja: 16",
@@ -564,6 +596,7 @@
             "bracketX": "Otteluohjelma {{AB}}"
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "Muuta tämä {{rarity_emoji}} tausta **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Kosmeettinen esinesynteesi",
             "confirmSynth": "Haluatko syntetisoida tämän?",

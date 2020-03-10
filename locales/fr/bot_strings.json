@@ -30,7 +30,13 @@
         "material": "Matériel",
         "material_plural": "Matériaux",
         "boosterpack": "Booster",
-        "boosterpack_plural": "Boosters"
+        "boosterpack_plural": "Boosters",
+        "medal": "",
+        "medal_plural": "Médailles",
+        "sticker": "",
+        "sticker_plural": "Collants",
+        "background": "",
+        "background_plural": "Bannières"
     },
     "terms": {
         "transferDenied": "Transfert refusé",
@@ -139,6 +145,21 @@
             "emojiError": "Je n'ai pas pu ajouter cet Emoji. Vérifie les permissions d'ajoutement des réactions ou si l'Emoji est valide...",
             "insuperms": "{{Imsorry}} Je ne peux pas faire ça pour toi si tu n'as pas le permission non plus.",
             "not-a-NSFW-channel": "Eh oh! Rends ce salon NSFW d'abord, il y a des enfants par ici..."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hé! Texte de traduction ne doit pas dépasser __1000 caractères__**\nN'inquiète pas, j'ai taillé la texte pour toi~",
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +572,16 @@
             "confirmDelete": "Affirmer la suppression?",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +596,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",

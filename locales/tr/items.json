@@ -1,14 +1,330 @@
 {
-    "partial_ring": {
-        "name": "Kısmi Yüzük",
-        "description": "Güzeller güzeli bir evlilik yüzüğü yapmak için kullanılan yuvarlak bir metaller grubu"
+    "anime_booster": {
+        "name": ""
     },
-    "lootbox_C_O": {
-        "name": "Sıradan Define Sandığı",
+    "broken_excavator": {
+        "name": ""
+    },
+    "commendtoken": {
+        "name": "",
+        "description": ""
+    },
+    "complete_ring_jade": {
+        "name": "",
+        "description": ""
+    },
+    "complete_ring_rubine": {
+        "name": "",
+        "description": ""
+    },
+    "complete_ring_sapphire": {
+        "name": "",
+        "description": ""
+    },
+    "complete_ring_stardust": {
+        "name": "",
         "description": ""
     },
     "cosmo_fragment": {
         "name": "Kozmetik Parça",
         "description": "Kozmetik Parçaları karıştırıvermek için kullanılan ışık saçan bir kürek"
+    },
+    "cosmo_gem_C": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_R": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_SR": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_U": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_UR": {
+        "name": "",
+        "description": ""
+    },
+    "daianwatch_booster": {
+        "name": "",
+        "description": ""
+    },
+    "doki_booster": {
+        "name": "",
+        "description": ""
+    },
+    "doublehook": {
+        "name": "",
+        "description": ""
+    },
+    "excavator": {
+        "name": "",
+        "description": ""
+    },
+    "hook": {
+        "name": "",
+        "description": ""
+    },
+    "initd_booster": {
+        "name": "",
+        "description": ""
+    },
+    "iwd1_booster": {
+        "name": "",
+        "description": ""
+    },
+    "iwd2_booster": {
+        "name": "",
+        "description": ""
+    },
+    "lootbox_C_C": {
+        "name": ""
+    },
+    "lootbox_C_E": {
+        "name": ""
+    },
+    "lootbox_C_event_1": {
+        "name": ""
+    },
+    "lootbox_C_event_2": {
+        "name": ""
+    },
+    "lootbox_C_event_3": {
+        "name": ""
+    },
+    "lootbox_C_event_s1": {
+        "name": ""
+    },
+    "lootbox_C_event_s2": {
+        "name": ""
+    },
+    "lootbox_C_event_s3": {
+        "name": ""
+    },
+    "lootbox_C_O": {
+        "name": "Sıradan Define Sandığı"
+    },
+    "lootbox_C_s1": {
+        "name": ""
+    },
+    "lootbox_C_s2": {
+        "name": ""
+    },
+    "lootbox_dev": {
+        "name": "",
+        "description": ""
+    },
+    "lootbox_EL": {
+        "name": "",
+        "description": ""
+    },
+    "lootbox_R_C": {
+        "name": ""
+    },
+    "lootbox_R_E": {
+        "name": ""
+    },
+    "lootbox_R_event_1": {
+        "name": ""
+    },
+    "lootbox_R_event_2": {
+        "name": ""
+    },
+    "lootbox_R_event_3": {
+        "name": ""
+    },
+    "lootbox_R_event_s1": {
+        "name": ""
+    },
+    "lootbox_R_event_s2": {
+        "name": ""
+    },
+    "lootbox_R_event_s3": {
+        "name": ""
+    },
+    "lootbox_R_O": {
+        "name": ""
+    },
+    "lootbox_R_s1": {
+        "name": ""
+    },
+    "lootbox_R_s2": {
+        "name": ""
+    },
+    "lootbox_R_s3": {
+        "name": ""
+    },
+    "lootbox_SR_C": {
+        "name": ""
+    },
+    "lootbox_SR_E": {
+        "name": ""
+    },
+    "lootbox_SR_event_1": {
+        "name": ""
+    },
+    "lootbox_SR_event_2": {
+        "name": ""
+    },
+    "lootbox_SR_event_3": {
+        "name": ""
+    },
+    "lootbox_SR_event_s1": {
+        "name": ""
+    },
+    "lootbox_SR_event_s2": {
+        "name": ""
+    },
+    "lootbox_SR_event_s3": {
+        "name": ""
+    },
+    "lootbox_SR_O": {
+        "name": ""
+    },
+    "lootbox_SR_s1": {
+        "name": ""
+    },
+    "lootbox_SR_s2": {
+        "name": ""
+    },
+    "lootbox_SR_s3": {
+        "name": ""
+    },
+    "lootbox_U_C": {
+        "name": ""
+    },
+    "lootbox_U_E": {
+        "name": ""
+    },
+    "lootbox_U_event_1": {
+        "name": ""
+    },
+    "lootbox_U_event_2": {
+        "name": ""
+    },
+    "lootbox_U_event_3": {
+        "name": ""
+    },
+    "lootbox_U_event_s1": {
+        "name": ""
+    },
+    "lootbox_U_event_s2": {
+        "name": ""
+    },
+    "lootbox_U_event_s3": {
+        "name": ""
+    },
+    "lootbox_U_O": {
+        "name": ""
+    },
+    "lootbox_U_s1": {
+        "name": ""
+    },
+    "lootbox_U_s2": {
+        "name": ""
+    },
+    "lootbox_U_s3": {
+        "name": ""
+    },
+    "lootbox_UR_C": {
+        "name": ""
+    },
+    "lootbox_UR_E": {
+        "name": ""
+    },
+    "lootbox_UR_event_1": {
+        "name": ""
+    },
+    "lootbox_UR_event_2": {
+        "name": ""
+    },
+    "lootbox_UR_event_s1": {
+        "name": ""
+    },
+    "lootbox_UR_event_s2": {
+        "name": ""
+    },
+    "lootbox_UR_event_s3": {
+        "name": ""
+    },
+    "lootbox_UR_O": {
+        "name": ""
+    },
+    "lootbox_UR_s1": {
+        "name": ""
+    },
+    "lootbox_UR_s2": {
+        "name": ""
+    },
+    "lootbox_UR_s3": {
+        "name": ""
+    },
+    "nierauto_booster": {
+        "name": "",
+        "description": ""
+    },
+    "p5_booster": {
+        "name": "",
+        "description": ""
+    },
+    "padoru_booster": {
+        "name": "",
+        "description": ""
+    },
+    "partial_ring": {
+        "name": "Kısmi Yüzük",
+        "description": "Güzeller güzeli bir evlilik yüzüğü yapmak için kullanılan yuvarlak bir metaller grubu"
+    },
+    "reel": {
+        "name": "",
+        "description": ""
+    },
+    "rod_c": {
+        "name": "",
+        "description": ""
+    },
+    "rod_r": {
+        "name": "",
+        "description": ""
+    },
+    "rod_sr": {
+        "name": "",
+        "description": ""
+    },
+    "rod_u": {
+        "name": "",
+        "description": ""
+    },
+    "rod_ur": {
+        "name": "",
+        "description": ""
+    },
+    "rope": {
+        "name": "",
+        "description": ""
+    },
+    "shovel": {
+        "name": "",
+        "description": ""
+    },
+    "spoon": {
+        "name": "",
+        "description": ""
+    },
+    "spork": {
+        "name": "",
+        "description": ""
+    },
+    "stick": {
+        "name": "",
+        "description": ""
+    },
+    "fork": {
+        "name": "",
+        "description": ""
     }
 }
