@@ -24,13 +24,19 @@
         "lootbox_plural": "Lootboxen",
         "consumable": "",
         "consumable_plural": "",
-        "junk": "",
-        "junk_plural": "",
+        "junk": "Müll",
+        "junk_plural": "Müll",
         "key": "",
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Medaillen",
+        "sticker": "",
+        "sticker_plural": "Sticker",
+        "background": "",
+        "background_plural": "Hintergründe"
     },
     "terms": {
         "transferDenied": "",
@@ -64,14 +70,14 @@
         "bet": "Wetten",
         "level": "Level",
         "levelUp": "Neues Level!",
-        "price": "",
+        "price": "Preis",
         "droppable": "",
         "event": "",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
+            "message": "Nachricht",
+            "message_plural": "Nachrichten",
+            "reaction": "Reaktion",
+            "reaction_plural": "Reaktionen",
             "role": "Rolle",
             "role_plural": "",
             "server": "Server",
@@ -140,6 +146,21 @@
             "insuperms": "{{imsorry}} Ich kann dies nicht für dich tun, wenn du nicht die Berechtigung selbst hast.",
             "not-a-NSFW-channel": "Stelle diesen Channel zu erst zu einen NSFW-Channel um. Hier sind Kinder."
         },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
+        },
         "warnings": {
             "translationTexTooLong": "",
             "open1": "",
@@ -154,11 +175,11 @@
                 "Einen Moment bitte..."
             ],
             "opinion_decks": [
+                "Gute Wahl!",
                 "",
                 "",
-                "",
-                "",
-                "",
+                "Nicht schlecht.",
+                "Das ist für Glück.",
                 "",
                 ""
             ],
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +572,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +596,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",

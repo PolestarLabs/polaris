@@ -30,7 +30,13 @@
         "material": "مادة",
         "material_plural": "المواد",
         "boosterpack": "حزمة تعزيز",
-        "boosterpack_plural": "حزم تعزيز"
+        "boosterpack_plural": "حزم تعزيز",
+        "medal": "",
+        "medal_plural": "",
+        "sticker": "",
+        "sticker_plural": "",
+        "background": "",
+        "background_plural": ""
     },
     "terms": {
         "transferDenied": "تم رفض النقل",
@@ -117,8 +123,8 @@
             "disabledModule": ":no_entry_sign: وقد اعلن سيدنا {{module}} انه ممنوع هنا,هذا سيء.",
             "genericInvalid": "معليش الأمر ذا ما يشتغل ;~;",
             "prefixChng": "دام كذا, الان البركفس حقي هو {{prefix}}, جرب هذا `{{prefix}}stats`. ",
-            "moderationNeeded": "",
-            "chooseAmod": "",
+            "moderationNeeded": "معليش. بس ما تقدر تستخدم هذا الأمر. تحتاج أذن **إدارة الخادم** (Manage Server) أو انك تكون مودراتور/آدمن (تقتدر تسويها كذا {{prefix}}رتبت مود[@Role])`",
+            "chooseAmod": "إختار موديل, يمديك.",
             "kinNone": "يجب ان تخبرني من يجب ان اطرد، بالطبع، يمكنني ان اطردك.",
             "kin404": "لا استطيع ان اجد هذا الشخص، هل غادروا؟ يمكن ان يكونوا من خيالك.",
             "unmutable": "مهما تقول لن أُسكت هذا الشخص.",
@@ -128,17 +134,32 @@
             "roleAlreadyHere": "يبدو أن الدور موجود بالفعل في القائمة.",
             "nosuchrole": "أم ، لم أجد هذا الدور ، اكتب اسمه بالضبط من فضلك.",
             "kbanNone": "أحتاج إلى هدف للحظر ، يمكنني دائمًا حظرك بدلاً من ذلك.",
-            "cantKickHim": "",
+            "cantKickHim": "أنا ما اقدر اسوي كذا لهذاك الشخص. مو مسموح لي أضر رؤسائي.",
             "cantKickSelf": "يا غبي ما يمديك تطرد نفسك من المكان :joy: او تحضر نفسك منه!",
-            "superRoleNope": "",
+            "superRoleNope": "كأنه **{{user}}** ما عنده المرتبة **{{group}}**.",
             "banNone": "أحتاج إلى هدف للحظر ، يمكنني دائمًا حظرك بدلاً من ذلك.",
-            "unpermB": "",
-            "cantFindMessageID": "",
-            "cantFindChannel": "",
-            "noChannelGiven": "",
-            "emojiError": "",
-            "insuperms": "",
-            "not-a-NSFW-channel": ""
+            "unpermB": "الظاهر انو ما عندي هذا الإذن.",
+            "cantFindMessageID": "هممم...هاذا مو صحيح... الID حق الرسالة غير معرف.",
+            "cantFindChannel": "ما أقدر ألقى القناة هاذي. حاول انك تستخدم channel# عشان تتأكد انها موجودة.",
+            "noChannelGiven": "لازم تقولي في روم عشان اسجل فيه الأنشطة الي تصير.",
+            "emojiError": "ما اقدر احط الفيس هاذا, تحقق من أذونات التفاعل أو إذا كانت الفيس صالح...",
+            "insuperms": "{{imsorry}} ماقدر اسوي لك كذا إذا ما عندك الإذن أصلا.",
+            "not-a-NSFW-channel": "لم يتم ضبط هذا الروم على NSFW. لا تترك \"عملك الفني\" في كل مكان."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -209,12 +230,12 @@
                     ""
                 ],
                 "ohmy_negative": [
-                    "",
-                    "",
+                    "يا..!",
+                    "أوووه...",
                     "أوه...",
                     "أوه لا!",
-                    "",
-                    ""
+                    "لاااا!",
+                    "يا ساتر!"
                 ]
             }
         },
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +572,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +596,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
