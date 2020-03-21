@@ -10,11 +10,11 @@
         "description": "Co to jest? Altruizm?"
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": "Tak zielony jak twoje przyznanie miłości."
+        "name": "Splendorowy Pierścień Żadowy",
+        "description": "Tak zielony jak twoje wyznanie miłości."
     },
     "complete_ring_rubine": {
-        "name": "",
+        "name": "Wspaniały Rubinowy Pierścień",
         "description": "Czerwone są róże, piękne są szczęścia łzy, ten pierścień też jest czerwony i tak piękny jak ty!"
     },
     "complete_ring_sapphire": {
@@ -63,7 +63,7 @@
     },
     "excavator": {
         "name": "Koparka Grabarza",
-        "description": ""
+        "description": "Dla ludzi, którzy nie chcą brudzić sobie rąk."
     },
     "hook": {
         "name": "Hak",

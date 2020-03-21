@@ -597,7 +597,7 @@
         },
         "synthfrag": {
             "magifrag": "",
-            "disenchant": "Muuta tämä {{rarity_emoji}} tausta **{{count}} $t(keywords.cosmoFragment)** ?",
+            "disenchant": "",
             "cosmeticSynth": "Kosmeettinen esinesynteesi",
             "confirmSynth": "Haluatko syntetisoida tämän?",
             "nogemsforThis": "Näyttää siltä, että sinulla ei ole tarpeeksi jalokiviä tähän synteesiin..."
