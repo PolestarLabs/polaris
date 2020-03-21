@@ -31,11 +31,11 @@
         "material_plural": "Materiais",
         "boosterpack": "Boosterpack",
         "boosterpack_plural": "Boosterpacks",
-        "medal": "",
+        "medal": "Medalha",
         "medal_plural": "Medalhas",
-        "sticker": "",
+        "sticker": "Figurinha",
         "sticker_plural": "Adesivos",
-        "background": "",
+        "background": "Fundo",
         "background_plural": "Fundos"
     },
     "terms": {
@@ -148,17 +148,17 @@
         },
         "cooldown": {
             "generic": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Espera aí, me dá um minutinho!",
+                "Reduza a marcha, por favor!",
+                "Por favor, tente novamente em alguns segundos.",
+                "Aguarde, por favor.",
+                "Comandos demais ao mesmo tempo!",
+                "Aaah! Vá com calma!",
+                "Eu não tenho dedos infinitos! Calma aí!",
+                "Pra que a pressa?!",
+                "Preciso de um minuto pra respirar!",
+                "Amor, por favor, um de cada vez.",
+                "*Você está indo rápido demais senpai uwu Não consigo aguentar uwu*"
             ]
         },
         "warnings": {
@@ -333,7 +333,7 @@
         },
         "ship": {
             "needTupipo": "A Calculadora de Amor não funciona com apenas uma pessoa, querido.",
-            "need2diffpipo": "A menos que essa pessoa seja capaz de se duplicar, ela ainda conta como uma pessoa, preciso de **duas**!",
+            "need2diffpipo": "A menos que essa pessoa seja capaz de fazer mitose, ela ainda conta como uma pessoa só. Preciso de **duas**!",
             "quotes": [
                 [
                     "Vish. _Aí não, em..._",
@@ -515,7 +515,7 @@
             "transferboxto": "Transferindo Lootbox para {{userB}}",
             "transferthisboxto": "Transferindo **{{boxname}}** para {{userB}} ",
             "timeout": "**Acabou o tempo!**",
-            "cancel": "Transferência Cancelada",
+            "cancel": "**Transferência Cancelada!**",
             "success": "**{{boxname}}** transferida para {{userB}}"
         },
         "give": {
@@ -564,7 +564,7 @@
     },
     "interface": {
         "generic": {
-            "deleted": "",
+            "deleted": "Deletado:",
             "cancel": "Cancelado!",
             "timeout": "Tempo esgotado!",
             "cantAfford": "Ah, você não tem o suficiente... :(",
@@ -574,14 +574,14 @@
             "alreadyOwnThis": "Ei, você já tem esse item!"
         },
         "reminders": {
-            "currentActive": "",
-            "noneToDelete": "",
-            "maxActive": "",
-            "errorWhen": "",
-            "errorTARDIS": "",
-            "reminderOk": "",
-            "reminderChannel": "",
-            "reminderDMs": ""
+            "currentActive": "Aqui estão seus lembretes ativos:",
+            "noneToDelete": "Não há lembretes para deletar!",
+            "maxActive": "Você só poder ter **{{count}}** lembretes ativos de uma vez!",
+            "errorWhen": "Pera, me perdi. Não entendi exatamente *quando* você quer que eu te lembre disso.",
+            "errorTARDIS": "Com licença viajante temporal, eu não posso voltar ao passado para te lembrar daquilo que você já esqueceu.",
+            "reminderOk": "Ok, te lembrarei de {{appointment}} às **{{time}} (UTC)** {{location}}",
+            "reminderChannel": "em {{channel}}",
+            "reminderDMs": "no seu privado"
         },
         "brackets": {
             "maxRR": "Limite Máximo para Torneio de Pontos Corridos: 16",
@@ -596,8 +596,8 @@
             "bracketX": "Chave {{AB}}"
         },
         "synthfrag": {
-            "magifrag": "",
-            "disenchant": "Desencantar este plano de fundo {{rarity_emoji}} em **{{count}} $t(keywords.cosmoFragment)**?",
+            "magifrag": "Fragmentação de Cosméticos",
+            "disenchant": "Gostaria de desencantar isto?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n em **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Síntese de Itens Cosméticos",
             "confirmSynth": "Você quer que eu sintetize isto?",
             "nogemsforThis": "Parece que você não tem gemas suficientes para a síntese..."

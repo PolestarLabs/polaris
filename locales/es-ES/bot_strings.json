@@ -597,7 +597,7 @@
         },
         "synthfrag": {
             "magifrag": "",
-            "disenchant": "¿Quieres desencantar este fondo {{rarity_emoji}} para conseguir **{{count}} $t(keywords.cosmoFragment)** ?",
+            "disenchant": "¿Te gustaría desencantar esto?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n en **{{count}} $t(keywords.s3.amazonaws.com/Fragment)** ?",
             "cosmeticSynth": "Síntesis de cosméticos",
             "confirmSynth": "¿Quieres que sintetice esto?",
             "nogemsforThis": "Parece que no tienes suficientes Gemas para llevar a cabo esta Síntesis..."

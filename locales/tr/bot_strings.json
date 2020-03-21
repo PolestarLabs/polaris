@@ -597,7 +597,7 @@
         },
         "synthfrag": {
             "magifrag": "",
-            "disenchant": "Bu {{rarity_emoji}} arkaplanı **{{count}} $t(keywords.cosmoFragment)** için parçala?",
+            "disenchant": "",
             "cosmeticSynth": "Kozmetik Eşya Sentezi",
             "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
             "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
