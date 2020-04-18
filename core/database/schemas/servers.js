@@ -1,3 +1,5 @@
+const SERVER_QUEUE = [];
+
 let mongoose = require('mongoose');
 let utils = require('../../structures/PrimitiveGearbox.js');
 const Mixed = mongoose.Schema.Types.Mixed;
@@ -7,8 +9,8 @@ const ServerSchema = new mongoose.Schema({
         id: {type:String,required: true,index:{unique:true}},
         name: String,
         globalhandle:String,
-        globalPrefix:{type:Boolean,default:true},
-        respondDisabled:{type:Boolean,default:true},
+        globalPrefix:{type:Boolean,default:false},
+        respondDisabled:{type:Boolean,default:false},
         event:Mixed,
         eventReg:String,
         partner:{type:Boolean,default:false},
@@ -38,7 +40,7 @@ const ServerSchema = new mongoose.Schema({
             autoRoleStack: {type:Boolean, default:true},
             DROPS:      {type:Boolean, default:true},
             ANNOUNCE:   {type:Boolean, default:true},
-            PREFIX:     {type:String,  default:"+"},
+            PREFIX:     {type:String,  default:"==="},
             LANGUAGE:   {type:String, default:"en"},
             MODROLE:    String,
             DISABLED:   Array,
@@ -106,6 +108,7 @@ let META = require('./serverMeta.js');
 META.updateMeta = function (S) {
   return new Promise(async resolve => {
     MODEL.findOne({id:S.id}).then(data=>{
+    if (!data) return;
     let admins =S.members.filter(mb=>mb.id===S.ownerID||mb.hasRole({id:data.modules.MODROLE})===true).map(mb=>mb.id);
       let meta = {
               id:S.id,
@@ -116,15 +119,16 @@ META.updateMeta = function (S) {
              channels: S.channels.map((rl,index)=>{return{name:rl.name,pos:rl.position,id:rl.id,cat:(rl.parent||{name:"---"+index+"---"}).name,type:rl.type,nsfw:rl.nsfw,topic:rl.topic}}),
              icon: S.iconURL
            }
-      META.findOne({id:S.id}, (err, guild) => {
-         if (err) {
+      process.nextTick(()=>{
+        META.findOne({id:S.id}, (err, guild) => {
+          if (err) {
             console.error(err)
-         }
+          }
           if (guild) {
             META.updateOne({id: S.id}, {
-               $set:{
-                 meta
-               }
+              $set:{
+                meta
+              }
             }).then(x=>{
               resolve(true)
               //resolve(console.log("[DATABASE]".yellow,"Meta updated for ",S.id))
@@ -138,35 +142,33 @@ META.updateMeta = function (S) {
               resolve(prompt)
             });
           }
-    });
+        });
+      })
   });
 });
 };
 MODEL.updateMeta = S=> META.updateMeta(S);
 MODEL.meta = S=> META.get
 
-MODEL.new = svDATA => {
-MODEL.findOne({id: svDATA.id}, (err, guild) => {
-   if (err) {
-      console.error(err)
-   }
-   if (guild) {
-     // Nothing
-   } else {
+MODEL.new = svDATA => {  
+  if(SERVER_QUEUE.includes(svDATA.id)) return;
+  SERVER_QUEUE.push(svDATA.id);
+  let rand = randomize(0,1000);
+  MODEL.findOne({id: svDATA.id}).then(guild => {
+    if (!guild) {
       let guild = new MODEL({
-         id: svDATA.id,
-         meta: svDATA,
-         prefix: '+',
-         modules:{LANGUAGE: 'en'},
-         meta:null
-      });
-      guild.save((err) => {
-        if (err) return console.error(err);
-        //console.log("[NEW SERVER]".blue,svDATA.name.yellow,`(${svDATA.members.size})Members`);
-        META.updateMeta(svDATA);
-      });
-   }
-});
+          id: svDATA.id,
+          name: svDATA.name,
+          modules:{LANGUAGE: 'en'},
+          meta: null,
+        });
+        guild.save((err) => {
+          if (err) return console.error(err);
+          META.updateMeta(svDATA);
+          return guild;
+        });
+    }
+  });
 }
 
 MODEL.cat   = 'guilds'
