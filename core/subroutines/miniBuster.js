@@ -4,8 +4,8 @@ module.exports ={
   
   up:function(msg,pos){  
     
-    DB.users.set(msg.author.id,{$inc:{'modules.statistics.healthIndex':pos}});
-    DB.servers.set(msg.guild.id,{$inc:{'modules.statistics.healthIndex':pos}});   
+    //DB.users.set(msg.author.id,{$inc:{'modules.statistics.healthIndex':pos}});
+    //DB.servers.set(msg.guild.id,{$inc:{'modules.statistics.healthIndex':pos}});   
     
   },
   

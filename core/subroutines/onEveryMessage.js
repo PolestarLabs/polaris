@@ -1,12 +1,26 @@
+const NSFW = require('../utilities/CheckNSFW.js');
 const Drops = require('./boxDrops').lootbox;
 
+
 module.exports = async msg => {
+
+
+  if(!msg.guild) return;
+  if(msg.channel.type === 1) return;
+
+  if(msg.guild.imagetracker && !msg.channel.nsfw){
+    const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
+    if(msg.attachments && msg.attachments[0] || hasImageURL ){ 
+      NSFW((msg.attachments[0]||{}).url || hasImageURL[0]).then(res=> res === true ? msg.addReaction('⚠️') : null);
+    }
+  }
+
   PLX.execQueue=PLX.execQueue.filter(itm=>itm.constructor != Promise);
   PLX.execQueue.push(
     Promise.all([
       levelChecks(msg),
       Drops(msg)
-    ]) 
+    ]).catch(err=> null)
   )
 
 };
@@ -40,7 +54,7 @@ async function levelChecks(msg) {
 
   await Promise.all([
     userData = (await userData),
-    servData = (await servData) || (await DB.servers.new(msg.guild)),
+    servData = (await servData),
   ]);
 
   if(!servData) return null;
@@ -82,9 +96,16 @@ async function levelChecks(msg) {
       if(
         servData.modules.LVUP_local &&
         !(servData.switches||{chLvlUpOff:[]}).chLvlUpOff.includes(msg.channel.id)
-      ) 
-          msg.channel.send("Level Up! >> "+curLevel_local);
-      
+      ){
+
+        let embed = {
+          color: 0x6699FF,
+          description: `:tada: **Level Up!** >> ${curLevel_local}`,
+          footer: {icon_url: msg.author.avatarURL, text: msg.author.tag} 
+        }
+        msg.channel.send({embed});
+      } 
+        
 
       if(servData.modules.AUTOROLES){
 
@@ -92,18 +113,18 @@ async function levelChecks(msg) {
         let AUTOS = servData.modules.AUTOROLES
         let sorting = function(a,b){return b[1]-a[1]};
         AUTOS.sort(sorting);
-        let levels = AUTOS.map(r=>r[1]); // 1 5 10 25
-        let addinrole;
-        let addinrole_lv = 0;
+        let levels = AUTOS.map(r=>r[1]);
 
         const roleStack = servData.modules.autoRoleStack === false ? false : true;
 
         for(let i = 0; i < levels.length; i++){
           msg.member.addRole(AUTOS.find(r=>r[1]==curLevel_local)[0]).catch(e=>"noperms");
           if(roleStack===true){
-            msg.member.addRole(AUTOS.find(r=>r[1]<=curLevel_local)[0]).catch(e=>"noperms");
+            let autorole = AUTOS.find(r=>r[1]<=curLevel_local);
+            if(autorole) msg.member.addRole( autorole[0]).catch(e=>"noperms");
           }else if (roleStack === false){
-            msg.member.removeRole(AUTOS.find(r=>r[1]!=curLevel_local)[0]).catch(e=>"noperms");
+            let autorole = AUTOS.find(r=>r[1]!=curLevel_local);
+            if(autorole) msg.member.removeRole( autorole[0]).catch(e=>"noperms");
           }
         }
       }
