@@ -529,19 +529,19 @@ const emojibank = {
 Object.assign(emojibank,THIRD_PARTY,MISC,BRANDS,POLARIS_UI,POLLUXES);
 
 
-function emoji(moji) {
+function emoji(moji,fallback) {
 
   if (!emojibank[moji]) {
     let GLDS = PLX.guilds.size;
     let resMoji
     while (GLDS--) {
       let emj = PLX.guilds.map(x => x)[GLDS].emojis.find(e => {
-        if (e.name == moji || e.name.includes(moji)) return true;
+        if (e.name == moji || e.name.includes(moji)||e.name == fallback || e.name.includes(fallback)) return true;
       });
 
       if (emj) resMoji = `<${emj.animated ? "a" : ""}:${emj.name}:${emj.id}>`;
     }
-    return resMoji || "\⬜"
+    return resMoji ||fallback|| "\⬜"
   } else {
     return emojibank[moji]
   }
