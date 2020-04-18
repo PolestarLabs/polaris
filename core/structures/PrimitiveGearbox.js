@@ -25,13 +25,16 @@ module.exports = {
      })
    },
 
-   dbSetter : function(query,alter){
+   dbSetter : function(query,alter, options = {}){
      return new Promise(async resolve=>{
        if(['string','number'].includes(typeof query)){
          query = {'id':query.toString()};
        };
        if(!typeof alter) resolve (null);
-       return resolve(this.updateOne(query,alter,{upsert:true}).lean().exec());
+       if(!options.upsert) options.upsert = true; 
+       if(['guilds','sv_meta'].includes(this.cat)) options.upsert = false;
+       
+       return resolve(this.updateOne(query,alter,options).lean().exec());
      })
    },
 
