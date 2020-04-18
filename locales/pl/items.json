@@ -1,14 +1,330 @@
 {
-    "partial_ring": {
-        "name": "Pierścień Składowy",
-        "description": "Okrągły kawałek metalu używany do stworzenia pięknego pierścionka zaręczynowego"
+    "anime_booster": {
+        "name": "Anime Generic VOL.1"
     },
-    "lootbox_C_O": {
-        "name": "Zwyczajny Lootbox",
+    "broken_excavator": {
+        "name": "Zepsuta Koparka"
+    },
+    "commendtoken": {
+        "name": "Żeton pochwały",
+        "description": "Co to jest? Altruizm?"
+    },
+    "complete_ring_jade": {
+        "name": "Splendorowy Pierścień Żadowy",
+        "description": "Tak zielony jak twoje wyznanie miłości."
+    },
+    "complete_ring_rubine": {
+        "name": "Wspaniały Rubinowy Pierścień",
+        "description": "Czerwone są róże, piękne są szczęścia łzy, ten pierścień też jest czerwony i tak piękny jak ty!"
+    },
+    "complete_ring_sapphire": {
+        "name": "Luksusowy Szafirowy Pierścień",
+        "description": "Pierwszy krok w kierunku zaangażowania jest oddanie bardzo rzadkiego kryształu osobie, którą się kocha - gratulacje! "
+    },
+    "complete_ring_stardust": {
+        "name": "",
         "description": ""
     },
     "cosmo_fragment": {
         "name": "Kosmiczny Fragment",
         "description": "Błyszczący żwirek służący do tworzenia Kosmicznych Fragmentów"
+    },
+    "cosmo_gem_C": {
+        "name": "Pospolity Kosmiczny Klejnot",
+        "description": "Cóż, przynajmniej błyszczy."
+    },
+    "cosmo_gem_R": {
+        "name": "Rzadki Kosmiczny Klejnot",
+        "description": "Oh? Całkiem drogie, czyż nie?"
+    },
+    "cosmo_gem_SR": {
+        "name": "Super Rzadki Kosmiczny Klejnot",
+        "description": "Wow, ten klejnot który masz jest specjalny. Ile za niego chcesz? Sześć rubinów? Osiem?"
+    },
+    "cosmo_gem_U": {
+        "name": "Niepospolity Kosmiczny Klejnot",
+        "description": "Mam na myśli, że to jest chyba lepsze niż \"pospolite\"."
+    },
+    "cosmo_gem_UR": {
+        "name": "Ultra Rzadki Kosmiczny Klejnot",
+        "description": "Zażycz sobie gwiazdy... I w końcu masz jedną."
+    },
+    "daianwatch_booster": {
+        "name": "Overwatch stworzony przez Daianpan",
+        "description": ""
+    },
+    "doki_booster": {
+        "name": "Doki Doki Literature Club",
+        "description": "Po prostu Monika"
+    },
+    "doublehook": {
+        "name": "Podwójny Hak",
+        "description": "Hak hak, albo jeśli wolisz to hak²"
+    },
+    "excavator": {
+        "name": "Koparka Grabarza",
+        "description": "Dla ludzi, którzy nie chcą brudzić sobie rąk."
+    },
+    "hook": {
+        "name": "Hak",
+        "description": "Ostatnio widziany, jak uganiał się za małym latającym chłopcem."
+    },
+    "initd_booster": {
+        "name": "Initial D",
+        "description": "Dejà Vu. Otwierałem już tą paczkę wcześniej."
+    },
+    "iwd1_booster": {
+        "name": "IWD - Sezon 1",
+        "description": "Ekskluzywne Discordowe Naklejki Internetowego Wrestlingu. 2018"
+    },
+    "iwd2_booster": {
+        "name": "IWD - Sezon 2",
+        "description": "Ekskluzywne Discordowe Naklejki Internetowego Wrestlingu. 2019"
+    },
+    "lootbox_C_C": {
+        "name": "Pospolita Skrzynka Chibi"
+    },
+    "lootbox_C_E": {
+        "name": "Epicka Pospolita Skrzynka"
+    },
+    "lootbox_C_event_1": {
+        "name": "Pospolita Skrzynka Halloween"
+    },
+    "lootbox_C_event_2": {
+        "name": "Pospolita Skrzynka Świąteczna"
+    },
+    "lootbox_C_event_3": {
+        "name": "Pospolita Skrzynka Wielkanocna"
+    },
+    "lootbox_C_event_s1": {
+        "name": "Pospolita Letnia Skrzynka"
+    },
+    "lootbox_C_event_s2": {
+        "name": "Pospolita Zimowa Skrzynka"
+    },
+    "lootbox_C_event_s3": {
+        "name": "Pospolita Skrzynka Przesilenia"
+    },
+    "lootbox_C_O": {
+        "name": "Pospolita Skrzynka"
+    },
+    "lootbox_C_s1": {
+        "name": "Pospolita Letnia Skrzynka"
+    },
+    "lootbox_C_s2": {
+        "name": "Pospolita Zimowa Skrzynka"
+    },
+    "lootbox_dev": {
+        "name": "Skrzynka - Prezent Dev'a",
+        "description": ""
+    },
+    "lootbox_EL": {
+        "name": "",
+        "description": "Jeśli otworzysz tę skrzynkę to twój ekwipunek eksploduje"
+    },
+    "lootbox_R_C": {
+        "name": "Rzadka Skrzynka Chibi"
+    },
+    "lootbox_R_E": {
+        "name": "Epicko Rzadka Skrzynka"
+    },
+    "lootbox_R_event_1": {
+        "name": "Rzadka Skrzynka Halloween"
+    },
+    "lootbox_R_event_2": {
+        "name": "Rzadka Skrzynka Świąteczna"
+    },
+    "lootbox_R_event_3": {
+        "name": "Rzadka Skrzynka Wielkanocna"
+    },
+    "lootbox_R_event_s1": {
+        "name": "Rzadka Letnia Skrzynka"
+    },
+    "lootbox_R_event_s2": {
+        "name": "Rzadka Zimowa Skrzynia"
+    },
+    "lootbox_R_event_s3": {
+        "name": "Rzadka Skrzynia Przesilenia"
+    },
+    "lootbox_R_O": {
+        "name": "Rzadka Skrzynka"
+    },
+    "lootbox_R_s1": {
+        "name": "Rzadka Letnia Skrzynka"
+    },
+    "lootbox_R_s2": {
+        "name": "Rzadka Zimowa Skrzynia"
+    },
+    "lootbox_R_s3": {
+        "name": "Rzadka Skrzynia Przesilenia"
+    },
+    "lootbox_SR_C": {
+        "name": "Super Rzadka Skrzynia Chibi"
+    },
+    "lootbox_SR_E": {
+        "name": "Super Rzadka Epicka Skrzynia"
+    },
+    "lootbox_SR_event_1": {
+        "name": "Super Rzadka Skrzynka Halloween"
+    },
+    "lootbox_SR_event_2": {
+        "name": "Super Rzadka Skrzynka Świąteczna"
+    },
+    "lootbox_SR_event_3": {
+        "name": "Super Rzadka Skrzynka Wielkanocna"
+    },
+    "lootbox_SR_event_s1": {
+        "name": "Super Rzadka Letnia Skrzynia"
+    },
+    "lootbox_SR_event_s2": {
+        "name": "Super Rzadka Zimowa Skrzynka"
+    },
+    "lootbox_SR_event_s3": {
+        "name": "Super Rzadka Skrzynia Przesilenia"
+    },
+    "lootbox_SR_O": {
+        "name": "Super Rzadka Skrzynia"
+    },
+    "lootbox_SR_s1": {
+        "name": "Super Rzadka Letnia Skrzynia"
+    },
+    "lootbox_SR_s2": {
+        "name": "Super Rzadka Zimowa Skrzynka"
+    },
+    "lootbox_SR_s3": {
+        "name": "Super Rzadka Skrzynia Przesilenia"
+    },
+    "lootbox_U_C": {
+        "name": "Niepospolita Skrzynka Chibi"
+    },
+    "lootbox_U_E": {
+        "name": "Epicka Niepospolita Skrzynka"
+    },
+    "lootbox_U_event_1": {
+        "name": "Niepospolita Skrzynka Halloween"
+    },
+    "lootbox_U_event_2": {
+        "name": "Niepospolita Skrzynka Świąteczna"
+    },
+    "lootbox_U_event_3": {
+        "name": "Niepospolita Skrzynka Wielkanocna"
+    },
+    "lootbox_U_event_s1": {
+        "name": "Niepospolita Letnia Skrzynka"
+    },
+    "lootbox_U_event_s2": {
+        "name": "Niepospolita Zimowa Skrzynka"
+    },
+    "lootbox_U_event_s3": {
+        "name": "Niepospotita Skrzynka Przesilenia"
+    },
+    "lootbox_U_O": {
+        "name": "Niepospolita Skrzynka"
+    },
+    "lootbox_U_s1": {
+        "name": "Niepospolita Letnia Skrzynka"
+    },
+    "lootbox_U_s2": {
+        "name": "Niepospolita Zimowa Skrzynka"
+    },
+    "lootbox_U_s3": {
+        "name": "Niepospotita Skrzynka Przesilenia"
+    },
+    "lootbox_UR_C": {
+        "name": "Ultra Rzadka Skrzynka Chibi"
+    },
+    "lootbox_UR_E": {
+        "name": "Ultra Rzadka Epicka Skrzynka"
+    },
+    "lootbox_UR_event_1": {
+        "name": "Ultra Rzadka Skrzynka Halloween"
+    },
+    "lootbox_UR_event_2": {
+        "name": "Ultra Rzadka Skrzynka Świąteczna"
+    },
+    "lootbox_UR_event_s1": {
+        "name": "Ultra Rzadka Letnia Skrzynka"
+    },
+    "lootbox_UR_event_s2": {
+        "name": "Ultra Rzadka Zimowa Skrzynia"
+    },
+    "lootbox_UR_event_s3": {
+        "name": "Ultra Rzadka Skrzynia Przesilenia"
+    },
+    "lootbox_UR_O": {
+        "name": "Ultra Rzadka Skrzynka"
+    },
+    "lootbox_UR_s1": {
+        "name": "Ultra Rzadka Letnia Skrzynka"
+    },
+    "lootbox_UR_s2": {
+        "name": "Ultra Rzadka Zimowa Skrzynia"
+    },
+    "lootbox_UR_s3": {
+        "name": "Ultra Rzadka Skrzynia Przesilenia"
+    },
+    "nierauto_booster": {
+        "name": "NieR: Automata",
+        "description": ""
+    },
+    "p5_booster": {
+        "name": "Persona 5",
+        "description": ""
+    },
+    "padoru_booster": {
+        "name": "Padoru Ultimate Collection",
+        "description": "Hashire sore yo i dawaj mi swoje Rubiny"
+    },
+    "partial_ring": {
+        "name": "Pierścień Składowy",
+        "description": "Okrągły kawałek metalu używany do stworzenia pięknego pierścionka zaręczynowego"
+    },
+    "reel": {
+        "name": "Kołowrotek",
+        "description": "Kręcisz tym dookoła, ale nie jak nagraniem. Wychodzi na to, że musi być przypięty do czegoś innego."
+    },
+    "rod_c": {
+        "name": "Prowizoryczna Wędka",
+        "description": "Podnosi tylko ryby, nie komplementy."
+    },
+    "rod_r": {
+        "name": "Przyzwoita Wędka",
+        "description": "Technicznie rzecz biorąc nie jest zła, ale nie jest też technicznie rzecz biorąc dobra."
+    },
+    "rod_sr": {
+        "name": "Potężna Wędka",
+        "description": "~Mówią, że tą wędkę stworzył Bob Ross~"
+    },
+    "rod_u": {
+        "name": "Bambusowa Wędka",
+        "description": "Ten bambusowy kij został zabrany z ogrodu mądrego chińskiego mnicha."
+    },
+    "rod_ur": {
+        "name": "Profesjonalna Wędka",
+        "description": "Nie. Niszcz. Tej. Rzeczy."
+    },
+    "rope": {
+        "name": "Lina",
+        "description": "Nie, to nie to czego szukasz."
+    },
+    "shovel": {
+        "name": "Łopata",
+        "description": "Używana do kopania dziur, w sensie fizycznym i metaforycznym."
+    },
+    "spoon": {
+        "name": "Łyżka",
+        "description": "To jest bardzo seksowna łyżka, używaj jej odpowiedzialnie."
+    },
+    "spork": {
+        "name": "Łyżelec",
+        "description": "To łyżka, plus widelec. To Wiżka!"
+    },
+    "stick": {
+        "name": "Pół-bezwartościowy Patyk",
+        "description": "Cena nie jest ważna, liczy się uczucie stworzone tym, jak fajny patyk może być"
+    },
+    "fork": {
+        "name": "Widelec",
+        "description": "Licząc jego czterokrotną możliwość dźgania noża, ale tylko połowę jego efektu, to wychodzi podwójna wartość!"
     }
 }

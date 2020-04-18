@@ -30,7 +30,13 @@
         "material": "Material",
         "material_plural": "Materiales",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacks"
+        "boosterpack_plural": "Boosterpacks",
+        "medal": "",
+        "medal_plural": "Medallas",
+        "sticker": "",
+        "sticker_plural": "Stickers",
+        "background": "",
+        "background_plural": "Fondos"
     },
     "terms": {
         "transferDenied": "Transferencia Denegada",
@@ -139,6 +145,21 @@
             "emojiError": "No pude añadir ese Emoji. Por favor, revisa los permisos y comprueba si es válido...",
             "insuperms": "{{imsorry}} Lo siento no puedo hacer eso para vos si no tienes permiso.",
             "not-a-NSFW-channel": "Este canal no está configurado para NSFW. No vayas dejando tu \"obra de arte\" por todas partes."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **¡Hey! El texto a traducir no puede exceder __1000 Caracteres__** Pero no te preocupes, he recortado el texto por vos~",
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "¡Cancelado!",
             "timeout": "¡Se acabó el tiempo!",
             "cantAfford": "Ah, esto no es algo que te puedas permitir... :(",
@@ -550,6 +572,16 @@
             "confirmDelete": "¿Confirmas la eliminación?",
             "alotWentOn": "Han pasado muchas cosas hoy...",
             "alreadyOwnThis": "¡Eh, esto ya lo tienes!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Límite máximo para Roundrobin: 16",
@@ -564,7 +596,8 @@
             "bracketX": "Bracket {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "¿Quieres desencantar este fondo {{rarity_emoji}} para conseguir **{{count}} $t(keywords.cosmoFragment)** ?",
+            "magifrag": "",
+            "disenchant": "¿Te gustaría desencantar esto?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n en **{{count}} $t(keywords.s3.amazonaws.com/Fragment)** ?",
             "cosmeticSynth": "Síntesis de cosméticos",
             "confirmSynth": "¿Quieres que sintetice esto?",
             "nogemsforThis": "Parece que no tienes suficientes Gemas para llevar a cabo esta Síntesis..."

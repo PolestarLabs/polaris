@@ -30,7 +30,13 @@
         "material": "Malzeme",
         "material_plural": "Malzemeler",
         "boosterpack": "Hızlandırıcı",
-        "boosterpack_plural": "Hızlandırıcılar"
+        "boosterpack_plural": "Hızlandırıcılar",
+        "medal": "",
+        "medal_plural": "Madalyalar",
+        "sticker": "",
+        "sticker_plural": "Çıkartmalar",
+        "background": "",
+        "background_plural": "Arka plan"
     },
     "terms": {
         "transferDenied": "Transfer Reddedildi",
@@ -139,6 +145,21 @@
             "emojiError": "Bu Emoji'yi ekleyemedim. Tepki izinlerini ya da Emojilerin açık olup olmadığını kontrol et...",
             "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
             "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hop! Çeviri metni __1000 Karakteri__ geçemez\nAma dert etme. Senin için metni ayırdım~",
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "İptal Edildi!",
             "timeout": "Süre Doldu!",
             "cantAfford": "Yaa, buna paran yetmiyor... :(",
@@ -550,6 +572,16 @@
             "confirmDelete": "Silmeyi onaylıyor musun?",
             "alotWentOn": "Bugün çok şeyler döndü...",
             "alreadyOwnThis": "Hey, zaten sende bundan var!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Roundrobin için maks limit: 16",
@@ -564,7 +596,8 @@
             "bracketX": "Çizelge {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "Bu {{rarity_emoji}} arkaplanı **{{count}} $t(keywords.cosmoFragment)** için parçala?",
+            "magifrag": "",
+            "disenchant": "",
             "cosmeticSynth": "Kozmetik Eşya Sentezi",
             "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
             "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
