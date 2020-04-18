@@ -279,6 +279,7 @@ PLX.setAvatar = async (url) => {
     }
 }
 PLX.findUser = (query) => {
+    if (!query) return null;
     query = query.toLowerCase().trim();
 
     if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
@@ -293,6 +294,7 @@ PLX.findUser = (query) => {
     return result || null;
 }
 PLX.findMember = (query, members) => {
+    if(!query) return null;
     query = query.toLowerCase().trim();
 
     if (/^[0-9]{16,19}$/.test(query)) { // If query looks like an ID try to get by ID
@@ -315,8 +317,9 @@ function postConnect(x) {
     
 
 setTimeout(()=>{
+    console.log("Discord connection start...")
     PLX.connect().then( postConnect ).catch(console.error);
-}, CLUSTER_ID * SHARDS_PER_CLUSTER * 12000 )
+}, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200 )
 
 
 process.on("uncaughtException", err => {
