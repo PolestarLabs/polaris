@@ -16,4 +16,6 @@ let MODEL = mongoose.model('ServerMetadata', ServerSchema, 'sv_metadata');
 
 MODEL.set = utils.dbSetter;
 MODEL.get = utils.dbGetter;
+MODEL.cat = 'sv_meta'
+
 module.exports = MODEL;
