@@ -7,7 +7,9 @@ const ATTR = (i) => `${i.buyable ? _emoji('market_ready').no_space : _emoji('__'
                     ${ i.tradeable ? _emoji('can_trade').no_space : _emoji('__').no_space}\
                     ${ i.destroyable ? _emoji('can_destroy').no_space : _emoji('__').no_space}`;
 
-const displayItem = (invItm, embed, P) =>
+
+const displayItem = (invItm, embed, P) =>{
+
     embed.field(
         `${invItm.emoji}  **${$t([`items:${invItm.id}.name`, invItm.name], P)}** × ${invItm.count}`,
         `
@@ -15,6 +17,7 @@ const displayItem = (invItm, embed, P) =>
         \u2003 ${ATTR(invItm)}\
         `
         , false);
+    }
 
 class GenericItemInventory{
 
@@ -34,7 +37,8 @@ class GenericItemInventory{
             if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
             msg.lang = msg.lang||[msg.channel.LANG];
             
-            const P = { lngs: msg.lang };
+            const P = { lngs: msg.lang.concat('dev') };
+   
             const userInventory = new INVENTORY(userID || msg.author.id, this.invIdentifier);
             let Inventory = await userInventory.listItems(args[10]);
             const response = { content: `${_emoji( this.emoji )} ${$t(`responses.inventory.browsing${this.browsingTag}`, P)} ` }

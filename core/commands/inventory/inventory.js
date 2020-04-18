@@ -78,8 +78,9 @@ const init = async function (msg,args){
         try{
             itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
         }catch(err){
-            console.error(err)
-            console.error(itemData,itm)
+     
+            console.error(` BAD INVENTORY ITEM `.bgRed +` ${itm} - `+ (err.message.red) + (" inventory.js :80".yellow)  )
+            
             itemType = 'other'
         }
         if(!types[itemType]) types[itemType] = 0;
