@@ -1,7 +1,6 @@
 const GIFEncoder = require('gif-encoder');
 const EventEmitter = require('events');
-const {createWriteStream} = require('fs')
-const {file} = require('../utilities/Gearbox');
+const {createWriteStream} = require('fs') 
 
 class Animation extends EventEmitter {
     constructor(options){
@@ -16,7 +15,7 @@ class Animation extends EventEmitter {
 
         this.buffers = []
         if (options.cache){
-            let resFile = createWriteStream(`cache/${options.filename || Date.now()}.gif`);
+            let resFile = createWriteStream(`./${options.filename || Date.now()}.gif`);
             this.gif.pipe(resFile);
         }
 
