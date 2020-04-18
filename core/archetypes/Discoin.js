@@ -8,7 +8,6 @@ module.exports = class Discoin {
 		this.rest = (METHOD, route, payload, query ) => {
 			if(typeof payload === 'string') query = payload, payload = null;
 			return new Promise((resolve,reject)=>{
-				console.log(this.token);
 				(request[METHOD])({url: `${ROOT}/${route}${query?"?s="+encodeURIComponent(query):""}`, headers: {"Authorization": "Bearer " + this.token}, json: payload }, (err, res, body) => {
 					if (err || rescodes.indexOf(res.statusCode) === -1)		
 						return reject(`[${res.statusCode}] :: API failure`);
