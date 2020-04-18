@@ -1,3 +1,5 @@
+const USER_QUEUE = []
+
 let mongoose = require('mongoose');
 let utils = require('../../structures/PrimitiveGearbox.js');
 const Mixed = mongoose.Schema.Types.Mixed;
@@ -217,15 +219,16 @@ MODEL.updateMeta = U => {
 
 
 MODEL.new = userDATA => {
+  if(!userDATA) return;
+  if(USER_QUEUE.includes(userDATA.id)) return;
+  USER_QUEUE.push(userDATA.id);
+
   return new Promise(resolve=>{
 
     MODEL.findOne({id: userDATA.id}, (err, newUser) => {
-      if (err) {
-        console.error(err)
-      }
+      if (err) console.error(err);      
       if (newUser) {
-        return resolve(newUser);
-        
+        return resolve(newUser);        
       } else {
         let user = new MODEL({
           id: userDATA.id,
@@ -233,8 +236,7 @@ MODEL.new = userDATA => {
           tag:userDATA.tag
         });
         user.save((err) => {
-          if (err) return console.error(err);
-          //console.log("[NEW USER]".blue,userDATA.tag.yellow,`(ID:${userDATA.id})`);
+          if (err) return console.error("USERSAVE ERROR".bgRed.white);          
           MODEL.updateMeta(userDATA);
           return resolve(user);           
         });
