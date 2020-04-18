@@ -1,21 +1,18 @@
 class Choice{
     constructor(string,index){
         this.index = index;
-        if(/<[A-z]+:[0-9]{11,19}>/.test(string)){
-            this.name       = string.replace('<','').split(':')[0];
-            this.id         = string.replace('>','').split(':')[1];
-            this.reaction   = string.replace('<','').replace('>','');
-            this.output     = string;
-        } else if(/<a:[A-z]+:[0-9]{11,19}>/.test(string)){
-            this.name       = string.replace('<a:','').split(':')[0];
-            this.id         = string.replace('>','').split(':')[1];
-            this.reaction   = string.replace('<a:','').replace('>','');
-            this.output     = string;
-        } else if(typeof string === 'object'){
+        let regex = /<?(a?:([A-z,0-9]+):([0-9]{10,25}))>?/
+        let emoji = string && typeof string == 'string' ? string.match(regex) : null;
+        if(emoji){
+            this.name     = emoji[2];
+            this.reaction = emoji[1];
+            this.output   = "<"+ emoji[0] + ">";
+            this.id       = emoji[3];
+        }else if(typeof string === 'object'){
             this.name       = string.name
             this.id         = string.id
             this.reaction   = string.name +":"+ string.id
-            this.output     = "<"+(string.animated?"a:":"")+string.name +":"+ string.id+">"
+            this.output     = "<"+(string.animated?"a:":":")+string.name +":"+ string.id+">"
         }else{
             this.name       = string;
             this.reaction   = string;
@@ -25,7 +22,7 @@ class Choice{
 }
 
 
-module.exports = function ReactionMenu(menu,msg,choices,options={}){
+const ReactionMenu = function ReactionMenu(menu,msg,choices,options={}){
     return new Promise(async resolve=>{
 
         
@@ -38,10 +35,12 @@ module.exports = function ReactionMenu(menu,msg,choices,options={}){
             let proc=0
         choices = choices.map((v,i,a)=> new Choice(v,i));
         choices.forEach((chc,i,all)=>{
-            menu.addReaction(chc.reaction).then(()=>{
-                proc++
-                if(proc===all.length) startChosing(menu);
-            })
+            wait((1+i)*.055).then(_=>
+                menu.addReaction(chc.reaction).then(()=>{
+                    proc++
+                    if(proc===all.length) startChosing(menu);
+                })
+            )
         });
         
         async function startChosing(menu){
@@ -72,3 +71,7 @@ module.exports = function ReactionMenu(menu,msg,choices,options={}){
         
     })
 }
+
+ReactionMenu.choice = Choice
+
+module.exports = ReactionMenu
