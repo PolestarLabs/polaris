@@ -71,7 +71,8 @@ const init = async  (msg, args) => {
     async function Pagination(page, mss, recursion = 0) {
         let tot_pages = Math.ceil(itemcount / 12);
         page = page > tot_pages ? tot_pages : page < 1 ? 1 : page;
-        let pagecontent = await DB.marketplace.find(query).limit(12).skip(12 * ((page || 1) - 1)).lean().exec()
+        let pagecontent = await DB.marketplace.find(query).limit(12).skip(12 * ((page || 1) - 1)).lean().exec();
+      
         let procedure = function (...args) {
             if (mss)
                 return mss.edit(...args);
@@ -83,7 +84,7 @@ const init = async  (msg, args) => {
         if (tot_pages > 0) {
 
             embed.description = `Showing entries (${page}/${tot_pages})
-                    *Type **\`${msg.prefix}market list [PAGE]\`** for a specific page*`
+                    *Use **\`${msg.prefix}market list [PAGE]\`** for a specific page*`
         } else {
             embed.description = `No Entries were found, please check your search`
 
@@ -95,8 +96,10 @@ const init = async  (msg, args) => {
             if (!offer) {
                 embed.field("\u200b", "\u200b", true);
                 continue;
-            }
-            let item = marketbase.find(it => offer.item_id === it.id && offer.item_type === it.type)
+            } 
+
+            let item = marketbase.find(it => offer.item_id == it._id && offer.item_type === it.type)
+
             if (!item) {
                 embed.field("---", "`BAD ENTRY`", true);
                 continue;
