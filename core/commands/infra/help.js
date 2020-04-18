@@ -147,10 +147,10 @@ msg.author.getDMChannel().then(dmChan=>{
       embed.setColor("#eb4190")
       embed.description(heldesc)
       embed.thumbnail(PLX.user.avatarURL)
-      embed.field(":sos: " + supserv, suplink, false)
-      embed.field(":hash: " + commlist, commlink, false)
+      embed.field(":sos: " + supserv, `https://discord.gg/pollux`, false)
+      embed.field(":hash: " + commlist, `${commlink}`, false)
       embed.field(":heart_decoration: " + inviteme, invitelink, false)
-      embed.field("<a:polluxYAY:482436838523404288> " + "Donate", "https://patreon.com/join/Pollux", false)
+      embed.field("<a:polluxYAY:482436838523404288> " + "Donate", " [Patreon](https://patreon.com/join/Pollux) <:patreon:684734175986712613> • [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8JDLAY5TFU9D6&source=url) <:Paypal:338329328947429378> ", false)
       embed.field($t('interface.help.notenough',P),
       $t('interface.help.trythese',P)+": \n[`+help full \u200b`] | [`+help currency \u200b`] \n [`+help links`] | [`+help <COMMAND>`]\n [`+help basics`] | [`+help commands`]")
     
