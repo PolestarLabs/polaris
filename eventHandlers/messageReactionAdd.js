@@ -3,7 +3,7 @@
 
 module.exports = async function run(msg,emoji,userID){
     if(userID==PLX.user.id) return;
-    DB.reactRoles.findOne({message:msg.id,channel:msg.channel.id}).then(RCT=>{
+    DB.reactRoles.findOne({channel:msg.channel.id, message:msg.id}).then(RCT=>{
         if(!RCT) return null;
         if(RCT.server != msg.channel.guild.id) return null;
         let roleReaction = RCT.rolemoji.find(rlmj=>rlmj.emoji.includes(emoji.id)||rlmj.emoji.includes(emoji.name) )
