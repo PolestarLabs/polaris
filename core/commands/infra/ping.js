@@ -9,7 +9,8 @@ const init = async msg => {
   embed.description('🏓')
   
 
-    let filepath = await Gal.randomOne('pong',true).catch(console.error);    
+    let filepath = await Gal.randomOne('pong',true).catch(console.error);
+    console.log(filepath)
     if (filepath) embed.image(filepath);
     msg.channel.createMessage({embed}).then(ms2=>{
       const stop = Date.now();
