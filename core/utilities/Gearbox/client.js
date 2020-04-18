@@ -33,7 +33,9 @@ module.exports = {
     },
     //Get IMG from Channel MSGs
     getChannelImg: async function getChannelImg(message, nopool) {
-        if ((message.args && message.args[0] || "").startsWith("http")) return message.args[0];
+
+        const hasImageURL = message.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
+        if (hasImageURL) return hasImageURL[0];
         if (message.attachments[0]) return message.attachments[0].url;
         let sevmesgs = message.channel.messages;
 
