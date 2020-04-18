@@ -1,6 +1,6 @@
-// const gear = require("../../utilities/Gearbox");
-// const DB = require("../../database/db_ops");
 const {performance} = require('perf_hooks');
+const M = require('moment')
+
 
 const {Embed}= require('eris');
 const clean = (text) => {
@@ -8,16 +8,25 @@ const clean = (text) => {
   let output = (typeof text === "string" ? text
   .replace(/`/g, `\`${String.fromCharCode(8203)}`)
   .replace(/@/g, `@${String.fromCharCode(8203)}`)
+    .replace(PLX.token,'[REDACTED]')
     .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]") :   
     JSON.stringify(text,null,2)).slice(0,1800);
-
-    console.log(output.length)
     return output
 }
 
 
 
 const init = async (msg) => {
+
+  if(msg.author.id!=='88120564400553984'){
+    
+    if (msg.content.includes('fs') ) return;
+    if (msg.content.includes('json') ) return;
+    if (msg.content.includes('../../') ) return;
+    if (msg.content.includes('require') ) return;
+  }
+    
+
 let depth_param = 0
   if(msg.args[0] === "-depth"){
     depth_param = parseInt(msg.args[1]);
@@ -38,12 +47,14 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
   if(code == 'process.exit()'){
     let output ="<:maybe:476214608592633866>"+invisibar+ `\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
     let embed = new Embed({description:output});
-    msg.channel.createMessage({embed}).then(x=>{
+    msg.channel.createMessage({embed}).then(async x=>{
+      await wait(1);
       process.exit(1);
     });
   }
   
   let runtime = performance.now();
+  let runtimeOutput = (rtm)=> (rtm*1000<1000?Math.floor(rtm*1000)+"μs ":rtm<1000?(rtm.toFixed(2))+"ms ":(rtm/1000).toFixed(2)+"s ");
   try {
     let evaled = eval(code);
     if (evaled instanceof Promise) evaled = await evaled;
@@ -51,14 +62,13 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled, {
       depth: 0 + depth_param
     });
-     let output ="<:yep:339398829050953728> ⏱ "+Math.floor(runtime*1000)+"μs "+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
+     let output ="<:yep:339398829050953728> ⏱ "+runtimeOutput(runtime)+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
      let embed = new Embed({description:output});
      embed.setColor("#2bce64")
-     console.log(JSON.stringify(embed).length)
      return msg.channel.createMessage({embed})
   } catch (e) {
     runtime = performance.now() - runtime
-     let output ="<:nope:339398829088571402> ⏱ "+Math.floor(runtime*1000)+"μs "+invisibar+ `\`\`\`ml\n${clean(e)}\`\`\``;
+     let output ="<:nope:339398829088571402> ⏱ "+runtimeOutput(runtime)+'\n**\`\`\`js\n'+(e.message||e)+ `\`\`\`**\n*\`\`\`c\n${clean(e.stack||[]).split('\n')[1] }\`\`\`*`;
      let embed = new Embed({description:output});
      embed.color(0xe03b3b)
      embed.footer("Check Logs for detailed Error stack")
