@@ -29,9 +29,8 @@ module.exports = async (guild,member) =>{
 
         let embed 
         try{
-            embed = JSON.parse(welcomeText[1]) || null;
+            embed = welcomeText[1] ? JSON.parse(welcomeText[1]) : null;
         }catch(err){
-            console.error(err)
             embed = undefined
         }   
 

@@ -27,7 +27,7 @@ module.exports = async (guild,member) =>{
 
         let embed 
         try{
-            embed = JSON.parse(fwellText[1]) || null;
+            embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
         }catch(err){
             embed = null
         }
