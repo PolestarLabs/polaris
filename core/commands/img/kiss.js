@@ -24,7 +24,9 @@ const init = async function(msg) {
     Target = PLX.getTarget(msg, 1, false);
   } else {
     Target = PLX.getTarget(msg, 0, false);
-  }
+    if (["bb", "gg", "bg", "gb"].includes(msg.args[1]))   filter = msg.args[1];
+  } 
+  
   P.user = msg.author.username;
   P.victim = Target ? Target.username : false;
   console.log(Target);
@@ -48,7 +50,7 @@ const init = async function(msg) {
     embed.description = ":hearts: " + $t("responses.forFun.kissedSelf", P);
 
   if (Target) {
-    var USERDATA = await DB.users.findOne({ id: msg.author.id });
+    var USERDATA = await DB.users.getFull({ id: msg.author.id });
     var marriedtarget = USERDATA.married.find(us => us.id == Target.id);
   }
 

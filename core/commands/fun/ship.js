@@ -5,7 +5,8 @@ const init = async function (msg,args){
     const Canvas = Picto.new(796,445);
     const ctx    = Canvas.getContext('2d');
 
-    let rand = args[2] || randomize(0,100);
+    let rand = Number(args[2]) || randomize(0,100);
+    
 
     const TargetA = PLX.getTarget(msg,0,false,true) || msg.guild.members.random().user;
     const TargetB = PLX.getTarget(msg,1,!args[1],true) || msg.guild.members.random().user;
@@ -54,8 +55,12 @@ const init = async function (msg,args){
     Picto.popOutTxt(ctx,"%",mainW-30,15,"44px 'Corporate Logo Rounded'","#fff",null,{style:"#f69",line:15},-1).w
     ctx.rotate(.05)
     ctx.translate(-300,-80)
-
-    msg.channel.send($t(`responses.ship.quotes.${Math.floor(rand / 10)}.${randomize(0,1)}`,{lngs:msg.lang}),file(Canvas.toBuffer(),"ship.png"));
+    let response = rand == 69 
+        ? "Nice."
+        : rand == 24 && ['pt','pt-BR'].includes(msg.lang[0]||msg.lang)
+            ? "Mas afinal qual dos dois vem de quatro?"
+            : $t(`responses.ship.quotes.${Math.floor(rand / 10)}.${randomize(0,1)}`,{lngs:msg.lang})
+    msg.channel.send(response,file(Canvas.toBuffer(),"ship.png"));
 
 }
 

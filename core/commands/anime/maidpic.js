@@ -14,4 +14,5 @@ module.exports={
     ,cat:'anime'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['maid']
+    ,scope: 'booru'
 }

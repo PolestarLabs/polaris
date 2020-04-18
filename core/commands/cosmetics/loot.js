@@ -51,7 +51,7 @@ const init = async function (msg, options = {}) {
 
   delete require.cache[require.resolve("../../archetypes/Lootbox.js")];
   const LOOT = require("../../archetypes/Lootbox.js");
-  let USERDATA = await DB.users.findOne({ id: msg.author.id });
+  let USERDATA = await DB.users.getFull({ id: msg.author.id });
 
 
   let thisRoll = (options || { thisroll: 0 }).thisRoll || 0;
@@ -162,17 +162,18 @@ dispatcher.on('end', () => {
     const BOXE = new LOOT.Lootbox(boxparams.rarity, boxparams);
     const BOX = await BOXE.legacyfy;
 
-
+    
     wait(5).then(x => {
       sttup.delete().catch(e=>null);
     });
 
 
     //==>
-
+ 
     let LootData = await drawBox(BOX, message, USERDATA);
 
     let LootMeta = LootData.LOOTS;
+ 
 
     // let lootpic=await msg.channel.send('box')
 

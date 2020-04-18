@@ -27,7 +27,7 @@ module.exports = {
         
     },
     reload: async function ServerCacheRELOAD(){
-        let setserv = await PLX.updatePrefixes(DB);
+        let setserv = await PLX.ServerCacheUPDATE();
         res.statusCode = 200
         res.end(JSON.stringify(setserv))
     },

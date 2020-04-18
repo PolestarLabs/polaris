@@ -30,6 +30,6 @@ const init = async function (msg) {
     cmd: cmd,
     perms: 3,
     init: init,
-    cat: 'bot'
+    cat: 'util'
 };
 

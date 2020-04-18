@@ -21,6 +21,7 @@ msg.channel.deleteMessages(bucket).then(x=>{
 }
 module.exports={
     init
+    ,deleteCommand:true
     ,pub:true
     ,cmd:'clear'
     ,perms:3

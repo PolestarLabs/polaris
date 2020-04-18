@@ -137,13 +137,9 @@ module.exports = {
             });
         })
     },
-    grabLang : async function (msg) {
+    grabLang : function (msg) {
 
         let svData, chData, langTo, langFrom, textToTrans;
-        await Promise.all([
-            svData = (await DB.channels.get(msg.channel.id)),
-            chData = (await DB.servers.get(msg.guild.id))
-        ]);
 
         let langsAvailable = Object.keys(translate.languages);
         if (msg.args.length > 2) {
@@ -166,7 +162,7 @@ module.exports = {
         }
 
         if (!langTo) {
-            langTo = (chData.LANGUAGE || svData.modules.LANGUAGE || 'en').split('-')[0];
+            langTo = (msg.channel.LANG || msg.guild.LANG || 'en').split('-')[0];
             textToTrans = msg.args.join(' ')
         }
         if (langTo === "dev") langTo = "en";

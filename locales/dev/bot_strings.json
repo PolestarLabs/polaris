@@ -30,7 +30,13 @@
         "material": "Material",
         "material_plural": "Materials",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacks"
+        "boosterpack_plural": "Boosterpacks",
+        "medal": "Medal",
+        "medal_plural": "Medals",
+        "sticker": "Sticker",
+        "sticker_plural": "Stickers",
+        "background": "Background",
+        "background_plural": "Backgrounds"
     },
     "terms": {
         "transferDenied": "Transfer Denied",
@@ -141,6 +147,21 @@
             "emojiError": "I couldn't add this Emoji. Check reaction permissions or if the Emoji is valid...",
             "insuperms": "{{imsorry}} I can't do that for you if you don't have permission yourself.",
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
+        },
+        "cooldown":{
+            "generic": [    
+                "Hang on, I need a minute!",
+                "I'm not a printer, please slow down!",
+                "Try again in a few seconds, please.",
+                "Please hold.",
+                "Too many commands!",
+                "Aaah! Slow down!",
+                "I only have so many fingers to push so many buttons! Relax!",
+                "What's the rush?!",
+                "I need a moment to breathe!",
+                "Honey, please, one at a time.",
+                "*You're going too fast senpai uwu I can't take it uwu*"   
+              ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\n But don't worry, I've trimmed the text for you~",
@@ -518,6 +539,7 @@
     },
     "interface": {
         "generic": {
+            "deleted":"Deleted:",
             "cancel":"Cancelled!",
             "timeout":"Timeout!",
             "cantAfford":"Ah, you can't afford this... :(",
@@ -525,6 +547,17 @@
             "confirmDelete": "Confirm Delete?",
             "alotWentOn" : "A lot went on in this day...",
             "alreadyOwnThis" : "Hey, you already own this one!"
+        },
+        "reminders":{
+            "currentActive": "These are your current active reminders:",
+            "noneToDelete": "No reminders to delete!",
+            "maxActive": "You can only have **{{count}}** active reminders at a time!",
+            "errorWhen": "Sorry, this is confusing. I didn't understand *when* you want me to remind that.",
+            "errorTARDIS": "Excuse me time traveler, I cannot go to the past to remind you of what you already forgot.",
+            "reminderOk" : "Ok I'll remind you of {{appointment}} by **{{time}} (UTC)** {{location}}",
+            "reminderChannel" : "at {{channel}}",
+            "reminderDMs" : "in your DMs"
+
         },
         "brackets":{
             "maxRR":"Max limit for Roundrobin: 16"
@@ -539,7 +572,8 @@
             ,"bracketX":"Bracket {{AB}}"
         },
         "synthfrag":{
-            "disenchant":"Disenchant this {{rarity_emoji}} background into **{{count}} $t(keywords.cosmoFragment)** ?"
+            "magifrag":"Cosmetics Fragmentation",
+            "disenchant":"Would you like to disenchant this?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n into **{{count}} $t(keywords.cosmoFragment)** ?"
             ,"cosmeticSynth":"Cosmetic Item Synthesis"
             ,"confirmSynth":"Do you want me to synthesize this?"
             ,"nogemsforThis":"Looks like you don't have enough gems for this synthesis..."

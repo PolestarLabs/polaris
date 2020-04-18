@@ -37,7 +37,7 @@ const init = async function (msg,args){
     let [_baseline,hex,userData,itemData ] = await Promise.all([    
           Picto.getCanvas(paths.CDN+"/build/invent/inventframe.png")
         , Picto.makeHex(175,Target.avatarURL)        
-        , DB.users.findOne({id:Target.id},{
+        , DB.users.getFull({id:Target.id},{
             'modules.inventory'         :1,
             'modules.flairsInventory'   :1,
             'modules.bgInventory'       :1,
@@ -74,7 +74,14 @@ const init = async function (msg,args){
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
-        let itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        let itemType;
+        try{
+            itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        }catch(err){
+            console.error(err)
+            console.error(itemData,itm)
+            itemType = 'other'
+        }
         if(!types[itemType]) types[itemType] = 0;
         types[itemType] += (itm.count || 0);
     });

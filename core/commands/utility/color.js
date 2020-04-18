@@ -1,7 +1,9 @@
 const Picto = require("../../utilities/Picto");
+const axios = require('axios')
+
 
 const init = async function(msg, programatic) {
-  delete require.cache[require.resolve("name-this-color")];
+
 
   let P = { lngs: msg.lang, prefix: msg.prefix };
   if (
@@ -17,9 +19,16 @@ const init = async function(msg, programatic) {
   let hexColor = (msg.args[0].match(hexRegex) || [])[0];
   let result;
   try {
-    const colors = require("name-this-color");
+    URL = "https://www.thecolorapi.com/id?hex=" + hexColor.replace("#", "")
+    const pre_res = (await axios.get(URL, {
+        headers: { 'Accept': 'json' },
+        responseType: 'json'
+    })).data ;
+ 
+console.log({pre_res})
+  //  const colors = require("name-this-color");
     result = hexColor
-      ? colors(hexColor)
+      ? [{title: pre_res.name.value, hex: hexColor, data: pre_res}]
       : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
   } catch (e) {
     result = [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
@@ -32,14 +41,23 @@ const init = async function(msg, programatic) {
   if (result) {
     result = result[0];
     // let RGB = colors.rgb(result[0])
-    embed
-      .author(result.title, "https://png.icons8.com/paint-brush/dusk/64")
-      .color(result.hex)
-      .image("attachment://color.png")
-      .footer("" + result.hex);
+    let CMYK = result.data.cmyk
+    let RGB = result.data.rgb
 
-    Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#" + hexColor);
-    if (programatic)
+    embed
+      .author(result.title, "https://img.icons8.com/dusk/250/paint-brush.png")
+      .color(result.hex)
+      .thumbnail("attachment://color.png")
+      .description(`
+      HEX \`${result.hex}\`
+      RGB \`${RGB.r}\` \`${RGB.g}\` \`${RGB.b}\`  
+      CMYK \`${CMYK.c}\` \`${CMYK.m}\` \`${CMYK.y}\` \`${CMYK.k}\`
+      `);
+
+    Picto.roundRect(ctx, 10, 10, 120, 120, 20,  hexColor);
+
+    console.log(Canvas)
+    if (programatic === true)
       return {
         embed,
         file: file(Canvas.toBuffer(), "color.png"),
@@ -47,9 +65,9 @@ const init = async function(msg, programatic) {
         name: result.title
       };
 
-    msg.channel.send({ embed }, file);
+    msg.channel.send({ embed }, file(Canvas.toBuffer(), "color.png"));
   } else {
-    if (programatic) {
+    if (programatic === true) {
       Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");
       return {
         embed,

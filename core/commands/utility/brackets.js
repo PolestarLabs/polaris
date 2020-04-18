@@ -67,7 +67,7 @@ const init = async function (msg,args){
     P.AB = "A";
     embed2.field($t('interface.brackets.bracketX',P),BRACKET_MATCHES.slice(0,BRACKET_MATCHES.length/2).map((v,i)=>wingmap(v,i,$t('interface.brackets.match'),0,':red_circle:')).join('\n') ,true )  
     P.AB = "B";
-    embed2.field($t('interface.brackets.bracketX',P),BRACKET_MATCHES.slice(BRACKET_MATCHES.length/2)  .map((v,i)=>wingmap(v,i,$t('interface.brackets.match'),BRACKET_MATCHES.length/2,':large_blue_circle:')).join('\n') ,true )
+    embed2.field($t('interface.brackets.bracketX',P),BRACKET_MATCHES.slice(BRACKET_MATCHES.length/2)  .map((v,i)=>wingmap(v,i,$t('interface.brackets.match'),BRACKET_MATCHES.length/2,':blue_circle:')).join('\n') ,true )
 
 
     

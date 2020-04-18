@@ -17,6 +17,7 @@ const ServerSchema = new mongoose.Schema({
         logging: {type:Boolean, default:false},
         imgwelcome: {type:Boolean, default:false},
         splitLogs:{type:Boolean, default:false},
+        switches: Mixed,
         modules: {
             BUSTER:Mixed,
             shitpostFeed:Mixed,
@@ -45,7 +46,7 @@ const ServerSchema = new mongoose.Schema({
             MUTEROLE:   String,
             SELFROLES:  Array,
             AUTOROLES:  Array,
-            ROLEMARKET: Mixed,
+            ROLEMARKET: Array,
             REACTIONS : Mixed,
             ACTLOG:String,
             MODLOG:String,
@@ -167,6 +168,8 @@ MODEL.findOne({id: svDATA.id}, (err, guild) => {
    }
 });
 }
+
+MODEL.cat   = 'guilds'
 MODEL.set = utils.dbSetter;
 MODEL.get = utils.dbGetter;
 module.exports = MODEL;

@@ -2,6 +2,8 @@ let mongoose = require('mongoose');
 let utils = require('../../structures/PrimitiveGearbox.js');
 const Mixed = mongoose.Schema.Types.Mixed;
 
+global.USERCACHE = new Map();
+
 const UserSchema = new mongoose.Schema({
   id: {type:String,required: true,index:{unique:true}},
   name: String,
@@ -17,7 +19,8 @@ const UserSchema = new mongoose.Schema({
   //CONTROL
   personal:Mixed,
   tag:  String,
-
+  hidden: Boolean,
+  
   //COUNTERS
   eventDaily:Number,
   eventGoodie:Number,
@@ -214,13 +217,16 @@ MODEL.updateMeta = U => {
 
 
 MODEL.new = userDATA => {
-  MODEL.findOne({id: userDATA.id}, (err, newUser) => {
-    if (err) {
+  return new Promise(resolve=>{
+
+    MODEL.findOne({id: userDATA.id}, (err, newUser) => {
+      if (err) {
         console.error(err)
-    }
-    if (newUser) {
-      // Nothing
-    } else {
+      }
+      if (newUser) {
+        return resolve(newUser);
+        
+      } else {
         let user = new MODEL({
           id: userDATA.id,
           name:userDATA.username,
@@ -230,16 +236,42 @@ MODEL.new = userDATA => {
           if (err) return console.error(err);
           //console.log("[NEW USER]".blue,userDATA.tag.yellow,`(ID:${userDATA.id})`);
           MODEL.updateMeta(userDATA);
+          return resolve(user);           
         });
-    }
-  });
-
-  return MODEL.findOne({id:userDATA.id})
+      }
+    });   
+  })
 }
 
 
 
+MODEL.cat     = 'users'
+MODEL.check   = utils.dbChecker;
+MODEL.set     = utils.dbSetter;
+MODEL.get     = function(query,project,avoidNew){
 
-MODEL.set = utils.dbSetter;
-MODEL.get = utils.dbGetter;
+  let userFromCache = USERCACHE.get(query.id || query);
+  let userFromDatabase =
+  new Promise(async resolve=>{
+
+    if(['string','number'].includes(typeof query)){
+      query = {'id':query.toString()};
+    };
+    if(!typeof project) project = {_id:0};
+    let data = await this.findOne(query,project).lean().exec();
+
+    if (!data && !!this.cat) return resolve(  await this.new(PLX[this.cat].find(u=>u.id === query.id)) );
+    if (data === null) return resolve(null);//return resolve( this.new(PLX.users.find(u=>u.id === query.id)) );
+    
+    USERCACHE.set(data.id,data)
+    
+    return resolve(data);
+  });
+
+  if(userFromCache) return userFromCache;
+  else return userFromDatabase;
+
+},
+MODEL.getFull = utils.dbGetterFull;
+
 module.exports = MODEL;

@@ -7,8 +7,8 @@ class UserProfileModel{
   
       // Discord Data
       if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
-  
-      if(userData && userData.constructor.modelName !== "UserDB") discordMember = userData;
+      
+      if(userData && (userData.constructor.modelName !== "UserDB" && userData.type!="udata") ) discordMember = userData;
       if(typeof discordMember === 'string') discordMember = PLX.users.get(discordMember);
       const notMember = discordMember && discordMember.constructor != Member;
   
@@ -34,6 +34,7 @@ class UserProfileModel{
       this.sticker      = userData.modules.sticker  || null;
       this.flair        = userData.modules.flairTop || 'default';
       this.rubines      = userData.modules.rubines  || 0;
+      this.sapphires    = userData.modules.sapphires  || 0;
       this.medals       = userData.modules.medals   || [];
       this.marriage     = userData.featuredMarriage || null;
       this.commend     = userData.modules.commend  || 0;
@@ -49,7 +50,7 @@ class UserProfileModel{
   
     get globalRank (){
        return DB.users
-          .find({"modules.exp": {$gt: this.exp},blacklisted: {$exists: false}}).countDocuments();
+          .find({"modules.exp": {$gt: this.exp} },{} ).countDocuments().exec();
     }
   
     get localData (){
@@ -63,7 +64,7 @@ class UserProfileModel{
         let svRankData = (await DB.localranks.get({user:this.ID,server:this.server})) ||{};
         this.thx = svRankData.thx || 0;
         this.localRank = await DB.localranks
-          .find({server:this.server,exp:{$gt:svRankData.exp||0}}).countDocuments();
+          .find({server:this.server,exp:{$gt:svRankData.exp||0}},{}).countDocuments().exec();
         return resolve(true);
       })
     }

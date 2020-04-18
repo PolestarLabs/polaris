@@ -318,7 +318,7 @@ if(!tier){
   return message.reply("You're not eligible for any rewards");
 }      
   
-const userData = await DB.users.findOne({id:message.author.id});
+const userData = await DB.users.getFull({id:message.author.id});
 
 //console.log({remo: userData.rewardsMonth, mocheck: MONTHCHECK})
 if(message.author.id!=="88120564400553984"){
@@ -414,7 +414,7 @@ await Promise.all([
 ]) 
     
 
-if(!(userData.counters.donateStreak||{}).total){    
+if(!((userData.counters||{}).donateStreak||{}).total){    
  // await userDB.set(message.author.id,{
  //   $inc:{"modules.sapphires":T.immediate}
  // });

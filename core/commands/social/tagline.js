@@ -4,7 +4,7 @@
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+    //if(PLX.autoHelper(['noargs',$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const userData =  await DB.userDB.findOne({id:msg.author.id});
     const persotxt = msg.args.join(' ')  
@@ -22,6 +22,7 @@ module.exports={
     init
     ,pub:true
     ,cmd:'tagline'
+    ,argsRequired: true
     ,perms:3
     ,cat:'social'
     ,botPerms:['embedLinks']

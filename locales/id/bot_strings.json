@@ -30,12 +30,18 @@
         "material": "Material",
         "material_plural": "Material",
         "boosterpack": "Bungkusan Kartu",
-        "boosterpack_plural": "Bungkusan Kartu"
+        "boosterpack_plural": "Bungkusan Kartu",
+        "medal": "Medali",
+        "medal_plural": "Medali",
+        "sticker": "Stiker",
+        "sticker_plural": "Stiker",
+        "background": "Latar Belakang",
+        "background_plural": "Latar Belakang"
     },
     "terms": {
-        "transferDenied": "",
-        "TransactionFee": "",
-        "TransactionID": "",
+        "transferDenied": "Transfer Ditolak",
+        "TransactionFee": "Biaya Transaksi",
+        "TransactionID": "ID Transaksi",
         "thanks": "terimakasih",
         "thanks_short": "ty",
         "thx": "",
@@ -139,6 +145,21 @@
             "emojiError": "Aku tidak dapat menambahkan emoji ini. Cek izin reaction atau jika emojinya valid...",
             "insuperms": "{{imsorry}} Aku tidak dapat melakukannya untukmu jika kamu sendiri tidak memiliki izin.",
             "not-a-NSFW-channel": "Channel ini tidak tersiapkan untuk NSFW. Jangan tinggalkan \"karya seni\"mu dimana-mana."
+        },
+        "cooldown": {
+            "generic": [
+                "Tunggu sebentar!",
+                "Aku bukan mesin printer, jadi sabar dong!",
+                "Mohon coba beberapa detik lagi.",
+                "Tunggu.",
+                "Terlalu banyak perintah!",
+                "Aaah! pelan-pelan!",
+                "Aku hanya punya beberapa jari untuk beberapa tombol! Sabar dong!",
+                "Kenapa buru-buru?!",
+                "Aku butuh waktu sejenak untuk bernafas!",
+                "Sayang, satu-satu dong.",
+                "*Kamu terlalu cepat senpai uwu aku tuh ngga bisa diginiin uwu*"
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hei! teks terjemahan tidak bisa melebihi __1000 karakter__** \nTetapi jangan khawatir, aku telah memangkas teksnya untukmu~",
@@ -312,7 +333,7 @@
         },
         "ship": {
             "needTupipo": "Kalkulator Cinta ini tidak dapat bekerja hanya pada satu orang, sayang.",
-            "need2diffpipo": "",
+            "need2diffpipo": "Kecuali dia mampu melakukan mitosis, tetap terhitung sebagai satu orang, Aku butuh **dua** orang!",
             "quotes": [
                 [
                     "Oh. __Oh tidak.__",
@@ -489,7 +510,7 @@
             "colorChange": "Warna favoritmu telah tersimpan!"
         },
         "transfer": {
-            "lastdly": "",
+            "lastdly": "Transfer Kotak Terakhir:",
             "next": "",
             "transferboxto": "",
             "transferthisboxto": "",
@@ -543,6 +564,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "Dibatalkan!",
             "timeout": "Waktu habis!",
             "cantAfford": "Ah, kamu tidak sanggup membeli ini... :(",
@@ -550,6 +572,16 @@
             "confirmDelete": "Konfirmasi penghapusan?",
             "alotWentOn": "Banyak yang terlewati hari ini...",
             "alreadyOwnThis": "Hei, kamu sudah memiliki ini!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Batas untuk usul: 16",
@@ -564,6 +596,7 @@
             "bracketX": "Kurung {{AB}}"
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "Melepaskan latar belakang {{rarity_emoji}} ini menjadi **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Kosmetik paduan",
             "confirmSynth": "Apakah kamu mau menggabungkan ini?",

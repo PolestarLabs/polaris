@@ -46,7 +46,7 @@ if(message.args[0]=="info"){
       //backwards compat
       DB.users.set(Author.id, {$set:{'modules.daily':now}});
 
-      DB.users.findOne({id:Author.id}).then(async userData=>{
+      DB.users.getFull({id:Author.id}).then(async userData=>{
         Author.dailing = false;
         //minibuster.up(message,hardStreak+softStreak*10)
         

@@ -19,9 +19,9 @@ const init = async function (msg,args) {
 
     //DATA NEEDED
     let svData    = DB.servers.get(Server.id),
-        localRanks= DB.localranks.find({server:msg.guild.id}).sort({'exp':-1}).limit(5),
+        localRanks= DB.localranks.find({server:msg.guild.id, user:{$in:Server.members.map(x=>x.id)} }).sort({'exp':-1}).limit(5),
         userData  = DB.users.get(Author.id),
-        userRanks = DB.users.find({}).sort({'modules.exp':-1}).limit(5);
+        userRanks = DB.users.find({}).sort({'modules.exp':-1}).limit(5).lean().exec();
         
         await Promise.all([svdata=await svData, userData=await userData, userRanks=await userRanks,localRanks=await localRanks]);
         let localUsers= await DB.users.find({id:{$in:localRanks.map(u=>u.user)}});
@@ -29,6 +29,7 @@ const init = async function (msg,args) {
     const localUserRanks = localRanks.map(index=> {
 
         let SMEM = Server.members.find(mem=>mem.id===index.user);
+       
  
         let us=localUsers.find(u=>u.id===index.user)||SMEM||{};
         if(!us.modules) us.modules={};
@@ -75,7 +76,13 @@ console.log(paths.BUILD+"/rank_mainframe.png")
         ct.fillStyle = usr.color;
         ct.fillRect(0,1,45,sec?80:100);    
     ct.drawImage(await usr.avatar,90,2,sec?80:90,sec?80:90);
-    ct.drawImage(await usr.bg,255,-50,400,206);
+    try{
+        ct.drawImage(await usr.bg,255,-50,400,206);
+    }catch(e){
+        console.error(e)
+        console.error("ERRORED BG".bgRed+usr.bg)
+    }
+
         ct.fillStyle = "rgba(45, 63, 77,0.1)"
         ct.fillRect(255,-50,400,206);        
         let EXP = Picto.tag(ct,usr.exp,"400 "+(18-(sec?2:0))+"px 'Whitney HTF'","#FFF")

@@ -119,9 +119,9 @@ const init = async function(msg, args, streak) {
 module.exports = {
   init,
   pub: true,
-  cmd: "index",
+  cmd: "trivia",
   perms: 3,
-  cat: "trivia",
+  cat: "fun",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: []
 };

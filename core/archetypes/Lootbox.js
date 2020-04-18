@@ -41,7 +41,9 @@ class LootboxItem{
       this.event   ? query.filter = this.event  : null;
       this.#filter ? query.event  = this.#filter : '';
       query.droppable = !this.#bypass.includes("droppable");
-      query.public    = !this.#bypass.includes("public");
+      if(this.type != 'boosterpack')
+        query.public  = !this.#bypass.includes("public");
+
       query.type      = this.type;
       let queries = [query];
       if (this.exclusive) queries.push({exclusive:this.exclusive});
@@ -116,6 +118,7 @@ class Lootbox{
         if(ct.type == 'background')  this.visuals[i] = (paths.CDN+`/backdrops/${ct.code}.png`);
         if(ct.type == 'medal')       this.visuals[i] = (paths.CDN+`/medals/${ct.icon}.png`);
         if(ct.collection == 'items') this.visuals[i] = (paths.CDN+`/build/items/${ct.icon}.png`);
+        if(ct.type == 'boosterpack') this.visuals[i] = (paths.CDN+`/build/boosters/${ct.icon}.png`);
         if(ct.type == 'gems')        this.visuals[i] = (paths.CDN+`/build/LOOT/${ct.currency}_${ct.rarity}.png`);
         
         if(++completed ==a.length){
@@ -129,8 +132,10 @@ class Lootbox{
     this.legacyfy = new Promise(resolve=>{
       this.legacy = []
       let completed = 0
+      console.log(this)
       this.content.forEach(async (ct,i,a)=>{
         await ct.loaded;
+        console.log({ct})
         this.legacy.push({
           item:   ct.type == "boosterpack"?ct.id: ct.code || ct.icon ||ct.id || ct.amount ,
           rarity: ct.rarity,

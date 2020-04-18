@@ -97,6 +97,8 @@ class GenericItemInventory{
         this.cat= 'inventory'
         this.botPerms= ['attachFiles', 'embedLinks']
         this.noCMD = false;
+        this.scope = 'inventory';
+        this.related = ['boosterpack','junk','consumable','key','material','lootbox'].filter(i=>i!=this.cmd)
     }
 
 

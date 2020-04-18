@@ -113,7 +113,7 @@ const TAROT = require('../../archetypes/Tarot');
 
         //console.log(Tarot);
     
-        let img = await Tarot.drawSpread('persona3');
+        let img = await Tarot.drawSpread(args[1]||'persona3');
 
         console.log(img) 
 

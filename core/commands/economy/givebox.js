@@ -45,8 +45,8 @@ const init = async function(msg, args) {
     
 
     const [userData, targetData, Boxes] = await Promise.all([
-      DB.users.findOne({ id: msg.author.id }),
-      DB.users.findOne({ id: Target.id }),
+      DB.users.getFull({ id: msg.author.id }),
+      DB.users.getFull({ id: Target.id }),
       DB.items.find({ type: "box" })
     ]);
 
@@ -81,7 +81,7 @@ const init = async function(msg, args) {
       embed.thumbnail = {};
       embed.image = {
         url:
-          "https://beta.pollux.gg/build/TRANSFER_BOX_timeout_1.gif"
+        paths.CDN+"/build/TRANSFER_BOX_timeout_1.gif"
       };
       embed.footer.text = "🕑";
       prompt.edit({ embed });
@@ -93,7 +93,7 @@ const init = async function(msg, args) {
       embed.thumbnail = {};
       embed.image = {
         url:
-          "https://beta.pollux.gg/build/TRANSFER_BOX_nope_4.gif"
+        paths.CDN+"/build/TRANSFER_BOX_nope_4.gif"
       };
       embed.footer.text = "❌";
       prompt.edit({ embed });
@@ -155,7 +155,7 @@ const init = async function(msg, args) {
           embed.color = 0x2deb88;
           embed.image = {
             url:
-              "https://beta.pollux.gg/build/TRANSFER_BOX_1.gif"
+            paths.CDN+"/build/TRANSFER_BOX_1.gif"
           };
           prompt.edit({ embed });
           return true;
@@ -174,7 +174,7 @@ const init = async function(msg, args) {
             `;
         embed.image = {
           url:
-            "https://beta.pollux.gg/build/TRANSFER_BOX_nope_4.gif"
+          paths.CDN+"/build/TRANSFER_BOX_nope_4.gif"
         };
         prompt.edit({ embed });
         return false;

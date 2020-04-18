@@ -251,10 +251,10 @@ class Tarot {
         Picto.setAndDraw(ctx,arcaname,100,310,180,'center');
 
         if (posit == "REVERSED") {
-            ctx.translate(0, 350);
-            ctx.scale(1, -1);
+            ctx.translate(0,350);
+            ctx.scale(-1, -1);
         }
-        ctx.drawImage(card_pic, 100-card_pic.width/2, 50);
+        ctx.drawImage(card_pic, 25, 50,150,250);
         return card;
     }
 

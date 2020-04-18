@@ -41,8 +41,8 @@ const init = async function (message) {
         let regex = /([0-9]*)[\s+]?([m|h|d|w|y]?)/
         let timing = message.args[1]
         
-        let number = !timing? 0 :timing.match(regex)[0];
-        let unit = !timing? 0 :timing.match(regex)[1];
+        let number = !timing? 0 :timing.match(regex)[1];
+        let unit = !timing? 0 :timing.match(regex)[2];
         let mult
         switch (unit) {
             case 'y':
@@ -73,6 +73,24 @@ const init = async function (message) {
             var timeTx = "undetermined time."
         }
         
+         if(time > 60) {
+             let unit = Math.floor(time/60)  
+             timeTx= unit + (unit == 1? " hour" : " hours");
+         }
+         if(time > (60*24)){
+             let unit = Math.floor(time/(60*24)) 
+             timeTx= unit + (unit == 1? " day" : " days");
+         }
+         if(time > (60*24*7)){
+             let unit = Math.floor(time/(60*24*7))   
+             timeTx= unit + (unit == 1? " week" : " weeks");
+         }
+         if(time > (60*24*30)){
+             let unit = Math.floor(time/(60*24*30)) 
+             timeTx= unit + (unit == 1? " month" : " months");
+         }
+ 
+
         let MUTED = "MUTED"
         let wasMUTED = "was Muted"
         let TIME = "Time"
