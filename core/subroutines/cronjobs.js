@@ -3,8 +3,7 @@ const axios = require('axios')
 const { readFileSync } = require('fs');
 const { servers } = require( "../database/db_ops");
 const cfg = require(appRoot+"/config.json")
-const g = require( '../utilities/Gearbox/global');
-// const DB = require( '../database/db_ops');
+const moment = require('moment');
 const RSS = require('rss-parser');
 const parser = new RSS();
 const tubeParser = new RSS({
@@ -163,7 +162,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
             data.items = data.items.filter(x=>x.link.startsWith('http'));
             if (data.items[0] && feed.last.guid != data.items[0].guid) {
               const embed = await RSSembedGenerator(data.items[0],data);
-              await DB.feed.updateOne({server:feed.server,url:feed.url},{ $set:{last:data.items[0], thumb: data.image.url  }}).catch(e=>null);
+              await DB.feed.updateOne({server:feed.server,url:feed.url},{ $set:{last:data.items[0], thumb: embed.thumbnail.url }}).catch(e=>null);
 
               PLX.getChannel(feed.channel).send({embed});
             }        
@@ -235,6 +234,9 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
 
 const ONEminute = new CronJob('*/1 * * * *', async () => {
 
+  console.log(`
+   ${ PLX.cluster.name.bgBlue } - Latency: ${PLX.shards.map(x=>x.latency)} - Uptime: ${moment(Date.now() - PLX.uptime).fromNow(true)}
+  `)
 
   //======================================================================================
   /* EVERY 1 MINUTE */
@@ -292,8 +294,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
         console.error(e)
       }
     })    
-  })
-
+  });
 
   /* Manage Mutes */ //================================
   DB.mutes.find({expires: {$lte: Date.now()} })

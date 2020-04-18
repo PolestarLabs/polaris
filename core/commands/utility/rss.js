@@ -31,9 +31,9 @@ const init = async function (msg){
         }
         let embed = await feedEmbed(feed.items[0],feed);
         payload.server= msg.guild.id
-        payload.thumb = feed.image.url
-        payload.name = feed.title || feed.image.title
-        console.log(feed.title)
+        payload.thumb = feed.logo || (feed.image||{}).url   || ''
+        payload.name = feed.title || (feed.image||{}).title || 'RSS Feed'
+
 
         await DB.feed.new(payload);
 
@@ -51,6 +51,8 @@ const init = async function (msg){
         let target = msg.args[1];
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
         let toDelete = feedData[target] || feedData.find(f=> f.type == "rss" && (f.url == target || f.url.includes(target)) )
+        if(!toDelete) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
+        
         let embed = new Embed;
         embed.description = `
                 URL: \`${toDelete.url}\`
@@ -90,23 +92,38 @@ const init = async function (msg){
 
 
 async function feedEmbed(item,data){
+
+    console.log({data})
+
     let embed = new Embed;
+    let ogs = require('open-graph-scraper');
     embed.color("#ff8a42") 
     embed.title  = item.title
     embed.url    = item.url || item.link || item.guid
-    embed.author(item.author || item.creator)
+    embed.footer(item.author || item.creator||'Pollux RSS Feed Tool')
     embed.timestamp(item.isoDate)
-    embed.thumbnail((data.image||{url:'https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png'}).url || '')
     embed.description     = (item.contentSnippet || item.content || "" ).split('\n')[0]
-    embed.footer(data.title )
-    let ogs = require('open-graph-scraper');
-    let results = await ogs({ 'url': item.guid  }).catch(e=>{return false});
-    let img_link = results ? results.data.ogImage.url: null;  
-    if(img_link) embed.image = {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link};
+    embed.author(data.title )
+    
+    let [results,res_thumb] = await Promise.all([
+        ogs({ 'url': embed.url  }).catch(e=>{ console.error(e); return false}),
+        ogs({ 'url': data.link || (embed.url.split('//'[1]+'').split('/')[0] )  }).catch(e=>{ console.error(e); return false})
+    ]);
+
+    embed.thumbnail = normalizeImage(res_thumb) || {url: (data.image||{}).url || 'https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png'};
+    embed.image = normalizeImage(results)
+    embed.author.icon_url = 'https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png';
+
+console.log("EMBED.".red)
+    console.log({embed})
     return embed;
   }
 
-
+function normalizeImage(results){
+    let img_link = results ? results.data.ogImage.url: null;  
+    let res = img_link ? {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link} : null;
+    return res;
+}
 
   
 module.exports={
