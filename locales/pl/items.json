@@ -50,7 +50,7 @@
         "description": "Zażycz sobie gwiazdy... I w końcu masz jedną."
     },
     "daianwatch_booster": {
-        "name": "Overwatch przez Daianpan",
+        "name": "Overwatch stworzony przez Daianpan",
         "description": ""
     },
     "doki_booster": {
@@ -75,11 +75,11 @@
     },
     "iwd1_booster": {
         "name": "IWD - Sezon 1",
-        "description": ""
+        "description": "Ekskluzywne Discordowe Naklejki Internetowego Wrestlingu. 2018"
     },
     "iwd2_booster": {
         "name": "IWD - Sezon 2",
-        "description": ""
+        "description": "Ekskluzywne Discordowe Naklejki Internetowego Wrestlingu. 2019"
     },
     "lootbox_C_C": {
         "name": "Pospolita Skrzynka Chibi"
@@ -144,10 +144,10 @@
         "name": "Rzadka Zimowa Skrzynia"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Rzadka Skrzynia Przesilenia"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Rzadka Skrzynka"
     },
     "lootbox_R_s1": {
         "name": "Rzadka Letnia Skrzynka"
@@ -156,19 +156,19 @@
         "name": "Rzadka Zimowa Skrzynia"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Rzadka Skrzynia Przesilenia"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Super Rzadka Skrzynia Chibi"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "Super Rzadka Epicka Skrzynia"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "Super Rzadka Skrzynka Halloween"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "Super Rzadka Skrzynka Świąteczna"
     },
     "lootbox_SR_event_3": {
         "name": "Super Rzadka Skrzynka Wielkanocna"
@@ -231,16 +231,16 @@
         "name": "Niepospotita Skrzynka Przesilenia"
     },
     "lootbox_UR_C": {
-        "name": ""
+        "name": "Ultra Rzadka Skrzynka Chibi"
     },
     "lootbox_UR_E": {
-        "name": ""
+        "name": "Ultra Rzadka Epicka Skrzynka"
     },
     "lootbox_UR_event_1": {
-        "name": ""
+        "name": "Ultra Rzadka Skrzynka Halloween"
     },
     "lootbox_UR_event_2": {
-        "name": ""
+        "name": "Ultra Rzadka Skrzynka Świąteczna"
     },
     "lootbox_UR_event_s1": {
         "name": "Ultra Rzadka Letnia Skrzynka"
@@ -273,7 +273,7 @@
     },
     "padoru_booster": {
         "name": "Padoru Ultimate Collection",
-        "description": "Hashire sore yo i daj mi swoje Rubiny"
+        "description": "Hashire sore yo i dawaj mi swoje Rubiny"
     },
     "partial_ring": {
         "name": "Pierścień Składowy",

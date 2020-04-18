@@ -129,7 +129,7 @@
 		"reactionroles": "É só clicar num emoji e... Pìmba! Você já tem o cargo que queria.",
 		"maidpic": "Posta uma Maid Girl aleatória",
 		"neko": "Posta uma Neko Girl aleatória",
-		"transfer": "Envia Rubinex ou Lootboxes para um amigo.",
+		"transfer": "Envia Rubines ou Lootboxes para um amigo",
 		"consumable": "$t(bot_strings:responses.inventory.browsingCONSUMABLE)",
 		"boosterpack": "$t(bot_strings:responses.inventory.browsingBOOSTERPACK)",
 		"junk": "$t(bot_strings:responses.inventory.browsingJUNK)",
@@ -147,23 +147,23 @@
 		"tagline": "Um breve comentário que melhor te descreve",
 		"personaltext": "Até 4 linhas de qualquer coisa que você queira mostrar ao mundo",
 		"rss": "Receba Feeds RSS diretamente em seu servidor!",
-		"ytalert": "",
+		"ytalert": "Envia os vídeos novos de um canal do YouTube diretamente em seu servidor!",
 		"reminder": "Nunca mais esqueça aquilo que você não pode esquecer! Você quer saber o que? Viu, você já se esqueceu!",
 		"pin": "Já imaginou como a vida seria muito mais fácil se você pudesse fixar uma mensagem sem ter que usar o mouse ou perder tempo com a interface móvel? **NÃO PRECISA MAIS IMAGINAR!** Esse é o comando perfeito pra você!",
-		"read&translate": "",
+		"read&translate": "Comando que lê e traduz de uma forma útil e encadeada! Lê o texto de uma imagem e traduz imediatamente em seguida! ",
 		"gotcha": "Recupera a última mensagem editada ou deletada por alguém recentemente no canal. Útil para pegar espertinhos no flagra."
 	},
 	"usage": {
 		"pin": "`{{prefix}}pin` - Fixa a última mensagem postada no canal\n`{{prefix}}pin [ID da mensagem]` Fixa uma mensagem específica, independentemente do canal.",
 		"reminder": "",
-		"ytalert": "",
+		"ytalert": "`{{prefix}}ytalert [add|remove|list] [URL do Canal | ID do Canal] (#canal)`\n\n`{{prefix}}rss add [URL] #canal` Envia os novos vídeos do canal do YouTube escolhido para o #canal, ou para o canal onde o comando foi utilizado se nenhum canal foi especificado.\n`{{prefix}}ytalert remove 1` `{{prefix}}ytalert remove [URL]` Remove o canal do YouTube da posição 1 da lista (veja `list`) ou com a URL especificada.\n`{{prefix}}ytalert list` Lista todos os alertas de YouTube ativos.\n\n>**Vídeos novos são atualizados a cada 1 hora*",
 		"rss": "",
 		"personaltext": "`{{prefix}}ptxt [Seu texto aqui]`\nTexto a ser exibido no seu Cartão de Perfil",
-		"tagline": "",
-		"fragment": "",
-		"open": "",
-		"didyoumean": "",
-		"safebooru": "",
+		"tagline": "`{{prefix}}tagline [Seu texto aqui]`\nTexto a ser exibido no seu Cartão de Perfil",
+		"fragment": "`{{prefix}}fragment [bg | medal | sticker] [last | ID_do_Item]`\n `last` Quebra o último Cosmético daquele tipo que você obteve e lhe dá **Fragmentos Cósmicos** de acordo com a raridade do item quebrado.\n`ID do Item` Ao usar o ID do item você pode especificar exatamente qual cosmético do seu inventário deseja quebrar. ",
+		"open": "Posso abrir os seguintes itens para você:\n  • <:BOOSTER:596658667345149954> **Boosters**: Que contêm figurinhas `{{prefix}}open booster [name]` \n • <:LOOTBOX:596658668238274560> **Caixas**: Que contêm várias coisas legais `{{prefix}}open box [tier]`\n\nCoisas que eu **não** posso abrir:\n  • \\💙 Seu coração\n  • \\🧠 Sua cabeça\n  • \\🥚 Ovos\n  • \\🏢 Uma pequena empresa com grandes negócios",
+		"didyoumean": "`{{prefix}}dym [Qualquer Texto | ([ID da Mensagem | ^ ] [Qualquer Texto]) ]`\nQualquer texto após `dym` será usado para a resposta 'Você quis dizer...?'.\n\n`{{prefix}}dym [ID da Mensagem] [Texto Aqui]` Se você quiser citar uma mensagem específica \n`{{prefix}}dym [Seu Texto Aqui] ^` para citar a mensagem que está imediatamente acima. O `^` pode estar em qualquer posição no texto. Todas as ocorrências de `^` serão apagadas.",
+		"safebooru": "`{{prefix}}safebooru [tags]`\nUse `_` como espaço :*`{{prefix}}safe blue_hair`*\nPara buscar mais de uma tag use `+` :*`{{prefix}}safe blue_hair+pointy_ears`*\nPara ignorar tags específicas, use `-` antes delas: *`{{prefix}}safe blue_hair+pointy_ears+-1girl`*\n\n$t(commands:addends.booru)",
 		"localnews": "",
 		"transfer": "",
 		"reactionroles": "`{{prefix}}reactionroles [add|del|list|clear] [#canall] [ID da Mensagem] [EMOJI] [Nome do Cargo | @Cargo]`\nBastante coisa, né? Vamos dividir o comando em partes:\n\nPara adicionar um novo Cargo por Reação a uma mensagem:\n`{{prefix}}reactionroles add #canal ID-DA-MENSAGEM :EMOJI: O Melhor Cargo de Todos`\n\nPara remover uma ou todas as Reações atribuídas a uma mensagem:\n`{{prefix}}reactionroles del ID-DA-MENSAGEM` :EMOJI:` Para um único par de cargo/reação.\n`{{prefix}}reactionroles del ID-DA-MENSAGEM` Para todos as reações daquela mensagem.\n",
@@ -299,11 +299,11 @@
 		"referCrafting": ""
 	},
 	"addends": {
-		"booru": "",
+		"booru": "{{prepend}} Você pode marcar a reação ⭐ para salvar o resultado em sua [Galeria Pessoal]({{websiteRoot}}/dash/boorusave)",
 		"guessingGames": "",
-		"infra": "",
-		"inventory": "",
+		"infra": "{{prepend}} Os comandos 'Infra' servem para checar meta informações e não estão documentados.",
+		"inventory": "{{prepend}} É um dos vários bolsos do seu **Inventário**.\nVocê pode checa-lo com o comando `{{prefix}}inventory` ",
 		"minigames": "{{prepend}} Um joguinho simples, pronto pra ser jogado!",
-		"requireTag": ""
+		"requireTag": "`{{prefix}}{{command}} [@alguém]`"
 	}
 }
