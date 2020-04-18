@@ -3,11 +3,10 @@ const cfg = require('./config.json')
 class WebhookDigester {
     constructor(client){
         this.client = client;
-        this.executed = []
+        this.executed = [];
     }
 
-    execute(embed,options){
-
+    execute(embed,options={}){
         const {pings,once,hook,noRepeat,id} = options;
         const destination = hook || cfg.mainWebhook
         let content = "";
@@ -17,7 +16,7 @@ class WebhookDigester {
             embed.footer = "ONE-TIME REPORT: May not be affecting all shards.";
         }
         if(pings){
-            content += '<@88120564400553984> | <@​&340531837606821899> | '
+            content += '<@88120564400553984> '
             if (typeof pings === 'string') content += pings;            
         }
         if (noRepeat && id){
