@@ -31,7 +31,6 @@
     "open-graph-scraper": "^3.6.2",
     "pixel-util": "0.0.2",
     "rss-parser": "^3.7.2",
-    "superagent": "^5.1.0",
     "tunnel-ssh": "^4.1.4",
     "uws": "^99.0.0",
     "zlib-sync": "^0.1.6"
