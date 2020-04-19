@@ -1,6 +1,5 @@
 
 const http = require('http');
-const { parse } = require('querystring');
 
 class Microserver{
     constructor(crossAuth){

@@ -15,7 +15,6 @@ const ERIS          = require("eris");
 const Eris          = require("eris-additions")(ERIS);
 const cmdPreproc    = require("./core/structures/CommandPreprocessor");
 const mongoose      = require('mongoose');
-const colors        = require('colors');
 
 const readdirAsync  = Promise.promisify(require('fs').readdir);
 
