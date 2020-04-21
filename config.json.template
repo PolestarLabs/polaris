@@ -9,5 +9,6 @@
     ,"riot"      : ""
     ,"twitch"    : ""
     ,"google"    : ""
+    ,"sentryDSN" : ""
 
 }

@@ -2,6 +2,10 @@
 process.stdout.write('\033c');
 console.log(require('./asciiPollux.js').ascii());
 //===========================================
+const cfg           = require('./config.json');   
+
+const Sentry = require('@sentry/node');
+Sentry.init({ dsn: cfg.sentryDSN });
 
 const {performance} = require('perf_hooks');
 let runtime = performance.now();
@@ -13,7 +17,6 @@ Promise.config({longStackTraces: true})
 const path          = require('path');
 global.appRoot      = path.resolve(__dirname);
 require('./utils/paths').run();
-const cfg           = require('./config.json');   
 const ERIS          = require("eris");
 const Eris          = require("eris-additions")(ERIS);
 const cmdPreproc    = require("./core/structures/CommandPreprocessor");
@@ -58,7 +61,7 @@ global.PLX= new Eris.CommandClient(cfg.token, {
         defaultHelpCommand: false,
         ignoreBots: true,
         defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
-        prefix: ["plx!b-", "p!b-", "+b-", "@mention"]
+        prefix: ["===", "p!+", "@mention"]
     });
 
 PLX.engine = Eris;
