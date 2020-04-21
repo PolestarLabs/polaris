@@ -31,11 +31,11 @@
         "material_plural": "Matériaux",
         "boosterpack": "Booster",
         "boosterpack_plural": "Boosters",
-        "medal": "",
+        "medal": "Médaille",
         "medal_plural": "Médailles",
-        "sticker": "",
+        "sticker": "Collant",
         "sticker_plural": "Collants",
-        "background": "",
+        "background": "Fond d'écran",
         "background_plural": "Bannières"
     },
     "terms": {
@@ -148,17 +148,17 @@
         },
         "cooldown": {
             "generic": [
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "Attendez, j'ai besoin d'une minute!",
+                "Je ne suis pas une imprimante, ralentez svp!",
+                "Veuillez réessayer dans quelques secondes.",
+                "Veuillez patienter.",
+                "Trop d'ordres!",
+                "Aaah! Ralentis!",
+                "Je n'ai pas tellement de doigts pour appuyer sur autant de boutons! Détends-toi!",
+                "Qu'est-ce qui presse?!",
+                "J'ai besoin d'un moment de repos!",
+                "Une à la fois svp, mon chou.",
+                "*Vous allez trop vite senpai uwu je ne peux pas le prendre uwu*"
             ]
         },
         "warnings": {
@@ -332,20 +332,20 @@
             "cantMarryPollux": "Pas du tout! Shoo!"
         },
         "ship": {
-            "needTupipo": "",
-            "need2diffpipo": "",
+            "needTupipo": "La calculatrice d'amour ne marche pas seulement une personne, mon chou.",
+            "need2diffpipo": "À moins que cette personne ne soit capable de mitose, elle compte toujours comme une seule personne, j'ai besoin de **deux** personnes!",
             "quotes": [
                 [
                     "Oh. _Oh non._",
                     ""
                 ],
                 [
-                    "",
-                    ""
+                    "Il n'y avait qu'une légère hésitation avant ce glissement vers la gauche.",
+                    "Bien que vous soyez familier l'un avec l'autre, vous ne voulez pas vous familiariser _de ce genre_."
                 ],
                 [
                     "",
-                    ""
+                    "Hé! Vous ne vous détestez pas l'un l'autre! On se débrouille, n'est-ce pas?"
                 ],
                 [
                     "",
@@ -493,10 +493,10 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "craftingItem": "",
+            "craftingItem": "Fabrication d'`{{item_name}}`",
             "noitem": "Je n'ai pas pu trouver cet article",
-            "noitemu": "",
-            "materialMissing": "",
+            "noitemu": "Impossible de trouver cet article ni quoi que ce soit de ce genre",
+            "materialMissing": "Il t'en manque des matériaux, je ne peux pas fabriquer le produit.",
             "materialPresent": "",
             "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
             "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?",
