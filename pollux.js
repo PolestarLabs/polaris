@@ -106,14 +106,11 @@ console.info("• ".blue, "Connecting to Database...");
 
 mongoose.connect(cfg.dbURL, {
     useNewUrlParser: true,
-    reconnectTries: 5,
-    reconnectInterval: 10000,
     keepAlive: 1,
     connectTimeoutMS: 8000,
     useUnifiedTopology: true,
     promiseLibrary: global.Promise,
     poolSize: 16,
-    bufferMaxEntries: 64
     
 }, (err) => {
     if (err) return console.error(err, "• ".red + 'Failed to connect to Database!');
