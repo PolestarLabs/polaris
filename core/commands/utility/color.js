@@ -17,16 +17,15 @@ const init = async function(msg, programatic) {
 
   let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
   let hexColor = (msg.args[0].match(hexRegex) || [])[0];
+  if( !hexColor.startsWith("#") ) hexColor = "#"+hexColor;
   let result;
   try {
-    URL = "https://www.thecolorapi.com/id?hex=" + hexColor.replace("#", "")
-    const pre_res = (await axios.get(URL, {
+    const pre_res = (await axios.get( "https://www.thecolorapi.com/id?hex=" + hexColor.replace("#", ""), {
         headers: { 'Accept': 'json' },
         responseType: 'json'
     })).data ;
  
 console.log({pre_res})
-  //  const colors = require("name-this-color");
     result = hexColor
       ? [{title: pre_res.name.value, hex: hexColor, data: pre_res}]
       : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
@@ -40,7 +39,6 @@ console.log({pre_res})
 
   if (result) {
     result = result[0];
-    // let RGB = colors.rgb(result[0])
     let CMYK = result.data.cmyk
     let RGB = result.data.rgb
 

@@ -28,7 +28,6 @@
     "imageurl-base64": "^1.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
-    "name-this-color": "^1.0.2",
     "open-graph-scraper": "^3.6.2",
     "pixel-util": "0.0.2",
     "rss-parser": "^3.7.2",
