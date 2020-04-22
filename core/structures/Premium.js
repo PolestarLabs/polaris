@@ -7,7 +7,7 @@ module.exports = {
         return new Promise(async resolve=>{
             DB.users.get(user.id).then(usr=>{
                 let tier = usr.donator
-                //if((usr.premium||{}).active)
+                //if(usr.premium?.active)
                 resolve(tier || false);
                 //else resolve (false);
             })

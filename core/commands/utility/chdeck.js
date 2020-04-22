@@ -22,7 +22,7 @@ else{
     
     msg.delete().catch(e=>null)
     
-    const userChannelDeck = ((await DB.users.get(msg.author.id)).switches||{}).channeldeck || [];
+    const userChannelDeck = (await DB.users.get(msg.author.id)).switches?.channeldeck || [];
 
     let deck = userChannelDeck.map(chn=> `<#${chn}>`);
     msg.channel.createMessage({embed:{

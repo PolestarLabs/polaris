@@ -73,7 +73,7 @@ const init = async function (msg){
             , {maxMatches: 1,time: 30e3}
         );
 
-        reason = (resp&&(resp[0]||{}).content) || false;
+        reason = (resp[0]?.content) || false;
     }else{
         reason = msg.args.slice(1).join(" ");
     }

@@ -60,7 +60,7 @@ const DEFAULT_CMD_OPTS = {
     ,hooks:  {
         preCommand: (m,a) => {            
             m.args = a;
-            m.lang = [m.channel.LANG || (m.guild || {}).LANG || 'en', 'dev'];
+            m.lang = [m.channel.LANG || m.guild?.LANG || 'en', 'dev'];
             m.runtime = performance.now();
         },
         postCheck: (m,a,chk) => {

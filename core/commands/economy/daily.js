@@ -51,7 +51,7 @@ if(message.args[0]=="info"){
         //minibuster.up(message,hardStreak+softStreak*10)
         
 
-        let streak = (userData.counters||{daily:{streak:0}}).daily.streak;
+        let streak = userData.counter?.daily.streak;
         let hardStreak = streak
 
 

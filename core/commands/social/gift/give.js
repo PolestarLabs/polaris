@@ -1,6 +1,6 @@
 const init = async function (msg,args){
     const inventory = await DB.gifts.find({holder:msg.author.id}).lean().exec();
-    const target = (msg.mentions[0]||{}).id;
+    const target = msg.mentions[0]?.id;
     
     if(inventory.length < 1) return "No gifts to be opened!";
     if(!target) return "You must mention who you want to send this to!";

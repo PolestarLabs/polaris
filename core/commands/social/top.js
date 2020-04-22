@@ -16,7 +16,7 @@ const topCommend = async (m)=>
         ]);
 
  
-        CommendRank.forEach(usr => { usr.name = (PLX.findUser(usr.id)||{}).username || usr.name  });
+        CommendRank.forEach(usr => { usr.name = PLX.findUser(usr.id)?.username || usr.name  });
 
 
         let commendSort   = CommendRank.sort((a,b)=> (a.modules.commend||0) - (b.modules.commend||0)).reverse().slice(0,10);
@@ -54,19 +54,22 @@ const topCommend = async (m)=>
 
 
 
-        return {embed:{
+        let embed= {
             thumbnail:{url:"https://pollux.fun/build/rank.png"},
             color:0x3b9ea5,
             description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankIn+1}** (${userData.modules.commend||0}) \u2003 | \u2003  ${ _emoji('plxcoin')}**#${myRankOut+1}** (${userData.modules.commended||0})`,
             fields:[
-                {name:"Top Commended",  value: listCommend.join('\n').slice(0,1024),inline: true},
-                {name:"Top Commenders", value: listCommenders.join('\n').slice(0,1024),inline: true},
+                {name:"Top Commended",  value: listCommend.join('\n').slice(0,1024) +"\u200b",inline: true},
+                {name:"Top Commenders", value: listCommenders.join('\n').slice(0,1024)+"\u200b" ,inline: true},
                 {name:'\u200b',value:'\u200b',inline:true},
-                {name:"\u200b",  value: listCommend2.join('\n').slice(0,1024),inline: true},
-                {name:"\u200b", value: listCommenders2.join('\n').slice(0,1024),inline: true}
+                {name:"\u200b",  value: listCommend2.join('\n').slice(0,1024)  +"\u200b" ,inline: true},
+                {name:"\u200b", value: listCommenders2.join('\n').slice(0,1024) +"\u200b" ,inline: true}
                 ,{name:'\u200b',value:'\u200b',inline:true}
             ]
-        }}
+        }
+
+        console.log({listCommenders,embed})
+        return {embed};
 
     }
 

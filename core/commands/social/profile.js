@@ -106,7 +106,7 @@ init = async (msg)=>{
   if (msg.content.split(/ +/).slice(1)[0] == "frame") {
     let ag = msg.content.split(/ +/).slice(1)[1];
     let dDATA = await DB.users.get(msg.author.id);
-    let frame = (dDATA.switches || {}).profileFrame
+    let frame = dDATA.switches?.profileFrame
 
     function switchon() {
       DB.users.set(msg.author.id, {
@@ -517,7 +517,7 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
 
       const cfg = require(appRoot + '/config.json');
       let bottomTag;
-      if (Target_Database.switches && !Target_Database.switches.hideProle) {
+      if (Target_Database.switches?.hideProle) {
         bottomTag = Target_Database.switches.role
       }
       if (cfg.admins.includes(Target_Database.id)) bottomTag = "moderatorplus"

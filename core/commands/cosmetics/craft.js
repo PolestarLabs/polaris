@@ -78,7 +78,7 @@ function noteno(item,extra){
   }
   
   P.item_name = crafted_item.name;
-  embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.craftingItem',P) )
+  embed.title(crafted_item?.emoji+$t('responses.crafting.craftingItem',P) )
     
 
   const userData = await DB.users.getFull({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
@@ -142,8 +142,8 @@ function noteno(item,extra){
 
         materialName = material.id || material;
 
-        amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
-        amtRequired = (material.amt || objCount(MAT,materialName))
+        amtInPosession = userData.modules.inventory.find(itm=>itm.id == materialName)?.count || 0;
+        amtRequired = material.amt || objCount(MAT,materialName)
 
       if (amtInPosession >= amtRequired){
         //message.reply('ok')

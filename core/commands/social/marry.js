@@ -1,7 +1,7 @@
 const YesNo = require("../../structures/YesNo.js");
 
 const init = async function(msg, args) {
-    const Target = PLX.findMember((msg.mentions[0]||{}).id, msg.guild.members);
+    const Target = PLX.findMember(msg.mentions[0]?.id, msg.guild.members);
 
     const P = {lngs: msg.lang, prefix: msg.prefix};
     const V = {};

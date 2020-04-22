@@ -26,7 +26,7 @@ const init = async function (msg,args){
         ENTS = msg.args.join(' ').split(',');
     }
 
-    N = N?N: (ENTS||{length:N}).length
+    N = N || ENTS?.length || 0
     
 
     if(N>16 && display_RR){
