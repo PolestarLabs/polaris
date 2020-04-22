@@ -11,7 +11,7 @@ module.exports = async msg => {
   if(msg.guild.imagetracker && !msg.channel.nsfw){
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
     if(msg.attachments && msg.attachments[0] || hasImageURL ){ 
-      NSFW((msg.attachments[0]||{}).url || hasImageURL[0]).then(res=> res === true ? msg.addReaction('⚠️') : null);
+      NSFW(msg.attachments[0]?.url || hasImageURL[0]).then(res=> res === true ? msg.addReaction('⚠️') : null);
     }
   }
 
@@ -59,7 +59,7 @@ async function levelChecks(msg) {
 
   if(!servData) return null;
 
-  if(  (servData.switches||{}).chLvlUpOff && servData.switches.chLvlUpOff.includes(msg.channel.id) || !userData ) {
+  if(  servData.switches?.chLvlUpOff?.includes(msg.channel.id) || !userData ) {
     userData = null;
     servData = null;
     return;
@@ -77,7 +77,7 @@ async function levelChecks(msg) {
   let curLevel_local = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
   //let forNext_local = Math.trunc(Math.pow(((LOCAL_RANK.level||0) + 1) / _FACTOR, 2));
 
-  if ( !((servData.switches||{}).chExpOff && servData.switches.chExpOff.includes(msg.channel.id))  ){
+  if ( !servData.switches?.chExpOff?.includes(msg.channel.id)  ){
     incrementLocal(msg);
     //incrementGlobal(msg);
   };
@@ -95,7 +95,7 @@ async function levelChecks(msg) {
     
       if(
         servData.modules.LVUP_local &&
-        !(servData.switches||{chLvlUpOff:[]}).chLvlUpOff.includes(msg.channel.id)
+        !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
       ){
 
         let embed = {
@@ -170,7 +170,7 @@ async function levelChecks(msg) {
 
       //delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
       msg.author.getDMChannel().then(dmChan=>{
-        if (!userData.switches||userData.switches.LVUPDMoptout===true) return;
+        if (!userData.switches||userData.switches?.LVUPDMoptout===true) return;
         dmChan.createMessage("**+1** x "+_emoji('loot')+_emoji(polizei)+' Level Up Bonus!');
       })
       //require("./modules/dev/levelUp_infra.js").init(msg);

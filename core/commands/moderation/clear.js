@@ -12,10 +12,10 @@ const init = async function (msg){
 const AMT = Math.abs(parseInt(msg.args[0])) || 10;
 let bucket = (await msg.channel.getMessages( AMT, msg.id)).map(m=>m.id);
 
-msg.channel.send(`Deleting messages...`)
+msg.channel.send(`Deleting messages...`).then(m=>m.delete())
 msg.channel.deleteMessages(bucket).then(x=>{
     console.log(x);
-    msg.channel.send(`Deleted ${AMT} messages`)
+    msg.channel.send(`${_emoji('yep')} Deleted **${AMT}** messages`)
 }).catch(e=>null)
 
 }

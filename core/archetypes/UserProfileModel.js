@@ -37,9 +37,9 @@ class UserProfileModel{
       this.sapphires    = userData.modules.sapphires  || 0;
       this.medals       = userData.modules.medals   || [];
       this.marriage     = userData.featuredMarriage || null;
-      this.commend     = userData.modules.commend  || 0;
-      this.countryFlag  = (userData.personal||{}).country || null;
-      this.profileFrame = userData.switches && userData.switches.profileFrame === true ? userData.donator : null;
+      this.commend      = userData.modules.commend  || 0;
+      this.countryFlag  = userData.personal?.country || null;
+      this.profileFrame = userData.switches?.profileFrame === true ? userData.donator : null;
       
       if(this.medals.length>0){
         let valid_medals = this.medals.filter(mdl=>mdl&&mdl!="0").map(v=> this.medals.indexOf(v) );
@@ -61,10 +61,10 @@ class UserProfileModel{
           return resolve(false);
         }
       
-        let svRankData = (await DB.localranks.get({user:this.ID,server:this.server})) ||{};
-        this.thx = svRankData.thx || 0;
+        let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
+        this.thx = svRankData?.thx || 0;
         this.localRank = await DB.localranks
-          .find({server:this.server,exp:{$gt:svRankData.exp||0}},{}).countDocuments().exec();
+          .find({server:this.server,exp:{$gt:svRankData?.exp||0}},{}).countDocuments().exec();
         return resolve(true);
       })
     }

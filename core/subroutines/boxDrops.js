@@ -48,7 +48,7 @@ if(trigger.content=="pick" &&  !trigger.channel.natural){
     const CHN = trigger.channel;
     const serverDATA = await DB.servers.findOne({id:SVR.id},{"modules.LOCALRANK":0}).lean().exec();
 
-    if(   (serverDATA.switches||{}).chLootboxOff && serverDATA.switches.chLootboxOff.includes(trigger.channel.id) ) return;
+    if(   serverDATA.switches?.chLootboxOff?.includes(trigger.channel.id) ) return;
 
 
 

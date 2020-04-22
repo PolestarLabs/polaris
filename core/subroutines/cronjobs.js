@@ -128,9 +128,6 @@ const FIVEminute = new CronJob('*/5  * * * *', async ()=> {
   //======================================================================================
   /* EVERY 5 MINUTES */
   //======================================================================================
-   //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".servers"]:bot.guilds.size}}).then(x=>x=null);
-   //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".users"]:bot.users.size}}).then(x=>x=null);
-   //DB.globalDB.set({$set:{['data.shardData.'+(Number((bot.shard||{id:process.env.SHARD}).id)+1)+".channels"]:bot.channels.size}}).then(x=>x=null);
 
   let gchange = PLX.gamechange();
   //let sname = getShardCodename(bot,Number(process.env.SHARD)+1)
@@ -174,7 +171,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
             let response = await axios.get('https://api.twitch.tv/helix/streams?user_login='+thisFeed.url, {headers:{ 'User-Agent': 'Pollux@Polaris.beta-0.1', 'Client-ID': cfg.twitch}}).timeout(3000).catch(e=>null);            
    
             if(!response) return;
-            const StreamData = (response.data||{}).data[0];
+            const StreamData = response.data?.data[0];
  
             if(!StreamData) return;
             if(

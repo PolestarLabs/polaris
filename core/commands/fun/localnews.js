@@ -27,7 +27,7 @@ const init = async function (msg) {
     let img_link = LINK;
     
     try {
-      if(!LINK) img_link = (msg.mentions[0] || {}).displayAvatarURL || await PLX.getChannelImg(msg);
+      if(!LINK) img_link = msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
       if(!LINK) img_link = (msg.mentions[0] || msg.author).displayAvatarURL;
     }

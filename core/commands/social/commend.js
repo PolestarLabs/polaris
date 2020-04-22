@@ -27,7 +27,7 @@ const init = async function (msg) {
 
 
     const preafter = async function preafter(M, D) {
-        if ((userData.modules.inventory.find(itm => itm.id == 'commendtoken') || {}).count >= 1) {
+        if ( userData.modules.inventory.find(itm => itm.id == 'commendtoken')?.count >= 1) {
             if (Target.id === msg.author.id) {
                 msg.channel.send(_emoji('nope') + $t('responses.commend.noSelf', P));
                 return false;
@@ -86,7 +86,7 @@ const init = async function (msg) {
         embe2.description(`
     ${_emoji('future')} ${dailyAvailable ? _emoji('online') + $t('responses.commend.check_yes', P) : _emoji('dnd') + $t('responses.commend.check_no', P)} 
        
-    :reminder_ribbon: × **${(userData.modules.inventory.find(i => i.id === "commendtoken") || {}).count || 0}**
+    :reminder_ribbon: × **${userData.modules.inventory.find(i => i.id === "commendtoken")?.count || 0}**
          `)
         return msg.channel.send({ embed: embe2 });
     }
