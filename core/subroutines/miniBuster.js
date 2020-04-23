@@ -53,7 +53,7 @@ checks:function(msg,UD){
 ]
   
   let penalty = 0;
-  if((UD.modules.statistics||{}).lastMessage == msg) {penalty = 80;  DB.users.set(UD.id,{$inc:{['modules.statistics.buster.REPEATINGMSG']:1}});}
+  if(UD.modules.statistics?.lastMessage == msg) {penalty = 80;  DB.users.set(UD.id,{$inc:{['modules.statistics.buster.REPEATINGMSG']:1}});}
   
   let score
   for (i in Checks){
@@ -87,7 +87,7 @@ run: async function(message,SD,UD,CD){
   
    const UNIVERSALTRACK = false
    
-   const bustCondition =  msg.match(checkRegex)||msg.length<=3||((UD.modules.statistics||{}).lastMessage == msg)
+   const bustCondition =  msg.match(checkRegex)||msg.length<=3||(UD.modules.statistics?.lastMessage == msg)
   targetto.push("350647150272577546")
   if(UD.modules.statistics&&UD.modules.statistics.healthIndex<-1000){
     for (i in targetto){

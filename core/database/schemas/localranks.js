@@ -17,8 +17,8 @@ MODEL.set = utils.dbSetter;
 MODEL.get = utils.dbGetter;
 
 MODEL.new = (US) => {
-  let U=(US.U||{id:US.U}).id || US.U;
-  let S=(US.S||{id:US.S}).id || US.S;
+  let U=US.U?.id || US.U;
+  let S=US.S?.id || US.S;
 MODEL.findOne({user:U,server:S}, (err, rank) => {
    if (err) {
       console.error(err)

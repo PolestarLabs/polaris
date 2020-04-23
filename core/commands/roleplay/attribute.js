@@ -27,7 +27,7 @@ const P = {user:message.member.displayName,lang:message.lngs}
   let value  = message.args.slice(2).join(" ")
   
   let USERDATA = await DB.users.getFull({id:message.author.id});
-  let vars = (USERDATA.switches||{variables:[]}).variables
+  let vars = USERDATA.switches?.variables
   
   if(["add","set"].includes(action)){
     if(vars && vars.length == 25) return message.reply("Max Attributes Reached (25)");
@@ -60,7 +60,7 @@ const P = {user:message.member.displayName,lang:message.lngs}
   
   USERDATA = await DB.users.getFull({id:message.author.id});
   
-  vars = USERDATA.switches.variables;
+  vars = USERDATA.switches?.variables;
   let embed = new Embed;
   embed.title("Attributes")
   for ( i in vars){

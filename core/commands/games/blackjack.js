@@ -230,7 +230,7 @@ const init       = async (msg,args) => {
 		
 
 		const powerups = USERDATA.modules.powerups || {};
-		const myDeck = (USERDATA.modules.skins || {}).blackjack || "default";
+		const myDeck = USERDATA.modules.skins?.blackjack || "default";
 
 		let arg = args[0]
 

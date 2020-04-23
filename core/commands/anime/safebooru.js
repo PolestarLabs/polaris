@@ -41,7 +41,7 @@ const init = async function (msg,args,ext){
         if(enhancedRes.tag_string_artist) embed.field ("Artist","**["+ enhancedRes.tag_string_artist.split(' ')[0].split('_').map(capitalize).join(' ')+`]()**`,true )
         if(enhancedRes.tag_string_character) embed.field ("Characters",enhancedRes.tag_string_character.split(' ').map(char=> char.split('_').map(capitalize).join(' ') ).slice(0,5).join(", ")+elipsis,true )
         if(enhancedRes.tag_string_copyright) embed.field ("Source", enhancedRes.tag_string_copyright.split(' ').filter((v,i,a)=> !v.includes(a[(i||5)+-1])).map(src=> src.split('_').map(capitalize).join(' ')).slice(0,3).join(", "),true )
-        if(enhancedRes.tag_string_general && (ext||{}).tags) embed.field ("Tags","`["+shuffle(enhancedRes.tag_string_general.slice(1).split(' ').slice(0,10)).join(']` `[')+"]`",true);
+        if(enhancedRes.tag_string_general && ext?.tags) embed.field ("Tags","`["+shuffle(enhancedRes.tag_string_general.slice(1).split(' ').slice(0,10)).join(']` `[')+"]`",true);
         msg.channel.send({embed}).then(ms=>{
 
             addReactions(ms,{
@@ -54,7 +54,7 @@ const init = async function (msg,args,ext){
         })
     }else if(res){
         embed.image( res.file_url )
-        if(res.tags && (ext||{}).tags) embed.field ("Tags","`["+shuffle(res.tags.slice(1)).split(' ').slice(0,10).join(']` `[')+"]`",true);
+        if(res.tags && ext?.tags) embed.field ("Tags","`["+shuffle(res.tags.slice(1)).split(' ').slice(0,10).join(']` `[')+"]`",true);
         msg.channel.send({embed}).then(ms=>{
             addReactions(ms,{
                 url: ( res.sample_url.includes('safebooru') ?  res.file_url : res.sample_url.replace("/samples","//samples") ),

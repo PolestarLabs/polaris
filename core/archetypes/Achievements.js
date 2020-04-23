@@ -50,7 +50,7 @@ class AchievementsManager extends EventEmitter{
                         let C2;
                         if(achiev.advanced_conditions && achiev.advanced_conditions.length > 0) C2 = achiev.advanced_conditions.every(acv=> { let user = userData; return eval(`try{${acv}}catch(err){false}`);});
                         else C2 = true;
-                        let awarded = (userData.modules.achievements.find(a=>a.id==achiev.id)||{unlocked:false}).unlocked;
+                        let awarded = userData.modules.achievements.find(a=>a.id==achiev.id)?.unlocked;
                         let switcher = (c)=> c?"✔️":"❌" 
 
                         if(awardRightAway && C1 && C2) this.emit('award', achiev.id, user.id);
@@ -89,7 +89,7 @@ Achievements.on('award', async (achievement,uID,options={msg:{},DM : false})=>{
         footer:   msg.author?{text: msg.author.tag, icon_url: msg.author.avatarURL}:{}
     }
 
-    if(!((channel.DISABLED||[]).includes("ACHIEVEMENTS")) || (msg||{}).command){
+    if(!((channel.DISABLED||[]).includes("ACHIEVEMENTS")) || msg?.command){
         channel.createMessage({embed}).catch(e=>{
             console.log(e)
             DMchannel.createMessage({embed}).catch(e=>null);

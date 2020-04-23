@@ -414,14 +414,14 @@ await Promise.all([
 ]) 
     
 
-if(!((userData.counters||{}).donateStreak||{}).total){    
+if(!userData.counters?.donateStreak.total){    
  // await userDB.set(message.author.id,{
  //   $inc:{"modules.sapphires":T.immediate}
  // });
 }
 
 
-if(!((userData.counters.donateStreak||{})[T.title])){
+if(!(userData.counters?.donateStreak[T.title])){
   //await DB.users.set(message.author.id,{
   //  $inc:{"modules.sapphires":T.immediate}
   //});
@@ -434,7 +434,7 @@ ${_emoji('yep')} **${capitalize(T.title)} Donator's Flair**
   embed.description += "\n*Enable profile frame with `p!profile frame [on|off]`*\n"
 }
 
-embed.description += `📶 **Streak:** ${((userData.counters.donateStreak||{}).total || 0 )+1} (${((userData.counters.donateStreak||{})[T.title] || 0 )+1} as ${[T.title]})`
+embed.description += `📶 **Streak:** ${(userData.counters?.donateStreak.total || 0 )+1} (${(userData.counters?.donateStreak[T.title] || 0 )+1} as ${[T.title]})`
 
 message.channel.send({content: _emoji('yep')+" All set! Rewards added!",embed});
 

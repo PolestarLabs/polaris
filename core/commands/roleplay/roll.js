@@ -32,7 +32,7 @@ let primaEx = message.content.split(/\s+/).slice(1).join(" ");
 
   
   const userDATA = await DB.users.get({id:message.author.id});
-  let variables = (userDATA.switches||{}).variables ||[] //||[]).filter(va=> !isNaN(Number(va.value)));
+  let variables = userDATA.switches?.variables ||[] //||[]).filter(va=> !isNaN(Number(va.value)));
  
   let counter = 0
   while(rollEq.includes("!")){

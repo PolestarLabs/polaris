@@ -17,7 +17,7 @@ const init = async function (msg){
 
     if(Target.id !== msg.author.id){
         let ch_messages  = await msg.channel.getMessages(10, msg.id);
-        textop = (ch_messages.find(m=>m.author.id === Target.id)||{}).cleanContent || false;
+        textop = ch_messages.find(m=>m.author.id === Target.id)?.cleanContent || false;
         if (textop) {
             onepart = false;
         }
