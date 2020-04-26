@@ -52,7 +52,7 @@ const init = async function (msg,args) {
         let aviDummy = {staticAvatarURL:"https://cdn.discordapp.com/embed/avatars/0.png"}
         return new Object({
             id: usr.id,
-            name: _LOCAL? usr.nick || usr.name : usr.meta.username||usr.nick||usr.user.username,
+            name: _LOCAL ? usr.nick || usr.name : usr?.meta.username||usr.nick||usr?.user.username || "Unknown",
             avatar: Picto.getCanvas( self==="self"?(msg.author||aviDummy).staticAvatarURL: (_LOCAL? "https://cdn.discordapp.com/avatars/"+usr.id+"/"+(usr.user||usr).avatar +".png" :(PLX.users.find(u=>u.id==usr.id)||aviDummy).staticAvatarURL) || (usr.meta.avatar||"").replace('gif','png')||"https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
             exp: usr.modules.exp,
             level: usr.modules.level,
@@ -60,8 +60,8 @@ const init = async function (msg,args) {
             color: usr.modules.favcolor,
             rubines: usr.modules.rubines,
             bg: Picto.getCanvas(paths.CDN+"/backdrops/"+( usr.modules?.bgID||"5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6")+".png"),
-            ACV: (usr.modules.achievements||[]).length, 
-            DLY: usr.modules?.counters.daily.streak || 0
+            ACV: (usr?.modules.achievements||[]).length, 
+            DLY: usr.modules?.counters?.daily.streak || 0
         });
     };
 

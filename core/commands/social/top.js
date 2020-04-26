@@ -1,5 +1,5 @@
 const topServer = (m)=>
-    require('./leaderboards.js').init(m,["server"]);
+    require('./leaderboards.js').init(m,["local"]);
 
 const topGlobal = (m)=>
     require('./leaderboards.js').init(m,["global"]);
@@ -92,7 +92,7 @@ module.exports={
             }
         },
         ,{ label: 'server', gen: topServer, options:{aliases:["local","here","sv"]} }
-        ,{ label: 'global', gen: topServer, options:{aliases:["all","world"]} }
+        ,{ label: 'global', gen: topGlobal, options:{aliases:["all","world"]} }
     ]
 }
 
