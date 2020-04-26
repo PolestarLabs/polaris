@@ -56,13 +56,17 @@ let ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16,'\u200b ');
  if(x.type == "SEND") x.type = "TRANSFER";
   if(x.to == TARGERDATA.id && x.from !==POLid){
     othPart = await DB.users.get(x.from);
+    if(!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency} 
+\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
     return `↔ \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* from [${othPart.meta.tag}](http://pollux.fun/p/${othPart.id}) \`${othPart.id}\` `
+\u200b\u2003\u2003|   *\`${x.type}\`* from [${othPart?.meta.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `
   }
   if(x.from == TARGERDATA.id && x.to !==POLid){
     othPart = await DB.users.get(x.to);
+    if(!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency} 
+\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
     return `↔  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* to [${othPart.meta.tag}](http://pollux.fun/p/${othPart.id}) \`${othPart.id}\` `
+\u200b\u2003\u2003|   *\`${x.type}\`* to [${othPart?.meta.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `
   }
   if(x.to==POLid){
     return `📤  \`${ts}\` **${x.amt}** ${x.currency}
