@@ -269,7 +269,7 @@ try{
           ctx.drawImage(colorstrap, 9, 10)
           ctx.globalAlpha = 1;
           
-          return Picto.getCanvas(paths.CDN+"/build/profile/litostar.png").then(IMG=> {
+          Picto.getCanvas(paths.CDN+"/build/profile/litostar.png").then(IMG=> {
             ctx.globalAlpha = .65;
             ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y-25 );
             ctx.globalAlpha = 1;
