@@ -89,7 +89,7 @@ run: async function(message,SD,UD,CD){
    
    const bustCondition =  msg.match(checkRegex)||msg.length<=3||(UD.modules.statistics?.lastMessage == msg)
   targetto.push("350647150272577546")
-  if(UD.modules.statistics&&UD.modules.statistics.healthIndex<-1000){
+  if(UD.modules.statistics?.healthIndex<-1000){
     for (i in targetto){
       if(message.author.id==targetto[i]&&!UNIVERSALTRACK){
         //console.error(`${"Tracking".yellow} ${UD.name.red}: ${msg} |SCORE:${(UD.modules.statistics.healthIndex+"").bgRed} |BUST:${bustCondition?"TRUE".red:"false".green}`);
@@ -104,7 +104,7 @@ run: async function(message,SD,UD,CD){
   
   if(bustCondition){
      let   penalty = 3
-  if(UD.modules.statistics&&UD.modules.statistics.healthIndex<-1000){
+  if(UD.modules.statistics?.healthIndex<-1000){
     
      penalty = this.checks(msg,UD);
     
@@ -124,20 +124,20 @@ run: async function(message,SD,UD,CD){
   
     DB.users.set(message.author.id,{$set:{'modules.statistics.lastMessage':msg}});
   
- if(UD.modules.statistics&&UD.modules.statistics.healthIndex > 0 && UD.modules.statistics.warned == true){
+ if(UD.modules.statistics?.healthIndex > 0 && UD.modules.statistics.warned == true){
    DB.users.set(message.author.id,{$set:{'modules.statistics.warned':false}});
    DB.users.set(message.author.id,{$set:{'modules.statistics.warned2':false}});
  }
    
- if(UD.modules.statistics&&UD.modules.statistics.healthIndex < -1000 && !UD.modules.statistics.warned){
+ if(UD.modules.statistics?.healthIndex < -1000 && !UD.modules.statistics.warned){
     DB.users.set(message.author.id,{$set:{'modules.statistics.warned':true}});
    message.reply("Your Reputation score is alarmingly low, please consider slowing down.");
  }  
- if(UD.modules.statistics&&UD.modules.statistics.healthIndex < -2000 && !UD.modules.statistics.warned2){
+ if(UD.modules.statistics?.healthIndex < -2000 && !UD.modules.statistics.warned2){
     DB.users.set(message.author.id,{$set:{'modules.statistics.warned2':true}});
    message.reply("Your Reputation score is alarmingly low, please consider slowing down, this is your second warning, blacklisting will not be reversed if you drop any lower!");
  }
- if(UD.modules.statistics&&UD.modules.statistics.healthIndex < -3500){
+ if(UD.modules.statistics?.healthIndex < -3500){
    message.reply("Your Reputation score reached below acceptable levels and you've been Blacklisted. You've been warned twice so this will not be reversed.");
    DB.users.set(message.author.id,{$set:{'blacklisted':'[SPAM BUSTER]: '+UD.modules.statistics.healthIndex+" | at "+`${message.guild.name} (${message.guild.id}) >> LAST BUSTED FOR: [${msg}]`}});
  }

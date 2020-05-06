@@ -60,7 +60,7 @@ const init = async function (msg,args,ext){
                 url: ( res.sample_url.includes('safebooru') ?  res.file_url : res.sample_url.replace("/samples","//samples") ),
                 saved: Date.now(),
                 tags: res.tags,
-                nsfw: ext && ext.nsfw
+                nsfw: ext?.nsfw
 
             })
         })
@@ -92,7 +92,7 @@ const init = async function (msg,args,ext){
                 ms.removeReaction('⭐')
                 
             }).then(reas=>{
-                if (!reas || reas.length === 0 ) return;
+                if (!reas?.length ) return;
                
                 let savers = reas.map(rea=> rea.author.username)
                 ms.channel.send("Saved by "+savers.join(","))

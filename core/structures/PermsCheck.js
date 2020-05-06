@@ -7,7 +7,7 @@ exports.run = function(cat,msg,perms){
     return;// 'error chan permis catchcheck'
   }
     
-  if(perms&&typeof perms == "object"){
+  if(typeof perms == "object"){
     for(i in perms){
       if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i])){
         try{ 

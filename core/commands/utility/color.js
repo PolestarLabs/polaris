@@ -16,10 +16,10 @@ const init = async function(msg, programatic) {
     return;
 
   let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  let hexColor = (msg.args[0].match(hexRegex) || [])[0];
+  let hexColor = (msg.args[0].match(hexRegex))?.[1];
   let result;
   try {
-    URL = "https://www.thecolorapi.com/id?hex=" + hexColor.replace("#", "")
+    URL = "https://www.thecolorapi.com/id?hex=" + hexColor
     const pre_res = (await axios.get(URL, {
         headers: { 'Accept': 'json' },
         responseType: 'json'

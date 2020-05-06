@@ -124,9 +124,9 @@ init = async (msg)=>{
       }).then(x => null) // msg.addReaction(':switchoff:343511248085843968'));
     }
 
-    if (ag && ag == "on") {
+    if (ag == "on") {
       switchon()
-    } else if (ag && ag == "off") {
+    } else if (ag == "off") {
       switchoff()
     } else {
       frame ? switchoff() : switchon();
@@ -139,7 +139,7 @@ init = async (msg)=>{
 
   if(Target_Database) Target_Database.type = 'udata';
   
-  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?msg.guild.member(Target):Target));
+  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?.member(Target) || Target));
 
 
 

@@ -3,7 +3,7 @@ module.exports = async (guild,member) =>{
 
         
 
-        if(!svData || !svData.modules.GREET.enabled) return null;
+        if(!svData?.modules.GREET.enabled) return null;
         
 
         let welcomeTimer   = svData.modules.GREET.timer

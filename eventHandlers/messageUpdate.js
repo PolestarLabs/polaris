@@ -4,7 +4,7 @@ module.exports = async function run(msg,oldMessage){
     msg.channel.snipe = {
         msg_old:{
             content:        oldMessage.content
-            ,attachment:    (oldMessage.attachments||[oldMessage.attachments])?.[0]
+            ,attachment:    oldMessage.attachments?.[0]||oldMessage.attachments
         },
         msg_new:{
             content:        msg.content            

@@ -157,7 +157,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
             const data = await parser.parseURL(feed.url).timeout(950).catch(e=>null);
             if(!data) return;
             data.items = data.items.filter(x=>x.link.startsWith('http'));
-            if (data.items[0] && feed.last.guid != data.items[0].guid) {
+            if (feed.last.guid != data.items[0]?.guid) {
               const embed = await RSSembedGenerator(data.items[0],data);
               await DB.feed.updateOne({server:feed.server,url:feed.url},{ $set:{last:data.items[0], thumb: embed.thumbnail.url }}).catch(e=>null);
 
@@ -207,7 +207,7 @@ const FIFTEENminute = new CronJob('*/1 * * * *', async () => {
             const {ytEmbedCreate, getYTData} = require('../commands/utility/ytalert.js');
             const data = await tubeParser.parseURL("https://www.youtube.com/feeds/videos.xml?channel_id="+thisFeed.url).timeout(3120).catch(e=>null);
  
-            if (data && data.items[0] && thisFeed.last.link !== data.items[0].link  ) {
+            if (thisFeed.last.link !== data?.items[0]?.link  ) {
               const embed = await ytEmbedCreate(data.items[0],data);
               const P = {lngs: [serverData.modules.LANGUAGE || 'en', 'dev']}
               P.tuber =data.items[0].author;

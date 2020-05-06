@@ -3,7 +3,7 @@ module.exports = async (guild,member) =>{
 
      
 
-        if(!svData ||!svData.modules.FWELL.enabled) return null;
+        if(!svData?.modules.FWELL.enabled) return null;
 
         let fwellTimer   = svData.modules.FWELL.timer
         let fwellText    = svData.modules.FWELL.text

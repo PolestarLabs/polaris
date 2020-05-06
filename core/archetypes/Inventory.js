@@ -6,7 +6,7 @@ class InventoryCommand{
         //                                 DEFAULT
         this.userID  = user.id          || user;
         this.invType = invType          || ""
-        this.db      = options ? options.db || "inventory" : "inventory";
+        this.db      = options?.db      || "inventory";
         this.Items   = new Promise(resolve => {
             DB.items.find({type:this.invType}).lean().exec().then(boxes=> resolve(boxes));
         });

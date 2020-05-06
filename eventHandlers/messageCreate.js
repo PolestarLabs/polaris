@@ -14,7 +14,7 @@ module.exports = async function (msg) {
     delete require.cache[require.resolve('../core/subroutines/onEveryMessage.js')]
   }
   
-  if( (PLX.tapping) && !global.piggyback){
+  if(PLX.tapping && !global.piggyback){
     let PEV =  PLX.tapping
     if([msg.channel.id,msg.guild.id,msg.author.id,"all"].includes(PEV) || PLX.beta)
 

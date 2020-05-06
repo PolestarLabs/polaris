@@ -10,7 +10,7 @@ const init = async function (msg){
         msg.args[0]==='role' && msg.args[1] && (msg.roleMentions.length>0 || rolefind(1) )||
         msg.args[1]==='role' && msg.args[2] && (msg.roleMentions.length>0 || rolefind(2) )
      ){
-        trueArgs =  msg.guild.members.filter(memb=>memb.roles.some(rl=> msg.roleMentions.includes(rl)|| (rolefind(1)||rolefind(2)||{}).id == rl)).map(m=>m.user.tag)
+        trueArgs =  msg.guild.members.filter(memb=>memb.roles.some(rl=> msg.roleMentions.includes(rl)|| (rolefind(1)||rolefind(2))?.id == rl)).map(m=>m.user.tag)
     }
 
     if(trueArgs.length < 2){

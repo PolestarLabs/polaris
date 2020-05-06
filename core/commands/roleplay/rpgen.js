@@ -1,8 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
-
+const axios = require('axios')
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
@@ -10,9 +6,16 @@ const init = async function (msg){
 
     const RPGen = require('../../../resources/rpgen');
 
-    const Colors = require('name-this-color');
-    let hex = (randomize(0,1677720)*10+2).toString(16).padStart(6,"A");
-    let color = Colors("#"+hex)[0]
+    let hex = "#"+(randomize(0,1677720)*10+2).toString(16).padStart(6,"A");
+    
+    const data = (await axios.get("https://www.thecolorapi.com/id?hex=" + hex.replace("#", ""), {
+        headers: { 'Accept': 'json' },
+        responseType: 'json'
+    })).data;
+    const color = hex 
+                ? {title: data.name.value, hex, data}
+                : { title: "Invalid Color (Defaults to Black)", hex: "#000000" };
+
 
     if(!msg.args[0] || msg.args[0] == "npc"){
         let oneNPC = RPGen.NPCs.generate();
@@ -36,17 +39,40 @@ const init = async function (msg){
             let file = fs.readFileSync(filepath);    
             
             if(oneNPC.race == "dragonborn") oneNPC.race = "Beast";
-            const embed = new Embed()
-            .title(capitalize(oneNPC.name))
-            .field("Race",capitalize(oneNPC.race),true)
-            .field("Feature Color",color.title,true)
-            .field("Traits","` • "+oneNPC.traits.join("`\n` • ")+"`",true)
-            .field("Flaws","` • "+oneNPC.flaws.join("`\n` • ")+"`",true)
-            .color(color.hex);
-            
-            embed.thumbnail("attachment://ava.gif")
-
-                msg.channel.send({embed},{file,name:"ava.gif"});
+            const embed = {}
+            embed.title = capitalize(oneNPC.name)
+            embed.fields = [];
+            embed.fields.push(
+                {
+                    name:  "Race"
+                    ,value:  capitalize(oneNPC.race)
+                    ,inline: true
+                }
+            )
+            embed.fields.push(
+                {
+                    name:  "Feature Color"
+                    ,value:  color.title
+                    ,inline: true
+                }
+            )
+            embed.fields.push(
+                {
+                    name:  "Traits"
+                    ,value:  "` • "+oneNPC.traits.join("`\n` • ")+"`"
+                    ,inline: true
+                }
+            )
+            embed.fields.push(
+                {
+                    name:  "Flaws"
+                    ,value:  "` • "+oneNPC.flaws.join("`\n` • ")+"`"
+                    ,inline: true
+                }
+            )
+            embed.color =  parseInt(color.hex.replace(/^#/, ''), 16);            
+            embed.thumbnail = {url:"attachment://ava.gif"}
+            msg.channel.send({embed},{file,name:"ava.gif"});
         })
         return;
     }
@@ -60,9 +86,9 @@ const init = async function (msg){
         }else{
             flavor =  (RPGen.Storyhooks.pcRelated())
         }
-        const embed = new Embed()
-            .color(hex)
-            .description(flavor);
+        const embed = {}
+        embed.color = parseInt(hex.replace(/^#/, ''), 16);
+        embed.description = flavor;
         return msg.channel.send({embed});
     }
 

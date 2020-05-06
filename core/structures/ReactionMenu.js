@@ -27,7 +27,7 @@ const ReactionMenu = function ReactionMenu(menu,msg,choices,options={}){
 
         
         let time = options.time || 10000
-        let embed = options.embed|| (menu.embeds||[])[0] || false;
+        let embed = options.embed|| menu.embeds?.[0] || false;
         let avoidEdit = options.avoidEdit || true;
         let strings = options.strings || {}
             strings.timeout   =strings.timeout|| "TIMEOUT"
@@ -58,7 +58,7 @@ const ReactionMenu = function ReactionMenu(menu,msg,choices,options={}){
                 }
             });
             
-            if (!reas || reas.length === 0 ) return resolve(null);
+            if (!reas?.length !== 0 ) return resolve(null);
             menu.removeReactions().catch(e=>null);
             if (reas.length === 1 && choices.find(c=> reas[0].emoji.name == c.name)  ) {
                 let res = choices.find(c=> reas[0].emoji.name == c.name);
