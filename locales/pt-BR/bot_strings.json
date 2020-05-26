@@ -461,6 +461,7 @@
             "inChan": "Certinho! Mensagens de Boas Vindas serão publicadas em **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "Dá uma olhada **nesta merda**...",
             "saltLVL": "O nível de sal de {{target}} é de **{{amount}}%** {{emoji}}",
             "booru404": "Oopsie... Não achei nada com essas tags, confere se você digitou direitinho~",
             "nsfw404": "Olha... Esse te fetiche é tão sinistro que não consegui encontrar nadica...",

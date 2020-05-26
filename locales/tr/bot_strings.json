@@ -461,6 +461,7 @@
             "inChan": "Pekâlâ! Hoş geldin mesajları **{{channel}}** kanalında yayımlanacak "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}} kişisinin sinir seviyesi **{{amount}}%** kadar {{emoji}}",
             "booru404": "Üzgünüm, belirttiğin etiketlerle ilgili hiçbir şey bulamadım. Etiketlerin doğruluğundan emin ol.",
             "nsfw404": "Kusura bakma ama aradığın porno baya bi' değişik; hiçbir yerde bulamadım. Senin gibi birinden beklendiği gibi.",

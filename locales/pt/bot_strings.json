@@ -15,7 +15,7 @@
         "C": "Comum",
         "U": "Incomum",
         "R": "Raro",
-        "SR": "Tri Bagual",
+        "SR": "Super Raro",
         "UR": "Ultra Raro",
         "thevoid": "vazio",
         "evToken": "",
@@ -232,7 +232,7 @@
                 "ohmy_negative": [
                     "",
                     "",
-                    "Mas que barbaridade...",
+                    "",
                     "",
                     "",
                     ""
@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "O nível de sal de {{target}} é **{{amount}}%** {{emoji}}",
             "booru404": "Oops, não encontrei nada com essas tags. Vê se tu tens tudo certo, querido!",
             "nsfw404": "Puto, o teu porno é tão bizarro que eu não encontrei isso em lado nenhum. Tenta algo menos estranho",
@@ -696,7 +697,7 @@
             "quick_useful": "",
             "quick_enjoy": "",
             "quick_didntask": "",
-            "avail_cmd": "Comandos Disponíves ",
+            "avail_cmd": "Comandos Disponíveis",
             "avail_cmdlist": "",
             "notenough": "",
             "trythese": "",
