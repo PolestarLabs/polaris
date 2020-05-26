@@ -461,6 +461,7 @@
             "inChan": "Selvä! Tervetulo-viestit lähetetään kanavalla **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Käyttäjän {{target}}' Suolaisuuden määrä on **{{amount}}%** {{emoji}}",
             "booru404": "Anteeksi, mutta en löytänyt noilla tageilla mitään. Varmista, että ne ovat oikein.",
             "nsfw404": "Anteeksi, mutta pornosi on niin kummallista, etten löytänyt sitä mistään. Kuten odotettu joltakulta kaltaiseltasi.",

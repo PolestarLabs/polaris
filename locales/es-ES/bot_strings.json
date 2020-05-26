@@ -461,6 +461,7 @@
             "inChan": "¡Muy bien! El mensaje de bienvenida se publicará en **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' tiene un Nivel de Sal de **{{amount}}%** {{emoji}}",
             "booru404": "Lo siento, no pude encontrar nada con esas etiquetas. Confirma que está todo bien.",
             "nsfw404": "Perdona, pero tu porno es tan rarito que no pude encontrarlo en ninguna parte. Intenta algo menos depravado.",

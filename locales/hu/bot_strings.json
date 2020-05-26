@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}-nak **{{amount}}%**-ban sós a p*csája {{emoji}}",
             "booru404": "Hoppika, semmit sem találtam ezekkel a tagekkel. Ellenőrizd, hogy mindent helyesen írtál-e.",
             "nsfw404": "Már megbocsáss, de a kérésed annyira bizarr, hogy ennek megfelelőt sehol se találtam. De tőled nem is vártam mást.",

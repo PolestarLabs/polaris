@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Level naštvanosti {{target}} je **{{amount}}%** {{emoji}}.",
             "booru404": "Ups, nemůžu najít nic s takovými tagy. Koukni se jestli máš všechno správně!",
             "nsfw404": "Kámo, tvoje porno je tak sakra bizární, že jsem ho nikde nemohla najít. Zkus něco méně výstředního.",
