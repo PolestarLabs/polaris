@@ -135,7 +135,7 @@ module.exports={
    roundRect: function roundRect(ctx, x=0, y=0, width=10, height=10, radius=5, fill="#FFF", stroke=false) {
  
   if (typeof radius === 'number') {
-    radius = typeof radius == 'object'?radius:{tl: radius, tr: radius, br: radius, bl: radius};
+    radius = {tl: radius, tr: radius, br: radius, bl: radius};
   } else {
     var defaultRadius = {tl: 0, tr: 0, br: 0, bl: 0};
     for (var side in defaultRadius) {
