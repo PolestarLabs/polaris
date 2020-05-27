@@ -147,6 +147,7 @@ const UserSchema = new mongoose.Schema({
 
 UserSchema.pre(/^update/, function() {
   this.update({},{ $set: { lastUpdated: new Date() } });
+  USERCACHE.delete(this.id)
 });
 
 UserSchema.methods.addItem = function receiveItem(itemId,amt=1){
