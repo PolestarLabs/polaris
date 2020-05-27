@@ -7,21 +7,21 @@ const XYZ ={
   global_roundel: {X: 680,  Y: 0},
   persotex    : {W: 255, H: 85, X:515, Y:482 - 125 },
   wifeRect    : {X:100,Y:1,W:314,H:65,R:37},
-  wifeName    : {X:165 ,Y:  7 ,W:183 ,A:'left'   },
-  lovepoints  : {X:165 ,Y: 35 ,W:183 ,A:'left'   },
-  wifeSince   : {X:350 ,Y: 35 ,W:183 ,A:'right'  },
+  wifeName    : {X:165 ,Y: 10 ,W:183 ,A:'left'   },
+  lovepoints  : {X:165 ,Y: 40 ,W:183 ,A:'left'   },
+  wifeSince   : {X:348 ,Y: 40 ,W:183 ,A:'right'  },
   commend     : {X: 52 ,Y: 25 ,W: 80 ,A:'center' },
-  name        : {X:325 ,Y:275 ,W:420 ,A:'left'   },
+  name        : {X:325 ,Y:281 ,W:420 ,A:'left'   },
+  tagline     : {X:332 ,Y:320 ,W:440 ,A:'left'   },
   medals      : {X:96,Y: 377                     },
-  tagline     : {X:332 ,Y:315 ,W:440 ,A:'left'   },
   rubines     : {X:706 ,Y:521 ,W:440             },
   sapphires   : {X:706 ,Y:521 ,W:440             },
-  globalRank  : {X:558 ,Y:465 ,W: 80 ,A: 'left' },
-  localRank   : {X:725 ,Y:465 ,W: 80 ,A: 'right' },
+  globalRank  : {X:556 ,Y:468 ,W: 80 ,A: 'left' },
+  localRank   : {X:723 ,Y:468 ,W: 80 ,A: 'right' },
   background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
   sticker     : {X: 318 ,Y: 395 ,W:215, H: 215    },
   avatar      : {X: 20,  Y: 110}, //123
-  flair       : {X: 243,  Y: 250, W:100, H:120},
+  flair       : {X: 243,  Y: 253, W:100, H:120},
   flag     : {X: 748,  Y: 276},
   offset_hex  : 20
 }; 
@@ -36,33 +36,33 @@ const COLORS = {
 };
 const TEXT={
   NAME:{
-    SIZE:   42,
+    SIZE:   38,
     WEIGHT: 900,
-    FAMILY: "Whitney HTF",
+    FAMILY: "Panton Black",
     COLOR:  "#2b2b3b"
   },
   TAGLINE:{
-    SIZE:17,
-    WEIGHT:600,
-    FAMILY:'Whitney HTF SC',
-    COLOR: "#333A5A"
+    SIZE:16,
+    WEIGHT:900,
+    FAMILY:'Panton',
+    COLOR: "#2b2b3b"
   },       
   WIFENAME:{
     SIZE:24,
     WEIGHT:600,
-    FAMILY:'Whitney HTF',
+    FAMILY:'Panton',
     COLOR:"#fdfdfd"
   },    
   WIFESMALL:{
-    SIZE: 20,
+    SIZE: 18,
     WEIGHT: 100,
-    FAMILY:'Whitney HTF',
+    FAMILY:'Panton',
     COLOR:"#fdfdfd"
   },
   RANKS:{
     SIZE: 22,
     WEIGHT: 300,
-    FAMILY: 'Whitney HTF Light',
+    FAMILY: 'Panton',
     COLOR: "#fdfdfd"
   },
   PERSOTEX:{
@@ -80,7 +80,7 @@ const TEXT={
   THX:{
     SIZE: 30,
     WEIGHT: 900,
-    FAMILY:"Whitney HTF",
+    FAMILY:"Panton Black",
     COLOR: "#ffffff"
   },
   RUBINES:{
