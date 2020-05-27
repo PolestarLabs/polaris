@@ -461,6 +461,7 @@
             "inChan": "Okej! Wiadomości z przywitaniami będą wrzucane na kanał **{{chanell}}** "
         },
         "forFun": {
+            "thisShit": "Czy patrzyłbyś na **ten syf**...",
             "saltLVL": "{{target}}' jest toksyczny w **{{amount}}%** {{emoji}}",
             "booru404": "Przykro mi, ale nie mogłam znaleźć nic z tymi tagami. Powinieneś upewnić się, że są poprawne.",
             "nsfw404": "Przepraszam, ale twoje porno jest takie dziwaczne, że nigdzie nie mogę go znaleźć. Spodziewałam się tego po tobie.",

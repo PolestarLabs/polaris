@@ -461,6 +461,7 @@
             "inChan": "Alright! Welcome Messages will be posted at **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Salt Level is **{{amount}}%** {{emoji}}",
             "booru404": "I'm sorry, But I couldn't find anything with those tags. You should check to make sure those are correct.",
             "nsfw404": "Excuse me, but your porn is so bizarre I couldn't find it anywhere. As expected of someone like you.",

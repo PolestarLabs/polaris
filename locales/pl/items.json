@@ -22,7 +22,7 @@
         "description": "Pierwszy krok w kierunku zaangażowania jest oddanie bardzo rzadkiego kryształu osobie, którą się kocha - gratulacje! "
     },
     "complete_ring_stardust": {
-        "name": "",
+        "name": "Bogaty Gwiezdny Pierścień",
         "description": ""
     },
     "cosmo_fragment": {
@@ -119,7 +119,7 @@
         "description": ""
     },
     "lootbox_EL": {
-        "name": "",
+        "name": "SkrzynkaEl",
         "description": "Jeśli otworzysz tę skrzynkę to twój ekwipunek eksploduje"
     },
     "lootbox_R_C": {
@@ -269,7 +269,7 @@
     },
     "p5_booster": {
         "name": "Persona 5",
-        "description": ""
+        "description": "Nigdy nie widzisz jak nadchodzi"
     },
     "padoru_booster": {
         "name": "Padoru Ultimate Collection",

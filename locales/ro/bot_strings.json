@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Salt Level este de **{{amount}}%** {{emoji}}",
             "booru404": "Oopsie, nu am gasit nimic cu aceste taguri. Verifica daca totul e in regula sweetie!",
             "nsfw404": "Ba, pornul tau e atat de ciudat cu nu ili am gasit nici unde... Incearca sa fii mai putin dus cu capu",

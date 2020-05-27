@@ -461,6 +461,7 @@
             "inChan": "D'acc! Messages de bienvenue seront plantés dans **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Le niveau de sel à {{target}} est de **{{amount}}%** {{emoji}} ",
             "booru404": "Oups, je n'ai rien pu trouver avec ces mots-clés. Essayes-en d'autres, mon chou!",
             "nsfw404": "Mec, ton porno est tellement bizarre que je l'ai trouvé nulle part. Essaye un truc moins chelou.",

@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Salt Level er **{{amount}}%** {{emoji}}",
             "booru404": "Jeg beklager, men jeg finner ingenting med de taggene. Du bør sjekke om de er korrekte. ",
             "nsfw404": "Unnskyld meg, men din type porno er så spesiell at jeg ikke fant det noen sted. Som forventet av en som deg. ",

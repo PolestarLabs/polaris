@@ -461,6 +461,7 @@
             "inChan": "Siap! pesan penyambutan akan di post di **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Tingkat kadar Garam-nya adalah **{{amount}}%** {{emoji}}",
             "booru404": "Maaf ya, aku tidak menemukan apa pun dengan label itu. Cek lagi deh sudah benar atau tidak.",
             "nsfw404": "Maaf, itu terlalu sadis sampai-sampai aku tidak menemukannya di mana pun. Kamu ini betul-betul deh.",

@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Das \"Salz-Level\" {{target}}' ist **{{amount}}%** {{emoji}}",
             "booru404": "Sorry, die angegebenen Tags existieren leider nicht!",
             "nsfw404": "JUNGE, JUNGE, JUNGE!!! Deine Pornos sind so verdammt seltsam, nicht mal ich kann da was finden. Versuch mal etwas weniger perverses!",
