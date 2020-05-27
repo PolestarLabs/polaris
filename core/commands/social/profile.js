@@ -311,23 +311,21 @@ try{
 
       await img.wifeHeart.then(IMG => ctx.drawImage( IMG , wR.X+6, wR.Y+6, 55,55) );
 
-      (async ()=>{
-        ctx.beginPath();
-        let thiX = wR.X+wR.W   -(picDiameter+ctx.lineWidth*2) -3
-        ctx.arc(thiX,picDiameter+8, picDiameter+2, 0, Math.PI*2,true);
-        ctx.clip();
-        try{
-          ctx.drawImage( (await img.wifeAvatar ) ,thiX-picDiameter-3,wR.Y,60,60);
-        }catch(e){
-          ctx.drawImage( (await img.defaultAvi ) ,thiX-picDiameter-3,wR.Y,60,60);
-        }
-        ctx.closePath();
-        ctx.restore();
-      })()
+      ctx.beginPath();
+      let thiX = wR.X+wR.W   -(picDiameter+ctx.lineWidth*2) -3
+      ctx.arc(thiX,picDiameter+8, picDiameter+2, 0, Math.PI*2,true);
+      ctx.clip();
+      try{
+        ctx.drawImage( (await img.wifeAvatar ) ,thiX-picDiameter-3,wR.Y,60,60);
+      }catch(e){
+        ctx.drawImage( (await img.defaultAvi ) ,thiX-picDiameter-3,wR.Y,60,60);
+      }
+      ctx.closePath();
+      ctx.restore();
 
     }    
     
-    Promise.all([backmost,sticker]).then(array=>{
+    return Promise.all([backmost,sticker]).then(array=>{
 
       if(array[1])
         ctx.drawImage(array[1] , XYZ.sticker.X - 10 -10, XYZ.sticker.Y - 25 -8,  XYZ.sticker.W,  XYZ.sticker.H);
@@ -335,7 +333,7 @@ try{
       ctx.drawImage(array[0],0,0);
       ctx.globalCompositeOperation = "source-over";
       array = null;
-      resolveAll(canvas);
+      return resolveAll(canvas);
     })
 
   });    

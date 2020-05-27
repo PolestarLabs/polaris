@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Pollux on Eris",
   "main": "pollux.js",
-  "scripts": {"start": "node --max-old-space-size=2048 --harmony pollux.js"},
+  "scripts": {
+    "start": "node --max-old-space-size=2048 --harmony pollux.js"
+  },
   "author": "Flicky",
   "license": "UNLICENSED",
   "dependencies": {
@@ -29,7 +31,6 @@
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
     "open-graph-scraper": "^3.6.2",
-    "pixel-util": "0.0.2",
     "rss-parser": "^3.7.2",
     "tunnel-ssh": "^4.1.4",
     "uws": "^99.0.0",
@@ -38,5 +39,7 @@
   "devDependencies": {
     "colors": "^1.3.2"
   },
- "engines" : { "node" : ">=14.0.0" } 
+  "engines": {
+    "node": ">=14.0.0"
+  }
 }
