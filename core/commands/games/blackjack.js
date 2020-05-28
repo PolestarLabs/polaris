@@ -64,10 +64,12 @@ const renderHand = async (HANDS,deck,bjd,current) => {
 const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
 	let msg 	= drawOpts.m,
-		bet 	= drawOpts.b,
+		bet 	  = drawOpts.b,
 		_PLAYER = drawOpts.p,
 		_DEALER = drawOpts.d,
-		_v 		= drawOpts.v;
+		_v 		  = drawOpts.v;
+		insurance = drawOpts.ins || 1;
+		canInsurance = drawOpts.canInsurance || 1;
 
 	const SCENE = Picto.new(800, 600);
 	const c = SCENE.getContext('2d');
@@ -105,9 +107,12 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 			break;
 	}
 
-	const [fel,chip,you,me,bjk,stando,joker] = await Promise.all([
+	const [fel,insur_glow,insur_enabled,chip,chip_i,you,me,bjk,stando,joker] = await Promise.all([
 		Picto.getCanvas(paths.Build + "/games/blackjack/feltro.png"),
-		Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"),
+		canInsurance ? Picto.getCanvas(paths.Build + "/games/blackjack/ins_avail.png"):null,
+		insurance ? Picto.getCanvas(paths.Build + "/games/blackjack/ins_using.png"):null,
+		insurance ? Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"):null,
+		Picto.getCanvas(_ASSETS + "chips-" + Math.ceil(chips/2) + ".png"),
 		drawOpts.enemyStando ? Picto.getCanvas(_ASSETS + "dio.png") : Picto.getCanvas(PLX.user.displayAvatarURL),
 		Picto.getCanvas(msg.author.displayAvatarURL),
 		bjkWIN 	? Picto.getCanvas(_ASSETS + "BLACKJACK-win.png") 
@@ -117,11 +122,29 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 						? Picto.getCanvas(paths.Build + "games/blackjack/JOKER-win.png") :null,
 		drawOpts.enemyStando ?  Picto.getCanvas(paths.BUILD + "STANDO.png") : null,
 		jkrWIN ? Picto.getCanvas(paths.Build+"cards/casino/JOKERS/"+(SCORE_A.split('-')[1]||'default')+".png") : null
-	]);
-      
+  ]);
+  
 
+  let bet_img = Picto.tag(c, miliarize( bet ), "900 italic 40px 'Panton Black'", "#e6d084")
+	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 30px 'Panton'", "#4a8b45")
+	let ins_txt = Picto.tag(c, "INSURANCE", "600 24px 'Panton'", "#448674")
+	let ins_img = Picto.tag(c, miliarize( insurance * Math.ceil(bet/2) ), "600 italic 36px 'Panton Black'", "#2ab099")
+ 
 	c.drawImage(fel, 0, 0,800,600)
-	c.drawImage(chip, 140*2, 170*2)
+  c.drawImage(chip, 560-(chip.width/2), 377-(chip.height/2))
+  if (canInsurance) c.drawImage(insur_glow,0,0);
+  if(insurance ){ 
+    Picto.roundRect(c,630,395,380,170,15,"#2b2b40AA");
+    c.drawImage(insur_enabled,0,0);
+    c.drawImage(chip_i, 400-(chip_i.width/2), 436-(chip_i.height/2));
+    c.drawImage(ins_txt.item, 630+80 - ins_txt.width / 2, 400+95)
+    c.drawImage(ins_img.item, 630+80 - ins_img.width / 2, 440+80);
+
+  }else{
+    Picto.roundRect(c,630,395,160,100,15,"#2b2b40AA");
+  }
+  c.drawImage(bet_img.item, 630+80 - bet_img.width / 2, 440);
+  c.drawImage(bet_txt.item, 630+80 - bet_txt.width / 2, 408)
 
 	//=================================
 	c.drawImage(DL, -10*2, 180*2)
@@ -139,27 +162,26 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 	c.drawImage(me, 332*2, 124*2, 60*2, 60*2);
 
 	let wid
-	let name_p = Picto.tag(c, _PLAYER, "400 28px 'Corporate Logo Rounded'", "#fff")
+	let name_p = Picto.tag(c, _PLAYER, "400 28px 'Corporate Logo Rounded'", "#fffA")
 	name_p.width > 100*2 ? wid = 100*2 : wid = name_p.width;
 	c.drawImage(name_p.item, 324*2 - wid, 132*2, wid, name_p.height)
 
-	let name_d = Picto.tag(c, _DEALER, "400 28px 'Corporate Logo Rounded'", "#fff")
+	let name_d = Picto.tag(c, _DEALER, "400 28px 'Corporate Logo Rounded'", "#fffA")
 	name_d.width > 100*2 ? wid = 100*2 : wid = name_d.width;
 	c.drawImage(name_d.item, 16*2 + 60*2, 102*2, wid, name_d.height)
 
-	let bet_img = Picto.tag(c, miliarize( bet ), "900 40px 'Whitney HTF'", "#e6d084")
-	c.drawImage(bet_img.item, 110*2 - bet_img.width / 2, 170*2)
-	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 36px 'Whitney HTF'", "#4a8b45")
-	c.drawImage(bet_txt.item, 110*2 - bet_txt.width / 2, 150*2)
+
+  
 
 
-	let num_p = Picto.tag(c, SCORE_A, "900 36px 'Whitney HTF',Sans", "#fff")
-	c.drawImage(num_p.item, 324*2 - num_p.width, 129*2 + 20*2)
 
-	let num_d = Picto.tag(c, SCORE_B, "900 36px 'Whitney HTF',Sans", "#fff")
-	c.drawImage(num_d.item, 16*2 + 60*2, 99*2 + 20*2)
+	let num_p = Picto.tag(c, SCORE_A, "900 italic 36px 'Panton Black',Sans", "#fff")
+	c.drawImage(num_p.item, 648 - num_p.width, 305 )
+console.log({SCORE_B})
+	let num_d = Picto.tag(c, SCORE_B, "900 italic 36px 'Panton Black',Sans", "#fff")
+	c.drawImage(num_d.item, 150, 244)
 
-	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase(), "900 40px 'Panton Black'", "#ea2e2e")
+	let BUSTED = Picto.tag(c, _v.BUST.toUpperCase()+"!", "900 italic 40px 'Panton Black'", "#ea2e2e",{style: '#2b2b3b',line:10})
 	
 	c.rotate(-.5)
 	if (Number(SCORE_B) > 21) c.drawImage(BUSTED.item,  40*2, 160*2);
@@ -437,7 +459,8 @@ const init       = async (msg,args) => {
 					await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
 				}
 			}
-			drawOptions.b = bet*playerHands.length + doubles*bet
+      drawOptions.b = bet*playerHands.length + doubles*bet
+      drawOptions.ins = playerHands.filter(x=>x.insurance).length
 			let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, multiHAND_DATA[0], POL_DATA, drawOptions);
 			let resp = winnings > 0 ? v._PRIZE : winnings < 0 ? v._ANTIPRIZE : ""
 			let rebalance = resp.replace("%R%", _emoji("rubine") + Math.abs(winnings))
@@ -563,7 +586,8 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
 
-		options.b = totalBet
+    options.b = totalBet
+    options.canInsurance = canInsurance
 		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(0,0));
 		//let ncanvas = Picto.new(800,600)
 		//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
