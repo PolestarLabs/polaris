@@ -364,25 +364,25 @@ module.exports = {
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
     let FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
-    let ctx = this.tag(ctx, TXT, FONT, stroke.style, stroke);
+    let ctx_2 = this.tag(ctx, TXT, FONT, stroke.style, stroke);
     ctx.drawImage(
-      ctx.item,X,Y,
-      maxWidth && ctx.width > maxWidth ? maxWidth : ctx.width,
-      ctx.height
+      ctx_2.item,X,Y,
+      maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
+      ctx_2.height
     );
-    ctx = this.tag(ctx, TXT, FONT, color, stroke);
+    ctx_2 = this.tag(ctx, TXT, FONT, color, stroke);
     ctx.drawImage(
-      ctx.item,
+      ctx_2.item,
       X - shadow,
       Y - shadow,
-      maxWidth && ctx.width > maxWidth ? maxWidth : ctx.width,
-      ctx.height
+      maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
+      ctx_2.height
     );
     return {
       w:
-        maxWidth && ctx.width > maxWidth
+        maxWidth && ctx_2.width > maxWidth
           ? maxWidth
-          : ctx.width + stroke.line + shadow + 2,
+          : ctx_2.width + stroke.line + shadow + 2,
       text: TXT,
     };
   },
