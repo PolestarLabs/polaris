@@ -146,14 +146,14 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
   c.drawImage(chip, 560-(chip.width/2), 377-(chip.height/2))
   if (canInsurance) c.drawImage(insur_glow,0,0);
   if(insurance ){ 
-    Picto.roundRect(c,630,395,380,170,15,"#2b2b40AA");
+    Picto.roundRect(c,630,395,160,170,15,"#20203BAF");
     c.drawImage(insur_enabled,0,0);
     c.drawImage(chip_i, 400-(chip_i.width/2), 436-(chip_i.height/2));
     c.drawImage(ins_txt.item, 630+80 - ins_txt.width / 2, 400+95)
     c.drawImage(ins_img.item, 630+80 - ins_img.width / 2, 440+80);
 
   }else{
-    Picto.roundRect(c,630,395,160,100,15,"#2b2b40AA");
+    Picto.roundRect(c,630,395,160,100,15,"#20203BAF");
   }
   c.drawImage(bet_img.item, 630+80 - bet_img.width / 2, 440);
   c.drawImage(bet_txt.item, 630+80 - bet_txt.width / 2, 408)
@@ -449,7 +449,7 @@ const init       = async (msg,args) => {
                           : _emoji("plxbjkwin");
 
 
-				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}${hand.insurance?_emoji('plxbjkinsu')+`\`${result.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}\`` :""}`)
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}${hand.insurance?_emoji('plxbjkinsu')+`\`${dealerValue == "Blackjack"?"+":"-"}${insuranceAmount}\`` :""}`)
         finalResult = result
       });
 
@@ -485,8 +485,8 @@ const init       = async (msg,args) => {
 			//let ncanvas = Picto.new(800,600)
 			//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
 			msg.channel.send(PLAY_RES, { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
-			if(splitExplain.length > 1){
-				msg.channel.send(`**${$t('games.blackjack.splitbreak',P)}**\n`+splitExplain.join('\n'))
+			if(splitExplain.length ){
+				msg.channel.send(`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): 'Results:'}**\n`+splitExplain.join('\n'))
 			}
 
 			// JOKER EFFECTS GO HERE
@@ -521,7 +521,7 @@ function gameResult(playerValue, dealerValue) {
 }
 
 async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, options) {
-
+dealerHand[0] ='AH'
 	let msg 	= options.m,
       balance = options.B,
       bet 	= options.b;
@@ -605,6 +605,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 
     options.b = totalBet
     options.canInsurance = canInsurance
+    options.ins = currentHand.insurance
 		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(0,0));
 		//let ncanvas = Picto.new(800,600)
 		//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
@@ -633,7 +634,6 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 			
 		if(action === 'insurance'){
 			currentHand.insurance = true;
-			totalBet +=  Math.ceil(totalBet/2);
 		}
 		if(action === 'surrender'){
 			currentHand.surrendered = true;
