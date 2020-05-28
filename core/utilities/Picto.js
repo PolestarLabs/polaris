@@ -19,6 +19,7 @@ module.exports = {
     let H = ctx.measureText(text).emHeightAscent;
     let h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
+    if(font.toLowerCase().includes('italic')) w+= (w/text.length*0.32)
     
     const item = new Canvas.createCanvas(w, h + H);
     let c = item.getContext("2d");
