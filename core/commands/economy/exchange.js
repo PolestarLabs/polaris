@@ -31,6 +31,7 @@ const init = async function(msg){
 	}
 
 	const embed = { fields: [] };
+	embed.color = 0xff3355;
 	let empty = {name:'\u200b',value:'\u200b',inline:true};
 
 	const { amount, currency } = getParams();
@@ -39,23 +40,24 @@ const init = async function(msg){
 		if (amount < 0) return msg.reply("Debt isn't transferable, exchange at least 1 Rubine");
 		if (amount === 0) return msg.reply("Exchange at least 1 Rubine");
 
+		const amtAfterTax = amount * .85;
+
 		const Currency = Rates.find(r => r.id === currency);
 
 		if (!Currency) return msg.reply("Could not find the specified currency. Run this command without arguments to see available currencies");
 		if (!await ECO.checkFunds(msg.author.id, amount)) return msg.reply("You don't have enough Rubines");
 
-		return DCN.create(msg.author.id, amount, currency)
+		return DCN.create(msg.author.id, amtAfterTax, currency)
 			.then(async(transaction) => {
 				await ECO.pay(msg.author.id, amount, "DISCOIN");
 
 				const receiptURL = genURL + transaction.id;
-				embed.description = "Your transaction receipt:";
+				embed.description = "Here is your transaction receipt:";
 				embed.image = { url: receiptURL };
 				embed.footer = { text: "Keep this receipt in case your Rubines don't reach their destination." }
 
-				// DM user receipt?
 				msg.author.getDMChannel().then(DMChannel => {
-					msg.reply(`Succesfully exchanged ${_emoji("RBN")}${amount} to ${currency}. Your receipt is on its way.`);
+					msg.reply(`Succesfully exchanged ${_emoji("RBN")}${miliarize(amount)} to ${currency}. Your receipt is on its way.`);
 					DMChannel.createMessage({ embed });
 				})
 				.catch(e => {
@@ -71,9 +73,8 @@ const init = async function(msg){
 	} else {
 		let RBN = Rates.find(r=>r.id === "RBN");
 
-		// need to find the function for number formatting & precision.
 		embed.title = "Discoin Currency Exchange";
-		embed.description = _emoji('RBN')+`1 Rubine \`RBN\` = ${RBN.value.toPrecision(4)} D$`;
+		embed.description = _emoji('RBN')+`1 Rubine \`RBN\` = ${miliarize(RBN.value)} D$`;
 
 		embed.fields.push({
 			name:"Example usage:",
@@ -96,16 +97,14 @@ const init = async function(msg){
 		});
 
 		// probably replaced with fancy image
-		// if not, need to add emojis when I add them to rates result
 		Rates.filter(r=>r.id!="RBN").forEach(curr=>{
-			embed.fields.push({name: curr.name, value: `1 RBN = ${Math.round(RBN.value/curr.value)||(RBN.value/curr.value).toFixed(2)} ${curr.id}` , inline: true})
+			embed.fields.push({name: `${_emoji(curr.id).replace("⬜", "💰")} ${curr.name}`, value: `1 RBN = ${miliarize(RBN.value/curr.value)||(RBN.value/curr.value).toPrecision(2)} ${curr.id}` , inline: true})
 		});
 
 		while(embed.fields.length % 3) embed.fields.push(empty);
 
 		// embed.thumbnail = {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882674287968266/piechart.gif"}
 		embed.thumbnail = {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882599956643840/abacus.gif"}
-		embed.color = 0xff3355;
 
 		return { embed };
 	}
