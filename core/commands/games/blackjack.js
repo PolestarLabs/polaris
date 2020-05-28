@@ -332,22 +332,57 @@ const init       = async (msg,args) => {
 			let winnings = 0;
 			let hideHoleCard = true;
 			let multiHAND_DATA = []
-			let resultade;
+			let result;
 
 			const H_DATA = {}
 			let doubles=0;
+			let surrenders=0;
+			let insurances=0;
+			let insuranceAmount=0;
 			let hasJoker = false;
 			let gameJokers = []
-			let splitExplain = []
+      let splitExplain = []
+ 
+      
+      
 			playerHands.forEach((hand, i) => {
 
+        let calc_bet = bet 
+
 				const playerValue = Blackjack.handValue(hand);
-				const result = gameResult(playerValue, dealerValue);
+				result = gameResult(playerValue, dealerValue);
 
 				if (result !== 'bust') hideHoleCard = false;
 				doubles += hand.doubled?1:0;
-				const lossOrGain = Math.floor((['loss', 'bust'].includes(result) ? -1 : result === 'push' ? 0 : 1) * (hand.doubled ? 2 : 1) * (playerValue === 'Blackjack' ? 1.5 : playerValue.toString().includes('JOKER') ? 2 : 1) * bet);
-				if (result == "push") resultade = "push";
+        if(hand.surrendered) {
+          surrenders++
+          calc_bet = Math.ceil(calc_bet / 2)
+          result = "surrender"
+        }
+        if(hand.insurance) {
+          insurances++
+          calc_bet = calc_bet - Math.ceil(calc_bet/2);
+          insuranceAmount = Math.ceil(calc_bet/2);
+        }
+
+				const lossOrGain = Math.floor(
+          (
+            (["loss", "bust","surrender"].includes(result) ? -1 : result === "push" ? 0 : 1) *
+            (hand.doubled ? 2 : 1) *
+            (playerValue === "Blackjack"
+              ? 1.5
+              : playerValue.toString().includes("JOKER")
+                ? 2
+                : 1
+            ) *
+            calc_bet +
+            (dealerValue === "Blackjack"
+              ? insuranceAmount
+              : -insuranceAmount
+            )
+          )
+        );
+
 				//winnings += lossOrGain;
 				const soft = Blackjack.isSoft(hand);				
 					H_DATA.num = i + 1
@@ -361,8 +396,27 @@ const init       = async (msg,args) => {
 					gameJokers.push(playerValue.toString())
 				}
 				
-				RESULT_EMOJI = (res) => playerValue.toString().includes("JOKER") ? _emoji('plxbjkjkr') : playerValue == "Blackjack" ? _emoji('plxbjkbjk') : res == "push"? _emoji('plxbjkpush') : res=="loss"? _emoji('plxbjkloss') :res=="bust"? _emoji('plxbjkbust') :res=="Dealer bust"? _emoji('plxbjkwin') : res.toLowerCase() == "blackjack"? _emoji('plxbjkbjk') : _emoji('plxbjkwin');
-				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}`)
+				RESULT_EMOJI = (res) =>
+          playerValue.toString().includes("JOKER")
+            ? _emoji("plxbjkjkr")
+            : playerValue == "Blackjack"
+              ? _emoji("plxbjkbjk")
+              : res == "push"
+                ? _emoji("plxbjkpush")
+                : res == "loss"
+                  ? _emoji("plxbjkloss")
+                  : res == "bust"
+                    ? _emoji("plxbjkbust")
+                    : res == "Dealer bust"
+                      ? _emoji("plxbjkwin")
+                      : res.toLowerCase() == "blackjack"
+                        ? _emoji("plxbjkbjk")
+                        : res.toLowerCase() == "surrender"
+                          ? _emoji("plxbjksurr")
+                          : _emoji("plxbjkwin");
+
+
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''} ${hand.insurance?_emoji('plxbjkinsur')+`${res.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}` :""}`)
 			});
 
 			let POL_DATA = {}		
@@ -372,7 +426,8 @@ const init       = async (msg,args) => {
 			let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE
 			if (Blackjack.handValue(playerHands[0]).toString().includes('JOKER')) PLAY_RES = v._JOKER;
 
-			resultade === 'push' ? PLAY_RES = v._EVEN : PLAY_RES = PLAY_RES			
+			result === 'push' ? PLAY_RES = v._EVEN : PLAY_RES = PLAY_RES			
+			result === 'surrender' ? PLAY_RES = v._SURR || "placeholder surrender text" : PLAY_RES = PLAY_RES
 
 			const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 				renderHand(playerHands,  myDeck),
@@ -475,6 +530,10 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 			//continue;
 		}
 
+		const canInsurance =
+				balance >= totalBet + Math.ceil(bet/2)
+				&& dealerHand[0].includes("A")
+				&& currentHand.length === 2;
 		const canDoubleDown = 
 				balance >= totalBet + bet
 				&& currentHand.length === 2;
@@ -518,10 +577,12 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 
 		const responses = await msg.channel.awaitMessages(msg2 =>
 			msg2.author.id === msg.author.id && (
-				msg2.content === 'hit' 	  ||
-				msg2.content === 'stand'  ||
-				msg2.content === 'STANDO' ||
-				msg2.content === 'stando' ||
+				msg2.content === 'hit' 	     ||
+				msg2.content === 'stand'     ||				
+				msg2.content === 'STANDO'    ||
+				msg2.content === 'stando'    ||
+				msg2.content === 'surrender' ||
+				(msg2.content === 'insurance'   && canInsurance)  ||
 				(msg2.content === 'split' 		&& canSplit) 	  ||
 				(msg2.content === 'double down' && canDoubleDown) ||
 				(msg2.content === 'double' 		&& canDoubleDown)
@@ -529,10 +590,22 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 				maxMatches: 1,
 				time: 30e3
 			}
-			);
-			
+		);
+		
 		if (responses.length === 0) return Promise.resolve(false);
-		const action = responses[0].content.toLowerCase();
+		const action = responses[0].content.toLowerCase()
+			
+		if(action === 'insurance'){
+			currentHand.insurance = true;
+			totalBet +=  Math.ceil(totalBet/2);
+		}
+		if(action === 'surrender'){
+			currentHand.surrendered = true;
+			totalBet = Math.ceil(totalBet/2);
+			if (currentHand === hands[hands.length - 1]) return Promise.resolve("EndGame");
+			nextHand();
+		}
+
 		if (action == "stando") {
 			options.enemyStando = true;
 			msg.channel.send( $t("eastereggs.konodioda", {lngs:msg.lang}) )
