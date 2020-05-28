@@ -6,6 +6,19 @@ const Blackjack = require('../../archetypes/Blackjack.js');
 const _ASSETS = paths.BUILD + "games/blackjack/"
 const ECO = require("../../archetypes/Economy.js")
 
+const constantAssets = Promise.all([
+  Picto.getCanvas(paths.Build + "/games/blackjack/feltro.png"),
+  Picto.getCanvas(paths.Build + "/games/blackjack/ins_avail.png"),
+  Picto.getCanvas(paths.Build + "/games/blackjack/ins_using.png"),
+  Picto.getCanvas(_ASSETS + "dio.png"),
+  Picto.getCanvas(_ASSETS + "BLACKJACK-win.png"),
+  Picto.getCanvas(_ASSETS + "BLACKJACK-lost.png"),
+  Picto.getCanvas(paths.Build + "games/blackjack/JOKER-win.png"),
+  Picto.getCanvas(paths.BUILD + "STANDO.png")
+]);
+
+
+
 
 const cardValue = card =>  new Object({rank : card.slice(0, -1) ,suit: card[card.length-1]});
 const fetchCard = (card, deck) => {
@@ -107,22 +120,20 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 			break;
 	}
 
-	const [fel,insur_glow,insur_enabled,chip,chip_i,you,me,bjk,stando,joker] = await Promise.all([
-		Picto.getCanvas(paths.Build + "/games/blackjack/feltro.png"),
-		canInsurance ? Picto.getCanvas(paths.Build + "/games/blackjack/ins_avail.png"):null,
-		insurance ? Picto.getCanvas(paths.Build + "/games/blackjack/ins_using.png"):null,
-		insurance ? Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"):null,
-		Picto.getCanvas(_ASSETS + "chips-" + Math.ceil(chips/2) + ".png"),
-		drawOpts.enemyStando ? Picto.getCanvas(_ASSETS + "dio.png") : Picto.getCanvas(PLX.user.displayAvatarURL),
+  const [fel,insur_glow,insur_enabled,dio,bWin,bLose,bJoker,stando] = await constantAssets;
+	const [chip,chip_i,you,me,bjk,joker] = await Promise.all([
+		Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"),
+		insurance ? Picto.getCanvas(_ASSETS + "chips-" + Math.ceil(chips/2) + ".png"):null,
+		drawOpts.enemyStando ? dio : Picto.getCanvas(PLX.user.displayAvatarURL),
 		Picto.getCanvas(msg.author.displayAvatarURL),
-		bjkWIN 	? Picto.getCanvas(_ASSETS + "BLACKJACK-win.png") 
+		bjkWIN 	? bWin 
 				: bjkLOSE 
-					? Picto.getCanvas(_ASSETS + "BLACKJACK-lost.png") 
+					? bLose
 					: jkrWIN 
-						? Picto.getCanvas(paths.Build + "games/blackjack/JOKER-win.png") :null,
-		drawOpts.enemyStando ?  Picto.getCanvas(paths.BUILD + "STANDO.png") : null,
+						? bJoker :null,
 		jkrWIN ? Picto.getCanvas(paths.Build+"cards/casino/JOKERS/"+(SCORE_A.split('-')[1]||'default')+".png") : null
   ]);
+
   
 
   let bet_img = Picto.tag(c, miliarize( bet ), "900 italic 40px 'Panton Black'", "#e6d084")
