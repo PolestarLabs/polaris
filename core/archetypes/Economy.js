@@ -13,8 +13,9 @@ const CURRENCIES = {
 
 function checkFunds (user,amt, currency = "RBN"){
   const uID = user.id || user;
-  if(typeof amt != 'number') return false;
+  
   amt = parseInt(amt);
+  if(typeof amt != 'number') return false;
   
   return new Promise(async (resolve,reject)=>{
     let userData = await DB.users.get(uID,{["modules."+CURRENCIES[currency]]:1});
