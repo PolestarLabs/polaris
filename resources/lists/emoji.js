@@ -73,6 +73,8 @@ const POLARIS_UI = {
     plxbjkpush: "<:plxbjkpush:598795339088134153>",
     plxbjkwin: "<:plxbjkwin:598795339213832193>",
     plxbjkbust: "<:plxbjkbust:598795339792646155>",
+    plxbjkinsu: "<:plxbjkinsu:715445818592722975>",
+    plxbjksurr: "<:plxbjksurr:715445818517356545>",
     plxbjk2x: "<:plxbjk2x:598795449117310988>",
     plxtarot: "<:plxtarot:598833296570449921>",
 
