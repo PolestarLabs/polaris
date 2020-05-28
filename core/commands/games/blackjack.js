@@ -292,7 +292,7 @@ const init       = async (msg,args) => {
 
 			v._WIN = $t("games.blackjack.youwin", P)
 			v._LOSE = $t("games.blackjack.youlose", P)
-			v._JOKER = $t("games.blackjack.joker", "Oh no! The Joker! You're so lucky~", P)
+			v._JOKER = $t("games.blackjack.joker", P)
 			v._EVEN = $t("games.blackjack.even", P)
 			v._PRIZE = $t("$.plus_rubines_generic", P)
 			v._ANTIPRIZE = $t("$.minus_rubines_generic", P)
@@ -329,16 +329,37 @@ const init       = async (msg,args) => {
 			return msg.reply(v.ceiling);
 		}
 
-		const blackjack = new Blackjack(msg);
-		
-		return msg.channel.send(
-			v.NEWGAME.replace("%usr%", msg.member.displayName).replace("%bt%", bet)
-			).then(async () => {
-				powerups.nojoker = true;
-				const balance 	 = USERDATA.modules.rubines;
-				const playerHand = blackjack.getHand(powerups);
-				powerups.nojoker = false;
-				const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
+		const blackjack  = new Blackjack(msg);
+    const playerHand = blackjack.getHand(powerups);
+    const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
+    const balance 	 = USERDATA.modules.rubines;    
+
+    const canInsurance  = testInsurance(balance,bet,playerHand,dealerHand);
+    const canDoubleDown = testDoubleDown(balance,bet,playerHand);
+    const canSplit      = testSplit(balance,bet,playerHand);
+
+    const HIT_TXT	   = $t("games.blackjack.hit"   , P)
+    const DOUBLE_TXT = $t("games.blackjack.double", P)
+    const SPLIT_TXT  = $t("games.blackjack.split"	, P)
+    const PASS_TXT 	 = $t("games.blackjack.pass"	, P)
+
+
+		let hitstand_pre = !canDoubleDown && !canSplit ?
+      HIT_TXT + PASS_TXT :
+          `${HIT_TXT} ${canDoubleDown
+            ? DOUBLE_TXT
+            : ''}${canSplit
+              ? SPLIT_TXT : ''}${PASS_TXT}`+`
+      ${$t('games.blackjack.surrender_helper',P)}
+      ${canInsurance? $t('games.blackjack.insurance_helper',P) :""}
+      `
+
+    return msg.channel.send(v.NEWGAME+`
+    ${hitstand_pre}
+    `).then(async tableMessage => {
+				powerups.nojoker = true;  //testing too
+        
+				powerups.nojoker = false; // testing
 				let playerHands;
 				
 				const drawOptions = {
@@ -347,7 +368,8 @@ const init       = async (msg,args) => {
 					B: balance,
 					p: playerName,
 					d: polluxNick,
-					m: msg
+					m: msg,
+					tm: tableMessage
 				}
 				let playerHandValueCalc = Blackjack.handValue(playerHand);
 				 
@@ -460,8 +482,40 @@ const init       = async (msg,args) => {
 			let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE
 			if (Blackjack.handValue(playerHands[0]).toString().includes('JOKER')) PLAY_RES = v._JOKER;
 
-			finalResult === 'push' ? PLAY_RES = v._EVEN : PLAY_RES = PLAY_RES			
-			finalResult === 'surrender' ? PLAY_RES = v._SURR || "placeholder surrender text" : PLAY_RES = PLAY_RES
+
+      P.insurance = insuranceAmount;
+
+
+      //TOP -> Result
+
+      if(finalResult === 'push' )
+        PLAY_RES = v._EVEN ;
+
+      if(finalResult === 'surrender' )
+        PLAY_RES = $t('games.blackjack.surrender_res',P);
+
+      if(dealerValue === 'Blackjack' )
+        PLAY_RES = $t('games.blackjack.blackjack_lose',P);
+        
+      if(playerHands.length === 1 && Blackjack.handValue(playerHand) === "Blackjack")
+        PLAY_RES = $t('games.blackjack.blackjack_win',P);
+        
+
+      //TOP -> Commentary
+      
+      if(playerHand.doubled && ["loss", "bust","surrender"].includes(result) )
+        PLAY_RES += "\n"+ $t('games.blackjack.double_lose',P);
+      else if(playerHand.doubled)
+        PLAY_RES += "\n"+ $t('games.blackjack.double_win',P);
+
+      if(playerHand.insurance && dealerValue === 'Blackjack')
+        PLAY_RES += "\n"+ $t('games.blackjack.insurance_win',P);
+      else if(playerHand.insurance)
+        PLAY_RES += "\n"+ $t('games.blackjack.insurance_lost',P);
+      
+
+
+      
 
 			const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 				renderHand(playerHands,  myDeck),
@@ -486,7 +540,7 @@ const init       = async (msg,args) => {
 			//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
 			msg.channel.send(PLAY_RES, { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
 			if(splitExplain.length ){
-				msg.channel.send(`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): 'Results:'}**\n`+splitExplain.join('\n'))
+				msg.channel.send(`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): $t('games.blackjack.result',P)}**\n`+splitExplain.join('\n'))
 			}
 
 			// JOKER EFFECTS GO HERE
@@ -523,13 +577,15 @@ function gameResult(playerValue, dealerValue) {
 async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, options) {
 dealerHand[0] ='AH'
 	let msg 	= options.m,
+      tableMessage = options.tm,
       balance = options.B,
       bet 	= options.b;
+      P = {lngs: msg.lang}
 
-	const HIT_TXT	 = $t("games.blackjack.hit"		, {lngs: msg.lang})
-	const DOUBLE_TXT = $t("games.blackjack.double"	, {lngs: msg.lang}).replace('double down', 'double')
-	const SPLIT_TXT  = $t("games.blackjack.split"	, {lngs: msg.lang})
-	const PASS_TXT 	 = $t("games.blackjack.pass"	, {lngs: msg.lang})
+	const HIT_TXT	   = $t("games.blackjack.hit"   , P)
+	const DOUBLE_TXT = $t("games.blackjack.double", P)
+	const SPLIT_TXT  = $t("games.blackjack.split"	, P)
+	const PASS_TXT 	 = $t("games.blackjack.pass"	, P)
 	
 	const hands = [playerHand];
 	let currentHand = hands[0];
@@ -564,25 +620,26 @@ dealerHand[0] ='AH'
 			return ProcessHand(currentHand);
 			//continue;
 		}
-
-		const canInsurance =
-				balance >= totalBet + Math.ceil(bet/2)
-				&& dealerHand[0].includes("A")
-				&& currentHand.length === 2;
-		const canDoubleDown = 
-				balance >= totalBet + bet
-				&& currentHand.length === 2;
-		const canSplit 		= 
-				balance >= totalBet + bet
-				&& Blackjack.handValue([currentHand[0]]) === Blackjack.handValue([currentHand[1]])
-				&& currentHand.length === 2;
-
+        
+    const canInsurance = testInsurance(balance,totalBet,currentHand,dealerHand);
+    const canDoubleDown = testDoubleDown(balance,totalBet,currentHand);
+    const canSplit = testSplit(balance,totalBet,currentHand);
+/*
 		let hitstand = !canDoubleDown && !canSplit ?
 			HIT_TXT + PASS_TXT :
 			`${HIT_TXT} ${canDoubleDown
 				? DOUBLE_TXT
 				: ''}${canSplit
-					? SPLIT_TXT : ''}${PASS_TXT}`
+          ? SPLIT_TXT : ''}${PASS_TXT}`+`
+${$t('games.blackjack.surrender_helper',P)}
+${canInsurance? $t('games.blackjack.insurance_helper',P) :""}
+`
+*/
+let hitstand = "```js\n"+`
+canInsurance: ${canInsurance}
+canDoubleDown: ${canDoubleDown}
+canSplit: ${canSplit}
+`+"```"
 
 		let USR_HAND = {}, POL_HAND = {};
 
@@ -602,7 +659,6 @@ dealerHand[0] ='AH'
 		]).timeout(2000).catch(e=> {errored = true; return [e,0] } );
 		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
-
     options.b = totalBet
     options.canInsurance = canInsurance
     options.ins = currentHand.insurance
@@ -610,7 +666,21 @@ dealerHand[0] ='AH'
 		//let ncanvas = Picto.new(800,600)
 		//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
 
-		msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(hitstand)); 
+    let tableMessageRound;
+    let actionsMessage;
+    if(currentHand.insuredLastTurn){
+      await msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => {         
+        tableMessageRound = m
+      });
+      tableMessageRound = await msg.channel.send(`Insurance has been placed for this match!
+      ${hitstand}`); 
+      currentHand.insuredLastTurn = false;
+    }else{      
+      await msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => {        
+        tableMessageRound = m
+      }); 
+    }
+    m.channel.send(hitstand).then(mm=> actionsMessage = mm )
 
 		const responses = await msg.channel.awaitMessages(msg2 =>
 			msg2.author.id === msg.author.id && (
@@ -627,13 +697,17 @@ dealerHand[0] ='AH'
 				maxMatches: 1,
 				time: 30e3
 			}
-		);
+    );
+    
+    //tableMessage.delete()
+    tableMessageRound.delete()
 		
 		if (responses.length === 0) return Promise.resolve(false);
 		const action = responses[0].content.toLowerCase()
 			
 		if(action === 'insurance'){
-			currentHand.insurance = true;
+      currentHand.insurance = true;
+      currentHand.insuredLastTurn = true;
 		}
 		if(action === 'surrender'){
 			currentHand.surrendered = true;
@@ -696,4 +770,22 @@ module.exports = {
 
 
 
-// TO-DO: update strings
+
+function testInsurance(balance,bet,currentHand,dealerHand){
+  return  balance >= bet + Math.ceil(bet/2)
+          && dealerHand[0].includes("A")
+          && currentHand.length === 2;
+}
+
+function testDoubleDown(balance,bet,currentHand){
+  return  balance >= bet * 2
+          && currentHand.length === 2;
+}
+
+function testSplit(balance,bet,currentHand){
+  console.log({currentHand})
+  return  balance >= bet * 2
+          && Blackjack.handValue([currentHand[0]]) === Blackjack.handValue([currentHand[1]])
+          && currentHand.length === 2;
+}
+ 
