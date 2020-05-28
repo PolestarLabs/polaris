@@ -16,6 +16,7 @@ module.exports = {
   tag: function tag(ctx, text, font="14px", color="#b4b4b8", stroke) {
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;     
 
+    text = text.toString()
     let H = ctx.measureText(text).emHeightAscent;
     let h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
