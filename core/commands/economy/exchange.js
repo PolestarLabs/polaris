@@ -13,11 +13,11 @@ const init = async function(msg){
 	function getParams() {
 		let amount = null, currency = null;
 
-		if (!isNaN(parseInt(msg.args[0])) && msg.args[1]?.length === 3) {
-			amount = msg.args[0];
+		if (parseInt(msg.args[0]) && msg.args[1]?.length === 3) {
+			amount = parseInt(msg.args[0]);
 			currency = msg.args[1].toUpperCase();
-		} else if (msg.args[0]?.length === 3 && !isNaN(parseInt(msg.args[1]))) {
-			amount = msg.args[1];
+		} else if (msg.args[0]?.length === 3 && parseInt(msg.args[1])) {
+			amount = parseInt(msg.args[1]);
 			currency = msg.args[0].toUpperCase();
 		}
 
@@ -36,8 +36,8 @@ const init = async function(msg){
 	const { amount, currency } = getParams();
 
 	if (amount && currency) {
-		if (parseInt(amount) < 0) return msg.reply("Debt isn't transferable, exchange at least 1 Rubine");
-		if (parseInt(amount) === 0) return msg.reply("Exchange at least 1 Rubine");
+		if (amount < 0) return msg.reply("Debt isn't transferable, exchange at least 1 Rubine");
+		if (amount === 0) return msg.reply("Exchange at least 1 Rubine");
 
 		const Currency = Rates.find(r => r.id === currency);
 
