@@ -310,10 +310,6 @@ const init       = async (msg,args) => {
 					d: polluxNick,
 					m: msg
 				}
-				if(msg.author.id=="88120564400553984"){
-					blackjack.deck[blackjack.deck.length-2]="JOKER-persona5"
-					console.log(blackjack.deck.slice(55))
-				}
 				let playerHandValueCalc = Blackjack.handValue(playerHand);
 				 
 			if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER")) {
@@ -326,8 +322,6 @@ const init       = async (msg,args) => {
 				playerHands = [playerHand];
 			}			
 
-		
-	
 			const dealerValue = Blackjack.handValue(dealerHand);
 			let winnings = 0;
 			let hideHoleCard = true;
@@ -416,7 +410,7 @@ const init       = async (msg,args) => {
                           : _emoji("plxbjkwin");
 
 
-				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''} ${hand.insurance?_emoji('plxbjkinsur')+`${result.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}` :""}`)
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}${hand.insurance?_emoji('plxbjkinsu')+`\`${result.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}\`` :""}`)
         finalResult = result
       });
 
@@ -489,8 +483,8 @@ function gameResult(playerValue, dealerValue) {
 async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, options) {
 
 	let msg 	= options.m,
-		balance = options.B,
-		bet 	= options.b;
+      balance = options.B,
+      bet 	= options.b;
 
 	const HIT_TXT	 = $t("games.blackjack.hit"		, {lngs: msg.lang})
 	const DOUBLE_TXT = $t("games.blackjack.double"	, {lngs: msg.lang}).replace('double down', 'double')
