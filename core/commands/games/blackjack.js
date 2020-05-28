@@ -14,7 +14,8 @@ const constantAssets = Promise.all([
   Picto.getCanvas(_ASSETS + "BLACKJACK-win.png"),
   Picto.getCanvas(_ASSETS + "BLACKJACK-lost.png"),
   Picto.getCanvas(paths.Build + "games/blackjack/JOKER-win.png"),
-  Picto.getCanvas(paths.BUILD + "STANDO.png")
+  Picto.getCanvas(paths.BUILD + "STANDO.png"),
+  Picto.getCanvas(_ASSETS + "alphamask.png"),
 ]);
 
 
@@ -81,8 +82,8 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 		_PLAYER = drawOpts.p,
 		_DEALER = drawOpts.d,
 		_v 		  = drawOpts.v;
-		insurance = drawOpts.ins || 1;
-		canInsurance = drawOpts.canInsurance || 1;
+		insurance = drawOpts.ins;
+		canInsurance = drawOpts.canInsurance;
 
 	const SCENE = Picto.new(800, 600);
 	const c = SCENE.getContext('2d');
@@ -120,7 +121,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 			break;
 	}
 
-  const [fel,insur_glow,insur_enabled,dio,bWin,bLose,bJoker,stando] = await constantAssets;
+  const [fel,insur_glow,insur_enabled,dio,bWin,bLose,bJoker,stando,alphamask] = await constantAssets;
 	const [chip,chip_i,you,me,bjk,joker] = await Promise.all([
 		Picto.getCanvas(_ASSETS + "chips-" + chips + ".png"),
 		insurance ? Picto.getCanvas(_ASSETS + "chips-" + Math.ceil(chips/2) + ".png"):null,
@@ -213,6 +214,11 @@ console.log({SCORE_B})
 		c.drawImage(bjk, 0, 0,800,600)
 		c.drawImage(you, 8*2, 110*2, 60*2, 60*2)
 	}
+
+
+  c.globalCompositeOperation = 'destination-out'
+  c.drawImage(alphamask,0,0)
+  c.globalCompositeOperation = 'source-over'
 
 
 	drawOpts.enemyStando ? c.drawImage(stando, 0, 0,800,600) : null;
@@ -687,3 +693,7 @@ module.exports = {
 		}
 	]
 };
+
+
+
+// TO-DO: update strings
