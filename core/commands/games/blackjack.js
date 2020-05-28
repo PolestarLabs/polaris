@@ -332,7 +332,7 @@ const init       = async (msg,args) => {
 			let winnings = 0;
 			let hideHoleCard = true;
 			let multiHAND_DATA = []
-			let result;
+			let finalResult;
 
 			const H_DATA = {}
 			let doubles=0;
@@ -350,9 +350,9 @@ const init       = async (msg,args) => {
         let calc_bet = bet 
 
 				const playerValue = Blackjack.handValue(hand);
-				result = gameResult(playerValue, dealerValue);
+				let result = gameResult(playerValue, dealerValue);
 
-				if (result !== 'bust') hideHoleCard = false;
+				hideHoleCard = false;
 				doubles += hand.doubled?1:0;
         if(hand.surrendered) {
           surrenders++
@@ -361,11 +361,10 @@ const init       = async (msg,args) => {
         }
         if(hand.insurance) {
           insurances++
-          calc_bet = calc_bet - Math.ceil(calc_bet/2);
-          insuranceAmount = Math.ceil(calc_bet/2);
+          insuranceAmount = Math.ceil(bet/2);
         }
 
-				const lossOrGain = Math.floor(
+				let lossOrGain = Math.floor(
           (
             (["loss", "bust","surrender"].includes(result) ? -1 : result === "push" ? 0 : 1) *
             (hand.doubled ? 2 : 1) *
@@ -375,13 +374,14 @@ const init       = async (msg,args) => {
                 ? 2
                 : 1
             ) *
-            calc_bet +
-            (dealerValue === "Blackjack"
-              ? insuranceAmount
-              : -insuranceAmount
-            )
+            calc_bet            
           )
         );
+
+        console.log({lossOrGain,insuranceAmount})
+        
+        lossOrGain += (dealerValue === "Blackjack" ? insuranceAmount : -insuranceAmount )
+        console.log({lossOrGain},'post')
 
 				//winnings += lossOrGain;
 				const soft = Blackjack.isSoft(hand);				
@@ -416,8 +416,9 @@ const init       = async (msg,args) => {
                           : _emoji("plxbjkwin");
 
 
-				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''} ${hand.insurance?_emoji('plxbjkinsur')+`${res.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}` :""}`)
-			});
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''} ${hand.insurance?_emoji('plxbjkinsur')+`${result.toLowerCase() == "blackjack"?"+":"-"}${insuranceAmount}` :""}`)
+        finalResult = result
+      });
 
 			let POL_DATA = {}		
 			POL_DATA.val = `${hideHoleCard ? Blackjack.handValue([dealerHand[0]]) : dealerValue}`
@@ -426,8 +427,8 @@ const init       = async (msg,args) => {
 			let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE
 			if (Blackjack.handValue(playerHands[0]).toString().includes('JOKER')) PLAY_RES = v._JOKER;
 
-			result === 'push' ? PLAY_RES = v._EVEN : PLAY_RES = PLAY_RES			
-			result === 'surrender' ? PLAY_RES = v._SURR || "placeholder surrender text" : PLAY_RES = PLAY_RES
+			finalResult === 'push' ? PLAY_RES = v._EVEN : PLAY_RES = PLAY_RES			
+			finalResult === 'surrender' ? PLAY_RES = v._SURR || "placeholder surrender text" : PLAY_RES = PLAY_RES
 
 			const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 				renderHand(playerHands,  myDeck),
@@ -564,7 +565,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
 			renderHand([visibleHand], 'default',bjkP)
-		]).timeout(1000).catch(e=> {errored = true; return [e,0] } );
+		]).timeout(2000).catch(e=> {errored = true; return [e,0] } );
 		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
 
