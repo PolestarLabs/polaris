@@ -16,10 +16,11 @@ module.exports = {
   tag: function tag(ctx, text, font="14px", color="#b4b4b8", stroke) {
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;     
 
-    text = text.toString()
+    text = text?.toString()
     let H = ctx.measureText(text).emHeightAscent;
     let h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
+
     if(font.toLowerCase().includes('italic')) w+= (w/text.length*0.32)
     
     const item = new Canvas.createCanvas(w, h + H);
@@ -229,8 +230,8 @@ module.exports = {
     let WW = ctx.measureText(t + "%").width;
     ctx.fillText(t, size / 2 + 15 - WW / 2, size - 15);
 
-    let label = this.tag(ctx, term.toUpperCase(), false, "#222");
-    lvthis = lvthis > 999 ? miliarize(lvthis, false, " ") : lvthis;
+    let label = this.tag(ctx, term.toUpperCase(), undefined, "#222");
+    lvthis = lvthis > 999 ? miliarize(lvthis, undefined, " ") : lvthis;
     let tg = this.tag(ctx, lvthis, "900 56px 'Panton Black'", "#363636");
 
     let f = 0.8;
