@@ -18,8 +18,7 @@ const constantAssets = Promise.all([
   Picto.getCanvas(_ASSETS + "alphamask.png"),
 ]);
 
-
-
+const imageOptions = { compressionLevel: 1, filters:8 }
 
 const cardValue = card =>  new Object({rank : card.slice(0, -1) ,suit: card[card.length-1]});
 const fetchCard = (card, deck) => {
@@ -79,6 +78,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
 	let msg 	= drawOpts.m,
 		bet 	  = drawOpts.b,
+		basebet = drawOpts.bbt,
 		_PLAYER = drawOpts.p,
 		_DEALER = drawOpts.d,
 		_v 		  = drawOpts.v;
@@ -140,7 +140,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
   let bet_img = Picto.tag(c, miliarize( bet ), "900 italic 40px 'Panton Black'", "#e6d084")
 	let bet_txt = Picto.tag(c, _v.bet.toUpperCase(), "600 30px 'Panton'", "#4a8b45")
 	let ins_txt = Picto.tag(c, "INSURANCE", "600 24px 'Panton'", "#448674")
-	let ins_img = Picto.tag(c, miliarize( insurance * Math.ceil(bet/2) ), "600 italic 36px 'Panton Black'", "#2ab099")
+	let ins_img = Picto.tag(c, miliarize( insurance * Math.ceil(basebet/2) ), "600 italic 36px 'Panton Black'", "#2ab099")
  
 	c.drawImage(fel, 0, 0,800,600)
   c.drawImage(chip, 560-(chip.width/2), 377-(chip.height/2))
@@ -189,7 +189,7 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
 	let num_p = Picto.tag(c, SCORE_A, "900 italic 36px 'Panton Black',Sans", "#fff")
 	c.drawImage(num_p.item, 648 - num_p.width, 305 )
-console.log({SCORE_B})
+	console.log({SCORE_B})
 	let num_d = Picto.tag(c, SCORE_B, "900 italic 36px 'Panton Black',Sans", "#fff")
 	c.drawImage(num_d.item, 150, 244)
 
@@ -338,69 +338,89 @@ const init       = async (msg,args) => {
     const canDoubleDown = testDoubleDown(balance,bet,playerHand);
     const canSplit      = testSplit(balance,bet,playerHand);
 
-    const HIT_TXT	   = $t("games.blackjack.hit"   , P)
-    const DOUBLE_TXT = $t("games.blackjack.double", P)
-    const SPLIT_TXT  = $t("games.blackjack.split"	, P)
-    const PASS_TXT 	 = $t("games.blackjack.pass"	, P)
+		let hitstand_pre = hitStandMessage(P,canDoubleDown,canSplit,canInsurance);
 
-
-		let hitstand_pre = !canDoubleDown && !canSplit ?
-      HIT_TXT + PASS_TXT :
-          `${HIT_TXT} ${canDoubleDown
-            ? DOUBLE_TXT
-            : ''}${canSplit
-              ? SPLIT_TXT : ''}${PASS_TXT}`+`
-      ${$t('games.blackjack.surrender_helper',P)}
-      ${canInsurance? $t('games.blackjack.insurance_helper',P) :""}
-      `
-
-    return msg.channel.send(v.NEWGAME+`
+    msg.channel.send(v.NEWGAME);
+    return msg.channel.send( `
     ${hitstand_pre}
-    `).then(async tableMessage => {
+    `).then(async introMessage => {
 				powerups.nojoker = true;  //testing too
         
 				powerups.nojoker = false; // testing
 				let playerHands;
-				
-				const drawOptions = {
-					v: v,
-					b: bet,
-					B: balance,
-					p: playerName,
-					d: polluxNick,
-					m: msg,
-					tm: tableMessage
-				}
+        
+        let log = {
+          embed: {
+            description: "Game Started",
+            fields: [
+              { name: "Player Turn", value: "\u200b", inline: true },
+              { name: "Pollux Turn", value: "\u200b", inline: true },
+            ],
+            footer:{
+              icon_url: msg.author.avatarURL,
+              text: msg.author.tag,
+            },
+            timestamp: new Date()
+          },
+          mess: introMessage,
+          usr: [],
+          plx: [],
+        };
+
+        const drawOptions = {
+          v: v,
+          b: bet,
+          bbt: bet,
+          B: balance,
+          p: playerName,
+          d: polluxNick,
+          m: msg,
+          intro: introMessage,
+          log,
+        };
 				let playerHandValueCalc = Blackjack.handValue(playerHand);
 				 
-			if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER")) {
-				playerHands = await getFinalHand(blackjack, playerHand, dealerHand, myDeck, powerups, drawOptions);
-				const result = gameResult(Blackjack.handValue(playerHands[0]), 0);
-				const noHit = playerHands.length === 1 && result === 'bust';
-				
-				while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) blackjack.hit(dealerHand,{nojoker:true});
-			}else{
-				playerHands = [playerHand];
-			}			
+		if (playerHandValueCalc !== 'Blackjack' && !playerHandValueCalc.toString().includes("JOKER")) {
+			playerHands = await getFinalHand(blackjack, playerHand, dealerHand, myDeck, powerups, drawOptions);
+			const result = gameResult(Blackjack.handValue(playerHands[0]), 0);
+			const noHit = playerHands.length === 1 && result === 'bust';
+        
+        //loli 
+ 
+			if(noHit){
+				log.usr.push(`> ${_emoji("plxbjkbust")} **Player bust**`)
+				log.plx.push(`> ${_emoji("plxbjkwin")} **Pollux wins**`)
+			}
+			while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) {
+				log.plx.push("> "+ _emoji('plxcards')+` Pollux hit **${Blackjack.handValue(dealerHand)}** to **${Blackjack.handValue(blackjack.hit(dealerHand,{nojoker:true}))}**`)
+				log.embed.fields[1] = {name:"Pollux Turn", value: log.plx.join("\n"),inline:true }
+				log.embed.fields[0] = {name:"Player Turn", value: log.usr.join("\n"),inline:true }
+      };
+      log.embed.description=(`Game finished in ${log.plx.length + log.usr.length } turns.`) 
+      log.mess.edit({content:"",embed: log.embed})
 
-			const dealerValue = Blackjack.handValue(dealerHand);
-			let winnings = 0;
-			let hideHoleCard = true;
-			let multiHAND_DATA = []
-			let finalResult;
+		}else{
+			playerHands = [playerHand];
+		}
 
-			const H_DATA = {}
-			let doubles=0;
-			let surrenders=0;
-			let insurances=0;
-			let insuranceAmount=0;
-			let hasJoker = false;
-			let gameJokers = []
-      let splitExplain = []
+		const dealerValue = Blackjack.handValue(dealerHand);
+		let winnings = 0;
+		let hideHoleCard = true;
+		let multiHAND_DATA = []
+		let finalResult;
+
+		const H_DATA = {}
+		let doubles=0;
+		let surrenders=0;
+		let insurances=0;
+		let insuranceAmount=0;
+		let hasJoker = false;
+		let gameJokers = []
+    let splitExplain = []
  
       
       
-			playerHands.forEach((hand, i) => {
+		playerHands.forEach((hand, i) => {
 
         let calc_bet = bet 
 
@@ -503,7 +523,7 @@ const init       = async (msg,args) => {
 
       //TOP -> Commentary
       
-      if(playerHand.doubled && ["loss", "bust","surrender"].includes(result) )
+      if(playerHand.doubled && ["loss", "bust","surrender"].includes(finalResult) )
         PLAY_RES += "\n"+ $t('games.blackjack.double_lose',P);
       else if(playerHand.doubled)
         PLAY_RES += "\n"+ $t('games.blackjack.double_win',P);
@@ -531,6 +551,7 @@ const init       = async (msg,args) => {
 				}
 			}
       drawOptions.b = bet*playerHands.length + doubles*bet
+      drawOptions.bbt = bet
       drawOptions.ins = playerHands.filter(x=>x.insurance).length
 			let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, multiHAND_DATA[0], POL_DATA, drawOptions);
 			let resp = winnings > 0 ? v._PRIZE : winnings < 0 ? v._ANTIPRIZE : ""
@@ -538,9 +559,15 @@ const init       = async (msg,args) => {
 
 			//let ncanvas = Picto.new(800,600)
 			//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
-			msg.channel.send(PLAY_RES, { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
+			msg.channel.send(PLAY_RES, { file: scenario.toBuffer('image/png',imageOptions), name: "blackjack.png" }).then(m => m.channel.send(rebalance).catch(() => null ))
 			if(splitExplain.length ){
-				msg.channel.send(`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): $t('games.blackjack.result',P)}**\n`+splitExplain.join('\n'))
+				//msg.channel.send(`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): $t('games.blackjack.result',P)}**\n`+splitExplain.join('\n'))
+        log.embed.fields.push({
+          name:`**${splitExplain.length>1 ? $t('games.blackjack.splitbreak',P): $t('games.blackjack.result',P)}**`,
+          value:splitExplain.join('\n'),
+          inline: false
+        })
+        log.mess.edit({embed:log.embed});
 			}
 
 			// JOKER EFFECTS GO HERE
@@ -577,21 +604,23 @@ function gameResult(playerValue, dealerValue) {
 async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, options) {
 dealerHand[0] ='AH'
 	let msg 	= options.m,
-      tableMessage = options.tm,
+      introMessage = options.intro,
       balance = options.B,
-      bet 	= options.b;
-      P = {lngs: msg.lang}
+      bet 	= options.b,
+      P = {lngs: msg.lang},
+      log=options.log.usr;
 
-	const HIT_TXT	   = $t("games.blackjack.hit"   , P)
-	const DOUBLE_TXT = $t("games.blackjack.double", P)
-	const SPLIT_TXT  = $t("games.blackjack.split"	, P)
-	const PASS_TXT 	 = $t("games.blackjack.pass"	, P)
 	
 	const hands = [playerHand];
 	let currentHand = hands[0];
 	let totalBet = bet;
-	
+  let tableMessageRound;
+ 
+  
 	async function ProcessHand(currentHand) {
+    if(log.length==0){
+		options.log.embed.description = "Game Started!"
+    }
 		if (!currentHand) return Promise.resolve(true);
 		const nextHand = () => currentHand = hands[hands.indexOf(currentHand) + 1];
 	
@@ -603,7 +632,7 @@ dealerHand[0] ='AH'
 			//continue;
 		}
 		let currentHandValue = Blackjack.handValue(currentHand);
-		
+		 
 		if ( typeof currentHandValue == 'string' && currentHandValue.startsWith("JOKER") ) {
 			nextHand();
 			return ProcessHand(currentHand);
@@ -624,22 +653,8 @@ dealerHand[0] ='AH'
     const canInsurance = testInsurance(balance,totalBet,currentHand,dealerHand);
     const canDoubleDown = testDoubleDown(balance,totalBet,currentHand);
     const canSplit = testSplit(balance,totalBet,currentHand);
-/*
-		let hitstand = !canDoubleDown && !canSplit ?
-			HIT_TXT + PASS_TXT :
-			`${HIT_TXT} ${canDoubleDown
-				? DOUBLE_TXT
-				: ''}${canSplit
-          ? SPLIT_TXT : ''}${PASS_TXT}`+`
-${$t('games.blackjack.surrender_helper',P)}
-${canInsurance? $t('games.blackjack.insurance_helper',P) :""}
-`
-*/
-let hitstand = "```js\n"+`
-canInsurance: ${canInsurance}
-canDoubleDown: ${canDoubleDown}
-canSplit: ${canSplit}
-`+"```"
+
+    let hitstand = hitStandMessage(P,canDoubleDown,canSplit,canInsurance);
 
 		let USR_HAND = {}, POL_HAND = {};
 
@@ -663,55 +678,63 @@ canSplit: ${canSplit}
     options.canInsurance = canInsurance
     options.ins = currentHand.insurance
 		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(0,0));
-		//let ncanvas = Picto.new(800,600)
-		//ncanvas.getContext('2d').drawImage(scenario,0,0,800,600);
-
-    let tableMessageRound;
-    let actionsMessage;
+ 
+    
     if(currentHand.insuredLastTurn){
-      await msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => {         
-        tableMessageRound = m
+      msg.channel.send(`${_emoji('plxbjkinsu')} **Insurance has been placed for this match!**`, { file: scenario.toBuffer('image/png',imageOptions), name: "blackjack.png" }).then(mm=>{
+      //msg.channel.send(`Insurance has been placed for this match!`).then(mm=>{
+        if(tableMessageRound) tableMessageRound.delete();
+        tableMessageRound = mm
+        //mm.delete()
       });
-      tableMessageRound = await msg.channel.send(`Insurance has been placed for this match!
-      ${hitstand}`); 
       currentHand.insuredLastTurn = false;
     }else{      
-      await msg.channel.send('', { file: scenario.toBuffer(), name: "blackjack.png" }).then(m => {        
-        tableMessageRound = m
-      }); 
+      msg.channel.send('', { file: scenario.toBuffer('image/png',imageOptions), name: "blackjack.png" }).then(mm=>{
+        if(tableMessageRound) tableMessageRound.delete();
+        tableMessageRound = mm
+      });
     }
-    m.channel.send(hitstand).then(mm=> actionsMessage = mm )
+    if(introMessage){
+      introMessage.edit(hitstand)
+    }else{
+      msg.channel.send(hitstand).then(mm=> introMessage = mm )
+    }
 
-		const responses = await msg.channel.awaitMessages(msg2 =>
-			msg2.author.id === msg.author.id && (
-				msg2.content === 'hit' 	     ||
-				msg2.content === 'stand'     ||				
-				msg2.content === 'STANDO'    ||
-				msg2.content === 'stando'    ||
-				msg2.content === 'surrender' ||
-				(msg2.content === 'insurance'   && canInsurance)  ||
-				(msg2.content === 'split' 		&& canSplit) 	  ||
-				(msg2.content === 'double down' && canDoubleDown) ||
-				(msg2.content === 'double' 		&& canDoubleDown)
-			), {
-				maxMatches: 1,
-				time: 30e3
-			}
+	const responses = await msg.channel.awaitMessages(msg2 =>
+		msg2.author.id === msg.author.id && (
+			msg2.content === 'hit' 	     ||
+			msg2.content === 'stand'     ||				
+			msg2.content === 'STANDO'    ||
+			msg2.content === 'stando'    ||
+			msg2.content === 'surrender' ||
+			(msg2.content === 'insurance'   && canInsurance)  ||
+			(msg2.content === 'split' 		&& canSplit) 	  ||
+			(msg2.content === 'double down' && canDoubleDown) ||
+			(msg2.content === 'double' 		&& canDoubleDown)
+		), {
+			maxMatches: 1,
+			time: 30e3
+		}
     );
     
     //tableMessage.delete()
-    tableMessageRound.delete()
+   
 		
-		if (responses.length === 0) return Promise.resolve(false);
-		const action = responses[0].content.toLowerCase()
-			
+	if (responses.length === 0) return Promise.resolve(false);
+    const action = responses[0].content.toLowerCase()
+    console.log('action',action)
+    await responses[0].delete().catch(console.err);
+    console.log('action-delete',action)
+    
 		if(action === 'insurance'){
       currentHand.insurance = true;
       currentHand.insuredLastTurn = true;
+      log.push("> "+ _emoji('plxbjkinsu')+" Insurance requested")
 		}
 		if(action === 'surrender'){
 			currentHand.surrendered = true;
-			totalBet = Math.ceil(totalBet/2);
+      totalBet = Math.ceil(totalBet/2);
+      log.push("> "+ _emoji('plxbjksurr')+" Player surrendered")
 			if (currentHand === hands[hands.length - 1]) return Promise.resolve("EndGame");
 			nextHand();
 		}
@@ -721,27 +744,39 @@ canSplit: ${canSplit}
 			msg.channel.send( $t("eastereggs.konodioda", {lngs:msg.lang}) )
 		}
 		if (action === 'stando' || action === 'stand' || Blackjack.handValue(currentHand) >= 21) {
+      log.push("> "+ _emoji('plxcards')+` Player stand **${USR_HAND.val}**`)
 			if (currentHand === hands[hands.length - 1]) return Promise.resolve("EndGame");
 			nextHand();
 		}
-		if (action === 'hit') blackjack.hit(currentHand);
+		if (action === 'hit') {
+      log.push("> "+ _emoji('plxcards')+` Player hit **${USR_HAND.val}** to **${Blackjack.handValue(blackjack.hit(currentHand))}**`)
+    }
 		if (action === 'split' && canSplit) {
-			totalBet += bet;
+      //totalBet;
+      log.push("> "+ _emoji('plxcards')+" Player split")
 			hands.push([currentHand.pop()]);
 			blackjack.hit(currentHand);
 		}
 		if ((action === 'double down' || action === 'double') && canDoubleDown) {
+      log.push("> "+ _emoji('plxbjk2x')+" Player double")
 			totalBet += bet;
 			currentHand.doubled = true;
-		}
+    }
+ 
 		return ProcessHand(currentHand);
-	}
+  }
+  
+ 
+  await ProcessHand(currentHand);
+ 
 
-	await ProcessHand(currentHand);
+  //introMessage.delete().catch(e=>null);
+  tableMessageRound.delete().catch(e=>null);
 	return hands;	
 }
 let hooks = PLX.commandOptions.defaultCommandOptions.hooks;
 hooks.postExecution = (msg)=>	(new Blackjack(msg)).endGame();
+
 
 module.exports = {
 	init,
@@ -769,12 +804,11 @@ module.exports = {
 };
 
 
-
-
 function testInsurance(balance,bet,currentHand,dealerHand){
   return  balance >= bet + Math.ceil(bet/2)
           && dealerHand[0].includes("A")
-          && currentHand.length === 2;
+          && currentHand.length === 2
+          && !currentHand.insurance;
 }
 
 function testDoubleDown(balance,bet,currentHand){
@@ -789,3 +823,21 @@ function testSplit(balance,bet,currentHand){
           && currentHand.length === 2;
 }
  
+function hitStandMessage(P,canDoubleDown,canSplit,canInsurance){
+  
+	const HIT_TXT	   = $t("games.blackjack.hit"   , P)
+	const DOUBLE_TXT = $t("games.blackjack.double", P)
+	const SPLIT_TXT  = $t("games.blackjack.split"	, P)
+  const PASS_TXT 	 = $t("games.blackjack.pass"	, P)
+
+let hitstand = (!canDoubleDown && !canSplit 
+  ?HIT_TXT + PASS_TXT 
+  :`${HIT_TXT} ${canDoubleDown
+    ? DOUBLE_TXT
+    : ''}${canSplit
+      ? SPLIT_TXT : ''}${PASS_TXT}`)+`
+${$t('games.blackjack.surrender_helper',P)}
+${canInsurance? $t('games.blackjack.insurance_helper',P) :""}
+  `
+  return hitstand;
+}
