@@ -13,7 +13,7 @@ module.exports = class Discoin {
 						return reject(`[${res.statusCode}] :: API failure`);
 					if ( ![200,201].includes(res.statusCode) )
 						return reject({body,request: `${METHOD.toUpperCase()}: /${route}`,payload});			
-					return resolve(body);
+					return resolve(JSON.parse(body));
 				})
 			});
 		};
