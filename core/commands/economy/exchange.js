@@ -3,6 +3,8 @@ const ECO = require('../../archetypes/Economy');
 const CFG = require('../../../config.json');
 const DCN = new Discoin(CFG.discoin);
 const DEmojis = require(appRoot + "/resources/lists/discoin.json").emojis;
+const Picto =  require('../../utilities/Picto');
+
 
 const init = async function(msg){
 
@@ -26,10 +28,11 @@ const init = async function(msg){
 	}
 	let Rates;
 	try {
-		Rates = JSON.parse(await DCN.rates());
+		Rates = await DCN.rates();
 	} catch (e) {
 		return msg.reply($t("responses.discoin.unreachable",P));
 	}
+	const DiscoinCurrencies = await DCN.currencies();
 
 	const embed = { fields: [] };
 	embed.color = 0xff3355;
@@ -97,7 +100,12 @@ const init = async function(msg){
 			inline: true
 		});
 
-		// probably replaced with fancy image
+		
+        // probably replaced with fancy image   
+        const canvas = Picto.new(800,600);
+        const ctx    = canvas.getContext('2d');
+        
+
 		Rates.filter(r=>r.id!="RBN").forEach(curr=>{
 			let perRBN = RBN.value/curr.value;
 			let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
@@ -111,6 +119,48 @@ const init = async function(msg){
 
 		return { embed };
 	}
+
+	
+	async function createCard(curr){
+		const canvas = Picto.new(225,90);
+		const c    = canvas.getContext('2d');
+		
+		const thisCurrency = DiscoinCurrencies.find(c=>c.id === curr.id); 
+		const homeCurrency = DiscoinCurrencies.find(c=>c.id === "RBN"); 
+		const emojiPic = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${thisCurrency.emoji}.png`);
+		const homeEmojiPic = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${homeCurrency.emoji}.png`);
+		let perRBN = RBN.value/curr.value;
+		let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
+
+
+		Picto.roundRect(c,0,0,225,90,8,'#FFF')
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.name+" "   ,'600 16px Panton Black',"#2b2b3b"),66,8,150);
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.bot.name,'600 italic 12px Panton',"#445"),66+4,26,150);
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'900 20px "Panton Black"',"#2b2b3b"),8+27,8+62,54,'center');
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'600 12px "Panton Black"',"#334"),185,56,32);
+		Picto.setAndDraw(c,Picto.tag(c,"=",'300 24px Panton',"#2b2b3b"),98,44+4,84);
+		Picto.setAndDraw(c,Picto.tag(c,perRBNString+" ",'300 24px Panton',"#2b2b3b"),98+84,44+4,84,'right');
+		Picto.setAndDraw(c,Picto.tag(c,curr.value.toPrecision(3)+" ",'300 18px Panton',"#334"),98+96,70,96,'right');
+		
+
+		let wid = 54
+		let minWid = 54
+		let hei = emojiPic.height / (emojiPic.width / wid);
+		while (hei>minWid){
+			wid--
+			hei = emojiPic.height / (emojiPic.width / wid);
+		}
+		c.drawImage( emojiPic , 8+(minWid/2)-(wid/2),8+(minWid/2)-(hei/2),wid,hei);
+		
+		let pad = 8
+		wid = 27 - pad
+		hei = homeEmojiPic.height / (homeEmojiPic.width / wid) ;
+		c.drawImage( homeEmojiPic , pad +66, pad + 36 +(wid/2)-(hei/2),wid,hei);
+		
+		return canvas;
+	}
+
+
 }
 
 module.exports={
