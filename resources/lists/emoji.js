@@ -78,6 +78,11 @@ const POLARIS_UI = {
     plxbjk2x: "<:plxbjk2x:598795449117310988>",
     plxtarot: "<:plxtarot:598833296570449921>",
 
+  // GENERIC
+    TIME1: "<:TIME1:688827284077150267>",
+    TIME2: "<:TIME2:688827283624296615>",
+    TIME3: "<:TIME3:688827284609957945>",
+
   // GIFT
     gift_Y_S:"<:gift_Y_S:648769996201263105>",
     gift_Y_R:"<:gift_Y_R:648769995601608714>",
