@@ -21,7 +21,7 @@
         "evToken": "Event Token",
         "evToken_plural": "Event Tokens",
         "lootbox": "Lootbox",
-        "lootbox_plural": "Lootboxes",        
+        "lootbox_plural": "Lootboxes",
         "consumable": "Consumable",
         "consumable_plural": "Consumables",
         "junk": "Junk",
@@ -149,7 +149,7 @@
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
         },
         "cooldown":{
-            "generic": [    
+            "generic": [
                 "Hang on, I need a minute!",
                 "I'm not a printer, please slow down!",
                 "Try again in a few seconds, please.",
@@ -160,7 +160,7 @@
                 "What's the rush?!",
                 "I need a moment to breathe!",
                 "Honey, please, one at a time.",
-                "*You're going too fast senpai uwu I can't take it uwu*"   
+                "*You're going too fast senpai uwu I can't take it uwu*"
               ]
         },
         "warnings": {
@@ -277,19 +277,17 @@
             "isEmpty": "There's nothing there to remove!"
         },
         "discoin": {
-            "desc": "Your Rubines are being sent, a response from %BOT% will come as soon as it arrives.",
-            "intake": "Pollux **Rubines** (RBN) Exchanged:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) to Receive:",
-            "remainder": "Remaining Limit for {{$}}",
-            "receiptCode": "Transaction Receipt Code",
-            "amNaN": "Invalid quantity",
-            "invalidCurr": "That Currency doesn't exist!",
-            "invalidAmt": "You can't exchange that amount! ",
-            "unverified": "You are not verified to make exchanges.\nPlease verify yourself at [http://discoin.sidetrip.xyz/verify]",
+            "discoin_desc": "Your Rubines are being sent, a response from %BOT% will come as soon as it arrives.",
+						"receipt": "Here is your transaction receipt:",
+						"receiptnoDM": "I couldn't deliver it in dms, so here is your receipt:",
+						"takedis": "Keep this receipt in case your Rubines don't reach their destination.",
+            "invalidCurr": "That Currency doesn't exist! Use `{{prefix}}exchange` to see all available currencies.",
+            "debt": "You can't exchange debt, exchange at least 1 Rubine!",
+						"zero": "Exchange at least 1 Rubine.",
             "userLimit": "Your exchange limit for today has been reached!",
             "globalLimit": "You've reached your Discoin limit, try again tomorrow.",
-            "takedis": "Keep this code in case your Rubines don't reach their destination.",
-            "ex-succ": "Exchange Successful!"
+						"remainder": "Remaining Limit for {{$}}",
+						"unreachable": "Discoin could not be reached, try again at a later time."
         },
         "langIntro": {
             "global": "Okay, from now on I'll speak {{LANGUAGE}} in this server. {{LANGJOKE}}",
@@ -336,7 +334,7 @@
             ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
             ,"cantMarryPollux" : "No way! Shoo!"
         },
-        
+
             "ship": {
                 "needTupipo": "The Love Calculator does not work with just one person, my dear.",
                 "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!"
@@ -376,8 +374,8 @@
                 ]
             ]
         },
-        
-        
+
+
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
@@ -513,7 +511,7 @@
         "transfer":{
             "lastdly":"Last Box Transfer:",
             "next":"Next Transfer available {{in X hours}}",
-        
+
             "transferboxto": "Transferring  Box to {{userB}}"
             ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
             ,"timeout": "**Transfer Timed Out!**"
