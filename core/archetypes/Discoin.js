@@ -17,6 +17,12 @@ module.exports = class Discoin {
 				})
 			});
 		};
+		this.currencies = () => new Promise((resolve,reject)=>{
+			request.get({url:"https://pollux.gg/api/discoin/currencies"}, (err,res,body)=>{
+				if ( res.statusCode === 200 ) resolve(JSON.parse(body));
+				else reject(res.statusCode);
+			})
+		})
 	}	
 	rates	() 				{return this.rest("get",   `currencies` ) } 
 	fetch	() 				{return this.rest("get",   "transactions",`{"to.id": "RBN", "handled": false}`) } 
