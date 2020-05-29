@@ -376,8 +376,8 @@ const init       = async (msg,args) => {
           embed: {
             description: "Game Started",
             fields: [
-              { name: "Player Turn", value: "\u200b", inline: true },
-              { name: "Pollux Turn", value: "\u200b", inline: true },
+              { name: "Player", value: "\u200b", inline: true },
+              { name: "Pollux", value: "\u200b", inline: true },
             ],
             color:0xF03350,
             footer:{
@@ -387,7 +387,7 @@ const init       = async (msg,args) => {
             timestamp: new Date()
           },
           usr: [],
-          plx: [],
+          plx: [`> ${_emoji('plxcards')} Pollux \`OPEN\` **${Blackjack.handValue(dealerHand) }**`],
         };
 
         const drawOptions = {
