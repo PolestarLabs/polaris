@@ -7,7 +7,7 @@ const init = async function(msg){
 
 	const genURL = "https://pollux.gg/generators/discoin/exchange.png?id=";
 
-	let P={lngs:msg.lang}
+	let P={lngs:msg.lang,prefix:msg.prefix}
 	if(PLX.autoHelper([$t("helpkey",P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
 	function getParams() {
@@ -27,7 +27,7 @@ const init = async function(msg){
 	try {
 		Rates = JSON.parse(await DCN.rates());
 	} catch (e) {
-		return msg.reply("Discoin could not be reached. Please try again later.");
+		return msg.reply($t("responses.discoin.unreachable",P));
 	}
 
 	const embed = { fields: [] };
@@ -37,14 +37,14 @@ const init = async function(msg){
 	const { amount, currency } = getParams();
 
 	if (amount && currency) {
-		if (amount < 0) return msg.reply("Debt isn't transferable, exchange at least 1 Rubine");
-		if (amount === 0) return msg.reply("Exchange at least 1 Rubine");
+		if (amount < 0) return msg.reply($t("responses.discoin.debt",P));
+		if (amount == 0) return msg.reply($t("responses.discoin.zero",P));
 
 		const amtAfterTax = amount * .85;
 
 		const Currency = Rates.find(r => r.id === currency);
 
-		if (!Currency) return msg.reply("Could not find the specified currency. Run this command without arguments to see available currencies");
+		if (!Currency) return msg.reply($t("responses.discoin.invalidCurr",P));
 		if (!await ECO.checkFunds(msg.author.id, amount)) return msg.reply("You don't have enough Rubines");
 
 		return DCN.create(msg.author.id, amtAfterTax, currency)
@@ -52,16 +52,16 @@ const init = async function(msg){
 				await ECO.pay(msg.author.id, amount, "DISCOIN");
 
 				const receiptURL = genURL + transaction.id;
-				embed.description = "Here is your transaction receipt:";
+				embed.description = $t("responses.discoin.receipt",P);
 				embed.image = { url: receiptURL };
-				embed.footer = { text: "Keep this receipt in case your Rubines don't reach their destination." }
+				embed.footer = { text: $t("responses.discoin.takedis",P) }
 
 				msg.author.getDMChannel().then(DMChannel => {
 					msg.reply(`Succesfully exchanged ${_emoji("RBN")}${miliarize(amount)} to ${currency}. Your receipt is on its way.`);
 					DMChannel.createMessage({ embed });
 				})
 				.catch(e => {
-					embed.description = "I couldn't deliver it in dms, so here is your receipt:";
+					embed.description = $t("respones.discoin.receiptnoDM",P);
 					msg.channel.send({ embed });
 				});
 			})
@@ -77,7 +77,7 @@ const init = async function(msg){
 		embed.description = _emoji('RBN')+`1 Rubine \`RBN\` = ${miliarize(RBN.value)} D$`;
 
 		embed.fields.push({
-			name:"Example usage:",
+			name:$t("terms.usage") + ":",
 			value: "```js\n"+
 			`${msg.prefix}exg 100 XYZ\n`+"```",
 			inline: true
@@ -98,7 +98,9 @@ const init = async function(msg){
 
 		// probably replaced with fancy image
 		Rates.filter(r=>r.id!="RBN").forEach(curr=>{
-			embed.fields.push({name: `${_emoji(curr.id).replace("⬜", "💰")} ${curr.name}`, value: `1 RBN = ${miliarize(RBN.value/curr.value)||(RBN.value/curr.value).toPrecision(2)} ${curr.id}` , inline: true})
+			let perRBN = RBN.value/curr.value;
+			let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
+			embed.fields.push({name: curr.name, value: `1 RBN = ${perRBNString} ${curr.id}` , inline: true})
 		});
 
 		while(embed.fields.length % 3) embed.fields.push(empty);
