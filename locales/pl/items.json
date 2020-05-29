@@ -116,10 +116,10 @@
     },
     "lootbox_dev": {
         "name": "Skrzynka - Prezent Dev'a",
-        "description": ""
+        "description": "Lootbox Startowy, prezent od twórcy Pollux'a dla początkujących. Gwarantowany jeden przedmiot rzadkości UR!"
     },
     "lootbox_EL": {
-        "name": "SkrzynkaEl",
+        "name": "Pud**El**ko",
         "description": "Jeśli otworzysz tę skrzynkę to twój ekwipunek eksploduje"
     },
     "lootbox_R_C": {
@@ -265,7 +265,7 @@
     },
     "nierauto_booster": {
         "name": "NieR: Automata",
-        "description": ""
+        "description": "Z tym boosterem będziesz **2B**ardzo szczęśliwy"
     },
     "p5_booster": {
         "name": "Persona 5",
