@@ -50,7 +50,6 @@ exports.run = function run(cmd, m, third, extras) {
   }), false);
   
   extras.aliases?emb.field("Aliases:",extras.aliases.map(y=>`\`${y}\``).join(' '),false):false;
-console.log({extras})
   if(extras.related){
     emb.field("**" + $t(["dict.seeAlso","See Also"], {lngs: m.lang}) + "**", 
       extras.related.map(ex=> `\n\u200b • \`${m.prefix}${ex}\``).join('')
