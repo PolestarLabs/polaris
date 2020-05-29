@@ -1,7 +1,7 @@
 global.DB = require("../../database/db_ops");
 
 module.exports = {
-    getTarget: function getTarget(msg, argPos = 0, self = true, soft = false) {
+    getTarget: function getTarget(msg, argPos = 0, self = true, soft = false, options) {
 
         if (!msg.args[argPos]) return self ? msg.author : null;
         let ID = msg.args[argPos].replace(/[^0-9]/g, '');
@@ -24,11 +24,12 @@ module.exports = {
                 );
 
             if (!user && self == true) user = msg.author;
-            user.noDB = true;
+            if(user) user.noDB = true;
         }
         if (!user && msg.mentions.length > 0  ) return msg.mentions[argPos]||msg.mentions[0];
+        if(options.force) return PLX.fetchUser(ID);
         if (!user) return null;
-        if(user.noDB) DB.users.new(user.user || user);
+        if(user.user.noDB) DB.users.new(user.user || user);
         return user.user || user;
     },
     //Get IMG from Channel MSGs

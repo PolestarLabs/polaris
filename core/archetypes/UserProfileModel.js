@@ -4,7 +4,7 @@ const moment = require("moment");
 
 class UserProfileModel{
     constructor(userData,discordMember){
-  
+      console.log({discordMember})
       // Discord Data
       if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
       

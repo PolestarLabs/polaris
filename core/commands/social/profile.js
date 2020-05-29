@@ -134,14 +134,16 @@ init = async (msg)=>{
     return;
   }  
   // NORMAL PROFILE -->
-  const Target = PLX.getTarget(msg,0,true,true);
+  const Target = await PLX.getTarget(msg,0,false,true,{force:true});
   let Target_Database = await DB.users.get({id:Target.id});
-
+  
   if(Target_Database) Target_Database.type = 'udata';
   
-  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?msg.guild.member(Target):Target));
+  console.log({Target_Database})
+  const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?.member(Target)||Target));
 
-
+ 
+console.log({USERPROFILE})
 
 
 try{
