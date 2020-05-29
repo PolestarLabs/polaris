@@ -2,6 +2,7 @@ const Discoin = require('../../archetypes/Discoin');
 const ECO = require('../../archetypes/Economy');
 const CFG = require('../../../config.json');
 const DCN = new Discoin(CFG.discoin);
+const DEmojis = require(appRoot + "/resources/lists/discoin.json").emojis;
 
 const init = async function(msg){
 
@@ -100,7 +101,7 @@ const init = async function(msg){
 		Rates.filter(r=>r.id!="RBN").forEach(curr=>{
 			let perRBN = RBN.value/curr.value;
 			let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
-			embed.fields.push({name: curr.name, value: `1 RBN = ${perRBNString} ${curr.id}` , inline: true})
+			embed.fields.push({name: `${DEmojis[curr.id]||"💰"} ${curr.name}`, value: `1 RBN = ${perRBNString} ${curr.id}` , inline: true})
 		});
 
 		while(embed.fields.length % 3) embed.fields.push(empty);
