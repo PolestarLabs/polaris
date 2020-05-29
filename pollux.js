@@ -292,6 +292,16 @@ PLX.findUser = (query) => {
         result = PLX.users.find(user => user.username.toLowerCase().includes(query));
     return result || null;
 }
+PLX.fetchUser = async (query) => {
+    if (!query) return null;
+    query = query.toLowerCase().trim();
+    let userdata = await PLX.requestHandler.request('GET','/users/'+query,true);
+    if(!userdata) return null;
+    userdata.tag = userdata.username+"#"+userdata.discriminator
+    userdata.avatarURL = `https://cdn.discordapp.com/avatars/${userdata.id}/${userdata.avatar}.png?size=256`
+    return userdata;
+}
+
 PLX.findMember = (query, members) => {
     if(!query) return null;
     query = query.toLowerCase().trim();
