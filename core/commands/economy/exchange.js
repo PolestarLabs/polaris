@@ -6,7 +6,7 @@ const DEmojis = require(appRoot + "/resources/lists/discoin.json").emojis;
 const Picto =  require('../../utilities/Picto');
 
 
-const init = async function(msg){
+const init = async function(msg,args){
 
 	const genURL = "https://pollux.gg/generators/discoin/exchange.png?id=";
 
@@ -16,12 +16,12 @@ const init = async function(msg){
 	function getParams() {
 		let amount = null, currency = null;
 
-		if (parseInt(msg.args[0]) && msg.args[1]?.length === 3) {
-			amount = parseInt(msg.args[0]);
-			currency = msg.args[1].toUpperCase();
-		} else if (msg.args[0]?.length === 3 && parseInt(msg.args[1])) {
-			amount = parseInt(msg.args[1]);
-			currency = msg.args[0].toUpperCase();
+		if (parseInt(args[0]) && args[1]?.length === 3) {
+			amount = parseInt(args[0]);
+			currency = args[1].toUpperCase();
+		} else if (args[0]?.length === 3 && parseInt(args[1])) {
+			amount = parseInt(args[1]);
+			currency = args[0].toUpperCase();
 		}
 
 		return { amount, currency };
@@ -33,8 +33,16 @@ const init = async function(msg){
 		return msg.reply($t("responses.discoin.unreachable",P));
 	}
 	const DiscoinCurrencies = await DCN.currencies();
+	let RBN = Rates.find(r=>r.id === "RBN");
+	const canvas = Picto.new(715,600);
+	const ctx    = canvas.getContext('2d');
+	const textMode = args.length === 1 && args[0] === '-t';
+	
+	const homeCurrency = DiscoinCurrencies.find(c=>c.id === "RBN"); 
+	const homeEmojiPic = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${homeCurrency.emoji}.png`);
+		
 
-	const embed = { fields: [] };
+	const embed = { fields: [], image:{url:'attachment://discoin.png'} };
 	embed.color = 0xff3355;
 	let empty = {name:'\u200b',value:'\u200b',inline:true};
 
@@ -75,7 +83,7 @@ const init = async function(msg){
 			});
 
 	} else {
-		let RBN = Rates.find(r=>r.id === "RBN");
+		
 
 		embed.title = "Discoin Currency Exchange";
 		embed.description = _emoji('RBN')+`1 Rubine \`RBN\` = ${miliarize(RBN.value)} D$`;
@@ -102,44 +110,54 @@ const init = async function(msg){
 
 		
         // probably replaced with fancy image   
-        const canvas = Picto.new(800,600);
-        const ctx    = canvas.getContext('2d');
+        
         
 
-		Rates.filter(r=>r.id!="RBN").forEach(curr=>{
+		await Promise.all( Rates.filter(r=>r.id!="RBN").map( async (curr,i)=>{
 			let perRBN = RBN.value/curr.value;
 			let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
-			embed.fields.push({name: `${DEmojis[curr.id]||"💰"} ${curr.name}`, value: `1 RBN = ${perRBNString} ${curr.id}` , inline: true})
-		});
+			if(textMode) embed.fields.push({name: `${DEmojis[curr.id]||"💰"} ${curr.name}`, value: `1 RBN = ${perRBNString} ${curr.id}` , inline: true});
+			else return createCurrencyGrid( (await createCard(curr)),i);			
+		}));
 
 		while(embed.fields.length % 3) embed.fields.push(empty);
+ 
 
 		// embed.thumbnail = {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882674287968266/piechart.gif"}
-		embed.thumbnail = {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882599956643840/abacus.gif"}
-
-		return { embed };
+		embed.thumbnail = textMode ? {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882599956643840/abacus.gif"} : {}
+ 
+		let image = !textMode ? file(canvas.toBuffer(),"discoin.png") : null;
+		return  msg.channel.send({embed},image);
 	}
 
-	
+	async function createCurrencyGrid(card,i){
+
+			let xpos = i % 3 * (225  + 8);
+			let ypos = ~~(i/3) * (90 + 8);
+
+			ctx.drawImage(card, 8+xpos,8+ypos)
+		
+	}
+ 
 	async function createCard(curr){
 		const canvas = Picto.new(225,90);
 		const c    = canvas.getContext('2d');
 		
 		const thisCurrency = DiscoinCurrencies.find(c=>c.id === curr.id); 
-		const homeCurrency = DiscoinCurrencies.find(c=>c.id === "RBN"); 
+		
 		const emojiPic = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${thisCurrency.emoji}.png`);
-		const homeEmojiPic = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${homeCurrency.emoji}.png`);
+		
 		let perRBN = RBN.value/curr.value;
 		let perRBNString = perRBN > 10 ? miliarize(perRBN) : perRBN.toPrecision(2).replace(".", ","); // not actually a string
 
 
 		Picto.roundRect(c,0,0,225,90,8,'#FFF')
-		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.name+" "   ,'600 16px Panton Black',"#2b2b3b"),66,8,150);
-		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.bot.name,'600 italic 12px Panton',"#445"),66+4,26,150);
-		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'900 20px "Panton Black"',"#2b2b3b"),8+27,8+62,54,'center');
-		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'600 12px "Panton Black"',"#334"),185,56,32);
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.name+" "   ,'600 20px Panton Black',"#2b2b3b"),66,6,150);
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.bot.name,'600 italic 15px Panton',"#445"),66+4,26+2,150);
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'900 24px "Panton Black"',"#2b2b3b"),8+27,2+62,54,'center');
+		Picto.setAndDraw(c,Picto.tag(c,thisCurrency.id+" ",'600 12px "Panton Black"',"#334"),8+185,56,32);
 		Picto.setAndDraw(c,Picto.tag(c,"=",'300 24px Panton',"#2b2b3b"),98,44+4,84);
-		Picto.setAndDraw(c,Picto.tag(c,perRBNString+" ",'300 24px Panton',"#2b2b3b"),98+84,44+4,84,'right');
+		Picto.setAndDraw(c,Picto.tag(c,perRBNString+" ",'600 28px Panton',"#2b2b3b"),12+98+84,44,84,'right');
 		Picto.setAndDraw(c,Picto.tag(c,curr.value.toPrecision(3)+" ",'300 18px Panton',"#334"),98+96,70,96,'right');
 		
 
