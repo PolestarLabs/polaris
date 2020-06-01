@@ -560,7 +560,7 @@ const init       = async (msg,args) => {
 
 			const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 				renderHand(playerHands,  myDeck),
-				renderHand([hideHoleCard ? visihand : dealerHand],  'default')
+				renderHand([hideHoleCard ? visihand : dealerHand],  myDeck)
 			]);
 
 			if (winnings !== 0) {
@@ -694,7 +694,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		let errored;
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
-			renderHand([visibleHand], 'default',bjkP)
+			renderHand([visibleHand], deck,bjkP)
 		]).timeout(2000).catch(e=> {errored = true; return [e,0] } );
 		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
