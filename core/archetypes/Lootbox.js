@@ -29,9 +29,10 @@ class LootboxItem{
 
     this.rarity = r || "C";
     this.exclusive  = p.exclusive || null;
-    this.event  = p.event  || null;
+    this.event   = p.event  || null;
     this.#filter = p.filter || null;
     this.#bypass = p.bypass || [];
+
   }
   
   fetchFrom(collection){
@@ -95,11 +96,12 @@ class Lootbox{
     let itmArray = Lootbox._shuffle(itmPILE).slice(0,3);
     let fltArray = Lootbox._shuffle([false,this.#filter,false]);
 
-    const contentBlueprint = Lootbox._shuffle([
-      { rarity: rarArray[0], event: eveArray[0], item: itmArray[0], filter: fltArray[0] },
-      { rarity: rarArray[1], event: eveArray[1], item: itmArray[1], filter: fltArray[1] },
-      { rarity: rarArray[2], event: eveArray[2], item: itmArray[2], filter: fltArray[2] },
-    ]);
+    let contentBlueprint = []
+    for (let i=0; i<this.#size; i++){
+      contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], filter: fltArray[i] })
+    }
+
+    contentBlueprint = Lootbox._shuffle(contentBlueprint)       
     
     this.content = contentBlueprint.map(cbl=>{
       let Item = new LootboxItem(cbl.item,cbl.rarity,cbl);
