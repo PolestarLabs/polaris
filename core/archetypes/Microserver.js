@@ -17,19 +17,18 @@ class Microserver{
                         this.microtasks = require('../subroutines/microtasks');
                         body = JSON.parse( body);
                         if(body.auth === crossAuth){
-                            let entrypoint = req.url.split('/')[1]                        
+                            let entrypoint = req.url.split('/')[1]
                             await this.microtasks[entrypoint](body,req.url,res);
-                            res.statusCode = 200
-                            res.end('ok')
                         }else{
                             res.statusCode = 403
-                            res.end('Vaza')                            
+                            res.end('Vaza')
                         }
                         req = null;
-                        microtasks = null;
-                    }catch(er){                        
+                        this.microtasks = null;
+                    }catch(err){                        
                         res.statusCode = 504
-                        res.end('ERROR: '+er.message)
+                        console.error(err)
+                        res.send('ERROR: '+err.message)
                     }
                 });
             }
