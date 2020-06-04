@@ -107,15 +107,15 @@ class Lootbox{
     this.#size      = options.size   || 3;
     this.#filter    = options.filter || false;
 
-    let rarArray = Lootbox._shuffle(rarPILE).slice(0,2).concat(rar);
-    let eveArray = Lootbox._shuffle([false,this.event,false]);
-    let itmArray = Lootbox._shuffle(itmPILE).slice(0,3);
-    let fltArray = Lootbox._shuffle([false,this.#filter,false]);
-    let itemTypeArray = Lootbox._shuffle(['junk','junk','junk','material','material','junk']);
+    let rarArray = Lootbox._shuffle(rarPILE).slice(0,this.#size-1).concat(rar);
+    let eveArray = Lootbox._shuffle( ([...new Array(this.#size-1)]).concat(this.event) );
+    let fltArray = Lootbox._shuffle( ([...new Array(this.#size-1)]).concat(this.#filter) );
+    let itmArray = Lootbox._shuffle(itmPILE).slice(0,this.#size);
 
     let contentBlueprint = []
     for (let i=0; i<this.#size; i++){
-      contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[i], filter: fltArray[i] })
+      itemTypeArray= Lootbox._shuffle(['junk','junk','junk','material','material','junk'])
+      contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[0], filter: fltArray[i] })
     }
 
     contentBlueprint = Lootbox._shuffle(contentBlueprint)       
