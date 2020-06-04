@@ -785,6 +785,7 @@
             "Amazing! Look at what I've found!",
             "Hey, I'm pretty sure you want to see this Lootbox here."
         ],
+        "duplicate":"DUPLICATE",
         "lootPick": "You all have **__20 Seconds__** to dispute it! Type `{{prefix}}pick` for a chance to claim it!",
         "goesTo": "Time's up! Let's see who's getting this Box.\n**This Loot Box will be raffled between:**",
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
