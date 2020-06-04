@@ -193,4 +193,4 @@ function legacyEmblem(ct,mini){
 }
 
 
-module.exports={Lootbox,LootboxItem}
+module.exports={Lootbox,LootboxItem,rates:RATES}
