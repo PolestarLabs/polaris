@@ -78,7 +78,7 @@ const DEFAULT_CMD_OPTS = {
                 }});
         }
     }
-    ,errorMessage: ()=>{ 
+    ,errorMessage: (msg,err)=>{
         return {
                 embed:{
                     description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n "
