@@ -2,7 +2,7 @@
 //          ODDS          //
 /**************************/
 
-const {LootRates: RATES} = require(appRoot+"/GlobalNumbers.js")
+const {LootRates: RATES} = require("../../GlobalNumbers.js")
 
 const itmODDS  = RATES.itemType
 const rarODDS  = RATES.rarity
@@ -28,9 +28,9 @@ class LootboxItem{
                           : ["RBN","JDE","SPH"].includes(t) ? "gems" : null;
 
     this.rarity = r || "C";
-    this.exclusive  = p.exclusive || null;
-    this.event   = p.event  || null;
-    this.#filter = p.filter || null;
+    this.exclusive  = p.exclusive
+    this.event   = p.event 
+    this.#filter = p.filter
     this.#bypass = p.bypass || [];
 
   }
@@ -39,11 +39,19 @@ class LootboxItem{
     collection = collection || this.collection || "cosmetics";
     this.loaded= new Promise(resolve=>{
       const query = {rarity: this.rarity};
-      this.event   ? query.filter = this.event  : null;
-      this.#filter ? query.event  = this.#filter : '';
+      query.event  = this.event;
+      query.filter = this.#filter;
+      
       query.droppable = !this.#bypass.includes("droppable");
       if(this.type != 'boosterpack')
         query.public  = !this.#bypass.includes("public");
+
+      // ITEM DB FORMAT QUERY ISSUES
+      if(this.collection == 'items'){
+        delete query.event
+        delete query.filter
+        delete query.public
+      }
 
       query.type      = this.type;
       let queries = [query];
@@ -52,11 +60,19 @@ class LootboxItem{
         { $match: {$or:queries} },
         { $sample: {size: 1}}
       ]).then(res=>{
-        res = res[0] ||{}
-        if(!res) this.content = null;
-        res.id    ?this.id   = res.id             : res._id;
+        res = res[0]
+        if(!res) {
+          this.type = 'gems';
+          this.calculateGems('RBN');
+          this.query = query
+          resolve(this);
+          return this.loaded = true;
+        }
+        this.objectId   = res._id
+        res.id    ?this.id   = res.id             : null;
         res.name  ?this.name = res.name           : null;
         res.code  ?this.code = res.code           : null;
+        res.event  ?this.event = res.event           : null;
         res.icon  ?this.icon = res.icon           : null;
         res.BUNDLE?this.release_pack = res.BUNDLE : null;
         this.isPublic = res.public;
@@ -95,10 +111,11 @@ class Lootbox{
     let eveArray = Lootbox._shuffle([false,this.event,false]);
     let itmArray = Lootbox._shuffle(itmPILE).slice(0,3);
     let fltArray = Lootbox._shuffle([false,this.#filter,false]);
+    let itemTypeArray = Lootbox._shuffle(['junk','junk','junk','material','material','junk']);
 
     let contentBlueprint = []
     for (let i=0; i<this.#size; i++){
-      contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], filter: fltArray[i] })
+      contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[i], filter: fltArray[i] })
     }
 
     contentBlueprint = Lootbox._shuffle(contentBlueprint)       
@@ -108,7 +125,7 @@ class Lootbox{
       if(Item.collection) Item.fetchFrom(Item.collection);
       else if(Item.type != "gems") Item.fetchFrom();
       else Item.calculateGems(cbl.item)
-      return Item;
+      return Item
     })
     
     
@@ -117,10 +134,10 @@ class Lootbox{
       let completed = 0
       this.content.forEach(async (ct,i,a)=>{
         await ct.loaded;
-        if(ct.type == 'background')  this.visuals[i] = (paths.CDN+`/backdrops/${ct.code}.png`);
+        if(ct.type == 'background')  this.visuals[i] = (paths.CDN+`/backdrops/${ct.code||ct.id}.png`);
         if(ct.type == 'medal')       this.visuals[i] = (paths.CDN+`/medals/${ct.icon}.png`);
-        if(ct.collection == 'items') this.visuals[i] = (paths.CDN+`/build/items/${ct.icon}.png`);
-        if(ct.type == 'boosterpack') this.visuals[i] = (paths.CDN+`/build/boosters/${ct.icon}.png`);
+        if(ct.collection == 'items') this.visuals[i] = (paths.CDN+`/build/items/${ct.icon||ct.id}.png`);
+        if(ct.type == 'boosterpack') this.visuals[i] = (paths.CDN+`/boosters/showcase/${ct.icon}.png`);
         if(ct.type == 'gems')        this.visuals[i] = (paths.CDN+`/build/LOOT/${ct.currency}_${ct.rarity}.png`);
         
         if(++completed ==a.length){
@@ -134,10 +151,8 @@ class Lootbox{
     this.legacyfy = new Promise(resolve=>{
       this.legacy = []
       let completed = 0
-      console.log(this)
       this.content.forEach(async (ct,i,a)=>{
         await ct.loaded;
-        console.log({ct})
         this.legacy.push({
           item:   ct.type == "boosterpack"?ct.id: ct.code || ct.icon ||ct.id || ct.amount ,
           rarity: ct.rarity,
