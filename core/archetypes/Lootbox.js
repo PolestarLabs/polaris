@@ -8,12 +8,13 @@ const itmODDS  = RATES.itemType
 const rarODDS  = RATES.rarity
 const gemRATES = RATES.gems
 
-const POPULATE = (pile,no,pushee)=>{while(no--) pile.push(pushee); return pile};
+const POPULATE = (pile,no,pushee)=>{while(no--) shuffle(pile).push(pushee); return shuffle(pile)};
 
 const itmPILE = []
 Object.keys(itmODDS).forEach(i=> POPULATE(itmPILE,itmODDS[i],i) );
 const rarPILE = []
 Object.keys(rarODDS).forEach(i=> POPULATE(rarPILE,rarODDS[i],i) );
+
 
 //=================================================================
 
@@ -84,7 +85,7 @@ class LootboxItem{
   }
 
   calculateGems(gem){
-    let noise = randomize(-250,250);
+    let noise = randomize(-50,200);
     this.amount = gem === "SPH" ? 1 : Math.floor( (gemRATES[this.rarity] + noise) * (gem=='JDE'?8:1));
     this.currency = gem
     return this.amount;
@@ -114,7 +115,7 @@ class Lootbox{
 
     let contentBlueprint = []
     for (let i=0; i<this.#size; i++){
-      itemTypeArray= Lootbox._shuffle(['junk','junk','junk','material','material','junk'])
+      let itemTypeArray= Lootbox._shuffle(['junk','junk','junk','material','material','junk'])
       contentBlueprint.push({ rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[0], filter: fltArray[i] })
     }
 

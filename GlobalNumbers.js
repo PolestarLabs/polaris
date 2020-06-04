@@ -8,8 +8,8 @@ module.exports={
         UR:2850,SR:1875,R:1223,U:830,C:500
     },
     LootRates: {
-        rarity    : { C:1000, U:500, R:300, SR:180, UR:85, XR:0},
-        gems      : { C:250, U:500, R:850, SR:1100, UR:1320, XR:1880 },
+        rarity    : { C:1000, U:400, R:250, SR:150, UR:70, XR:0},
+        gems      : { C:150, U:250, R:500, SR:850, UR:1320, XR:2500 },
         itemType  : {
             //JADES
                JDE:  250
