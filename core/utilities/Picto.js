@@ -50,10 +50,18 @@ module.exports = {
     c.antialias = "subpixel";
     c.filter = "best";
     c.font = font;
+    
+    let {stroke} = options
+    
+    if (stroke) {
+      c.strokeStyle = stroke.style;
+      c.lineWidth   = stroke.line;    
+    }
     c.fillStyle = color;
 
     options = Object.assign(
       {
+        strokeText: !!stroke,
         font: font || "bold 25px Quicksand, sans-serif",
         textAlign: "left",
         verticalAlign: "top",
@@ -118,7 +126,8 @@ module.exports = {
     height = 10,
     radius = 5,
     fill = "#FFF",
-    stroke = false
+    stroke = false,
+    lineWidth= 3
   ) {
     if (typeof radius === "number") {
       radius = { tl: radius, tr: radius, br: radius, bl: radius };
@@ -159,6 +168,7 @@ module.exports = {
     }
     if (stroke) {
       typeof stroke == "string" ? (ctx.strokeStyle = stroke) : false;
+      ctx.lineWidth = lineWidth
       ctx.stroke();
     }
   },
