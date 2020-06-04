@@ -104,6 +104,8 @@ class Lootbox{
     this.rarity     = rar;
     this.content    = [];
     this.timestamp  = Date.now();
+    
+    this.id         = options.id     || "unknown";
     this.event      = options.event  || false;
     this.#size      = options.size   || 3;
     this.#filter    = options.filter || false;
