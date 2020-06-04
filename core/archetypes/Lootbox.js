@@ -69,12 +69,12 @@ class LootboxItem{
           return this.loaded = true;
         }
         this.objectId   = res._id
-        res.id    ?this.id   = res.id             : null;
-        res.name  ?this.name = res.name           : null;
-        res.code  ?this.code = res.code           : null;
-        res.event  ?this.event = res.event           : null;
-        res.icon  ?this.icon = res.icon           : null;
-        res.BUNDLE?this.release_pack = res.BUNDLE : null;
+        this.id     = res.id
+        this.name   = res.name
+        this.code   = res.code
+        this.event  = res.event
+        this.icon   = res.icon
+        this.release_pack   = res.BUNDLE
         this.isPublic = res.public;
         resolve(this);
         this.loaded = true;        
