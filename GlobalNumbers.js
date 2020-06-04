@@ -9,18 +9,18 @@ module.exports={
     },
     LootRates: {
         rarity    : { C:1000, U:400, R:250, SR:150, UR:70, XR:0},
-        gems      : { C:150, U:250, R:500, SR:850, UR:1320, XR:2500 },
+        gems      : { C:100, U:200, R:400, SR:650, UR:1000, XR:2500 },
         itemType  : {
             //JADES
-               JDE:  250
+               JDE:  400
             //RUBINES
-              ,RBN:  200
+              ,RBN:  250
             //MEDALS
-              ,MDL:  250
+              ,MDL:  200
             //BACKGROUNDS
-              ,BKG:  200
+              ,BKG:  1200
             //BOOSTERS
-              ,BPK:  150
+              ,BPK:  120
             //ITEMS
               ,ITM:  0
             //SAPPHIRE
