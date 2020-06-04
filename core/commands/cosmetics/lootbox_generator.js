@@ -3,11 +3,14 @@ const Picto = require('../../utilities/Picto.js');
 const Canvas = require("canvas");
 const ECO = require("../../archetypes/Economy");
 
+const LootingUsers = new Map();
+
 const staticAssets = {}
 
 const VisualsCache = new Map()
 
-const cardWidth = 270
+const CARD_WIDTH = 270;
+const BASELINE_REROLLS = 3;
 
 staticAssets.load = Promise.all([
     Picto.getCanvas(paths.CDN + '/build/LOOT/frame_C.png'),
@@ -25,88 +28,63 @@ staticAssets.load = Promise.all([
 
 
 const init = async function (msg,args){
-    
-    console.log(staticAssets)
+ 
     if(!staticAssets.loaded) await staticAssets.load;
     if(VisualsCache.size > 800) VisualsCache.clear();
  
     
-    const USERDATA = await DB.users.getFull({ id: msg.author.id });    
+    const USERDATA = await DB.users.getFull({ id: msg.author.id });
 
-
-    const boxparams = await DB.items.findOne({ id: 'lootbox_C_O' });
-    const lootbox = new Lootbox(boxparams.rarity,boxparams);
- 
-    await lootbox.compileVisuals;
-
-    await Promise.all(
-        lootbox.visuals.map(async vis =>
-            VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis) ) && VisualsCache.get(vis)
-        )
-    );
-    
-    const P = {lngs:msg.lang}
-    
-    const canvas = Picto.new(800,600)
-    const ctx = canvas.getContext('2d')
-
-    let itemCards = lootbox.content.map((item,i)=> renderCard(item,lootbox.visuals[i],P) );
-
-    itemCards.forEach((card,i)=> {
-
-        let loot = lootbox.content[i];
-   
-            
-        ctx.drawImage(card,8+i*(cardWidth-15)+2,0)
-    
-    });
-
-    lootbox.content.forEach((loot,i)=>{
-
-        let isDupe = true;
-
-        if(loot.type === 'background')
-            USERDATA.modules.bgInventory.includes( loot.id || loot.code); // <- ID/CODE backwards compat
-        if(loot.type === 'medal')
-            USERDATA.modules.medalInventory.includes( loot.id || loot.icon); // <- ID/ICON backwards compat
-        
-        if(loot.type != 'gems') isDupe = true;
-    
-        if(isDupe){
-            let dupe= renderDupeTag(loot.rarity,P);
-            console.log(dupe)
-            ctx.drawImage(dupe, -6+i*(cardWidth-15), -80,cardWidth+40,cardWidth+40)
-        }
-
-    })
-
-    let lootembed = await msg.channel.send( {
-        embed:{
-            description:`
-${_emoji(boxparams.rarity)} **${$t(`items:${boxparams.id}.name`,P)}**
-
-    Reroll Cost: **${1000}** ${_emoji('RBN')}
-    Rerolls Available: **${5}** 🔁
-
-            `,
-            image:{
-                url:"attachment://Lootbox.png",
-            },
-            thumbnail:{url:paths.CDN+"/build/LOOT/openbox.gif"}
-            ,color: 0x3585F0
-            ,footer:{
-                icon_url: msg.author.avatarURL
-                ,text: msg.author.tag
+    if(LootingUsers.get(msg.author.id)){
+        await DB.users.set(msg.author.id, {$inc: {'counters.cross_server_box_attempts':1} });
+        return {
+            embed:{
+                description: `**You are already Looting in another server.** 
+                Bear in mind that exploiting loopholes can get you banned from using my services!
+                \`- This incident will be reported to the moderators -\``
+                ,color: 0xFF9060
             }
-            ,timestamp: new Date()
         }
-    }, {
-        file: canvas.toBuffer(),
-        name: "Lootbox.png"
-      });
-  
- 
+    }
+    LootingUsers.set(msg.author.id,msg.guild.id);
 
+
+   
+ 
+ 
+    const P = {lngs:msg.lang}
+    const boxparams = await DB.items.findOne({ id: 'lootbox_C_O' });
+
+    async function process(options){
+        const lootbox = new Lootbox(boxparams.rarity,boxparams);
+        await lootbox.compileVisuals;
+
+        let firstRoll = await compileBox(msg,lootbox,USERDATA,{P,currentRoll:0});
+        let message = await msg.channel.send(...firstRoll);
+    
+
+        message.addReaction('⭐').catch(e=>null)
+        message.addReaction('🔁').catch(e=>null)
+        message.awaitReactions( reaction=>{    
+            if(reaction.author.id == PLX.user.id) return false;
+            if(reaction.emoji.name == "🔁"){            
+                return true;
+            }
+            
+        }, {time: 15000, maxMatches:1} ).catch(e=>{
+            console.error(e)
+            ms.removeReaction('🔁')
+            
+        }).then(reas=>{
+            if (!reas || reas.length === 0 ) return;
+            
+            message.delete();
+            return process();
+            
+        })
+    }
+    process()
+    
 }
 
 
@@ -114,13 +92,13 @@ ${_emoji(boxparams.rarity)} **${$t(`items:${boxparams.id}.name`,P)}**
 
 function renderCard(item,visual,P){ 
 
-    const canvas = Picto.new(cardWidth,567)
+    const canvas = Picto.new(CARD_WIDTH,567)
     const ctx = canvas.getContext('2d')
 
     const itemVisual = VisualsCache.get(visual);
     const backFrame = staticAssets["frame_"+item.rarity];
 
-    ctx.drawImage(backFrame,cardWidth/2-backFrame.width/2,0);
+    ctx.drawImage(backFrame,CARD_WIDTH/2-backFrame.width/2,0);
 
     ctx.globalCompositeOperation ='overlay'
     ctx.rotate(-1.5708)
@@ -128,7 +106,7 @@ function renderCard(item,visual,P){
     let itemTypePrint = (item.type !== 'gems' ? $t("keywords."+item.type ,P) : $t("keywords."+item.currency ,P)).toUpperCase()
     Picto.setAndDraw(ctx, 
         Picto.tag(ctx, itemTypePrint, "600 50px 'AvenirNextRoundedW01-Bold'", "#FFF" )
-        ,-468,(cardWidth-backFrame.width)/2+10,460
+        ,-468,(CARD_WIDTH-backFrame.width)/2+10,460
     )
     ctx.rotate(1.5708)
     ctx.globalCompositeOperation ='source-over'
@@ -155,19 +133,19 @@ function renderCard(item,visual,P){
         ctx.rotate(.2)
     }else if(item.type == 'medal'){
         let itemW= 150        
-        ctx.drawImage(itemVisual,cardWidth/2-itemW/2,190-itemW/2,itemW,itemW)
+        ctx.drawImage(itemVisual,CARD_WIDTH/2-itemW/2,190-itemW/2,itemW,itemW)
 
     }else if(item.type == 'boosterpack'){        
         let itemW= 210
-        ctx.translate((cardWidth/2-itemW/2+30), (190-300/2))
+        ctx.translate((CARD_WIDTH/2-itemW/2+30), (190-300/2))
         ctx.rotate(.17)
         ctx.drawImage(itemVisual,0,0,itemW,300)
         ctx.rotate(-.17)
-        ctx.translate(-(cardWidth/2-itemW/2+30), -(190-300/2))
+        ctx.translate(-(CARD_WIDTH/2-itemW/2+30), -(190-300/2))
 
     }else{        
         let itemW= 200        
-        ctx.drawImage(itemVisual,cardWidth/2-itemW/2,190-itemW/2,itemW,itemW)
+        ctx.drawImage(itemVisual,CARD_WIDTH/2-itemW/2,190-itemW/2,itemW,itemW)
         
     }
 
@@ -197,7 +175,7 @@ function renderCard(item,visual,P){
     
     Picto.setAndDraw(ctx, 
         Picto.tag(ctx,  $t("keywords."+item.rarity,P) +" ", "900 32px AvenirNextRoundedW01-Bold", "#FFF" )
-        ,cardWidth/2,20,230,'center'
+        ,CARD_WIDTH/2,20,230,'center'
     )
 
     return canvas;
@@ -222,6 +200,107 @@ function renderDupeTag(rarity,P){
 
 }
 
+function getPrize(loot,USERDATA){
+
+    if(['boosterpack','item'].includes(loot.type))
+        return USERDATA.addItem(loot.id);
+    
+    if(loot.type == 'gems')
+        return ECO.pay(USERDATA.id,loot.amount,'lootbox',this.currency);
+    
+    if(loot.type == 'background')
+        return  DB.users.set(USERDATA.id, {$addToSet: {'modules.bgInventory':(loot.code||loot.id)} });
+        
+    if(loot.type == 'medal')
+        return  DB.users.set(USERDATA.id, {$addToSet: {'modules.medalInventory':(loot.icon||loot.id)} });
+    
+}
+
+function determineRerollCost(box,rollNum,USERDATA){
+
+    let stake = Math.round(
+        (USERDATA.modules.bgInventory.length || 100)
+        + (USERDATA.modules.bgInventory.length || 100)
+        + (USERDATA.modules.inventory.length || 100)
+    )
+    stake = stake < 50 ? 50 : stake;
+
+    let factors = ["C", "U", "R", "SR", "UR"].indexOf(box.rarity) || 0;
+    return ((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50);
+
+}
+
+async function finalize(USERDATA,box,options = {}){
+    const {rerollcosts} = options;
+    DB.control.set(USERDATA.id,{$inc:{'data.boxesOpened':1 , 'data.rerolls': rerollcosts||0}});
+    await USERDATA.removeItem(box.id);
+    if(rerollcosts) await ECO.pay(USERDATA.id,rerollcosts, "lootbox_reroll", 'RBN');
+}
+
+async function compileBox(msg,lootbox,USERDATA,options){
+
+
+
+    await Promise.all(
+        lootbox.visuals.map(async vis =>
+            VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis) ) && VisualsCache.get(vis)
+        )
+    );
+
+    const {currentRoll,P} = options;
+    const rerollCost = determineRerollCost(lootbox,currentRoll,USERDATA);
+    const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
+    
+    const canvas = Picto.new(800,600)
+    const ctx = canvas.getContext('2d')
+
+    let itemCards = lootbox.content.map((item,i)=> renderCard(item,lootbox.visuals[i],P) );
+
+    itemCards.forEach((card,i)=> ctx.drawImage(card,8+i*(CARD_WIDTH-15)+2,0) );
+
+    lootbox.content.forEach((loot,i)=>{
+
+        let isDupe = false;
+
+        if(loot.type === 'background')
+            isDupe = USERDATA.modules.bgInventory.includes( loot.id || loot.code); // <- ID/CODE backwards compat
+        if(loot.type === 'medal')
+            isDupe = USERDATA.modules.medalInventory.includes( loot.id || loot.icon); // <- ID/ICON backwards compat
+        
+    
+        if(isDupe){
+            let dupe= renderDupeTag(loot.rarity,P);
+            ctx.drawImage(dupe, -6+i*(CARD_WIDTH-15), -80,CARD_WIDTH+40,CARD_WIDTH+40)
+        }
+
+    })
+
+    return   [{
+        embed:{
+            description:`
+${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`,P)}**
+
+    Reroll Cost: **${rerollCost}** ${_emoji('RBN')}
+    Rerolls Available: **${totalRerolls-currentRoll}/${totalRerolls}** 🔁
+
+            `,
+            image:{
+                url:"attachment://Lootbox.png",
+            },
+            thumbnail:{url:paths.CDN+"/build/LOOT/openbox.gif"}
+            ,color: 0x3585F0
+            ,footer:{
+                icon_url: msg.author.avatarURL
+                ,text: msg.author.tag
+            }
+            ,timestamp: new Date()
+        }
+    }, {
+        file: canvas.toBuffer(),
+        name: "Lootbox.png"
+    }];
+
+}
 
 
 module.exports={
@@ -230,6 +309,19 @@ module.exports={
     ,cmd:'lootbox_generator'
     ,perms:3
     ,cat:'cosmetics'
-    ,botPerms:['attachFiles','embedLinks']
+    ,botPerms:['attachFiles','embedLinks','manageMessages','addReactions']
     ,aliases:['lgen']
+    ,hooks:{
+        postCommand: (m) => LootingUsers.delete(m.author.id)
+    }
+    ,errorMessage: (msg,err)=>{
+        LootingUsers.delete(msg.author.id);
+        return {
+            embed:{
+                description: "Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n \n***Your Lootbox __was not__ removed from your inventory!***"
+                ,thumbnail:{url:paths.CDN+'/build/assorted/error_aaa.gif?'}
+                ,color: 0xFF9060
+            }
+        }
+    }
 }
