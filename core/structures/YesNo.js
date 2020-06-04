@@ -1,7 +1,7 @@
 // const gear = require("../utilities/Gearbox/global");
 module.exports =  async function yesNo(m,message,yes=false,no=false,timeout=false,options){
     options = options || {}
-    let embed = options.embed|| (m.embeds||[])[0] || false;
+    let embed = options.embed|| m.embeds?.[0] || false;
     let avoidEdit = options.avoidEdit || !embed  || false;
     let clearReacts = typeof options.clearReacts == 'undefined' || options.clearReacts;
     let time = options.time || 15000;
@@ -41,7 +41,7 @@ module.exports =  async function yesNo(m,message,yes=false,no=false,timeout=fals
     if (timeout && typeof timeout == 'function')  return timeout(m);
     else if (timeout)  return timeout;
   });
-  if (!reas || reas.length === 0 ) return;
+  if (!reas?.length !== 0 ) return;
 
   function cancellation(){
     if(clearReacts)
@@ -53,7 +53,7 @@ module.exports =  async function yesNo(m,message,yes=false,no=false,timeout=fals
       
       m.edit({embed}) 
     }
-    if (no && typeof no == 'function')  return no(m);
+    if (typeof no == 'function')  return no(m);
     else if (no)  return no;
   }
   

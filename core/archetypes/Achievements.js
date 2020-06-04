@@ -17,16 +17,16 @@ class AchievementsManager extends EventEmitter{
     has(ach,user){
         return new Promise(async (resolve)=>{
             const userData = await DB.users.get(user.id||user);
-            resolve (!!((userData.modules.achievements||[{}]).find(a=>a.id == ach)));
+            resolve (!!(userData?.modules.achievements?.find(a=>a.id == ach)));
         })
     }
     progress(ach,user){
         return new Promise(async (resolve)=>{
-            if(!user || !user.modules && user.id || typeof user == 'string') user = await DB.users.get(user.id||user);
-            let statistics  = ((await DB.control.get(user.id)) || {data:{}}).data.statistics;
+            if(!user?.modules && user.id || typeof user == 'string') user = await DB.users.get(user.id||user);
+            let statistics  = (await DB.control.get(user.id))?.data.statistics;
             let achiev      = await this.get(ach);
-            let conditions  = achiev.condition ? achiev.condition.split('>='):0;
-            let goal        = conditions?conditions[1]||1:1;
+            let conditions  = achiev.condition?.split('>=') || 0;
+            let goal        = conditions?.[1]||1;
             let current     = eval(`try{${ conditions[0]||0 }}catch(err){0}`);
             let percent     = (Math.floor(current * 100 / goal)/100)||0;
 
@@ -37,18 +37,18 @@ class AchievementsManager extends EventEmitter{
 
     check(userData, beau,awardRightAway){
         return new Promise(async (resolve,reject)=>{
-            if(!userData || !userData.modules && userData.id || typeof userData == 'string') userData = await DB.users.get(userData.id||userData);
+            if(!userData?.modules && userData.id || typeof userData == 'string') userData = await DB.users.get(userData.id||userData);
             if(!userData) reject("[AchievementsManager] UserData is Null");
-            let statistics = ((await DB.control.get(userData.id)) || {data:{}}).data.statistics;
+            let statistics = (await DB.control.get(userData.id))?.data.statistics;
 
             let res = await DB.achievements.find({},{_id:0,id:1,reveal_requisites:1,reveal_level:1,advanced_conditions:1,condition:1}).lean().exec().then(a=>
                 Promise.all(
                     a.map(async achiev=>{
                         let user = userData;
-                        let revealed = userData.modules.level >= achiev.reveal_level && (achiev.achiev_requisites ? this.has(userData.id, achiev.achiev_requisites)||true : true) && !!eval(achiev.reveal_requisites)
+                        let revealed = userData.modules.level >= achiev.reveal_level && (this.has(userData.id, achiev.achiev_requisites)||true) && !!eval(achiev.reveal_requisites)
                         let C1 =  eval(`try{${achiev.condition}}catch(err){false}`);
                         let C2;
-                        if(achiev.advanced_conditions && achiev.advanced_conditions.length > 0) C2 = achiev.advanced_conditions.every(acv=> { let user = userData; return eval(`try{${acv}}catch(err){false}`);});
+                        if(achiev.advanced_conditions?.length > 0) C2 = achiev.advanced_conditions.every(acv=> { let user = userData; return eval(`try{${acv}}catch(err){false}`);});
                         else C2 = true;
                         let awarded = userData.modules.achievements.find(a=>a.id==achiev.id)?.unlocked;
                         let switcher = (c)=> c?"✔️":"❌" 

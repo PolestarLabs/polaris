@@ -25,7 +25,7 @@ const PERMS_CALC = function CommandPermission(msg){
             ? cfg.admins
             : [ ];
     let GUILD = msg.guild||{}
-    let switches = !((GUILD.DISABLED||[]).includes(msg.command.label) || (GUILD.DISABLED||[]).includes(msg.command.cat));
+    let switches = !(GUILD.DISABLED?.includes(msg.command.label) || GUILD.DISABLED?.includes(msg.command.cat));
     if(msg.author.looting === true) {
         msg.addReaction(_emoji('nope').reaction);
         return false;

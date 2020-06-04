@@ -245,7 +245,7 @@ function determineRing(arg,Rings){
     P.userA = msg.member.nick || msg.author.username;
     P.userB = Target.nick     || Target.user.username;
 
-    if(! (userData && userData.id == msg.author.id && RING && mrgPresent) ){   
+    if(! (userData?.id == msg.author.id && RING && mrgPresent) ){   
         [userData,Rings] = await Promise.all([ DB.users.getFull({id:msg.author.id}), DB.items.find({subtype:'ring'}) ]);
         RING = determineRing(args[0],Rings) || determineRing(args[1],Rings);
         
@@ -271,7 +271,7 @@ function determineRing(arg,Rings){
 
     upgradePrompt = upgradePrompt || await msg.channel.send( _emoji('loading') + "Upgrading Ring" );
 
-    if(RING && userData.hasItem(RING.id) ){
+    if(userData.hasItem(RING?.id) ){
         await userData.removeItem(RING.id);
         await DB.relationships.set({_id:mrgPresent._id},{$set:{ring:RING.icon}});
         (upgradePrompt).edit("upgrade confirmation");

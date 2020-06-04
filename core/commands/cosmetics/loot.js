@@ -79,7 +79,7 @@ const init = async function (msg, options = {}) {
     msg.author.looting = true;
 
     let rerolls = options.rerolls;
-    rerolls = rerolls === 0 ? 0 : !rerolls ? 3 : rerolls;
+    rerolls = !rerolls && rerolls !== 0 ? 3 : rerolls;
 
     let event = options.event || false;
     let boxaher = options.boxaher || `lootbox_${options.rarity || "C"}_O`;

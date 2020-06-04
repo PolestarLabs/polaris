@@ -23,7 +23,7 @@ const init = async function (msg){
     if(msg.args[0]=== "add"){
         let channelID = msg.args[1];
 
-        if(channelID && channelID.startsWith("http")){
+        if(channelID?.startsWith("http")){
             let pre= channelID.split('/');
             channelID = pre[pre.length - 1];
         };
@@ -40,7 +40,7 @@ const init = async function (msg){
         
         let payload = {type: "youtube", url: channelID, last: youtubeChannel.items[0], channel: channel};
 
-        if(feedData && feedData.find(fdd=> fdd.url == channelID)){
+        if(feedData?.find(fdd=> fdd.url == channelID)){
             await DB.feed.set({server:msg.guild.id, url:channelID},{$set:{channel:channel} });
             return msg.channel.send( $t('interface.feed.urlPresent',P) );
         }
@@ -65,7 +65,7 @@ const init = async function (msg){
     }
     // +RSS remove (LINK || index) 
     if(msg.args[0]=== "remove"||msg.args[0]=== "delete"){
-        if (!feedData || feedData.length == 0) return msg.channel.send( $t('interface.feed.noTube',P) );
+        if (!feedData?.length) return msg.channel.send( $t('interface.feed.noTube',P) );
         let target = msg.args[1];
         
         if (!target) return msg.channel.send( $t('interface.feed.stateIDorURL',P) );
@@ -85,7 +85,7 @@ const init = async function (msg){
     }
 
     if(msg.args[0]=== "list"){      
-        if(feedData && feedData.length > 0){
+        if(feedData?.length > 0){
             msg.channel.send(`
             **${_emoji('todo')+ $t('interface.feed.listShowYoutube',P) }**
 \u2003${feedData.filter(x=>x.type==="youtube").map((x,i)=>`\`\u200b${(i+"").padStart(2,' ')}\` https://youtube.com/channel/${x.url} @ <#${x.channel}>`).join('\n\u2003')}        
@@ -122,7 +122,7 @@ async function feedEmbed(item,data){
 
     let ogs = require('open-graph-scraper');
     let results = await ogs({ 'url':  data.link  }).catch(e=>{console.error(e);return false});
-    let img_link = results ? results.data.ogImage.url: null;  
+    let img_link = results?.data.ogImage.url || null;  
     if(img_link) embed.thumbnail = {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link};
 
     return embed;

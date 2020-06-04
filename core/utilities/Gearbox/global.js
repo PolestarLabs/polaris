@@ -132,7 +132,7 @@ module.exports = {
           const file = path.resolve(resource);
           fs.stat(file, (err, stats) => {
             if (err) return reject(err);
-            if (!stats || !stats.isFile()) return reject('[FILE NOT FOUND] '.red + file);
+            if (!stats?.isFile()) return reject('[FILE NOT FOUND] '.red + file);
             fs.readFile(file, (err2, data) => {
               if (err2) reject(err2);
               else resolve(data);

@@ -7,7 +7,7 @@ class ReactionCollector extends EventEmitter {
 		this.message = message;
 		this.ended = false;
 		this.collected = [];
-		this.bot = message.channel.guild ? message.channel.guild.shard.client : message.channel._client;
+		this.bot = message.channel.guild?.shard.client || message.channel._client;
 		this.listener = (message,emoji,userID) => this.verify(message,emoji,userID);
 		this.bot.on("messageReactionAdd", this.listener);
 		if(this.options.time) setTimeout(()=>this.stop("time"), this.options.time);

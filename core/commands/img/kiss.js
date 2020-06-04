@@ -28,7 +28,7 @@ const init = async function(msg) {
   } 
   
   P.user = msg.author.username;
-  P.victim = Target ? Target.username : false;
+  P.victim = Target?.username || false;
   console.log(Target);
 
   if (randomize(1, 100) === 100) {
@@ -46,7 +46,7 @@ const init = async function(msg) {
     (Target
       ? $t("responses.forFun.kissed", P)
       : $t("responses.forFun.kissedNone", P));
-  if (Target && Target.id == msg.author.id)
+  if (Target?.id == msg.author.id)
     embed.description = ":hearts: " + $t("responses.forFun.kissedSelf", P);
 
   if (Target) {

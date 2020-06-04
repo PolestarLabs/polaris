@@ -43,30 +43,28 @@ module.exports = {
         if (nopool) return false;
 
         const messpool = sevmesgs.filter(mes => {
-            if (mes.attachments && mes.attachments.length > 0) {
+            if (mes.attachments?.length > 0) {
                 if (mes.attachments[0].url) {
                     return true
                 }
             }
-            if (mes.embeds && mes.embeds.length > 0) {
+            if (mes.embeds?.length > 0) {
                 if (mes.embeds[0].type === 'image' && mes.embeds[0].url) {
                     return true
                 }
             }
         });
 
-        if ((messpool || []).length > 0) return (
+        if (messpool?.length > 0) return (
             messpool[messpool.length - 1].attachments[0] ||
             messpool[messpool.length - 1].embeds[0]
         ).url;
         else return false;
     },
     modPass: function modPass(member, extra, sData = false) {
-        if (sData) {
-            if (sData.modules.MODROLE) {
-                if (member.hasRole(sData.modules.MODROLE)) return true;
-            }
-        };
+        if (sData?.modules.MODROLE) {
+            if (member.hasRole(sData.modules.MODROLE)) return true;
+        }
         if (member.permission.has('manageGuild') || member.permission.has('administrator')) {
             return true;
         }
@@ -80,7 +78,7 @@ module.exports = {
         let gamelist = require("../../../resources/lists/playing.js");
         let max = gamelist.games.length - 1
         let rand = randomize(0, max)
-        let gm = gamein ? gamein : gamelist.games[rand];
+        let gm = gamein || gamelist.games[rand];
         return PLX.editStatus(status, { name: gm[0], type: gm[1] })
     },
     getPreviousMessage: function getMessage(msg, ID) {
@@ -101,7 +99,7 @@ module.exports = {
     },
     autoHelper: function autoHelper(trigger, options) {
       let message, P, M, key, cmd, opt;
-      if (options && typeof options == 'object') {
+      if (typeof options == 'object') {
         message = options.message || options.msg;
         M = message.content;
         P = { lngs: message.lang };

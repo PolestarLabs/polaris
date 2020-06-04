@@ -22,7 +22,7 @@ class Blackjack {
   hit(hand,powerups) {
     if (this.deck.length === 0) {
       
-      if (decks.has(this.guildID) && decks.get(this.guildID).length !== 0) {
+      if (decks.get(this.guildID)?.length || 0 !== 0) {
         this.deck = decks.get(this.guildID);
       } else {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
@@ -35,7 +35,7 @@ class Blackjack {
       this.deck = Blackjack._shuffle(this.deck);
     }
    
-    if(powerups && powerups.jokers){
+    if(powerups?.jokers){
 
       let jokers = powerups.jokers.length ||0
       while (jokers--){
@@ -44,7 +44,7 @@ class Blackjack {
       }
     }
     
-    if(powerups&&powerups.nojoker){
+    if(powerups?.nojoker){
       let incr = 0;
       while(this.deck[this.deck.length-1].includes("JOKER")){
         this.deck = Blackjack._shuffle(this.deck);
@@ -58,7 +58,7 @@ class Blackjack {
     return games.delete(this.playerID);
   }
   cardsRemaining() {
-    return decks.has(this.guildID) ? decks.get(this.guildID).length : this.decks.length;
+    return decks.get(this.guildID)?.length || this.decks.length;
   }
   static gameExists(playerID) {
     return games.has(playerID);

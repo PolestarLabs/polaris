@@ -4,8 +4,8 @@ module.exports = async function ReactionNavigator(m,msg,pagefun,options={},rec){
 if(rec>30) return msg.reply("`Navigation Limit Reached`");
 
     let time = options.time || 10000
-    let content = options.content|| (m.content||[])[0] || "";
-    let embed = options.embed|| (m.embeds||[])[0] || false;
+    let content = options.content|| m.content?.[0] || "";
+    let embed = options.embed|| m.embeds?.[0] || false;
     let avoidEdit = options.avoidEdit || true;
     let strings = options.strings || {}
         strings.timeout   =strings.timeout|| "TIMEOUT"
@@ -34,7 +34,7 @@ if(rec>30) return msg.reply("`Navigation Limit Reached`");
         }
     });
 
-    if (!reas || reas.length === 0 ) return;
+    if (!reas?.length !== 0 ) return;
     m.removeReactions().catch(e=>null);
 
     if (!isFirst && reas.length === 1 && reas[0].emoji.name == "◀") {

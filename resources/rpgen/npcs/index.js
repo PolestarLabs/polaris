@@ -6,7 +6,7 @@ const generate = (props = {}) => {
     const characterTraitsJson = require('./characterTraits.json');
     const flawsJson = require('./flaws.json');
 
-    const race = props.race ? props.race : Utils.pick(Data.races)
+    const race = props.race || Utils.pick(Data.races)
     const name = Races[race]();
 
     const traits = [];
