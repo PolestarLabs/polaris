@@ -6,17 +6,17 @@
 	parity: offset: 0 = even, 1 = uneven
 */
 const bets = {
-	straight: { type: "straight", reward: 8, check: n => n === this.number },
-	split: { type: "split", reward: 6, check: n => this.numbers.includes(n) },
-	street: { type: "street", reward: 5, check: n => this.numbers.includes(n) },
-	basket: { type: "basket", reward: 4, check: n => [0, 1, 2, 3].includes(n) },
-	dozen: { type: "dozen", reward: 2, check: n => n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset }, // offset = 1-3
-	column: { type: "column", reward: 2, check: n => (n - this.offset) % 3 === 0}, // offset = 1-3
-	snake: { type: "snake", reward: 1.8, check: n => [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].includes(n) },
-	manque: { type: "manque", reward: 1.5, check: n => n >= 1 && n <= 18 },
-	passe: { type: "passe", reward: 1.5, check: n => n >= 19 && n <= 36 },
-	colour: { type: "colour", reward: 1.5, check: n => this.offset ? ![2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35].includes(n) : [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35].includes(n) },
-	parity: { type: "parity", reward: 1.5, check: n => (n % 2) === (this.offset ? 1 : 0) },
+	straight: { type: "straight", reward: 8, check: function(n) {return n === this.number} },
+	split: { type: "split", reward: 6, check: function(n) {return this.numbers.includes(n)}},
+	street: { type: "street", reward: 5, check: function(n) { this.numbers.includes(n)} },
+	basket: { type: "basket", reward: 4, check: function(n) { [0, 1, 2, 3].includes(n)} },
+	dozen: { type: "dozen", reward: 2, check: function(n) { n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset} }, // offset = 1-3
+	column: { type: "column", reward: 2, check: function(n) { (n - this.offset) % 3 === 0} }, // offset = 1-3
+	snake: { type: "snake", reward: 1.8, check: function(n) { [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].includes(n)} },
+	manque: { type: "manque", reward: 1.5, check: function(n) { n >= 1 && n <= 18} },
+	passe: { type: "passe", reward: 1.5, check: function(n) { n >= 19 && n <= 36} },
+	colour: { type: "colour", reward: 1.5, check: function(n) { this.offset ? !this.numbers.includes(n) : this.numbers.includes(n)}, numbers: [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35] },
+	parity: { type: "parity", reward: 1.5, check: function(n) { (n % 2) === (this.offset ? 1 : 0)} },
 };
 
 const dividers = [ "-" ];
@@ -127,7 +127,6 @@ module.exports = class Roulette {
 
 		// straight
 		if (!isNaN(parseInt(bet))) {
-			console.log(" ITS A NUMBER ")
 			const number = parseInt(bet);
 			if (number >= 0 && number <= 36) return { ...valid, number: number, ...bets.straight };
 			else return { valid: false, reason: "invalidBet" };
