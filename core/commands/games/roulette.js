@@ -1,7 +1,182 @@
 const ECO = require("../../archetypes/Economy");
+const Roulette = require("../../archetypes/Roulette");
 
-const init = async function() {
+const settings = {};
+	settings.collectTime = 35e3;
+	settings.sendWheelTime = 30e3;
+	settings.wheelSpinTime = 10e3;
+// @flicky (set to 0/null to ignore)
+	settings.boardEmbedColor = 0x2b2b3b;
+	settings.wheelEmbedColor = 0x2b2b3b;
+	settings.resultsEmbedColor = 0x2b2b3b;
+	settings.minPerBet = 1;
+	settings.maxPerBet = 2500;
+	settings.maxBets = 10;
+	settings.maxTotal = 20000;
+	settings.timeBetweenBets = 1e3;
 
+async function generateBoard() {
+	// this could probably be a simple cached board
+	// also may not work like this at all
+	// api URL would be easiest (for updateBoard)
+	return "https://upload.wikimedia.org/wikipedia/commons/2/27/Sarony_cigarettes_roulette_blik%2C_foto1.JPG";
+};
+
+async function generateWheel(winningNumber) {
+	// make sure users can't determine the winning number
+	// also need still image to replace gif with
+	return ["https://live.staticflickr.com/2199/3526750763_929737ce8a_b.jpg"];
+};
+
+async function updateBoard(board, bet, userID) {
+	/*
+		bet {
+			amount: integer
+			type: string
+			offset: number (0-3)
+		}
+		type: [straight, split, street, basket, dozen, column, snake, manque, passe, colour, parity]
+		offset: dozen & column: 1-3 - colour: 0 = black, 1 = red - parity: 0 = even, 1 = uneven
+	*/
+	return "https://upload.wikimedia.org/wikipedia/commons/2/27/Sarony_cigarettes_roulette_blik%2C_foto1.JPG";
+};
+
+async function allowedToBet(Game, userID, bet) {
+	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet" };
+	if (settings.maxPerBet && bet.amount > settings.maxPerBet) return { reason: "maxPerBet" };
+	const user = Game.betByUser(userID);
+	if (settings.maxBets && user.bets >= settings.maxBets) return { reason: "maxBets" };
+	if (settings.maxTotal && user.amount >= settings.maxTotal) return { reason: "maxTotal" };
+	if (!await ECO.checkFunds(userID, bet.amount + user.amount)) return { reason: "noMoney" };
+	return true;
+};
+
+async function creditUsers(results) {
+	for (const result of results) {
+		const userID = result.userID;
+		ECO.checkFunds(userID, result.cost).then(() => {
+			if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(_ => "Too bad");
+			else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(_ => "Shouldn't happen");
+		}).catch(() => {
+			result.invalid = true;
+		});
+	};
+	return results;
+};
+
+const init = async function(msg) {
+	const spamFilter = new Map();
+	const checkSpam = m => {
+		if (spamFilter.has(m.author.id) && spamFilter.get(m.author.id) > (Date.now() - settings.timeBetweenBets)) return true;
+		spamFilter.set(m.author.id, m.timestamp);
+		return false;
+	};
+
+	let P={lngs:msg.lang,prefix:msg.prefix};
+	if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+
+	const v = {};
+		v.ONGOING = "A Roulette game is already ongoing in this server";
+
+		v.BOARD_TITLE = "Polaris Roulette";
+		v.BOARD_DESCRIPTION = "You may now place your bets! `bet [amt] [bet] <1-3>`\nUse `bet help` for a detailed betting tutorial.";
+
+		v.WHEEL_DESCRIPTION = `${(settings.collectTime - settings.sendWheelTime) / 1000} seconds left to place your bets!`;
+		v.WHEEL_DESCRIPTION_END = `The wheel will now decide your faith.`;
+
+		v.RESULTS_TITLE = "Roulette Results";
+
+		v.RESULT_NOMONEY = "You somehow lost your money so your bets were dismissed.";
+
+		v.NOTSOFAST = "You are placing bets too fast.";
+
+		v.invalidBet = "Invalid bet";
+		v.missingAll = "No params";
+		v.missingAmount = "No amount";
+		v.missingBet = "No bet";
+		v.zeroAmount = "Bet atleast 1 RBN";
+
+		v.notAllowed = "You can't place this bet right now";
+		v.noMoney = "not enough money";
+		v.minPerBet = `Minimum is ${settings.minPerBet} RBN`;
+		v.maxPerBet = `Maximum is ${settings.maxPerBet} RBN`;
+		v.maxBets = `Maximum bets is ${settings.maxBets}`;
+		v.maxTotal = `Maximum total is ${settings.maxTotal} RBN`;
+
+		v.BETPLACED = "Your bet has been placed";
+
+	if (Roulette.gameExists(msg.guild.id)) return v.ONGOING;
+
+	let board = await generateBoard();
+	const boardEmbed = { color: settings.boardEmbedColor , fields: [] };
+		boardEmbed.title = v.BOARD_TITLE;
+		boardEmbed.description = v.BOARD_DESCRIPTION;
+		boardEmbed.image = { url: board };
+
+	const Game = new Roulette(msg);
+	const Collector = msg.channel.createMessageCollector(m => m.content.toLowerCase().startsWith("bet "), { time: settings.collectTime });
+
+
+	const wheelEmbed = { color: settings.boardEmbedColor , fields: [] };
+		wheelEmbed.description = v.WHEEL_DESCRIPTION;
+	let wheelmsg;
+	setTimeout(async() => {
+		const wheel = await generateWheel(Game.winningNumber);
+		wheelEmbed.image = { url: wheel[0] };
+		wheelmsg = await msg.channel.send({ embed: wheelEmbed });
+	}, settings.sendWheelTime);
+
+	const boardmsg = await msg.channel.send({ embed: boardEmbed });
+
+	Collector.on("message", async(m) => {
+		const userID = m.author.id;
+		if (checkSpam(m)) return m.reply(v.NOTSOFAST);
+
+		const bet = Roulette.parseBet(m.content);
+		if (!bet.valid) return m.reply(v[bet.reason] || v.invalidBet);
+
+		const allowed = await allowedToBet(Game, userID, bet);
+		if (allowed !== true) return m.reply(v[allowed.reason] || v.notAllowed);
+
+		Game.addBet(userID, bet);
+		board = await updateBoard(board, bet, userID);
+		boardEmbed.image.url = board;
+		await boardmsg.edit({ embed: boardEmbed });
+		m.reply(v.BETPLACED);
+		return;
+	});
+
+	Collector.on("end", async() => {
+		console.log("End");
+		wheelEmbed.description = v.WHEEL_DESCRIPTION_END;
+		await wheelmsg.edit({ embed: wheelEmbed });
+
+		let results = Game.results;
+		Game.end();
+
+		validatedResults = await creditUsers(results);
+
+		const resultsEmbed = { color: settings.resultsEmbedColor , fields: [] };
+			resultsEmbed.title = v.RESULTS_TITLE;
+			resultsEmbed.description = `The winning number was ${Game.winningNumber}`;
+
+			let value;
+			if (validatedResults.length) {
+				value = validatedResults.map(result => {
+				if (result.invalid) return `<@${result.userID}> ${v.RESULT_NOMONEY}`;
+				else if (result.payout > 0) return `<@${result.userID}> Congrats you got ${result.payout} RBN`;
+				else if (result.payout < 0) return `<@${result.userID}> Sorry, but I'll be taking ${parseInt(result.payout)} RBN away from you`;
+				else return `<@${result.payout}> You barely got away and didn't win or lose anything.`;
+				}).join("\n");
+			} else {
+				value = "Sadly no one placed a bet";
+			}
+			resultsEmbed.fields.push({ name: "Player Results", value: value});
+
+			setTimeout(() => {
+				wheelmsg.edit({ embed: resultsEmbed });
+			}, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
+	});
 };
 
 module.exports = {
