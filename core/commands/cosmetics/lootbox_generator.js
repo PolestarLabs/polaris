@@ -25,20 +25,20 @@ staticAssets.load = Promise.all([
     Picto.getCanvas(paths.CDN + '/build/LOOT/bgR.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/bgSR.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/bgUR.png'),
-    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_0.png'),
-    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_1.png'),
-    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_2.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparkles_0.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparkles_1.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparkles_2.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/bonusbar.png'),
 ]).then(res=>{
     let [
         frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag,
         bgC,bgU,bgR,bgSR,bgUR,
-        sparles_0,sparles_1,sparles_2,bonusbar,
+        sparkles_0,sparkles_1,sparkles_2,bonusbar,
     ] = res;
     Object.assign(staticAssets,{
         frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag,
         bgC,bgU,bgR,bgSR,bgUR,
-        sparles_0,sparles_1,sparles_2,bonusbar,
+        sparkles_0,sparkles_1,sparkles_2,bonusbar,
         loaded:true});
     delete staticAssets.load
 })
@@ -70,7 +70,8 @@ const init = async function (msg,args){
  
  
     const P = {lngs:msg.lang}
-    const boxparams = await DB.items.findOne({ id: 'lootbox_SR_O' });
+    const boxparams = await DB.items.findOne({ id: 'lootbox_UR_O' });
+    boxparams.size = ~~args[0]
 
     let currentRoll = 0
 
@@ -146,9 +147,9 @@ function renderCard(item,visual,P){
         ctx.rotate(-.2)
         ctx.translate(0,10)
         Picto.roundRect(ctx, ox,oy ,240,135,15,"#FFF","#1b1b2b",5)
-        ctx.shadowBlur = 0
+        ctx.shadowColor = 'transparent';
         Picto.roundRect(ctx, ox+offset, oy+offset, odx - (offset*2) ,ody - (offset*2), offset/2 ,itemVisual)
-        ctx.shadowBlur = 10
+        ctx.shadowColor = '#2248';
         ctx.translate(0,-10)
         ctx.rotate(.2)
     }else if(item.type == 'medal'){
@@ -193,9 +194,10 @@ function renderCard(item,visual,P){
 
     ctx.drawImage(Picto.block(ctx,itemTitle,itemFont,"#FFF",230,100,itemOptions).item,15,220);
     
+    ctx.shadowColor = 'transparent'
     Picto.setAndDraw(ctx, 
-        Picto.tag(ctx,  $t("keywords."+item.rarity,P) +" ", "900 32px AvenirNextRoundedW01-Bold", "#FFF" )
-        ,CARD_WIDTH/2,20,230,'center'
+        Picto.tag(ctx,  $t("keywords."+item.rarity,P) +" ", "900 32px AvenirNextRoundedW01-Bold", "#FFFB" )
+        ,CARD_WIDTH/2,15,230,'center'
     )
 
     return canvas;
@@ -274,29 +276,70 @@ async function compileBox(msg,lootbox,USERDATA,options){
     const canvas = Picto.new(800,600)
     const ctx = canvas.getContext('2d')
     let back = staticAssets[`bg${lootbox.rarity}`];
-    ctx.drawImage(back,0,0,800,600)
-    ctx.translate(0,20)
+    
+   
 
     let itemCards = lootbox.content.map((item,i)=> renderCard(item,lootbox.visuals[i],P) );
 
-    itemCards.forEach((card,i)=> ctx.drawImage(card,8+i*(CARD_WIDTH-15)+2,0) );
+    if(itemCards.length <= 3){
+        if (itemCards.length == 3) ctx.drawImage(back,0,0,800,600);
+        ctx.translate(0,10)
+        itemCards.forEach((card,i,a)=> {
+            if(a.length ==1) i =1;
+            let angle = -.05+(.05*i)
+            let moveY = Math.abs(i-1) + (i||15) -(i==2?25:0)
+            let moveX = i-1 * 15 + i*16
 
-    lootbox.content.forEach((loot,i)=>{
-
+            ctx.translate(moveX,moveY)
+            ctx.rotate(angle)
+            ctx.drawImage(card,8+i*(CARD_WIDTH-15)+2,0) 
+            ctx.rotate(-angle)
+            ctx.translate(-moveX,-moveY)
+        });
+        ctx.translate(0,-10)
+    }else{
+        ctx.save()
+        ctx.translate(0,470)
+        ctx.rotate(-.08* Math.floor(itemCards.length/2))
+        itemCards.forEach((card,i)=> {    
+            let angle = .08 * i
+            let dx = 230
+            let dy = 0
+            ctx.save();
+            ctx.rotate(angle)
+            ctx.translate(0,-470)            
+            ctx.drawImage(card, -(780/(itemCards.length*2)) +(1+i)*(780/itemCards.length-40)+2-(10*i), 120+Math.pow(1+i,2)*-(10-i) )
+            ctx.restore();            
+        })
+        ctx.restore()
+    }
+    
+    lootbox.content.forEach((loot,i,a)=>{
         let isDupe = false;
 
         if(loot.type === 'background')
             isDupe = USERDATA.modules.bgInventory.includes( loot.id || loot.code); // <- ID/CODE backwards compat
         if(loot.type === 'medal')
-            isDupe = USERDATA.modules.medalInventory.includes( loot.id || loot.icon); // <- ID/ICON backwards compat
-        
-    
+            isDupe = USERDATA.modules.medalInventory.includes( loot.id || loot.icon); // <- ID/ICON backwards compat        
+    isDupe=true
         if(isDupe){
             let dupe= renderDupeTag(loot.rarity,P);
-            ctx.drawImage(dupe, -6+i*(CARD_WIDTH-15), -80,CARD_WIDTH+40,CARD_WIDTH+40)
+            if(a.length<=3) ctx.drawImage(dupe, -6+(a.length==1?1:i)*(CARD_WIDTH-15), -80,CARD_WIDTH+40,CARD_WIDTH+40);
+            else Picto.setAndDraw(ctx,Picto.tag(ctx,"DUPE",'600 italic 30px "Panton Black"','#FA5',{style:'#22212b',line:10}), 100+i*(750/a.length)-40*(1+i),430+Math.abs((i-2)*10));
         }
-
     })
+    
+
+    ctx.drawImage(staticAssets.bonusbar,0,0,800,600)
+    if(lootbox.content.length<=3){
+
+        lootbox.content.forEach((l,i,a)=> l.rarity.includes('R') ? ctx.drawImage(staticAssets[`sparkles_${a[1]?i:1}`],0,0) : null );
+    }
+
+    let bonusNum =  Picto.tag(ctx, "+1520", "600 italic 42px 'Panton Black'", "#FFF" )
+    let bonusName =  Picto.tag(ctx, "EXP", "600 italic 34px 'Panton'", "#FFF" )
+    ctx.drawImage(bonusNum.item,620-bonusName.width-bonusNum.width-10, 525);
+    ctx.drawImage(bonusName.item,620-bonusName.width, 535);
 
     return   [{
         embed:{
