@@ -20,9 +20,26 @@ staticAssets.load = Promise.all([
     Picto.getCanvas(paths.CDN + '/build/LOOT/frame_UR.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/frame_XR.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/dupe-tag.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bgC.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bgU.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bgR.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bgSR.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bgUR.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_0.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_1.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/sparles_2.png'),
+    Picto.getCanvas(paths.CDN + '/build/LOOT/bonusbar.png'),
 ]).then(res=>{
-    let [frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag] = res;
-    Object.assign(staticAssets,{frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag,loaded:true});
+    let [
+        frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag,
+        bgC,bgU,bgR,bgSR,bgUR,
+        sparles_0,sparles_1,sparles_2,bonusbar,
+    ] = res;
+    Object.assign(staticAssets,{
+        frame_C,frame_U,frame_R,frame_SR,frame_UR,frame_XR,dupe_tag,
+        bgC,bgU,bgR,bgSR,bgUR,
+        sparles_0,sparles_1,sparles_2,bonusbar,
+        loaded:true});
     delete staticAssets.load
 })
 
@@ -53,13 +70,15 @@ const init = async function (msg,args){
  
  
     const P = {lngs:msg.lang}
-    const boxparams = await DB.items.findOne({ id: 'lootbox_C_O' });
+    const boxparams = await DB.items.findOne({ id: 'lootbox_SR_O' });
 
-    async function process(options){
+    let currentRoll = 0
+
+    async function process(){
         const lootbox = new Lootbox(boxparams.rarity,boxparams);
         await lootbox.compileVisuals;
 
-        let firstRoll = await compileBox(msg,lootbox,USERDATA,{P,currentRoll:0});
+        let firstRoll = await compileBox(msg,lootbox,USERDATA,{P,currentRoll});
         let message = await msg.channel.send(...firstRoll);
     
 
@@ -73,12 +92,13 @@ const init = async function (msg,args){
             
         }, {time: 15000, maxMatches:1} ).catch(e=>{
             console.error(e)
-            ms.removeReaction('🔁')
+            message.removeReaction('🔁')
             
         }).then(reas=>{
             if (!reas || reas.length === 0 ) return;
             
             message.delete();
+            currentRoll++
             return process();
             
         })
@@ -239,7 +259,7 @@ async function finalize(USERDATA,box,options = {}){
 
 async function compileBox(msg,lootbox,USERDATA,options){
 
-
+    
 
     await Promise.all(
         lootbox.visuals.map(async vis =>
@@ -253,6 +273,9 @@ async function compileBox(msg,lootbox,USERDATA,options){
     
     const canvas = Picto.new(800,600)
     const ctx = canvas.getContext('2d')
+    let back = staticAssets[`bg${lootbox.rarity}`];
+    ctx.drawImage(back,0,0,800,600)
+    ctx.translate(0,20)
 
     let itemCards = lootbox.content.map((item,i)=> renderCard(item,lootbox.visuals[i],P) );
 
@@ -287,7 +310,7 @@ ${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`,P)}**
             image:{
                 url:"attachment://Lootbox.png",
             },
-            thumbnail:{url:paths.CDN+"/build/LOOT/openbox.gif"}
+            thumbnail:{url:paths.CDN+(currentRoll?"/build/LOOT/rerollbox.gif":"/build/LOOT/openbox.gif")}
             ,color: 0x3585F0
             ,footer:{
                 icon_url: msg.author.avatarURL
