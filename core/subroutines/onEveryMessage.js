@@ -1,4 +1,4 @@
-const NSFW = require('../utilities/CheckNSFW.js');
+//const NSFW = require('../utilities/CheckNSFW.js');
 const Drops = require('./boxDrops').lootbox;
 
 
@@ -11,7 +11,7 @@ module.exports = async msg => {
   if(msg.guild.imagetracker && !msg.channel.nsfw){
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
     if(msg.attachments && msg.attachments[0] || hasImageURL ){ 
-      NSFW(msg.attachments[0]?.url || hasImageURL[0]).then(res=> res === true ? msg.addReaction('⚠️') : null);
+      //NSFW(msg.attachments[0]?.url || hasImageURL[0]).then(res=> res === true ? msg.addReaction('⚠️') : null);
     }
   }
 
