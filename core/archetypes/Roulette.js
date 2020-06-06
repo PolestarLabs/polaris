@@ -114,7 +114,7 @@ module.exports = class Roulette {
 
 		// split and street
 		const splitBet = bet.split("");
-		if (parseInt(splitBet[0]) && dividers.includes(splitBet[1].toLowerCase()) && parseInt(splitBet[2])) {
+		if (parseInt(splitBet[0]) && dividers.includes(splitBet[1]?.toLowerCase()) && parseInt(splitBet[2])) {
 			const n1 = parseInt(splitBet[0]),
 				n2 = parseInt(splitBet[2]);
 
