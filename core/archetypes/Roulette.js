@@ -27,15 +27,19 @@ const squareCheck = (n)=> !!(n % 3) && n > 0 && n < 33;
 
 const splitCheck = (n1, n2) => {
 	return (n1 < n2 ? n1 - n2 === -1 && n1 % 3 !== 0 : n1 - n2 === 1 && n2 % 3 !== 0) ||
-		(n1 > n2 ? n1 - n2 === 3 : n2 - n1 === 3)
+		(n1 > n2 ? n1 - n2 === 3 : n2 - n1 === 3);
 };
 
 const streetCheck = (n1, n2) => {
-	return n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0
+	return n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0;
 };
 
 const dstreetCheck = (n1, n2) => {
-	return n2 - n1 === 5 && n2 % 3 === 0 && n1 <= 31
+	return n2 - n1 === 5 && n2 % 3 === 0 && n1 <= 31;
+}
+
+const dozenCheck = (n1, n2) => {
+	return n1 % 12 === 1 && n1 <= 25 && n2 - n1 === 11;
 }
 
 const games = new Map();
@@ -109,8 +113,8 @@ module.exports = class Roulette {
 		if (bet === "red" || bet === "black") return { ...valid, ...bets.colour, offset: bet === "black" ? 0 : 1 };
 
 		if (offset && offset >= 1 && offset <= 3) {
-			if (bet === "column") return { ...valid, offset: offset, ...bets.column };
-			if (bet === "dozen") return { ...valid, offset: offset, ...bets.dozen };
+			if (bet === "column") return { ...valid, ...bets.column, offset: offset };
+			if (bet === "dozen") return { ...valid, ...bets.dozen, offset: offset };
 		}
 
 		if (bet === "square" && squareCheck(offset) ) {
@@ -132,13 +136,14 @@ module.exports = class Roulette {
 				if (splitCheck(n1, n2)) return { ...valid, ...bets.split, numbers: [n1, n2] };
 				if (streetCheck(n1, n2)) return { ...valid, ...bets.street, numbers: [n1, n2, n1 < n2 ? n1 + 1 : n2 + 1] };
 				if (dstreetCheck(n1, n2)) return { ...valid, ...bets.dstreet, numbers: [n1, n2] }
+				if (dozenCheck(n1, n2)) return { ...valid, ...bets.dozen, offset: n1 === 1 ? 1 : n1 === 13 ? 2 : 3 }
 			}
 		}
 
 		// straight
 		if (!isNaN(parseInt(bet))) {
 			const number = parseInt(bet);
-			if (number >= 0 && number <= 36) return { ...valid, number: number, ...bets.straight };
+			if (number >= 0 && number <= 36) return { ...valid, ...bets.straight, number: number };
 			else return { valid: false, reason: "invalidBet" };
 		}
 
