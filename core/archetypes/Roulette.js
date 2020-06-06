@@ -74,6 +74,7 @@ module.exports = class Roulette {
 
 	calculatePayout(bet) {
 		if (bet.check(this.winningNumber)) return bet.amount * bet.reward;
+		else if (this.winningNumber === 0) return -(bet.amount * .5);
 		else return -bet.amount;
 	}
 
