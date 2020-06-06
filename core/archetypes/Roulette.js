@@ -120,7 +120,7 @@ module.exports = class Roulette {
 		// split and street
 		let divider;
 		for (divider of dividers) {
-			if (bet.includes(div)) break;
+			if (bet.includes(divider)) break;
 			else divider = null;
 		}
 		if (divider) {
