@@ -6,18 +6,19 @@
 	parity: offset: 0 = even, 1 = uneven
 */
 const bets = {
-	straight: { type: "straight", reward: 8, check: function(n) {return n === this.number} },
-	split: 	{ type: "split",  reward: 6,   check: function(n) { return this.numbers.includes(n)} },
-	street: { type: "street", reward: 5,   check: function(n) { return this.numbers.includes(n)} },
-	basket: { type: "basket", reward: 4,   check: function(n) { return [0, 1, 2, 3].includes(n)} },
-	square: { type: "square", reward: 3,   check: function(n) { return this.numbers.includes(n)} },
-	dozen: 	{ type: "dozen",  reward: 2,   check: function(n) { return n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset} }, // offset = 1-3
-	column: { type: "column", reward: 2,   check: function(n) { return (n - this.offset) % 3 === 0} }, // offset = 1-3
-	snake: 	{ type: "snake",  reward: 1.8, check: function(n) { return [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].includes(n)} },
-	manque: { type: "manque", reward: 1.5, check: function(n) { return n >= 1 && n <= 18} },
-	passe: 	{ type: "passe",  reward: 1.5, check: function(n) { return n >= 19 && n <= 36} },
-	colour: { type: "colour", reward: 1.5, check: function(n) { return this.offset ? !this.numbers.includes(n) : this.numbers.includes(n)}, numbers: [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35] },
-	parity: { type: "parity", reward: 1.5, check: function(n) { return (n % 2) === (this.offset ? 1 : 0)} },
+	straight: { type: "straight", reward: 8, check: function(n) { return n === this.number } },
+	split: 	{ type: "split",  reward: 6,   check: function(n) { return this.numbers.includes(n) } },
+	street: { type: "street", reward: 5,   check: function(n) { return this.numbers.includes(n) } },
+	basket: { type: "basket", reward: 4,   check: function(n) { return [0, 1, 2, 3].includes(n) } },
+	square: { type: "square", reward: 3,   check: function(n) { return this.numbers.includes(n) } },
+	dstreet: { type: "dstreet", reward: 2.5, check: function(n) { return n >= this.numbers[0] && n <= this.numbers[1] } },
+	dozen: 	{ type: "dozen",  reward: 2,   check: function(n) { return n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset } }, // offset = 1-3
+	column: { type: "column", reward: 2,   check: function(n) { return (n - this.offset) % 3 === 0 } }, // offset = 1-3
+	snake: 	{ type: "snake",  reward: 1.8, check: function(n) { return [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].includes(n) } },
+	manque: { type: "manque", reward: 1.5, check: function(n) { return n >= 1 && n <= 18 } },
+	passe: 	{ type: "passe",  reward: 1.5, check: function(n) { return n >= 19 && n <= 36 } },
+	colour: { type: "colour", reward: 1.5, check: function(n) { return this.offset ? !this.numbers.includes(n) : this.numbers.includes(n) }, numbers: [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35] },
+	parity: { type: "parity", reward: 1.5, check: function(n) { return (n % 2) === (this.offset ? 1 : 0) } },
 };
 
 const dividers = [ "-" ];
@@ -32,6 +33,10 @@ const splitCheck = (n1, n2) => {
 const streetCheck = (n1, n2) => {
 	return n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0
 };
+
+const dstreetCheck = (n1, n2) => {
+	return n2 - n1 === 5 && n2 % 3 === 0 && n1 <= 31
+}
 
 const games = new Map();
 
@@ -113,15 +118,21 @@ module.exports = class Roulette {
 		}
 
 		// split and street
-		const splitBet = bet.split("");
-		if (parseInt(splitBet[0]) && dividers.includes(splitBet[1]?.toLowerCase()) && parseInt(splitBet[2])) {
-			const n1 = parseInt(splitBet[0]),
-				n2 = parseInt(splitBet[2]);
+		let divider;
+		for (divider of dividers) {
+			if (bet.includes(div)) break;
+			else divider = null;
+		}
+		if (divider) {
+			const splitBet = bet.split(divider);
+			if (parseInt(splitBet[0]) && parseInt(splitBet[1])) {
+				const n1 = parseInt(splitBet[0]),
+				n2 = parseInt(splitBet[1]);
 
-			// check if logic is correct
-			console.log(`n1: ${n1}, n2: ${n2}, split: ${splitCheck(n1, n2)}, street: ${streetCheck(n1, n2)}`);
-			if (splitCheck(n1, n2)) return { ...valid, ...bets.split, numbers: [n1, n2] };
-			if (streetCheck(n1, n2)) return { ...valid, ...bets.street, numbers: [n1, n2, n1 < n2 ? n1 + 1 : n2 + 1] };
+				if (splitCheck(n1, n2)) return { ...valid, ...bets.split, numbers: [n1, n2] };
+				if (streetCheck(n1, n2)) return { ...valid, ...bets.street, numbers: [n1, n2, n1 < n2 ? n1 + 1 : n2 + 1] };
+				if (dstreetCheck(n1, n2)) return { ...valid, ...bets.dstreet, numbers: [n1, n2] }
+			}
 		}
 
 		// straight
