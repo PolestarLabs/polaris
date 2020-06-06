@@ -22,7 +22,7 @@ const bets = {
 
 const dividers = [ "-" ];
 
-const squareCheck = (n)=> !!(n % 3) && n > 0 && n < 36;
+const squareCheck = (n)=> !!(n % 3) && n > 0 && n < 33;
 
 const splitCheck = (n1, n2) => {
 	return n1 !== 0 && n2 !== 0 && n1 !== n2 &&
