@@ -25,20 +25,12 @@ const dividers = [ "-" ];
 const squareCheck = (n)=> !!(n % 3) && n > 0 && n < 33;
 
 const splitCheck = (n1, n2) => {
-	return n1 !== 0 && n2 !== 0 && n1 !== n2 &&
-	(
-		(
-			(n1 - n2 === 1 || n1 - n2 === -1) &&
-			(n1 < n2 ? n1 : n2) % 3 != 0
-		) ||
+	return (n1 < n2 ? n1 - n2 === -1 && n1 % 3 !== 0 : n1 - n2 === 1 && n2 % 3 !== 0) ||
 		(n1 > n2 ? n1 - n2 === 3 : n2 - n1 === 3)
-	);
 };
 
 const streetCheck = (n1, n2) => {
-	return n1 !== 0 && n2 !== 0 && n1 !== n2 &&
-	(n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0) &&
-	(n1 > n2 ? n1 : n2) % 3 === 0
+	return n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0
 };
 
 const games = new Map();
