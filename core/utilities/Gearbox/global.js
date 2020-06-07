@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const Eris = require('eris');
 const MersenneTwister = require('../MersenneTwister');
-const generator = new MersenneTwister();
 
 if (Eris.Embed) {
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
@@ -34,8 +33,8 @@ module.exports = {
 },
 
   randomize: function randomize(min, max, seed = Date.now()) {
-    let RAND = generator.random(seed);
-    return Math.floor(RAND * (max - min + 1) + min);
+    let RAND = new MersenneTwister(seed);
+    return Math.floor(RAND.random() * (max - min + 1) + min);
   },
   wait: function wait(time) {
     time = typeof time == 'number' ? time : 1000;
