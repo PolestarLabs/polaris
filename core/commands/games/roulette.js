@@ -63,10 +63,12 @@ async function updateBoard(board, bet, userID) {
 async function allowedToBet(Game, userID, bet) {
 	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet" };
 	if (settings.maxPerBet && bet.amount > settings.maxPerBet) return { reason: "maxPerBet" };
-	const user = Game.betByUser(userID);
-	if (settings.maxBets && user.bets >= settings.maxBets) return { reason: "maxBets" };
-	if (settings.maxTotal && user.amount >= settings.maxTotal) return { reason: "maxTotal" };
-	if (!await ECO.checkFunds(userID, bet.amount + user.amount)) return { reason: "noMoney" };
+	const user = Game.getUser(userID);
+	if (user) {
+		if (settings.maxBets && user.bets >= settings.maxBets) return { reason: "maxBets" };
+		if (settings.maxTotal && user.amount >= settings.maxTotal) return { reason: "maxTotal" };
+		if (!await ECO.checkFunds(userID, bet.amount + user.amount)) return { reason: "noMoney" };
+	}
 	return true;
 };
 
@@ -191,7 +193,7 @@ const init = async function(msg) {
 		Game.end();
 
 		validatedResults = await creditUsers(results);
-		const displayNumber = Game.winningNumber == 37 ? "00" : Game.winningNumber
+		const displayNumber = Game.winningNumber == 37 ? "d" : Game.winningNumber
 
 		const resultsEmbed = { color: settings.resultsEmbedColor , fields: [] };
 			resultsEmbed.title = v.RESULTS_TITLE;

@@ -9,8 +9,8 @@ const bets = {
 	straight: { type: "straight", reward: 35, check: function(n) { return n === this.number } },
 	split: 	{ type: "split",  reward: 17,   check: function(n) { return this.numbers.includes(n) } },
 	street: { type: "street", reward: 11,   check: function(n) { return this.numbers.includes(n) } },
-	basket: { type: "basket", reward: 8,   check: function(n) { return [0, 1, 2, 3].includes(n) } },
 	square: { type: "square", reward: 8,   check: function(n) { return this.numbers.includes(n) } },
+	basket: { type: "basket", reward: 6,   check: function(n) { return [0, "d", 1, 2, 3].includes(n) } },
 	dstreet: { type: "dstreet", reward: 5, check: function(n) { return n >= this.numbers[0] && n <= this.numbers[1] } },
 	dozen: 	{ type: "dozen",  reward: 2,   check: function(n) { return n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset } }, // offset = 1-3
 	column: { type: "column", reward: 2,   check: function(n) { return (n - this.offset) % 3 === 0 } }, // offset = 1-3
@@ -48,7 +48,8 @@ module.exports = class Roulette {
 	constructor(msg) {
 		this.guildID = msg.guild.id;
 		this.users = {};
-		this.winningNumber = Math.floor(Math.random() * 37);
+		this.winningNumber = random(0,37);
+		if (this.winningNumber === 37) this.winningNumber = "d";
 		games.set(this.guildID, this);
 	}
 
@@ -67,8 +68,8 @@ module.exports = class Roulette {
 		user.payout += this.calculatePayout(bet);
 	}
 
-	betByUser(userID) {
-		if (!this.users[userID]) return 0;
+	getUser(userID) {
+		if (!this.users[userID]) return null;
 		else return { bets: this.users[userID].bets.length, amount: this.users[userID].bets.reduce((a, b) => a + b.amount, 0) };
 	}
 
@@ -141,6 +142,7 @@ module.exports = class Roulette {
 		}
 
 		// straight
+		if (bet === "00") return { ...valid, ...bets.straight, number: "d" };
 		if (!isNaN(parseInt(bet))) {
 			const number = parseInt(bet);
 			if (number >= 0 && number <= 36) return { ...valid, ...bets.straight, number: number };
