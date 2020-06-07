@@ -4,14 +4,14 @@ const Canvas = require("canvas");
 const ECO = require("../../archetypes/Economy");
 
 const LootingUsers = new Map();
-
-const staticAssets = {}
-
 const VisualsCache = new Map()
 
 const CARD_WIDTH = 270;
 const BASELINE_REROLLS = 3;
+const REROLL_MSG    = (P) => ({embed: {description: $t('loot.rerolled',P )}} );
+const FIRSTROLL_MSG = (P) => ({embed: {description: $t('loot.opening', P) }} );
 
+const staticAssets = {}
 staticAssets.load = Promise.all([
     Picto.getCanvas(paths.CDN + '/build/LOOT/frame_C.png'),
     Picto.getCanvas(paths.CDN + '/build/LOOT/frame_U.png'),
@@ -47,8 +47,7 @@ staticAssets.load = Promise.all([
 const init = async function (msg,args){
  
     if(!staticAssets.loaded) await staticAssets.load;
-    if(VisualsCache.size > 800) VisualsCache.clear();
- 
+    if(VisualsCache.size > 800) VisualsCache.clear(); 
     
     const USERDATA = await DB.users.getFull({ id: msg.author.id });
 
@@ -63,14 +62,11 @@ const init = async function (msg,args){
             }
         }
     }
-    LootingUsers.set(msg.author.id,msg.guild.id);
-
-
-   
+    LootingUsers.set(msg.author.id,msg.guild.id);   
  
  
-    const P = {lngs:msg.lang}
-    const boxparams = await DB.items.findOne({ id: 'lootbox_UR_O' });
+    const P = {lngs:msg.lang, cosmos: 0, user: msg.author.username}
+    const boxparams = await DB.items.findOne({ id: args?.boxId||'lootbox_C_O' });
     boxparams.size = ~~args[0]
 
     let currentRoll = 0
@@ -79,35 +75,63 @@ const init = async function (msg,args){
         const lootbox = new Lootbox(boxparams.rarity,boxparams);
         await lootbox.compileVisuals;
 
-        let firstRoll = await compileBox(msg,lootbox,USERDATA,{P,currentRoll});
-        let message = await msg.channel.send(...firstRoll);
-    
+        let preRoll;
+        if(currentRoll == 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P) );
+        else preRoll = msg.channel.send(REROLL_MSG(P));
 
+        const rerollCost = determineRerollCost(lootbox,currentRoll,USERDATA);
+        const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
+        const canAffordReroll = await ECO.checkFunds( USERDATA , rerollCost );
+
+        const canReroll = canAffordReroll && totalRerolls-currentRoll > 0;
+
+        let firstRoll = await compileBox(msg,lootbox,USERDATA,{P,currentRoll,totalRerolls,rerollCost,canAffordReroll});
+        
+        await preRoll.then(pR=>pR.deleteAfter(1500).catch(e=>null));
+        let message = await msg.channel.send(...firstRoll)
+ 
         message.addReaction('⭐').catch(e=>null)
-        message.addReaction('🔁').catch(e=>null)
-        message.awaitReactions( reaction=>{    
+        if(canReroll) message.addReaction(_emoji('retweet').reaction).catch(e=>null);
+
+        return message.awaitReactions( reaction=>{
             if(reaction.author.id == PLX.user.id) return false;
-            if(reaction.emoji.name == "🔁"){            
-                return true;
-            }
+            if(reaction.emoji.id === _emoji('retweet').id){
+               return canReroll;
+            }else if(reaction.emoji.name == "⭐") return true;
             
         }, {time: 15000, maxMatches:1} ).catch(e=>{
             console.error(e)
-            message.removeReaction('🔁')
+            message.removeReaction(_emoji('retweet').reaction)
             
-        }).then(reas=>{
-            if (!reas || reas.length === 0 ) return;
-            
-            message.delete();
-            currentRoll++
-            return process();
+        }).then(async reas=>{
+         
+            let choice = reas?.[0];
+
+            if(choice?.emoji.id === _emoji('retweet').id){                 
+                message.delete();
+                currentRoll++
+                return process();
+            }else{
+               
+                message.removeReactions().catch(e=>null);
+                await Promise.all([
+                    USERDATA.removeItem(lootbox.id),
+                    USERDATA.addItem('cosmo_fragment',P.cosmos),
+                    ECO.pay(USERDATA,determineRerollCost(lootbox,currentRoll-1,USERDATA),"lootbox_reroll"),
+                    DB.users.set(USERDATA.id,lootbox.bonus.query),
+                    Promise.all( lootbox.content.map(item=> getPrize(item,USERDATA) ) )
+                ]);                    
+                firstRoll[0].embed.description = $t('loot.allItemsAdded',P)
+                message.edit(firstRoll[0]);
+                
+            }
+
             
         })
     }
-    process()
     
+    return process();
 }
-
 
 
 
@@ -203,13 +227,14 @@ function renderCard(item,visual,P){
     return canvas;
 
 }
-
 function renderDupeTag(rarity,P){
     const canvas = Picto.new(staticAssets.dupe_tag.width,staticAssets.dupe_tag.width)
     const ctx = canvas.getContext('2d')
+    let cosmoAward = rates.gems[rarity];
+    P.cosmos += cosmoAward
+
     ctx.translate(canvas.width-staticAssets.dupe_tag.width +10,canvas.height/2)
     ctx.rotate(.22)
-    let cosmoAward = rates.gems[rarity];
     ctx.shadowColor = '#53F8';
     ctx.shadowBlur = 10
     ctx.drawImage(staticAssets.dupe_tag,0,0)
@@ -221,14 +246,13 @@ function renderDupeTag(rarity,P){
     return canvas
 
 }
-
 function getPrize(loot,USERDATA){
 
     if(['boosterpack','item'].includes(loot.type))
         return USERDATA.addItem(loot.id);
     
     if(loot.type == 'gems')
-        return ECO.pay(USERDATA.id,loot.amount,'lootbox',this.currency);
+        return ECO.receive(USERDATA.id,loot.amount,'lootbox',loot.currency);
     
     if(loot.type == 'background')
         return  DB.users.set(USERDATA.id, {$addToSet: {'modules.bgInventory':(loot.code||loot.id)} });
@@ -237,7 +261,6 @@ function getPrize(loot,USERDATA){
         return  DB.users.set(USERDATA.id, {$addToSet: {'modules.medalInventory':(loot.icon||loot.id)} });
     
 }
-
 function determineRerollCost(box,rollNum,USERDATA){
 
     let stake = Math.round(
@@ -251,27 +274,31 @@ function determineRerollCost(box,rollNum,USERDATA){
     return ((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50);
 
 }
-
-async function finalize(USERDATA,box,options = {}){
-    const {rerollcosts} = options;
-    DB.control.set(USERDATA.id,{$inc:{'data.boxesOpened':1 , 'data.rerolls': rerollcosts||0}});
-    await USERDATA.removeItem(box.id);
-    if(rerollcosts) await ECO.pay(USERDATA.id,rerollcosts, "lootbox_reroll", 'RBN');
-}
-
-async function compileBox(msg,lootbox,USERDATA,options){
-
+function boxBonus(USERDATA, lootbox, options) {
     
+    // TO-DO: more options of small-prizes
+    let rarityIndex = ['C','U','R','SR','UR','XR'].indexOf(lootbox.rarity)
+    let prize = Math.ceil(100 + (rarityIndex * 100) - (options.currentRoll*50*rarityIndex) );
+    if (prize < 100) prize = 50;
+
+    prize+= randomize(-25,100)
+
+    return {
+        label: prize
+        ,unit: "EXP"
+        ,query: {$inc:{'modules.exp':prize}}       
+    }
+}
+async function compileBox(msg,lootbox,USERDATA,options){    
 
     await Promise.all(
         lootbox.visuals.map(async vis =>
-            VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis) ) && VisualsCache.get(vis)
+            VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch(e=> new Canvas.Image() ) ) && VisualsCache.get(vis)
         )
     );
 
-    const {currentRoll,P} = options;
-    const rerollCost = determineRerollCost(lootbox,currentRoll,USERDATA);
-    const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
+    const {currentRoll,rerollCost,totalRerolls,canAffordReroll,P} = options;
+    let hasDupes = false;
     
     const canvas = Picto.new(800,600)
     const ctx = canvas.getContext('2d')
@@ -313,6 +340,7 @@ async function compileBox(msg,lootbox,USERDATA,options){
         })
         ctx.restore()
     }
+
     
     lootbox.content.forEach((loot,i,a)=>{
         let isDupe = false;
@@ -321,8 +349,9 @@ async function compileBox(msg,lootbox,USERDATA,options){
             isDupe = USERDATA.modules.bgInventory.includes( loot.id || loot.code); // <- ID/CODE backwards compat
         if(loot.type === 'medal')
             isDupe = USERDATA.modules.medalInventory.includes( loot.id || loot.icon); // <- ID/ICON backwards compat        
-    isDupe=true
+
         if(isDupe){
+            hasDupes = true;
             let dupe= renderDupeTag(loot.rarity,P);
             if(a.length<=3) ctx.drawImage(dupe, -6+(a.length==1?1:i)*(CARD_WIDTH-15), -80,CARD_WIDTH+40,CARD_WIDTH+40);
             else Picto.setAndDraw(ctx,Picto.tag(ctx,"DUPE",'600 italic 30px "Panton Black"','#FA5',{style:'#22212b',line:10}), 100+i*(750/a.length)-40*(1+i),430+Math.abs((i-2)*10));
@@ -336,25 +365,38 @@ async function compileBox(msg,lootbox,USERDATA,options){
         lootbox.content.forEach((l,i,a)=> l.rarity.includes('R') ? ctx.drawImage(staticAssets[`sparkles_${a[1]?i:1}`],0,0) : null );
     }
 
-    let bonusNum =  Picto.tag(ctx, "+1520", "600 italic 42px 'Panton Black'", "#FFF" )
-    let bonusName =  Picto.tag(ctx, "EXP", "600 italic 34px 'Panton'", "#FFF" )
+    lootbox.bonus = boxBonus(USERDATA, lootbox, options);
+
+    let bonusNum =  Picto.tag(ctx, lootbox.bonus.label , "600 italic 42px 'Panton Black'", "#FFF" )
+    let bonusName =  Picto.tag(ctx, lootbox.bonus.unit, "600 italic 34px 'Panton'", "#FFF" )
     ctx.drawImage(bonusNum.item,620-bonusName.width-bonusNum.width-10, 525);
     ctx.drawImage(bonusName.item,620-bonusName.width, 535);
 
+    P.k_emoji   = "`⭐`"
+    P.r_emoji   = _emoji('retweet')
+    P.amt       = `${_emoji('RBN')}** ${miliarize(rerollCost,true,'\u202F')}**`
+    P.count     = totalRerolls-currentRoll
+    P.x_frags   = `${_emoji('cosmo')} **${P.cosmos}** [**${$t('keywords.cosmoFragment_plural',P)}**](${paths.WIKI}/items/cosmo_fragment)`
     return   [{
         embed:{
+            title:`${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`,P)}**`,
             description:`
-${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`,P)}**
-
-    Reroll Cost: **${rerollCost}** ${_emoji('RBN')}
-    Rerolls Available: **${totalRerolls-currentRoll}/${totalRerolls}** 🔁
+${$t('loot.options_new', P)}
+${hasDupes? $t('loot.hasDupes', P) :''}
+${
+    totalRerolls-currentRoll>0?
+    `> ${ $t('loot.rerollRemain_new',P)} [${totalRerolls-currentRoll}/${totalRerolls}]`:""
+}
+    ${
+         !canAffordReroll ? $t('loot.noFunds',P) : currentRoll >= totalRerolls ? $t('loot.noMoreRolls',P) : ''
+    }
 
             `,
             image:{
                 url:"attachment://Lootbox.png",
-            },
-            thumbnail:{url:paths.CDN+(currentRoll?"/build/LOOT/rerollbox.gif":"/build/LOOT/openbox.gif")}
-            ,color: 0x3585F0
+            }
+            ,thumbnail:{url:paths.CDN+(currentRoll?"/build/LOOT/rerollbox.gif":"/build/LOOT/openbox.gif")}
+            ,color: parseInt(lootbox.color.replace('#',''),16)
             ,footer:{
                 icon_url: msg.author.avatarURL
                 ,text: msg.author.tag

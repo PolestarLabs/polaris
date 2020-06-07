@@ -791,13 +791,13 @@
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
         "opening": "{{user}} opened their Lootbox...",
         "contains": "This {{adjective}} Lootbox contains",
-        "options": "You can either keep it, or reroll it by paying {{amt}}",
+
         "keep": "Keep it",
         "reroll": "Reroll it",
         "rerolled": "Let's try again, rerolling the box content...",
         "noMoreRolls": "You've ran out of rerolls, you'll have to stick with this result.",
         "noFunds": "You need more Rubines to reroll, perhaps next time.",
-        "rerollRemain": "Rerolls remaining:",
+  
         "addedRubines": "{{X}} Rubines have been added to your Balance",
         "addedJades": "{{X}} Jades have been added to your Pouch",
         "addedMedal": "**{{itm}}** Medal has been added to your Medals Pocket",
@@ -807,7 +807,14 @@
         "morons": "You let a Lootbox slip by? What am I saying, of course you did.",
         "contesting": "Entries for this Box:",
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
-        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own."
+        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
+        
+        
+        "options_new": "{{k_emoji}}Keep | {{r_emoji}}Reroll {{amt}}",             
+        "rerollRemain_new": "You can reroll **one** last time!",
+        "rerollRemain_new_plural": "You can reroll **{{count}}** more times!",
+        "hasDupes" : "{{x_frags}} from duplicate items!",
+        "allItemsAdded" : "All items have been added to your inventory!"
     },
 
     "eastereggs": {
