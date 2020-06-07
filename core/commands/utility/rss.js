@@ -120,7 +120,7 @@ console.log("EMBED.".red)
   }
 
 function normalizeImage(results){
-    let img_link = results?.data.ogImage.url || null;  
+    let img_link = results?.data?.ogImage?.url || null;  
     let res = img_link ? {url:img_link.startsWith('//')?img_link.replace('//','http://'):img_link} : null;
     return res;
 }
