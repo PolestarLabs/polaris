@@ -4,6 +4,7 @@ exports.run=()=>{
 
   global.paths = {
     CDN,
+    WIKI: "https://wiki.pollux.gg",
     MISC:       appRoot + "/../v7/resources/misc/",
     REACTIONS:  appRoot + "/../v7/resources/imgres/reactions/",
 
