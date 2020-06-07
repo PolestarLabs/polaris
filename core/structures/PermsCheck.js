@@ -20,7 +20,6 @@ ${"• "+perms.join('\n• ')}
             
           }
           return "error1";
-          break;
         }
       }
     }

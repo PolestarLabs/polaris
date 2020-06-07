@@ -274,4 +274,4 @@ gift.get    =  utils.dbGetter;
         })
       }
 
-module.exports={ gift,paidroles, usercols,audit,global,fanart,buyables,commends, control,reactRoles,marketplace,relationships,alert, feed,control }; 
+module.exports={ gift,paidroles, usercols,audit,global,fanart,buyables,commends,reactRoles,marketplace,relationships,alert, feed,control };
