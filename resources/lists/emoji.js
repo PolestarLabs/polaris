@@ -1,9 +1,7 @@
 const POLARIS_UI = {
 
   loot: "<:loot:339957191027195905>",
-  rubine: "<:rubine_fulllarge:550389035835588638>",
-  loading: "<a:waitafuckingmoment:590604600319672341>",
-  token: "<:token:597978242535915526>",
+  //token: "<:token:597978242535915526>",
   
   RBN: "<:rubine_fulllarge:550389035835588638>",
   rubine: "<:rubine_fulllarge:550389035835588638>",
@@ -201,8 +199,6 @@ const emojibank = {
   borealis: "<:borealis:391423329078345729>",
 
   salt: "<:salty:277280624900046849>",
-  cacetinho: "<:fruki:249731487530876929>",
-  fruki: "<:cacetinho:249732000750108673>",
   riceball: "<:jellydonut:249732000984858624>"
 
   //MISC
@@ -214,7 +210,6 @@ const emojibank = {
   //SERVICES
   ,
   discord: "<:discord:314003252830011395>",
-  twitter: "<:twitter:314349922877046786>",
   steam: "<:steam:314349923044687872>",
   twitch: "<:twitch:314349922755411970>",
   league: "<:league:314349922902343681>",
@@ -248,7 +243,6 @@ const emojibank = {
   'retweet': "<:Retweet:338764316792717322>",
   'api': "<:Api:338148353906966530>",
   'bot': "<:Bot:338148354007629845>",
-  'discord': "<:Discord:338148354544631808>",
   'google': "<:Google:338148597927378945>",
   'module': "<:Module:338148598057533441>",
   'fork': "<:Fork:338148598099345409>",
@@ -272,8 +266,6 @@ const emojibank = {
   'dislike': "<:Dislike:338154671522840576>",
   'error': "<:Error:338155247946039307>",
   'download': "<:Download:338155248155885568>",
-  'error': "<:Error:338155248222732288>",
-  'expired': "<:Expired:338157313133248513>",
   'hourglass': "<:Hourglass:338157886259855361>",
   'commandline': "<:CommandLine:338158927332114434>",
   'debug': "<:Debug:338158979777822741>",
@@ -287,7 +279,6 @@ const emojibank = {
   'tasks': "<:Tasks:338325464840011776>",
   "3dsmax": "<:3dsMax:338329566688837645>",
   "gun": "<:Gun:338331025300127745>",
-  "twitter": "<:Twitter:338329566646894604>",
   cloudstorage: "<:CloudStorage:338329324182831111>",
   facebook: "<:Facebook:338329324203540480>",
   deviantart: "<:Deviantart:338329324266717184>",
@@ -328,7 +319,7 @@ const emojibank = {
   miku: "<:miku:335866556275752960>",
   n3ds: "<:n3DS:335866556653502464>",
   patreon: "<:patreon:335866556871344128>",
-  twitch: "<:twitch:335866556909223936>",
+
   pollux: "<:pollux:335866556909355018>",
   beyblade: "<:beyblade:336743092264632322>",
   starcraft: "<:starcraft:336743092382072842>",
@@ -344,7 +335,6 @@ const emojibank = {
   pokeball: "<:pokeball:336743096391958538>",
   darkmagirl: "<:darkmagirl:336743096375312385>",
   overwatch: "<:overwatch:336743096609931264>",
-  league: "<:league:336743096438095878>",
   umbreon: "<:umbreon:337967647356616716>"
 
   //DISCOIN
@@ -355,8 +345,6 @@ const emojibank = {
   ,
   offline: "<:offline:313956277237710868>",
   ff: "<:ff:343511122931875871>",
-  play: "<:play:343511123204767744>",
-  pause: "<:pause:343511123217219584>",
   song: "<:song:343511123242254336>",
   on: "<:on:343511231434588161>",
   off: "<:off:343511248085843968>",
@@ -375,7 +363,6 @@ const emojibank = {
   radar: "<:radar:343590771930431499>",
   ticketdusk: "<:ticketdusk:343590772098203658>",
   usb: "<:usb:343590772186152961>",
-  twitter: "<:twitter:343590771770785792>",
   bell: "<:bell:343590772035158016>",
   todo: "<:todo:343590772043546625>",
   mobo: "<:mobo:343590807691067393>",
@@ -395,7 +382,6 @@ const emojibank = {
   d12: "<:d12:343590879669256192>",
   d10: "<:d10:343590879526649858>",
   d8: "<:d8:343590880239681536>",
-  stop: "<:stop:343664908489064457>",
   Userlocation: "<:Userlocation:338762651423473668>",
   HighImportance: "<:HighImportance:338764315773632513>",
   LowImportance: "<:LowImportance:338764315978891266>",
