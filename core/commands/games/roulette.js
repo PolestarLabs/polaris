@@ -191,10 +191,11 @@ const init = async function(msg) {
 		Game.end();
 
 		validatedResults = await creditUsers(results);
+		const displayNumber = Game.winningNumber == 37 ? "00" : Game.winningNumber
 
 		const resultsEmbed = { color: settings.resultsEmbedColor , fields: [] };
 			resultsEmbed.title = v.RESULTS_TITLE;
-			resultsEmbed.description = `The winning number was ${Game.winningNumber}`;
+			resultsEmbed.description = `The winning number was ${_emoji('roulette'+displayNumber)}`;
 
 			let value;
 			if (validatedResults.length) {
