@@ -66,7 +66,8 @@ const init = async function (msg,args){
  
  
     const P = {lngs:msg.lang, cosmos: 0, user: msg.author.username}
-    const boxparams = await DB.items.findOne({ id: args?.boxId||'lootbox_C_O' });
+    console.log(args)
+    const boxparams = await DB.items.findOne({ id: args?.boxID||'lootbox_C_O' });
     boxparams.size = ~~args[0]
 
     let currentRoll = 0
@@ -121,7 +122,16 @@ const init = async function (msg,args){
                     DB.users.set(USERDATA.id,lootbox.bonus.query),
                     Promise.all( lootbox.content.map(item=> getPrize(item,USERDATA) ) )
                 ]);                    
-                firstRoll[0].embed.description = $t('loot.allItemsAdded',P)
+                firstRoll[0].embed.description = `
+**${$t('loot.allItemsAdded',P)}**
+                >>> ${lootbox.content.map(x=>{
+                    let label = x.name 
+                        ? `${_emoji(x.type)} **${$t('keywords.'+x.type)}:** ${x.name}` 
+                        : `${_emoji(x.currency)} **${$t('keywords.'+x.currency, P)}:** x${x.amount}`
+                    if(x.isDupe) label = `~~${label}~~\n${_emoji('__')+_emoji('__')}***${$t('keywords.cosmoFragment_plural',P)}** x${rates.gems[x.rarity]}*`;
+                    return label
+                }).join('\n')}
+                `
                 message.edit(firstRoll[0]);
                 
             }
@@ -190,7 +200,16 @@ function renderCard(item,visual,P){
 
     }else{        
         let itemW= 200        
-        ctx.drawImage(itemVisual,CARD_WIDTH/2-itemW/2,190-itemW/2,itemW,itemW)
+        try{
+
+            ctx.drawImage(itemVisual,CARD_WIDTH/2-itemW/2,190-itemW/2,itemW,itemW)
+        }catch(err){
+            console.error("===========================")
+            console.error(err)
+            console.error(item)
+            console.error("===========================")
+
+        }
         
     }
 
@@ -231,7 +250,7 @@ function renderDupeTag(rarity,P){
     const canvas = Picto.new(staticAssets.dupe_tag.width,staticAssets.dupe_tag.width)
     const ctx = canvas.getContext('2d')
     let cosmoAward = rates.gems[rarity];
-    P.cosmos += cosmoAward
+    P.cosmos += cosmoAward    
 
     ctx.translate(canvas.width-staticAssets.dupe_tag.width +10,canvas.height/2)
     ctx.rotate(.22)
@@ -352,6 +371,7 @@ async function compileBox(msg,lootbox,USERDATA,options){
 
         if(isDupe){
             hasDupes = true;
+            loot.isDupe = true
             let dupe= renderDupeTag(loot.rarity,P);
             if(a.length<=3) ctx.drawImage(dupe, -6+(a.length==1?1:i)*(CARD_WIDTH-15), -80,CARD_WIDTH+40,CARD_WIDTH+40);
             else Picto.setAndDraw(ctx,Picto.tag(ctx,"DUPE",'600 italic 30px "Panton Black"','#FA5',{style:'#22212b',line:10}), 100+i*(750/a.length)-40*(1+i),430+Math.abs((i-2)*10));

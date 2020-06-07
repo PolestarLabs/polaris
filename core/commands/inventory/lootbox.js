@@ -1,8 +1,8 @@
 const INVENTORY = require('../../archetypes/Inventory');
+const GENERATOR = require("../cosmetics/lootbox_generator.js");
 
 const INVOKERS   = new Map();
 const INV_STATUS = new Map();
-const LOOTING    = new Map();
 
 const init = async function (msg,args,userID){
     
@@ -51,11 +51,12 @@ const open = async function (msg,args,userID){
     if(userID && msg.author.id != userID) return "Only the owner can see inside";
 
     const userInventory = new INVENTORY(userID||msg.author.id,"box");
-    const Inventory     = await userInventory.listItems();    
-     
-    LOOTING.set(userID || msg.author.id, true );
-    if(!Inventory.find(bx=>bx.rarity == args[0])) return $t('responses.inventory.noSuchBox',{lngs:msg.lang});  
-    require("../cosmetics/loot.js").init(msg,{issuer:"pollux",rarity:args[0]}).catch(console.error).then(done=> LOOTING.delete(userID || msg.author.id, true) );
+    const Inventory     = await userInventory.listItems();     
+    const selectedBox   = Inventory.find(bx=>bx.rarity == args[0]);
+
+    if(!selectedBox) return $t('responses.inventory.noSuchBox',{lngs:msg.lang});
+    this.hooks = GENERATOR.hooks;
+    return GENERATOR.init(msg,{boxID: selectedBox.id}).catch(console.error);
 }
 
 const reactionOption = (rar) => {     
