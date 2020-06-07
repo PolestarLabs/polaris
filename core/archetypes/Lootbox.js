@@ -7,6 +7,14 @@ const {LootRates: RATES} = require("../../GlobalNumbers.js")
 const itmODDS  = RATES.itemType
 const rarODDS  = RATES.rarity
 const gemRATES = RATES.gems
+const COLORS   = {
+   C : "#928fa8"
+  ,U : "#63b361"
+  ,R : "#3646bf"
+  ,SR: "#8827ce"
+  ,UR: "#dc5c50"
+  ,XR: "#981f1f"
+}
 
 const POPULATE = (pile,no,pushee)=>{while(no--) shuffle(pile).push(pushee); return shuffle(pile)};
 
@@ -28,7 +36,7 @@ class LootboxItem{
                         : t == "ITM" ? (this.collection="items", p.itemType)
                           : ["RBN","JDE","SPH"].includes(t) ? "gems" : null;
 
-    this.rarity = r || "C";
+    this.rarity = r || "C";    
     this.exclusive  = p.exclusive
     this.event   = p.event 
     this.#filter = p.filter
@@ -104,7 +112,7 @@ class Lootbox{
     this.rarity     = rar;
     this.content    = [];
     this.timestamp  = Date.now();
-    
+    this.color  = COLORS[this.rarity]    
     this.id         = options.id     || "unknown";
     this.event      = options.event  || false;
     this.#size      = options.size   || 3;
