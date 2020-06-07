@@ -12,7 +12,7 @@ class InventoryCommand{
         });
 
     }
-    getUserData() { return DB.users.get(this.userID) };
+    getUserData() { return DB.users.get(this.userID) }
     async listItems(uD) {
         if(!uD) uD = await this.getUserData();
         let inv= (await this.Items).map(itm=> {
@@ -20,7 +20,7 @@ class InventoryCommand{
             return thisItem ? (itm.count = thisItem.count,itm) : null;
         }).filter(i=>i!=null);
         return inv;
-    };
+    }
 
 }
 

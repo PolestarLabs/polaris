@@ -1,14 +1,13 @@
 global.DB = require("../../database/db_ops");
 
 module.exports = {
-    getTarget: function getTarget(msg, argPos = 0, self = true, soft = false, options) {
+    getTarget: function getTarget(msg, argPos = false, self = true, soft = false, options) {
 
-        if (!msg.args[argPos]) return self ? msg.author : null;
+        if (msg.args[argPos]===false) return self ? msg.author : null;
         let ID = msg.args[argPos].replace(/[^0-9]/g, '');
-        let user = PLX.users.find(usr => usr.id === ID);
+        let user = PLX.users.find(usr => usr.id === ID);   
 
-        if (!user) {
-            
+        if (!user) {            
             user = msg.guild.members.find(mbr =>
                 mbr.username.toLowerCase() == msg.args[argPos].toLowerCase() ||
                 (mbr.nick || "").toLowerCase() == msg.args[argPos].toLowerCase()
@@ -26,10 +25,11 @@ module.exports = {
             if (!user && self == true) user = msg.author;
             if(user) user.noDB = true;
         }
+
         if (!user && msg.mentions.length > 0  ) return msg.mentions[argPos]||msg.mentions[0];
-        if(options.force) return PLX.fetchUser(ID);
+        if(options?.force) return PLX.fetchUser(ID);
         if (!user) return null;
-        if(user.user.noDB) DB.users.new(user.user || user);
+        if(user?.noDB) DB.users.new(user.user || user);
         return user.user || user;
     },
     //Get IMG from Channel MSGs
