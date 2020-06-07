@@ -19,6 +19,7 @@ const settings = {};
 	settings.maxBets = 10;
 	settings.maxTotal = 20000;
 	settings.timeBetweenBets = 1e3;
+	settings.noticeTimeout = 5e3;
 
 async function generateBoard() {
 	// this could probably be a simple cached board
@@ -36,7 +37,7 @@ async function generateBoard() {
 async function generateWheel(winningNumber) {
 	// make sure users can't determine the winning number
 	// also need still image to replace gif with
-	return ["https://live.staticflickr.com/2199/3526750763_929737ce8a_b.jpg"];
+	return ["https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif"];
 };
 
 async function updateBoard(board, bet, userID) {
@@ -149,7 +150,7 @@ const init = async function(msg) {
 	let wheelmsg;
 	setTimeout(async() => {
 		const wheel = await generateWheel(Game.winningNumber);
-		wheelEmbed.image = { url: wheel[0] };
+		wheelEmbed.thumbnail = { url: wheel[0] };
 		wheelmsg = await msg.channel.send({ embed: wheelEmbed });
 	}, settings.sendWheelTime);
 
@@ -162,17 +163,23 @@ const init = async function(msg) {
 		if (checkSpam(m)) return m.reply(v.NOTSOFAST);
 
 		const bet = Roulette.parseBet(m.content);
-		if (!bet.valid) return m.reply(v[bet.reason] || v.invalidBet);
+		if (!bet.valid) {
+			m.addReaction(_emoji('chipERROR').reaction);
+			return m.reply(_emoji('chipERROR') + v[bet.reason] || v.invalidBet).then(r=>r.deleteAfter(settings.noticeTimeout));
+		}
 
 		const allowed = await allowedToBet(Game, userID, bet);
-		if (allowed !== true) return m.reply(v[allowed.reason] || v.notAllowed);
+		if (allowed !== true) {
+			m.addReaction(_emoji('chipWARN').reaction);
+			return m.reply(_emoji('chipWARN') + v[allowed.reason] || v.notAllowed).then(r=>r.deleteAfter(settings.noticeTimeout));
+		}
 
 		Game.addBet(userID, bet);
 		board = await updateBoard(Game, bet, userID);
 		boardEmbed.image.url = board;
 		await boardmsg.edit({ embed: boardEmbed });
-		m.reply(v.BETPLACED);
-		return;
+		m.addReaction(_emoji('chipOK').reaction)
+		return m.reply(_emoji('chipOK') + v.BETPLACED).then(r=>r.deleteAfter(settings.noticeTimeout));
 	});
 
 	Collector.on("end", async() => {
@@ -212,7 +219,7 @@ module.exports = {
 	init
 	,pub:true
 	,cmd:"roulette"
-	,cooldown: 5 * 60e4
+	,cooldown: 10e3
 	,perms:3
 	,cat:"gambling"
 	,botPerms:["attachFiles","embedLinks"]

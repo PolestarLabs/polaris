@@ -65,6 +65,12 @@ const POLARIS_UI = {
     XRdek: "<:XRdek:586968935967096832>",
     URdek: "<:URdek:586968936105377811>",
     
+  // CASINO 
+  chipWARN: "<:chipWARN:719041743743352884>",
+  chipOK: "<:chipOK:719041743906930688>",
+  chipINFO: "<:chipINFO:719042194258001972>",
+  chipERROR: "<:chipERROR:719041743504539741>",
+
   // BLACKJACK
     plxcards: "<:plxcards:598784000353370113>",
     plxbjkloss: "<:plxbjkloss:598795338752720908>",
