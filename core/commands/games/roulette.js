@@ -13,7 +13,7 @@ const settings = {};
 	settings.helpEmbedColor = 0x2b2b3b;
 	settings.wheelEmbedColor = 0x2b2b3b;
 	settings.resultsEmbedColor = 0x2b2b3b;
-	settings.helpURL = "https://cdn.discordapp.com/attachments/488142034776096772/718992250381533234/unknown.png"
+	settings.helpURL = "https://cdn.discordapp.com/attachments/488142183216709653/719951843756867612/unknown.png"
 	settings.minPerBet = 1;
 	settings.maxPerBet = 2500;
 	settings.maxBets = 10;
@@ -31,13 +31,12 @@ async function generateBoard() {
 		return paths.CDN + "/generators/roulette.png"
 
 	*/
-	return "https://upload.wikimedia.org/wikipedia/commons/2/27/Sarony_cigarettes_roulette_blik%2C_foto1.JPG";
+	return "https://cdn.discordapp.com/attachments/488142183216709653/718882975844139018/unknown.png";
 };
 
 async function generateWheel(winningNumber) {
 	// make sure users can't determine the winning number
-	// also need still image to replace gif with
-	return ["https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif"];
+	return "https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif";
 };
 
 async function updateBoard(board, bet, userID) {
@@ -57,7 +56,7 @@ async function updateBoard(board, bet, userID) {
 	//"%7B%22bet%22%3A%7B%22amount%22%3A150%2C%22type%22%3A%22dozen%22%2C%22offset%22%3A1%7D%2C%22userID%22%3A%2288120564400553984%22%7D"
 	//https://beta.pollux.gg/generators/roulette.png?data=%7B%22gameUsers%22%3A%7B%2288120564400553984%22%3A%7B%22payout%22%3A-130%2C%22bets%22%3A%5B%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A1%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A100%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A1%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A0%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22offset%22%3A2%2C%22type%22%3A%22dozen%22%2C%22reward%22%3A2%7D%5D%7D%7D%2C%22bet%22%3A%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22offset%22%3A2%2C%22type%22%3A%22dozen%22%2C%22reward%22%3A2%7D%2C%22userID%22%3A%2288120564400553984%22%7D
 
-	return "https://upload.wikimedia.org/wikipedia/commons/2/27/Sarony_cigarettes_roulette_blik%2C_foto1.JPG";
+	return "https://cdn.discordapp.com/attachments/488142183216709653/718882975844139018/unknown.png";
 };
 
 async function allowedToBet(Game, userID, bet) {
@@ -152,7 +151,7 @@ const init = async function(msg) {
 	let wheelmsg;
 	setTimeout(async() => {
 		const wheel = await generateWheel(Game.winningNumber);
-		wheelEmbed.thumbnail = { url: wheel[0] };
+		wheelEmbed.thumbnail = { url: wheel };
 		wheelmsg = await msg.channel.send({ embed: wheelEmbed });
 	}, settings.sendWheelTime);
 
