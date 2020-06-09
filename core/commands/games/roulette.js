@@ -204,7 +204,7 @@ const init = async function(msg) {
 				if (result.invalid) return `<@${result.userID}> ${v.RESULT_NOMONEY}`;
 				else if (result.payout > 0) return `<@${result.userID}> Congrats you got ${result.payout} RBN`;
 				else if (result.payout < 0) return `<@${result.userID}> Sorry, but I'll be taking ${parseInt(result.payout)} RBN away from you`;
-				else return `<@${result.payout}> You barely got away and didn't win or lose anything.`;
+				else return `<@${result.userID}> You barely got away and didn't win or lose anything.`;
 				}).join("\n");
 			} else {
 				value = "Sadly no one placed a bet";
