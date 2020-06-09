@@ -293,9 +293,6 @@
 						"perMin": "The minimum is {{perMin}} Rubines per transaction.",
 						"perMax": "The maximum per transcation is {{perMax}} Rubines.",
 						"dailyMax": "You've hit the daily maximum of {{dailyMax}} Rubines.",
-            "userLimit": "Your exchange limit for today has been reached!",
-            "globalLimit": "You've reached your Discoin limit, try again tomorrow.",
-						"remainder": "Remaining Limit for {{$}}",
 						"unreachable": "Discoin could not be reached, try again at a later time."
         },
         "langIntro": {
