@@ -48,7 +48,7 @@ module.exports = class Roulette {
 	constructor(msg) {
 		this.guildID = msg.guild.id;
 		this.users = {};
-		this.winningNumber = random(0,37);
+		this.winningNumber = randomize(0,37);
 		if (this.winningNumber === 37) this.winningNumber = "d";
 		games.set(this.guildID, this);
 	}
