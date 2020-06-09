@@ -214,7 +214,7 @@ const init = async function(msg) {
 		console.log("End");
 		wheelEmbed.description = v.WHEEL_DESCRIPTION_END;
 		const boardImg = await getBoard(Game.users);
-		wheelEmbed.image = { url: boardimg };
+		wheelEmbed.image = { url: boardImg };
 		await wheelmsg.edit({ embed: wheelEmbed });
 
 		let results = Game.results;
