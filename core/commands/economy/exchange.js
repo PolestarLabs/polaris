@@ -137,7 +137,7 @@ const init = async function(msg,args){
 			inline: true
 		});
 		embed.fields.push({
-			name: $t("responses.discoin.tax"),
+			name: $t("responses.discoin.tax",P),
 			value: $t("responses.discoin.tax_desc", { ...P, exchange: "15", income: "12", transfer: "5" }),
 			inline: true
 		});
