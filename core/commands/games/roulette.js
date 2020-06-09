@@ -81,8 +81,9 @@ function toHex(bet) {
 	if (bet.type === "dstreet") return (type + (1 << bet.numbers[0])).toString(16);
 	if (bet.type === "split") {
 		let numbers = bet.numbers.sort();
-		let offset = numbers[1] - numbers[0] === 3 ? 0 : 38;
-		return (type + (1 << offset)).toString(16)
+		if (numbers[1] - numbers[0] === 3) return type.toString(16);
+		else return (type + (1 << 38)).toString(16);
+
 	}
 }
 
