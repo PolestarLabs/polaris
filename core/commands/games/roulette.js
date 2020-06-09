@@ -39,7 +39,7 @@ async function generateWheel(winningNumber) {
 	return "https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif";
 };
 
-async function updateBoard(board, bet, userID) {
+async function getBoard(userData) {
 	/*
 		bet {
 			amount: integer
@@ -49,15 +49,42 @@ async function updateBoard(board, bet, userID) {
 		type: [straight, split, street, basket, dozen, column, snake, manque, passe, colour, parity]
 		offset: dozen & column: 1-3 - colour: 0 = black, 1 = red - parity: 0 = even, 1 = uneven
 	*/
+	let data = "";
+	Object.keys(userData).forEach(k => {
+		data += k + "-";
+		data += userData[k].hash;
+		for (let bet of userData[k].bets) {
+			data += "-" + toHex(bet) + "-" + bet.amount.toString(16);
+		}
+		data += "+";
+	});
+	data = data.substring(0, data.length - 1);
 
-	let gameUsers = board.users;
-	let imageURL = paths.CDN + "/generators/roulette.png?data=" + encodeURIComponent(JSON.stringify({gameUsers,bet,userID}));
+	let imageURL = paths.CDN + "/generators/roulette.png?data=" + encodeURIComponent(data);
 	console.log(imageURL);
 	//"%7B%22bet%22%3A%7B%22amount%22%3A150%2C%22type%22%3A%22dozen%22%2C%22offset%22%3A1%7D%2C%22userID%22%3A%2288120564400553984%22%7D"
 	//https://beta.pollux.gg/generators/roulette.png?data=%7B%22gameUsers%22%3A%7B%2288120564400553984%22%3A%7B%22payout%22%3A-130%2C%22bets%22%3A%5B%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A1%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A100%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A1%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22type%22%3A%22colour%22%2C%22reward%22%3A1.5%2C%22numbers%22%3A%5B2%2C4%2C6%2C8%2C10%2C11%2C13%2C15%2C17%2C20%2C22%2C24%2C26%2C28%2C29%2C31%2C33%2C35%5D%2C%22offset%22%3A0%7D%2C%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22offset%22%3A2%2C%22type%22%3A%22dozen%22%2C%22reward%22%3A2%7D%5D%7D%7D%2C%22bet%22%3A%7B%22valid%22%3Atrue%2C%22amount%22%3A10%2C%22offset%22%3A2%2C%22type%22%3A%22dozen%22%2C%22reward%22%3A2%7D%2C%22userID%22%3A%2288120564400553984%22%7D
 
 	return "https://cdn.discordapp.com/attachments/488142183216709653/718882975844139018/unknown.png";
 };
+
+function toHex(bet) {
+	const betTypes = ["straight", "split", "street", "square", "basket", "dstreet", "dozen", "column", "snake", "manque", "passe", "colour", "parity"];
+	let type = 1 << (40 + betTypes.indexOf(bet.type));
+
+	if (["basket", "snake", "passe", "manque"].includes(bet.type)) return type.toString(16);
+	if (["colour", "parity", "column", "dozen"].includes(bet.type)) return (type + (1 << bet.offset)).toString(16)
+
+	if (bet.type === "straight") return (type + (1 << (bet.number === "d" ? 37 : bet.number))).toString(16);
+	if (bet.type === "square") return (type + (1 << bet.numbers.sort()[0])).toString(16);
+	if (bet.type === "street") return (type + (1 << bet.numbers.sort()[0])).toString(16);
+	if (bet.type === "dstreet") return (type + (1 << bet.numbers[0])).toString(16);
+	if (bet.type === "split") {
+		let numbers = bet.numbers.sort();
+		let offset = numbers[1] - numbers[0] === 3 ? 0 : 38;
+		return (type + (1 << offset)).toString(16)
+	}
+}
 
 async function allowedToBet(Game, userID, bet) {
 	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet" };
@@ -176,9 +203,9 @@ const init = async function(msg) {
 		}
 
 		Game.addBet(userID, bet);
-		board = await updateBoard(Game, bet, userID);
-		boardEmbed.image.url = board;
-		await boardmsg.edit({ embed: boardEmbed });
+		Game.users[userID].hash = m.author.avatar || m.author.defaultAvatar;
+
+		await boardmsg.edit({ embed: boardEmbed }); // REPLACE WITH FEED
 		m.addReaction(_emoji('chipOK').reaction)
 		return m.reply(_emoji('chipOK') + v.BETPLACED).then(r=>r.deleteAfter(settings.noticeTimeout));
 	});
@@ -186,6 +213,8 @@ const init = async function(msg) {
 	Collector.on("end", async() => {
 		console.log("End");
 		wheelEmbed.description = v.WHEEL_DESCRIPTION_END;
+		const boardImg = await getBoard(Game.users);
+		wheelEmbed.image = { url: boardimg };
 		await wheelmsg.edit({ embed: wheelEmbed });
 
 		let results = Game.results;

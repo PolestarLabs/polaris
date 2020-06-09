@@ -53,7 +53,6 @@ module.exports = class Roulette {
 		games.set(this.guildID, this);
 	}
 
-
 	/*
 		Adds bet to user & updates payout
 	*/
