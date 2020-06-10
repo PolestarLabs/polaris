@@ -75,8 +75,6 @@ function toHex(bet) {
 }
 
 
-
-
 async function allowedToBet(Game, userID, bet) {
 	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet" };
 	if (settings.maxPerBet && bet.amount > settings.maxPerBet) return { reason: "maxPerBet" };
