@@ -297,14 +297,15 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   DB.mutes.find({expires: {$lte: Date.now()} })
   .then(mutes => {
     mutes.forEach(mtu=>{
-      DB.servers.get(mtu.server.id).then(svData=>{
+      DB.servers.get(mtu.server.id).then(async svData=>{
         DB.mutes.expire(Date.now());
         let logSERVER = PLX.guilds.get(mtu.server);
+        await logSERVER.removeMemberRole(mtu.user,svData.modules.MUTEROLE,"Mute Expired").timeout(2000);
+        mtu.delete();
         let logUSER   = PLX.findUser(mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
-        if (!logMEMBER) return;
-        logMEMBER.removeRole(svData.modules.MUTEROLE).catch(err=>"Die Silently");
+        if (!logMEMBER) return; 
         
         if (svData.dDATA || svData.logging) {
           return;
