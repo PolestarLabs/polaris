@@ -296,15 +296,25 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
   /* Manage Mutes */ //================================
   DB.mutes.find({expires: {$lte: Date.now()} })
   .then(mutes => {
-    mutes.forEach(mtu=>{
-      DB.servers.get(mtu.server.id).then(svData=>{
-        DB.mutes.expire(Date.now());
+
+    [...new Set(mutes.map(m=>m.server))].forEach(muteSv=>{
+      DB.servers.get(muteSv).then( svData=>{
+      mutes.filter(mut=> mut.server == muteSv ).forEach(async mtu=>{
+        //DB.mutes.expire(Date.now());
         let logSERVER = PLX.guilds.get(mtu.server);
+        if(svData.modules.MUTEROLE){
+          await logSERVER.removeMemberRole(mtu.user,svData.modules.MUTEROLE,"Mute Expired")
+            .then(err=> mtu.delete())
+            .catch(err=> mtu.delete());
+        }else{
+          return mtu.delete();
+        }
+        // activity logs stuff (LEGACY CODE)
+        return;
         let logUSER   = PLX.findUser(mtu.user);
         if(!logSERVER||!logUSER) return;
         let logMEMBER = logSERVER.member(logUSER);
-        if (!logMEMBER) return;
-        logMEMBER.removeRole(svData.modules.MUTEROLE).catch(err=>"Die Silently");
+        if (!logMEMBER) return; 
         
         if (svData.dDATA || svData.logging) {
           return;
@@ -319,6 +329,7 @@ const ONEminute = new CronJob('*/1 * * * *', async () => {
           });
         }      
       })
+    })
     })
   });
 
