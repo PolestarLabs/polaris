@@ -5,21 +5,25 @@ const Picto = require('../../utilities/Picto.js');
 
 const XYZ ={
   global_roundel: {X: 680,  Y: 0},
-  persotex    : {W: 255, H: 85, X:515, Y:482 - 125 },
-  wifeRect    : {X:100,Y:1,W:314,H:65,R:37},
-  wifeName    : {X:165 ,Y: 10 ,W:183 ,A:'left'   },
-  lovepoints  : {X:165 ,Y: 40 ,W:183 ,A:'left'   },
-  wifeSince   : {X:348 ,Y: 40 ,W:183 ,A:'right'  },
+  persotex    : {W: 270, H: 85, X:500, Y:476 - 125 },
+  
+  wifeRect    : {X:100+380, Y: 1 +505 ,W:314 ,H:65,R:37  },
+  wifeName    : {X:165+380 ,Y: 10+505 ,W:183 ,A:'left'   },
+  lovepoints  : {X:165+380 ,Y: 40+505 ,W:183 ,A:'left'   },
+  wifeSince   : {X:348+380 ,Y: 40+505 ,W:183 ,A:'right'  },
+
   commend     : {X: 52 ,Y: 25 ,W: 80 ,A:'center' },
   name        : {X:325 ,Y:281 ,W:420 ,A:'left'   },
   tagline     : {X:332 ,Y:320 ,W:440 ,A:'left'   },
   medals      : {X:96,Y: 377                     },
-  rubines     : {X:706 ,Y:521 ,W:440             },
-  sapphires   : {X:706 ,Y:521 ,W:440             },
+
+  rubines     : {X:706-420 ,Y:521-500 ,W:440             },
+  sapphires   : {X:706-420 ,Y:521-500 ,W:440             },
+
   globalRank  : {X:556 ,Y:468 ,W: 80 ,A: 'left' },
   localRank   : {X:723 ,Y:468 ,W: 80 ,A: 'right' },
   background  : {X: 88 ,Y: 15 ,W:692, H: 345      },
-  sticker     : {X: 318 ,Y: 395 ,W:215, H: 215    },
+  sticker     : {X: 315 ,Y: 395 ,W:215, H: 215    },
   avatar      : {X: 20,  Y: 110}, //123
   flair       : {X: 243,  Y: 253, W:100, H:120},
   flag     : {X: 748,  Y: 276},
@@ -32,7 +36,7 @@ const COLORS = {
   SECONDARY_TXT_COLOR   : "#363f5c",
   SECONDARY_TXT_SIZE    : "#2b2b3b",
   SECONDARY_TXT_WEIGHT  : "#2b2b3b",
-  wifeFill: "#333340"
+  wifeFill: "#2b2b3b"
 };
 const TEXT={
   NAME:{
@@ -135,6 +139,7 @@ init = async (msg)=>{
   }  
   // NORMAL PROFILE -->
   const Target = await PLX.getTarget(msg,0,false,true,{force:true});
+  console.log({Target})
   let Target_Database = await DB.users.get({id:Target.id});
   
   if(Target_Database) Target_Database.type = 'udata';
@@ -159,7 +164,7 @@ try{
 
     let img={};
     img.defaultAvi   = Picto.getCanvas( "https://cdn.discordapp.com/embed/avatars/0.png" );
-    img.mainframe    = Picto.getCanvas(paths.CDN + "/build/profile/"        + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe2") + ".png");
+    img.mainframe    = Picto.getCanvas(paths.CDN + "/build/profile/"        + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex") + ".png");
     img.background   = Picto.getCanvas(paths.CDN + "/backdrops/"            + USERPROFILE.background   + ".png");
     img.flair        = Picto.getCanvas(paths.CDN + "/flairs/"               + USERPROFILE.flair        + ".png");
     img.sticker      = Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
@@ -218,7 +223,7 @@ try{
     
     const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
     if(isMarried) {
-      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
+      img.wifeAvatar = await Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
       //img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
       img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/items/ring_"+USERPROFILE.wife.ring+".png")
     }
@@ -306,23 +311,20 @@ try{
       let wR = XYZ.wifeRect
       
       Picto.roundRect(ctx,wR.X,wR.Y,wR.W,wR.H,wR.R,rectFill,ringTierColor)
+     
 
       ctx.shadowBlur = 0;
-      ctx.shadowColor = 'rgba(30,30,30,.3)';
+      ctx.shadowColor = 'rgba(30,30,30,.13)';
       ctx.save();
 
       await img.wifeHeart.then(IMG => ctx.drawImage( IMG , wR.X+6, wR.Y+6, 55,55) );
 
-      ctx.beginPath();
-      let thiX = wR.X+wR.W   -(picDiameter+ctx.lineWidth*2) -3
-      ctx.arc(thiX,picDiameter+8, picDiameter+2, 0, Math.PI*2,true);
-      ctx.clip();
+
       try{
-        ctx.drawImage( (await img.wifeAvatar ) ,thiX-picDiameter-3,wR.Y,60,60);
+        Picto.roundRect(ctx,wR.X+wR.W-wR.H,wR.Y+3,wR.H-6,wR.H-6,wR.H/2, (await img.wifeAvatar ))
       }catch(e){
-        ctx.drawImage( (await img.defaultAvi ) ,thiX-picDiameter-3,wR.Y,60,60);
+        Picto.roundRect(ctx,wR.X+wR.W-wR.H,wR.Y+3,wR.H-6,wR.H-6,wR.H/2, (await img.defaultAvi ))
       }
-      ctx.closePath();
       ctx.restore();
 
     }    
@@ -380,8 +382,8 @@ try{
   let flair = img.flair.then(IMG=> ctx.drawImage(IMG, XYZ.flair.X, XYZ.flair.Y, XYZ.flair.W, XYZ.flair.H) );
   let rubine_n_roundel = (async () =>{
     if (!Target.bot){
-      ctx.drawImage(txt.rubines.item, XYZ.rubines.X - txt.rubines.width, XYZ.rubines.Y);      
-      ctx.drawImage(txt.sapphires.item, XYZ.sapphires.X - txt.sapphires.width - txt.rubines.width - 50, XYZ.sapphires.Y);
+      ctx.drawImage(txt.rubines.item, XYZ.rubines.X - txt.rubines.width, XYZ.rubines.Y+3);      
+      ctx.drawImage(txt.sapphires.item, XYZ.sapphires.X - txt.sapphires.width - txt.rubines.width - 50, XYZ.sapphires.Y+3);
       
       z="global_roundel"
       const [imgRND, imgSPH, imgRBN] = await Promise.all([img[z],img.iconSapphire, img.iconRubine]);
