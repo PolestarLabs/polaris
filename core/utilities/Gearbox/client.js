@@ -5,8 +5,8 @@ const ID_REGEX = /^\d{17,19}$/
 
 module.exports = {
     getTarget: async function getTarget(query, guild = null, strict = false) {
+        if (!query) return null;
         query = query.trim();
-        if (!query) return;
 
         const ID = query.replace(CLEAN_ID_REGEX, '');
         const isID = ID_REGEX.test(ID);
