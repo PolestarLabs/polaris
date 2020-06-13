@@ -7,7 +7,8 @@ const init = async function (msg) {
     let P = { lngs: msg.lang, prefix: msg.prefix }
 
     let Target = await PLX.getTarget(msg.args[0], msg.guild, true);
-    if (msg.author.id === Target.id) return msg.channel.createMessage('no');
+    if (!Target) return message.channel.send($t("responses.errors.kin404", P));
+    if (msg.author.id === Target.id) return msg.channel.send('no');
 
     if (!Target) {
         return msg.reply($t('responses.commend.noPerson', P));
