@@ -295,7 +295,7 @@ PLX.findMember = (query, members) => {
     if(!query) return null;
     query = query.toLowerCase().trim();
 
-    let result = members.get(query.match(/[0-9]{17,19}/)[0])
+    let result = members.get(query.match(/[0-9]{17,19}/)?.[0])
     if (!result) result = members.find(member => member.user.username.toLowerCase() === query);
     if (!result) result = members.find(member => member.nick && member.nick.toLowerCase() === query);
     if (!result) result = members.find(member => member.user.username.toLowerCase().includes(query));

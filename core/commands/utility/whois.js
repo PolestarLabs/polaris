@@ -47,7 +47,7 @@ const init = async function (msg,args){
 
         
 
-    const TARGET =  PLX.findMember(args[0],msg.guild.members) || PLX.findUser(args[0]) || msg.member;
+    const TARGET = await PLX.getTarget(args[0],msg.guild) || msg.member;
 
     const canvas = Picto.new(800,600);
     const ctx = canvas.getContext('2d');
