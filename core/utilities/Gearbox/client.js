@@ -1,35 +1,34 @@
 global.DB = require("../../database/db_ops");
 
+const CLEAN_ID_REGEX = /[<!@>]/g
+const ID_REGEX = /^\d{17,19}$/
+
 module.exports = {
-    getTarget: function getTarget(msg, argPos = false, self = true, soft = false, options) {
+    getTarget: async function getTarget(query, guild = null, strict = false) {
+        query = query.trim();
+        if (!query) return;
 
-        if (msg.args[argPos]===false) return self ? msg.author : null;
-        let ID = msg.args[argPos].replace(/[^0-9]/g, '');
-        let user = PLX.users.find(usr => usr.id === ID);   
+        const ID = query.replace(CLEAN_ID_REGEX, '');
+        const isID = ID_REGEX.test(ID);
+        if (strict && !isID) return null;
 
-        if (!user) {            
-            user = msg.guild.members.find(mbr =>
-                mbr.username.toLowerCase() == msg.args[argPos].toLowerCase() ||
-                (mbr.nick || "").toLowerCase() == msg.args[argPos].toLowerCase()
-            ) ||
-                msg.guild.members.find(mbr =>
-                    soft && (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
-                ) ||
-                msg.guild.members.find(mbr =>
-                    soft && mbr.username.toLowerCase().includes(msg.args[argPos].toLowerCase())
-                ) ||
-                msg.guild.members.find(mbr =>
-                    soft && mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
-                );
+        let user;
 
-            if (!user && self == true) user = msg.author;
-            if(user) user.noDB = true;
+        switch(true) {
+            case guild && !strict:
+                user = isID ? await guild.getRESTMember(ID).catch() : PLX.findMember(query, guild.members);
+                break;
+            case !guild && strict:
+                user = await PLX.getRESTUser(ID);
+                break;
+            case guild && strict:
+                user = await guild.getRESTMember(id);
+                break;
+            case !guild && !strict:
+            default:
+                user = isID ? await PLX.getRESTUser(ID) : PLX.findUser(query);
         }
 
-        if (!user && msg.mentions.length > 0  ) return msg.mentions[argPos]||msg.mentions[0];
-        if(options?.force) return PLX.fetchUser(ID);
-        if (!user) return null;
-        if(user?.noDB) DB.users.new(user.user || user);
         return user.user || user;
     },
     //Get IMG from Channel MSGs

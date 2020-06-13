@@ -8,7 +8,7 @@ const cmd = 'balance';
 
 const init = async function (message) {
 
-    const Target = (await PLX.getTarget(message))||message.author;
+    const Target = message.author;
     const emb = new Embed();
 
     let P={lngs:message.lang}

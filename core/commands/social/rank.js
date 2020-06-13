@@ -5,7 +5,7 @@ const init = async function (msg){
     const P = {lngs:msg.lang,prefix:msg.prefix}
 
 
-    const TARGET = msg.guild.member(await PLX.getTarget(msg));
+    const TARGET = msg.guild.member(await PLX.getTarget(msg.args[0], msg.guild));
 
     let userData,serverData,selfLocal,LRpos;
     await Promise.all([

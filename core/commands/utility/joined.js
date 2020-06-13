@@ -10,7 +10,7 @@ const init = async function (msg){
     const moment = require('moment')
           moment.locale(msg.lang[0]);
           
-    let TG = PLX.getTarget(msg,0,true);
+    let TG = await PLX.getTarget(msg.args[0], msg.guild);
     let joinMoment = moment.utc(msg.guild.member(TG).joinedAt);
     moment.locale('en')
     let joinMomentNeutral = moment.utc(msg.guild.member(TG).joinedAt);

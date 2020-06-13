@@ -9,7 +9,8 @@ const init = async function (message) {
   const Server = message.guild;
   const Author = message.author;
   const Member = Server.member(Author);
-  let Target = PLX.getTarget(message, 0, false,{force:true} );
+  let Target = await PLX.getTarget(msg.args[0], msg.guild);
+  if (msg.author.id === Target.id) return msg.channel.createMessage('no');
   const bot = message.botUser;
 
   const P = { lngs: message.lang };

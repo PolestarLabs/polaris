@@ -8,8 +8,8 @@ const init = async function (msg,args){
     let rand = Number(args[2]) || randomize(0,100);
     
 
-    const TargetA = PLX.getTarget(msg,0,false,true) || msg.guild.members.random().user;
-    const TargetB = PLX.getTarget(msg,1,!args[1],true) || msg.guild.members.random().user;
+    const TargetA = await PLX.getTarget(msg.args[0], msg.guild);
+    const TargetB = await PLX.getTarget(msg.args[1], msg.guild);
 
     if( !(TargetA && TargetB) ) return $t('responses.ship.needTupipo',{lngs:msg.lang});
     if(TargetA.id === TargetB.id) return $t('responses.ship.need2diffpipo',{lngs:msg.lang});

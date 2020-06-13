@@ -6,20 +6,12 @@ const init = async function (msg) {
 
     let P = { lngs: msg.lang, prefix: msg.prefix }
 
-    let Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
-
-    if (msg.args.includes("info") || msg.args.includes("status") || msg.args.includes("stats")) {
-        if (msg.args.length !== 1) Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
-        if (msg.args.length === 1) Target = msg.author;
-    }
+    let Target = await PLX.getTarget(msg.args[0], msg.guild, true);
+    if (msg.author.id === Target.id) return msg.channel.createMessage('no');
 
     if (!Target) {
         return msg.reply($t('responses.commend.noPerson', P));
     }
-
-    if (Target == null) Target = msg.author;
-
-
 
     const userData = await DB.users.getFull({ id: msg.author.id });
     const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
@@ -97,10 +89,7 @@ const init = async function (msg) {
 
  
 const info = async (msg, args) => {
-    let Target;
-    if (args.length !== 0) Target = PLX.getTarget(msg, 0, false) || PLX.getTarget(msg, 1, false);
-    if (args.length === 0) Target = msg.author;
-    if (Target == null) Target = msg.author;
+    let Target = await PLX.getTarget(msg.args[0], msg.guild) || await PLX.getTarget(msg.args[1], msg.guild, msg.author);
     
     const [targetData,targetDataC] = await Promise.all([
         (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),

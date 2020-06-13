@@ -5,7 +5,7 @@ const init = async function(msg,args) {
  
   
     const embed = new Embed();
-    let Target = PLX.getTarget(msg,0,true,true);
+    let Target = await PLX.getTarget(msg.args[0], msg.guild);
 
     let img = await Gal.randomOne("pat", true);
     let avgcolor = await require("../../utilities/Picto").avgColor(img);

@@ -8,7 +8,7 @@ const init = async function (msg){
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-    const Target = PLX.getTarget(msg);
+    const Target = await PLX.getTarget(msg.args[0]);
 
     const embed = new Embed()
         .image(Target.avatarURL)

@@ -4,13 +4,13 @@ const ECO = require('../../archetypes/Economy');
 const Timed = require("../../structures/TimedUsage");
 const moment = require("moment");
 
-const init = async function (msg,args){
+const init = async function (msg){
 
     const P={lngs:msg.lang,prefix:msg.prefix}
 
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
-    let TARGET = PLX.getTarget(msg,1,false);
-    if (TARGET instanceof Promise) TARGET = await TARGET;
+    let TARGET = await PLX.getTarget(msg.args[1], msg.guild);
+    if (msg.author.id === TARGET.id) return msg.channel.createMessage('no.')
 
     if(!TARGET) {        
          PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});

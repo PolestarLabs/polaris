@@ -55,14 +55,14 @@ const init = async function (msg){
         endMessage = `Purged %X messages **not** including any images`
         filter =  mes=> {
             if (mes.attachments && mes.attachments.length>0) {
-              if (mes.attachments[0].url) {
-                return false
-              }
+                if (mes.attachments[0].url) {
+                    return false
+                }
             }
             if (mes.embeds && mes.embeds.length>0) {
-              if (mes.embeds[0].type === 'image' && mes.embeds[0].url) {
-                return false
-              }
+                if (mes.embeds[0].type === 'image' && mes.embeds[0].url) {
+                    return false
+                }
             }
             return true;
         }
@@ -73,11 +73,13 @@ const init = async function (msg){
         endMessage = `${revFil?"Filtered":"Purged %X"} messages including Links`
         filter =  mes=> mes.content.includes("http");
     }
-    else if(PLX.getTarget(msg)){
-        Target = PLX.getTarget(msg);
-        count = parseInt(msg.args[1]) || 100;
-        endMessage = `${revFil?"Filtered":"Purged %X"} messages from user ${Target.tag}`
-        filter = mes=>mes.author.id == Target.id;
+    else {
+        Target = await PLX.getTarget(msg.args[0], msg.guild);
+        if(Target){
+            count = parseInt(msg.args[1]) || 100;
+            endMessage = `${revFil?"Filtered":"Purged %X"} messages from user ${Target.tag}`
+            filter = mes=>mes.author.id == Target.id;
+        }
     }
 
     let newFilter;

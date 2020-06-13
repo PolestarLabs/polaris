@@ -21,9 +21,9 @@ const init = async function(msg) {
 
   if (["bb", "gg", "bg", "gb"].includes(msg.args[0])) {
     filter = msg.args[0];
-    Target = PLX.getTarget(msg, 1, false);
+    Target = await PLX.getTarget(msg.args[1], msg.guild);
   } else {
-    Target = PLX.getTarget(msg, 0, false);
+    Target = await PLX.getTarget(msg.args[0], msg.guild);
     if (["bb", "gg", "bg", "gb"].includes(msg.args[1]))   filter = msg.args[1];
   } 
   

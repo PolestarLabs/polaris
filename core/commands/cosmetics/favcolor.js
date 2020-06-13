@@ -12,43 +12,38 @@ const init = async function (msg){
     const getColor = require('../utility/color');
 
     if(msg.args[0] === "check" || msg.mentions.length > 0){
-    if(msg.mentions.length > 0 || msg.args.length>1){
+        if(msg.args.length>1){
 
-        let usery;
-        if(msg.mentions.length>0)
-            usery = msg.mentions[0];
-        else
-            usery = await PLX.getTarget(msg,1);
+            let usery = await PLX.getTarget(msg.args[1]);
+            let uData = await DB.users.get(usery.id);            
+            let embed = new Embed;
+            let x;
+            if(uData)
+                x = uData.modules.favcolor;
+            else {
+                embed.footer("User not found in Database")
+                x = "---";
+            }
 
-        let uData = await DB.users.get(usery.id);            
-        let embed = new Embed;
-        let x;
-        if(uData)
-            x = uData.modules.favcolor;
-        else {
-            embed.footer("User not found in Database")
-            x = "---";
+            msg.args[0] = x
+            embed.setColor("#" + x.replace(/^#/, ''))
+            embed.author("Favcolor for "+usery.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
+            embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
+
+            return msg.channel.send({embed});
         }
-
-        msg.args[0] = x
-        embed.setColor("#" + x.replace(/^#/, ''))
-        embed.author("Favcolor for "+usery.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
-        embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
-      
-      return msg.channel.send({embed});
-    }
         let embed = new Embed;
         let USERDATA = await DB.users.get(msg.author.id);
         let x = USERDATA.modules.favcolor
         msg.args[0] = x
         embed.setColor("#" + x.replace(/^#/, ''))
-            embed.author("Favcolor for "+msg.author.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
-            embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
+        embed.author("Favcolor for "+msg.author.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
+        embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
       
       return msg.channel.send({embed});
     }
 
-        let res = await getColor.init(msg,true);
+    let res = await getColor.init(msg,true);
  
     if(res.name == "INVALID COLOR"){
         res.embed.description = _emoji('nope') + "INVALID COLOR";

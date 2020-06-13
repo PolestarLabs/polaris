@@ -134,7 +134,7 @@ init = async (msg)=>{
     return;
   }  
   // NORMAL PROFILE -->
-  const Target = await PLX.getTarget(msg,0,false,true,{force:true});
+  const Target = await PLX.getTarget(msg.args[0]);
   let Target_Database = await DB.users.get({id:Target.id});
   
   if(Target_Database) Target_Database.type = 'udata';
