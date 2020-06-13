@@ -51,6 +51,7 @@ global.PLX= new Eris.CommandClient(cfg.token, {
     firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID) ,
     lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
     defaultImageSize: 512,
+    restMode: true,
     defaultImageFormat: 'png',
     disableEvents: {
         'TYPING_START': true,
@@ -288,13 +289,7 @@ PLX.findUser = (query) => {
         result = PLX.users.find(user => user.username.toLowerCase().includes(query));
     return result || null;
 }
-PLX.fetchUser = async (query) => {
-    if (!query) return null;
-    query = query.toLowerCase().trim();
-    let userdata = await PLX.requestHandler.request('GET','/users/'+query,true);
-    if(!userdata) return null;
-    return new Eris.User(userdata);
-}
+
 
 PLX.findMember = (query, members) => {
     if(!query) return null;
