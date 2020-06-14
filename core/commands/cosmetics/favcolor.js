@@ -3,6 +3,8 @@
 //const locale = require('../../../utils/i18node');
 //const $t = locale.getT();
 
+const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
+
 const init = async function (msg){
 
     let P={lngs:msg.lang,prefix:msg.prefix}
@@ -11,38 +13,28 @@ const init = async function (msg){
     let colorChanged = $t("misc.colorChange", P)
     const getColor = require('../utility/color');
 
-    if(msg.args[0] === "check" || msg.mentions.length > 0){
-        if(msg.args.length>1){
+    if (msg.args[0] === 'check' || !HEX_REGEX.test(msg.args[0])) {
+        const query = msg.args[0] === 'check' ? msg.args[1] : msg.args[0];
+        let usery = await PLX.getTarget(query) || msg.author;
+        let uData = await DB.users.get(usery.id);
 
-            let usery = await PLX.getTarget(msg.args[1]);
-            let uData = await DB.users.get(usery.id);            
-            let embed = new Embed;
-            let x;
-            if(uData)
-                x = uData.modules.favcolor;
-            else {
-                embed.footer("User not found in Database")
-                x = "---";
-            }
-
-            msg.args[0] = x
-            embed.setColor("#" + x.replace(/^#/, ''))
-            embed.author("Favcolor for "+usery.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
-            embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
-
-            return msg.channel.send({embed});
-        }
         let embed = new Embed;
-        let USERDATA = await DB.users.get(msg.author.id);
-        let x = USERDATA.modules.favcolor
+        let x;
+        if(uData)
+            x = uData.modules.favcolor;
+        else {
+            embed.footer("User not found in Database")
+            x = "---";
+        }
+
         msg.args[0] = x
         embed.setColor("#" + x.replace(/^#/, ''))
-        embed.author("Favcolor for "+msg.author.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
+        embed.author("Favcolor for "+usery.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
         embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
-      
-      return msg.channel.send({embed});
-    }
 
+        return msg.channel.send({embed});
+    }
+    
     let res = await getColor.init(msg,true);
  
     if(res.name == "INVALID COLOR"){

@@ -15,7 +15,7 @@ const init = async function(msg, programatic) {
   )
     return;
 
-  let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+  let hexRegex = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
   let hexColor = (msg.args[0].match(hexRegex))?.[1];
   let result;
   try {
@@ -28,9 +28,9 @@ const init = async function(msg, programatic) {
 console.log({pre_res})
     result = hexColor
       ? [{title: pre_res.name.value, hex: hexColor, data: pre_res}]
-      : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+      : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000", data: { cmyk: { c: 0, m: 0, y: 0, k: 100 }, rgb: { r: 0, g: 0, b: 0 } } }];
   } catch (e) {
-    result = [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+    result = [{ title: "Invalid Color (Defaults to Black)", hex: "#000000", data: { cmyk: { c: 0, m: 0, y: 0, k: 100 }, rgb: { r: 0, g: 0, b: 0 } } }];
   }
 
   let embed = new Embed(),
