@@ -282,7 +282,7 @@ PLX.findUser = (query) => {
     if (!query) return null;
     query = query.toLowerCase().trim();
 
-    let result = PLX.users.get(query.match(/[0-9]{16,19}/)[0]);
+    let result = PLX.users.get(query.match(/[0-9]{16,19}/)?.[0]);
     if (!result)
         result = PLX.users.find(user => user.username.toLowerCase() === query);
     if (!result)
