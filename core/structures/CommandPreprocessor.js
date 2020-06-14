@@ -82,7 +82,8 @@ const DEFAULT_CMD_OPTS = {
         return {
                 embed:{
                     //description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n "
-                    description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n ```js\n"+err+"```"
+                    description: "Oh **no**! Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n"
+                    +(PLX.beta || cfg.testChannels.includes(msg.channel.id) ? " ```js\n" + err.stack + "```" : "")
                     ,thumbnail:{url:paths.CDN+'/build/assorted/error_aaa.gif?'}
                     ,color: 0xF05060
                 }
