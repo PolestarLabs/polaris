@@ -30,7 +30,7 @@ module.exports = {
         }
 
         if (member && guild) return user;
-        return user.user || user;
+        return user?.user || user;
     },
     //Get IMG from Channel MSGs
     getChannelImg: async function getChannelImg(message, nopool) {
