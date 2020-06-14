@@ -22,7 +22,7 @@ module.exports = {
                 user = await PLX.getRESTUser(ID);
                 break;
             case guild && strict:
-                user = await guild.getRESTMember(id);
+                user = await guild.getRESTMember(ID);
                 break;
             case !guild && !strict:
             default:
