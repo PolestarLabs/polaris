@@ -4,7 +4,7 @@ const CLEAN_ID_REGEX = /[<!@>]/g
 const ID_REGEX = /^\d{17,19}$/
 
 module.exports = {
-    getTarget: async function getTarget(query, guild = null, strict = false) {
+    getTarget: async function getTarget(query, guild = null, strict = false, member= false) {
         query = query?.trim();
         if (!query) return;
 
@@ -29,6 +29,7 @@ module.exports = {
                 user = isID ? await PLX.getRESTUser(ID) : PLX.findUser(query);
         }
 
+        if (member && guild) return user;
         return user.user || user;
     },
     //Get IMG from Channel MSGs
