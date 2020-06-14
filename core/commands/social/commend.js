@@ -6,13 +6,13 @@ const init = async function (msg) {
 
     let P = { lngs: msg.lang, prefix: msg.prefix }
 
+    if (!msg.mentions.length) return msg.channel.send($t("responses.errors.mentionRequired", P));
     let Target = await PLX.getTarget(msg.args[0], msg.guild, true);
-    if (!Target) return message.channel.send($t("responses.errors.kin404", P));
-    if (msg.author.id === Target.id) return msg.channel.send('no');
-
     if (!Target) {
         return msg.reply($t('responses.commend.noPerson', P));
     }
+    if (msg.author.id === Target.id) return msg.channel.send('no');
+
 
     const userData = await DB.users.getFull({ id: msg.author.id });
     const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
