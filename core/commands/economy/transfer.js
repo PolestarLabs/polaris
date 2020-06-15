@@ -10,12 +10,12 @@ const init = async function (msg){
 
     const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
     let TARGET = await PLX.getTarget(msg.args[1], msg.guild);
-    if (msg.author.id === TARGET.id) return msg.channel.createMessage('no.')
-
     if(!TARGET) {        
          PLX.autoHelper("force",{cmd:this.cmd,msg,opt:this.cat});
          return;
     }    
+    if (msg.author.id === TARGET.id) return msg.channel.createMessage('no.')
+
 
     const [USERDATA,TARGETDATA] = await Promise.all([
         DB.users.get(msg.author.id),

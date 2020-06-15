@@ -11,6 +11,7 @@ const init = async function (msg){
           moment.locale(msg.lang[0]);
           
     let TG = await PLX.getTarget(msg.args[0], msg.guild);
+    if (!TG) return msg.channel.send($t("responses.errors.kin404", P));
     let joinMoment = moment.utc(msg.guild.member(TG).joinedAt);
     moment.locale('en')
     let joinMomentNeutral = moment.utc(msg.guild.member(TG).joinedAt);

@@ -5,7 +5,8 @@ const init = async function (msg){
     const P = {lngs:msg.lang,prefix:msg.prefix}
 
 
-    const TARGET = msg.guild.member(await PLX.getTarget(msg.args[0], msg.guild));
+    const TARGET = await PLX.getTarget(msg.args[0], msg.guild);
+    if (!TARGET) return msg.channel.send($t("responses.errors.kin404", P));
 
     let userData,serverData,selfLocal,LRpos;
     await Promise.all([

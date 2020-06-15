@@ -139,6 +139,7 @@ init = async (msg)=>{
   }  
   // NORMAL PROFILE -->
   const Target = await PLX.getTarget(msg.args[0]||msg.author.id);
+  if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({id:Target.id});
   
   if(Target_Database) Target_Database.type = 'udata';
