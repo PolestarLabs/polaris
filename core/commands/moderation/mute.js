@@ -5,20 +5,20 @@
 
 const cmd = "mute";
 
-const init = async function (message) {
-  const Server = message.guild;
-  const Author = message.author;
+const init = async function (msg) {
+  const Server = msg.guild;
+  const Author = msg.author;
   const Member = Server.member(Author);
   let Target = await PLX.getTarget(msg.args[0], msg.guild);
   if (msg.author.id === Target.id) return msg.channel.createMessage('no');
-  const bot = message.botUser;
+  const bot = msg.botUser;
 
-  const P = { lngs: message.lang };
+  const P = { lngs: msg.lang };
 
   let ServerDATA = await DB.servers.get(Server.id);
 
     const modPass = PLX.modPass(Member, "kickMembers", ServerDATA);
-    if (!modPass) return message.reply($t("CMD.moderationNeeded", P)).catch(console.error);
+    if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);
 
     console.log({Target})
     
@@ -26,11 +26,11 @@ const init = async function (message) {
     
     console.log({Target})
 
-    if (!Target) return message.channel.send($t("responses.errors.kin404", P));
-    if (!Target.kickable) return message.channel.send($t("responses.errors.unmutable", P));    
+    if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
+    if (!Target.kickable) return msg.channel.send($t("responses.errors.unmutable", P));    
 
     let regex = /([0-9]*)[\s+]?([m|h|d|w|y]?)/;
-    let timing = message.args[1];
+    let timing = msg.args[1];
 
     let number = !timing ? 0 : timing.match(regex)[1];
     let unit = !timing ? 0 : timing.match(regex)[2];
@@ -53,12 +53,12 @@ const init = async function (message) {
         break;
     }
 
-    message.args[2] = (+number * mult) / 60000;
+    msg.args[2] = (+number * mult) / 60000;
     
     let timeTx,time;
 
-    if ( message.args[2] != undefined && !isNaN(message.args[2]) && Number(message.args[2]) != 0 ) {
-        timeTx = message.args[2] + (message.args[2] == 1 ? " minute." : " minutes.");      
+    if ( msg.args[2] != undefined && !isNaN(msg.args[2]) && Number(msg.args[2]) != 0 ) {
+        timeTx = msg.args[2] + (msg.args[2] == 1 ? " minute." : " minutes.");      
     } else {
         time = 24 * 60;
         timeTx = "undetermined time.";
@@ -108,7 +108,7 @@ const init = async function (message) {
         "No Mute Role found, creating new one!"
       )
         .then(async (role) => {
-          message.channel.send(
+          msg.channel.send(
             `No Mute Role Setup, Creating **POLLUX-MUTE**...`
           );
           DB.servers.set(Server.id, { $set: { "modules.MUTEROLE": role.id } });
@@ -129,12 +129,12 @@ const init = async function (message) {
     async function setupMute(role) {
       Target.addRole(
         role.id,
-        "MUTED BY " + message.author.tag + `  (${message.author.id})`
+        "MUTED BY " + msg.author.tag + `  (${msg.author.id})`
       );
       makeitMute(Target, role, time);
       roleout(time, role);
       logThis(time, timeTx);
-      return message.channel.send(
+      return msg.channel.send(
         `**${(Target.user || Target).tag}** was MUTED for ${timeTx}`
       );
     }
@@ -162,7 +162,7 @@ const init = async function (message) {
 
       if (chanpoint) {
         let id = Target.user.id;
-        let mess = message;
+        let mess = msg;
         let emb = new RichEmbed();
 
         emb.setThumbnail(Target.user.avatarURL);
@@ -243,7 +243,7 @@ const init = async function (message) {
         }
         if (first === true) {
           Promise.all(promiseBucket).then((x) => {
-            message.channel.send(
+            msg.channel.send(
               "`Could not edit Mute overrides in " +
                 erroredChans +
                 " Channels 💔`"
