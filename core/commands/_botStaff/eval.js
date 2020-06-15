@@ -57,8 +57,7 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
   let runtime = performance.now();
   let runtimeOutput = (rtm)=> (rtm*1000<1000?Math.floor(rtm*1000)+"μs ":rtm<1000?(rtm.toFixed(2))+"ms ":(rtm/1000).toFixed(2)+"s ");
   try {
-    let evaled = eval(code);
-    if (evaled instanceof Promise) evaled = await evaled;
+    let evaled = await eval(code);
     runtime = performance.now() - runtime
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled, {
       depth: 0 + depth_param
