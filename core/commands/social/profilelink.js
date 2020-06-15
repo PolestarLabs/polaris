@@ -8,6 +8,7 @@ const init = async function (msg){
 
     let TARGET = msg.content.split(/ +/).length > 1 ? (await PLX.getTarget(msg.args[0])) : msg.author;  
     let userdata= await DB.users.getFull({id:TARGET.id});
+    if (!userdata) return msg.channel.send('User not in DB')
     let adress = userdata.personalhandle || userdata.id;
     let mess= "<:Userlocation:338762651423473668> | "+paths.CDN+"/p/"+adress; 
     msg.channel.send(mess)
