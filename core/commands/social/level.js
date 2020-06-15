@@ -192,7 +192,7 @@ let l_exp,
 }
   
   let global_roundel = await XChart(100,percent,favcolor||"#dd5383",propic,level,v.GLOBAL)
-  let local_roundel = await XChart(100,l_percent,(Server.member(Target).displayHexColor ||"#9459af"),serpic||false,l_level,v.SERVER)
+  let local_roundel = await XChart(100,l_percent,(Server.member(Target)?.displayHexColor ||"#9459af"),serpic||false,l_level,v.SERVER)
 
   ctx.drawImage(local_roundel,0,0)
   ctx.drawImage(global_roundel,120,0)
