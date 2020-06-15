@@ -17,12 +17,14 @@ module.exports = {
         switch(true) {
             case guild && !strict:
                 user = isID ? await guild.getRESTMember(ID).catch(() => null) : PLX.findMember(query, guild.members);
+                if (user) user = Object.assign(PLX.findMember(ID, guild.members), user);
                 break;
             case !guild && strict:
                 user = await PLX.getRESTUser(ID).catch(() => null);
                 break;
             case guild && strict:
                 user = await guild.getRESTMember(ID).catch(() => null);
+                if (user) user = Object.assign(PLX.findMember(ID, guild.members), user);
                 break;
             case !guild && !strict:
             default:
