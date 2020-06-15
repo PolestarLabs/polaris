@@ -75,11 +75,10 @@ const init = async function (msg){
     }
     else {
         Target = await PLX.getTarget(msg.args[0], msg.guild);
-        if(Target){
-            count = parseInt(msg.args[1]) || 100;
-            endMessage = `${revFil?"Filtered":"Purged %X"} messages from user ${Target.tag}`
-            filter = mes=>mes.author.id == Target.id;
-        }
+        if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
+        count = parseInt(msg.args[1]) || 100;
+        endMessage = `${revFil?"Filtered":"Purged %X"} messages from user ${Target.tag}`
+        filter = mes=>mes.author.id == Target.id;
     }
 
     let newFilter;
