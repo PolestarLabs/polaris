@@ -9,7 +9,7 @@ const init = async function (msg){
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
     const Target = await PLX.getTarget(msg.args[0]);
-    if (!TARGET) return msg.channel.send($t("responses.errors.kin404", P));
+    if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
 
     const embed = new Embed()
         .image(Target.avatarURL)
