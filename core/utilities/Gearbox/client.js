@@ -16,17 +16,17 @@ module.exports = {
 
         switch(true) {
             case guild && !strict:
-                user = isID ? await guild.getRESTMember(ID).catch() : PLX.findMember(query, guild.members);
+                user = isID ? await guild.getRESTMember(ID).catch(() => null) : PLX.findMember(query, guild.members);
                 break;
             case !guild && strict:
-                user = await PLX.getRESTUser(ID);
+                user = await PLX.getRESTUser(ID).catch(() => null);
                 break;
             case guild && strict:
-                user = await guild.getRESTMember(ID);
+                user = await guild.getRESTMember(ID).catch(() => null);
                 break;
             case !guild && !strict:
             default:
-                user = isID ? await PLX.getRESTUser(ID) : PLX.findUser(query);
+                user = isID ? await PLX.getRESTUser(ID).catch(() => null) : PLX.findUser(query);
         }
 
         if (member && guild) return user;
