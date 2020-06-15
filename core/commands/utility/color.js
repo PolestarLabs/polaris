@@ -52,7 +52,7 @@ console.log({pre_res})
       CMYK \`${CMYK.c}\` \`${CMYK.m}\` \`${CMYK.y}\` \`${CMYK.k}\`
       `);
 
-    Picto.roundRect(ctx, 10, 10, 120, 120, 20,  hexColor);
+    Picto.roundRect(ctx, 10, 10, 120, 120, 20, `#${hexColor}`);
 
     console.log(Canvas)
     if (programatic === true)
