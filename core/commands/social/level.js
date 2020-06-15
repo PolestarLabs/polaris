@@ -111,7 +111,7 @@ let l_exp,
                 }
             } else {
                 for (let i = 0; i < arrRGB.length; i++) {
-                    const t = rgbColor.substr((i + 1), 1);
+                    let t = rgbColor.substr((i + 1), 1);
                     t = t + t;
                     arrRGB[i] = parseInt(t, 16);
                 }
