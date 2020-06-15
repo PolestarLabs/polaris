@@ -7,6 +7,7 @@ const init = async  (msg, args) => {
     let filter = args[0]
     let thispage = parseInt(filter) ? Math.abs(filter) : 1;
     let query = {}
+    const P = { lngs: msg.lang };
 
     if (filter && !parseInt(filter)) {
         switch (filter) {
@@ -50,6 +51,7 @@ const init = async  (msg, args) => {
             case "user":
                 if (msg.args[2]) {
                     Target = await PLX.getTarget(msg.args[2]);
+                    if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
                     query = { author: Target.id }
                 } else {
                     query = { author: msg.author.id }
