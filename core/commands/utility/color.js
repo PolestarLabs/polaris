@@ -16,7 +16,7 @@ const init = async function(msg, programatic) {
     return;
 
   let hexRegex = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
-  let hexColor = (msg.args[0].match(hexRegex))?.[1];
+  let hexColor = (msg.args[0].match(hexRegex))?.[0];
   let result;
   try {
     URL = "https://www.thecolorapi.com/id?hex=" + hexColor
