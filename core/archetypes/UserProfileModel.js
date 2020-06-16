@@ -4,14 +4,13 @@ const moment = require("moment");
 
 class UserProfileModel{
     constructor(userData,discordMember){
-      console.log({discordMember})
       // Discord Data
       if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
       
-      if(userData?.constructor.modelName !== "UserDB" && userData?.type!="udata" ) discordMember = userData;
+      if(!discordMember && userData?.constructor.modelName !== "UserDB" && userData?.type!="udata" ) discordMember = userData;
       if(typeof discordMember === 'string') discordMember = PLX.users.get(discordMember);
       const notMember = discordMember && discordMember.constructor != Member;
-  
+      
       this.ID = discordMember.id;
       this.server = notMember ? null : discordMember.guild.id;
       this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;

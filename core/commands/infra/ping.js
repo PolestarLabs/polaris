@@ -5,7 +5,7 @@ const init = async msg => {
 
   const start = Date.now();
   let embed = new Embed()
-  embed.setColor("#36393f")
+  embed.color = 0x36393f
   embed.description('🏓')
   
 

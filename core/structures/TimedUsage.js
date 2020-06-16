@@ -54,12 +54,12 @@ exports.init = async function (message,cmd,opts,success,reject,info,presuccess) 
   const dailyAvailable = await Daily.dailyAvailable(Author);
 
   const embed = new Embed;
-  embed.setColor("#d83668");
+  embed.color = 0xd83668;
   if(message.args.includes('status')||message.args.includes('stats')){
     let remain = userDaily+DAY;
     if(info) return info (message,Daily,remain);
     let embe2=new Embed;
-    embe2.setColor('#e35555')
+    embe2.color = 0xe35555
     embe2.description(`
 ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily).fromNow()}
 ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily).add((DAY/1000/60/60),'hours').fromNow() }

@@ -28,9 +28,22 @@ const init = async function (msg){
         }
 
         msg.args[0] = x
-        embed.setColor("#" + x.replace(/^#/, ''))
+        embed.color = parseInt(x.replace(/^#/, ''),16)
         embed.author("Favcolor for "+usery.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
         embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
+      
+      return msg.channel.send({embed});
+    }
+        let embed = new Embed;
+        let USERDATA = await DB.users.get(msg.author.id);
+        let x = USERDATA.modules.favcolor
+        msg.args[0] = x
+        embed.color = parseInt(x.replace(/^#/, ''),16)
+            embed.author("Favcolor for "+msg.author.tag, "https://img.icons8.com/dusk/250/paint-brush.png")
+            embed.description = "**"+(await getColor.init(msg,true)).name + "** : : " + x
+      
+      return msg.channel.send({embed});
+    }
 
         return msg.channel.send({embed});
     }

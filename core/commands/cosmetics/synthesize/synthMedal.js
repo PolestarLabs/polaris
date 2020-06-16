@@ -31,7 +31,7 @@ module.exports =
             Picto.getCanvas(paths.CDN + "/build/synthesis/" + (obtainable ? ("circle_" + selectedItem.rarity) : "nosynth") + ".png"),
             Picto.getCanvas(imageLink)
         ]);
-        embed.setColor(await Picto.avgColor(imageLink));
+        embed.color =  parseInt((await Picto.avgColor(imageLink)).replace('#',''),16);
 
 
         ctx.drawImage(synthCircle, 130, 15);

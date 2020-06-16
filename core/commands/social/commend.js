@@ -65,7 +65,7 @@ const init = async function (msg) {
         P.remaining = moment.utc(r).fromNow(true)
         let dailyNope = $t('responses.commend.cooldown', P);
         let embed = new Embed;
-        embed.setColor('#e35555');
+        embed.color = 0xe35555;
         embed.description(_emoji('nope') + dailyNope);
         return msg.channel.send({ embed: embed });
     }
@@ -75,7 +75,7 @@ const init = async function (msg) {
         let dailyAvailable = await Daily.dailyAvailable(msg.author);
         P.remaining = moment.utc(userDaily.last).add(Daily.day, 'milliseconds').fromNow(true);
         let embe2 = new Embed;
-        embe2.setColor('#3b9ea5')
+        embe2.color = 0x3b9ea5
         embe2.description(`
     ${_emoji('future')} ${dailyAvailable ? _emoji('online') + $t('responses.commend.check_yes', P) : _emoji('dnd') + $t('responses.commend.check_no', P)} 
        

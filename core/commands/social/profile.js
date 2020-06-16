@@ -97,7 +97,7 @@ const TEXT={
 
 const {performance} = require('perf_hooks');
 
-init = async (msg)=>{
+init = async (msg,args)=>{
   msg.runtime_internal = performance.now();
   
   let startimer = Date.now();
@@ -138,9 +138,8 @@ init = async (msg)=>{
     return;
   }  
   // NORMAL PROFILE -->
-  const P = { lngs: msg.lang };
-  const Target = await PLX.getTarget(msg.args[0]||msg.author.id);
-  if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
+  const Target = await PLX.getTarget(args[0]);
+  console.log({Target})
   let Target_Database = await DB.users.get({id:Target.id});
   
   if(Target_Database) Target_Database.type = 'udata';
@@ -163,6 +162,7 @@ try{
   //                            Gather Images
   //=========================================
 
+    const PFLD = Target_Database?.profiled;
     let img={};
     img.defaultAvi   = Picto.getCanvas( "https://cdn.discordapp.com/embed/avatars/0.png" );
     img.mainframe    = Picto.getCanvas(paths.CDN + "/build/profile/"        + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex") + ".png");
