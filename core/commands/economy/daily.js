@@ -34,7 +34,7 @@ if(message.args[0]=="info"){
       let myDaily = await Premium.getDaily(Author) || 125;
 
       const embed = new Embed;
-      embed.setColor("#d83668");
+      embed.color = 0xd83668;
       if (emblem) {
         embed.author(emblem.toUpperCase()+"-boosted Daily!","http://pollux.fun/images/donate/" + emblem + "-small.png")
       }
@@ -148,7 +148,7 @@ if(message.args[0]=="info"){
         let dailyNope = $t('$.dailyNope',P);
         message.reply(_emoji('nope') + dailyNope);
         let embed=new Embed;
-        embed.setColor('#e35555');
+        embed.color = 0xe35555;
         embed.description(`
     ${_emoji('time')   } **${v.last}** ${ moment.utc(Daily.userDataStatic).fromNow()}
     ${_emoji('expired')} **${v.expirestr}** ${moment.utc(Daily.userDataStatic+Daily.expiration).fromNow() }
@@ -162,7 +162,7 @@ if(message.args[0]=="info"){
         let streak = userDaily.streak;
 
         let embe2=new Embed;
-        embe2.setColor('#e35555')
+        embe2.color = 0xe35555
         embe2.description(`
     ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily.last).fromNow()}
     ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily.last).add(20,'hours').fromNow() }

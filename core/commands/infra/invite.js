@@ -7,7 +7,7 @@ const init = async function (msg){
 
     let embed = new Embed
     embed.setDescription(":love_letter: "+$t('CMD.inviteText', {lngs:msg.lang})+"("+paths.CDN+"/invite) !");
-    embed.setColor("#ea7d7d")
+    embed.color = 0xea7d7d
 
     msg.channel.send({embed})
 

@@ -54,7 +54,7 @@ const init = async function (message) {
                     }
                 });
 
-                emb.setColor('#272791')
+                emb.color = 0x272791
                 emb.footer(`© 2015 - ${(new Date).getYear()+1900} | Blizzard Entertainment, Inc.`, "https://seeklogo.com/images/B/blizzard-entertainment-logo-04FA6ACC79-seeklogo.com.png")
                 emb.author("Heroes of the Storm", "http://www.mpcgaming.com/img/hotsicon.png", "http://heroesofthestorm.gamepedia.com/")
                 emb.thumbnail("http://www.mpcgaming.com/img/hotsicon.png")
@@ -123,7 +123,7 @@ request("https://na1.api.riotgames.com/lol/platform/v3/champion-rotations?api_ke
                 });    
             
             emb = new Embed();
-            emb.setColor('#064955')
+            emb.color = 0x064955
 
             emb.footer(`© 2006 - ${(new Date).getYear()+1900} | Riot Games, Inc.`, "https://www.riotgames.com/darkroom/original/06fc475276478d31c559355fa475888c:af22b5d4c9014d23b550ea646eb9dcaf/riot-logo-fist-only.png")
             emb.author("League of Legends", "https://vignette1.wikia.nocookie.net/leagueoflegends/images/1/12/League_of_Legends_Icon.png/revision/latest?cb=20150402234343", "http://leagueoflegends.wikia.com/wiki/League_of_Legends_Wiki")

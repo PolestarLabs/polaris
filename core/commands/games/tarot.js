@@ -171,7 +171,7 @@ const TAROT = require('../../archetypes/Tarot');
         embed.setDescription(pc2 + finalString + pc2)
         embed.setTitle("3 Card Spread Fortune")
         embed.setFooter("Current Deck: Persona 3", 'https://lh3.googleusercontent.com/-9YpgeohI1lo/AAAAAAAAAAI/AAAAAAAACFA/u3wB6SrW4Vo/s640/photo.jpg')
-        embed.setColor("#951d2f")
+        embed.color = 0x951d2f
     
         message.channel.send({
           embed

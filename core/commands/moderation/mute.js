@@ -175,7 +175,7 @@ const init = async function (message) {
         emb.addField(TIME, timeTx, true);
         emb.addField(RESPO, Author, true);
         //emb.addField("Message",mess.content,true)
-        emb.setColor("#102af5");
+        emb.color = 0x102af5;
         var ts = new Date();
         emb.setFooter("Mute", Target.user.avatarURL);
         emb.setTimestamp(ts);
@@ -199,7 +199,7 @@ const init = async function (message) {
           }** ${wasAUTOUNMUTE}`
         );
         RevokeEmb.addField(RESPO, bot.user, true);
-        RevokeEmb.setColor("#102af5");
+        RevokeEmb.color = 0x102af5;
         var ts = new Date();
         RevokeEmb.setFooter("Unmute", Target.user.avatarURL);
         RevokeEmb.setTimestamp(ts);

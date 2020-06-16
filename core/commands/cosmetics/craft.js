@@ -23,7 +23,7 @@ function noteno(item,extra){
   
   let embed = new Embed
   embed.description=""
-  embed.setColor('#71dbfa') 
+  embed.color = 0x71dbfa 
   
   let arg = message.content.split(/ +/).slice(1)[0];
   if (!arg)return;
@@ -155,7 +155,7 @@ function noteno(item,extra){
         matDisplay+="\n"+_emoji(icona)+" | "+ALLITEMS.find(x=>x.id==materialName).emoji+ALLITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
     })
     if (fails > 0 ) {
-      embed.setColor('#ed3a19');
+      embed.color = 0xed3a19;
       craftExplan = "\n\n" + $t('responses.crafting.materialMissing',P)
       embed.description= matDisplay +  craftExplan
       message.author.crafting = false;
@@ -177,7 +177,7 @@ function noteno(item,extra){
               authorOnly:message.author.id
             }
           ).catch(e => {
-              embed.setColor("#ffd900")
+              embed.color = 0xffd900
               embed.description = matDisplay
               embed.footer($t('responses.crafting.timeout',P))
               m.edit({embed})
@@ -188,7 +188,7 @@ function noteno(item,extra){
           if(reas.length === 0 )return;
 
           if (reas.length === 1&&reas[0].emoji.id==NA.id) {
-            embed.setColor("#db4448")
+            embed.color = 0xdb4448
             embed.footer($t('responses.crafting.cancel',P))
             embed.description = matDisplay
             m.edit({embed})
@@ -216,7 +216,7 @@ function noteno(item,extra){
             await DB.items.receive(message.author.id, crafted_item.id);
             
             message.author.crafting = false;
-            embed.setColor("#78eb87")
+            embed.color = 0x78eb87
             embed.description = matDisplay
             embed.footer($t('responses.crafting.crafted',P))
             m.removeReactions().catch()

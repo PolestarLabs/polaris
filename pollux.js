@@ -32,10 +32,6 @@ Eris.Guild.prototype.member = function (user) {
     user = user.id || user;
     return this.members.find(usr => usr.id === user.id || usr.id === user);
 }
-Eris.Embed.prototype.setColor = function (color) {
-    this.color = parseInt(color.replace(/^#/, ''), 16);
-    return this;
-}
 
 
 const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER) || 1

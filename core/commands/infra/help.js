@@ -144,7 +144,7 @@ msg.author.getDMChannel().then(dmChan=>{
       const embed = new Embed;
     
       embed.title(helpol)
-      embed.setColor("#eb4190")
+      embed.color = 0xeb4190
       embed.description(heldesc)
       embed.thumbnail(PLX.user.avatarURL)
       embed.field(":sos: " + supserv, `https://discord.gg/pollux`, false)

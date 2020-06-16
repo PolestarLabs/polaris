@@ -65,7 +65,7 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
     });
      let output ="<:yep:339398829050953728> ⏱ "+runtimeOutput(runtime)+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
      let embed = new Embed({description:output});
-     embed.setColor("#2bce64")
+     embed.color = 0x2bce64
      return msg.channel.createMessage({embed})
   } catch (e) {
     runtime = performance.now() - runtime

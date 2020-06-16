@@ -351,7 +351,7 @@ let dasveritas= message.guild.roles.get('421181998439333901');
 let embed = new Embed;
   
   embed.title(MONTHNAME+" Donators rewards");
-  embed.setColor("#32363c");
+  embed.color = 0x32363c;
   
 let STATUS = "ok"
 
