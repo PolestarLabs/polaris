@@ -211,17 +211,6 @@ PLX.once("ready", async (msg) => {
 
     }catch(e){
         console.error(e)
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
-        console.error("ERROR MTASK")
     }
 
         hook.info(`**INFO:** Cluster connected and all shards reported online!
