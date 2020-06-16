@@ -73,7 +73,8 @@ const init = async function (msg){
     \u200b` 
     
     msg.channel.send({embed}).then(async x=>{
-        embed.setColor(win?"#0cc6ee":"#ee0c2c")
+        
+        embed.color = (win?0x0cc6ee:0xee0c2c)
         embed.description = `... calling for **${call}**
 betting **${bet} ${currency}**
 and landed **${face}**!

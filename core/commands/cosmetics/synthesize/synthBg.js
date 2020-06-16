@@ -37,7 +37,7 @@ module.exports =
         ctx.drawImage(bgImage, 170, 100, 180, 90);
         ctx.rotate(.261799);
         ctx.drawImage(synthBoard, 0, 0);
-        embed.setColor(await Picto.avgColor(imageLink));
+        embed.color = parseInt((await Picto.avgColor(imageLink)).replace('#',''),16);
         return {
             selectedItem,
             hasIt,

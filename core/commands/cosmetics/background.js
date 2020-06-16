@@ -61,7 +61,7 @@ var init = async function(msg, args) {
 
   let imageLink = paths.CDN + "/backdrops/" + selectedBG.code + ".png";
   const Picto = require(appRoot + "/core/utilities/Picto");
-  embed.setColor(await Picto.avgColor(imageLink));
+  embed.color = parseInt((await Picto.avgColor(imageLink)).replace('#',''),16)
   embed.image(imageLink);
   const YesNo = require("../../structures/YesNo");
   msg.channel.send({ embed }).then(async m => {

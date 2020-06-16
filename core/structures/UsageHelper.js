@@ -21,10 +21,10 @@ exports.run = function run(cmd, m, third, extras) {
 
   let emb = new Embed;
   try {
-    emb.setColor($d[third].color)
+    emb.color = parseInt(($d[third].color).replace('#',''),16);
     emb.thumbnail($d[third].thumb.replace('%ICONSET%',ICONSET))
   } catch (e) {
-    emb.setColor("#eee")
+    emb.color = 0xEeEeEe
   }
  
   emb.footer(`${v.mod}: ${v.name} | ${third.toUpperCase()} > ${cmd}`, "https://img.icons8.com/"+ICONSET+"/250/puzzle.png");
