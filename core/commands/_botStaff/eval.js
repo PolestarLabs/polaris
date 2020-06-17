@@ -9,6 +9,7 @@ const clean = (text) => {
   .replace(/`/g, `\`${String.fromCharCode(8203)}`)
   .replace(/@/g, `@${String.fromCharCode(8203)}`)
     .replace(PLX.token,'[REDACTED]')
+    .replace(PLX.api?.key||'-32799da-','[REDACTED]')
     .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]") :   
     JSON.stringify(text,null,2)).slice(0,1800);
     return output
@@ -23,7 +24,7 @@ const init = async (msg) => {
     if (msg.content.includes('fs') ) return;
     if (msg.content.includes('json') ) return;
     if (msg.content.includes('../../') ) return;
-    if (msg.content.includes('require') ) return;
+   // if (msg.content.includes('require') ) return;
   }
     
 
