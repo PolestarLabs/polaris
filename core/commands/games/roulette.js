@@ -101,9 +101,10 @@ async function creditUsers(results) {
 };
 
 const init = async function(msg) {
+
 	const spamFilter = new Map();
 	const checkSpam = m => {
-		if (spamFilter.has(m.author.id) && spamFilter.get(m.author.id) > (Date.now() - settings.timeBetweenBets)) return true;
+		if (spamFilter.has(m.author.id) && m.timestamp - spamFilter.get(m.author.id) < settings.timeBetweenBets) return true;
 		spamFilter.set(m.author.id, m.timestamp);
 		return false;
 	};
@@ -270,7 +271,7 @@ module.exports = {
 	init
 	,pub:true
 	,cmd:"roulette"
-	,cooldown: 10e3
+	,cooldown: 60e3
 	,perms:3
 	,cat:"gambling"
 	,botPerms:["attachFiles","embedLinks"]
