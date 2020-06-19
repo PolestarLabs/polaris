@@ -13,7 +13,7 @@ const bets = {
 	basket: { type: "basket", reward: 6,   check: function(n) { return [0, "d", 1, 2, 3].includes(n) } },
 	dstreet: { type: "dstreet", reward: 5, check: function(n) { return n >= this.numbers[0] && n <= this.numbers[1] } },
 	dozen: 	{ type: "dozen",  reward: 2,   check: function(n) { return n >= 1 + 12 * (this.offset - 1) && n <= 12 * this.offset } }, // offset = 1-3
-	column: { type: "column", reward: 2,   check: function(n) { return (n - this.offset) % 3 === 0 } }, // offset = 1-3
+	column: { type: "column", reward: 2,   check: function(n) { return !!parseInt(n) && (n - this.offset) % 3 === 0 } }, // offset = 1-3
 	snake: 	{ type: "snake",  reward: 2, check: function(n) { return [1, 5, 9, 12, 14, 16, 19, 23, 27, 30, 32, 34].includes(n) } },
 	manque: { type: "manque", reward: 1, check: function(n) { return n >= 1 && n <= 18 } },
 	passe: 	{ type: "passe",  reward: 1, check: function(n) { return n >= 19 && n <= 36 } },
