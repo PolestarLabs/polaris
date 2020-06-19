@@ -133,9 +133,9 @@ module.exports = class Roulette {
 				const n1 = parseInt(splitBet[0]),
 				n2 = parseInt(splitBet[1]);
 
-				if (splitCheck(n1, n2)) return { ...valid, ...bets.split, numbers: [n1, n2] };
-				if (streetCheck(n1, n2)) return { ...valid, ...bets.street, numbers: [n1, n2, n1 < n2 ? n1 + 1 : n2 + 1] };
-				if (dstreetCheck(n1, n2)) return { ...valid, ...bets.dstreet, numbers: [n1, n2] }
+				if (splitCheck(n1, n2)) return { ...valid, ...bets.split, numbers: n1 < n2 ? [n1, n2] : [n2, n1] };
+				if (streetCheck(n1, n2)) return { ...valid, ...bets.street, numbers: n1 < n2 ? [n1, n1 + 1, n2] : [n2, n2 + 1, n1] };
+				if (dstreetCheck(n1, n2)) return { ...valid, ...bets.dstreet, numbers: n1 < n2 ? [n1, n2] : [n2, n1] }
 				if (dozenCheck(n1, n2)) return { ...valid, ...bets.dozen, offset: n1 === 1 ? 1 : n1 === 13 ? 2 : 3 }
 			}
 		}
