@@ -28,10 +28,10 @@ async function generateBoard() {
 
 	/*
 		Optional: Pass server ID for some customization
-		return paths.CDN + "/generators/roulette.png"
+
 
 	*/
-	return "https://cdn.discordapp.com/attachments/488142183216709653/718882975844139018/unknown.png";
+	return paths.CDN + "/generators/roulette.png";
 };
 
 async function generateWheel(winningNumber) {
@@ -69,7 +69,7 @@ function toHex(bet) {
 	const betTypes = ["straight", "split", "street", "square", "basket", "dstreet", "dozen", "column", "snake", "manque", "passe", "colour", "parity"];
 	let type = betTypes.indexOf(bet.type).toString(16);
 	let offset = bet.offset || bet.number === "d" ? 2 : bet.number === 0 ? 1 : bet.numbers?.sort()[1] - bet.numbers?.sort()[0] === 3 ? 1 : bet.type=='straight'? 0 :2;
-	let number = Math.abs((bet.number || bet.numbers?.sort()[0]|| 0) -1).toString(36); 
+	let number = Math.abs((bet.number || bet.numbers?.sort()[0]|| 0) -1).toString(36);
 
 	return `${type}${offset}${number}`
 }
@@ -157,10 +157,11 @@ const init = async function(msg) {
 		boardEmbed.title = v.BOARD_TITLE;
 		boardEmbed.description = v.BOARD_DESCRIPTION;
 		boardEmbed.image = { url: board };
+		boardEmbed.fields = [];
+			boardEmbed.fields[0] = { name: "Feed", value: "_ _" };
 
 	const Game = new Roulette(msg);
 	const Collector = msg.channel.createMessageCollector(m => m.content.toLowerCase().startsWith("bet "), { time: settings.collectTime });
-
 
 	const wheelEmbed = { color: settings.boardEmbedColor , fields: [] };
 		wheelEmbed.description = v.WHEEL_DESCRIPTION;
@@ -172,6 +173,14 @@ const init = async function(msg) {
 	}, settings.sendWheelTime);
 
 	const boardmsg = await msg.channel.send({ embed: boardEmbed });
+
+	const feed = [];
+	function updateFeed(userID, bet) {
+		if (feed.length === 5) feed.splice(4, 1);
+		feed.splice(1, 0, `- <@${userID}> has placed ${_emoji("RBN")}${miliarize(bet.amount)} on ${translate(bet)}`);
+		boardEmbed.fields[0].value = feed.join("\n");
+		boardmsg.edit({ embed: boardEmbed });
+	}
 
 	Collector.on("message", async(m) => {
 		if (m.content.split(" ")[1]?.toLowerCase() === "help") return m.channel.send({ content: "", embed: helpEmbed });
@@ -194,9 +203,8 @@ const init = async function(msg) {
 		Game.addBet(userID, bet);
 		Game.users[userID].hash = m.author.avatar || m.author.defaultAvatar;
 		boardEmbed.image = {url:  getBoard(Game.users) }  // readded for testing
-		await boardmsg.edit({ embed: boardEmbed }); // REPLACE WITH FEED
+		updateFeed(userID, bet);
 		m.addReaction(_emoji('chipOK').reaction)
-		return m.reply(_emoji('chipOK') + v.BETPLACED).then(r=>r.deleteAfter(settings.noticeTimeout));
 	});
 
 	Collector.on("end", async() => {
@@ -234,6 +242,29 @@ const init = async function(msg) {
 			}, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
 	});
 };
+
+function e(number) {
+	return _emoji(`roulette${number === "d" ? "00" : number}`);
+}
+
+function translate(bet) {
+	switch (bet.type) {
+		case "straight": return `${e(bet.number)}`;
+		case "split": return `${e(bet.numbers[0])} & ${e(bet.numbers[1])}`;
+		case "street": return `${e(bet.numbers[0])}- ${e(bet.numbers[1])}`;
+		case "square": return `${e(bet.numbers[0])}, ${e(bet.numbers[1])}, ${e(bet.numbers[2])} & ${e(bet.numbers[3])}`;
+		// basket
+		case "dstreet": return `${e(bet.numbers[0])}through ${e(bet.numbers[1])}`;
+		case "dozen": return `${e(1 + 12 * (bet.offset - 1))}through ${e(12 * bet.offset)}`;
+		case "column": return `column ${bet.offset}`;
+		// snake
+		// manque
+		// passe
+		case "colour": return !bet.offset ? "black" : "red";
+		case "parity": return !bet.offset ? "even": "uneven";
+		default: return bet.type;
+	}
+}
 
 module.exports = {
 	init
