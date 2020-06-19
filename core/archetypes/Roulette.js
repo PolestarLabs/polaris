@@ -18,7 +18,7 @@ const bets = {
 	manque: { type: "manque", reward: 1, check: function(n) { return n >= 1 && n <= 18 } },
 	passe: 	{ type: "passe",  reward: 1, check: function(n) { return n >= 19 && n <= 36 } },
 	colour: { type: "colour", reward: 1, check: function(n) { return this.offset ? this.numbers.includes(n) : !this.numbers.includes(n) }, numbers: [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35] },
-	parity: { type: "parity", reward: 1, check: function(n) { return !!parseInt(n) && (n % 2) === (this.offset ? 1 : 0) } },
+	parity: { type: "parity", reward: 1, check: function(n) { return !!parseInt(n) && (n % 2) ^ this.offset } },
 };
 
 const dividers = [ "-" ];
@@ -142,6 +142,8 @@ module.exports = class Roulette {
 
 		// straight
 		if (bet === "00") return { ...valid, ...bets.straight, number: "d" };
+		// parseInt will allow "1-5" (square) as 1 for example, so return.
+		if (bet.length > 1) return { valid: false, reason: "invalidBet" }; 
 		if (!isNaN(parseInt(bet))) {
 			const number = parseInt(bet);
 			if (number >= 0 && number <= 36) return { ...valid, ...bets.straight, number: number };
