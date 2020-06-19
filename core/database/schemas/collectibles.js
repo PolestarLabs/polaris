@@ -1,20 +1,21 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema
-const utils = require('../../structures/PrimitiveGearbox.js');
-const Mixed = Schema.Types.Mixed;
+const mongoose = require("mongoose");
 
+const { Schema } = mongoose;
+const utils = require("../../structures/PrimitiveGearbox.js");
+
+const { Mixed } = Schema.Types;
 
 const collectibles = new Schema({
   name: String,
-  id: {type:String,index:{unique:true}},
+  id: { type: String, index: { unique: true } },
   rarity: String,
   icon: String,
   emoji: String,
-  attribs: Mixed  
-  
-})
+  attribs: Mixed,
 
-let MODEL = mongoose.model('collectibles', collectibles, 'collectibles');
+});
+
+const MODEL = mongoose.model("collectibles", collectibles, "collectibles");
 
 MODEL.set = utils.dbSetter;
 MODEL.get = utils.dbGetter;
