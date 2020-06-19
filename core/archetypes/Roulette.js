@@ -143,7 +143,7 @@ module.exports = class Roulette {
 		// straight
 		if (bet === "00") return { ...valid, ...bets.straight, number: "d" };
 		// parseInt will allow "1-5" (square) as 1 for example, so return.
-		if (bet.length > 1) return { valid: false, reason: "invalidBet" }; 
+		if (bet.length > 2) return { valid: false, reason: "invalidBet" }; 
 		if (!isNaN(parseInt(bet))) {
 			const number = parseInt(bet);
 			if (number >= 0 && number <= 36) return { ...valid, ...bets.straight, number: number };
