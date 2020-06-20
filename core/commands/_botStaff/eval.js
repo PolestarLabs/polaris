@@ -1,47 +1,41 @@
-const {performance} = require('perf_hooks');
-const M = require('moment')
+const { performance } = require("perf_hooks");
+const M = require("moment");
 
+const { Embed } = require("eris");
 
-const {Embed}= require('eris');
 const clean = (text) => {
-
-  let output = (typeof text === "string" ? text
-  .replace(/`/g, `\`${String.fromCharCode(8203)}`)
-  .replace(/@/g, `@${String.fromCharCode(8203)}`)
-    .replace(PLX.token,'[REDACTED]')
-    .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]") :   
-    JSON.stringify(text,null,2)).slice(0,1800);
-    return output
-}
-
-
+  const output = (typeof text === "string" ? text
+    .replace(/`/g, `\`${String.fromCharCode(8203)}`)
+    .replace(/@/g, `@${String.fromCharCode(8203)}`)
+    .replace(PLX.token, "[REDACTED]")
+    .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]")
+    : JSON.stringify(text, null, 2)).slice(0, 1800);
+  return output;
+};
 
 const init = async (msg) => {
-
-  if(msg.author.id!=='88120564400553984'){
-    
-    if (msg.content.includes('fs') ) return;
-    if (msg.content.includes('json') ) return;
-    if (msg.content.includes('../../') ) return;
-    if (msg.content.includes('require') ) return;
+  if (msg.author.id !== "88120564400553984") {
+    if (msg.content.includes("fs")) return;
+    if (msg.content.includes("json")) return;
+    if (msg.content.includes("../../")) return;
+    if (msg.content.includes("require")) return;
   }
-    
 
-let depth_param = 0
-  if(msg.args[0] === "-depth"){
+  let depth_param = 0;
+  if (msg.args[0] === "-depth") {
     depth_param = parseInt(msg.args[1]);
-     msg.args.shift()    
-     msg.args.shift() 
+    msg.args.shift();
+    msg.args.shift();
   }
 
-let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b`
-  let code = msg.args.join(" ");
+  const invisibar = "\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b";
+  const code = msg.args.join(" ");
 
-   if(code.includes('child_process') && msg.author.id !== "88120564400553984") return;
-   if(code.includes('exec')          && msg.author.id !== "88120564400553984") return;
-   if(code.includes('.leave(')       && msg.author.id !== "88120564400553984") return;
-   if(code.includes('.drop')         && msg.author.id !== "88120564400553984") return;
-   if(code.includes('process.')      && msg.author.id !== "88120564400553984") return;
+  if (code.includes("child_process") && msg.author.id !== "88120564400553984") return;
+  if (code.includes("exec") && msg.author.id !== "88120564400553984") return;
+  if (code.includes(".leave(") && msg.author.id !== "88120564400553984") return;
+  if (code.includes(".drop") && msg.author.id !== "88120564400553984") return;
+  if (code.includes("process.") && msg.author.id !== "88120564400553984") return;
 
   if (!code) return;
   
@@ -53,9 +47,9 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
       process.exit(1);
     });
   }
-  
+
   let runtime = performance.now();
-  let runtimeOutput = (rtm)=> (rtm*1000<1000?Math.floor(rtm*1000)+"μs ":rtm<1000?(rtm.toFixed(2))+"ms ":(rtm/1000).toFixed(2)+"s ");
+  const runtimeOutput = (rtm) => (rtm * 1000 < 1000 ? `${Math.floor(rtm * 1000)}μs ` : rtm < 1000 ? `${rtm.toFixed(2)}ms ` : `${(rtm / 1000).toFixed(2)}s `);
   try {
     let evaled = await eval(code);
     runtime = performance.now() - runtime
@@ -75,11 +69,10 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
     console.error(e)
      return msg.channel.createMessage({embed})
   }
-
-}
+};
 
 module.exports = {
   init,
-  aliases: ["ev","ee"],
-  cat: 'dev'
-}
+  aliases: ["ev", "ee"],
+  cat: "dev",
+};

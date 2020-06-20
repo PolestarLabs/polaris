@@ -1,26 +1,23 @@
+const Gal = require("../../structures/Galleries");
 
-const Gal = require('../../structures/Galleries')
+const init = async function (msg) {
+  const embed = new Embed();
 
-const init = async function (msg){
+  const img = await Gal.randomOne("ahegao", true);
 
-    const  embed = new Embed();
+  embed.image(img);
+  embed.color("#FFFFFF");
+  // embed.description(":coffee: **Coffee time!**");
 
-    let img = await Gal.randomOne('ahegao',true);
+  msg.channel.send({ embed });
+};
 
-    embed.image(img);
-    embed.color("#FFFFFF");
-    //embed.description(":coffee: **Coffee time!**");
-
-    msg.channel.send({embed});
-
-}
-
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'ahegao'
-    ,perms:3
-    ,cat:'nsfw'
-    ,botPerms:['embedLinks']
-    ,aliases:[]
-}
+module.exports = {
+  init,
+  pub: true,
+  cmd: "ahegao",
+  perms: 3,
+  cat: "nsfw",
+  botPerms: ["embedLinks"],
+  aliases: [],
+};
