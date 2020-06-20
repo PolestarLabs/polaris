@@ -6,11 +6,11 @@ const ID_REGEX = /^\d{17,19}$/;
 module.exports = {
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
     query = query?.trim();
-    if (!query) return undefined;
+    if (!query) return Promise.reject("noQuery");
 
     const ID = query.replace(CLEAN_ID_REGEX, "");
     const isID = ID_REGEX.test(ID);
-    if (strict && !isID) return null;
+    if (strict && !isID) return Promise.reject("isStrict & isNotID");
 
     let user;
 
@@ -31,7 +31,8 @@ module.exports = {
         user = isID ? await PLX.getRESTUser(ID).catch(() => null) : PLX.findUser(query);
     }
 
-    if (member && guild) return user;
+    if (user && member && guild) return user;
+    if (!user && guild && strict) return await PLX.getRESTUser(ID);
     return user?.user || user;
   },
   // Get IMG from Channel MSGs
