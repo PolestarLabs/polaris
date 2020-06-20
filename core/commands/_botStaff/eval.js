@@ -47,7 +47,7 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
   
   if(code == 'process.exit()'){
     let output ="<:maybe:476214608592633866>"+invisibar+ `\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
-    let embed = new Embed({description:output});
+    let embed = {description:output};
     msg.channel.createMessage({embed}).then(async x=>{
       await wait(1);
       process.exit(1);
@@ -63,14 +63,14 @@ let invisibar = `\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2
       depth: 0 + depth_param
     });
      let output ="<:yep:339398829050953728> ⏱ "+runtimeOutput(runtime)+invisibar+ `\`\`\`js\n${clean(evaled)}\`\`\``;
-     let embed = new Embed({description:output});
+     let embed = {description:output};
      embed.color = 0x2bce64
      return msg.channel.createMessage({embed})
   } catch (e) {
     runtime = performance.now() - runtime
      let output ="<:nope:339398829088571402> ⏱ "+runtimeOutput(runtime)+'\n**\`\`\`js\n'+(e.message||e)+ `\`\`\`**\n*\`\`\`c\n${clean(e.stack||[]).split('\n')[1] }\`\`\`*`;
-     let embed = new Embed({description:output});
-     embed.color(0xe03b3b)
+     let embed =  {description:output};
+     embed.color= 0xe03b3b
      embed.footer("Check Logs for detailed Error stack")
     console.error(e)
      return msg.channel.createMessage({embed})
