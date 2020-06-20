@@ -3,6 +3,10 @@ process.stdout.write("\x1Bc");
 console.log(require("./asciiPollux.js").ascii());
 // ===========================================
 
+global.Promise = require("bluebird");
+global.clusterNames = require("./clusters.json");
+global.GNums = require("./GlobalNumbers.js");
+
 const Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
@@ -13,9 +17,6 @@ const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const cfg             = require("./config.json");
 const WebhookDigester = require("./WebhookDigester.js");
-global.clusterNames = require("./clusters.json");
-global.GNums = require("./GlobalNumbers.js");
-global.Promise = require("bluebird");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 
