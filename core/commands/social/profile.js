@@ -165,13 +165,14 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
-  const Target = await PLX.getTarget(msg.args[0] || msg.author.id);
+  const Target = await PLX.getTarget(msg.args[0],msg.guild,true,true);
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({ id: Target.id });
 
   if (Target_Database) Target_Database.type = "udata";
-
-  const USERPROFILE = new UserProfileModel(Target_Database || msg.args[0], (msg.guild?.member(Target) || Target));
+ 
+  // Strictly accepts UDBData and DiscordUser/DiscordMember
+  const USERPROFILE = new UserProfileModel(Target_Database, Target); 
 
   console.log({ USERPROFILE });
 
