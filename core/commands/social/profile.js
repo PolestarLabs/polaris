@@ -146,6 +146,10 @@ init = async (msg,args)=>{
   
   const USERPROFILE = new UserProfileModel(Target_Database||msg.args[0],(msg.guild?.member(Target) || Target));
 
+  if(!Target_Database){
+    USERPROFILE.tagline = "Not a Pollux user"
+    USERPROFILE.personalText = "This user does not play with Pollux :c"
+  }
 
  
 console.log({USERPROFILE})
@@ -167,10 +171,10 @@ try{
     img.defaultAvi   = Picto.getCanvas( "https://cdn.discordapp.com/embed/avatars/0.png" );
     img.mainframe    = Picto.getCanvas(paths.CDN + "/build/profile/"        + (Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex") + ".png");
     img.background   = Picto.getCanvas(paths.CDN + "/backdrops/"            + USERPROFILE.background   + ".png");
-    img.flair        = Picto.getCanvas(paths.CDN + "/flairs/"               + USERPROFILE.flair        + ".png");
-    img.sticker      = Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
-    img.flag         = Picto.getCanvas(paths.CDN + "/build/flags/"         + USERPROFILE.countryFlag  + ".png");
-    img.aviFrame     = Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
+    img.flair        = Picto.getCanvas(paths.CDN + "/flairs/"               + (USERPROFILE.flair||'default')  + ".png");
+    img.sticker      = USERPROFILE.sticker && Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
+    img.flag         = USERPROFILE.countryFlag && Picto.getCanvas(paths.CDN + "/build/flags/"          + USERPROFILE.countryFlag  + ".png");
+    img.aviFrame     = USERPROFILE.profileFrame && Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
     img.medals       = USERPROFILE.medals.map(mdl=> new Object({
                                   canvas: Picto.getCanvas(paths.CDN + "/medals/"+mdl+".png"),
                                   index: USERPROFILE.medals.indexOf(mdl)
@@ -518,31 +522,34 @@ Promise.all([backdrop,foreground,hexes]).then(async arr=>{
 
     try {
 
-      const cfg = require(appRoot + '/config.json');
-      let bottomTag;
-      if (Target_Database.switches?.hideProle) {
-        bottomTag = Target_Database.switches.role
-      }
-      if (cfg.admins.includes(Target_Database.id)) bottomTag = "moderatorplus"
-      if (cfg.owner.includes(Target_Database.id)) bottomTag = "owner"
-
-      if (bottomTag) {
-        let tierframe = await Picto.getCanvas(paths.BUILD + "profile/bottomtags/" + bottomTag + ".png");
-        ctx.drawImage(tierframe, 160 + 268, 565);
-      }
-     
-      if (bottomTag == "translator" && Target_Database.switches.translator) {
-        let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
-        ctx.drawImage(flag, 160 + 313, 573, 32, 21);
-      }
-      
-      if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
-        let bliste = await Picto.getCanvas(paths.CDN + "/build/bliste.png");
-        ctx.drawImage(bliste, -2, 2);
-        ctx.globalCompositeOperation = 'saturation';
-        ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
-        ctx.fillRect(0, 0, 800, 600)
-        ctx.drawImage(bliste, -2, 2);
+      if(Target_Database){
+          
+          const cfg = require(appRoot + '/config.json');
+          let bottomTag;
+          if (Target_Database.switches?.hideProle) {
+            bottomTag = Target_Database.switches.role
+          }
+          if (cfg.admins.includes(Target_Database.id)) bottomTag = "moderatorplus"
+          if (cfg.owner.includes(Target_Database.id)) bottomTag = "owner"
+          
+          if (bottomTag) {
+            let tierframe = await Picto.getCanvas(paths.BUILD + "profile/bottomtags/" + bottomTag + ".png");
+          ctx.drawImage(tierframe, 160 + 268, 565);
+        }
+        
+        if (bottomTag == "translator" && Target_Database.switches.translator) {
+          let flag = await Picto.getCanvas(paths.BUILD + "flags/" + Target_Database.switches.translator + ".png");
+          ctx.drawImage(flag, 160 + 313, 573, 32, 21);
+        }
+        
+        if (Target_Database.blacklisted && Target_Database.blacklisted != "") {
+          let bliste = await Picto.getCanvas(paths.CDN + "/build/bliste.png");
+          ctx.drawImage(bliste, -2, 2);
+          ctx.globalCompositeOperation = 'saturation';
+          ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
+          ctx.fillRect(0, 0, 800, 600)
+          ctx.drawImage(bliste, -2, 2);
+        }
       }
 
     } catch (e) {
