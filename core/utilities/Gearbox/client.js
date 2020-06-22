@@ -6,7 +6,7 @@ const ID_REGEX = /^\d{17,19}$/;
 module.exports = {
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
     query = query?.trim();
-    if (!query) return Promise.reject("noQuery");
+    if (!query) return null;
 
     const ID = query.replace(CLEAN_ID_REGEX, "");
     const isID = ID_REGEX.test(ID);
