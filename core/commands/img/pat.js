@@ -3,7 +3,7 @@ const init = async function (msg, args) {
   const Gal = require("../../structures/Galleries");
 
   const embed = new Embed();
-  const Target = await PLX.getTarget(msg.args[0], msg.guild);
+  const Target = await PLX.getTarget(msg.args[0], msg.guild, false, true);
 
   const img = await Gal.randomOne("pat", true);
   const avgcolor = await require("../../utilities/Picto").avgColor(img);
@@ -11,7 +11,7 @@ const init = async function (msg, args) {
   embed.image(img);
   embed.color(avgcolor);
   console.log(avgcolor);
-  embed.description = `${msg.member.nick || msg.author.username} pats ${Target.nick || Target.username}`;
+  embed.description = `${msg.member.nick || msg.author.username} pats ${Target?.nick || Target?.username || 'everyone'}`;
   msg.channel.send({ embed });
 };
 

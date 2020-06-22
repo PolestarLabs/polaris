@@ -49,7 +49,7 @@ const init = async function (msg) {
 
   if (Target) {
     var USERDATA = await DB.users.getFull({ id: msg.author.id });
-    var marriedtarget = USERDATA.married.find((us) => us.id == Target.id);
+    var marriedtarget = USERDATA.featuredMarriage ?  await DB.relationships.get({ _id: USERDATA.featuredMarriage }) : null;
   }
 
   if (marriedtarget) {
@@ -58,22 +58,7 @@ const init = async function (msg) {
     pris == 1 ? (pris = randomize(1, 0)) : false;
     variation = USERDATA.lovepoints < 50 + noise ? "couple" : "wet";
     if (randomize(0, 5) == 1) variation = "cute";
-    Promise.all([
-      userDB.findOneAndUpdate(
-        {
-          id: message.author.id,
-          "married.id": userB_meta.id,
-        },
-        { $inc: { "modules.lovepoints": pris } },
-      ),
-      userDB.findOneAndUpdate(
-        {
-          id: userB_meta.id,
-          "married.id": message.author.id,
-        },
-        { $inc: { "modules.lovepoints": pris } },
-      ),
-    ]);
+    await DB.relationships.set({_id:marriedtarget._id},{$inc:{lovepoints:pris}});
   }
   if (randomize(0, 5) == 1) variation = "couple";
   if (randomize(0, 10) == 1) variation = "wet";

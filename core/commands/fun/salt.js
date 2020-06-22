@@ -1,5 +1,5 @@
 const init = async function (msg) {
-  const Target = await PLX.getTarget(msg.args[0], msg.guild);
+  const Target = await PLX.getTarget(msg.args[0], msg.guild) || msg.member;
 
   const saltmoji = "<:salty:277280624900046849>";
   const r = randomize(1, 100);

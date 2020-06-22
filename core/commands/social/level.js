@@ -31,7 +31,7 @@ const init = async function (msg) {
 
   const Server = msg.guild;
 
-  const Target = await PLX.getTarget(msg.args[0]);
+  const Target = await PLX.getTarget(msg.args[0]) || msg.author;
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   const TARGET_DB = await userDB.findOne({ id: Target.id });
   const SV_DB = await serverDB.findOne({ id: Server.id });
