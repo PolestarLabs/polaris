@@ -1,11 +1,8 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-// const locale = require('../../../utils/i18node');
-// const $t = locale.getT();
-
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  if (PLX.autoHelper([$t("helpkey", P),'noargs'], { cmd: this.cmd, msg, opt: this.cat })) return;
+
+  let purgeFilter = msg.args[0];
 
   const ServerDATA = await DB.servers.get(msg.guild.id);
   const modPass = PLX.modPass(msg.member, "manageMessages", ServerDATA);
@@ -14,21 +11,24 @@ const init = async function (msg) {
   }
 
   let filter; let censor; let Target; let endMessage; let revFil;
-  if (msg.args[0] === "reverse_filter" || msg.args[0] === "!") {
+  if (purgeFilter === "reverse_filter" || purgeFilter === "!") {
     revFil = true;
     msg.args.shift();
+    purgeFilter = msg.args[0]
   }
 
-  if (msg.args[0] == "bots") {
+  if (purgeFilter.length < 5 && !isNaN(parseInt(purgeFilter, 10))) return `It looks like you meant to just clear messages. Use \`${msg.prefix}clear ${purgeFilter}\` instead.`;
+
+  if (purgeFilter == "bots") {
     filter = (mes) => mes.author.bot;
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages from Bots`;
-  } else if (msg.args[0] == "content") {
+  } else if (purgeFilter == "content") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 250;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including *\`${censor}\`*`;
     filter = (mes) => mes.content.includes(censor);
-  } else if (msg.args[0] == "images") {
+  } else if (purgeFilter == "images") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including Images`;
@@ -44,7 +44,7 @@ const init = async function (msg) {
         }
       }
     };
-  } else if (msg.args[0] == "images") {
+  } else if (purgeFilter == "images") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = "Purged %X messages **not** including any images";
@@ -61,13 +61,13 @@ const init = async function (msg) {
       }
       return true;
     };
-  } else if (msg.args[0] == "links") {
+  } else if (purgeFilter == "links") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including Links`;
     filter = (mes) => mes.content.includes("http");
   } else {
-    Target = await PLX.getTarget(msg.args[0], msg.guild);
+    Target = await PLX.getTarget(purgeFilter, msg.guild);
     if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
     count = parseInt(msg.args[1]) || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages from user ${Target.tag}`;
