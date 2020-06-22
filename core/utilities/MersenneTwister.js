@@ -14,9 +14,9 @@ class MersenneTwister {
     this.mti = this.N + 1;
 
     if (seed.constructor === Array) {
-      this.init_by_array(seed, seed.length);
+      this.initByArray(seed, seed.length);
     } else {
-      this.init_seed(seed);
+      this.initSeed(seed);
     }
   }
 
