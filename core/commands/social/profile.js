@@ -165,7 +165,7 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
-  const Target = await PLX.getTarget(msg.args[0],msg.guild,false,true);
+  const Target = await PLX.getTarget(msg.args[0],msg.guild,false,true) || msg.member;
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({ id: Target.id });
 
