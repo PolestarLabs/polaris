@@ -42,7 +42,8 @@ const init = async function (msg, args) {
       J = false;
   }
 
-  const TARGET = await PLX.getTarget(args[0], msg.guild, 0, !0) || msg.member;
+  const TARGET = await PLX.getTarget(args[0] || msg.member.id, msg.guild, 0, !0);
+  if (!TARGET) return msg.channel.send($t("responses.errors.kin404", P));
 
   const canvas = Picto.new(800, 600);
   const ctx = canvas.getContext("2d");
