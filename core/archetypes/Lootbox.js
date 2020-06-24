@@ -92,7 +92,7 @@ class LootboxItem {
   }
 
   calculateGems(gem) {
-    const noise = randomize(-50, 200);
+    const noise = randomize(-30, 100);
     this.amount = gem === "SPH" ? 1 : Math.floor((gemRATES[this.rarity] + noise) * (gem == "JDE" ? 8 : 1));
     this.currency = gem;
     return this.amount;

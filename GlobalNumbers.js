@@ -12,7 +12,7 @@ module.exports = {
       C: 1000, U: 400, R: 250, SR: 150, UR: 70, XR: 0,
     },
     gems: {
-      C: 100, U: 200, R: 400, SR: 650, UR: 1000, XR: 2500,
+      C: 50, U: 100, R: 160, SR: 240, UR: 320, XR: 500,
     },
     itemType: {
       // JADES
