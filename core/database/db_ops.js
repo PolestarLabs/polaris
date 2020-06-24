@@ -6,7 +6,7 @@ const channelDB = require("./schemas/channels.js");
 const svMetaDB = require("./schemas/serverMeta.js");
 
 module.exports = {
-
+  native: userDB.db,
   serverDB,
   userDB,
   channelDB,
