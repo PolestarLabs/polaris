@@ -12,7 +12,6 @@ const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
 const Eris            = require("eris-additions")(ERIS);
-const mongoose        = require("mongoose");
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const cfg             = require("./config.json");
@@ -99,44 +98,29 @@ PLX.updateBlacklists = (DB) => Promise.all([
   PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
 });
 
-// DATABASE INITIALIZING
-mongoose.Promise = global.Promise;
-Promise.promisifyAll(require("mongoose"));
+const DBSchema = require('@polestar/database_schema');
+const dbConnectionData = {
+  hook,
+  url: cfg.dbURL,
+  options: {
+    useNewUrlParser: true,
+    keepAlive: 1,
+    connectTimeoutMS: 8000,
+    useUnifiedTopology: true,
+    promiseLibrary: global.Promise,
+    poolSize: 16,
+  },
+};
 
-console.info("• ".blue, "Connecting to Database...");
+DBSchema(dbConnectionData).then(Connection => {
+  global.DB = Connection;
 
-mongoose.connect(cfg.dbURL, {
-  useNewUrlParser: true,
-  keepAlive: 1,
-  connectTimeoutMS: 8000,
-  useUnifiedTopology: true,
-  promiseLibrary: global.Promise,
-  poolSize: 16,
+  setTimeout(() => {
+    console.log("Discord connection start...");
+    PLX.connect().then(postConnect).catch(console.error);
+  }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
+})
 
-}, (err) => {
-  if (err) return console.error(err, `${"• ".red}Failed to connect to Database!`);
-  return console.log("• ".green, "Connecting to Database");
-});
-mongoose.set("useFindAndModify", false);
-mongoose.set("useCreateIndex", true);
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "• ".red + "DB connection error:".red));
-db.once("open", () => {
-  console.log("• ".green, "DB connection successful");
-  PLX.updateBlacklists(require("./core/database/db_ops")).then(() => {
-    console.log("• ".blue, "Blacklist Loaded!");
-  });
-});
-db.on("reconnected", () => {
-  hook.ok("**RECONNECTED:** Database connection recovered.");
-});
-db.on("reconnectFailed", () => {
-  hook.error("**CRITICAL:** Database shutdown detected. All reconnection attempts failed.");
-  setTimeout(() => PLX.softKill(), 6000);
-});
-db.on("disconnected", () => {
-  hook.warn("**ATTENTION:** Database possible shutdown detected. Attempting recovery.");
-});
 
 // Translation Engine ------------- <
 global.translateEngineStart = () => {
@@ -192,7 +176,11 @@ PLX.once("ready", async () => {
     PLX.user.setStatus("online");
     console.log(`${"● ".green}Shard${1 + PLX.shard.id}/${PLX.shard.count} [ONLINE]`);
   }
-  // msgPreproc.run()
+  
+  PLX.updateBlacklists(DB).then(() => {
+    console.log("• ".blue, "Blacklist Loaded!");
+  }).catch(console.error);
+
   readdirAsync("./eventHandlers/").then((files) => {
     files.forEach((file) => {
       const eventor = require(`./eventHandlers/${file}`);
@@ -296,11 +284,6 @@ function postConnect() {
   console.log("Discord Client Connected".cyan);
   // POST STATS TO LISTS
 }
-
-setTimeout(() => {
-  console.log("Discord connection start...");
-  PLX.connect().then(postConnect).catch(console.error);
-}, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
 
 process.on("uncaughtException", (err) => {
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
