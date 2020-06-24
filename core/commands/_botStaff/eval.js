@@ -8,6 +8,10 @@ const clean = (text) => {
     .replace(/`/g, `\`${String.fromCharCode(8203)}`)
     .replace(/@/g, `@${String.fromCharCode(8203)}`)
     .replace(PLX.token, "[REDACTED]")
+    .replace(DB.native.host, "[REDACTED]")
+    .replace(DB.native.name, "[REDACTED]")
+    .replace(DB.native.port, "[REDACTED]")
+    .replace(DB.native.pass, "[REDACTED]")
     .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]")
     : JSON.stringify(text, null, 2)).slice(0, 1800);
   return output;
