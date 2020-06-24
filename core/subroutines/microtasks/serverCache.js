@@ -1,5 +1,3 @@
-const DB = require("../../database/db_ops");
-
 module.exports = {
 
   update: async function ServerCacheUPDATE(body, url, res) {
