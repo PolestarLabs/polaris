@@ -32,9 +32,10 @@ module.exports = async (guild, member) => {
     const fwellChannel = svData.modules.FWELL.channel;
     const fwellSkin = svData.modules.FWELL.type;
     const fwellImage = svData.modules.FWELL.image;
-    embed.image = fwellImage && embed ? { url: "attachment://out.png" } : undefined;
-
-    embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
+    if (embed){
+      embed.image = embed.image.url ? embed.image : fwellImage && embed ? { url: "attachment://out.png" } : undefined;
+      embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
+    }
 
     const P = { lngs: [svData.modules.LANGUAGE, "dev"] };
     const txt = $t("logs.userLeave", P).replace(/\*/g, "");
