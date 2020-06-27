@@ -69,7 +69,7 @@ const init = async (msg) => {
      let output ="<:nope:339398829088571402> ⏱ "+runtimeOutput(runtime)+'\n**\`\`\`js\n'+(e.message||e)+ `\`\`\`**\n*\`\`\`c\n${clean(e.stack||[]).split('\n')[1] }\`\`\`*`;
      let embed =  {description:output};
      embed.color= 0xe03b3b
-     embed.footer("Check Logs for detailed Error stack")
+     embed.footer ={text: "Check Logs for detailed Error stack"}
     console.error(e)
      return msg.channel.createMessage({embed})
   }
