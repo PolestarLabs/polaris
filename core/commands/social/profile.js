@@ -248,7 +248,7 @@ init = async (msg) => {
 
     const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
     if (isMarried) {
-      img.wifeAvatar = await Picto.getCanvas(USERPROFILE.wife.wifeAvatar);
+      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar).catch;
       // img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
       img.wifeHeart = Picto.getCanvas(`${paths.CDN}/build/items/ring_${USERPROFILE.wife.ring}.png`);
     }
