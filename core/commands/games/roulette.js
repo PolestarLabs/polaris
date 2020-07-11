@@ -178,7 +178,7 @@ const init = async function(msg) {
 	const feed = [];
 	function updateFeed(userID, bet) {
 		if (feed.length === 5) feed.splice(4, 1);
-		feed.splice(1, 0, `- <@${userID}> has placed ${_emoji("RBN")}${miliarize(bet.amount)} on ${translate(bet)}`);
+		feed.splice(0, 0, `- <@${userID}> has placed ${_emoji("RBN")}${miliarize(bet.amount)} on ${translate(bet)}`);
 		boardEmbed.fields[0].value = feed.join("\n");
 		boardmsg.edit({ embed: boardEmbed });
 	}
