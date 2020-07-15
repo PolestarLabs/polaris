@@ -1,11 +1,28 @@
+const BASELINE = 128;
+const FIBONACCI = function(start,pos){
+  let res =start;
+  let pre =0;
+  while (pos--){
+    let t = res;
+    res += pre;
+    pre = t;
+  }
+  return res;
+}
+
+const mdP    = (S) => ~~(FIBONACCI(BASELINE,S))
+const bgP    = (S) => ~~( mdP(S) * FIBONACCI(BASELINE*2.5,1) * S / BASELINE );
+
 module.exports = {
 
   DROPMAX: 1000, // Maximum dice face for Lootbox Drops
+
+
   bgPrices: {
-    UR: 32520, SR: 15250, R: 8200, U: 3100, C: 1850,
+    UR: bgP(6), SR: bgP(5), R: bgP(4), U: bgP(3), C: bgP(2),
   },
   medalPrices: {
-    UR: 2850, SR: 1875, R: 1223, U: 830, C: 500,
+    UR: mdP(6), SR: mdP(5), R: mdP(4), U: mdP(3), C: mdP(2),
   },
   LootRates: {
     rarity: {
