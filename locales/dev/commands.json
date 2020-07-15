@@ -27,7 +27,7 @@
 		"cashrank": "**GLOBAL** {{good}} Ranks. Alternatively `{{prefix}}{{good}}`",
 		"daily": "Free {{good}}s everyday",
 		"help": "You probably know what this does",
-		"rule34": "Get Lewd Stuff",	
+		"rule34": "Get Lewd Stuff",
 		"ping": "Pong",
 		"betflip": "Bet {{good}}s on a coin flip",
 		"supserv": "Support Server",
@@ -152,8 +152,8 @@
 		"pin": "Ever wanted to pin a message, but without having to reach your mouse or awkwardly fiddle around the mobile interface? **WORRY NO MORE!** Here it is!"
 		,"read&translate":"Read + Translate commands in a useful chained version! Read text from an image and translate it immediately afterwards! "
 		,"gotcha":"Recovers the last message edited or deleted by someone recently on the channel. Useful for sniping *smartassery*."
-		
-	}, 
+
+	},
 	"usage": {
 		"pin": "`{{prefix}}pin` - Pins the last message posted to the channel\n`{{prefix}}pin [Message ID]` Pins a specific message, regardless of its channel."
 		,"reminder":"`{{prefix}}reminder (list|delete) [Reminder Text and Time (| Time) ] (-c #channel)`\n\nThe most basic usage is: `{{prefix}}reminder do this in 3 hours`, `{{prefix}}reminder do this next tuesday 2pm`, `{{prefix}}reminder do this tomorrow 14:34 PST`\nThe default reminder channel is via DMs, if you want to specify a channel try: `{{prefix}}reminder do this 14:20 -c #channel`\n\nIn some cases the wording can be confusing, so to completely isolate the timer from the text you can use `|`:\n`{{prefix}}reminder watch 007: Tomorrow never dies | next friday` Here the word 'tomorrow' could confuse things a bit, so using `|` ensures only what is past it will be accounted as time.\n\nTo list your current reminders:\n`{{prefix}}reminder list`\nTo remove reminders:\n`{{prefix}}reminder delete (index)` Removes the reminder at the `index` position. Removes the last one if none is specified.",
@@ -225,7 +225,7 @@
 		"fortunecookie": "`{{prefix}}fortunecookie` (This command has some issues)",
 		"menu": "[Discontinued]",
 		"puto": "Only available on the following languages: [PT-BR]",
-		
+
 		"ship": "`{{prefix}}ship @friend1 @friend2` You can use their IDs if you don't want to ping them",
 		"triggered": "`{{prefix}}triggered [@someone]`",
 		"menesueco": "Only available on the following languages: [PT-BR]",
@@ -248,7 +248,7 @@
 		"np": "`{{prefix}}np`",
 		"play": "`{{prefix}}play [youtube search | youtube link]`",
 		"playlist": "`{{prefix}}playlist`",
-		
+
 		"personaltxt": "`{{prefix}}personaltxt [ Text goes here ]`",
 		"rep": "`{{prefix}}rep @someone_else`",
 		"servers": "`{{prefix}}servers`",
@@ -262,7 +262,7 @@
 		"drawcards": "`{{prefix}}drawcards`",
 		"blackjack": "`{{prefix}}blackjack 150` | `{{prefix}}blackjack deck [id]`\n Minimum bet is 10, maximum is 2500.\n\n**After the game starts:**\n`stand` - Stops the game with the current hand\n`hit` - Draws one more card\n`double` - Draw one **last** card and double your bet\n`split` (Advanced) - Available when you hold 2 cards of the same value: Split your hand and play two simmultaneous matches\n\n**Decks**\nYou can customize your deck with `{{prefix}}blackjack deck [Skin ID]`\nCheck available decks with `{{prefix}}blackjack deck list` or `{{prefix}}decks`\n*You can obtain more decks from the (User Marketplace)[{{websiteRoot}}/shop/marketplace] or from (Specialized Crafting)[{{websiteRoot}}/crafting#advanced]\n\n**Jokers**\n> **SOON™️**",
 		"alignment": "`{{prefix}}alignment` or  `{{prefix}}alignchart`",
-		"exchange": "`{{prefix}}exchange [Amount] [Destination Currency Code]` \ne.g `{{prefix}}exchange 28 DUT` Exchanges 28 Rubines into DueUtil Credits.",
+		"exchange": "`{{prefix}}exchange [Amount] [Destination Currency Code]` \ne.g `{{prefix}}exchange 28 DUT` Exchanges 28 Rubines into DueUtil Credits.\nJust say {{prefix}}{{command}} to get a list of all available currencies.",
 		"slots": "`{{prefix}}slots [bet(optional)]`",
 		"avatar": "`{{prefix}}avatar [@someguy]`",
 		"daily": "`{{prefix}}daily` to get your daily bonus, streak 10 days in a row for a higher bonus1\n `{{prefix}}daily epoch` to check how much time until next global refresh.",

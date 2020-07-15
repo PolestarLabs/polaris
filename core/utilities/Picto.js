@@ -398,26 +398,26 @@ module.exports = {
     shadow = shadow || stroke.line / 2 - 1;
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
-    const FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
-    let ctx2 = this.tag(ctx, TXT, FONT, stroke.style, stroke);
+    let FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
+    let ctx_2 = this.tag(ctx, TXT, FONT, stroke.style, stroke);
     ctx.drawImage(
-      ctx2.item, X, Y,
-      maxWidth && ctx2.width > maxWidth ? maxWidth : ctx2.width,
-      ctx2.height,
+      ctx_2.item,X,Y,
+      maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
+      ctx_2.height
     );
-    ctx2 = this.tag(ctx, TXT, FONT, color, stroke);
+    ctx_2 = this.tag(ctx, TXT, FONT, color, stroke);
     ctx.drawImage(
-      ctx2.item,
+      ctx_2.item,
       X - shadow,
       Y - shadow,
-      maxWidth && ctx2.width > maxWidth ? maxWidth : ctx2.width,
-      ctx2.height,
+      maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
+      ctx_2.height
     );
     return {
       w:
-        maxWidth && ctx2.width > maxWidth
+        maxWidth && ctx_2.width > maxWidth
           ? maxWidth
-          : ctx2.width + stroke.line + shadow + 2,
+          : ctx_2.width + stroke.line + shadow + 2,
       text: TXT,
     };
   },
