@@ -232,7 +232,7 @@
 		"ascii": "`{{prefix}}ascii [tekst]`",
 		"cat": "Mrał",
 		"morse": "`{{prefix}}morse [tekst]` Powinieneś być na kanale głosowym",
-		"say": "`{{prefix}}say [wiadomość]` dla zwykłej wiadomości.\n`{{prefix}}say embed <JSON>' dla fajniejszych wiadomości używających Treść Osadzoną.\nKrótki Przykład: `{{prefix}}say embed {\"description\":\"Hello!\",\"color:16729306}`\n - Zobacz [Narzędzie do wizualizacji Treści Osadzonych autorstwa Leovoel'a] (https://leovoel.github.io/embed-visualizer/) aby tworzyć własne Treści Osadzone!\n\n - ***Zobacz też:** `{{prefix}}saytochannel` aby wysłać jakieś wiadomości bezpośrednio na dany kanał!*",
+		"say": "`{{prefix}}say [wiadomość]` dla zwykłej wiadomości.\n`{{prefix}}say embed <JSON>' dla fajniejszych wiadomości z Treścią Osadzoną.\nKrótki Przykład: `{{prefix}}say embed {\"description\":\"Hello!\",\"color:16729306}`\n - Zobacz [Architekt Treści Osadzonych Pollux'a] ({{websiteRoot}}/embedarchitect) aby stworzyć własne Treści Osadzone!\n\n - ***Zobacz też:** `{{prefix}}saytochannel` aby wysłać jakieś wiadomości bezpośrednio na dany kanał!*",
 		"saytochannel": "**Wymaga Roli Moderatora**\n`{{prefix}}saytochannel [#kanał] [message]` dla pojedynczej wiadomości.\n`{{prefix}}saytochannel [#kanał] embed <JSON>' dla fajniejszych wiadomości używających Treść Osadzoną.\n\n - Zobacz [Narzędzie do wizualizacji Treści Osadzonych]]({{websiteRoot}}/embedarchitect), aby tworzyć własne Treści Osadzone!\n - ***Zobacz też:** `{{prefix}}say`*",
 		"modrole": "`{{prefix}}modrole set [@rola|Nazwa Roli]`",
 		"mute": "`{{prefix}}mute [@użytkownik] [minuty] [powód]` `{{prefix}}mute @JakiśDebil 15 Bycie niegrzecznym`",

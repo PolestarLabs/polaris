@@ -1,4 +1,4 @@
-const Npcs = require('../npcs')
+const Npcs = require("../npcs");
 
-console.log('****NPCs****');
+console.log("****NPCs****");
 console.log(Npcs.generate());

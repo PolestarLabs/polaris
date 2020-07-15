@@ -1,8 +1,10 @@
 const { exec } = require("child_process");
 
 const init = async function (msg, args) {
-  exec(`git ${args.join(" ")}`, (error, stdout, stderr) => {
-    const description = `
+  exec(`git ${args.join(" ")}`, {
+    cwd: "/home/pollux/polaris/dashboard",
+  }, (error, stdout, stderr) => {
+    const description =  `
         ${
   error
     ? `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${stderr.slice(0, 1900)}\`\`\``
@@ -12,8 +14,6 @@ const init = async function (msg, args) {
 
     msg.channel.send({ embed: { description } });
   });
-
-  require("./reload").init(msg, ["hard"]);
 };
 
 module.exports = {
@@ -22,5 +22,6 @@ module.exports = {
   cmd: "git",
   perms: 3,
   cat: "_botStaff",
+  aliases: ["dgit", "dg", "dgt"],
 
 };

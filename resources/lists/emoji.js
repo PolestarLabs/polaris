@@ -1,47 +1,44 @@
 const POLARIS_UI = {
 
   loot: "<:loot:339957191027195905>",
-  rubine: "<:rubine_fulllarge:550389035835588638>",
-  loading: "<a:waitafuckingmoment:590604600319672341>",
-  token: "<:token:597978242535915526>",
-  
+  // token: "<:token:597978242535915526>",
+
   RBN: "<:rubine_fulllarge:550389035835588638>",
   rubine: "<:rubine_fulllarge:550389035835588638>",
-      rubine_simplelarge: "<:rubine_simplelarge:550389037265977382>",
-      rubine_flatlarge: "<:rubine_flatlarge:550389035818942476>",
-      rubine_fulllarge: "<:rubine_fulllarge:550389035835588638>",
+  rubine_simplelarge: "<:rubine_simplelarge:550389037265977382>",
+  rubine_flatlarge: "<:rubine_flatlarge:550389035818942476>",
+  rubine_fulllarge: "<:rubine_fulllarge:550389035835588638>",
   JDE: "<:jade_fulllarge:550389035906891789>",
   jade: "<:jade_fulllarge:550389035906891789>",
-      jade_simplelarge: "<:jade_simplelarge:550389035806228502>",
-      jade_flatlarge: "<:jade_flatlarge:550389035722342400>",
-      jade_fulllarge: "<:jade_fulllarge:550389035906891789>",
+  jade_simplelarge: "<:jade_simplelarge:550389035806228502>",
+  jade_flatlarge: "<:jade_flatlarge:550389035722342400>",
+  jade_fulllarge: "<:jade_fulllarge:550389035906891789>",
   SPH: "<:sapphire_fulllarge:550389035848171523>",
   sapphire: "<:sapphire_fulllarge:550389035848171523>",
-      sapphire_simplelarge: "<:sapphire_simplelarge:550389035953160222>",
-      sapphire_flatlarge: "<:sapphire_flatlarge:550389035474878496>",
-      sapphire_fulllarge: "<:sapphire_fulllarge:550389035848171523>",
+  sapphire_simplelarge: "<:sapphire_simplelarge:550389035953160222>",
+  sapphire_flatlarge: "<:sapphire_flatlarge:550389035474878496>",
+  sapphire_fulllarge: "<:sapphire_fulllarge:550389035848171523>",
   TKN: "<:token_fulllarge:550389036905398282>",
   EVT: "<:token_fulllarge:550389036905398282>",
   token: "<:token_fulllarge:550389036905398282>",
-      token_simplelarge: "<:token_simplelarge:550389035642912779>",
-      token_flatlarge: "<:token_flatlarge:550389035848171521>",
-      token_fulllarge: "<:token_fulllarge:550389036905398282>",
+  token_simplelarge: "<:token_simplelarge:550389035642912779>",
+  token_flatlarge: "<:token_flatlarge:550389035848171521>",
+  token_fulllarge: "<:token_fulllarge:550389036905398282>",
   plxcoin: "<:token:597978242535915526>",
-
 
   __: "<:__:601288252867084318>",
   ONL: "<:ONL:605588002470756353>",
-    online: "<:ONL:605588002470756353>",
+  online: "<:ONL:605588002470756353>",
   OFL: "<:OFL:598873604037279765>",
-    offline: "<:OFL:598873604037279765>",
+  offline: "<:OFL:598873604037279765>",
   DND: "<:DND:598873604121165846>",
-   dnd: "<:DND:598873604121165846>",
+  dnd: "<:DND:598873604121165846>",
   AWY: "<:AWY:598873604431806483>",
-    away: "<:AWY:598873604431806483>",
+  away: "<:AWY:598873604431806483>",
   loading: "<a:waitafuckingmoment:590604600319672341>",
 
   // INVENTORY
-  
+
   MATERIAL: "<:MATERIAL:596658667777163274>",
   LOOTBOX: "<:LOOTBOX:596658668238274560>",
   KEY: "<:KEY:596658667810586644>",
@@ -54,52 +51,59 @@ const POLARIS_UI = {
   can_trade: "<:can_trade:601282813177757726>",
   can_destroy: "<:can_destroy:601282813471490051>",
   deckie: "<:deckie:586933317077827594>",
-  
-  // ITEMS 
-  
-  // Cards 
-    Rdek: "<:Rdek:586968935514112002>",
-    SRdek: "<:SRdek:586968935648329729>",
-    Cdek: "<:Cdek:586968935837204501>",
-    Udek: "<:Udek:586968935883210785>",
-    XRdek: "<:XRdek:586968935967096832>",
-    URdek: "<:URdek:586968936105377811>",
-    
+
+  // ITEMS
+
+  // Cards
+  Rdek: "<:Rdek:586968935514112002>",
+  SRdek: "<:SRdek:586968935648329729>",
+  Cdek: "<:Cdek:586968935837204501>",
+  Udek: "<:Udek:586968935883210785>",
+  XRdek: "<:XRdek:586968935967096832>",
+  URdek: "<:URdek:586968936105377811>",
+
   // BLACKJACK
-    plxcards: "<:plxcards:598784000353370113>",
-    plxbjkloss: "<:plxbjkloss:598795338752720908>",
-    plxbjkbjk: "<:plxbjkbjk:598795338857447425>",
-    plxbjkjkr: "<:plxbjkjkr:598795338974887936>",
-    plxbjkpush: "<:plxbjkpush:598795339088134153>",
-    plxbjkwin: "<:plxbjkwin:598795339213832193>",
-    plxbjkbust: "<:plxbjkbust:598795339792646155>",
-    plxbjk2x: "<:plxbjk2x:598795449117310988>",
-    plxtarot: "<:plxtarot:598833296570449921>",
+  plxcards: "<:plxcards:598784000353370113>",
+  plxbjkloss: "<:plxbjkloss:598795338752720908>",
+  plxbjkbjk: "<:plxbjkbjk:598795338857447425>",
+  plxbjkjkr: "<:plxbjkjkr:598795338974887936>",
+  plxbjkpush: "<:plxbjkpush:598795339088134153>",
+  plxbjkwin: "<:plxbjkwin:598795339213832193>",
+  plxbjkbust: "<:plxbjkbust:598795339792646155>",
+  plxbjkinsu: "<:plxbjkinsu:715445818592722975>",
+  plxbjksurr: "<:plxbjksurr:715445818517356545>",
+  plxbjk2x: "<:plxbjk2x:598795449117310988>",
+  plxtarot: "<:plxtarot:598833296570449921>",
+
+  // GENERIC
+  TIME1: "<:TIME1:688827284077150267>",
+  TIME2: "<:TIME2:688827283624296615>",
+  TIME3: "<:TIME3:688827284609957945>",
 
   // GIFT
-    gift_Y_S:"<:gift_Y_S:648769996201263105>",
-    gift_Y_R:"<:gift_Y_R:648769995601608714>",
-    gift_Y_B:"<:gift_Y_B:648769996201263154>",
-    gift_R_S:"<:gift_R_S:648769996046073875>",
-    gift_R_R:"<:gift_R_R:648769995613929472>",
-    gift_R_B:"<:gift_R_B:648769995576442890>",
-    gift_P_S:"<:gift_P_S:648769996381487146>",
-    gift_P_R:"<:gift_P_R:648769995630837760>",
-    gift_P_B:"<:gift_P_B:648769996968820766>"
+  gift_Y_S: "<:gift_Y_S:648769996201263105>",
+  gift_Y_R: "<:gift_Y_R:648769995601608714>",
+  gift_Y_B: "<:gift_Y_B:648769996201263154>",
+  gift_R_S: "<:gift_R_S:648769996046073875>",
+  gift_R_R: "<:gift_R_R:648769995613929472>",
+  gift_R_B: "<:gift_R_B:648769995576442890>",
+  gift_P_S: "<:gift_P_S:648769996381487146>",
+  gift_P_R: "<:gift_P_R:648769995630837760>",
+  gift_P_B: "<:gift_P_B:648769996968820766>",
 
-}
+};
 
 const POLLUXES = {
-  plxOof : "<:plxOof:594739726435745814>",
-  PolluxChu : "<:PolluxChu:594739726418968576>",
+  plxOof: "<:plxOof:594739726435745814>",
+  PolluxChu: "<:PolluxChu:594739726418968576>",
   plxYaY: "<:plxYaYforplebs:597169518296432641>",
   plxYaYani: "<:plxYaYforplebs:597169518296432641>",
-}
+};
 
 const BRANDS = {
   reddit: "<:reddit:510526878038360074>",
   twitter: "<:twitter:510526878139023380>",
-}
+};
 
 const MISC = {
   Ofriends: "<:Ofriends:604395612561211432>",
@@ -108,73 +112,60 @@ const MISC = {
   friendsdotgreen: "<:friendsdotgreen:604395612477063168>",
   friendsdotred: "<:friendsdotred:604395612515074048>",
   friendsdotblue: "<:friendsdotblue:604395612519006208>",
-  friendsdotyellow: "<:friendsdotyellow:604395612628189185>"
-}
+  friendsdotyellow: "<:friendsdotyellow:604395612628189185>",
+};
 
 const THIRD_PARTY = {
 
-initiatemoneytransfer: "<:initiatemoneytransfer:446901833362046977>",
-future: "<:future:446901833642934274>",
-change: "<:change:446901833659711488>",
-datarecovery: "<:datarecovery:446901833693265920>",
-ledger: "<:ledger:446901833861169152>",
-expired: "<:expired:446901833894592516>",
-cash: "<:cash:446901834007707660>",
-cogplay: "<:cogplay:446901834225942535>",
-exchange: "<:exchange:446901834246782976>",
-hexagon: "<:hexagon:446901834271948801>",
-multiply: "<:multiply:446901834280468510>",
-log: "<:log:446901834284662784>",
-bankbuilding: "<:bankbuilding:446901834293182485>",
-cashbook: "<:cashbook:446901834297114644>",
-alarm: "<:alarm:446901834305634304>",
-employeecard: "<:employeecard:446901834309828628>",
-labels: "<:labels:446901834313891840>",
-leagueoflegends: "<:leagueoflegends:446901834322411530>",
-expense: "<:expense:446901834326474772>",
-membershipcard: "<:membershipcard:446901834347446272>",
-onlinepayment: "<:onlinepayment:446901835614126081>",
-nodes: "<:nodes:446901835660525568>",
-onlinestore: "<:onlinestore:446901835715051531>",
-snowflake: "<:snowflake:446901835744411669>",
-nokia: "<:nokia:446901835769315338>",
-welfare: "<:welfare:446901835836686337>",
-pie: "<:pie:446901835865784321>",
-pincodekeyboard: "<:pincodekeyboard:446901835866046484>",
-rotate: "<:rotate:446901835878367242>",
-time: "<:time:446901835907727371>",
-stocks: "<:stocks:446901835945738270>",
-warrantycard: "<:warrantycard:446901835974967296>",
-travelcard: "<:travelcard:446901835995807753>",
-withdrawallimit: "<:withdrawallimit:446901836000002048>",
-sparkler: "<:sparkler:446901836012847124>",
-withdraw: "<:withdraw:446901836025167872>",
-snowstorm: "<:snowstorm:446901836025298959>",
-waitafuckingmoment: "<a:waitafuckingmoment:590604600319672341>",
+  initiatemoneytransfer: "<:initiatemoneytransfer:446901833362046977>",
+  future: "<:future:446901833642934274>",
+  change: "<:change:446901833659711488>",
+  datarecovery: "<:datarecovery:446901833693265920>",
+  ledger: "<:ledger:446901833861169152>",
+  expired: "<:expired:446901833894592516>",
+  cash: "<:cash:446901834007707660>",
+  cogplay: "<:cogplay:446901834225942535>",
+  exchange: "<:exchange:446901834246782976>",
+  hexagon: "<:hexagon:446901834271948801>",
+  multiply: "<:multiply:446901834280468510>",
+  log: "<:log:446901834284662784>",
+  bankbuilding: "<:bankbuilding:446901834293182485>",
+  cashbook: "<:cashbook:446901834297114644>",
+  alarm: "<:alarm:446901834305634304>",
+  employeecard: "<:employeecard:446901834309828628>",
+  labels: "<:labels:446901834313891840>",
+  leagueoflegends: "<:leagueoflegends:446901834322411530>",
+  expense: "<:expense:446901834326474772>",
+  membershipcard: "<:membershipcard:446901834347446272>",
+  onlinepayment: "<:onlinepayment:446901835614126081>",
+  nodes: "<:nodes:446901835660525568>",
+  onlinestore: "<:onlinestore:446901835715051531>",
+  snowflake: "<:snowflake:446901835744411669>",
+  nokia: "<:nokia:446901835769315338>",
+  welfare: "<:welfare:446901835836686337>",
+  pie: "<:pie:446901835865784321>",
+  pincodekeyboard: "<:pincodekeyboard:446901835866046484>",
+  rotate: "<:rotate:446901835878367242>",
+  time: "<:time:446901835907727371>",
+  stocks: "<:stocks:446901835945738270>",
+  warrantycard: "<:warrantycard:446901835974967296>",
+  travelcard: "<:travelcard:446901835995807753>",
+  withdrawallimit: "<:withdrawallimit:446901836000002048>",
+  sparkler: "<:sparkler:446901836012847124>",
+  withdraw: "<:withdraw:446901836025167872>",
+  snowstorm: "<:snowstorm:446901836025298959>",
+  waitafuckingmoment: "<a:waitafuckingmoment:590604600319672341>",
 
-}
-
-
-
-
-
-
-
-
-
-
+};
 
 const emojibank = {
 
+  // POLLUX ORIGINAL
 
-  //POLLUX ORIGINAL
+  // ITEMS
 
-  //ITEMS
+  // SUPER UI MOJIS
 
-
-  //SUPER UI MOJIS
-
-  
   rubine: "<:rubine_fulllarge:550389035835588638>",
   sapphire: "<:sapphire:367128894307827712>",
   jade: "<:jade:367128893716430848>",
@@ -187,100 +178,85 @@ const emojibank = {
   AMH: "<:amethist:367128881766989824>",
   EMD: "<:emerald:367128893309583360>",
 
-
-
-  
   australis: "<:australis:391418503317422080>",
   borealis: "<:borealis:391423329078345729>",
 
   salt: "<:salty:277280624900046849>",
-  cacetinho: "<:fruki:249731487530876929>",
-  fruki: "<:cacetinho:249732000750108673>",
-  riceball: "<:jellydonut:249732000984858624>"
+  riceball: "<:jellydonut:249732000984858624>",
+  // MISC
 
-  //MISC
-  ,
   botTag: "<:botTag:230105988211015680>",
   online: "<:online:313956277808005120>",
-  dnd: "<:dnd:313956276893646850>"
+  dnd: "<:dnd:313956276893646850>",
+  // SERVICES
 
-  //SERVICES
-  ,
   discord: "<:discord:314003252830011395>",
-  twitter: "<:twitter:314349922877046786>",
   steam: "<:steam:314349923044687872>",
   twitch: "<:twitch:314349922755411970>",
   league: "<:league:314349922902343681>",
-  battlenet: "<:battlenet:314349923006939136>"
+  battlenet: "<:battlenet:314349923006939136>",
+  // MENUITEMS
 
-  //MENUITEMS
-  ,
   check: "<:check:314349398811475968>",
   xmark: "<:xmark:314349398824058880>",
   empty: "<:empty:314349398723264512>",
   yep: "<:yep:339398829050953728>",
   nope: "<:nope:339398829088571402>",
 
-  windky: "<:windky:386609737241853952>"
+  windky: "<:windky:386609737241853952>",
 
-  ,
   bare3: "<:bare3:386933141119696908>",
   barfx: "<:barfx:386933141283274753>",
   bare2: "<:bare2:386933141455110155>",
   barf2: "<:barf2:386933141140668419>",
   bare1: "<:bare1:386933141123891201>",
   barf1: "<:barf1:386933141140668418>",
-  barf3: "<:barf3:386933141316829185>"
+  barf3: "<:barf3:386933141316829185>",
 
-  ,
   tradeable: "<:tradeable:404716198694223885>",
   buyable: "<:buyable:404716199063191552>",
   breakable: "<:breakable:404718003465224202>",
   consumable: "<:consumable:404721077361704980>",
 
-  'retweet': "<:Retweet:338764316792717322>",
-  'api': "<:Api:338148353906966530>",
-  'bot': "<:Bot:338148354007629845>",
-  'discord': "<:Discord:338148354544631808>",
-  'google': "<:Google:338148597927378945>",
-  'module': "<:Module:338148598057533441>",
-  'fork': "<:Fork:338148598099345409>",
-  'console': "<:Console:338148598103408651>",
-  'sourcecode': "<:SourceCode:338148598397009940>",
-  'wifirouter': "<:WifiRouter:338148598418112512>",
-  'wacomtablet': "<:WacomTablet:338149666841559043>",
-  'motherboard': "<:MotherBoard:338149666912862209>",
-  'workstation': "<:Workstation:338149667172909066>",
-  'fidgetspinner': "<:fidgetspinner:338150912566755329>",
-  'loser': "<:Loser:338150912688128000>",
-  'winner': "<:Winner:338150912696647680>",
-  'mute': "<:Mute:338151856759111681>",
-  'unmute': "<:Unmute:338151856931078145>",
-  'pause': "<:Pause:338151856947855362>",
-  'youtube': "<:Youtube:338151857014833153>",
-  'play': "<:PLay:338151857199513600>",
-  'stop': "<:Stop:338151857379606528>",
-  'privacy': "<:Privacy:338152581429985281>",
-  'like': "<:Like:338154351128346635>",
-  'dislike': "<:Dislike:338154671522840576>",
-  'error': "<:Error:338155247946039307>",
-  'download': "<:Download:338155248155885568>",
-  'error': "<:Error:338155248222732288>",
-  'expired': "<:Expired:338157313133248513>",
-  'hourglass': "<:Hourglass:338157886259855361>",
-  'commandline': "<:CommandLine:338158927332114434>",
-  'debug': "<:Debug:338158979777822741>",
-  'left': "<:Left:338325464101945348>",
-  'down': "<:Down:338325464219123713>",
-  'right': "<:Right:338325464378507266>",
-  'highpriority': "<:HighPriority:338325464437227522>",
-  'mediumpriority': "<:MediumPriority:338325464437358594>",
-  'up': "<:Up:338325464441552897>",
-  'lowpriority': "<:LowPriority:338325464579833857>",
-  'tasks': "<:Tasks:338325464840011776>",
+  retweet: "<:Retweet:338764316792717322>",
+  api: "<:Api:338148353906966530>",
+  bot: "<:Bot:338148354007629845>",
+  google: "<:Google:338148597927378945>",
+  module: "<:Module:338148598057533441>",
+  fork: "<:Fork:338148598099345409>",
+  console: "<:Console:338148598103408651>",
+  sourcecode: "<:SourceCode:338148598397009940>",
+  wifirouter: "<:WifiRouter:338148598418112512>",
+  wacomtablet: "<:WacomTablet:338149666841559043>",
+  motherboard: "<:MotherBoard:338149666912862209>",
+  workstation: "<:Workstation:338149667172909066>",
+  fidgetspinner: "<:fidgetspinner:338150912566755329>",
+  loser: "<:Loser:338150912688128000>",
+  winner: "<:Winner:338150912696647680>",
+  mute: "<:Mute:338151856759111681>",
+  unmute: "<:Unmute:338151856931078145>",
+  pause: "<:Pause:338151856947855362>",
+  youtube: "<:Youtube:338151857014833153>",
+  play: "<:PLay:338151857199513600>",
+  stop: "<:Stop:338151857379606528>",
+  privacy: "<:Privacy:338152581429985281>",
+  like: "<:Like:338154351128346635>",
+  dislike: "<:Dislike:338154671522840576>",
+  error: "<:Error:338155247946039307>",
+  download: "<:Download:338155248155885568>",
+  hourglass: "<:Hourglass:338157886259855361>",
+  commandline: "<:CommandLine:338158927332114434>",
+  debug: "<:Debug:338158979777822741>",
+  left: "<:Left:338325464101945348>",
+  down: "<:Down:338325464219123713>",
+  right: "<:Right:338325464378507266>",
+  highpriority: "<:HighPriority:338325464437227522>",
+  mediumpriority: "<:MediumPriority:338325464437358594>",
+  up: "<:Up:338325464441552897>",
+  lowpriority: "<:LowPriority:338325464579833857>",
+  tasks: "<:Tasks:338325464840011776>",
   "3dsmax": "<:3dsMax:338329566688837645>",
-  "gun": "<:Gun:338331025300127745>",
-  "twitter": "<:Twitter:338329566646894604>",
+  gun: "<:Gun:338331025300127745>",
   cloudstorage: "<:CloudStorage:338329324182831111>",
   facebook: "<:Facebook:338329324203540480>",
   deviantart: "<:Deviantart:338329324266717184>",
@@ -290,31 +266,34 @@ const emojibank = {
   pokedex: "<:Pokedex:338329334253223946>",
   raspberrypi: "<:Raspberrypi:338329334278389760>",
   webhook: "<:Webhook:338329334605676557>",
-  rubylang: "<:Ruby:338353496380276737>"
+  rubylang: "<:Ruby:338353496380276737>",
 
-  //TIERS
-
-  ,
+  // TIERS
   XR: "<:XR:435711433133785089>",
-  UR: "<:UR:344622750650073088>",
-  SR: "<:SR:344622749584719873>",
-  R: "<:R_:344622750452809728>",
-  U: "<:U_:344622750628839434>",
-  C: "<:C_:344622750221991937>"
+  UR: "<:xUR:716153099311513703>",
+  SR: "<:xSR:716153100217483304>",
+  R: "<:xR:716153099470766154>",
+  U: "<:xU:716153099940659200>",
+  C: "<:xC:716153099823087677>",
 
-  //MEDALS
+  XR_old: "<:XR:435711433133785089>",
+  UR_old: "<:UR:344622750650073088>",
+  SR_old: "<:SR:344622749584719873>",
+  R_old: "<:R_:344622750452809728>",
+  U_old: "<:U_:344622750628839434>",
+  C_old: "<:C_:344622750221991937>",
+  // MEDALS
 
-  ,
   hyruleshield: "<:hyruleShield:335866552878366731>",
   gardevoir: "<:gardevoir:335866552912183298>",
   fruki: "<:fruki:335866553239076865>",
   burger: "<:burger:335866553545523200>",
   snes: "<:snes:335866555978219521>",
-  "undefined": "<:undefined:335866556166701058>",
+  undefined: "<:undefined:335866556166701058>",
   miku: "<:miku:335866556275752960>",
   n3ds: "<:n3DS:335866556653502464>",
   patreon: "<:patreon:335866556871344128>",
-  twitch: "<:twitch:335866556909223936>",
+
   pollux: "<:pollux:335866556909355018>",
   beyblade: "<:beyblade:336743092264632322>",
   starcraft: "<:starcraft:336743092382072842>",
@@ -330,19 +309,13 @@ const emojibank = {
   pokeball: "<:pokeball:336743096391958538>",
   darkmagirl: "<:darkmagirl:336743096375312385>",
   overwatch: "<:overwatch:336743096609931264>",
-  league: "<:league:336743096438095878>",
-  umbreon: "<:umbreon:337967647356616716>"
+  umbreon: "<:umbreon:337967647356616716>",
+  // DISCOIN
 
-  //DISCOIN
+  discoin: "<:Discoin:357656754642747403>",
 
-  ,
-  discoin: "<:Discoin:357656754642747403>"
-
-  ,
   offline: "<:offline:313956277237710868>",
   ff: "<:ff:343511122931875871>",
-  play: "<:play:343511123204767744>",
-  pause: "<:pause:343511123217219584>",
   song: "<:song:343511123242254336>",
   on: "<:on:343511231434588161>",
   off: "<:off:343511248085843968>",
@@ -361,7 +334,6 @@ const emojibank = {
   radar: "<:radar:343590771930431499>",
   ticketdusk: "<:ticketdusk:343590772098203658>",
   usb: "<:usb:343590772186152961>",
-  twitter: "<:twitter:343590771770785792>",
   bell: "<:bell:343590772035158016>",
   todo: "<:todo:343590772043546625>",
   mobo: "<:mobo:343590807691067393>",
@@ -381,16 +353,14 @@ const emojibank = {
   d12: "<:d12:343590879669256192>",
   d10: "<:d10:343590879526649858>",
   d8: "<:d8:343590880239681536>",
-  stop: "<:stop:343664908489064457>",
   Userlocation: "<:Userlocation:338762651423473668>",
   HighImportance: "<:HighImportance:338764315773632513>",
   LowImportance: "<:LowImportance:338764315978891266>",
   kommunism: "<:kommunism:381950417329848322>",
   banne: "<:banne:381950509558267904>",
   banhammer: "<:banne:381950509558267904>",
-  hash: "<:hash:381968420486250497>"
+  hash: "<:hash:381968420486250497>",
 
-  ,
   marksman: "<:Marksman:377365020176285707>",
   mage: "<:Mage:377365019505065985>",
   fighter: "<:Fighter:377365019941142530>",
@@ -399,10 +369,9 @@ const emojibank = {
   specialist: "<:Specialist:377365019471511554>",
   tank: "<:Tank:377365019911913472>",
 
-
   bg: "<:pic:343590839345479680>",
   medal: "<:hexagon:446901834271948801>",
-  //NEWS
+  // NEWS
 
   initiatemoneytransfer: "<:initiatemoneytransfer:446901833362046977>",
   future: "<:future:446901833642934274>",
@@ -442,8 +411,6 @@ const emojibank = {
   withdraw: "<:withdraw:446901836025167872>",
   snowstorm: "<:snowstorm:446901836025298959>",
 
-
-
   Rdek: "<:Rdek:586968935514112002>",
   Cdek: "<:Cdek:586968935837204501>",
   URdek: "<:URdek:586968936105377811>",
@@ -451,10 +418,7 @@ const emojibank = {
   XRdek: "<:XRdek:586968935967096832>",
   SRdek: "<:SRdek:586968935648329729>",
 
-
-
-
-  //HEROES
+  // HEROES
 
   raynor: "<:Raynor:328605865257074688>",
   rexxar: "<:Rexxar:328605865328246784>",
@@ -517,74 +481,46 @@ const emojibank = {
   murky: "<:Murky:328606060661440512>",
   malfurion: "<:Malfurion:328606060665503754>",
   jaina: "<:Jaina:328606059964923904>",
-  'li-ming': "<:LiMing:328606060640468992>",
+  "li-ming": "<:LiMing:328606060640468992>",
   malthael: "<:Malthael:328606060652789770>",
   nova: "<:Nova:328606060673761290>",
   lili: "<:LiLi:328606060699058176>",
   "kael'thas": "<:Kaelthas:328606060321570819>",
   ragnaros: "<:Ragnaros:328606062682963969>",
-  probius: "<:Probius:328606062917844994>"
-}
+  probius: "<:Probius:328606062917844994>",
+};
 
-Object.assign(emojibank,THIRD_PARTY,MISC,BRANDS,POLARIS_UI,POLLUXES);
-
-
-function emoji(moji,fallback) {
-
-  if (!emojibank[moji]) {
-    let GLDS = PLX.guilds.size;
-    let resMoji
-    while (GLDS--) {
-      let emj = PLX.guilds.map(x => x)[GLDS].emojis.find(e => {
-        if (e.name == moji || e.name.includes(moji)||e.name == fallback || e.name.includes(fallback)) return true;
-      });
-
-      if (emj) resMoji = `<${emj.animated ? "a" : ""}:${emj.name}:${emj.id}>`;
-    }
-    return resMoji ||fallback|| "\⬜"
-  } else {
-    return emojibank[moji]
-  }
-
-}
+Object.assign(emojibank, THIRD_PARTY, MISC, BRANDS, POLARIS_UI, POLLUXES);
 
 const globalEmojis = [];
 async function shallowEmojiBank() {
-  PLX.guilds.forEach(async G => {
-    G.emojis.forEach(async e => {
-      globalEmojis.push(e)
-    })
-  })
+  PLX.guilds.forEach(async (G) => {
+    G.emojis.forEach(async (e) => {
+      globalEmojis.push(e);
+    });
+  });
 }
 function getShallowMoji(identifier) {
-  let EMJ = globalEmojis.find(ge =>
-    ge.id == identifier ||
-    ge.name == identifier ||
-    ge.name.toLowerCase() == identifier.toLowerCase()
-  );
+  const EMJ = globalEmojis.find((ge) => ge.id === identifier
+    || ge.name === identifier
+    || ge.name.toLowerCase() === identifier.toLowerCase());
   if (!EMJ) return false;
-  EMJ.string = `<${EMJ.animated ? 'a' : ''}:${EMJ.name}:${EMJ.id}>`
+  EMJ.string = `<${EMJ.animated ? "a" : ""}:${EMJ.name}:${EMJ.id}>`;
   return EMJ;
 }
-shallowEmojiBank()
-
+shallowEmojiBank();
 
 class PolluxEmoji extends String {
   constructor(identifier) {
-    let print =
-      emojibank[identifier]
+    const print = emojibank[identifier]
       || getShallowMoji(identifier).string
-      || "\⬜";
+      || "⬜";
 
-    super(print + " ");
+    super(`${print} `);
     this.reaction = print.replace("<:", "").replace("<a:", "").replace(">", "");
-    this.no_space = print.replace(/ +/g, "")
-    this.id = this.reaction.split(':')[1]
-    this.name = this.reaction.replace("a:", "").split(':')[0]
+    this.no_space = print.replace(/ +/g, "");
+    [this.name, this.id] = this.reaction.replace("a:", "").split(":");
   }
 }
-
-
-
 
 module.exports = { PolluxEmoji, getShallowMoji };

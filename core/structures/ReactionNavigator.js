@@ -1,54 +1,49 @@
-module.exports = async function ReactionNavigator(m,msg,pagefun,options={},rec){
-   
+module.exports = async function ReactionNavigator(m, msg, pagefun, options = {}, rec) {
+  if (rec > 30) return msg.reply("`Navigation Limit Reached`");
 
-if(rec>30) return msg.reply("`Navigation Limit Reached`");
+  const time = options.time || 10000;
+  const content = options.content || m.content?.[0] || "";
+  const embed = options.embed || m.embeds?.[0] || false;
+  const avoidEdit = options.avoidEdit || true;
+  const strings = options.strings || {};
+  strings.timeout = strings.timeout || "TIMEOUT";
 
-    let time = options.time || 10000
-    let content = options.content|| (m.content||[])[0] || "";
-    let embed = options.embed|| (m.embeds||[])[0] || false;
-    let avoidEdit = options.avoidEdit || true;
-    let strings = options.strings || {}
-        strings.timeout   =strings.timeout|| "TIMEOUT"
+  const page = options.page || 1;
+  const totPages = options.tot_pages || 1;
 
-    let page = options.page || 1
-    let tot_pages = options.tot_pages || 1
+  const isFirst = page === 1;
+  const isLast = page === totPages;
 
-    let isFirst = page == 1
-    let isLast  = page == tot_pages 
+  if (!isFirst) m.addReaction("◀");
+  if (!isLast) m.addReaction("▶");
 
-    if(!isFirst) m.addReaction("◀")
-    if(!isLast)  m.addReaction("▶")
-   
-    
-    
-    const reas = await m.awaitReactions( {
-        maxMatches: 1,
-        authorOnly:msg.author.id,
-        time
-    }).catch(e=>{
-        m.removeReactions().catch(e=>null);
-        if(embed && !avoidEdit){
-            embed.color =16499716;        
-            embed.footer ={text: strings.timeout};      
-            m.edit({content,embed});
-        }
-    });
-
-    if (!reas || reas.length === 0 ) return;
-    m.removeReactions().catch(e=>null);
-
-    if (!isFirst && reas.length === 1 && reas[0].emoji.name == "◀") {
-        options=null;
-        pagefun(page-1,m,rec++);
-        m = null;
-        msg = null;
+  const reas = await m.awaitReactions({
+    maxMatches: 1,
+    authorOnly: msg.author.id,
+    time,
+  }).catch(() => {
+    m.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
+      embed.color = 16499716;
+      embed.footer = { text: strings.timeout };
+      m.edit({ content, embed });
     }
+  });
 
-    if (!isLast && reas.length === 1 && reas[0].emoji.name == "▶") {
-        pagefun(page+1,m,rec++);
-        options=null;
-        m = null;
-        msg = null;
-    }
+  if (!reas?.length !== 0) return null;
+  m.removeReactions().catch();
 
-}
+  if (!isFirst && reas.length === 1 && reas[0].emoji.name === "◀") {
+    options = null;
+    pagefun(page - 1, m, rec += 1);
+    m = null;
+    msg = null;
+  }
+
+  if (!isLast && reas.length === 1 && reas[0].emoji.name === "▶") {
+    pagefun(page + 1, m, rec += 1);
+    options = null;
+    m = null;
+    msg = null;
+  }
+};
