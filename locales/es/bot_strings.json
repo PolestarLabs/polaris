@@ -796,18 +796,17 @@
             "¡Increible! ¡Mira lo que encontre!",
             "Hey, estoy muy segura de que querrás ver esta lootbox acá."
         ],
+        "duplicate": "",
         "lootPick": "¡Todos tienen **__20 Seconds__** para disputarserlo! Escribe `{{prefix}}pick` ¡por la oportunidad de conseguirlo!",
         "goesTo": "¡Se acabó el tiempo! Veamos quien se queda con este Botín.\n**Este Botín será sorteado entre:**",
         "congrats": "¡Muy bien! La lootbox fue agregada a tu **inventario**, Podes abrirla usando el `{{prefix}}lootbox` comando.",
         "opening": "{{user}} abrió su Botín...",
         "contains": "Esta {{adjective}} lootbox contiene",
-        "options": "Podes quedártelo o volverlo a abrir pagando {{amt}}",
         "keep": "Quedárselo",
         "reroll": "Volver a abrirlo",
         "rerolled": "Intentemos de nuevo, mezclando el contenido de la caja...",
         "noMoreRolls": "Te has quedado sin oportunidades para repetir, tendrás que quedarte con el resultado.",
         "noFunds": "Necesitas mas Rubíes para volverlo a intentar, tal vez la próxima.",
-        "rerollRemain": "Re-aperturas restantes:",
         "addedRubines": "{{X}} Rubíes fueron agregados a tu saldo",
         "addedJades": "{{X}} Jades fueron agregado a tu bolsa",
         "addedMedal": "**{{itm}}** Medalla fue agregada en tu bolsillo de medallas",
@@ -817,7 +816,12 @@
         "morons": "¿Dejaron pasar un Botín? Que digo, claro que lo hicieron.",
         "contesting": "Participantes para esta Caja:",
         "eventDrop": "¡Y hay mas! Esta caja es una **CAJA DE EVENTO** esto significa: **`Artículos especiales dentro`!**",
-        "notThisbox": "Parece que no tenes ese cofre. Intenta `{{prefix}} lootbox` de nuevo y ve los cofres que posees."
+        "notThisbox": "Parece que no tenes ese cofre. Intenta `{{prefix}} lootbox` de nuevo y ve los cofres que posees.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Pensaron que era Pollux, **¡Pero era YO, DIO!**!",
