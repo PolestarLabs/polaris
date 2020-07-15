@@ -796,18 +796,17 @@
             "Niesamowite! Zobacz, co znalazłam!",
             "Hej, jestem pewna, że chcesz tu widzieć Lootbox'a."
         ],
+        "duplicate": "",
         "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
         "goesTo": "Koniec czasu! Zobaczmy, kto otrzyma to Pudełko.\n**Ten Loot Box zostanie rozlosowany pomiędzy:**",
         "congrats": "Dobra robota! Skrzynka została dodana do twojego **Ekwipunku**. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
         "opening": "{{user}} otworzył Pudełko...",
         "contains": "Ta {{adjective}} skrzynka zawiera",
-        "options": "Możesz go zachować lub rerollnąć, płacąc {{amt}}",
         "keep": "Zatrzymaj to",
         "reroll": "Rerollnij to",
         "rerolled": "Spróbujmy jeszcze raz, rerollnąć zawartość pudełka ...",
         "noMoreRolls": "Zabrakło Ci rerollnięć, będziesz musiał zachować ten wynik.",
         "noFunds": "Potrzebujesz więcej rubinów, aby ponownie zakręcić, być może następnym razem.",
-        "rerollRemain": "Pozostałe rerolle:",
         "addedRubines": "{{X}} Rubiny zostały dodane do twojego salda",
         "addedJades": "{{X}} Żady zostały dodane do twojej torby",
         "addedMedal": "**{{itm}}** Medal został dodany do twojej Kieszeni na Medale",
@@ -817,7 +816,12 @@
         "morons": "Pozwoliłeś, by Pudełko Ciebie minęło? Co ja gadam.. jasne że tak.",
         "contesting": "Wpisy dotyczące tego Pudełka:",
         "eventDrop": "Tego jest więcej! Te pudełko to **EVENTOWE PUDEŁKO** co znaczy że **w środku są specjalne przedmioty'!**",
-        "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz."
+        "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz.",
+        "options_new": "{{k_emoji}}Zachowaj | {{r_emoji}}Losuj ponownie {{amt}}",
+        "rerollRemain_new": "Możesz losować ponownie jeszcze **jeden** raz!",
+        "rerollRemain_new_plural": "Możesz losować ponownie jeszcze **{{count}}** razy!",
+        "hasDupes": "{{x_frags}} zduplikowanych przedmiotów!",
+        "allItemsAdded": "Wszystkie przedmioty zostały dodane do twojego ekwipunku!"
     },
     "eastereggs": {
         "konodioda": "Myślałeś, że to Pollux, **ale to byłem JA, ZIOM**!",

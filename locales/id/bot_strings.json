@@ -796,18 +796,17 @@
             "Hebat! lihat apa yang telah aku temukan!",
             "Hei, aku sangat yakin kamu ingin melihat Lootbox ini disini."
         ],
+        "duplicate": "",
         "lootPick": "Kalian semua punya **__20 detik__** untuk memperselisihkannya! Ketik `{{prefix}}pick` untuk kesempatan mengklaimnya!",
         "goesTo": "Waktu habis! ayo lihat siapa yang akan mendapatkan Lootbox ini.\n**Lootbox ini akan diundi diantara:**",
         "congrats": "Mantap Djiwa! kotaknya telah di tambahkan ke **Inventori**. Kamu sekarang bisa membukanya menggunakan perintah `{{prefix}}lootbox`.",
         "opening": "{{user}} membuka Lootboxnya...",
         "contains": "{{adjective}} Lootbox ini berisi",
-        "options": "Kamu bisa menyimpannya, atau menggulirkannya kembali dengan membayar {{amt}}",
         "keep": "Simpan",
         "reroll": "Gulirkan",
         "rerolled": "Ayo coba lagi, menggulirkan isi kotak...",
         "noMoreRolls": "Kamu sudah kehabisan reroll, kamu akan mendapatkan hasil yang ini.",
         "noFunds": "Kamu membutuhkan Rubi lebih banyak lagi untuk reroll, mungkin lain kali.",
-        "rerollRemain": "Reroll yang tersisa:",
         "addedRubines": "{{X}} Rubi telah di tambahkan ke saldomu",
         "addedJades": "{{X}} Giok telah di tambahkan ke kantungmu",
         "addedMedal": "**{{itm}}** Medali telah di tambahkan ke Saku Medali",
@@ -817,7 +816,12 @@
         "morons": "Kamu membiarkan Lootbox terlewati begitu saja? Apa yang aku katakan, tentu saja kamu melakukannya.",
         "contesting": "Peserta untuk kotak ini:",
         "eventDrop": "Dan masih ada lagi! Kotak ini adalah sebuah **KOTAK ACARA** yang artinya: **'berisi barang-barang spesial'!**",
-        "notThisbox": "Kamu sepertinya tidak mempunyai kotak itu. Coba `{{prefix}}lootbox` lagi dan lihat kotak apa yang kamu miliki."
+        "notThisbox": "Kamu sepertinya tidak mempunyai kotak itu. Coba `{{prefix}}lootbox` lagi dan lihat kotak apa yang kamu miliki.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Kamu pikir barusan itu Pollux, **tapi itu adalah AKU, DI0**!",
