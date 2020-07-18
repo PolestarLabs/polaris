@@ -2,8 +2,6 @@ const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
 const Picto = require("../../utilities/Picto");
 
-
-
 const settings = {};
 	settings.collectTime = 35e3;
 	settings.sendWheelTime = 30e3;
@@ -28,8 +26,6 @@ async function generateBoard() {
 
 	/*
 		Optional: Pass server ID for some customization
-
-
 	*/
 	return paths.CDN + "/generators/roulette.png";
 };
@@ -76,12 +72,12 @@ function toHex(bet) {
 
 
 async function allowedToBet(Game, userID, bet) {
-	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet" };
-	if (settings.maxPerBet && bet.amount > settings.maxPerBet) return { reason: "maxPerBet" };
+	if (settings.minPerBet && bet.amount < settings.minPerBet) return { reason: "minPerBet", count: settings.minPerBet };
+	if (settings.maxPerBet && bet.amount > settings.maxPerBet) return { reason: "maxPerBet", count: settings.maxPerBet };
 	const user = Game.getUser(userID);
 	if (user) {
-		if (settings.maxBets && user.bets >= settings.maxBets) return { reason: "maxBets" };
-		if (settings.maxTotal && user.amount >= settings.maxTotal) return { reason: "maxTotal" };
+		if (settings.maxBets && user.bets >= settings.maxBets) return { reason: "maxBets", count: settings.maxBets };
+		if (settings.maxTotal && user.amount >= settings.maxTotal) return { reason: "maxTotal", count: settings.maxTotal };
 		if (!await ECO.checkFunds(userID, bet.amount + user.amount)) return { reason: "noMoney" };
 	}
 	return true;
@@ -112,51 +108,19 @@ const init = async function(msg) {
 	let P={lngs:msg.lang,prefix:msg.prefix};
 	if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
 
-	const v = {};
-		v.ONGOING = "A Roulette game is already ongoing in this server";
-
-		v.BOARD_TITLE = "Polaris Roulette";
-		v.BOARD_DESCRIPTION = "You may now place your bets! `bet [amt] [bet] <1-3>`\nUse `bet help` for a detailed betting tutorial.";
-
-		v.HELP_TITLE = "Roulette Betting Help";
-		v.HELP_DESCRIPTION = "Check the wiki for more detailed information";
-
-		v.RESULTS_TITLE = "Roulette Results";
-		v.RESULT_NOMONEY = "You somehow lost your money so your bets were dismissed.";
-
-		v.WHEEL_DESCRIPTION = `${(settings.collectTime - settings.sendWheelTime) / 1000} seconds left to place your bets!`;
-		v.WHEEL_DESCRIPTION_END = `The wheel will now decide your faith.`;
-
-		v.NOTSOFAST = "You are placing bets too fast.";
-
-		v.invalidBet = "Invalid bet";
-		v.missingAll = "No params";
-		v.missingAmount = "No amount";
-		v.missingBet = "No bet";
-		v.zeroAmount = "Bet atleast 1 RBN";
-
-		v.notAllowed = "You can't place this bet right now";
-		v.noMoney = "not enough money";
-		v.minPerBet = `Minimum is ${settings.minPerBet} RBN`;
-		v.maxPerBet = `Maximum is ${settings.maxPerBet} RBN`;
-		v.maxBets = `Maximum bets is ${settings.maxBets}`;
-		v.maxTotal = `Maximum total is ${settings.maxTotal} RBN`;
-
-		v.BETPLACED = "Your bet has been placed";
-
-	if (Roulette.gameExists(msg.guild.id)) return v.ONGOING;
+	if (Roulette.gameExists(msg.guild.id)) return $t("games.alreadyPlaying",P);
 
 	const helpEmbed = {
 		color: settings.helpEmbedColor,
-		title: v.HELP_TITLE,
-		description: v.HELP_DESCRIPTION,
+		title: $t("games.roulette.helpTitle",P),
+		description: $t("games.roulette.helpDescription",P),
 		image: { url: settings.helpURL }
 	};
 
 	let board = await generateBoard();
 	const boardEmbed = { color: settings.boardEmbedColor , fields: [] };
-		boardEmbed.title = v.BOARD_TITLE;
-		boardEmbed.description = v.BOARD_DESCRIPTION;
+		boardEmbed.title = $t("games.roulette.boardTitle",P);
+		boardEmbed.description = $t("games.roulette.boardDescription",P);
 		boardEmbed.image = { url: board };
 		boardEmbed.fields = [];
 			boardEmbed.fields[0] = { name: "Feed", value: "_ _" };
@@ -165,7 +129,7 @@ const init = async function(msg) {
 	const Collector = msg.channel.createMessageCollector(m => m.content.toLowerCase().startsWith("bet "), { time: settings.collectTime });
 
 	const wheelEmbed = { color: settings.boardEmbedColor , fields: [] };
-		wheelEmbed.description = v.WHEEL_DESCRIPTION;
+		wheelEmbed.description = $t("games.roulette.wheelDescription", { P, seconds: (settings.collectTime - settings.sendWheelTime) / 1e3 });
 	let wheelmsg;
 	setTimeout(async() => {
 		const wheel = await generateWheel(Game.winningNumber);
@@ -177,8 +141,9 @@ const init = async function(msg) {
 
 	const feed = [];
 	function updateFeed(userID, bet) {
-		if (feed.length === 5) feed.splice(4, 1);
-		feed.splice(0, 0, `- <@${userID}> has placed ${_emoji("RBN")}${miliarize(bet.amount)} on ${translate(bet)}`);
+		if (feed.length === 5) feed.splice(0, 1);
+		const betPlacedStrings = $t("games.roulette.betPlaced", { P, user: `<@${userID}>`, amount: `${_emoji("RBN")}${miliarize(bet.amount)}`, bet: translate(bet), returnObjects: true });
+		feed.push("> " + betPlacedStrings[Math.floor(Math.random() * betPlacedStrings.length)])
 		boardEmbed.fields[0].value = feed.join("\n");
 		boardmsg.edit({ embed: boardEmbed });
 	}
@@ -187,18 +152,18 @@ const init = async function(msg) {
 		if (m.content.split(" ")[1]?.toLowerCase() === "help") return m.channel.send({ content: "", embed: helpEmbed });
 
 		const userID = m.author.id;
-		if (checkSpam(m)) return m.reply(v.NOTSOFAST);
+		if (checkSpam(m)) return m.reply($t("games.roulette.notSoFast"));
 
 		const bet = Roulette.parseBet(m.content);
 		if (!bet.valid) {
 			m.addReaction(_emoji('chipERROR').reaction);
-			return m.reply(_emoji('chipERROR') + v[bet.reason] || v.invalidBet).then(r=>r.deleteAfter(settings.noticeTimeout));
+			return m.reply(_emoji('chipERROR') + $t(`games.roulette.${bet.reason}`,P) || $t("games.roulete.invalidBet",P)).then(r=>r.deleteAfter(settings.noticeTimeout));
 		}
 
 		const allowed = await allowedToBet(Game, userID, bet);
 		if (allowed !== true) {
 			m.addReaction(_emoji('chipWARN').reaction);
-			return m.reply(_emoji('chipWARN') + v[allowed.reason] || v.notAllowed).then(r=>r.deleteAfter(settings.noticeTimeout));
+			return m.reply(_emoji('chipWARN') + $t(`games.roulette.${allowed.reason}`, { P, count: allowed.count }) || $t("games.roulette.notAllowed")).then(r=>r.deleteAfter(settings.noticeTimeout));
 		}
 
 		Game.addBet(userID, bet);
@@ -209,10 +174,7 @@ const init = async function(msg) {
 	});
 
 	Collector.on("end", async() => {
-		console.log("End");
-		wheelEmbed.description = v.WHEEL_DESCRIPTION_END;
-		const boardImg = await getBoard(Game.users);
-		wheelEmbed.image = { url: boardImg };
+		wheelEmbed.description = $t("games.roulette.wheelEnd",P);
 		await wheelmsg.edit({ embed: wheelEmbed });
 
 		let results = Game.results;
@@ -222,21 +184,28 @@ const init = async function(msg) {
 		const displayNumber = Game.winningNumber == 37 ? "d" : Game.winningNumber
 
 		const resultsEmbed = { color: settings.resultsEmbedColor , fields: [] };
-			resultsEmbed.title = v.RESULTS_TITLE;
-			resultsEmbed.description = `The winning number was ${_emoji('roulette'+displayNumber)}`;
+			resultsEmbed.title = $t("games.roulette.resultsTitle",P);
+			resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: _emoji('roulette'+displayNumber) });
 
 			let value;
 			if (validatedResults.length) {
 				value = validatedResults.map(result => {
-				if (result.invalid) return `<@${result.userID}> ${v.RESULT_NOMONEY}`;
-				else if (result.payout > 0) return `<@${result.userID}> Congrats you got ${result.payout} RBN`;
-				else if (result.payout < 0) return `<@${result.userID}> Sorry, but I'll be taking ${parseInt(result.payout)} RBN away from you`;
-				else return `<@${result.userID}> You barely got away and didn't win or lose anything.`;
+					let resultStrings;
+					if (result.invalid) {
+						resultStrings = $t("games.roulette.resultsInvalid", P);
+					} else if (result.payout > 0) {
+						resultStrings = $t("games.roulette.resultsWin", { P, count: result.payout, returnObjects: true });
+					} else if (result.payout < 0) {
+						resultStrings = $t("games.roulette.resultsLoss", { P, count: parseInt(result.payout), returnObjects: true });
+					} else {
+						resultStrings = $t("games.roulette.resultsDraw", { P, returnObjects: true });
+					}
+					return `<@${result.userID}> ` + (typeof resultStrings === "object" ? resultStrings[Math.floor(Math.random() * resultStrings.length)] : resultStrings);
 				}).join("\n");
 			} else {
-				value = "Sadly no one placed a bet";
+				value = $t("games.roulette.resultsNoBet", P);
 			}
-			resultsEmbed.fields.push({ name: "Player Results", value: value});
+			resultsEmbed.fields.push({ name: $t("games.roulette.resultsPlayer"), value: value});
 
 			setTimeout(() => {
 				wheelmsg.edit({ embed: resultsEmbed });
