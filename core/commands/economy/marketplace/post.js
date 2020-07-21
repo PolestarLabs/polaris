@@ -149,7 +149,7 @@ const init = async function (msg, args) {
       };
       payload.pollux = true;
 
-      axios.post(`${paths.CDN}/shop/marketplace`, payload).then((res) => {
+      axios.post(`${paths.CDN}/api/marketplace`, payload).then((res) => {
         if (res.data.status === "OK") {
           entryId = res.data.payload.id;
           msg.channel.send(`
