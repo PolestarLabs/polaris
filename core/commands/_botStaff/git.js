@@ -1,6 +1,11 @@
 const { exec } = require("child_process");
 
 const init = async function (msg, args) {
+
+  const regex = /^git[\w\d\s-"'\.\/]+$/  
+
+  if( !regex.test(`git ${args.join(' ')}`) ) return " "+_emoji("nope");
+
   exec(`git ${args.join(" ")}`, (error, stdout, stderr) => {
     const description = `
         ${
