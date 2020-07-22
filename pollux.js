@@ -65,6 +65,8 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   prefix: ["===", "p!+", "@mention"],
 });
 
+global.MARKET_TOKEN = cfg["pollux-api-token"]
+
 PLX.engine = Eris;
 PLX.beta = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;

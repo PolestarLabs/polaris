@@ -147,7 +147,7 @@ const init = async function (msg, args) {
         author: msg.author.id,
         type: operation,
       };
-      payload.pollux = true;
+      payload.pollux = MARKET_TOKEN;
 
       axios.post(`${paths.CDN}/api/marketplace`, payload).then((res) => {
         if (res.data.status === "OK") {
