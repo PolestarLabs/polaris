@@ -796,18 +796,17 @@
             "Harika! Bak, ne bulduk!",
             "Bak, eminim bu define sandığına bir göz atmak istersiniz."
         ],
+        "duplicate": "",
         "lootPick": "Sandığı kapmak için hepinizin **__20 Saniyesi__** var!\n`{{prefix}}pick` yaz ve alma şansını yakala!",
         "goesTo": "Süre doldu! Bakalım kutu kimin olacak.\n**Define sandığı bu kişilerin arasından seçilecek:**",
         "congrats": "Tebrikler! Sandık **Envanterine** eklendi. `{{prefix}}lootbox` komutunu kullanarak açabilirsin.",
         "opening": "{{user}} Define sandığını açtı...",
         "contains": "Bu {{adjective}} Define sandığı içeriği",
-        "options": "İstersen direkt alabilir istersen {{amt}} karşılığında tekrardan açabilirsin",
         "keep": "Direkt al",
         "reroll": "Tekrar aç",
         "rerolled": "Hadi bakalım, sandığı tekrardan açıyoruz...",
         "noMoreRolls": "Tekrardan açma haklarını bitirdin, bu sonuca razı gelmek zorundasın.",
         "noFunds": "Tekrardan açmak için daha fazla Rubin'e ihtiyacın var, belki daha sonra.",
-        "rerollRemain": "Kalan Tekrar denemeler:",
         "addedRubines": "{{X}} Rubin hesabına eklendi",
         "addedJades": "{{X}} Jade ",
         "addedMedal": "**{{itm}}** Madalyon, Madalyon Paketine eklendi",
@@ -817,7 +816,12 @@
         "morons": "Define sandığının kayıp gitmesine izin mi verdin? Ne diyorum ki ben, tabii ki öyle yaptın.",
         "contesting": "Bu sandık için girişimciler:",
         "eventDrop": "Ve daha fazlası! bu bir **ETKİNLİK KUTUSU** yani **'içinde güzel şeyler var'!**",
-        "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak."
+        "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Pollux zannettin değil mi, **AMA BEN DİOYDUM**!",

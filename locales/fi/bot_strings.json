@@ -796,18 +796,17 @@
             "Upeaa! Katsokaa, mitä minä olen löytänyt!",
             "Hei, olen aika varma, että haluat nähdä tämän Yllätyslaatikon täällä."
         ],
+        "duplicate": "",
         "lootPick": "Teillä kaikilla on **__20 sekuntia__** aikaa kiistellä siitä! Kirjoita `{{prefix}}pick` saadaksesi mahdollisuuden voittaa se!",
         "goesTo": "Aika loppui! Katsotaan, kuka saa tämän laatikon.\n**Tämä Yllätyslaatikko arvotaan heidän välillään:**",
         "congrats": "Hyvin tehty! Laatikko on lisätty **Tavaraluetteloosi**. Voit avata sen käyttämällä `{{prefix}}lootbox` -käskyä.",
         "opening": "{{user}} avasi Yllätyslaatikkonsa...",
         "contains": "Tämä {{adjective}} Yllätyslaatikko sisältää",
-        "options": "Voit joko pitää sen tai arpoa sen uudelleen maksamalla {{amt}}",
         "keep": "Pidä se",
         "reroll": "Arvo se uudelleen",
         "rerolled": "Uusi yritys, arvotaan laatikon sisältöä uudelleen...",
         "noMoreRolls": "Et voi enää arpoa laatikkoa uudelleen, joudut tyytymään tähän tulokseen.",
         "noFunds": "Tarvitset enemmän Rubiineja arpoaksesi uudelleen, ehkä seuraavalla kerralla.",
-        "rerollRemain": "Uudelleenarvontoja jäljellä:",
         "addedRubines": "{{X}} Rubiinia on lisätty saldoosi",
         "addedJades": "{{X}} Jadea on lisätty pussiisi",
         "addedMedal": "**{{itm}}** Mitali on lisätty mitalitaskuusi",
@@ -817,7 +816,12 @@
         "morons": "Annat yllätyslaatikon mennä sivusuun? Mitä oikein puhun, tietenkin annoit.",
         "contesting": "Tätä laatikkoa tavoittelevat:",
         "eventDrop": "Ja lisää tulee! Tämä laatikko on **TAPAHTUMALAATIKKO**, mikä tarkoittaa: *'erityisiä hienouksia sisällä'!**",
-        "notThisbox": "Sinulla ei näytä olevan tuota laatikkoa. Kokeile `{{prefix}}lootbox` uudestaan nähdäksesi omistamasi laatikot."
+        "notThisbox": "Sinulla ei näytä olevan tuota laatikkoa. Kokeile `{{prefix}}lootbox` uudestaan nähdäksesi omistamasi laatikot.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Luulit sen olevan Pollux, **mutta se olin MINÄ, DIO**!",

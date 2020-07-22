@@ -796,18 +796,17 @@
             "*Sugoi!* Olhem essa Caixa que eu achei!",
             "Opa, eu tenho quase certeza que você vai querer ver esta Caixa aqui."
         ],
+        "duplicate": "",
         "lootPick": "Todos vocês tem **__20 Segundos__** para disputar ela! Digite `{{prefix}}pick` para ter uma chance de pegar!",
         "goesTo": "Acabou o tempo! Vamos ver quem fica com a Caixa.\n**Essa Caixa vai ser sorteada entre:**",
         "congrats": "Parabéns! Essa Caixa foi enviada pro seu **inventário**. Você pode abrir ela usando o comando `{{prefix}}lootbox`.",
         "opening": "{{user}} abriu sua Caixa...",
         "contains": "Esta Caixa {{adjective}} contém",
-        "options": "Você pode ficar com eles, ou Trocar pagando {{amt}}",
         "keep": "Manter",
         "reroll": "Trocar",
         "rerolled": "Vamos tentar de novo, Trocando o conteúdo da caixa...",
         "noMoreRolls": "Uhm... Você não tem mais Trocas e vai ter que ficar com isso daí mesmo.",
         "noFunds": "Você não tem grana pra pagar essa Troca. Quem sabe na próxima.",
-        "rerollRemain": "Trocas restantes:",
         "addedRubines": "{{X}} Rubines adicionados ao seu saldo",
         "addedJades": "{{X}} Jades adicionados ao seu saquinho",
         "addedMedal": "Medalha **{{itm}}** adicionada à sua Coleção de Medalhas",
@@ -817,7 +816,12 @@
         "morons": "Vocês são uns **estrupícios**! Deixaram a Caixa sumir!",
         "contesting": "Candidatos para esta Caixa",
         "eventDrop": "E tem mais! Esta é uma **CAIXA DE EVENTO** o que significa que tem **coisas mais legais ainda** dentro!",
-        "notThisbox": "Você não tem essa Caixa. Tenta `{{prefix}}lootbox` de novo para ver as opções."
+        "notThisbox": "Você não tem essa Caixa. Tenta `{{prefix}}lootbox` de novo para ver as opções.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Você achou que fosse a Pollux, **mas era EU, DIO**!",
