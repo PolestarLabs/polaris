@@ -1,4 +1,4 @@
-global.DB = require("../../database/db_ops");
+ 
 
 const CLEAN_ID_REGEX = /[<!@>]/g;
 const ID_REGEX = /^\d{17,19}$/;
