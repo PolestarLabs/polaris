@@ -51,4 +51,8 @@ module.exports = (Eris) => {
       else resolve(col);
     }));
   };
+
+  Eris.Message.prototype.createReactionCollector = function createReactionCollector(filter, options) {
+    return new ReactionCollector(this, filter, options);
+  };
 };
