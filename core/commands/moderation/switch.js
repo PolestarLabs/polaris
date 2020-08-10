@@ -1,6 +1,7 @@
 // Create cat map with commands and other useful information
 const cats = {};
-for (command of PLX.commands) {
+for (command of Object.keys(PLX.commands)) {
+    command = PLx.commands[command];
     if (command.hidden || command.pub === false) continue;
     if (!cats[command.cat]) cats[command.cat] = { cmds: [] };
     cats[command.cat]["cmds"].push(command.name);
