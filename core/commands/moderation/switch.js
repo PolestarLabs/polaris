@@ -1,7 +1,7 @@
 // Create cat map with commands and other useful information
 const cats = {};
 for (command of Object.keys(PLX.commands)) {
-    command = PLx.commands[command];
+    command = PLX.commands[command];
     if (command.hidden || command.pub === false) continue;
     if (!cats[command.cat]) cats[command.cat] = { cmds: [] };
     cats[command.cat]["cmds"].push(command.name);
@@ -15,9 +15,14 @@ for (cat of catsArr) cats[cat]["cmds"].sort();
 // Get amount of emojis needed
 let emojisNeeded = catsArr.length;
 for (cat of catsArr) cats[cat]["cmds"].length;
-let currentLetter = "a",
-    indicatorArr = [];
-for (let i = 0; i < emojisNeeded; i++) {if (i !== 0) currentLetter = String.fromCharCode(currentLetter.charCodeAt(0)); indicatorArr.push(`regional_indicator_${currentLetter}`);};
+let indicatorArr = [
+    '🇦', '🇧', '🇨', '🇩', '🇪',
+    '🇫', '🇭', '🇬', '🇮', '🇯',
+    '🇰', '🇱', '🇲', '🇳', '🇴',
+    '🇵', '🇶', '🇷', '🇸', '🇹',
+    '🇺', '🇻', '🇼', '🇽', '🇾',
+    '🇿'
+  ];
 const menuEmoijis = ["❌", "💾", "➡️"];
 
 // Only one switch per guild to combat race conditions
@@ -119,7 +124,7 @@ const init = async(msg) => {
                 }
                 omsg.edit(genSwitchEmbed(modules, mode, currentCat)); 
             }
-        } else if (emoji.name === "➡️") {
+        } else if (emoji.name === "➡") {
             // button for selecting a category
             intoCat = !intoCat;
             omsg.edit(genSwitchEmbed(modules, mode, currentCat, intoCat));
