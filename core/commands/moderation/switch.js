@@ -1,7 +1,7 @@
 // Create cat map with commands and other useful information
 const cats = {};
 for (command of Object.keys(PLX.commands)) {
-    command = PLx.commands[command];
+    command = PLX.commands[command];
     if (command.hidden || command.pub === false) continue;
     if (!cats[command.cat]) cats[command.cat] = { cmds: [] };
     cats[command.cat]["cmds"].push(command.name);
@@ -51,14 +51,14 @@ const init = async(msg) => {
         ce: channel.modules.ENABLED,
     };
     const reactionFilter = r => {
-        msg.author.id === r.userID &&
+        return msg.author.id === r.userID &&
         (   menuEmoijis.includes(r.emoji.name) ||
             indicatorArr.includes(r.emoji.name)   );
     };
 
-    let omsg = await msg.channel.send({ color: 0x22d, title: "Please wait", description: "Currently configuring everything..." });
-    for (emoji in menuEmoijis) await omsg.addReaction(emoji);
-    for (emoji in indicatorArr) await omsg.addReaction(emoji);
+    let omsg = await msg.channel.send({embed:{ color: 0x22d, title: "Please wait", description: "Currently configuring everything..." }});
+    for (emoji of menuEmoijis) await omsg.addReaction(emoji);
+    for (emoji of indicatorArr) await omsg.addReaction(emoji);
 
     omsg.edit(genSwitchEmbed(modules, mode, currentCat));
 
