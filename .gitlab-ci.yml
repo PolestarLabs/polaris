@@ -4,7 +4,6 @@ deploy:
   stage: deploy
   script:
     - npm install
-    - npm run build
     - if["$CI_COMMIT_REF_NAME" == "dev"]; then pm2 restart POLARIS; fi
   environment:
     name: dev
