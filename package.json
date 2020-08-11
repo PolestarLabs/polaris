@@ -34,7 +34,6 @@
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
     "node-fetch": "^2.6.0",
-    "nsfwjs-node": "^2.1.14",
     "open-graph-scraper": "^3.6.2",
     "rss-parser": "^3.7.2",
     "tunnel-ssh": "^4.1.4",
