@@ -99,7 +99,7 @@ const init = async(msg) => {
     const RC = omsg.createReactionCollector(reactionFilter, { time: 60e5 });
 
     RC.on("emoji", emoji => {
-        if (emoji.name !== "#⃣") omsg.removeReaction(emoji.name, msg.author.id).catch(e => null);
+        if (!["❌", "#⃣"].includes(emoji.name)) omsg.removeReaction(emoji.name, msg.author.id).catch(e => null);
         let length = currentCat ? cats[currentCat]["cmds"].length : catsArr.length; // 0 - emojisNeeded
 
         if (emoji.name === "#⃣") {
@@ -195,9 +195,9 @@ const init = async(msg) => {
             omsg.addReaction("⬅");
         } else {
             save();
-            let name = name === "all" && currentCat ? currentCat : name;
-            let currentCat = name === "all" ? null : currentCat;
-            updateModules(modules, mode, name, currentCat).then(updatedModules => {
+            let nname = name === "all" && currentCat ? currentCat : name;
+            let ncurrentCat = name === "all" ? null : currentCat;
+            updateModules(modules, mode, nname, ncurrentCat).then(updatedModules => {
                 omsg.edit(genSwitchEmbed(updatedModules, mode, currentCat));
                 Object.assign(modules, updatedModules)
                 lastSaved = false;
