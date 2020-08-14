@@ -7,6 +7,7 @@ const
     N_CHANNEL = _emoji('channel').name,
     N_SAVE    = _emoji('save').name,
     N_UNDO    = _emoji('undo').name,
+    OVERRIDE    = _emoji('override'),
 
     R_NOPE =  _emoji('nope').reaction,
     R_YEP  =  _emoji('yep').reaction,
@@ -243,7 +244,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
     const cmode = mode === "c" || mode.slice(1) === "c"; // channel mode
 
     const embed = {
-        color: 0x000, // TODO: change
+        color: mode == "c" ? 0x7289da : 0xea6a3d, // TODO: change
         title: `${!cat ? "Category" : cat.slice(0,1).toUpperCase() + cat.slice(1)} switches`,
         fields: [],
     };
@@ -262,7 +263,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
                 catName = cat.slice(0,1).toUpperCase() + cat.slice(1);
 
             embed.fields.push({
-                name: disabled ? `:red_square: ~~${catName}~~` : disabledCount ? `:orange_square: ${catName}` : `:green_square: ${catName}` + (override ? " **🇴**" : ""),
+                name: disabled ? `${_emoji('off')} ~~${catName}~~` : disabledCount ? `${_emoji('partial')} ${catName}` : `${_emoji('on')} ${catName}` + (override ? ` ${OVERRIDE}`  : ""),
                 value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length-disabledCount}  ${MINI_OFF}${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
                 inline: true,
             });
@@ -283,7 +284,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
             const disabled = cmode ? (cdcmds.includes(cmd) || (gdcmds.includes(cmd)) && !cecmds.includes(cmd)) : gdcmds.includes(cmd),
                 override = cmode && (cdcmds.includes(cmd) || cecmds.includes(cmd)),
                 cmdName = cmd.slice(0,1).toUpperCase() + cmd.slice(1);
-            embed.fields[currField].value += disabled ? `:red_square: ~~${cmdName}~~${override ? " **🇴**" : ""}\n` : `:green_square: ${cmdName}${override ? " **🇴**" : ""}\n`;
+            embed.fields[currField].value += disabled ? `${_emoji('off')} ~~${cmdName}~~${override ? ` ${OVERRIDE}`  : ""}\n` : !override ? `${_emoji('onoff_neutral')} ${cmdName}\n` : `${_emoji('on')} ${cmdName}${override ? ` ${OVERRIDE}`  : ""}\n`;
         }
     }
 
