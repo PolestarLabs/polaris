@@ -1,6 +1,24 @@
 // Create cat map with commands and other useful information
 const readdirAsync = Promise.promisify(require("fs").readdir);
 
+const
+    N_NOPE =  _emoji('nope').name,
+    N_YEP  =  _emoji('yep').name,
+    N_CHANNEL = _emoji('channel').name,
+    N_SAVE    = _emoji('save').name,
+    N_UNDO    = _emoji('undo').name,
+
+    R_NOPE =  _emoji('nope').reaction,
+    R_YEP  =  _emoji('yep').reaction,
+
+    R_UNDO    = _emoji('undo').reaction,
+    R_SAVE    = _emoji('save').reaction,
+    R_CHANNEL = _emoji('channel').reaction,
+
+    MINI_ON  = _emoji('on_small'),
+    MINI_OFF = _emoji('off_small');
+
+
 const cats = {};
 let ready = false;
 let catsArr;
@@ -28,7 +46,19 @@ readdirAsync("./core/commands").then(async(modules) => {
 });
 
 // Menu emojis
-const menuEmoijis = ["❌", "💾", "↩", "#⃣", ["", "⬅"]]; // ["➡", "⬅"]
+const menuEmoijis = [
+    R_NOPE
+    ,R_SAVE
+    ,R_UNDO
+    ,R_CHANNEL
+     , ["", "⬅"]]; // ["➡", "⬅"]
+// Menu emojis
+const menuEmoijisNames = [
+    N_NOPE
+    ,N_SAVE
+    ,N_UNDO
+    ,N_CHANNEL
+     , ["", "⬅"]]; // ["➡", "⬅"]
 
 // Only one switch per guild to combat race conditions
 const switches = new Map();
@@ -94,15 +124,15 @@ const init = async(msg) => {
         else name = m.content.toLowerCase();
         return (currentCat ? cats[currentCat]["cmds"].includes(name) : catsArr.includes(name));
     } 
-    const reactionFilter = r => msg.author.id === r.userID && menuEmoijis.flat().includes(r.emoji.name);
+    const reactionFilter = r => msg.author.id === r.userID && menuEmoijisNames.flat().includes(r.emoji.name);
     const MC = msg.channel.createMessageCollector(messageFilter, { time: 60e5 });
     const RC = omsg.createReactionCollector(reactionFilter, { time: 60e5 });
 
     RC.on("emoji", emoji => {
-        if (!["❌", "#⃣"].includes(emoji.name)) omsg.removeReaction(emoji.name, msg.author.id).catch(e => null);
+        if (![N_NOPE, N_CHANNEL ].includes(emoji.name)) omsg.removeReaction( emoji.name+":"+emoji.id, msg.author.id).catch(e => null);
         let length = currentCat ? cats[currentCat]["cmds"].length : catsArr.length; // 0 - emojisNeeded
 
-        if (emoji.name === "#⃣") {
+        if (emoji.name === N_CHANNEL) {
             mode = "c";
             omsg.edit(genSwitchEmbed(modules, mode, currentCat, intoCat));
         } else if (emoji.name === "⬅") {
@@ -111,10 +141,10 @@ const init = async(msg) => {
             omsg.edit(genSwitchEmbed(modules, mode, currentCat));
             omsg.removeReaction("⬅");
             // omsg.addReaction("➡");
-        } else if (emoji.name === "↩") {
+        } else if (emoji.name === N_UNDO ) {
             Object.assign(modules, load());
             omsg.edit(genSwitchEmbed(modules, mode, currentCat));
-        } else if (emoji.name === "💾") {
+        } else if (emoji.name === N_SAVE) {
             // save button
             Promise.all([
                 omsg.edit(savingEmbed),
@@ -128,7 +158,8 @@ const init = async(msg) => {
                 RC.stop("error");
                 omsg.edit({ embed: { title: "Something went wrong...", description: "Could not save the changes" } }); // TODO: find normal error embed / just create an error
             });
-        } else if (emoji.name === "❌") {
+        } else if (emoji.name === N_NOPE ) {
+            console.log(emoji)
             // exit command
             MC.stop("User input");
             RC.stop("user input");
@@ -138,13 +169,13 @@ const init = async(msg) => {
             // let's make sure they meant to leave without saving
             if (!lastSaved) {
                 msg.channel.send({ embed: { color: 0x33D, title: "Oops! You didn't save your changes.", description: "Do you want to save your changes? (yes|no)" } }).then(savemsg => {
-                    savemsg.addReaction("✅");
-                    savemsg.addReaction("❌");
+                    savemsg.addReaction(R_YEP);
+                    savemsg.addReaction(R_NOPE);
                     Promise.race([
                         msg.channel.awaitMessages(m => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: 6e4 }),
-                        savemsg.awaitReactions(r => msg.author.id === r.userID && ["✅", "❌"].includes(r.emoji.name), { maxMatches: 1, time: 6e4 }),
+                        savemsg.awaitReactions(r => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: 6e4 }),
                     ]).then(r => {
-                        if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === "✅")) {
+                        if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP )) {
                             Promise.all([
                                 savemsg.edit(savingEmbed),
                                 DB.servers.set(msg.guild.id, { $set: { "modules.DISABLED": modules.gd } }),
@@ -233,7 +264,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
 
             embed.fields.push({
                 name: disabled ? `:red_square: ~~${catName}~~` : disabledCount ? `:orange_square: ${catName}` : `:green_square: ${catName}` + (override ? " **🇴**" : ""),
-                value: disabledCount && !disabled ? `\\✅${cats[cat].cmds.length-disabledCount}  \\❌${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
+                value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length-disabledCount}  ${MINI_OFF}${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
                 inline: true,
             });
         }
