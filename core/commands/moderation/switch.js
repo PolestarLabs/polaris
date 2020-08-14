@@ -199,7 +199,7 @@ const init = async(msg) => {
 
     const reactionRemoveFunction = (emoji, userID) => {
         if (userID !== msg.author.id) return;
-        if (emoji.name === "#⃣") {
+        if (emoji.name === N_CHANNEL) {
             mode = "g";
             omsg.edit(genSwitchEmbed(modules, mode, currentCat, intoCat));
         }
