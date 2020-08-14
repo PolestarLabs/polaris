@@ -159,7 +159,6 @@ const init = async(msg) => {
                 omsg.edit({ embed: { title: "Something went wrong...", description: "Could not save the changes" } }); // TODO: find normal error embed / just create an error
             });
         } else if (emoji.name === N_NOPE ) {
-            console.log(emoji)
             // exit command
             MC.stop("User input");
             RC.stop("user input");
