@@ -133,30 +133,8 @@ const init = async function (message) {
         amtInPosession = userData.modules.inventory.find((itm) => itm.id == materialName)?.count || 0;
         amtRequired = material.amt || objCount(MAT, materialName);
 
-<<<<<<< Updated upstream
-      if (amtInPosession >= amtRequired){
-        //message.reply('ok')
-        
-      }else{
-        icona='nope';
-        fails+=1
-      }
-        matDisplay+="\n"+_emoji(icona)+" | "+ALLITEMS.find(x=>x.id==materialName).emoji+ALLITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
-    })
-    if (fails > 0 ) {
-      embed.color = 0xed3a19;
-      craftExplan = "\n\n" + $t('responses.crafting.materialMissing',P)
-      embed.description= matDisplay +  craftExplan
-      message.author.crafting = false;
-      message.channel.send({embed})
-    }else{
-      craftExplan = "\n\n"+$t('responses.crafting.materialPresent',P)
-      embed.description=matDisplay+ craftExplan
-      message.channel.send({embed}).then(async m=>{
-=======
         if (amtInPosession >= amtRequired) {
         // message.reply('ok')
->>>>>>> Stashed changes
 
         } else {
           icona = "nope";
@@ -181,19 +159,6 @@ const init = async function (message) {
           m.addReaction(NA.r);
 
           const reas = await m.awaitReactions({
-<<<<<<< Updated upstream
-              maxMatches: 1,
-              time: 10000,
-              authorOnly:message.author.id
-            }
-          ).catch(e => {
-              embed.color = 0xffd900
-              embed.description = matDisplay
-              embed.footer($t('responses.crafting.timeout',P))
-              m.edit({embed})
-              m.removeReactions().catch()
-              return message.author.crafting = false;
-=======
             maxMatches: 1,
             time: 10000,
             authorOnly: message.author.id,
@@ -204,26 +169,16 @@ const init = async function (message) {
             m.edit({ embed });
             m.removeReactions().catch();
             return message.author.crafting = false;
->>>>>>> Stashed changes
           });
 
           if (reas.length === 0) return;
 
-<<<<<<< Updated upstream
-          if (reas.length === 1&&reas[0].emoji.id==NA.id) {
-            embed.color = 0xdb4448
-            embed.footer($t('responses.crafting.cancel',P))
-            embed.description = matDisplay
-            m.edit({embed})
-            m.removeReactions().catch()
-=======
           if (reas.length === 1 && reas[0].emoji.id == NA.id) {
             embed.setColor("#db4448");
             embed.footer($t("responses.crafting.cancel", P));
             embed.description = matDisplay;
             m.edit({ embed });
             m.removeReactions().catch();
->>>>>>> Stashed changes
             return message.author.crafting = false;
           }
           if (reas.length === 1 && reas[0].emoji.id == YA.id) {
@@ -245,19 +200,11 @@ const init = async function (message) {
             await DB.items.receive(message.author.id, crafted_item.id);
 
             message.author.crafting = false;
-<<<<<<< Updated upstream
-            embed.color = 0x78eb87
-            embed.description = matDisplay
-            embed.footer($t('responses.crafting.crafted',P))
-            m.removeReactions().catch()
-            return m.edit({embed});
-=======
             embed.setColor("#78eb87");
             embed.description = matDisplay;
             embed.footer($t("responses.crafting.crafted", P));
             m.removeReactions().catch();
             return m.edit({ embed });
->>>>>>> Stashed changes
           }
         });
       }
