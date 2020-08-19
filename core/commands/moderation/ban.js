@@ -104,9 +104,10 @@ const init = async function (msg) {
     pre_msg = await msg.channel.send({ embed });
   }
 
-  const post_reason = `${reason}\n  [MOD: ${msg.author.tag}]`;
 
-  PLX.banGuildMember(msg.guild.id, Target.id, clear, post_reason).then((banned) => {
+  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`).replace(/[\u{0080}-\u{FFFF}]/gu,"?");
+
+  const postban = (banned)=>{
     if (soft) {
       PLX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
     }
@@ -120,8 +121,16 @@ const init = async function (msg) {
 
     userBanned = null;
     Target = null;
-  }).catch((err) => {
-    msg.channel.send($t("interface.kickban.userKickError", P)); console.error(err);
+  }
+
+  PLX.banGuildMember(msg.guild.id, Target.id, clear, post_reason).then( postban )
+  .catch((err) => {
+    PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
+      .then(postban)
+      .catch(err=>{
+        msg.channel.send($t("interface.kickban.userKickError", P)); 
+        console.error(err);
+    })
   });
 };
 
