@@ -7,18 +7,22 @@ const
     N_CHANNEL = _emoji('channel').name,
     N_SAVE    = _emoji('save').name,
     N_UNDO    = _emoji('undo').name,
+    N_WG    = _emoji('whitegreenem').name,
+    N_WO    = _emoji('whiteorangeem').name,
+    N_WR    = _emoji('whiteredem').name,
     OVERRIDE    = _emoji('override'),
 
     R_NOPE =  _emoji('nope').reaction,
     R_YEP  =  _emoji('yep').reaction,
-
-    R_UNDO    = _emoji('undo').reaction,
-    R_SAVE    = _emoji('save').reaction,
     R_CHANNEL = _emoji('channel').reaction,
+    R_SAVE    = _emoji('save').reaction,
+    R_UNDO    = _emoji('undo').reaction,
+    R_WG    = `<:${_emoji('whitegreenem').reaction}>`,
+    R_WO    = `<:${_emoji('whiteorangeem').reaction}>`,
+    R_WR    = `<:${_emoji('whiteredem').reaction}>`,
 
     MINI_ON  = _emoji('on_small'),
     MINI_OFF = _emoji('off_small');
-
 
 const cats = {};
 let ready = false;
@@ -130,8 +134,7 @@ const init = async(msg) => {
     const RC = omsg.createReactionCollector(reactionFilter, { time: 60e5 });
 
     RC.on("emoji", emoji => {
-        if (![N_NOPE, N_CHANNEL ].includes(emoji.name)) omsg.removeReaction( emoji.name+":"+emoji.id, msg.author.id).catch(e => null);
-        let length = currentCat ? cats[currentCat]["cmds"].length : catsArr.length; // 0 - emojisNeeded
+        if (![N_NOPE, N_CHANNEL].includes(emoji.name)) omsg.removeReaction( emoji.name+":"+emoji.id, msg.author.id).catch(e => null);
 
         if (emoji.name === N_CHANNEL) {
             mode = "c";
@@ -257,25 +260,24 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
         const cenabledcats =  catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cecmds.includes(cmd)));
         
         for (cat of catsArr) {
-            const disabled = cmode ? (gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat) : gdisabledcats.includes(cat),
+            const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat)) : gdisabledcats.includes(cat),
                 override = cmode && (cats[cat]["cmds"].some(cmd => cdcmds.includes(cmd) || cecmds.includes(cmd))),
                 disabledCount = cats[cat].cmds.map(cmd => ((gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)) ? 1 : 0).reduce((a, b) => a + b, 0),
                 catName = cat.slice(0,1).toUpperCase() + cat.slice(1);
-
             embed.fields.push({
-                name: disabled ? `${_emoji('off')} ~~${catName}~~` : disabledCount ? `${_emoji('partial')} ${catName}` : `${_emoji('on')} ${catName}` + (override ? ` ${OVERRIDE}`  : ""),
-                value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length-disabledCount}  ${MINI_OFF}${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
+                name: (disabled ? (override && cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? R_WO : _emoji("partial")) : (override && cmode ? R_WG : _emoji("on"))) + ` ${catName}`,
+                value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length-disabledCount}    ${MINI_OFF}${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
                 inline: true,
             });
         }
     } else {
         let fieldCount = 1;
         let cmdCount = cats[cat]["cmds"].length;
-        if (cmdCount > 10) {
+        if (cmdCount > 5) {
             if (!(cmdCount % 3)) fieldCount = 3;
             else fieldCount = 2;
         }
-        for (let i = 0; i < fieldCount; i++) embed.fields.push({ name: "\u200b", value: "" });
+        for (let i = 0; i < fieldCount; i++) embed.fields.push({ name: "\u200b", value: "", inline: true });
         let currField = 0;
         const cmds = cats[cat]["cmds"];
         for (cmd of cmds) {
@@ -284,11 +286,11 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
             const disabled = cmode ? (cdcmds.includes(cmd) || (gdcmds.includes(cmd)) && !cecmds.includes(cmd)) : gdcmds.includes(cmd),
                 override = cmode && (cdcmds.includes(cmd) || cecmds.includes(cmd)),
                 cmdName = cmd.slice(0,1).toUpperCase() + cmd.slice(1);
-            embed.fields[currField].value += disabled ? `${_emoji('off')} ~~${cmdName}~~${override ? ` ${OVERRIDE}`  : ""}\n` : !override ? `${_emoji('onoff_neutral')} ${cmdName}\n` : `${_emoji('on')} ${cmdName}${override ? ` ${OVERRIDE}`  : ""}\n`;
+            embed.fields[currField].value += (disabled ? override ? R_WR : _emoji("off") : override ? R_WG : _emoji("on")) + ` ${cmdName}\n`;
         }
     }
 
-    if (embed.fields.length % 3) embed.fields.push({ name: "\u200b", value: "\u200b", inline: true });
+    while (embed.fields.length % 3) embed.fields.push({ name: "\u200b", value: "\u200b", inline: true });
     return { embed };
 };
 
@@ -296,20 +298,27 @@ function updateModules(modules, mode, name, cat) {
     return new Promise((resolve, reject) => {
         const cmode = mode === "c";
         if (cat) { // we're inside a category so cmd
+            let disabledByGuild = modules.gd.includes(name);
             if (cmode) { // channel mode
+                // GUILD DISABLED: neutral → on → off → neutral;
+                // GUILD ENABLED: neutral → off → on → neutral;
 
-                // neutral -> enabled -> disabled -> neutral...
-                if (modules.ce.includes(name)) {
+                let enabledByChannel = modules.ce.includes(name);
+                let disabledByChannel = modules.cd.includes(name);
+                if (disabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
+                    // disable command
                     modules.ce.splice(modules.ce.indexOf(name), 1);
                     if (modules.cd.indexOf(name) === -1) modules.cd.push(name);
-                } else if (modules.cd.includes(name)) {
+                } else if (disabledByGuild ? disabledByChannel : enabledByChannel) {
+                    // make neutral
                     modules.cd.splice(modules.cd.indexOf(name), 1);
                 } else {
+                    // enable command
                     modules.ce.push(name);
                 };
             } else { // guild mode
 
-                if (modules.gd.includes(name)) modules.gd.splice(modules.gd.indexOf(name), 1);
+                if (disabledByGuild) modules.gd.splice(modules.gd.indexOf(name), 1);
                 else modules.gd.push(name);
             }
         } else { // enabling/disabling an entire category.
@@ -331,14 +340,22 @@ function updateModules(modules, mode, name, cat) {
                     }
                 } else {
                     catcmds = cats[name]["cmds"];
-                    // neutral -> enabled -> disabled -> neutral...
-                    if (catcmds.every(cmd => modules.ce.includes(cmd))) {
+                    // GUILD MIX/DISABLED: neutral → on → off → neutral;
+                    // GUILD ENABLED: neutral → off → on → neutral;
+                    const enabledByChannel = catcmds.every(cmd => modules.ce.includes(cmd));
+                    const disabledByChannel = catcmds.every(cmd => modules.cd.includes(cmd));
+                    const someDisabledByGuild = catcmds.some(cmd => modules.gd.includes(cmd));
+
+                    if (someDisabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
+                        // disable cat
                         cnewenabledcmds = modules.ce.filter(cmd => !catcmds.includes(cmd));
                         cnewdisabledcmds = [ ...modules.cd, ...catcmds.filter(cmd => !modules.cd.includes(cmd)) ];
-                    } else if (catcmds.every(cmd => modules.cd.includes(cmd))) {
+                    } else if (someDisabledByGuild ? (disabledByChannel && !enabledByChannel) : enabledByChannel) {
+                        // make neutral
                         cnewenabledcmds = modules.ce.filter(cmd => !catcmds.includes(cmd));
                         cnewdisabledcmds = modules.cd.filter(cmd => !catcmds.includes(cmd));
                     } else {
+                        // enable cat
                         cnewenabledcmds = [ ...modules.ce, ...catcmds.filter(cmd => !modules.ce.includes(cmd)) ];
                         cnewdisabledcmds = modules.cd.filter(cmd => !catcmds.includes(cmd));
                     }
