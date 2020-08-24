@@ -52,7 +52,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   defaultImageSize: 512,
   restMode: true,
   defaultImageFormat: "png",
-  intents: 5639,
+  intents: 5767,
   disableEvents: {
     TYPING_START: true,
     TYPING_STOP: true,
