@@ -1,4 +1,4 @@
-const BOARD = require('./_soundboard.js')
+const BOARD = require('../../archetypes/Soundboard.js')
 
 const init = async function (msg){
 

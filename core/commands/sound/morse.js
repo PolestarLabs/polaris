@@ -1,14 +1,14 @@
 const Stream = require('stream');
 const fs = require('fs')
 
-const BOARD = require('./_soundboard.js')
+const BOARD = require('../../archetypes/Soundboard.js')
 const morse_txt = require("morse");
 
 
+//const _RADIO = (paths.ASSETS    +  '/sound/tune.mp3');
 const _DOT = (paths.ASSETS      +  '/sound/short.mp3');
 const _DASH = (paths.ASSETS     +  '/sound/long.mp3');
 const _SILENCE = (paths.ASSETS  +  '/sound/silent.mp3');
-
  
 
 const init = async function (msg,args){
@@ -25,11 +25,11 @@ const init = async function (msg,args){
         ,footer:{text:"Radio Operator | Zero Wing",icon_url:"http://i.imgur.com/tda07NK.png"}
         ,color: 0x5745a3
         ,thumbnail: {url:"https://telegraph.p3k.io/assets/telegraph-icon-white.png"}
-        ,description: "*\"WHAT?\"*\n```"+outputTX+"```\n"+_emoji("wifirouter")+$t('forFun.transmittedVc',P)
+        ,description: "*\"WHAT?\"*\n```"+outputTX+"```\n"+ "📡 " +$t('forFun.transmittedVc',P)
     }
 
     if (!msg.member.voiceState.channelID) {
-      msg.channel.send(mm('CMD.enterVoiceBetterExperience',P));
+      msg.channel.send({content:$t('CMD.enterVoiceBetterExperience',P),embed});
     }else{
 
         const output = new Stream.PassThrough();
@@ -50,7 +50,7 @@ const init = async function (msg,args){
                     morse_arr.push(_SILENCE);
                     break;
                 default:
-                    //morse_arr.push(_SILENCE);
+                    //morse_arr.push(_SILENCE); <-- maybe glitch noise or idk
                     break;
                 }
             }
@@ -77,13 +77,6 @@ const init = async function (msg,args){
           }
 
     }
-
-
-//msg.channel.send({embed}).catch(e=>msg.channel.send(output).catch(e=>msg.channel.send("Morse Code Too Long")))
- 
-
-
-
 
 }
 
