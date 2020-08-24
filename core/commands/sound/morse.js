@@ -10,13 +10,17 @@ const _DOT = (paths.ASSETS      +  '/sound/short.mp3');
 const _DASH = (paths.ASSETS     +  '/sound/long.mp3');
 const _SILENCE = (paths.ASSETS  +  '/sound/silent.mp3');
  
+const dot = "•" //"<:dot:747373996533612574>"
+const dash = "－" //"<:dash:747373996323897345>"
+const space = " "//"<:space:747373996269371513>"
+
 
 const init = async function (msg,args){
 
     delete require.cache[require.resolve("../../archetypes/Morse.js")];
     const MORSE = require("../../archetypes/Morse.js");
     let P = {lngs:msg.lang}
-    let string = args.join(' ').toUpperCase()+" ";
+    let string = args.join(' ').toUpperCase()
     let code = morse_txt.encode(string);
 
     let outputTX = code.replace(/\.\.\.\.\.\.\./g," ");
@@ -25,8 +29,10 @@ const init = async function (msg,args){
         ,footer:{text:"Radio Operator | Zero Wing",icon_url:"http://i.imgur.com/tda07NK.png"}
         ,color: 0x5745a3
         ,thumbnail: {url:"https://telegraph.p3k.io/assets/telegraph-icon-white.png"}
-        ,description: "*\"WHAT?\"*\n```"+outputTX+"```\n"+ "📡 " +$t('forFun.transmittedVc',P)
+        ,description:  "*\"WHAT?\"*\n```"+ ` ${outputTX.replace(/-/g,dash).replace(/\./g,dot).replace(/ /g,space).slice(0,1500)}`  +"```\n"+ "📡 " +$t('forFun.transmittedVc',P)
+            
     }
+    console.log(embed)
 
     if (!msg.member.voiceState.channelID) {
       msg.channel.send({content:$t('CMD.enterVoiceBetterExperience',P),embed});
