@@ -3,6 +3,7 @@ exports.run = () => {
   global.paths = {
     CDN,
     WIKI: "https://wiki.pollux.gg",
+    ASSETS: `${appRoot}/../assets/`,
     MISC: `${appRoot}/../v7/resources/misc/`,
     REACTIONS: `${appRoot}/../v7/resources/imgres/reactions/`,
 
