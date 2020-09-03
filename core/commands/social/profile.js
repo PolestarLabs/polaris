@@ -190,7 +190,7 @@ init = async (msg) => {
     img.defaultAvi   = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
     img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex"}.png`);
     img.background   = Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
-    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`);
+    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) );
     img.sticker      = USERPROFILE.sticker && Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
     img.flag         = USERPROFILE.countryFlag && Picto.getCanvas(paths.CDN + "/build/flags/"          + USERPROFILE.countryFlag  + ".png");
     img.aviFrame     = USERPROFILE.profileFrame && Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
