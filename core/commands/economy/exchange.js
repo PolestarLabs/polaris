@@ -48,7 +48,7 @@ async function isAllowed(user, amount) {
 
 const init = async function(msg,args){
 
-	const genURL = "https://pollux.gg/generators/discoin/exchange.png?id=";
+	const genURL = paths.GENERATORS + "/discoin/exchange.png?id=";
 
 	let P={lngs:msg.lang,prefix:msg.prefix};
 	if(PLX.autoHelper([$t("helpkey",P)],{cmd:this.cmd,msg,opt:this.cat}))return;

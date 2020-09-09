@@ -33,9 +33,9 @@ const init = async (msg) => {
   const inviteme = $t("help.inviteme", P);
   const useful = $t("help.useful", P);
 
-  const commlink = `${paths.CDN}/commands`;
-  const suplink = `${paths.CDN}/support`;
-  const invitelink = `${paths.CDN}/invite`;
+  const commlink = `${paths.DASH}/commands`;
+  const suplink = `${paths.DASH}/support`;
+  const invitelink = `${paths.DASH}/invite`;
 
   const hEmbed = new Embed();
 

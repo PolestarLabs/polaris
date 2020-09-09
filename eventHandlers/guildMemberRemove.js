@@ -4,7 +4,7 @@ module.exports = async (guild, member) => {
 
     const fwellTimer = svData.modules.FWELL.timer;
     let fwellText = svData.modules.FWELL.text
-      .replace(/%pfLink%/g, `${paths.CDN}/profile/${userData.personalhandle || userData.id}`)
+      .replace(/%pfLink%/g, `${paths.DASH}/profile/${userData.personalhandle || userData.id}`)
       .replace(/%lvGlobal%/g, `${userData.modules.level}`)
       .replace(/%reputation%/g, `${userData.modules.commend || 0}`)
       .replace(/%membernumber%/g, `${guild.memberCount}`)
@@ -40,7 +40,7 @@ module.exports = async (guild, member) => {
     const P = { lngs: [svData.modules.LANGUAGE, "dev"] };
     const txt = $t("logs.userLeave", P).replace(/\*/g, "");
 
-    const url = `${paths.CDN}/generators/userio/out/${member.id}/${fwellSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
+    const url = `${paths.GENERATORS}/userio/out/${member.id}/${fwellSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
 
     resolveFile(url).then(async (buffer) => {
       PLX.getChannel(fwellChannel).send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {

@@ -20,7 +20,7 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);
   embed.description = `
-   **${selectedItem.name}**  \`${selectedItem.code}\` **[\`INFO\`](${paths.CDN}/bgshop "Background Shop" )**
+   **${selectedItem.name}**  \`${selectedItem.code}\` **[\`INFO\`](${paths.DASH}/bgshop "Background Shop" )**
   `;
 
   SynthPrompt(hasIt, embed, obtainable, affordsIt, P);

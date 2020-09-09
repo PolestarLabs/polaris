@@ -25,7 +25,7 @@ const init = async function (msg, args) {
   embed.author = {
     name: transactionUser.tag,
     icon_url: `${paths.CDN}/images/${curr || "x"}.png`,
-    url: `${paths.CDN}/profile/${log.from}`,
+    url: `${paths.DASH}/profile/${log.from}`,
   };
 
   embed.color = log.transaction == "+" ? 0x60c143 : 0xe23232;

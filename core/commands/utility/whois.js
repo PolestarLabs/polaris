@@ -156,7 +156,7 @@ module.exports = {
         if (msg.embeds.length > 0) return { content: "", embed: null };
         return {
           embed: {
-            author: { icon_url: TARGET.avatarURL, name: (TARGET.user || TARGET).tag, url: `${paths.CDN}/profile/${TARGET.id}` },
+            author: { icon_url: TARGET.avatarURL, name: (TARGET.user || TARGET).tag, url: `${paths.DASH}/profile/${TARGET.id}` },
             fields: [
               { name: "Roles", value: (TARGET.roles || []).map((x) => `<@&${x}>`).join() || "N/A" },
               { name: "Pollux Blacklisted?", value: PLX.blacklistedUsers.includes(TARGET.id) ? "Yes" : "No", inline: !0 },

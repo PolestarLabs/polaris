@@ -5,7 +5,7 @@ module.exports = async (guild, member) => {
 
     const welcomeTimer = svData.modules.GREET.timer;
     let welcomeText = svData.modules.GREET.text
-      .replace(/%pfLink%/g, `${paths.CDN}/profile/${userData.personalhandle || userData.id}`)
+      .replace(/%pfLink%/g, `${paths.DASH}/profile/${userData.personalhandle || userData.id}`)
       .replace(/%lvGlobal%/g, `${userData.modules.level}`)
       .replace(/%reputation%/g, `${userData.modules.commend || 0}`)
       .replace(/%membernumber%/g, `${guild.memberCount}`)
@@ -46,7 +46,7 @@ module.exports = async (guild, member) => {
     const P = { lngs: [svData.modules.LANGUAGE || "en", "dev"] };
     const txt = $t("logs.userJoin", P).replace(/\*/g, "");
 
-    const url = `${paths.CDN}/generators/userio/in/${member.id}/${welcomeSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
+    const url = `${paths.GENERATORS}/userio/in/${member.id}/${welcomeSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
 
     resolveFile(url).then(async (buffer) => {
       PLX.getChannel(welcomeChannel).send({ content: welcomeText, embed }, (welcomeImage ? file(buffer, "in.png") : null)).then((ms) => {

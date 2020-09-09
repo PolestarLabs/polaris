@@ -1,7 +1,11 @@
-const CDN = "https://beta.pollux.gg";
+const CDN = "https://cdn.pollux.gg";
+const GENERATORS = "https://beta.pollux.gg/generators";
+const API = "https://beta.pollux.gg/api";
+const DASH = "https://beta.pollux.gg";
+
 exports.run = () => {
   global.paths = {
-    CDN,
+    CDN,GENERATORS,API,DASH
     WIKI: "https://wiki.pollux.gg",
     MISC: `${appRoot}/../v7/resources/misc/`,
     REACTIONS: `${appRoot}/../v7/resources/imgres/reactions/`,

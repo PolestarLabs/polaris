@@ -19,7 +19,7 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);
   embed.description = `
-**${selectedItem.name}**  \`${selectedItem.icon}\` **[\`INFO\`](${paths.CDN}/medalshop "Medal Shop" )**
+**${selectedItem.name}**  \`${selectedItem.icon}\` **[\`INFO\`](${paths.DASH}/medalshop "Medal Shop" )**
 `;
 
   SynthPrompt(hasIt, embed, obtainable, affordsIt, P);

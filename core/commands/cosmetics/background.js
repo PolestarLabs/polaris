@@ -27,7 +27,7 @@ const init = async function (msg, args) {
   embed.description = `
    **${selectedBG.name}**
   \`${selectedBG.code}\`
-  [${$t("responses.equip.getMoreBG", P)}](${paths.CDN}/bgshop)
+  [${$t("responses.equip.getMoreBG", P)}](${paths.DASH}/bgshop)
   `;
   _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity];
   embed.field(

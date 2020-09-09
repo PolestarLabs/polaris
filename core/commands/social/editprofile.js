@@ -26,7 +26,7 @@ const init = async function (msg) {
     msg.channel.send({
       embed: {
         description:
-            `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.CDN}/profile/me) to edit these.`,
+            `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
       },
     });
   }
@@ -50,7 +50,7 @@ const init = async function (msg) {
   embed.field(`🖼 ${"Change BG"}`,
     `\`${userData.modules.bgID}\``, true);
   embed.field(`🌐  ${"Change Profile vanity link"}`,
-    `\`${paths.CDN}/profile/\`\u200b**\`${userData.personalhandle || userData.id}\`**`, true);
+    `\`${paths.DASH}/profile/\`\u200b**\`${userData.personalhandle || userData.id}\`**`, true);
   embed.field("\u200b", `🗃 ${"Change Medals/Sticker/Flair"}  `,
     true);
   embed.image(`${paths.CDN}/backdrops/${userData.modules.bgID}.png`);
@@ -108,7 +108,7 @@ const init = async function (msg) {
       msg.channel.send({
         embed: {
           description:
-                `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.CDN}/profile/me) to edit these.`,
+                `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
         },
       });
       men.deleteAfter(3000);

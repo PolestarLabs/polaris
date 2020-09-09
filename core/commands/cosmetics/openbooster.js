@@ -29,7 +29,7 @@ const init = async function (msg) {
 
   const thisPack = boosterData.find((b) => b.id === `${collection}_booster`);
   P.boostername = thisPack.name;
-  P.dashboard = `[${$t("terms.dashboard", P)}](${paths.CDN}/dashboard#/stickers)`;
+  P.dashboard = `[${$t("terms.dashboard", P)}](${paths.DASH}/dashboard#/stickers)`;
   embed.author(_emoji(thisPack.rarity) + $t("interface.booster.title", P));
   embed.color = 0x36393f;
   embed.description = `${`
@@ -39,7 +39,7 @@ const init = async function (msg) {
  ` + "------------------------------------------------\n"}${
     $t("interface.booster.checkStickersAt", P)}`;
 
-  embed.image(`${paths.CDN}/generators/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}`);
+  embed.image(`${paths.GENERATORS}/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}`);
   embed.thumbnail(`${paths.CDN}/build/boosters/showcase/${collection}.png`);
   embed.footer(msg.author.tag, msg.author.avatarURL);
 
