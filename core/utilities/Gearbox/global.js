@@ -34,7 +34,7 @@ module.exports = {
     return i || -1;
   },
 
-  randomize: function randomize(min, max, seed = Date.now()) {
+  randomize: function randomize(min, max, seed = Date.now() * Math.random()) {
     const RAND = new MersenneTwister(seed);
     return Math.floor(RAND.random() * (max - min + 1) + min);
   },
