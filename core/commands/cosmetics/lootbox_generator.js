@@ -58,7 +58,7 @@ staticAssets.load = Promise.all([
 });
 
 const init = async function (msg, args) {
-  return "Unavailable";
+
   if (!staticAssets.loaded) await staticAssets.load;
   if (VisualsCache.size > 800) VisualsCache.clear();
 
