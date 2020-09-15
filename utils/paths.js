@@ -5,7 +5,7 @@ const DASH = "https://beta.pollux.gg";
 
 exports.run = () => {
   global.paths = {
-    CDN,GENERATORS,API,DASH
+    CDN,GENERATORS,API,DASH,
     WIKI: "https://wiki.pollux.gg",
     MISC: `${appRoot}/../v7/resources/misc/`,
     REACTIONS: `${appRoot}/../v7/resources/imgres/reactions/`,
