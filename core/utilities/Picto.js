@@ -100,7 +100,13 @@ module.exports = {
   },
 
   avgColor: async function avgColor(link, blockSize = 5) {
-    imgEl = await Canvas.loadImage(link);
+    let imgEl 
+    try{
+      imgEl = await Canvas.loadImage(link);
+    }catch(err){
+      console.error(err);
+      return "#000000"
+    }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 
     const canvas = Canvas.createCanvas(imgEl.width, imgEl.height);
