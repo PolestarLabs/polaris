@@ -99,5 +99,5 @@ module.exports = {
   perms: 3,
   cat: "util",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: [],
+  aliases: ["colour"],
 };
