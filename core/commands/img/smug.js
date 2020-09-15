@@ -6,7 +6,7 @@ const init = async function (msg) {
 
   if (msg.args[0] && !!parseInt(msg.args[0])) {
     const index = parseInt(msg.args[0]);
-    img.file = `${paths.CDN}/random/smug/${index}`;
+    img.file = `${paths.DASH}/random/smug/${index}`;
     img.index = index;
   } else {
     img = await Gal.randomOneIndexed("smug", true);
