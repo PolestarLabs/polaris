@@ -73,7 +73,7 @@ const init = async function (msg, args) {
 
   const regex = /^@?([^\s]+)(?: to )?(.*)$/;
   const options = { forwardDate: true, startOfDay: 9 };
-  const from = Date.now() - (Date.now() % 60e3) + 60e3;
+  const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
 
   let what = preInput || input;
 
