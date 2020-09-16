@@ -1,7 +1,5 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-// const locale = require('../../../utils/i18node');
-// const $t = locale.getT();
+
+const BOMB = _emoji("swp_bomb").no_space
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
@@ -16,8 +14,8 @@ const init = async function (msg) {
       for (let j = 0; j < SQ; j++) {
         let rand = randomize(0, SQ + 5);
         if (minesTot <= 0) rand = 0;
-        if (arrGrid[i][j] == "||<a:aaaaaaaaaaa:432063835201994762>||") continue;
-        arrGrid[i][j] = (rand == 1 ? "||<a:aaaaaaaaaaa:432063835201994762>||" : "||:zero:||");
+        if (arrGrid[i][j] == `||${ BOMB }||`) continue;
+        arrGrid[i][j] = (rand == 1 ? `||${ BOMB }||` : `||:zero:||`);
         if (rand == 1) minesTot--;
       }
     }
@@ -26,53 +24,53 @@ const init = async function (msg) {
 
   for (i = 0; i < SQ; i++) {
     for (j = 0; j < SQ; j++) {
-      if (arrGrid[i][j] == "||<a:aaaaaaaaaaa:432063835201994762>||") continue;
+      if (arrGrid[i][j] == `||${ BOMB }||`) continue;
       let around = 0;
-      if ((arrGrid[i] || [])[j - 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // N
-      if ((arrGrid[i] || [])[j + 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // S
+      if ((arrGrid[i] || [])[j - 1] == `||${ BOMB }||`) around++; // N
+      if ((arrGrid[i] || [])[j + 1] == `||${ BOMB }||`) around++; // S
 
-      if ((arrGrid[i - 1] || [])[j] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // W
-      if ((arrGrid[i + 1] || [])[j] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // E
+      if ((arrGrid[i - 1] || [])[j] == `||${ BOMB }||`) around++; // W
+      if ((arrGrid[i + 1] || [])[j] == `||${ BOMB }||`) around++; // E
 
-      if ((arrGrid[i - 1] || [])[j - 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // NW
-      if ((arrGrid[i - 1] || [])[j + 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // SW
+      if ((arrGrid[i - 1] || [])[j - 1] == `||${ BOMB }||`) around++; // NW
+      if ((arrGrid[i - 1] || [])[j + 1] == `||${ BOMB }||`) around++; // SW
 
-      if ((arrGrid[i + 1] || [])[j - 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // NE
-      if ((arrGrid[i + 1] || [])[j + 1] == "||<a:aaaaaaaaaaa:432063835201994762>||") around++; // SE
+      if ((arrGrid[i + 1] || [])[j - 1] == `||${ BOMB }||`) around++; // NE
+      if ((arrGrid[i + 1] || [])[j + 1] == `||${ BOMB }||`) around++; // sE
 
       switch (around) {
         case 1:
-          arrGrid[i][j] = "||:one:||";
+          arrGrid[i][j] = `||${_emoji("swp_1").no_space}||`;
           break;
         case 2:
-          arrGrid[i][j] = "||:two:||";
+          arrGrid[i][j] = `||${_emoji("swp_2").no_space}||`;
           break;
         case 3:
-          arrGrid[i][j] = "||:three:||";
+          arrGrid[i][j] = `||${_emoji("swp_3").no_space}||`;
           break;
         case 4:
-          arrGrid[i][j] = "||:four:||";
+          arrGrid[i][j] = `||${_emoji("swp_4").no_space}||`;
           break;
         case 5:
-          arrGrid[i][j] = "||:five:||";
+          arrGrid[i][j] = `||${_emoji("swp_5").no_space}||`;
           break;
         case 6:
-          arrGrid[i][j] = "||:six:||";
+          arrGrid[i][j] = `||${_emoji("swp_6").no_space}||`;
           break;
         case 7:
-          arrGrid[i][j] = "||:seven:||";
+          arrGrid[i][j] = `||${_emoji("swp_7").no_space}||`;
           break;
         case 8:
-          arrGrid[i][j] = "||:eight:||";
+          arrGrid[i][j] = `||${_emoji("swp_8").no_space}||`;
           break;
         default:
-          arrGrid[i][j] = "||:zero:||";
+          arrGrid[i][j] = `||${_emoji("swp_0").no_space}||`;
           break;
       }
     }
   }
   for (i in arrGrid) {
-    arrGrid[i] = arrGrid[i].join("\u0020");
+    arrGrid[i] = arrGrid[i].join("\u200b");
   }
 
   msg.channel.send(arrGrid.join("\n"));
