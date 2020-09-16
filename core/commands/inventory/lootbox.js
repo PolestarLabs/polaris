@@ -37,6 +37,7 @@ const init = async function (msg, args, userID) {
 const open = async function (msg, args, userID) {
   args = args.map((a) => (typeof a === "string" ? a.toUpperCase() : a));
 
+
   INVOKERS.delete(userID || msg.author.id);
   INV_STATUS.delete(userID || msg.author.id);
 
@@ -55,7 +56,7 @@ const reactionOption = (rar) => ({
   emoji: _emoji(rar).reaction,
   type: "cancel",
   response: (msg, args, uid) => open(args[0], [rar, args[1]], uid),
-  filter: (msg, emj, uid) => INVOKERS.get(uid) == msg.id && INV_STATUS.get(uid).includes(emj.substr(0, 2).replace("_", "")) && !LOOTING.get(uid),
+  filter: (msg, emj, uid) =>  INVOKERS.get(uid) === msg.id && INV_STATUS.get(uid).includes( rar ) //&& !LOOTING.get(uid)
 });
 
 module.exports = {
