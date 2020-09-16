@@ -24,7 +24,7 @@ const init = async function (msg,args){
         let AMT = Number(args[1])||0
         let TYP = (args[2]||"C").toUpperCase();
 
-        DB.users.findOne(msg.author.id).then(x=>{
+        DB.users.findOne({id:msg.author.id}).then(x=>{
             x.addItem('lootbox_'+TYP+'_O',AMT).then(x=>{
                 msg.channel.send("OK"+`[${AMT} Box ${TYP}]`)
             })
@@ -34,7 +34,7 @@ const init = async function (msg,args){
         let AMT = Number(args[2])||0
         let ITM = (args[1]||"fork")
 
-        DB.users.findOne(msg.author.id).then(x=>{
+        DB.users.findOne({id:msg.author.id}).then(x=>{
             x.addItem(ITM,AMT||0).then(x=>{
                 msg.channel.send("OK"+`[${AMT} Box ${TYP}]`)
             })
