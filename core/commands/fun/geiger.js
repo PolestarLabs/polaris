@@ -13,7 +13,7 @@ const init = async function (message) {
     let num;
 
     switch (true) {
-      case rand == 1000:
+      case rand === 1000:
         num = "CANCER";
         break;
       case rand > 950:
@@ -64,7 +64,7 @@ const init = async function (message) {
 
     await ctx.drawImage(needle, 84, 77, 116, 116);
 
-    if (randomize(1, 10) == 10) {
+    if (randomize(1, 10) === 10) {
       message.channel.cancer -= 10000;
     }
 

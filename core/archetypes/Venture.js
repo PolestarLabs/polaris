@@ -1,3 +1,4 @@
+/* eslint max-classes-per-file: ["error", 2] */
 const VENTURE_EVENTS = [
   {
     id: 1,
@@ -55,6 +56,85 @@ const VENTURE_EVENTS = [
   },
 ];
 
+function concatenateSpoils(source, key) {
+  const spoil = [];
+  const loss = [];
+
+  if (["rubines", "sapphires", "jades", "cosmo"].includes(key)) {
+    if (source[key] > 0) spoil.push({ type: key, amt: source[key] });
+    else loss.push({ type: key, amt: source[key] });
+  }
+  if (["item", "lootbox", "special"].includes(key)) {
+    if (source[key]) spoil.push({ type: key, item: source[key], amt: 1 });
+  }
+  return { spoil, loss };
+}
+
+function eventProcessor(event, Venture) {
+  let {
+    supply, journey, prize, pay,
+  } = Venture;
+
+  const payQuery = {};
+  let res = true;
+  let text = event.event;
+
+  if (event.condition) {
+    res = false;
+    let [Criteria, Items] = event.condition.split(":");
+    Items = Number(Items) || Items;
+
+    switch (Criteria) {
+      case "rubines": res = true; payQuery.rubines = Items; break;
+      case "item" && supply.item.find((i) => i.id === Items && i.count > 0): res = true; payQuery.item = Items; break;
+      case "level" && this.player.level >= Items: res = true; break;
+      case "jades" && supply.jades >= Items: res = true; payQuery.jades = Items; break;
+      case "items-or" && Items.split(",").some((itm) => supply.item.find((i) => i.id === itm && i.count > 0)):
+        res = true; payQuery.items = supply.item.find((x) => x === Items.split(",")); break;
+      case "items-all" && Items.split(",").every((itm) => supply.item.find((i) => i.id === itm && i.count > 0)):
+        res = true; payQuery.items = Items.split(","); break;
+      case "sapphires" && supply.sapphires >= Items: res = true; payQuery.sapphires = Items; break;
+      case "encounter" && journey.includes(Items): res = true; break;
+      default: throw new RangeError(`Unexpected input: ${Criteria}`);
+    }
+
+    if (text.includes("|")) {
+      if (!res) {
+        const [p, what] = event.fail.split(":");
+        payQuery[p] = -Number(what) || what;
+        [, text] = text.split("|");
+      } else {
+        [text] = text.split("|");
+      }
+    }
+  }
+
+  if (event.special === "wipe") prize = {};
+  if (event.special === "wipeRBN") prize.rubines = {};
+  if (event.special === "wipeBOX") prize.lootbox = {};
+
+  for (i in payQuery) {
+    if (typeof payQuery[i] === "number") {
+      pay[i] = pay[i] ? (pay[i] + payQuery[i]) : payQuery[i];
+
+      supply[i] -= payQuery[i];
+    } else {
+      supply[i].find((itm) => itm.id === payQuery[i]).count -= 1; // eslint-disable-line no-loop-func
+      pay[i] = pay[i] || {};
+      if (pay[i]) {
+        pay[i][payQuery[i]] = pay[i][payQuery[i]] ? pay[i][payQuery[i]] += 1 : 1;
+      }
+    }
+  }
+
+  ["rubines", "sapphires", "jades", "cosmo"].forEach((gem) => (res && event[gem] ? (prize[gem] = (prize[gem] || 0) + event[gem]) : null));
+  ["item", "lootbox", "special"].forEach(
+    (itm) => (res && event[itm] ? ((prize[itm] || (prize[itm] = {}))[event[itm]] = (prize[itm][event[itm]] || 0) + 1) : null),
+  );
+
+  return { res, payQuery, text };
+}
+
 // {id,timemin,timemax,odds,event,landscape, condition, cosmo, rubines,sapphires,jades,lootbox,special}
 
 const TIME_SLICE = 30;
@@ -70,22 +150,24 @@ module.exports = {
       this.prize = {};
       this.journey = [];
       this.supply = {
-        item: new Object(player.modules.inventory),
+        item: { ...player.modules.inventory },
         rubines: this.insurance,
         jades: player.modules.jades,
         rubines_bank: player.modules.rubines,
         sapphires: player.modules.sapphires,
       };
 
-      const event_count = Math.round((time * 60) / TIME_SLICE);
-      let ev_i = 0;
-      while (ev_i++ < event_count) {
-        const eligible_events = VENTURE_EVENTS.filter((ev) => (ev.timemax >= (ev_i * 60) && ev.timemin <= (ev_i * 60))
-                && (ev.onetime ? !stack.includes(ev.id) : true)
-                && (ev.landscape ? ev.landscape === this.landscape : true));
-        const odds = eligible_events.map((ev) => ev.odds);
+      const eventCount = Math.round((time * 60) / TIME_SLICE);
+      let evInt = 0;
+      while ((evInt += 1) < eventCount) {
+        const eligibleEvents = VENTURE_EVENTS.filter(
+          (ev) => (ev.timemax >= (evInt * 60) && ev.timemin <= (evInt * 60)) // eslint-disable-line
+                && (ev.onetime ? !this.journey.includes(ev.id) : true)
+                && (ev.landscape ? ev.landscape === this.landscape : true),
+        );
+        const odds = eligibleEvents.map((ev) => ev.odds);
         const IX = weightedRand(odds);
-        const thisEvent = eligible_events[IX];
+        const thisEvent = eligibleEvents[IX];
         eventProcessor(thisEvent, this);
         this.journey.push(thisEvent.id);
       }
@@ -94,7 +176,7 @@ module.exports = {
 
   Journey: class Journey {
     constructor(Venture) {
-      Venture = new Object(Venture);
+      Venture = { ...Venture };
 
       this.events = VENTURE_EVENTS.filter((VE) => Venture.journey.includes(VE.id));
       this.log = Venture.journey.map((ev) => this.events.map((e) => e.id).indexOf(ev));
@@ -125,87 +207,3 @@ module.exports = {
     }
   },
 };
-
-function concatenateSpoils(source, key) {
-  const spoil = [];
-  const loss = [];
-
-  if (["rubines", "sapphires", "jades", "cosmo"].includes(key)) {
-    source[key] > 0 ? spoil.push({ type: key, amt: source[key] }) : loss.push({ type: key, amt: source[key] });
-  }
-  if (["item", "lootbox", "special"].includes(key)) {
-    source[key] ? spoil.push({ type: key, item: source[key], amt: 1 }) : null;
-  }
-  return { spoil, loss };
-}
-
-function eventProcessor(event, Venture) {
-  let {
-    supply, journey, prize, pay,
-  } = Venture;
-
-  const payQuery = {};
-  let res = true;
-  let text = event.event;
-
-  if (event.condition) {
-    res = false;
-    let [Criteria, Items] = event.condition.split(":");
-    Items = Number(Items) || Items;
-
-    if (Criteria == "rubines" && supply.rubines >= Items) (res = true) && (payQuery.rubines = Items);
-
-    else if (Criteria == "item" && supply.item.find((i) => i.id == Items && i.count > 0)) (res = true) && (payQuery.item = Items);
-
-    else if (Criteria == "level" && this.player.level >= Items) (res = true);
-
-    else if (Criteria == "jades" && supply.jades >= Items) (res = true) && (payQuery.jades = Items);
-
-    else if (Criteria == "items-or" && Items.split(",").some((itm) => supply.item.find((i) => i.id == itm && i.count > 0))) (res = true) && (payQuery.items = supply.item.find((x) => x == Items.split(",")));
-
-    else if (Criteria == "items-all" && Items.split(",").every((itm) => supply.item.find((i) => i.id == itm && i.count > 0))) (res = true) && (payQuery.items = Items.split(","));
-
-    else if (Criteria == "sapphires" && supply.sapphires >= Items) (res = true) && (payQuery.sapphires = Items);
-
-    else if (Criteria == "encounter" && journey.includes(Items)) (res = true);
-
-    if (text.includes("|")) {
-      if (!res) {
-        const [pay, what] = event.fail.split(":");
-        payQuery[pay] = -Number(what) || what;
-        text = text.split("|")[1];
-      } else {
-        text = text.split("|")[0];
-      }
-    }
-  }
-
-  if (event.special == "wipe") prize = {};
-  if (event.special == "wipeRBN") prize.rubines = {};
-  if (event.special == "wipeBOX") prize.lootbox = {};
-
-  for (i in payQuery) {
-    if (typeof payQuery[i] === "number") {
-      pay[i]
-        ? pay[i] += payQuery[i]
-        : pay[i] = payQuery[i];
-
-      supply[i] -= payQuery[i];
-    } else {
-      supply[i].find((itm) => itm.id == payQuery[i]).count -= 1;
-      pay[i] = pay[i] || {};
-      if (pay[i]) {
-        pay[i][payQuery[i]]
-          ? pay[i][payQuery[i]]++
-          : pay[i][payQuery[i]] = 1;
-      }
-    }
-  }
-
-  ["rubines", "sapphires", "jades", "cosmo"].forEach((gem) => (res && event[gem] ? prize[gem] = (prize[gem] || 0) + event[gem] : null));
-  ["item", "lootbox", "special"].forEach((itm) => {
-    res && event[itm] ? (prize[itm] || (prize[itm] = {}))[event[itm]] = (prize[itm][event[itm]] || 0) + 1 : null;
-  });
-
-  return { res, payQuery, text };
-}

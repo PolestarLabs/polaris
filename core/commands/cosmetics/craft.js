@@ -26,7 +26,7 @@ const init = async function (message) {
 
     let arg = message.content.split(/ +/).slice(1)[0];
     if (!arg) return;
-    let crafted_item = ITEMS.find((itm) => itm.id == arg || itm.code == arg);
+    let crafted_item = ITEMS.find((itm) => itm.id === arg || itm.code === arg);
 
     if (!crafted_item) {
       message.author.crafting = false;
@@ -130,7 +130,7 @@ const init = async function (message) {
 
         materialName = material.id || material;
 
-        amtInPosession = userData.modules.inventory.find((itm) => itm.id == materialName)?.count || 0;
+        amtInPosession = userData.modules.inventory.find((itm) => itm.id === materialName)?.count || 0;
         amtRequired = material.amt || objCount(MAT, materialName);
 
         if (amtInPosession >= amtRequired) {
@@ -140,7 +140,7 @@ const init = async function (message) {
           icona = "nope";
           fails += 1;
         }
-        matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id == materialName).emoji}${ALLITEMS.find((x) => x.id == materialName).name} (${amtInPosession}/${amtRequired})`;
+        matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName).emoji}${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
       });
       if (fails > 0) {
         embed.setColor("#ed3a19");
@@ -173,7 +173,7 @@ const init = async function (message) {
 
           if (reas.length === 0) return;
 
-          if (reas.length === 1 && reas[0].emoji.id == NA.id) {
+          if (reas.length === 1 && reas[0].emoji.id === NA.id) {
             embed.setColor("#db4448");
             embed.footer($t("responses.crafting.cancel", P));
             embed.description = matDisplay;
@@ -181,7 +181,7 @@ const init = async function (message) {
             m.removeReactions().catch();
             return message.author.crafting = false;
           }
-          if (reas.length === 1 && reas[0].emoji.id == YA.id) {
+          if (reas.length === 1 && reas[0].emoji.id === YA.id) {
             await Promise.all(
               [ECO.pay(message.author.id, GC.rubines, "crafting", "RBN"),
                 ECO.pay(message.author.id, GC.jades, "crafting", "JDE"),

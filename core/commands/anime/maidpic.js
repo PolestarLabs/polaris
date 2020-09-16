@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   args = ["maid", "rating:safe"];
 
   return require("./safebooru").init(msg, args, { title: " ", color: 0x2b2b3b });

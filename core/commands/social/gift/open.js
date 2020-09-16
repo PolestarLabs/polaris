@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const inventory = await DB.gifts.find({ holder: msg.author.id }).lean().exec();
 
   if (inventory.length < 1) return "No gifts to be opened!";

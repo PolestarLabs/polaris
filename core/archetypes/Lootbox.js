@@ -1,3 +1,4 @@
+/* eslint max-classes-per-file: ["error", 2] */
 /** *********************** */
 //          ODDS          //
 /** *********************** */
@@ -16,7 +17,7 @@ const COLORS = {
   XR: "#981f1f",
 };
 
-const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
+const POPULATE = (pile, no, pushee) => { while ((no -= 1)) shuffle(pile).push(pushee); return shuffle(pile); };
 
 const itmPILE = [];
 Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
@@ -25,16 +26,26 @@ Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
 
 //= ================================================================
 
+function legacyEmblem(ct, mini) {
+  if (ct.type === "medal") return "MEDAL";
+  if (ct.type === "background") return "BG";
+  if (ct.type === "boosterpack") return mini ? "BOOSTER" : "STAMP";
+  if (ct.currency === "RBN") return mini ? "RUBINES" : `RUBINE_${ct.rarity}`;
+  if (ct.currency === "JDE") return mini ? "JADES" : `JADE_${ct.rarity}`;
+  if (ct.currency === "SPH") return mini ? "SAPPHIRE" : `SAPPHIRE_${ct.rarity}`;
+  return null;
+}
+
 class LootboxItem {
   #filter;
 
   #bypass;
 
   constructor(t, r, p) {
-    this.type = t == "BKG" ? "background"
-      : t == "MDL" ? "medal"
-        : t == "BPK" ? (this.collection = "items", "boosterpack")
-          : t == "ITM" ? (this.collection = "items", p.itemType)
+    this.type = t === "BKG" ? "background"
+      : t === "MDL" ? "medal"
+        : t === "BPK" ? (this.collection = "items", "boosterpack")
+          : t === "ITM" ? (this.collection = "items", p.itemType)
             : ["RBN", "JDE", "SPH"].includes(t) ? "gems" : null;
 
     this.rarity = r || "C";
@@ -52,10 +63,10 @@ class LootboxItem {
       query.filter = this.#filter;
 
       query.droppable = !this.#bypass.includes("droppable");
-      if (this.type != "boosterpack") query.public = !this.#bypass.includes("public");
+      if (this.type !== "boosterpack") query.public = !this.#bypass.includes("public");
 
       // ITEM DB FORMAT QUERY ISSUES
-      if (this.collection == "items") {
+      if (this.collection === "items") {
         delete query.event;
         delete query.filter;
         delete query.public;
@@ -68,13 +79,13 @@ class LootboxItem {
         { $match: { $or: queries } },
         { $sample: { size: 1 } },
       ]).then((res) => {
-        res = res[0];
+        [res] = res;
         if (!res) {
           this.type = "gems";
           this.calculateGems("RBN");
           this.query = query;
           resolve(this);
-          return this.loaded = true;
+          return (this.loaded = true);
         }
         this.objectId = res._id;
         this.id = res.id;
@@ -85,7 +96,7 @@ class LootboxItem {
         this.release_pack = res.BUNDLE;
         this.isPublic = res.public;
         resolve(this);
-        this.loaded = true;
+        return (this.loaded = true);
       });
     });
     return this.loaded;
@@ -93,13 +104,13 @@ class LootboxItem {
 
   calculateGems(gem) {
     const noise = randomize(-30, 100);
-    this.amount = gem === "SPH" ? 1 : Math.floor((gemRATES[this.rarity] + noise) * (gem == "JDE" ? 8 : 1));
+    this.amount = gem === "SPH" ? 1 : Math.floor((gemRATES[this.rarity] + noise) * (gem === "JDE" ? 8 : 1));
     this.currency = gem;
     return this.amount;
   }
 
   getOne(col) {
-    this.item = shuffle(shuffle(col))[0];
+    [this.item] = shuffle(shuffle(col));
   }
 }
 
@@ -136,7 +147,7 @@ class Lootbox {
     this.content = contentBlueprint.map((cbl) => {
       const Item = new LootboxItem(cbl.item, cbl.rarity, cbl);
       if (Item.collection) Item.fetchFrom(Item.collection);
-      else if (Item.type != "gems") Item.fetchFrom();
+      else if (Item.type !== "gems") Item.fetchFrom();
       else Item.calculateGems(cbl.item);
       return Item;
     });
@@ -146,13 +157,13 @@ class Lootbox {
       let completed = 0;
       this.content.forEach(async (ct, i, a) => {
         await ct.loaded;
-        if (ct.type == "background") this.visuals[i] = (`${paths.CDN}/backdrops/${ct.code || ct.id}.png`);
-        if (ct.type == "medal") this.visuals[i] = (`${paths.CDN}/medals/${ct.icon}.png`);
-        if (ct.collection == "items") this.visuals[i] = (`${paths.CDN}/build/items/${ct.icon || ct.id}.png`);
-        if (ct.type == "boosterpack") this.visuals[i] = (`${paths.CDN}/boosters/showcase/${ct.icon}.png`);
-        if (ct.type == "gems") this.visuals[i] = (`${paths.CDN}/build/LOOT/${ct.currency}_${ct.rarity}.png`);
+        if (ct.type === "background") this.visuals[i] = (`${paths.CDN}/backdrops/${ct.code || ct.id}.png`);
+        if (ct.type === "medal") this.visuals[i] = (`${paths.CDN}/medals/${ct.icon}.png`);
+        if (ct.collection === "items") this.visuals[i] = (`${paths.CDN}/build/items/${ct.icon || ct.id}.png`);
+        if (ct.type === "boosterpack") this.visuals[i] = (`${paths.CDN}/boosters/showcase/${ct.icon}.png`);
+        if (ct.type === "gems") this.visuals[i] = (`${paths.CDN}/build/LOOT/${ct.currency}_${ct.rarity}.png`);
 
-        if (++completed == a.length) {
+        if ((completed += 1) === a.length) {
           resolve(null);
           delete this.compileVisuals;
         }
@@ -165,13 +176,13 @@ class Lootbox {
       this.content.forEach(async (ct, i, a) => {
         await ct.loaded;
         this.legacy.push({
-          item: ct.type == "boosterpack" ? ct.id : ct.code || ct.icon || ct.id || ct.amount,
+          item: ct.type === "boosterpack" ? ct.id : ct.code || ct.icon || ct.id || ct.amount,
           rarity: ct.rarity,
           emblem: legacyEmblem(ct),
           type: legacyEmblem(ct, true),
           name: ct.name || ct.amount || ct.icon || ct.code || ct.id,
         });
-        if (++completed == a.length) {
+        if ((completed += 1) === a.length) {
           resolve(this.legacy);
           delete this.legacyfy;
         }
@@ -189,15 +200,6 @@ class Lootbox {
     });
     return newArr;
   }
-}
-
-function legacyEmblem(ct, mini) {
-  if (ct.type == "medal") return "MEDAL";
-  if (ct.type == "background") return "BG";
-  if (ct.type == "boosterpack") return mini ? "BOOSTER" : "STAMP";
-  if (ct.currency == "RBN") return mini ? "RUBINES" : `RUBINE_${ct.rarity}`;
-  if (ct.currency == "JDE") return mini ? "JADES" : `JADE_${ct.rarity}`;
-  if (ct.currency == "SPH") return mini ? "SAPPHIRE" : `SAPPHIRE_${ct.rarity}`;
 }
 
 module.exports = { Lootbox, LootboxItem, rates: RATES };

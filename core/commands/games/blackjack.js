@@ -24,7 +24,7 @@ const cardValue = card =>  new Object({rank : card.slice(0, -1) ,suit: card[card
 const fetchCard = (card, deck) => {
 	if (typeof card === 'string' && card.startsWith("JOKER")) 
 		return Picto.getCanvas(`${paths.CDN}/build/cards/casino/JOKERS/${card.split("-")[1] || deck || "default"}.png`);	
-	if (card[0] == "X") 
+	if (card[0] === "X") 
 		return Picto.getCanvas(`${paths.CDN}/build/cards/casino/${deck || "default"}/backface.png`);
 
 	const {rank,suit} = cardValue(card);           
@@ -90,8 +90,8 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
 	let SCORE_A = DATA_A.status + DATA_A.val,
 		SCORE_B = DATA_B.val,
-		bjkWIN	= SCORE_A.toString().toLowerCase() == "blackjack"
-		bjkLOSE	= SCORE_B.toString().toLowerCase() == "blackjack",
+		bjkWIN	= SCORE_A.toString().toLowerCase() === "blackjack"
+		bjkLOSE	= SCORE_B.toString().toLowerCase() === "blackjack",
 		jkrWIN	= SCORE_A.toString().includes("JOKER"),
 		jrkLOSE	= SCORE_B.toString().includes("JOKER")
 
@@ -223,13 +223,13 @@ const drawTable  = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
   
   if (drawOpts?.actions && !(jkrWIN||bjkLOSE||bjkWIN||Number(SCORE_B) > 21||  Number(SCORE_A) > 21) ){
     drawOpts.actions.forEach((action,i)=>{
-      actionColor = action == 'SURRENDER'
+      actionColor = action === 'SURRENDER'
         ? "#F35" 
-        : action == 'DOUBLE'
+        : action === 'DOUBLE'
           ? "#F85"
-          : action == 'SPLIT'
+          : action === 'SPLIT'
             ? "#85F"
-            : action == 'INSURANCE'
+            : action === 'INSURANCE'
               ? "#FA5"
               : "#AAB"
 
@@ -270,8 +270,8 @@ const DECK 		 = async (msg,args) => {
 	
 	targetDeck = DECKDATA.find(
 		dck =>
-			dck.localizer == args[0] ||
-			dck.id == USERDATA.modules.skinInventory[args[0]] ||
+			dck.localizer === args[0] ||
+			dck.id === USERDATA.modules.skinInventory[args[0]] ||
 			dck.name.toLowerCase().includes(args.join(' ').toLowerCase())
 			) || null;
 			
@@ -497,24 +497,24 @@ const init       = async (msg,args) => {
 				RESULT_EMOJI = (res) =>
           playerValue.toString().includes("JOKER")
             ? _emoji("plxbjkjkr")
-            : playerValue == "Blackjack"
+            : playerValue === "Blackjack"
               ? _emoji("plxbjkbjk")
-              : res == "push"
+              : res === "push"
                 ? _emoji("plxbjkpush")
-                : res == "loss"
+                : res === "loss"
                   ? _emoji("plxbjkloss")
-                  : res == "bust"
+                  : res === "bust"
                     ? _emoji("plxbjkbust")
-                    : res == "Dealer bust"
+                    : res === "Dealer bust"
                       ? _emoji("plxbjkwin")
-                      : res.toLowerCase() == "blackjack"
+                      : res.toLowerCase() === "blackjack"
                         ? _emoji("plxbjkbjk")
-                        : res.toLowerCase() == "surrender"
+                        : res.toLowerCase() === "surrender"
                           ? _emoji("plxbjksurr")
                           : _emoji("plxbjkwin");
 
 
-				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}${hand.insurance?_emoji('plxbjkinsu')+`\`${dealerValue == "Blackjack"?"+":"-"}${insuranceAmount}\`` :""}`)
+				splitExplain.push(`${_emoji('plxcards').no_space}\`\u200b${((i+1)+"").padStart(2," ")}\` : **\`\u200b${(lossOrGain+"").padStart(6,' ')}\`** ${_emoji('RBN')} ${RESULT_EMOJI(result)}${hand.doubled?_emoji('plxbjk2x'):''}${hand.insurance?_emoji('plxbjkinsu')+`\`${dealerValue === "Blackjack"?"+":"-"}${insuranceAmount}\`` :""}`)
         finalResult = result
       });
 
@@ -657,7 +657,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		}
 		let currentHandValue = Blackjack.handValue(currentHand);
 		 
-		if ( typeof currentHandValue == 'string' && currentHandValue.startsWith("JOKER") ) {
+		if ( typeof currentHandValue === 'string' && currentHandValue.startsWith("JOKER") ) {
 			nextHand();
 			return ProcessHand(currentHand);
 			//continue;
@@ -689,8 +689,8 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		POL_HAND.status = Blackjack.isSoft([dealerHand[0]]) ? "SOFT" : "";
 
 		let visibleHand = [dealerHand[0], ["X"]]
-		let bjkP = USR_HAND.val.toString().toLowerCase() == "blackjack"
-		let bjkD = POL_HAND.val.toString().toLowerCase() == "blackjack"
+		let bjkP = USR_HAND.val.toString().toLowerCase() === "blackjack"
+		let bjkD = POL_HAND.val.toString().toLowerCase() === "blackjack"
 		let errored;
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
@@ -775,7 +775,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 			nextHand();
 		}
 
-		if (action == "stando") {
+		if (action === "stando") {
 			options.enemyStando = true;
 			msg.channel.send( $t("eastereggs.konodioda", {lngs:msg.lang}) )
 		}

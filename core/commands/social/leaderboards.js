@@ -5,7 +5,7 @@
 // const $t = locale.getT();
 const cmd = "leaderboards";
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   delete require.cache[require.resolve("../../utilities/Picto")];
   const Picto = require("../../utilities/Picto");
   const Server = msg.guild;
@@ -50,7 +50,7 @@ const init = async function (msg, args) {
     return new Object({
       id: usr.id,
       name: _LOCAL ? usr.nick || usr.name : usr?.meta.username || usr.nick || usr?.user.username || "Unknown",
-      avatar: Picto.getCanvas(self === "self" ? (msg.author || aviDummy).staticAvatarURL : (_LOCAL ? `https://cdn.discordapp.com/avatars/${usr.id}/${(usr.user || usr).avatar}.png` : (PLX.users.find((u) => u.id == usr.id) || aviDummy).staticAvatarURL) || (usr.meta.avatar || "").replace("gif", "png") || "https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+      avatar: Picto.getCanvas(self === "self" ? (msg.author || aviDummy).staticAvatarURL : (_LOCAL ? `https://cdn.discordapp.com/avatars/${usr.id}/${(usr.user || usr).avatar}.png` : (PLX.users.find((u) => u.id === usr.id) || aviDummy).staticAvatarURL) || (usr.meta.avatar || "").replace("gif", "png") || "https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
       exp: usr.modules.exp,
       level: usr.modules.level,
       tagline: usr.modules.tagline,

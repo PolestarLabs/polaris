@@ -15,7 +15,7 @@ const init = async function (msg) {
 
   /* ADM */
   // create
-  if (subcommand == "create") {
+  if (subcommand === "create") {
     msg.channel.send("Choose name");
     let responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
             && msg2.content.length < 16,

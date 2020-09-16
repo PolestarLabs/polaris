@@ -1,4 +1,4 @@
-const init = async function () {
+const init = async () => {
   PLX.softKill();
 };
 

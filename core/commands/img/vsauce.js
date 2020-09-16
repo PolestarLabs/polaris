@@ -8,7 +8,7 @@ const init = async function (message) {
   const helpkey = $t("helpkey", {
     lngs: message.lang,
   });
-  if (message.content.split(" ")[1] == helpkey || message.content.split(" ")[1] == "?" || message.content.split(" ")[1] == "help") {
+  if (message.content.split(" ")[1] === helpkey || message.content.split(" ")[1] === "?" || message.content.split(" ")[1] === "help") {
     return PLX.usage(cmd, message, this.cat);
   }
   //------------

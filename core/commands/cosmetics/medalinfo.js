@@ -1,6 +1,6 @@
 const cmd = "medalinfo";
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   if (!msg.args[0]) return msg.reply("you have to give me the medal name.");
   const Picto = require(`${appRoot}/core/utilities/Picto`);
   const mdi = await DB.cosmetics.find({ type: "medal" });

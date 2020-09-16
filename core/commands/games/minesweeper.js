@@ -14,9 +14,9 @@ const init = async function (msg) {
       for (let j = 0; j < SQ; j++) {
         let rand = randomize(0, SQ + 5);
         if (minesTot <= 0) rand = 0;
-        if (arrGrid[i][j] == `||${ BOMB }||`) continue;
-        arrGrid[i][j] = (rand == 1 ? `||${ BOMB }||` : `||:zero:||`);
-        if (rand == 1) minesTot--;
+        if (arrGrid[i][j] === `||${ BOMB }||`) continue;
+        arrGrid[i][j] = (rand === 1 ? `||${ BOMB }||` : `||:zero:||`);
+        if (rand === 1) minesTot--;
       }
     }
     ir++;
@@ -24,19 +24,19 @@ const init = async function (msg) {
 
   for (i = 0; i < SQ; i++) {
     for (j = 0; j < SQ; j++) {
-      if (arrGrid[i][j] == `||${ BOMB }||`) continue;
+      if (arrGrid[i][j] === `||${ BOMB }||`) continue;
       let around = 0;
-      if ((arrGrid[i] || [])[j - 1] == `||${ BOMB }||`) around++; // N
-      if ((arrGrid[i] || [])[j + 1] == `||${ BOMB }||`) around++; // S
+      if ((arrGrid[i] || [])[j - 1] === `||${ BOMB }||`) around++; // N
+      if ((arrGrid[i] || [])[j + 1] === `||${ BOMB }||`) around++; // S
 
-      if ((arrGrid[i - 1] || [])[j] == `||${ BOMB }||`) around++; // W
-      if ((arrGrid[i + 1] || [])[j] == `||${ BOMB }||`) around++; // E
+      if ((arrGrid[i - 1] || [])[j] === `||${ BOMB }||`) around++; // W
+      if ((arrGrid[i + 1] || [])[j] === `||${ BOMB }||`) around++; // E
 
-      if ((arrGrid[i - 1] || [])[j - 1] == `||${ BOMB }||`) around++; // NW
-      if ((arrGrid[i - 1] || [])[j + 1] == `||${ BOMB }||`) around++; // SW
+      if ((arrGrid[i - 1] || [])[j - 1] === `||${ BOMB }||`) around++; // NW
+      if ((arrGrid[i - 1] || [])[j + 1] === `||${ BOMB }||`) around++; // SW
 
-      if ((arrGrid[i + 1] || [])[j - 1] == `||${ BOMB }||`) around++; // NE
-      if ((arrGrid[i + 1] || [])[j + 1] == `||${ BOMB }||`) around++; // sE
+      if ((arrGrid[i + 1] || [])[j - 1] === `||${ BOMB }||`) around++; // NE
+      if ((arrGrid[i + 1] || [])[j + 1] === `||${ BOMB }||`) around++; // sE
 
       switch (around) {
         case 1:

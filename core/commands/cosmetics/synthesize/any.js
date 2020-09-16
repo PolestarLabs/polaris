@@ -21,11 +21,11 @@ module.exports = {
       if (item.rarity.toLowerCase() === target) return true;
       return false;
     });
-    if (!selectedItem || target == "random") selectedItem = shuffle(BASE)[0];
+    if (!selectedItem || target === "random") [selectedItem] = shuffle(BASE);
 
     const payCoin = `cosmo_gem_${selectedItem.rarity}`;
     const canBuy = selectedItem.buyable && !selectedItem.event;
-    const affordsIt = userData.modules.inventory.find((itm) => (itm.id == `cosmo_gem_${selectedItem.rarity}`) && itm.count >= 1) || false;
+    const affordsIt = userData.modules.inventory.find((itm) => (itm.id === `cosmo_gem_${selectedItem.rarity}`) && itm.count >= 1) || false;
     const obtainable = selectedItem.buyable && !selectedItem.event;
     console.log({
       payCoin, canBuy, affordsIt, obtainable,

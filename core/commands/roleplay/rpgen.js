@@ -16,7 +16,7 @@ const init = async function (msg) {
     ? { title: data.name.value, hex, data }
     : { title: "Invalid Color (Defaults to Black)", hex: "#000000" };
 
-  if (!msg.args[0] || msg.args[0] == "npc") {
+  if (!msg.args[0] || msg.args[0] === "npc") {
     const oneNPC = RPGen.NPCs.generate();
     const fs = require("fs");
     fs.readdir(`${appRoot}/resources/rpgen/pics/`, (err, files) => {
@@ -37,7 +37,7 @@ const init = async function (msg) {
       const filepath = `${appRoot}/resources/rpgen/pics/${files[rand]}`;
       const file = fs.readFileSync(filepath);
 
-      if (oneNPC.race == "dragonborn") oneNPC.race = "Beast";
+      if (oneNPC.race === "dragonborn") oneNPC.race = "Beast";
       const embed = {};
       embed.title = capitalize(oneNPC.name);
       embed.fields = [];
@@ -78,9 +78,9 @@ const init = async function (msg) {
 
   if (["plot", "hook", "story"].includes(msg.args[0])) {
     let flavor;
-    if (!msg.args[1] || msg.args[1] == "player") {
+    if (!msg.args[1] || msg.args[1] === "player") {
       flavor = (RPGen.Storyhooks.pcRelated());
-    } else if (msg.args[1] == "npc") {
+    } else if (msg.args[1] === "npc") {
       flavor = (RPGen.Storyhooks.npcActs());
     } else {
       flavor = (RPGen.Storyhooks.pcRelated());

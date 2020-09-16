@@ -96,7 +96,7 @@ const init = async (msg, args) => {
         continue;
       }
 
-      const item = marketbase.find((it) => offer.item_id == it._id && offer.item_type === it.type);
+      const item = marketbase.find((it) => offer.item_id === it._id && offer.item_type === it.type);
 
       if (!item) {
         embed.field("---", "`BAD ENTRY`", true);
@@ -106,7 +106,7 @@ const init = async (msg, args) => {
         _emoji(item.rarity) + item.name,
         `
         **\`${filter === "mine" ? offer.id : item.type.toUpperCase()}\`**
-        ${offer.type == "sell" ? "Selling for: " : "Buying for: "} **${miliarize(offer.price, "soft")}**${_emoji(offer.currency)}
+        ${offer.type === "sell" ? "Selling for: " : "Buying for: "} **${miliarize(offer.price, "soft")}**${_emoji(offer.currency)}
         [\\🔗 See entry on web](${paths.CDN}/shop/marketplace/entry/${offer.id})
                     `, true,
       );

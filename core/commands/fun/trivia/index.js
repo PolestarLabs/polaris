@@ -7,7 +7,7 @@ const init = async function (msg, args, streak) {
   const scores = {};
 
   let QUESTIONS = require("./questions.json");
-  if (diff) QUESTIONS = QUESTIONS.filter((q) => q.level == diff);
+  if (diff) QUESTIONS = QUESTIONS.filter((q) => q.level === diff);
   if (theme && theme != "") QUESTIONS = QUESTIONS.filter((q) => q.allcats.toLowerCase().includes(theme));
 
   if (msg.channel.trivia) return msg.reply("Theres already a game going on here!");
@@ -15,7 +15,7 @@ const init = async function (msg, args, streak) {
 
   async function triviaRun() {
     msg.channel.trivia = true;
-    if (QUESTIONS.length == 0 || cround+1 > rounds) {
+    if (QUESTIONS.length === 0 || cround+1 > rounds) {
       msg.channel.trivia = false;
       return msg.channel.send({
         content: "no more questions",
@@ -49,13 +49,13 @@ const init = async function (msg, args, streak) {
 
       cround++;
 
-      if (responses.length == 0) {
+      if (responses.length === 0) {
         msg.channel.send("Nobody got it. :( ");
         return triviaRun();
       }
 
       const { correct, response } = correctCheck(responses[0], Q);
-      if (responses[0].content == "abort" && responses[0].author == msg.author) {
+      if (responses[0].content === "abort" && responses[0].author === msg.author) {
         msg.channel.trivia = false;
         return msg.channel.send("Game cancelled!");
       }
@@ -85,7 +85,7 @@ const init = async function (msg, args, streak) {
   }
   function correctCheck(res, Q) {
     if (res.author.bot) return { end: false };
-    if (res.content === "abort" && res.author.id == msg.author.id) return { end: true };
+    if (res.content === "abort" && res.author.id === msg.author.id) return { end: true };
 
     const response = res.content
       .normalize("NFD")
@@ -98,7 +98,7 @@ const init = async function (msg, args, streak) {
     else res.addReaction(_emoji("nope").reaction);
 
     let end = correct;
-    if (Q.type == "TF" && ["true", "false"].includes(response)) end = true;
+    if (Q.type === "TF" && ["true", "false"].includes(response)) end = true;
     if (!correct && ["pass"].includes(response)) end = true;
 
     return { correct, response, end };

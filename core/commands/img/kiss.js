@@ -6,9 +6,9 @@ const init = async function (msg) {
   const P = { lngs: msg.lang };
   const helpkey = $t("helpkey", P);
   if (
-    msg.content.split(" ")[1] == helpkey
-    || msg.content.split(" ")[1] == "?"
-    || msg.content.split(" ")[1] == "help"
+    msg.content.split(" ")[1] === helpkey
+    || msg.content.split(" ")[1] === "?"
+    || msg.content.split(" ")[1] === "help"
   ) {
     return PLX.usage(cmd, msg, this.cat);
   }
@@ -45,7 +45,7 @@ const init = async function (msg) {
     Target
       ? $t("responses.forFun.kissed", P)
       : $t("responses.forFun.kissedNone", P)}`;
-  if (Target?.id == msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
+  if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
   if (Target) {
     var USERDATA = await DB.users.getFull({ id: msg.author.id });
@@ -55,13 +55,13 @@ const init = async function (msg) {
   if (marriedtarget) {
     const noise = randomize(0, 50);
     let pris = randomize(1, 0);
-    pris == 1 ? (pris = randomize(1, 0)) : false;
+    pris === 1 ? (pris = randomize(1, 0)) : false;
     variation = USERDATA.lovepoints < 50 + noise ? "couple" : "wet";
-    if (randomize(0, 5) == 1) variation = "cute";
+    if (randomize(0, 5) === 1) variation = "cute";
     await DB.relationships.set({_id:marriedtarget._id},{$inc:{lovepoints:pris}});
   }
-  if (randomize(0, 5) == 1) variation = "couple";
-  if (randomize(0, 10) == 1) variation = "wet";
+  if (randomize(0, 5) === 1) variation = "couple";
+  if (randomize(0, 10) === 1) variation = "wet";
   console.log(`${msg.args[0] || "_"}.${variation}`);
   const kissImg = await Gal.filteredOne(
     "kiss",

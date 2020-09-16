@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   args = ["airplane", "1girl"];
 
   return require("./safebooru").init(msg, args, { title: ":airplane: Airwaifu", color: 0x63bbff });

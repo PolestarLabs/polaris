@@ -21,7 +21,7 @@ const init = function (message) {
     expirestr: $t("daily.expirestr", P),
   };
 
-  if (message.args[0] == "info") {
+  if (message.args[0] === "info") {
     message.args[0] = "status";
     message.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
   }
@@ -61,14 +61,14 @@ const init = function (message) {
 
       let gemstone = "";
 
-      if ((hardStreak % 10) == 0) {
+      if ((hardStreak % 10) === 0) {
         const dailyStreak = $t("$.dailyStreak", P).replace("500", "**500**");
         embed.description += `\n${_emoji("ticket") + dailyStreak}`;
 
         await ECO.receive(Author.id, 500, "daily_10streak", "RBN");
       }
 
-      if ((hardStreak % 3) == 0) {
+      if ((hardStreak % 3) === 0) {
         if ((hardStreak % 10) != 0) gemstone = "j";
 
         const dailyStreak = $t("interface.daily.dailyStreakJades", P);
@@ -77,7 +77,7 @@ const init = function (message) {
         await ECO.receive(Author.id, 1000, "daily_3streak", "JDE", "+");
       }
 
-      if ((hardStreak % 200) == 0) {
+      if ((hardStreak % 200) === 0) {
         gemstone = "S";
 
         const dailyStreak = $t("interface.daily.dailyStreakSapphs", P);
@@ -86,7 +86,7 @@ const init = function (message) {
         await ECO.receive(Author.id, 1, "daily_250streak", "SPH");
       }
 
-      if ((hardStreak % 365) == 0) {
+      if ((hardStreak % 365) === 0) {
         gemstone = "S";
 
         const dailyStreak = $t("interface.daily.dailyStreakSapphs", P);
@@ -97,7 +97,7 @@ const init = function (message) {
 
       embed.description += `${"\n\n" + "*Streak: **"}${hardStreak || 0}***.`;
 
-      embed.thumbnail(`${paths.CDN}/build/daily/${gemstone == "S" ? "ringsaph" : gemstone + (hardStreak % 10)}.gif`);
+      embed.thumbnail(`${paths.CDN}/build/daily/${gemstone === "S" ? "ringsaph" : gemstone + (hardStreak % 10)}.gif`);
 
       userachinv = userData.modules.achievements;
       if (hardStreak >= 10 && !userachinv.includes("10daily")) {

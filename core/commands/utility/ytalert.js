@@ -40,7 +40,7 @@ const init = async function (msg) {
       type: "youtube", url: channelID, last: youtubeChannel.items[0], channel,
     };
 
-    if (feedData?.find((fdd) => fdd.url == channelID)) {
+    if (feedData?.find((fdd) => fdd.url === channelID)) {
       await DB.feed.set({ server: msg.guild.id, url: channelID }, { $set: { channel } });
       return msg.channel.send($t("interface.feed.urlPresent", P));
     }
@@ -66,7 +66,7 @@ const init = async function (msg) {
     const target = msg.args[1];
 
     if (!target) return msg.channel.send($t("interface.feed.stateIDorURL", P));
-    const toDelete = feedData[target] || feedData.find((f) => f.url == target || f.url.includes(target));
+    const toDelete = feedData[target] || feedData.find((f) => f.url === target || f.url.includes(target));
     const embed = new Embed();
     embed.description = `
                 URL: https://youtube.com/channel/${toDelete.url}

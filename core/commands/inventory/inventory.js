@@ -4,7 +4,7 @@ const Picto = require('../../utilities/Picto');
 
 const INVOKERS   = new Map();
 
-const init = async function (msg,args){
+const init = async (msg, args) => {
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
@@ -95,7 +95,7 @@ const init = async function (msg,args){
         ,a_lbx = xlr99(types.box || 0 ,"L");
 
     function xlr99(x,LR="R"){
-        x= LR == "R" ? x>99?"+99":x
+        x= LR === "R" ? x>99?"+99":x
                      : x>99?"99+":x;
         return x;
     }
@@ -149,42 +149,42 @@ module.exports={
             emoji: _emoji("LOOTBOX").reaction,
             type: "edit",
             response: require("./lootbox.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: _emoji("BOOSTER").reaction,
             type: "edit",
             response: require("./boosterpack.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: _emoji("CONSUMABLE").reaction,
             type: "edit",
             response: require("./consumable.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: _emoji("MATERIAL").reaction,
             type: "edit",
             response: require("./material.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: _emoji("KEY").reaction,
             type: "edit",
             response: require("./key.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: _emoji("JUNK").reaction,
             type: "edit",
             response: require("./junk.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         },{
             emoji: "❌",
             type: "cancel",
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id
             
         }
     ],

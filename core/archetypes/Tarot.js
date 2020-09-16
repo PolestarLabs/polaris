@@ -233,7 +233,7 @@ class Tarot {
   getSpread(size) {
     let i = size;
     const spread = [];
-    while (i--) {
+    while ((i -= 1)) {
       this._deck = Tarot._shuffle(this._deck);
       spread.push({ card: this._deck.pop(), pose: Tarot._pos() });
     }
@@ -243,30 +243,32 @@ class Tarot {
   async drawCard(arcana, posit, deck = "persona3") {
     const card = Picto.new(200, 350);
     const ctx = card.getContext("2d");
-    const card_pic = await Picto.getCanvas(`${paths.CDN}/build/cards/tarot/${deck}/${arcana.id}.png`);
+    const cardPic = await Picto.getCanvas(`${paths.CDN}/build/cards/tarot/${deck}/${arcana.id}.png`);
     const posname = Picto.tag(ctx, posit, "400 20px Panton", "#A5A5A3");
     Picto.setAndDraw(ctx, posname, 100, 20, 180, "center");
     const arcaname = Picto.tag(ctx, arcana.Arcana, "900 24px Panton");
     Picto.setAndDraw(ctx, arcaname, 100, 310, 180, "center");
 
-    if (posit == "REVERSED") {
+    if (posit === "REVERSED") {
       ctx.translate(0, 350);
       ctx.scale(-1, -1);
     }
-    ctx.drawImage(card_pic, 25, 50, 150, 250);
+    ctx.drawImage(cardPic, 25, 50, 150, 250);
     return card;
   }
 
   async drawSpread(skin) {
     const spSize = this.spread.length;
-    const canvas = new Picto.new(200 * spSize, 350);
+    const canvas = Picto.new(200 * spSize, 350);
     const ctx = canvas.getContext("2d");
 
     const SPREAD = this.spread;
+    const tasks = [];
     while (SPREAD.length) {
       const currSpd = SPREAD.pop();
-      ctx.drawImage(await this.drawCard(currSpd.card, currSpd.pose, skin), (spSize - (SPREAD.length) - 1) * 200, 0);
+      tasks.push(this.drawCard(currSpd.card, currSpd.pose, skin).then((c) => ctx.drawImage(c, (spSize - (SPREAD.length) - 1) * 200, 0)));
     }
+    await Promise.all(tasks);
     return canvas;
   }
 
@@ -283,7 +285,7 @@ class Tarot {
 
   static _pos() {
     const r = Math.floor(Math.random() * 10 + 1);
-    return r % 2 == 0 ? "UPRIGHT" : "REVERSED";
+    return r % 2 === 0 ? "UPRIGHT" : "REVERSED";
   }
 }
 

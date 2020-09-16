@@ -114,9 +114,9 @@ const init = async function (msg) {
     ${TIME_OPTS.join("\n")}`;
   const res_DUR = await Screen({ embed }, TIMES);
   //-----------------------------------------------
-  const selectedTime = res_DUR.res.index == 0 ? 1
-    : res_DUR.res.index == 1 ? 5
-      : res_DUR.res.index == 2 ? 10 : 0;
+  const selectedTime = res_DUR.res.index === 0 ? 1
+    : res_DUR.res.index === 1 ? 5
+      : res_DUR.res.index === 2 ? 10 : 0;
   //-----------------------------------------------
   delete embed.title;
   embed.description = TIME_OPTS[res_DUR.res.index];

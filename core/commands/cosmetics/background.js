@@ -2,7 +2,7 @@ const cmd = "background";
 const fs = require("fs");
 const ECO = require("../../archetypes/Economy.js");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   let BGBASE = await DB.cosmetics.bgs();
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
