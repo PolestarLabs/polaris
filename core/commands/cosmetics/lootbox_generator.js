@@ -106,20 +106,20 @@ const init = async function (msg, args) {
     const message = await msg.channel.send(...firstRoll);
 
     message.addReaction("⭐").catch((e) => null);
-    if (canReroll) message.addReaction(_emoji("retweet").reaction).catch((e) => null);
+    if (canReroll) message.addReaction("🔁").catch((e) => null);
 
     return message.awaitReactions((reaction) => {
       if (reaction.author.id == PLX.user.id) return false;
-      if (reaction.emoji.id === _emoji("retweet").id) {
+      if (reaction.emoji.name === "🔁") {
         return canReroll;
       } if (reaction.emoji.name == "⭐") return true;
     }, { time: 15000, maxMatches: 1 }).catch((e) => {
       console.error(e);
-      message.removeReaction(_emoji("retweet").reaction);
+      message.removeReaction("🔁");
     }).then(async (reas) => {
       const choice = reas?.[0];
 
-      if (choice?.emoji.id === _emoji("retweet").id) {
+      if (choice?.emoji.name === "🔁") {
         message.delete();
         currentRoll++;
         return process();
@@ -371,7 +371,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   ctx.drawImage(bonusName.item, 620 - bonusName.width, 535);
 
   P.k_emoji = "`⭐`";
-  P.r_emoji = _emoji("retweet");
+  P.r_emoji = "`🔁`";
   P.amt = `${_emoji("RBN")}** ${miliarize(rerollCost, true, "\u202F")}**`;
   P.count = totalRerolls - currentRoll;
   P.x_frags = `${_emoji("cosmo")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
