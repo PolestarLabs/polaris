@@ -152,8 +152,8 @@ const init = async function (message) {
         craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
         embed.description = matDisplay + craftExplan;
         message.channel.send({ embed }).then(async (m) => {
-          const YA = { r: ":yep:339398829050953728", id: "339398829050953728" };
-          const NA = { r: ":nope:339398829088571402", id: "339398829088571402" };
+          const YA = { r:  _emoji('yep').reaction , id: _emoji('yep').id };
+          const NA = { r:  _emoji('nope').reaction , id: _emoji('nope').id };
 
           await m.addReaction(YA.r);
           m.addReaction(NA.r);
