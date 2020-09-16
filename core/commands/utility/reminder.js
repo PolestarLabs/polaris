@@ -20,6 +20,7 @@ const init = async function (msg, args) {
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
+
   if (args[0] === "list" && args.length == 1) {
     return {
       content: $t("interface.reminders.currentActive", P),
@@ -80,16 +81,6 @@ const init = async function (msg, args) {
 
   const timestamp = when[0].start.date().getTime(); //+ 3600000 * 3;
 
-  msg.channel.send(
-    "```js"+
-    `
-    // DEBUG ##################################
-FROM ${new Date(from)}
-TIMES ${JSON.stringify(when[0],0,2)}
-REF ${ when[0].start.date() }
-    `
-    +"```"
-    )
 
   if (when.length < 1) return $t("interface.reminders.errorWhen", P);
   if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
@@ -113,6 +104,7 @@ REF ${ when[0].start.date() }
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "reminder",
   perms: 3,
   cat: "utility",
