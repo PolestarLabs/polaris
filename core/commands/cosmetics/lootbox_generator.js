@@ -133,6 +133,7 @@ const init = async function (msg, args) {
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
+      LootingUsers.delete(msg.author.id);
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
                 >>> ${lootbox.content.map((x) => {
@@ -419,7 +420,6 @@ module.exports = {
     postCommand: (m) => LootingUsers.delete(m.author.id),
   },
   errorMessage: (msg, err) => {
-    LootingUsers.delete(msg.author.id);
     return {
       embed: {
         description: "Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n \n***Your Lootbox __was not__ removed from your inventory!***",
