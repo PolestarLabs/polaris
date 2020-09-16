@@ -25,7 +25,7 @@ const init = async function (msg) {
       type: "rss", url: str, last: feed.items[0], channel,
     };
 
-    if (feedData && feedData.find((fdd) => fdd.url == str)) {
+    if (feedData && feedData.find((fdd) => fdd.url === str)) {
       await DB.feed.set({ server: msg.guild.id, url: str }, { $set: { channel } });
       return msg.channel.send($t("interface.feed.urlPresent", P));
     }
@@ -43,10 +43,10 @@ const init = async function (msg) {
 
   // +RSS remove (LINK || index)
   if (msg.args[0] === "remove" || msg.args[0] === "delete") {
-    if (!feedData || feedData.length == 0) return msg.channel.send($t("interface.feed.noFeed", P));
+    if (!feedData || feedData.length === 0) return msg.channel.send($t("interface.feed.noFeed", P));
     const target = msg.args[1];
     if (!target) return msg.channel.send($t("interface.feed.stateIDorURL", P));
-    const toDelete = feedData[target] || feedData.find((f) => f.type == "rss" && (f.url == target || f.url.includes(target)));
+    const toDelete = feedData[target] || feedData.find((f) => f.type === "rss" && (f.url === target || f.url.includes(target)));
     if (!toDelete) return msg.channel.send($t("interface.feed.stateIDorURL", P));
 
     const embed = new Embed();

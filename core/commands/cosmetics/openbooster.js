@@ -15,7 +15,7 @@ const init = async function (msg) {
   // if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
 
   function getRandomSticker(col, exc) {
-    const pile = shuffle(stickerData.filter((stk) => stk.series_id == col && stk.id != exc));
+    const pile = shuffle(stickerData.filter((stk) => stk.series_id === col && stk.id != exc));
     return pile[randomize(0, pile.length - 1)];
   }
 

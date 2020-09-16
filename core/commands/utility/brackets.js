@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   N = Math.abs(parseInt(msg.args[0]) || parseInt(msg.args[1])) || 0;
@@ -9,14 +9,14 @@ const init = async function (msg, args) {
     msg.args[0] === "role" && msg.args[1] && (msg.roleMentions.length > 0 || rolefind(1))
         || msg.args[1] === "role" && msg.args[2] && (msg.roleMentions.length > 0 || rolefind(2))
   ) {
-    ENTS = msg.guild.members.filter((memb) => memb.roles.some((rl) => msg.roleMentions.includes(rl) || (rolefind(1) || rolefind(2) || {}).id == rl)).map((m) => m.user.tag);
+    ENTS = msg.guild.members.filter((memb) => memb.roles.some((rl) => msg.roleMentions.includes(rl) || (rolefind(1) || rolefind(2) || {}).id === rl)).map((m) => m.user.tag);
   }
   iterations = 0;
   display_RR = false;
   display_FF = false;
   while (["-bk", "-rr", "-full", "role"].includes(msg.args[0]) || iterations > 5) {
-    if (msg.args[iterations] == "-rr") display_RR = true;
-    if (msg.args[iterations] == "-full") display_FF = true;
+    if (msg.args[iterations] === "-rr") display_RR = true;
+    if (msg.args[iterations] === "-full") display_FF = true;
     msg.args.shift();
     iterations++;
   }
@@ -111,8 +111,8 @@ function BK(n, entrants, P) {
   }
 
   isPowerOf = (n, p) => {
-    while (n != 0 && n % p == 0) { n /= p; }
-    return n == 1;
+    while (n != 0 && n % p === 0) { n /= p; }
+    return n === 1;
   };
 
   let roundzero;

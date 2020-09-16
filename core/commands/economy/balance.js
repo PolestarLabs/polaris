@@ -49,8 +49,8 @@ ${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0, t
       const POLid = "271394014358405121";
 
       const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
-      if (x.type == "SEND") x.type = "TRANSFER";
-      if (x.to == TARGERDATA.id && x.from !== POLid) {
+      if (x.type === "SEND") x.type = "TRANSFER";
+      if (x.to === TARGERDATA.id && x.from !== POLid) {
         othPart = (await PLX.getTarget(x.from,null,true))||{tag:'Unknown#0000'};
         if (!othPart) {
           return ` \`${ts}\` **${x.amt}** ${x.currency} 
@@ -59,7 +59,7 @@ ${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0, t
         return `↔ \`${ts}\` **${x.amt}** ${x.currency}
 \u200b\u2003\u2003|   *\`${x.type}\`* from [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
       }
-      if (x.from == TARGERDATA.id && x.to !== POLid) {
+      if (x.from === TARGERDATA.id && x.to !== POLid) {
         othPart = (await PLX.getTarget(x.to,null,true))||{tag:'Unknown#0000'};
         if (!othPart) {
           return ` \`${ts}\` **${x.amt}** ${x.currency} 
@@ -68,11 +68,11 @@ ${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0, t
         return `↔  \`${ts}\` **${x.amt}** ${x.currency}
 \u200b\u2003\u2003|   *\`${x.type}\`* to [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
       }
-      if (x.to == POLid) {
+      if (x.to === POLid) {
         return `📤  \`${ts}\` **${x.amt}** ${x.currency}
 \u200b\u2003\u2003|   *${x.type}*`;
       }
-      if (x.from == POLid) {
+      if (x.from === POLid) {
         return `📥  \`${ts}\` **${x.amt}** ${x.currency}
 \u200b\u2003\u2003|   *${x.type}*`;
       }

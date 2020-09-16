@@ -311,7 +311,7 @@ const init = async function (message) {
 
   // console.log({remo: userData.rewardsMonth, mocheck: MONTHCHECK})
   if (message.author.id !== "88120564400553984") {
-    if (userData.rewardsMonth >= MONTHCHECK && userData.donator == tier.title) {
+    if (userData.rewardsMonth >= MONTHCHECK && userData.donator === tier.title) {
       return message.reply("You already claimed this month's rewards!");
     }
     if (!useroles.includes("421181998439333901")) {
@@ -365,7 +365,7 @@ const init = async function (message) {
   const tiere = T.boxes[0].name.replace("lootbox_", "").replace("_O", "");
   embed.thumbnail(`https://pollux.fun/build/${T.title}.png`);
   embed.description(`
-**${capitalize(T.title) + (T.legacy ? " Legacy" : "")}** ${STATUS == 0 ? "(Last Month)" : typeof STATUS === "number" ? `(${STATUS} Months Left)` : ""}
+**${capitalize(T.title) + (T.legacy ? " Legacy" : "")}** ${STATUS === 0 ? "(Last Month)" : typeof STATUS === "number" ? `(${STATUS} Months Left)` : ""}
 
 ${_emoji("sapphire")} x ${T.SPH}
 ${_emoji("jade")} x ${miliarize(T.JDE)}

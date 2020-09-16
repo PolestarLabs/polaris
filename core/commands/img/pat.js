@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   delete require.cache[require.resolve("../../structures/Galleries")];
   const Gal = require("../../structures/Galleries");
 

@@ -1,7 +1,36 @@
 const ax = require("axios");
 const BOORU = require("../../utilities/BooruGetter");
 
-const init = async function (msg, args, ext) {
+function addReactions(ms, save) {
+  ms.addReaction("👍").catch(() => null);
+  ms.addReaction("👎").catch(() => null);
+  ms.addReaction("💖").catch(() => null);
+  ms.addReaction("😠").catch(() => null);
+  if (save) {
+    ms.addReaction("⭐").catch(() => null);
+    ms.awaitReactions((reaction) => {
+      if (reaction.author.id === PLX.user.id) return false;
+
+      if (reaction.emoji.name === "⭐") {
+        DB.usercols.set(reaction.author.id, { $addToSet: { "collections.boorusave": save } });
+        ms.removeReaction("⭐", reaction.author.id).catch(() => null);
+        return true;
+      }
+      return false;
+    }, { time: 15000 }).catch((e) => {
+      console.error(e);
+      ms.removeReaction("⭐");
+    }).then((reas) => {
+      if (!reas?.length) return;
+
+      const savers = reas.map((rea) => rea.author.username);
+      ms.channel.send(`Saved by ${savers.join(",")}`);
+      ms.removeReaction("⭐");
+    });
+  }
+}
+
+const init = async (msg, args, ext) => {
   const QUALITY_CONTROL = `+score:>0${msg.channel.nsfw ? "" : "+-rating:questionable"}`;
 
   let tags = args.join("+") || "";
@@ -29,21 +58,44 @@ const init = async function (msg, args, ext) {
     tags += QUALITY_CONTROL;
   }
 
-  const res = await BOORU[endpoint](tags).catch((e) => null);
+  const res = await BOORU[endpoint](tags).catch(() => null);
 
   let enhancedRes;
-  if (res) enhancedRes = (await ax.get(`http://danbooru.donmai.us/posts.json?md5=${res.md5 || res.hash}`).catch((e) => ({ data: null }))).data;
+  if (res) enhancedRes = (await ax.get(`http://danbooru.donmai.us/posts.json?md5=${res.md5 || res.hash}`).catch(() => ({ data: null }))).data;
 
   if (res && enhancedRes) {
     embed.image(enhancedRes.file_url);
     const elipsis = enhancedRes.tag_string_character.split(" ").length > 5 ? " (...)" : "";
-    if (enhancedRes.tag_string_artist) embed.field("Artist", `**[${enhancedRes.tag_string_artist.split(" ")[0].split("_").map(capitalize).join(" ")}]()**`, true);
-    if (enhancedRes.tag_string_character) embed.field("Characters", enhancedRes.tag_string_character.split(" ").map((char) => char.split("_").map(capitalize).join(" ")).slice(0, 5).join(", ") + elipsis, true);
-    if (enhancedRes.tag_string_copyright) {
-      embed.field("Source", enhancedRes.tag_string_copyright.split(" ").filter((v, i, a) => !v.includes(a[(i || 5) + -1])).map((src) => src.split("_").map(capitalize).join(" ")).slice(0, 3)
-        .join(", "), true);
+    if (enhancedRes.tag_string_artist) {
+      embed.field(
+        "Artist",
+        `**[${enhancedRes.tag_string_artist.split(" ")[0].split("_").map(capitalize).join(" ")}]()**`,
+        true,
+      );
     }
-    if (enhancedRes.tag_string_general && ext?.tags) embed.field("Tags", `\`[${shuffle(enhancedRes.tag_string_general.slice(1).split(" ").slice(0, 10)).join("]` `[")}]\``, true);
+    if (enhancedRes.tag_string_character) {
+      embed.field(
+        "Characters",
+        enhancedRes.tag_string_character.split(" ").map((char) => char.split("_").map(capitalize).join(" ")).slice(0, 5).join(", ") + elipsis,
+        true,
+      );
+    }
+    if (enhancedRes.tag_string_copyright) {
+      embed.field(
+        "Source",
+        enhancedRes.tag_string_copyright.split(" ").filter((v, i, a) => !v.includes(a[(i || 5) + -1])).map((src) => src.split("_").map(capitalize)
+          .join(" ")).slice(0, 3)
+          .join(", "),
+        true,
+      );
+    }
+    if (enhancedRes.tag_string_general && ext?.tags) {
+      embed.field(
+        "Tags",
+        `\`[${shuffle(enhancedRes.tag_string_general.slice(1).split(" ").slice(0, 10)).join("]` `[")}]\``,
+        true,
+      );
+    }
     msg.channel.send({ embed }).then((ms) => {
       addReactions(ms, {
         url: (enhancedRes.large_file_url || enhancedRes.file_url),
@@ -68,34 +120,6 @@ const init = async function (msg, args, ext) {
   } else {
     embed.description = _emoji("nope") + $t("forFun.booru404", { lngs: msg.lang, prefix: msg.prefix });
     msg.channel.send({ embed });
-  }
-
-  function addReactions(ms, save) {
-    ms.addReaction("👍").catch((e) => null);
-    ms.addReaction("👎").catch((e) => null);
-    ms.addReaction("💖").catch((e) => null);
-    ms.addReaction("😠").catch((e) => null);
-    if (save) {
-      ms.addReaction("⭐").catch((e) => null);
-      ms.awaitReactions((reaction) => {
-        if (reaction.author.id == PLX.user.id) return false;
-
-        if (reaction.emoji.name == "⭐") {
-          DB.usercols.set(reaction.author.id, { $addToSet: { "collections.boorusave": save } });
-          ms.removeReaction("⭐", reaction.author.id).catch((e) => null);
-          return true;
-        }
-      }, { time: 15000 }).catch((e) => {
-        console.error(e);
-        ms.removeReaction("⭐");
-      }).then((reas) => {
-        if (!reas?.length) return;
-
-        const savers = reas.map((rea) => rea.author.username);
-        ms.channel.send(`Saved by ${savers.join(",")}`);
-        ms.removeReaction("⭐");
-      });
-    }
   }
 };
 module.exports = {

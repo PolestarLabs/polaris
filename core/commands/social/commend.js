@@ -16,7 +16,7 @@ const init = async function (msg) {
   const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
   const preafter = async function preafter(M, D) {
-    if (userData.modules.inventory.find((itm) => itm.id == "commendtoken")?.count >= 1) {
+    if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
       if (Target.id === msg.author.id) {
         msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
         return false;
@@ -89,7 +89,7 @@ const info = async (msg, args) => {
   ]);
 
   const metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
-  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id == u.id).meta.tag, amt: u.count }));
+  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id).meta.tag, amt: u.count }));
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(

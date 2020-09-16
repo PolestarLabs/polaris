@@ -2,7 +2,7 @@
 // const DB = require('../../database/db_ops');
 const i18n = require("../../structures/Locales.js");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const P = { lngs: msg.lang };
 
   const language = args[0].toString();
@@ -11,18 +11,18 @@ const init = async function (msg, args) {
 
   console.log(args);
 
-  if (language == "refresh") {
+  if (language === "refresh") {
     msg.guild.LANG = serverData.modules.LANGUAGE;
     return msg.addReaction(_emoji("yep").reaction);
   }
 
-  if (language == "reset") {
+  if (language === "reset") {
     msg.guild.channels.forEach((ch) => ch.LANG = null);
     return msg.addReaction(_emoji("yep").reaction);
   }
 
   if (language) {
-    const langTo = i18n.i18n.find((lang) => lang.iso == language || lang.code.includes(language) || [lang.iso.toLowerCase(), lang.name, lang["name-e"].toLowerCase(), lang.flag].includes(language.toLowerCase()));
+    const langTo = i18n.i18n.find((lang) => lang.iso === language || lang.code.includes(language) || [lang.iso.toLowerCase(), lang.name, lang["name-e"].toLowerCase(), lang.flag].includes(language.toLowerCase()));
     console.log(langTo);
     if (langTo) {
       P.lngs[0] = langTo.iso;

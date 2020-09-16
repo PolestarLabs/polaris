@@ -140,7 +140,7 @@ const startMultiplayerLoop = async (msg, players) => {
   }
 };
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   if (args[0] === "multiplayer" || args[0] === "mp" || args[0] === "start") {
     await msg.channel.send("Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n**The match starts in __20 seconds__.**");
     const players = await startPlayerCollector(await msg.channel.send("**Total of rubines in the pool:** 0 rubines\n**Players**\n---"));

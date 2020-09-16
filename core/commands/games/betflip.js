@@ -37,31 +37,31 @@ const init = async function (msg) {
   }
 
   const rand = randomize(1, 99);
-  const countercall = call == "HEADS" ? "TAILS" : "HEADS";
+  const countercall = call === "HEADS" ? "TAILS" : "HEADS";
   const R = bet > 2500
     ? rand > 60 + (bet / 100 > 30 ? 30 : bet / 100)
       ? call
       : countercall
     : bet < 2000
-      ? rand % 2 == 0
+      ? rand % 2 === 0
         ? call
         : countercall
       : rand > 60
         ? call
         : countercall;
 
-  const win = R == call;
+  const win = R === call;
 
   if (await ECO.checkFunds(msg.author, bet, currency)) {
     ECO.pay(msg.author, bet, "Gambling : Betflip", currency);
     if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
   } else {
-    return msg.channel.send(`Cannot afford. ${await userData.modules[(currency ? currency == "RBN" ? "rubines" : currency == "JDE" ? "jades" : currency == "SPH" ? "sapphires" : "rubines" : "rubines")]}/${bet}`);
+    return msg.channel.send(`Cannot afford. ${await userData.modules[(currency ? currency === "RBN" ? "rubines" : currency === "JDE" ? "jades" : currency === "SPH" ? "sapphires" : "rubines" : "rubines")]}/${bet}`);
   }
 
-  const res = R == "HEADS" ? A : B;
-  const res2 = R == "HEADS" ? A1 : B1;
-  const face = R == "HEADS" ? $t("terms.coinHeads", P) : $t("terms.coinTails", P);
+  const res = R === "HEADS" ? A : B;
+  const res2 = R === "HEADS" ? A1 : B1;
+  const face = R === "HEADS" ? $t("terms.coinHeads", P) : $t("terms.coinTails", P);
 
   const embed = new Embed();
   embed.author(`${msg.author.tag} flips a coin...`, msg.author.avatarURL);

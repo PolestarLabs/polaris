@@ -181,7 +181,7 @@ const init = async function(msg) {
 		Game.end();
 
 		validatedResults = await creditUsers(results);
-		const displayNumber = Game.winningNumber == 37 ? "d" : Game.winningNumber
+		const displayNumber = Game.winningNumber === 37 ? "d" : Game.winningNumber
 
 		const resultsEmbed = { color: settings.resultsEmbedColor , fields: [] };
 			resultsEmbed.title = $t("games.roulette.resultsTitle",P);

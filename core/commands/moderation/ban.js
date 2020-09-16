@@ -19,7 +19,7 @@ const init = async function (msg) {
   if (!Target) {
     return msg.channel.send($t("responses.errors.kin404", P));
   }
-  if (Target.id == msg.author.id) {
+  if (Target.id === msg.author.id) {
     return msg.channel.send($t("responses.errors.cantKickSelf", P));
   }
   if (!(msg.guild.member(Target).kickable)) {
@@ -31,7 +31,7 @@ const init = async function (msg) {
   let isFalse = false;
 
   function isParam(arg) {
-    if (arg === "-purge" || arg == "-p") {
+    if (arg === "-purge" || arg === "-p") {
       clear = 7;
       msg.args.splice(1, 1);
       return true;
@@ -65,7 +65,7 @@ const init = async function (msg) {
 
   let reason;
   let pre_msg;
-  if (msg.args.length == 1) {
+  if (msg.args.length === 1) {
     embed.description = `*\`\`\`${$t("interface.kickban.waitingForReason", P)}\`\`\`*`;
     pre_msg = await msg.channel.send({ content: _emoji("loading") + $t("interface.kickban.includeReason", P), embed });
     const resp = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id,
@@ -89,7 +89,7 @@ const init = async function (msg) {
       msg.channel.send($t("interface.kickban.noReason", P));
     }
     return null;
-  } if (reason && reason == "cancel") {
+  } if (reason && reason === "cancel") {
     embed.color = 0xee1225;
     if (!pre_msg) return null;
     embed.description = `\u200b\n${$t("interface.kickban.cancelled", P)}\n\u200b`;

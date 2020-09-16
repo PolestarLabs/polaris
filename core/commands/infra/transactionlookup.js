@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const { Embed } = require("eris");
   const embed = new Embed();
   const filterid = args[0];
@@ -19,7 +19,7 @@ const init = async function (msg, args) {
       curr = "cash";
   }
 
-  const transactionUser = log.from == "271394014358405121"
+  const transactionUser = log.from === "271394014358405121"
     ? (await DB.users.get({ id: log.to })).meta
     : (await DB.users.getFull({ id: log.from })).meta;
   embed.author = {
@@ -28,8 +28,8 @@ const init = async function (msg, args) {
     url: `${paths.DASH}/profile/${log.from}`,
   };
 
-  embed.color = log.transaction == "+" ? 0x60c143 : 0xe23232;
-  if (log.to == "PAYPAL") embed.color = 0x0079c1;
+  embed.color = log.transaction === "+" ? 0x60c143 : 0xe23232;
+  if (log.to === "PAYPAL") embed.color = 0x0079c1;
   embed.description(`
   **Transaction Info:**`);
   embed.fields = [];
@@ -61,13 +61,13 @@ const init = async function (msg, args) {
   if (log.details.state) {
     embed.fields.push({
       name: "State",
-      value: log.details.state == "approved" ? _emoji("yep") : _emoji("nope"),
+      value: log.details.state === "approved" ? _emoji("yep") : _emoji("nope"),
       inline: true,
     });
   }
   if (log.type.includes("give")) {
     embed.field(
-      log.transaction == "+" ? "FROM" : "TO",
+      log.transaction === "+" ? "FROM" : "TO",
       `**${transactionUser.tag}** \`${log.to}\``,
       true,
     );

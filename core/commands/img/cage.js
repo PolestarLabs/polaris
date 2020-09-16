@@ -8,7 +8,7 @@ const init = async function (msg) {
       image: {
         url:
           `http://www.placecage.com/${
-            cage % 2 == 0 ? "c/" : ""
+            cage % 2 === 0 ? "c/" : ""
           }${cage + 300
           }/${
             cage2 + 300

@@ -39,7 +39,7 @@ const init = async function (message) {
   function hots() {
     const rotation = [[]];
     request("http://heroesofthestorm.gamepedia.com/Free_rotation", (error, response, html) => {
-      if (!error && response.statusCode == 200) {
+      if (!error && response.statusCode === 200) {
         const $ = cheerio.load(html);
         $(".hero-tile").each(function (i, element) {
           const a = $(this).children()[0]; // [0];

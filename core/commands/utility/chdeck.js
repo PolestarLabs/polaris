@@ -1,11 +1,11 @@
-const init = async function (msg, args) {
-  if (args[0] == "add") {
+const init = async (msg, args) => {
+  if (args[0] === "add") {
     if (args[1]) {
       targetChannels = msg.channelMentions;
       await DB.users.set(msg.author.id, { $addToSet: { "switches.channeldeck": { $each: targetChannels } } });
       msg.addReaction(_emoji("yep").reaction);
     }
-  } else if (args[0] == "del") {
+  } else if (args[0] === "del") {
     if (args[1]) {
       targetChannels = msg.channelMentions;
       await DB.users.set(msg.author.id, { $pull: { "switches.channeldeck": { $each: [targetChannels] } } });

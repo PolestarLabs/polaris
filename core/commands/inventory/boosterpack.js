@@ -23,11 +23,11 @@ const init = async function (msg, args, userID) {
   return { content: `${_emoji("BOOSTER")} ${$t("responses.inventory.browsingBooster", P)}`, embed };
 };
 
-const open = async function (msg, args) {
+const open = async (msg, args) => {
   const userInventory = new INVENTORY(msg.author.id, "boosterpack");
   const Inventory = await userInventory.listItems();
 
-  if (!Inventory.find((bx) => bx.icon == args[0])) return "No such pack";
+  if (!Inventory.find((bx) => bx.icon === args[0])) return "No such pack";
 
   (require("../cosmetics/openbooster.js")).init(msg, { rarity: args[0] });
 };

@@ -38,7 +38,7 @@ class GenericItemInventory {
       const userInventory = new INVENTORY(userID || msg.author.id, this.invIdentifier);
       const Inventory = await userInventory.listItems(args[10]);
       const response = { content: `${_emoji(this.emoji)} ${$t(`responses.inventory.browsing${this.browsingTag}`, P)} ` };
-      if (Inventory.length == 0) {
+      if (Inventory.length === 0) {
         response.embed = { description: `*${rand$t("responses.inventory.emptyJokes", P)}*`, color: this.color };
         return response;
       }
@@ -63,7 +63,7 @@ class GenericItemInventory {
           Inventory.forEach((itm) => displayItem(itm, embed, P));
           response.embed = embed;
           return response;
-        } if (tot_pages == 0) { // soft comp to match false
+        } if (tot_pages === 0) { // soft comp to match false
           embed.description = `*${rand$t("responses.inventory.emptyJokes", P)}*`;
           return { embed };
         }

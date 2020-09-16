@@ -23,12 +23,12 @@ const init = async function (msg) {
   //
 
   const prefilt = MRG.filter((v, i, a) => {
-    // let unique = i == a.map(x=>x.id).indexOf(v.id);
-    const unique = a.map((x) => x.id).filter((x) => x == v.id).length === 1;
+    // let unique = i === a.map(x=>x.id).indexOf(v.id);
+    const unique = a.map((x) => x.id).filter((x) => x === v.id).length === 1;
     if (!unique) {
-      const copies = a.filter((ff) => ff.id == v.id);
+      const copies = a.filter((ff) => ff.id === v.id);
       const oldest = copies.sort((a, b) => a.since - b.since)[0];
-      copies.forEach((c) => c.ponderedValue = c.ring == "stardust" ? 0 : c.ring == "sapphire" ? 1 : c.ring == "rubine" ? 2 : c.ring == "jade" ? 3 : 9);
+      copies.forEach((c) => c.ponderedValue = c.ring === "stardust" ? 0 : c.ring === "sapphire" ? 1 : c.ring === "rubine" ? 2 : c.ring === "jade" ? 3 : 9);
       const mostValuable = copies.sort((a, b) => a.ponderedValue - b.ponderedValue)[0];
 
       v.ring = mostValuable.ring;
@@ -37,7 +37,7 @@ const init = async function (msg) {
       return v;
     }
     return v;
-  }).filter((v, i, a) => i == a.map((y) => y.id).indexOf(v.id));
+  }).filter((v, i, a) => i === a.map((y) => y.id).indexOf(v.id));
 
   const newMARRIAGES = await Promise.all(prefilt.map(marriageToRelationship));
 
@@ -46,10 +46,10 @@ const init = async function (msg) {
     embed: {
       description: `
             MRG: ${MRG.length}
-            DiffUsr: ${MRG.map((x) => x.id).filter((v, i, a) => i == a.indexOf(v)).length}
+            DiffUsr: ${MRG.map((x) => x.id).filter((v, i, a) => i === a.indexOf(v)).length}
             
 
-            ${newMARRIAGES.map((x, i) => `\`${i}\` **From** ${moment(x.since).from(Date.now())} | **User:** <@${x.users.find((x) => x != msg.author.id)}> | **Ring:** ${_emoji(x.ring)} | Init: ${x.initiative == msg.author.id ? _emoji("yep") : _emoji("nope")}, LVP: ${x.lovepoints} | ${x.merged ? "`MERGED`" : ""}
+            ${newMARRIAGES.map((x, i) => `\`${i}\` **From** ${moment(x.since).from(Date.now())} | **User:** <@${x.users.find((x) => x != msg.author.id)}> | **Ring:** ${_emoji(x.ring)} | Init: ${x.initiative === msg.author.id ? _emoji("yep") : _emoji("nope")}, LVP: ${x.lovepoints} | ${x.merged ? "`MERGED`" : ""}
 ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`).join("")}
 
 

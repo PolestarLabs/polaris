@@ -39,7 +39,7 @@ const init = async function (msg) {
       verticalAlign: 'top',
       textAlign: "left",
     }
-    if (!HEADLINE || HEADLINE.length == 0 && randomize(0, 3) > 1) {
+    if (!HEADLINE || HEADLINE.length === 0 && randomize(0, 3) > 1) {
       if (!global.fakeFeed) {
         setTimeout(()=>global.fakeFeed = null, 30000); 
         let RSS = require('rss-parser');

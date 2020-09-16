@@ -57,7 +57,7 @@ async function vere(base64, message, cmdPiece) {
       if (reas.length === 0) return;
       const Rea = reas[0];
       const LF = TranslateBlob.LANGFLAGS;
-      const rLang = Object.keys(LF).find((x) => LF[x] == Rea.emoji.name);
+      const rLang = Object.keys(LF).find((x) => LF[x] === Rea.emoji.name);
       const translated = await TranslateBlob.translate(detections, lang, rLang, true);
       embed.description = `\`\`\`${translated}\`\`\`(translated to ${TranslateBlob.LANGNAMES[rLang]})`;
       mes.edit({ embed });

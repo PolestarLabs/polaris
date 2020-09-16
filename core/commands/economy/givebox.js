@@ -3,7 +3,7 @@ const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
 const Timed = require("../../structures/TimedUsage");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const v = {
@@ -53,7 +53,7 @@ const init = async function (msg, args) {
       list
         .map(
           (box, i) => `${box.tradeable ? ">-" : "> "}${
-            i == R || box == cbx ? "✔️" : `[${i}]`
+            i === R || box === cbx ? "✔️" : `[${i}]`
           }[${box.name}]\n`,
         )
         .join("")
@@ -97,10 +97,10 @@ const init = async function (msg, args) {
 
     if (
       preRarity
-      && userBoxList.find((box) => box.tradeable && box.rarity == preRarity)
+      && userBoxList.find((box) => box.tradeable && box.rarity === preRarity)
     ) {
       return boxTransfer(
-        userBoxList.find((box) => box.tradeable && box.rarity == preRarity),
+        userBoxList.find((box) => box.tradeable && box.rarity === preRarity),
       );
     }
 

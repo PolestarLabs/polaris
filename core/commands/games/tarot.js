@@ -106,7 +106,7 @@ const S = [
 
 const TAROT = require("../../archetypes/Tarot");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const Tarot = new TAROT(msg, Number(args[0] || 3));
 
   // console.log(Tarot);

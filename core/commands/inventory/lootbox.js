@@ -45,7 +45,7 @@ const open = async function (msg, args, userID) {
 
   const userInventory = new INVENTORY(userID || msg.author.id, "box");
   const Inventory = await userInventory.listItems();
-  const selectedBox = Inventory.find((bx) => bx.rarity == args[0]);
+  const selectedBox = Inventory.find((bx) => bx.rarity === args[0]);
 
   if (!selectedBox) return $t("responses.inventory.noSuchBox", { lngs: msg.lang });
   this.hooks = GENERATOR.hooks;

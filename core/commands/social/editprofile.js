@@ -7,19 +7,19 @@ const init = async function (msg) {
 
   const subcommand = msg.args[0];
 
-  if (subcommand == "personaltxt") {
+  if (subcommand === "personaltxt") {
     msg.args = msg.args.slice(1);
     require("../social/personaltxt").init(msg);
   }
-  if (subcommand == "tagline") {
+  if (subcommand === "tagline") {
     msg.args = msg.args.slice(1);
     require("./tagline").init(msg);
   }
-  if (subcommand == "frame") {
+  if (subcommand === "frame") {
     msg.args = msg.args.slice(1);
     require("./profile").init(msg);
   }
-  if (subcommand == "bg") {
+  if (subcommand === "bg") {
     msg.args = msg.args.slice(1);
     require("../cosmetics/background").init(msg);
   } else if (subcommand) {
@@ -60,7 +60,7 @@ const init = async function (msg) {
   ReactionMenu(men, msg, ["✏", (frameOn ? "🔴" : frameOn !== "unavailable" ? "🔵" : null), "📝", "🖌", "🖼", "🌐", "🗃"], { time: 20000 }).then((res) => {
     if (!res) return "CANCELLED!";
 
-    if (res.index == 0) {
+    if (res.index === 0) {
       PROCESS_SUBRESPONSE(msg, "**TEXT** `One line of text`").then((res) => {
         require("./tagline").init(res.forward);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}tagline ${res ? res.string : ""}\`` } });
@@ -68,35 +68,35 @@ const init = async function (msg) {
       });
     }
 
-    if (res.index == 1) {
+    if (res.index === 1) {
       const forward = msg;
       forward.content = "+cmd frame toggle";
       require("./profile").init(forward).then((r) => men.addReaction(yep).catch()).catch((err) => console.log(err));
       msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}profile frame toggle\`` } });
       men.deleteAfter(3000);
     }
-    if (res.index == 2) {
+    if (res.index === 2) {
       PROCESS_SUBRESPONSE(msg, "**TEXT** `150 Characters of Text`").then((res) => {
         require("./personaltext").init(res.forward);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}personaltxt ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
     }
-    if (res.index == 3) {
+    if (res.index === 3) {
       PROCESS_SUBRESPONSE(msg, "**HEXCOLOR** `#000000`").then((res) => {
         require("./cosmetics/favcolor").init(res.forward);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}favcolor ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
     }
-    if (res.index == 4) {
+    if (res.index === 4) {
       PROCESS_SUBRESPONSE(msg, "**SEARCH** `bg name or code`").then((res) => {
         require("../cosmetics/background").init(res.forward);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}bg ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
     }
-    if (res.index == 5) {
+    if (res.index === 5) {
       return msg.channel.send({ embed: { description: "This feature is only available for *Iridium+* Donators." } });
       PROCESS_SUBRESPONSE(msg, "**HANDLE** `one word, no special characters allowed`").then((res) => {
         // require("../cosmetics/background").init(res.forward);
@@ -104,7 +104,7 @@ const init = async function (msg) {
         // men.deleteAfter(3000)
       });
     }
-    if (res.index == 6) {
+    if (res.index === 6) {
       msg.channel.send({
         embed: {
           description:

@@ -12,7 +12,8 @@ module.exports = class RussianRoulette {
     return this.currentPayout + this.increment;
   }
 
-  async renderCard() {} // todo
+  // TODO
+  async renderCard() {} // eslint-disable-line no-empty-function
 
   willSurvive() {
     return !shuffle(handgunBarrel)[0];

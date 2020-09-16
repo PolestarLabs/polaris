@@ -16,12 +16,12 @@ parser.refiners.push({refine (text, results, opt) {
 }})
 */
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
 
-  if (args[0] === "list" && args.length == 1) {
+  if (args[0] === "list" && args.length === 1) {
     return {
       content: $t("interface.reminders.currentActive", P),
       embed: {
@@ -31,7 +31,7 @@ const init = async function (msg, args) {
           },
           fields: userReminders.map((r) => ({
             name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
-            value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel == "dm" ? "DM" : `<#${r.channel}>`}`,
+            value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
             inline: false,
           })),
         footer: {text: "All times are in UTC"}

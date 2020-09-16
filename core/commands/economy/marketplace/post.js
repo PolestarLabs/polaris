@@ -2,7 +2,7 @@
 // const gear = require('../../../utilities/Gearbox');
 const YesNo = require("../../../structures/YesNo");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   // buy type id
 
   let operation = (args[0] || "").toLowerCase(); //  BUY / SELL
@@ -45,7 +45,7 @@ const init = async function (msg, args) {
       prequery = false;
       query = false;
 
-      if (type == "background") {
+      if (type === "background") {
         if (!userData.modules.bgInventory.includes(id)) {
           pass = false;
           reason = "Background not in Inventory";
@@ -53,7 +53,7 @@ const init = async function (msg, args) {
           query = { $pull: { "modules.bgInventory": id } };
         }
       }
-      if (type == "medal") {
+      if (type === "medal") {
         if (!userData.modules.medalInventory.includes(id)) {
           pass = false;
           reason = "Medal not in Inventory";
@@ -61,7 +61,7 @@ const init = async function (msg, args) {
           query = { $pull: { "modules.medalInventory": id } };
         }
       }
-      if (type == "boosterpack") {
+      if (type === "boosterpack") {
         if (!userData.modules.inventory.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
           pass = false;
           reason = "Booster not in Inventory";
@@ -70,7 +70,7 @@ const init = async function (msg, args) {
           query = { $inc: { "modules.inventory.$.count": -1 } };
         }
       }
-      if (transaction == "buy") {
+      if (transaction === "buy") {
         pass = true;
       }
 
@@ -100,7 +100,7 @@ const init = async function (msg, args) {
       saleStatus.forSPH ? itemStatus.pass ? _emoji("yep") : itemStatus.reason : _emoji("nope"), true,
     );
 
-    if (operation == "info" || operation == "") {
+    if (operation === "info" || operation === "") {
       return msg.channel.send({ embed });
     }
 
@@ -188,7 +188,7 @@ Use it to share your listing elsewhere!
       msg.channel.send({
         embed: {
           description: `
-            ${operation == "sell" ? "Selling" : "Buying"}: \`${itemType}\` **${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}
+            ${operation === "sell" ? "Selling" : "Buying"}: \`${itemType}\` **${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}
             `,
         },
       }).then((ms) => {
@@ -196,7 +196,7 @@ Use it to share your listing elsewhere!
       });
     }
   } else {
-    if (operation == "info" || operation == "") return;
+    if (operation === "info" || operation === "") return;
     abort();
   }
 };
