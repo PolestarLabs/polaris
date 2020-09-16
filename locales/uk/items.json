@@ -1,330 +1,330 @@
 {
     "anime_booster": {
-        "name": ""
+        "name": "Аніме Загальний VOL.1"
     },
     "broken_excavator": {
-        "name": ""
+        "name": "Зламаний беко"
     },
     "commendtoken": {
-        "name": "",
-        "description": ""
+        "name": "Командний токен",
+        "description": "Що це? Альтруїзм?"
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": ""
+        "name": "Шалендорське нефритове кільце",
+        "description": "Зелений - як коментар з любов'ю."
     },
     "complete_ring_rubine": {
-        "name": "",
-        "description": ""
+        "name": "Чудове рубінове кільце",
+        "description": "Троянди - червоні, фіалки - сині, це кільце - також червона та прекрасна, як ви!"
     },
     "complete_ring_sapphire": {
-        "name": "",
-        "description": ""
+        "name": "Розкішне Кільце Сапфіру",
+        "description": "Перший крок до зобов'язань - відмовитись від рідкісної самої - вітання! "
     },
     "complete_ring_stardust": {
-        "name": "",
-        "description": ""
+        "name": "Глибоке Зоряне Кільце",
+        "description": "“Кожну любитель — у його серці, божевільний і, в голові, — мінваль.” \nNageil Gaiman, Stardust."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Фрагмент Космо",
+        "description": "Крихітні гравій використовуються для підкотування косових уламків"
     },
     "cosmo_gem_C": {
-        "name": "",
-        "description": ""
+        "name": "Звичайний Козмо",
+        "description": "Ну, принаймні, блискуче."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "Рідкісний Козмо",
+        "description": "трохи дорого, чи не так?"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "Супер Рідкісний Козручний самоцвіт",
+        "description": "Ой, це особливий малий самоцвіт, який ви туди дістали? Скільки ви хочете зробити шість рубінів? Вісім?"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "Рідкісний Космо Гем",
+        "description": "Я маю на увазі, це краще, ніж звичайно."
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "Побажайте зірку... І нарешті це."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "Огляд з Даянпану",
+        "description": "Будь ласка, не 4 DPS у командному бустерпаку"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "Докі Докі Літературний клуб",
+        "description": "Просто Моніка"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "Подвійний гак",
+        "description": "Хук або ви віддаєте перевагу хуку 2"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "Зворотна гравізія",
+        "description": "За людей, що не хочуть брудними руками."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "Хук",
+        "description": "Востаннє бачили переслідуючого хлопчика."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "Початковий D",
+        "description": "Deja<unk> vu. Я щойно відкрив цей прискорювач раніше."
     },
     "iwd1_booster": {
-        "name": "",
-        "description": ""
+        "name": "ШОД - сезон 1",
+        "description": "Екслюзивна участь в Discord з інтернетом в наклейок. 2018 2018"
     },
     "iwd2_booster": {
-        "name": "",
-        "description": ""
+        "name": "ШОД - сезон 2",
+        "description": "Ексклюзивні підписки до Інтернету Discord з боротьби з підпискою. 2019"
     },
     "lootbox_C_C": {
-        "name": ""
+        "name": "Chibi поширений декорбокс"
     },
     "lootbox_C_E": {
-        "name": ""
+        "name": "Епічна загальна Лутбокс"
     },
     "lootbox_C_event_1": {
-        "name": ""
+        "name": "Звичайна книжка для Хеллоуїну"
     },
     "lootbox_C_event_2": {
-        "name": ""
+        "name": "Новорічна булочка"
     },
     "lootbox_C_event_3": {
-        "name": ""
+        "name": "Звичайний великодній корпус"
     },
     "lootbox_C_event_s1": {
-        "name": ""
+        "name": "Звичайний літній лутбокс"
     },
     "lootbox_C_event_s2": {
-        "name": ""
+        "name": "Звичайний зимовий бокс"
     },
     "lootbox_C_event_s3": {
-        "name": ""
+        "name": "Звичайний ящик для сонця"
     },
     "lootbox_C_O": {
-        "name": ""
+        "name": "Звичайний Скарбничка"
     },
     "lootbox_C_s1": {
-        "name": ""
+        "name": "Звичайний літній лутбокс"
     },
     "lootbox_C_s2": {
-        "name": ""
+        "name": "Звичайний зимовий бокс"
     },
     "lootbox_dev": {
-        "name": "",
-        "description": ""
+        "name": "Подарункова Коробка розробників",
+        "description": "Стартовий ящик, подарунок від розробників Pollux для початківців. Втісно гарантовано мати хоча б один предмет UR!"
     },
     "lootbox_EL": {
-        "name": "",
-        "description": ""
+        "name": "ельф",
+        "description": "Якщо відкрити цей ящик, то буде вибухнути"
     },
     "lootbox_R_C": {
-        "name": ""
+        "name": "Chibi Rare Lootbox"
     },
     "lootbox_R_E": {
-        "name": ""
+        "name": "Епічний Рідкісний Скарб"
     },
     "lootbox_R_event_1": {
-        "name": ""
+        "name": "Rare Halloween Lootbox"
     },
     "lootbox_R_event_2": {
-        "name": ""
+        "name": "Рідкісна різдвяна бочка"
     },
     "lootbox_R_event_3": {
-        "name": ""
+        "name": "Рідкісна коробка Пасхи"
     },
     "lootbox_R_event_s1": {
-        "name": ""
+        "name": "Рідкісний літній Лутбокс"
     },
     "lootbox_R_event_s2": {
-        "name": ""
+        "name": "рідкісний зимовий бокс"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Rare Lootbox"
     },
     "lootbox_R_s1": {
-        "name": ""
+        "name": "Рідкісний літній Лутбокс"
     },
     "lootbox_R_s2": {
-        "name": ""
+        "name": "рідкісний зимовий бокс"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Chibi Super Rare Lootbox"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "Епічний Супер Рідкісний Скарб"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "Супер рідкісна книжка для Хеллоуїну"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "Різдвяний ящик на Супер Рідкісний"
     },
     "lootbox_SR_event_3": {
-        "name": ""
+        "name": "Супер Рідкісний Великодній Видобуток"
     },
     "lootbox_SR_event_s1": {
-        "name": ""
+        "name": "Супер Рідкісний Літній Логотип"
     },
     "lootbox_SR_event_s2": {
-        "name": ""
+        "name": "Супер Рідкий зимовий Лутбокс"
     },
     "lootbox_SR_event_s3": {
-        "name": ""
+        "name": "Супер Рідкісний Солдат з Скарбами"
     },
     "lootbox_SR_O": {
-        "name": ""
+        "name": "Супер Рідкісний ящик"
     },
     "lootbox_SR_s1": {
-        "name": ""
+        "name": "Супер Рідкісний Літній Логотип"
     },
     "lootbox_SR_s2": {
-        "name": ""
+        "name": "Супер Рідкий зимовий Лутбокс"
     },
     "lootbox_SR_s3": {
-        "name": ""
+        "name": "Супер Рідкісний Солдат з Скарбами"
     },
     "lootbox_U_C": {
-        "name": ""
+        "name": "Chibi Uncommon Lootbox"
     },
     "lootbox_U_E": {
-        "name": ""
+        "name": "Епічна Нетипова Лутбокс"
     },
     "lootbox_U_event_1": {
-        "name": ""
+        "name": "Uncommon Halloween Lootbox"
     },
     "lootbox_U_event_2": {
-        "name": ""
+        "name": "Рідкісна Різдвяна бочка"
     },
     "lootbox_U_event_3": {
-        "name": ""
+        "name": "Рідкісний Великодній Булаж"
     },
     "lootbox_U_event_s1": {
-        "name": ""
+        "name": "Незвичайний літній Лутбокс"
     },
     "lootbox_U_event_s2": {
-        "name": ""
+        "name": "Рідкісний зимовий малюнок"
     },
     "lootbox_U_event_s3": {
-        "name": ""
+        "name": "Незвичайний предмет споглядання"
     },
     "lootbox_U_O": {
-        "name": ""
+        "name": "Нетиповий Лутбокс"
     },
     "lootbox_U_s1": {
-        "name": ""
+        "name": "Незвичайний літній Лутбокс"
     },
     "lootbox_U_s2": {
-        "name": ""
+        "name": "Рідкісний зимовий малюнок"
     },
     "lootbox_U_s3": {
-        "name": ""
+        "name": "Незвичайний предмет споглядання"
     },
     "lootbox_UR_C": {
-        "name": ""
+        "name": "Chibi Ultra Rare Lootbox"
     },
     "lootbox_UR_E": {
-        "name": ""
+        "name": "Epic Ultra Rare Lootbox"
     },
     "lootbox_UR_event_1": {
-        "name": ""
+        "name": "Ультра-рідкісний Геллоуїн"
     },
     "lootbox_UR_event_2": {
-        "name": ""
+        "name": "Ультра рідкісна різдвяна бочка"
     },
     "lootbox_UR_event_s1": {
-        "name": ""
+        "name": "Ультра Рідкісний Літній Лутбокс"
     },
     "lootbox_UR_event_s2": {
-        "name": ""
+        "name": "Ультра Рідкісний зимовий ящик"
     },
     "lootbox_UR_event_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "lootbox_UR_O": {
-        "name": ""
+        "name": "Ultra Rare Lootbox"
     },
     "lootbox_UR_s1": {
-        "name": ""
+        "name": "Ультра Рідкісний Літній Лутбокс"
     },
     "lootbox_UR_s2": {
-        "name": ""
+        "name": "Ультра Рідкісний зимовий ящик"
     },
     "lootbox_UR_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "nierauto_booster": {
-        "name": "",
-        "description": ""
+        "name": "NieR: Automata",
+        "description": "Прискорювач, який вам потрібен 2B щасливим"
     },
     "p5_booster": {
-        "name": "",
-        "description": ""
+        "name": "Persona 5",
+        "description": "Ви ніколи не бачите, що це прийде"
     },
     "padoru_booster": {
-        "name": "",
-        "description": ""
+        "name": "Колекція контролю Падору",
+        "description": "Хашире ьо і димально зроби рубіни"
     },
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "Часткове Кільце",
+        "description": "Кругла смуга металу, яка використовується для створення чарівного весільного кільця"
     },
     "reel": {
-        "name": "",
-        "description": ""
+        "name": "Рибальський риболовля",
+        "description": "Ви кружляєте їх, але не схожі на запис. Схоже, що їх треба десь підкручувати."
     },
     "rod_c": {
-        "name": "",
-        "description": ""
+        "name": "Водяна вудка",
+        "description": "Лише тягне рибу, а не доповнення."
     },
     "rod_r": {
-        "name": "",
-        "description": ""
+        "name": "Свята вудка",
+        "description": "Технічно це не погано, але технічно не чудово."
     },
     "rod_sr": {
-        "name": "",
-        "description": ""
+        "name": "Бавовняна вудка",
+        "description": "~Вони кажуть, що ця риболовля паличка була зроблена Боб Росс ~"
     },
     "rod_u": {
-        "name": "",
-        "description": ""
+        "name": "Мандрівка бамбукова",
+        "description": "Ця паличка бамбука взята з саду мудрих китайських монах."
     },
     "rod_ur": {
-        "name": "",
-        "description": ""
+        "name": "Вудка професійної риболовлі",
+        "description": "Ні В якому разі не зламається."
     },
     "rope": {
-        "name": "",
-        "description": ""
+        "name": "Мотузка",
+        "description": "Ні, це не те, що ви вважаєте."
     },
     "shovel": {
-        "name": "",
-        "description": ""
+        "name": "Лопата",
+        "description": "Використовується для риття отворів, як фізичних, так і метафоричних."
     },
     "spoon": {
-        "name": "",
-        "description": ""
+        "name": "Ложиця",
+        "description": "Це дуже сексуальна ложка, будь ласка, використовуйте її відповідально."
     },
     "spork": {
-        "name": "",
-        "description": ""
+        "name": "Спорк",
+        "description": "Ложка, плюс виделка. Це Їжа!"
     },
     "stick": {
-        "name": "",
-        "description": ""
+        "name": "Напівбезцінний стік",
+        "description": "Ціна не в тому, що важливо, але відчуття прірви прірви наскільки дивовижною може бути ця палиця"
     },
     "fork": {
-        "name": "",
-        "description": ""
+        "name": "Fork",
+        "description": "З швидкістю в чотири рази більше кроку ніж ножа, але й половина впливу, це вдвічі цінність!"
     }
 }

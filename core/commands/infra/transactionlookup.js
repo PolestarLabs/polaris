@@ -1,8 +1,8 @@
 const init = async function (msg, args) {
   const { Embed } = require("eris");
   const embed = new Embed();
-  let filterid = args[0];
-  let log = await DB.audits.get({ transactionId: filterid });
+  const filterid = args[0];
+  const log = await DB.audits.get({ transactionId: filterid });
   if (!log) return msg.addReaction(_emoji("nope").reaction);
   let curr;
   switch (log.currency) {
@@ -19,14 +19,13 @@ const init = async function (msg, args) {
       curr = "cash";
   }
 
-  let transactionUser =
-    log.from == "271394014358405121"
-      ? (await DB.users.get({ id: log.to })).meta
-      : (await DB.users.getFull({ id: log.from })).meta;
+  const transactionUser = log.from == "271394014358405121"
+    ? (await DB.users.get({ id: log.to })).meta
+    : (await DB.users.getFull({ id: log.from })).meta;
   embed.author = {
     name: transactionUser.tag,
-    icon_url: paths.CDN + "/images/" + (curr || "x") + ".png",
-    url: paths.CDN + "/profile/" + log.from,
+    icon_url: `${paths.CDN}/images/${curr || "x"}.png`,
+    url: `${paths.DASH}/profile/${log.from}`,
   };
 
   embed.color = log.transaction == "+" ? 0x60c143 : 0xe23232;
@@ -36,26 +35,26 @@ const init = async function (msg, args) {
   embed.fields = [];
   embed.fields.push({
     name: "Amount",
-    value: "**" + miliarize(log.amt, true) + "** " + log.currency,
+    value: `**${miliarize(log.amt, true)}** ${log.currency}`,
     inline: true,
   });
   embed.fields.push({
     name: "Type",
-    value: "`" + log.type + "`",
+    value: `\`${log.type}\``,
     inline: true,
   });
   if (log.to != "271394014358405121" && log.from != "271394014358405121") {
-    let ouser = (await DB.userDB.findOne({ id: log.to }))?.meta || log.to;
+    const ouser = (await DB.userDB.findOne({ id: log.to }))?.meta || log.to;
     embed.fields.push({
       name: "Recipient",
-      value: (ouser.tag || "") + " `" + log.to + "`",
+      value: `${ouser.tag || ""} \`${log.to}\``,
       inline: true,
     });
   }
   if (log.details) {
     embed.fields.push({
       name: "Details",
-      value: "```\n" + log.details.info + "```",
+      value: `\`\`\`\n${log.details.info}\`\`\``,
       inline: true,
     });
   }
@@ -66,15 +65,16 @@ const init = async function (msg, args) {
       inline: true,
     });
   }
-  if (log.type.includes("give"))
+  if (log.type.includes("give")) {
     embed.field(
       log.transaction == "+" ? "FROM" : "TO",
-      "**" + transactionUser.tag + "** `" + log.to + "`",
-      true
+      `**${transactionUser.tag}** \`${log.to}\``,
+      true,
     );
+  }
 
   embed.thumbnail = { url: transactionUser.avatarURL || transactionUser.avatar };
-  let ts = new Date(log.timestamp);
+  const ts = new Date(log.timestamp);
   embed.timestamp = ts;
   embed.footer = { text: log.transactionId };
 

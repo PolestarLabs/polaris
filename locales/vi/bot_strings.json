@@ -796,18 +796,17 @@
             "",
             ""
         ],
+        "duplicate": "",
         "lootPick": "",
         "goesTo": "",
         "congrats": "",
         "opening": "",
         "contains": "",
-        "options": "",
         "keep": "",
         "reroll": "",
         "rerolled": "",
         "noMoreRolls": "",
         "noFunds": "",
-        "rerollRemain": "",
         "addedRubines": "",
         "addedJades": "",
         "addedMedal": "",
@@ -817,7 +816,12 @@
         "morons": "",
         "contesting": "",
         "eventDrop": "",
-        "notThisbox": ""
+        "notThisbox": "",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "",

@@ -23,7 +23,7 @@
     },
     "complete_ring_stardust": {
         "name": "Bogaty Gwiezdny Pierścień",
-        "description": ""
+        "description": "\"Każdy kochanek jest w jego sercu szaleńcem, a w jego głowie natomiast minstrelem.. \n― Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
         "name": "Kosmiczny Fragment",
@@ -51,7 +51,7 @@
     },
     "daianwatch_booster": {
         "name": "Overwatch stworzony przez Daianpan",
-        "description": ""
+        "description": "Proszę nie wybieraj 4 DPS w drużynowym boosterze."
     },
     "doki_booster": {
         "name": "Doki Doki Literature Club",
@@ -71,7 +71,7 @@
     },
     "initd_booster": {
         "name": "Initial D",
-        "description": "Dejà Vu. Otwierałem już tą paczkę wcześniej."
+        "description": "Dejà Vu. Otwierałam już tą paczkę wcześniej."
     },
     "iwd1_booster": {
         "name": "IWD - Sezon 1",
@@ -269,7 +269,7 @@
     },
     "p5_booster": {
         "name": "Persona 5",
-        "description": "Nigdy nie widzisz jak nadchodzi"
+        "description": "Nigdy nie widzisz, jak nadchodzi"
     },
     "padoru_booster": {
         "name": "Padoru Ultimate Collection",

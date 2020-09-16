@@ -560,7 +560,7 @@ const init       = async (msg,args) => {
 
 			const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 				renderHand(playerHands,  myDeck),
-				renderHand([hideHoleCard ? visihand : dealerHand],  'default')
+				renderHand([hideHoleCard ? visihand : dealerHand],  myDeck)
 			]);
 
 			if (winnings !== 0) {
@@ -694,7 +694,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 		let errored;
 		const [POLLUX_HAND_GFX,PLAYER_HAND_GFX]= await Promise.all([
 			renderHand(hands, deck 	 ,bjkD,currentHand),			 
-			renderHand([visibleHand], 'default',bjkP)
+			renderHand([visibleHand], deck,bjkP)
 		]).timeout(2000).catch(e=> {errored = true; return [e,0] } );
 		if (errored) Promise.reject("Error during checks => \n"+POLLUX_HAND_GFX);
 
@@ -707,7 +707,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
       if(canInsurance)  options.actions.push("INSURANCE")
     options.actions.push("SURRENDER")
 
-		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(0,0));
+		let scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(e=>Picto.new(1,1));
  
     
     if(currentHand.insuredLastTurn){
@@ -718,8 +718,15 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
         //mm.delete()
       });
       currentHand.insuredLastTurn = false;
-    }else{      
-      msg.channel.send('', { file: scenario.toBuffer('image/png',imageOptions), name: "blackjack.png" }).then(mm=>{
+    }else{ 
+		let finalImage;
+		try{
+			finalImage = scenario.toBuffer('image/png',imageOptions)
+		}catch(err){
+			finalImage = scenario.toBuffer()
+		}
+
+      msg.channel.send('', { file: finalImage, name: "blackjack.png" }).then(mm=>{
         if(tableMessageRound) tableMessageRound.delete();
         tableMessageRound = mm
       });

@@ -796,18 +796,17 @@
             "Sugoi! Regardez cette Lootbox que j'ai trouvée!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "␣Vous avez tous **__20 Secondes__** pour la prendre! Ecrivez `{{prefix}}pick` pour avoir une chance de l'avoir!",
         "goesTo": "Le temps est écoulé! Voyons qui a gagné cette Lootbox...\n**Cette Lootbox va être mis en jeu entre:**",
         "congrats": "Félicitations! Ce coffre a été ajouté à votre **inventaire**. Tu peux l'ouvrir par la commande `{{prefix}}lootbox`.",
         "opening": "{{user}} a ouvert sa Lootbox...",
         "contains": "",
-        "options": "Tu peux soit garder ton butin, ou, retenter ta chancer en payant {{amt}} Rubines!",
         "keep": "Garder",
         "reroll": "Relancer",
         "rerolled": "On relance! Voyons voir...",
         "noMoreRolls": "Tu n'as plus de relances, tu vas devoir garder ce butin!",
         "noFunds": "Tu ne peux pas te payer une relance le prolo, on verra la prochaine fois.",
-        "rerollRemain": "Relances restantes:",
         "addedRubines": "{{X}} Rubines ajoutées à votre porte-feuille!",
         "addedJades": "{{X}} Jades ajoutées à votre bourse!",
         "addedMedal": "**{{itm}}** Médaille a été ajouté a ta pochette de médailles",
@@ -817,7 +816,12 @@
         "morons": "Bande **d'abrutis**! Vous avez laissé un lootbox filer!! >:U",
         "contesting": "Participants pour cette lootbox:",
         "eventDrop": "Et il en a plus! Ce coffre est un **COFFRE D'ÉVÉNEMENT** qui signifie: **'des trucs spéciaux dedans'!**",
-        "notThisbox": "Tu ne possèdes pas ce genre de lootbox, retente `{{prefix}}lootbox` et regarde ce que tu as~"
+        "notThisbox": "Tu ne possèdes pas ce genre de lootbox, retente `{{prefix}}lootbox` et regarde ce que tu as~",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Tu pensais que c'était Pollux, **mais c'était moi, DIO**!",

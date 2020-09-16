@@ -796,18 +796,17 @@
             "斯勾以～！看看我找到的箱子！",
             ""
         ],
+        "duplicate": "",
         "lootPick": "你們有**__20秒__**的時間可以搶！輸入`{{prefix}}pick`來加入戰局！",
         "goesTo": "時間到！我們來看誰會拿到這個箱子\n**這些人都有機會拿到這個箱子：**",
         "congrats": "",
         "opening": "{{user}}開啟了他的箱子...",
         "contains": "",
-        "options": "你可以把它留著，或是付{{amt}}來重骰",
         "keep": "留著",
         "reroll": "重骰",
         "rerolled": "在試一次吧，正在重骰內容物...",
         "noMoreRolls": "你不能在重骰了，就這樣了",
         "noFunds": "孩子，你窮到不能重骰，下次吧",
-        "rerollRemain": "剩餘重骰次數：",
         "addedRubines": "{{X}}個紅寶石已加入你的餘額",
         "addedJades": "{{X}}個玉已加入你的餘額",
         "addedMedal": "",
@@ -817,7 +816,12 @@
         "morons": "You're a bunch of **morons**! You let a Lootbox slip by. ]:U",
         "contesting": "",
         "eventDrop": "",
-        "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子"
+        "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "跟你玩21點不是Pollux，**而是我，迪奧！**",

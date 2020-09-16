@@ -277,19 +277,23 @@
             "isEmpty": "There's nothing there to remove!"
         },
         "discoin": {
-            "desc": "Your Rubines are being sent, a response from %BOT% will come as soon as it arrives.",
-            "intake": "Pollux **Rubines** (RBN) Exchanged:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) to Receive:",
-            "remainder": "Remaining Limit for {{$}}",
-            "receiptCode": "Transaction Receipt Code",
-            "amNaN": "Invalid quantity",
-            "invalidCurr": "That Currency doesn't exist!",
-            "invalidAmt": "You can't exchange that amount! ",
-            "unverified": "You are not verified to make exchanges.\nPlease verify yourself at [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Your exchange limit for today has been reached!",
-            "globalLimit": "You've reached your Discoin limit, try again tomorrow.",
-            "takedis": "Keep this code in case your Rubines don't reach their destination.",
-            "ex-succ": "Exchange Successful!"
+						"links": "Relevant links:",
+						"list": "Currency list",
+						"graphs": "Live graphs",
+						"guide": "Users guide",
+						"tax": "Tax information",
+						"tax_desc": "Exchange tax: **{{exchange}}%**\nIncome Tax: **{{income}}%**\nTransfer Tax: **{{transfer}}%**" ,
+            "discoin_desc": "Your Rubines are being sent, a response from {{bot}} will come as soon as it arrives.",
+						"receipt": "Here is your transaction receipt:",
+						"receiptnoDM": "I couldn't deliver it in dms, so here is your receipt:",
+						"takedis": "Keep this receipt in case your Rubines don't reach their destination.",
+            "invalidCurr": "That Currency doesn't exist! Use `{{prefix}}exchange` to see all available currencies.",
+            "debt": "You can't exchange debt, exchange at least 1 Rubine!",
+						"zero": "Exchange at least 1 Rubine.",
+						"perMin": "The minimum is {{perMin}} Rubines per transaction.",
+						"perMax": "The maximum per transcation is {{perMax}} Rubines.",
+						"dailyMax": "You've hit the daily maximum of {{dailyMax}} Rubines.",
+						"unreachable": "Discoin could not be reached, try again at a later time."
         },
         "langIntro": {
             "global": "Okay, from now on I'll speak {{LANGUAGE}} in this server. {{LANGJOKE}}",
@@ -818,18 +822,19 @@
             "Amazing! Look at what I've found!",
             "Hey, I'm pretty sure you want to see this Lootbox here."
         ],
+        "duplicate":"DUPLICATE",
         "lootPick": "You all have **__20 Seconds__** to dispute it! Type `{{prefix}}pick` for a chance to claim it!",
         "goesTo": "Time's up! Let's see who's getting this Box.\n**This Loot Box will be raffled between:**",
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
         "opening": "{{user}} opened their Lootbox...",
         "contains": "This {{adjective}} Lootbox contains",
-        "options": "You can either keep it, or reroll it by paying {{amt}}",
+
         "keep": "Keep it",
         "reroll": "Reroll it",
         "rerolled": "Let's try again, rerolling the box content...",
         "noMoreRolls": "You've ran out of rerolls, you'll have to stick with this result.",
         "noFunds": "You need more Rubines to reroll, perhaps next time.",
-        "rerollRemain": "Rerolls remaining:",
+  
         "addedRubines": "{{X}} Rubines have been added to your Balance",
         "addedJades": "{{X}} Jades have been added to your Pouch",
         "addedMedal": "**{{itm}}** Medal has been added to your Medals Pocket",
@@ -839,7 +844,14 @@
         "morons": "You let a Lootbox slip by? What am I saying, of course you did.",
         "contesting": "Entries for this Box:",
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
-        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own."
+        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
+        
+        
+        "options_new": "{{k_emoji}}Keep | {{r_emoji}}Reroll {{amt}}",             
+        "rerollRemain_new": "You can reroll **one** last time!",
+        "rerollRemain_new_plural": "You can reroll **{{count}}** more times!",
+        "hasDupes" : "{{x_frags}} from duplicate items!",
+        "allItemsAdded" : "All items have been added to your inventory!"
     },
 
     "eastereggs": {

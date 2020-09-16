@@ -1,330 +1,330 @@
 {
     "anime_booster": {
-        "name": ""
+        "name": "Anime Generieke VOL.1"
     },
     "broken_excavator": {
-        "name": ""
+        "name": "Gebroken Ruggengraat"
     },
     "commendtoken": {
-        "name": "",
-        "description": ""
+        "name": "Commendatie token",
+        "description": "Wat is dit? Altruisme?"
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": ""
+        "name": "Splendoreuze Jade Ring",
+        "description": "Zo groen als uw comité met liefde."
     },
     "complete_ring_rubine": {
-        "name": "",
-        "description": ""
+        "name": "Geweldige Rubine Ring",
+        "description": "Rozen zijn rood, violets zijn blauw, deze ring is ook rood en mooi als jij!"
     },
     "complete_ring_sapphire": {
-        "name": "",
-        "description": ""
+        "name": "Luxe Saffier Ring",
+        "description": "De eerste stap in de richting van betrokkenheid is het opgeven van een zeldzame edelsteen voor je dierbaren - gefeliciteerd! "
     },
     "complete_ring_stardust": {
-        "name": "",
-        "description": ""
+        "name": "Opulente sterrenring",
+        "description": "“Iedere liefhebber is in zijn hart een gek en, in zijn hoofd, een minst.\" \n- Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Cosmo Fragment",
+        "description": "Glimmend grind voor kosmo Scherven"
     },
     "cosmo_gem_C": {
-        "name": "",
-        "description": ""
+        "name": "Gemeenschappelijk Kosmo Edelsteen",
+        "description": "Oh goed, het is in ieder geval verlegend."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "Zeldzame Cosmo Edelsteen",
+        "description": "Oh? Een beetje duur, nietwaar?"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "Super Zeldzame Cosmo Edelsteen",
+        "description": "Woah, dat is een speciaal kleine edelsteen die je daar binnenkwam. Hoeveel wil je er voor hebben? Zes rubines? Acht?"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "Ongewone Cosmo Edelsteen",
+        "description": "Ik bedoel, ik denk dat het beter is dan een gewoonte!"
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "Wens op een ster... en je hebt er eindelijk een gekregen."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "Overwatch door Daianpan",
+        "description": "Doe niet 4 DPS in een team boosterpack"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "Doki Doki Literatuur Club",
+        "description": "Alleen Monika"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "Dubbele haak",
+        "description": "Een haak of als je een hak verkiezen"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "Grafisch Achterschoffel",
+        "description": "Voor mensen die hun handen niet vies willen krijgen."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "Haak",
+        "description": "Laatst gezien aan het jagen op een kleine vliegende jongen."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "Initiële D",
+        "description": "Jouw vu. Ik heb zojuist deze booster geopend."
     },
     "iwd1_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Seizoen 1",
+        "description": "Internet Worden Discord Exclusief Lidmaatschap Stickers. 2018"
     },
     "iwd2_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Seizoen 2",
+        "description": "Internet Sprekende Discord Exclusieve Lidmaatschap Stickers. 2019"
     },
     "lootbox_C_C": {
-        "name": ""
+        "name": "Chibi Common Lootbox"
     },
     "lootbox_C_E": {
-        "name": ""
+        "name": "Epische Gewone Lootbox"
     },
     "lootbox_C_event_1": {
-        "name": ""
+        "name": "Gewone Halloween Lootbox"
     },
     "lootbox_C_event_2": {
-        "name": ""
+        "name": "Gewone Kerstmis Lootbox"
     },
     "lootbox_C_event_3": {
-        "name": ""
+        "name": "Gewone Paas Lootbox"
     },
     "lootbox_C_event_s1": {
-        "name": ""
+        "name": "Gewone Zomer Lootbox"
     },
     "lootbox_C_event_s2": {
-        "name": ""
+        "name": "Gewone Winter Lootbox"
     },
     "lootbox_C_event_s3": {
-        "name": ""
+        "name": "Gewone Solstice Lootbox"
     },
     "lootbox_C_O": {
-        "name": ""
+        "name": "Gewone Lootbox"
     },
     "lootbox_C_s1": {
-        "name": ""
+        "name": "Gewone Zomer Lootbox"
     },
     "lootbox_C_s2": {
-        "name": ""
+        "name": "Gewone Winter Lootbox"
     },
     "lootbox_dev": {
-        "name": "",
-        "description": ""
+        "name": "Dev Geschenk Box",
+        "description": "Starter Lootbox, een geschenk van Pollux's dev voor beginners. Het is gegarandeerd dat er ten minste één UR item is!"
     },
     "lootbox_EL": {
-        "name": "",
-        "description": ""
+        "name": "elBox",
+        "description": "Als je deze doos opent, zal je inventaris ontploffen"
     },
     "lootbox_R_C": {
-        "name": ""
+        "name": "Chibi Rare Lootbox"
     },
     "lootbox_R_E": {
-        "name": ""
+        "name": "Epische Zeldzame Lootbox"
     },
     "lootbox_R_event_1": {
-        "name": ""
+        "name": "Rare Halloween Lootbox"
     },
     "lootbox_R_event_2": {
-        "name": ""
+        "name": "Zeldzame Kerst Lootbox"
     },
     "lootbox_R_event_3": {
-        "name": ""
+        "name": "Zeldzame Paas Lootbox"
     },
     "lootbox_R_event_s1": {
-        "name": ""
+        "name": "Zeldzame Zomer Lootbox"
     },
     "lootbox_R_event_s2": {
-        "name": ""
+        "name": "Zeldzame Winter Lootbox"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Rare Lootbox"
     },
     "lootbox_R_s1": {
-        "name": ""
+        "name": "Zeldzame Zomer Lootbox"
     },
     "lootbox_R_s2": {
-        "name": ""
+        "name": "Zeldzame Winter Lootbox"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Chibi Super Zeldzame Lootbox"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "Epische Super Zeldzame Lootbox"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "Super Zeldzame Halloween Lootbox"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "Super Zeldzame Kerstmis Schoffbox"
     },
     "lootbox_SR_event_3": {
-        "name": ""
+        "name": "Super Zeldzame Paas Lootbox"
     },
     "lootbox_SR_event_s1": {
-        "name": ""
+        "name": "Super Zeldzame Zomer Lootbox"
     },
     "lootbox_SR_event_s2": {
-        "name": ""
+        "name": "Super Zeldzame Winter Lootbox"
     },
     "lootbox_SR_event_s3": {
-        "name": ""
+        "name": "Super Zeldzame Solstice Lootbox"
     },
     "lootbox_SR_O": {
-        "name": ""
+        "name": "Super Zeldzame Lootbox"
     },
     "lootbox_SR_s1": {
-        "name": ""
+        "name": "Super Zeldzame Zomer Lootbox"
     },
     "lootbox_SR_s2": {
-        "name": ""
+        "name": "Super Zeldzame Winter Lootbox"
     },
     "lootbox_SR_s3": {
-        "name": ""
+        "name": "Super Zeldzame Solstice Lootbox"
     },
     "lootbox_U_C": {
-        "name": ""
+        "name": "Chibi Uncommon Lootbox"
     },
     "lootbox_U_E": {
-        "name": ""
+        "name": "Epische Ongewone Lootbox"
     },
     "lootbox_U_event_1": {
-        "name": ""
+        "name": "Uncommon Halloween Lootbox"
     },
     "lootbox_U_event_2": {
-        "name": ""
+        "name": "Ongewone Kerstmis Lootbox"
     },
     "lootbox_U_event_3": {
-        "name": ""
+        "name": "Ongewone Paas Lootbox"
     },
     "lootbox_U_event_s1": {
-        "name": ""
+        "name": "Ongewone Zomer Lootbox"
     },
     "lootbox_U_event_s2": {
-        "name": ""
+        "name": "Ongewone Winter Lootbox"
     },
     "lootbox_U_event_s3": {
-        "name": ""
+        "name": "Ongebruikelijke Solstice Lootbox"
     },
     "lootbox_U_O": {
-        "name": ""
+        "name": "Ongebruikelijke Lootbox"
     },
     "lootbox_U_s1": {
-        "name": ""
+        "name": "Ongewone Zomer Lootbox"
     },
     "lootbox_U_s2": {
-        "name": ""
+        "name": "Ongewone Winter Lootbox"
     },
     "lootbox_U_s3": {
-        "name": ""
+        "name": "Ongebruikelijke Solstice Lootbox"
     },
     "lootbox_UR_C": {
-        "name": ""
+        "name": "Chibi Ultra Rare Lootbox"
     },
     "lootbox_UR_E": {
-        "name": ""
+        "name": "Epic Ultra Rare Lootbox"
     },
     "lootbox_UR_event_1": {
-        "name": ""
+        "name": "Ultra Zeldzame Halloween Lootbox"
     },
     "lootbox_UR_event_2": {
-        "name": ""
+        "name": "Ultra Zeldzame Kerst Lootbox"
     },
     "lootbox_UR_event_s1": {
-        "name": ""
+        "name": "Ultra Zeldzame Zomer Lootbox"
     },
     "lootbox_UR_event_s2": {
-        "name": ""
+        "name": "Ultra Zeldzame Winter Lootbox"
     },
     "lootbox_UR_event_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "lootbox_UR_O": {
-        "name": ""
+        "name": "Ultra Rare Lootbox"
     },
     "lootbox_UR_s1": {
-        "name": ""
+        "name": "Ultra Zeldzame Zomer Lootbox"
     },
     "lootbox_UR_s2": {
-        "name": ""
+        "name": "Ultra Zeldzame Winter Lootbox"
     },
     "lootbox_UR_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "nierauto_booster": {
-        "name": "",
-        "description": ""
+        "name": "NieR: Automata",
+        "description": "De booster die je 2B nodig hebt"
     },
     "p5_booster": {
-        "name": "",
-        "description": ""
+        "name": "Persona 5",
+        "description": "Je ziet het nooit komen"
     },
     "padoru_booster": {
-        "name": "",
-        "description": ""
+        "name": "Padoru Ultieme Collectie",
+        "description": "Hashire soring en gimme je Rubines"
     },
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "Gedeeltelijke Ring",
+        "description": "Een ronde band van metaal gebruikt om een mooie trouwring te maken"
     },
     "reel": {
-        "name": "",
-        "description": ""
+        "name": "Vissen Voel",
+        "description": "Je gedraagt het rond, maar niet als een record. Het lijkt erop dat het ergens opgehangen moet worden."
     },
     "rod_c": {
-        "name": "",
-        "description": ""
+        "name": "Makeshift vishengel",
+        "description": "Alleen vis wint, geen complimenten."
     },
     "rod_r": {
-        "name": "",
-        "description": ""
+        "name": "Duurzame Vishengel",
+        "description": "Het is technisch niet slecht, maar technisch niet groot."
     },
     "rod_sr": {
-        "name": "",
-        "description": ""
+        "name": "Formidabele vishengel",
+        "description": "~Ze zeggen dat deze vishengel is gemaakt door Bob Ross~"
     },
     "rod_u": {
-        "name": "",
-        "description": ""
+        "name": "Bamboe Vishengel",
+        "description": "Deze bamboe stok werd van een wijze Chinese monniken tuin."
     },
     "rod_ur": {
-        "name": "",
-        "description": ""
+        "name": "Professionele Vishengel",
+        "description": "Nee. Breek. Één punt."
     },
     "rope": {
-        "name": "",
-        "description": ""
+        "name": "Touw",
+        "description": "Nee, dit is niet wat je denkt dat het is."
     },
     "shovel": {
-        "name": "",
-        "description": ""
+        "name": "Schep",
+        "description": "Gebruikt voor het graven van gaten, zowel fysiek als metaforisch."
     },
     "spoon": {
-        "name": "",
-        "description": ""
+        "name": "Lepje",
+        "description": "Dit is een zeer sexy lepel, gebruik het op een verantwoordelijke manier."
     },
     "spork": {
-        "name": "",
-        "description": ""
+        "name": "Sporen",
+        "description": "Een lepel plus een vork. Het is een Voedsel!"
     },
     "stick": {
-        "name": "",
-        "description": ""
+        "name": "Semi-Waardeloze Stok",
+        "description": "De prijs is niet wat telt, maar het gevoel draait rond hoe geweldig deze stick kan zijn"
     },
     "fork": {
-        "name": "",
-        "description": ""
+        "name": "Fork",
+        "description": "Met vier keer het stabatvermogen van een mes, maar de helft van de impact, is het dubbele van de waarde!"
     }
 }
