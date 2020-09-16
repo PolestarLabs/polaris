@@ -8,7 +8,7 @@ const init = async function (msg) {
   const moment = require("moment");
   moment.locale(msg.lang[0]);
 
-  const TG = await PLX.getTarget(msg.args[0], msg.guild);
+  const TG = await PLX.getTarget(msg.args[0] || msg.author.id, msg.guild);
   if (!TG) return msg.channel.send($t("responses.errors.kin404", P));
   const joinMoment = moment.utc(msg.guild.member(TG).joinedAt);
   moment.locale("en");
