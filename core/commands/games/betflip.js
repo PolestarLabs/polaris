@@ -11,15 +11,16 @@ const init = async function (msg) {
   const userData = DB.users.get(msg.author.id);
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   const bet = Math.abs(parseInt(msg.args[0]));
   let call = msg.args[1] ? msg.args[1].toUpperCase() : null;
   let currency = msg.args[2] ? msg.args[2].toUpperCase() : "RBN";
 
   if (!bet || !call) {
-    return msg.channel.send("insufficient args");
+     PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
+     return;
   }
+
   if (!["HEADS", "TAILS", $t("terms.coinHeads", P).toUpperCase(), $t("terms.coinTails", P).toUpperCase()].includes(call)) {
     return msg.channel.send("invalid face called");
   }
