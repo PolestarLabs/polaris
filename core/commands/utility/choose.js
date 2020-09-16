@@ -87,6 +87,7 @@ const init = async function (msg) {
 };
 module.exports = {
   init,
+  argsRequired: true,
   pub: true,
   cmd: "choose",
   perms: 3,

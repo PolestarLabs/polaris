@@ -71,6 +71,7 @@ const init = async function (message, args) {
 };
 
 module.exports = {
+  argsRequired: true,
   pub: true,
   cmd,
   perms: 3,

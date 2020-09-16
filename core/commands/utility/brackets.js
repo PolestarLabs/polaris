@@ -75,6 +75,7 @@ const init = async function (msg, args) {
 
 module.exports = {
   init,
+  argsRequired: true,
   pub: true,
   cmd: "brackets",
   perms: 3,
