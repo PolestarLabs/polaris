@@ -60,7 +60,7 @@ const init = async function (msg) {
 
   if (!onepart) {
     ctx.drawImage(await part1, 0, 0);
-    Picto.setAndDraw(ctx, Picto.tag(ctx, textop, null, "#000"), 142, 52, 240);
+    Picto.setAndDraw(ctx, Picto.tag(ctx, textop, undefined, "#000"), 142, 52, 240);
   }
   await msg.channel.send("", file(await canvas.toBuffer(), "didyoumean.png"));
 };
