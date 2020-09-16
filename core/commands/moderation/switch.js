@@ -17,9 +17,10 @@ const
     R_CHANNEL = _emoji('channel').reaction,
     R_SAVE    = _emoji('save').reaction,
     R_UNDO    = _emoji('undo').reaction,
-    R_WG    = `<:${_emoji('whitegreenem').reaction}>`,
-    R_WO    = `<:${_emoji('whiteorangeem').reaction}>`,
-    R_WR    = `<:${_emoji('whiteredem').reaction}>`,
+    
+    E_WG    = `${_emoji('whitegreenem')}`,
+    E_WO    = `${_emoji('whiteorangeem')}`,
+    E_WR    = `${_emoji('whiteredem')}`,
 
     MINI_ON  = _emoji('on_small'),
     MINI_OFF = _emoji('off_small');
@@ -265,7 +266,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
                 disabledCount = cats[cat].cmds.map(cmd => ((gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)) ? 1 : 0).reduce((a, b) => a + b, 0),
                 catName = cat.slice(0,1).toUpperCase() + cat.slice(1);
             embed.fields.push({
-                name: (disabled ? (override && cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? R_WO : _emoji("partial")) : (override && cmode ? R_WG : _emoji("on"))) + ` ${catName}`,
+                name: (disabled ? (override && cmode ? E_WR : _emoji("off")) : disabledCount ? (override && cmode ? E_WO : _emoji("partial")) : (override && cmode ? E_WG : _emoji("on"))) + ` ${catName}`,
                 value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length-disabledCount}    ${MINI_OFF}${disabledCount} ` : `${cats[cat]["cmds"].length} commands`,
                 inline: true,
             });
@@ -286,7 +287,7 @@ function genSwitchEmbed(modules, mode, cat, intoCat) {
             const disabled = cmode ? (cdcmds.includes(cmd) || (gdcmds.includes(cmd)) && !cecmds.includes(cmd)) : gdcmds.includes(cmd),
                 override = cmode && (cdcmds.includes(cmd) || cecmds.includes(cmd)),
                 cmdName = cmd.slice(0,1).toUpperCase() + cmd.slice(1);
-            embed.fields[currField].value += (disabled ? override ? R_WR : _emoji("off") : override ? R_WG : _emoji("on")) + ` ${cmdName}\n`;
+            embed.fields[currField].value += (disabled ? override ? E_WR : _emoji("off") : override ? E_WG : _emoji("on")) + ` ${cmdName}\n`;
         }
     }
 
