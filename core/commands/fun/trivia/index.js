@@ -15,7 +15,7 @@ const init = async function (msg, args, streak) {
 
   async function triviaRun() {
     msg.channel.trivia = true;
-    if (QUESTIONS.length == 0 || cround > rounds) {
+    if (QUESTIONS.length == 0 || cround+1 > rounds) {
       msg.channel.trivia = false;
       return msg.channel.send({
         content: "no more questions",
