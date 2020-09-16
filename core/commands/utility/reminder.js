@@ -24,11 +24,16 @@ const init = async function (msg, args) {
     return {
       content: $t("interface.reminders.currentActive", P),
       embed: {
-        fields: userReminders.map((r) => ({
-          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} (UTC)`,
-          value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel == "dm" ? "DM" : `<#${r.channel}>`}`,
-          inline: false,
-        })),
+          author: {
+            name: `${msg.author.username}'s Appointments`,
+            icon_url: msg.author.avatarURL
+          },
+          fields: userReminders.map((r) => ({
+            name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
+            value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel == "dm" ? "DM" : `<#${r.channel}>`}`,
+            inline: false,
+          })),
+        footer: {text: "All times are in UTC"}
       },
     };
   }
@@ -73,7 +78,18 @@ const init = async function (msg, args) {
 
   const when = parser.parse(input, from, options);
 
-  const timestamp = when[0].start.date().getTime() + 3600000 * 3;
+  const timestamp = when[0].start.date().getTime(); //+ 3600000 * 3;
+
+  msg.channel.send(
+    "```js"+
+    `
+    // DEBUG ##################################
+FROM ${new Date(from)}
+TIMES ${JSON.stringify(when[0],0,2)}
+REF ${ when[0].start.date() }
+    `
+    +"```"
+    )
 
   if (when.length < 1) return $t("interface.reminders.errorWhen", P);
   if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
