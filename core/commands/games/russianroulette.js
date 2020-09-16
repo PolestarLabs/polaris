@@ -173,6 +173,7 @@ const init = async function (msg, args) {
 module.exports = {
   init,
   cmd: "russianroulette",
+  pub: true,
   argsRequired: true,
   perms: 3,
   cat: "games",
