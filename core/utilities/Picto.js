@@ -38,7 +38,12 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: Canvas.loadImage,
+  getCanvas: function getCanvas(...args){    
+    return  Canvas.loadImage(...args).catch(err=>{
+      console.error(...args)
+      throw new Error(err)
+    })
+  },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
