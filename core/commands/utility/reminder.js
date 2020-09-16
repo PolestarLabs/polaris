@@ -72,11 +72,11 @@ const init = async function (msg, args) {
   }
 
   //const regex = /^@?([^\s]+)(?: to )?(.*)$/;
-  const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(ws?)?/gm
-
+  
   const options = { forwardDate: true, startOfDay: 9 };
   const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
-
+  
+  const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(wk?s?)?/gm
   input = input.replace(regex,function(full, $1,$2,$3,$4,$5,$6){
     console.log($1,$2,$3)
     if($2) $2 = " hour";
