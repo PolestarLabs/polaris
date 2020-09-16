@@ -51,16 +51,64 @@ const POLARIS_UI = {
   can_trade: "<:can_trade:601282813177757726>",
   can_destroy: "<:can_destroy:601282813471490051>",
   deckie: "<:deckie:586933317077827594>",
+  
+  // ITEMS 
+  
+  // Cards 
+    Rdek: "<:Rdek:586968935514112002>",
+    SRdek: "<:SRdek:586968935648329729>",
+    Cdek: "<:Cdek:586968935837204501>",
+    Udek: "<:Udek:586968935883210785>",
+    XRdek: "<:XRdek:586968935967096832>",
+    URdek: "<:URdek:586968936105377811>",
+    
+  // CASINO 
+  chipWARN: "<:chipWARN:719041743743352884>",
+  chipOK: "<:chipOK:719041743906930688>",
+  chipINFO: "<:chipINFO:719042194258001972>",
+  chipERROR: "<:chipERROR:719041743504539741>",
+  rubineCHIP: '<:rubineCHIP:719171507581878312>',
 
-  // ITEMS
-
-  // Cards
-  Rdek: "<:Rdek:586968935514112002>",
-  SRdek: "<:SRdek:586968935648329729>",
-  Cdek: "<:Cdek:586968935837204501>",
-  Udek: "<:Udek:586968935883210785>",
-  XRdek: "<:XRdek:586968935967096832>",
-  URdek: "<:URdek:586968936105377811>",
+  //ROULETTE
+ 
+    roulette00: '<:roulette00:719180723398901813>',
+    roulette12: '<:roulette12:719180723491307613>',
+    roulette16: '<:roulette16:719180723562741833>',
+    roulette36: '<:roulette36:719180723575193601>',
+    roulette32: '<:roulette32:719180723592102010>',
+    roulette2: '<:roulette2:719180723604553779>',
+    roulette13: '<:roulette13:719180723613073420>',
+    roulette8: '<:roulette8:719180723617136711>',
+    roulette3: '<:roulette3:719180723625394177>',
+    roulette27: '<:roulette27:719180723679920211>',
+    roulette20: '<:roulette20:719180723680051283>',
+    roulette33: '<:roulette33:719180723692634113>',
+    roulette7: '<:roulette7:719180723717931060>',
+    roulette4: '<:roulette4:719180723776651304>',
+    roulette35: '<:roulette35:719180723793166357>',
+    roulette21: '<:roulette21:719180723793297469>',
+    roulette0: '<:roulette0:719180723801817088>',
+    roulette11: '<:roulette11:719180723806011457>',
+    roulette5: '<:roulette5:719180723818332240>',
+    roulette22: '<:roulette22:719180723831177217>',
+    roulette6: '<:roulette6:719180723839434763>',
+    roulette19: '<:roulette19:719180723856211973>',
+    roulette9: '<:roulette9:719180723856212023>',
+    roulette15: '<:roulette15:719180723856212064>',
+    roulette17: '<:roulette17:719180723868926053>',
+    roulette14: '<:roulette14:719180723872989270>',
+    roulette26: '<:roulette26:719180723877183538>',
+    roulette23: '<:roulette23:719180723889766453>',
+    roulette1: '<:roulette1:719180723918995526>',
+    roulette18: '<:roulette18:719180723931709480>',
+    roulette24: '<:roulette24:719180723952812052>',
+    roulette29: '<:roulette29:719180723956744203>',
+    roulette30: '<:roulette30:719180723994492959>',
+    roulette34: '<:roulette34:719180723994624100>',
+    roulette10: '<:roulette10:719180724011270154>',
+    roulette31: '<:roulette31:719180724108001320>',
+    roulette28: '<:roulette28:719180724191625259>',
+    roulette25: '<:roulette25:719180724254670878>',
 
   // BLACKJACK
   plxcards: "<:plxcards:598784000353370113>",

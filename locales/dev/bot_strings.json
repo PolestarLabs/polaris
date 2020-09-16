@@ -340,7 +340,6 @@
             ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
             ,"cantMarryPollux" : "No way! Shoo!"
         },
-
             "ship": {
                 "needTupipo": "The Love Calculator does not work with just one person, my dear.",
                 "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!"
@@ -380,8 +379,6 @@
                 ]
             ]
         },
-
-
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
@@ -517,7 +514,6 @@
         "transfer":{
             "lastdly":"Last Box Transfer:",
             "next":"Next Transfer available {{in X hours}}",
-
             "transferboxto": "Transferring  Box to {{userB}}"
             ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
             ,"timeout": "**Transfer Timed Out!**"
@@ -772,6 +768,43 @@
             "zero_1": "Oh my, seems all your Rubines are mine now.",
             "zero_2": "Not a single hit? that's a shame.",
             "zero_3": "Perhaps if you try again you might win something?"
+        },
+        "roulette": {
+            "boardTitle": "Pollux Roulette",
+            "boardDescription": "You may now place your bets! `bet [amt] [bet] <1-3>`\nUse `bet help` for a detailed betting tutorial.",
+            "betPlaced": [
+                "{{user}} has placed {{amount}} on {{bet}}"
+            ],
+            "helpTitle": "Roulette Betting 101",
+            "helpDescription": "You can find more information on the Pollux wiki!",
+            "resultsTitle": "Roulette Results",
+            "resultsDescription": "The winning number was {{number}}.",
+            "resultsPlayer": "Player Result ",
+            "resultsWin": [
+                "Congrats! You've won {{count}} $t(keywords.RBN_plural)."
+            ],
+            "resultsLoss": [
+                "I'll be taking {{count}} $t(keywords.RBN_plural) from you."
+            ],
+            "resultsDraw": [
+                "You didn't win, but at least you didn't lose."
+            ],
+            "resultsInvalid": "You somehow lost your money so your bets were dismissed.",
+            "resultsNoBet": "Sadly no one placed a bet...",
+            "wheelDescription": "{{seconds}} seconds left to place your bets!",
+            "wheelEnd": "The wheel will now decide your faith.",
+            "notSoFast": "You are placing bets too fast.",
+            "invalidBet": "I can't understand that bet.",
+            "missingAll": "Couldn't find your bet.",
+            "missingAmount": "Sorry. You can't bet without money.",
+            "missingBet": "Um, where's your bet?",
+            "zeroAmount": "Bet at least 1 $t(keywords.RBN)!",
+            "notAllowed": "You can't place this bet right now.",
+            "noMoney": "You don't have enough money.",
+            "minperBet": "The minimum betting count is {{count}} $t(keywords.RBN).",
+            "maxPerBet": "Bets can't be more than {{count}} $t(keywords.RBN).",
+            "maxBets": "Calm down, you've already placed {{count}} bets.",
+            "maxtotal": "I can't let you bet more than {{count}} in total!"
         },
         "ceilingBet": "You can't bet more than **{{number}}** $t(keywords.RBN_plural) in this game.",
         "tryAgain": "Try again?",
