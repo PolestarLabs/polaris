@@ -14,7 +14,7 @@ const init = async function (msg) {
 
   const avgcolor = await require("../../utilities/Picto").avgColor(img.file);
 
-  embed.image(img.file);
+  embed.image(img.file + ".png");
   embed.color(avgcolor);
   embed.footer(`Smug Anime Girl #${img.index}`);
 
