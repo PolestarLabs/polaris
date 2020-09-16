@@ -12,21 +12,23 @@ module.exports = async function yesNo(m, message, yes = false, no = false, timeo
   strings.cancel = `❌${strings.cancel || ""}`;
 
   const YA = {
-    r: ":yep:339398829050953728",
-    id: "339398829050953728",
+    r: _emoji('yep').reaction,
+    id: _emoji('yep').id
   };
   const NA = {
-    r: ":nope:339398829088571402",
-    id: "339398829088571402",
+    r: _emoji('nope').reaction,
+    id: _emoji('nope').id
   };
 
   await m.addReaction(YA.r);
   m.addReaction(NA.r);
+
   const reas = await m.awaitReactions({
     maxMatches: 1,
     authorOnly: options.approver || message.author.id,
     time,
-  }).catch(() => {
+  }).catch((err) => {
+    console.error(err)
     if (clearReacts) m.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 16499716;
@@ -39,8 +41,9 @@ module.exports = async function yesNo(m, message, yes = false, no = false, timeo
     if (timeout) return timeout;
     return null;
   });
-  if (!reas?.length !== 0) return null;
-
+   
+  if (!reas?.length) return null;
+ 
   function cancellation() {
     if (clearReacts) m.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
