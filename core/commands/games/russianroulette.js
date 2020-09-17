@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
@@ -5,18 +6,19 @@ const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 const startGameCollector = async (game, msg, cb) => {
   const BET = parseInt(msg.args[0]);
 
-  const response = await msg.channel.awaitMessages((m) => m.author.id === msg.author.id, {
-    time: 30e3,
-    maxMatches: 1,
-  });
+  const response = await msg.channel.awaitMessages(
+    (m) => m.author.id === msg.author.id && ["shoot", "stop"].includes(m.content.toLowerCase()),
+    {
+      time: 30e3,
+      maxMatches: 1,
+    },
+  );
 
   if (!response[0]) return msg.reply("you haven't said your action in 30 seconds! Stopping the game.");
 
   const result = await game.handleInput(response[0].content);
 
   console.log({ result });
-
-  if (result.invalidInput) return msg.channel.send("You **have** to say shoot or stop. Game stopped, and I'm not returning your money back.");
 
   if (result.stopped) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette STOP");
@@ -75,9 +77,8 @@ const playerRoulette = async (player, game) => {
 
 const handlePlayers = async (message, players, game, gameFrame) => {
   let dead = null;
-  players.forEach(async (player, index) => {
-    // If there's someone dead, don't continue
-    if (dead) return;
+  for (const index in players) { // eslint-disable-line guard-for-in
+    const player = players[index];
 
     // No one is dead so far
     gameFrame.embed.description += `${player.name}'s turn.... `;
@@ -99,7 +100,7 @@ const handlePlayers = async (message, players, game, gameFrame) => {
 
     // Tell players the status of that player
     await Promise.all([message.edit(gameFrame), wait(3)]);
-  });
+  }
   // End of round
   return dead;
 };
