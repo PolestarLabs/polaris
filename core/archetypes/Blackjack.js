@@ -37,8 +37,7 @@ class Blackjack {
 
     if (powerups?.jokers) {
       let jokers = powerups.jokers.length || 0;
-      while (jokers > 0) {
-        jokers -= 1;
+      while (jokers--) {
         this.deck.push(powerups.jokers[jokers]);
         this.deck = Blackjack._shuffle(this.deck);
       }

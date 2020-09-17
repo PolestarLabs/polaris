@@ -159,7 +159,7 @@ module.exports = {
 
       const eventCount = Math.round((time * 60) / TIME_SLICE);
       let evInt = 0;
-      while ((evInt += 1) < eventCount) {
+      while ((evInt++) < eventCount) {
         const eligibleEvents = VENTURE_EVENTS.filter(
           (ev) => (ev.timemax >= (evInt * 60) && ev.timemin <= (evInt * 60)) // eslint-disable-line
                 && (ev.onetime ? !this.journey.includes(ev.id) : true)

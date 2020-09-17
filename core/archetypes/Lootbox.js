@@ -18,9 +18,8 @@ const COLORS = {
 
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 
-
 const itmPILE = [];
-console.log(itmODDS)
+console.log(itmODDS);
 Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
 const rarPILE = [];
 Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
@@ -163,7 +162,7 @@ class Lootbox {
         if (ct.type === "boosterpack") this.visuals[i] = (`${paths.CDN}/boosters/showcase/${ct.icon}.png`);
         if (ct.type === "gems") this.visuals[i] = (`${paths.CDN}/build/LOOT/${ct.currency}_${ct.rarity}.png`);
 
-        if ((completed += 1) === a.length) {
+        if (++completed === a.length) {
           resolve(null);
           delete this.compileVisuals;
         }
@@ -182,7 +181,7 @@ class Lootbox {
           type: legacyEmblem(ct, true),
           name: ct.name || ct.amount || ct.icon || ct.code || ct.id,
         });
-        if ((completed += 1) === a.length) {
+        if (++completed === a.length) {
           resolve(this.legacy);
           delete this.legacyfy;
         }

@@ -233,7 +233,7 @@ class Tarot {
   getSpread(size) {
     let i = size;
     const spread = [];
-    while ((i -= 1)) {
+    while (i--) {
       this._deck = Tarot._shuffle(this._deck);
       spread.push({ card: this._deck.pop(), pose: Tarot._pos() });
     }
