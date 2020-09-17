@@ -1,6 +1,6 @@
 // const gear = require("../../utilities/Gearbox");
 // const DB = require("../../database/db_ops");
-
+const moment = require("moment");
 const cmd = "balance";
 
 // const locale = require(appRoot+'/utils/i18node');
@@ -53,7 +53,7 @@ const init = async (msg) => {
     const nope = $t('CMD.noDM',P);
     */
 
-  const moment = require("moment");
+
   moment.locale(msg.lang[0]);
 
   const TARGERDATA = await DB.users.get({ id: Target.id });
