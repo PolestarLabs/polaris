@@ -27,12 +27,13 @@
         "max-len": ["error", 150],
         "no-bitwise": "off",
         "class-methods-use-this": "off",
-        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-plusplus": "off",
         "radix": ["error", "as-needed"],
         "no-return-assign": ["error", "except-parens"],
         "no-cond-assign": ["error", "except-parens"],
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
         "prefer-const": ["error", { "destructuring": "all" }]
+        
     }
 }
