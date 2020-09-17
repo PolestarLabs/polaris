@@ -83,7 +83,7 @@ ${await lastTransBuild(lastTrans[2])}
     emb.fields = [];
     emb.fields = [];
   }
-  message.channel.send({ embed: emb });
+  msg.channel.send({ embed: emb });
 };
 module.exports = {
   pub: true,
