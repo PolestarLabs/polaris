@@ -565,9 +565,9 @@ const init = async (msg, args) => {
   const dealerHand = blackjack.getHand().map((card) => (card.startsWith("JOKER") ? `${randomize(1, 10)}H` : card));
   const balance   = USERDATA.modules.rubines;
 
-  const canInsurance  = testInsurance(balance, b, playerHand, dealerHand);
-  const canDoubleDown = testDoubleDown(balance, b, playerHand);
-  const canSplit      = testSplit(balance, b, playerHand);
+  const canInsurance  = testInsurance(balance, bet, playerHand, dealerHand);
+  const canDoubleDown = testDoubleDown(balance, bet, playerHand);
+  const canSplit      = testSplit(balance, bet, playerHand);
 
   const hitstandPre = hitStandMessage(P, canDoubleDown, canSplit, canInsurance);
 

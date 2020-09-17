@@ -1,3 +1,4 @@
+/* eslint-disable no-await-in-loop */
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
@@ -5,18 +6,19 @@ const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 const startGameCollector = async (game, msg, cb) => {
   const BET = parseInt(msg.args[0]);
 
-  const response = await msg.channel.awaitMessages((m) => m.author.id === msg.author.id, {
-    time: 30e3,
-    maxMatches: 1,
-  });
+  const response = await msg.channel.awaitMessages(
+    (m) => m.author.id === msg.author.id && ["shoot", "stop"].includes(m.content.toLowerCase()),
+    {
+      time: 30e3,
+      maxMatches: 1,
+    },
+  );
 
   if (!response[0]) return msg.reply("you haven't said your action in 30 seconds! Stopping the game.");
 
   const result = await game.handleInput(response[0].content);
 
   console.log({ result });
-
-  if (result.invalidInput) return msg.channel.send("You **have** to say shoot or stop. Game stopped, and I'm not returning your money back.");
 
   if (result.stopped) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette STOP");
@@ -31,7 +33,7 @@ const startGameCollector = async (game, msg, cb) => {
     return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
   } if (result.won) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette FLAWLESS");
-    return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.payout}** rubines to your account.`);
+    return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.currentPayout}** rubines to your account.`);
   }
 
   await message.edit(`**no bullet noise**\nNo bullet this time (${result.rounds} rounds remaining)...\n`
@@ -55,7 +57,7 @@ const startPlayerCollector = async (msg) => {
         money: parseInt(m.content.split(" ")[1]),
       })
       && msg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-      + `**Players**\n${verifiedPlayers.map((a) => `- **${a.name}** - ${a.money} rubines\n`)}`);
+      + `**Players**\n${verifiedPlayers.map((a) => `- **${a.name}** - ${a.money} rubines\n`).join("")}`);
 
   await msg.channel.awaitMessages(filter, {
     time: 20e3,
@@ -75,9 +77,8 @@ const playerRoulette = async (player, game) => {
 
 const handlePlayers = async (message, players, game, gameFrame) => {
   let dead = null;
-  players.forEach(async (player, index) => {
-    // If there's someone dead, don't continue
-    if (dead) return;
+  for (const index in players) { // eslint-disable-line guard-for-in
+    const player = players[index];
 
     // No one is dead so far
     gameFrame.embed.description += `${player.name}'s turn.... `;
@@ -99,13 +100,14 @@ const handlePlayers = async (message, players, game, gameFrame) => {
 
     // Tell players the status of that player
     await Promise.all([message.edit(gameFrame), wait(3)]);
-  });
+  }
   // End of round
   return dead;
 };
 
 const newRound = async (msg, players, round = 0) => {
   // Initialise game
+  const value = players.map((a) => a.money).reduce((a, b) => a + b);
   const game = new RussianRoulette(null, 0);
   const gameFrame = {
     embed: {
@@ -119,7 +121,7 @@ const newRound = async (msg, players, round = 0) => {
   // Actual rounds
   const message = await msg.channel.send(gameFrame);
   const diedInRound = await handlePlayers(message, players, game, gameFrame);
-  message.deleteAfter(5000);
+  message.deleteAfter(2e3);
 
   // Is there 1 person left?
   if (players.length === 1) { // This person wins
@@ -139,7 +141,7 @@ const newRound = async (msg, players, round = 0) => {
       description: `**Results:**\n${diedInRound ? `${diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`,
       thumbnail: { url: `${paths.CDN}/build/games/russian_roulette/miniload.gif` },
     },
-  }).then((m) => m.deleteAfter(5000));
+  }).then((m) => m.deleteAfter(2e3));
 
   return newRound(msg, players, round + 1);
 };
