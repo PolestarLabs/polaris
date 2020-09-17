@@ -27,7 +27,7 @@ async function generateBoard() {
 	/*
 		Optional: Pass server ID for some customization
 	*/
-	return paths.CDN + "/generators/roulette.png";
+	return paths.DASH + "/generators/roulette.png";
 };
 
 async function generateWheel(winningNumber) {
@@ -56,7 +56,7 @@ function getBoard(userData) {
 	});
 	data = data.substring(0, data.length - 1);
 
-	let imageURL = paths.CDN + "/generators/roulette.png?data=" + data;
+	let imageURL = paths.DASH + "/generators/roulette.png?data=" + data;
 
 	return imageURL;
 };
