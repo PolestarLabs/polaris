@@ -100,6 +100,7 @@ const handlePlayers = async (message, players, game, gameFrame) => {
 
     // Tell players the status of that player
     await Promise.all([message.edit(gameFrame), wait(3)]);
+    if (died) break;
   }
   // End of round
   return dead;
