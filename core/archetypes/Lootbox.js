@@ -2,7 +2,6 @@
 /** *********************** */
 //          ODDS          //
 /** *********************** */
-
 const { LootRates: RATES } = require("../../GlobalNumbers.js");
 
 const itmODDS = RATES.itemType;
@@ -17,13 +16,14 @@ const COLORS = {
   XR: "#981f1f",
 };
 
-const POPULATE = (pile, no, pushee) => { while ((no -= 1)) shuffle(pile).push(pushee); return shuffle(pile); };
+const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
+
 
 const itmPILE = [];
+console.log(itmODDS)
 Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
 const rarPILE = [];
 Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
-
 //= ================================================================
 
 function legacyEmblem(ct, mini) {
