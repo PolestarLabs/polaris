@@ -57,7 +57,7 @@ const startPlayerCollector = async (msg) => {
         money: parseInt(m.content.split(" ")[1]),
       })
       && msg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-      + `**Players**\n${verifiedPlayers.map((a) => `- **${a.name}** - ${a.money} rubines\n`)}`);
+      + `**Players**\n${verifiedPlayers.map((a) => `- **${a.name}** - ${a.money} rubines\n`).join("")}`);
 
   await msg.channel.awaitMessages(filter, {
     time: 20e3,
@@ -121,7 +121,7 @@ const newRound = async (msg, players, round = 0) => {
   // Actual rounds
   const message = await msg.channel.send(gameFrame);
   const diedInRound = await handlePlayers(message, players, game, gameFrame);
-  message.deleteAfter(5000);
+  message.deleteAfter(2e3);
 
   // Is there 1 person left?
   if (players.length === 1) { // This person wins
@@ -141,7 +141,7 @@ const newRound = async (msg, players, round = 0) => {
       description: `**Results:**\n${diedInRound ? `${diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`,
       thumbnail: { url: `${paths.CDN}/build/games/russian_roulette/miniload.gif` },
     },
-  }).then((m) => m.deleteAfter(5000));
+  }).then((m) => m.deleteAfter(2e3));
 
   return newRound(msg, players, round + 1);
 };
