@@ -21,5 +21,5 @@ module.exports={
     ,cmd:'ytdown'
     ,cat:'utility'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
+    ,aliases:['ytd']
 }
