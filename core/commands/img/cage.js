@@ -1,4 +1,4 @@
-const init = async function (msg) {
+const init = async (msg) => {
   const cage = randomize(5, 30);
   const cage2 = randomize(5, 30);
 

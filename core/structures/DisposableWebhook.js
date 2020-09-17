@@ -1,4 +1,4 @@
-const i2b64 = Promise.promisify((require("imageurl-base64")));
+const i2b64 = Promise.promisify(require("imageurl-base64"));
 
 class DisposableHook {
   constructor(msg, name, avatar, info) {

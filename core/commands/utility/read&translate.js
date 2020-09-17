@@ -1,7 +1,7 @@
 const TranslateBlob = require("../../structures/TranslationBlob");
 
 const cmd = "read&translate";
-const init = async function (message) {
+const init = async (msg) => {
   const cmd_read = require("./read.js");
   let readContent = cmd_read.init(message, true);
   message.args.push("-");

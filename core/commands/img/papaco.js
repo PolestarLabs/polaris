@@ -1,4 +1,4 @@
-const init = async function (msg) {
+const init = async (msg) => {
   const embed = new Embed();
 
   embed.image("https://thumbs.gfycat.com/UnpleasantIncompatibleGoosefish-max-1mb.gif");

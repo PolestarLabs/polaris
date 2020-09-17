@@ -31,9 +31,9 @@ staticAssets.load = Promise.all([
   Picto.getCanvas(`${paths.CDN}/build/LOOT/bonusbar.png`),
 ]).then((res) => {
   const [
-    frame_C, frame_U, frame_R, frame_SR, frame_UR, frame_XR, dupe_tag,
+    frame_C, frame_U, frame_R, frame_SR, frame_UR, frame_XR, dupe_tag, // eslint-disable-line camelcase
     bgC, bgU, bgR, bgSR, bgUR,
-    sparkles_0, sparkles_1, sparkles_2, bonusbar,
+    sparkles_0, sparkles_1, sparkles_2, bonusbar, // eslint-disable-line camelcase
   ] = res;
   Object.assign(staticAssets, {
     frame_C,
@@ -56,100 +56,6 @@ staticAssets.load = Promise.all([
   });
   delete staticAssets.load;
 });
-
-const init = async (msg, args) => {
-
-  if (!staticAssets.loaded) await staticAssets.load;
-  if (VisualsCache.size > 800) VisualsCache.clear();
-
-  const USERDATA = await DB.users.getFull({ id: msg.author.id });
-
-  if (LootingUsers.get(msg.author.id)) {
-    await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
-    return {
-      embed: {
-        description: `**You are already Looting in another server.** 
-                Bear in mind that exploiting loopholes can get you banned from using my services!
-                \`- This incident will be reported to the moderators -\``,
-        color: 0xFF9060,
-      },
-    };
-  }
-  LootingUsers.set(msg.author.id, msg.guild.id);
-
-  const P = { lngs: msg.lang, cosmos: 0, user: msg.author.username };
-  console.log(args);
-  const boxparams = await DB.items.findOne({ id: args?.boxID || "lootbox_C_O" });
-  boxparams.size = ~~args[0];
-
-  let currentRoll = 0;
-
-  async function process() {
-    const lootbox = new Lootbox(boxparams.rarity, boxparams);
-    await lootbox.compileVisuals;
-
-    let preRoll;
-    if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
-    else preRoll = msg.channel.send(REROLL_MSG(P));
-
-    const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
-    const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
-    const canAffordReroll = await ECO.checkFunds(USERDATA, rerollCost);
-
-    const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
-
-    const firstRoll = await compileBox(msg, lootbox, USERDATA, {
-      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
-    });
-
-    await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
-    const message = await msg.channel.send(...firstRoll);
-
-    message.addReaction("⭐").catch((e) => null);
-    if (canReroll) message.addReaction("🔁").catch((e) => null);
-
-    return message.awaitReactions((reaction) => {
-      if (reaction.author.id === PLX.user.id) return false;
-      if (reaction.emoji.name === "🔁") {
-        return canReroll;
-      } if (reaction.emoji.name === "⭐") return true;
-    }, { time: 15000, maxMatches: 1 }).catch((e) => {
-      console.error(e);
-      message.removeReaction("🔁");
-    }).then(async (reas) => {
-      const choice = reas?.[0];
-
-      if (choice?.emoji.name === "🔁") {
-        message.delete();
-        currentRoll++;
-        return process();
-      }
-
-      message.removeReactions().catch((e) => null);
-      await Promise.all([
-        USERDATA.removeItem(lootbox.id),
-        USERDATA.addItem("cosmo_fragment", P.cosmos),
-        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
-        DB.users.set(USERDATA.id, lootbox.bonus.query),
-        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
-      ]);
-      LootingUsers.delete(msg.author.id);
-      firstRoll[0].embed.description = `
-**${$t("loot.allItemsAdded", P)}**
-                >>> ${lootbox.content.map((x) => {
-    let label = x.name
-      ? `${_emoji(x.type)} **${$t(`keywords.${x.type}`)}:** ${x.name}`
-      : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
-    if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
-    return label;
-  }).join("\n")}
-                `;
-      message.edit(firstRoll[0]);
-    });
-  }
-
-  return process();
-};
 
 function renderCard(item, visual, P) {
   const canvas = Picto.new(CARD_WIDTH, 567);
@@ -243,6 +149,19 @@ function renderCard(item, visual, P) {
 
   return canvas;
 }
+
+function determineRerollCost(box, rollNum, USERDATA) {
+  let stake = Math.round(
+    (USERDATA.modules.bgInventory.length || 100)
+        + (USERDATA.modules.bgInventory.length || 100)
+        + (USERDATA.modules.inventory.length || 100),
+  );
+  stake = stake < 50 ? 50 : stake;
+
+  const factors = ["C", "U", "R", "SR", "UR"].indexOf(box.rarity) || 0;
+  return ((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50);
+}
+
 function renderDupeTag(rarity, P) {
   const canvas = Picto.new(staticAssets.dupe_tag.width, staticAssets.dupe_tag.width);
   const ctx = canvas.getContext("2d");
@@ -255,32 +174,20 @@ function renderDupeTag(rarity, P) {
   ctx.shadowBlur = 10;
   ctx.drawImage(staticAssets.dupe_tag, 0, 0);
   ctx.shadowBlur = 0;
-  Picto.setAndDraw(ctx, Picto.tag(ctx, `${$t("loot.duplicate", P)} ! `, "900 italic 32px 'PantonBlack'", "#ffca82", { line: 8, style: "#1b1b32" }), 49, 5, 235);
-  Picto.setAndDraw(ctx, Picto.tag(ctx, `+${cosmoAward}`, "900 italic 25px 'PantonBlack'", "#FFF", { line: 6, style: "#1b1b32" }), 175, 40, 125, "right");
+  Picto.setAndDraw(
+    ctx,
+    Picto.tag(ctx, `${$t("loot.duplicate", P)} ! `, "900 italic 32px 'PantonBlack'", "#ffca82",
+      { line: 8, style: "#1b1b32" }),
+    49, 5, 235,
+  );
+  Picto.setAndDraw(ctx, Picto.tag(ctx, `+${cosmoAward}`, "900 italic 25px 'PantonBlack'", "#FFF",
+    { line: 6, style: "#1b1b32" }),
+  175, 40, 125, "right");
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.cosmoFragment_plural", P).toUpperCase(), "900 17px 'Panton'", "#DDF8"), 175, 48, 150);
 
   return canvas;
 }
-function getPrize(loot, USERDATA) {
-  if (["boosterpack", "item"].includes(loot.type)) return USERDATA.addItem(loot.id);
 
-  if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
-
-  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
-
-  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
-}
-function determineRerollCost(box, rollNum, USERDATA) {
-  let stake = Math.round(
-    (USERDATA.modules.bgInventory.length || 100)
-        + (USERDATA.modules.bgInventory.length || 100)
-        + (USERDATA.modules.inventory.length || 100),
-  );
-  stake = stake < 50 ? 50 : stake;
-
-  const factors = ["C", "U", "R", "SR", "UR"].indexOf(box.rarity) || 0;
-  return ((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50);
-}
 function boxBonus(USERDATA, lootbox, options) {
   // TO-DO: more options of small-prizes
   const rarityIndex = ["C", "U", "R", "SR", "UR", "XR"].indexOf(lootbox.rarity);
@@ -295,9 +202,11 @@ function boxBonus(USERDATA, lootbox, options) {
     query: { $inc: { "modules.exp": prize } },
   };
 }
+
 async function compileBox(msg, lootbox, USERDATA, options) {
   await Promise.all(
-    lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => new Canvas.Image())) && VisualsCache.get(vis)),
+    lootbox.visuals.map(async (vis) => VisualsCache.get(vis)
+    || (VisualsCache.set(vis, await Picto.getCanvas(vis).catch(() => new Canvas.Image())) && VisualsCache.get(vis))),
   );
 
   const {
@@ -333,12 +242,10 @@ async function compileBox(msg, lootbox, USERDATA, options) {
     ctx.rotate(-0.08 * Math.floor(itemCards.length / 2));
     itemCards.forEach((card, i) => {
       const angle = 0.08 * i;
-      const dx = 230;
-      const dy = 0;
       ctx.save();
       ctx.rotate(angle);
       ctx.translate(0, -470);
-      ctx.drawImage(card, -(780 / (itemCards.length * 2)) + (1 + i) * (780 / itemCards.length - 40) + 2 - (10 * i), 120 + Math.pow(1 + i, 2) * -(10 - i));
+      ctx.drawImage(card, -(780 / (itemCards.length * 2)) + (1 + i) * (780 / itemCards.length - 40) + 2 - (10 * i), 120 + ((1 + i) ** 2) * -(10 - i));
       ctx.restore();
     });
     ctx.restore();
@@ -355,7 +262,11 @@ async function compileBox(msg, lootbox, USERDATA, options) {
       loot.isDupe = true;
       const dupe = renderDupeTag(loot.rarity, P);
       if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length === 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
-      else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
+      else {
+        Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5",
+          { style: "#22212b", line: 10 }),
+        100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
+      }
     }
   });
 
@@ -408,24 +319,127 @@ ${
   }];
 }
 
+function getPrize(loot, USERDATA) {
+  if (["boosterpack", "item"].includes(loot.type)) return USERDATA.addItem(loot.id);
+  if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
+  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
+  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
+  return null;
+}
+
+const init = async (msg, args) => {
+  if (!staticAssets.loaded) await staticAssets.load;
+  if (VisualsCache.size > 800) VisualsCache.clear();
+
+  const USERDATA = await DB.users.getFull({ id: msg.author.id });
+
+  if (LootingUsers.get(msg.author.id)) {
+    await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
+    return {
+      embed: {
+        description: `**You are already Looting in another server.** 
+                Bear in mind that exploiting loopholes can get you banned from using my services!
+                \`- This incident will be reported to the moderators -\``,
+        color: 0xFF9060,
+      },
+    };
+  }
+  LootingUsers.set(msg.author.id, msg.guild.id);
+
+  const P = { lngs: msg.lang, cosmos: 0, user: msg.author.username };
+  console.log(args);
+  const boxparams = await DB.items.findOne({ id: args?.boxID || "lootbox_C_O" });
+  boxparams.size = ~~args[0];
+
+  let currentRoll = 0;
+
+  async function process() {
+    const lootbox = new Lootbox(boxparams.rarity, boxparams);
+    await lootbox.compileVisuals;
+
+    let preRoll;
+    if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
+    else preRoll = msg.channel.send(REROLL_MSG(P));
+
+    const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
+    const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
+    const canAffordReroll = await ECO.checkFunds(USERDATA, rerollCost);
+
+    const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
+
+    const firstRoll = await compileBox(msg, lootbox, USERDATA, {
+      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
+    });
+
+    await preRoll.then((pR) => pR.deleteAfter(1500).catch(() => null));
+    const message = await msg.channel.send(...firstRoll);
+
+    message.addReaction("⭐").catch(() => null);
+    if (canReroll) message.addReaction("🔁").catch(() => null);
+
+    return message.awaitReactions((reaction) => {
+      if (reaction.author.id === PLX.user.id) return false;
+      if (reaction.emoji.name === "🔁") {
+        return canReroll;
+      }
+      if (reaction.emoji.name === "⭐") return true;
+      return false;
+    }, { time: 15000, maxMatches: 1 }).catch((e) => {
+      console.error(e);
+      message.removeReaction("🔁");
+    }).then(async (reas) => {
+      const choice = reas?.[0];
+
+      if (choice?.emoji.name === "🔁") {
+        msg.delete();
+        currentRoll++;
+        return process();
+      }
+
+      msg.removeReactions().catch(() => null);
+      await Promise.all([
+        USERDATA.removeItem(lootbox.id),
+        USERDATA.addItem("cosmo_fragment", P.cosmos),
+        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
+        DB.users.set(USERDATA.id, lootbox.bonus.query),
+        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
+      ]);
+      LootingUsers.delete(msg.author.id);
+      firstRoll[0].embed.description = `**${$t("loot.allItemsAdded", P)}**`
+        + `>>> ${lootbox.content.map((x) => {
+          let label = x.name
+            ? `${_emoji(x.type)} **${$t(`keywords.${x.type}`)}:** ${x.name}`
+            : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
+          if (x.isDupe) {
+            label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
+          }
+          return label;
+        }).join("\n")}`;
+      return msg.edit(firstRoll[0]);
+    });
+  }
+
+  return process();
+};
+
 module.exports = {
   init,
   pub: false,
   cmd: "lootbox_generator",
   perms: 3,
   cat: "cosmetics",
-  botPerms: ["attachFiles", "embedLinks", "manageMessages", "addReactions"],
+  botPerms: ["attachFiles", "embedLinks", "managemsgs", "addReactions"],
   aliases: ["lgen"],
   hooks: {
     postCommand: (m) => LootingUsers.delete(m.author.id),
   },
-  errorMessage: (msg, err) => {
-    return {
-      embed: {
-        description: "Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n \n***Your Lootbox __was not__ removed from your inventory!***",
-        thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
-        color: 0xFF9060,
-      },
-    };
-  },
+  errormsg: () => ({
+    embed: {
+      description: "Something went wrong...\n"
+        + "If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n\n"
+        + "***Your Lootbox __was not__ removed from your inventory!***",
+      thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
+      color: 0xFF9060,
+    },
+  }),
 };

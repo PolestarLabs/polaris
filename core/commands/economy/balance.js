@@ -6,12 +6,37 @@ const cmd = "balance";
 // const locale = require(appRoot+'/utils/i18node');
 // const $t = locale.getT();
 
-const init = async function (message) {
-  const Target = message.author;
+async function lastTransBuild(x) {
+  if (!x) return "\u200b";
+
+  const POLid = "271394014358405121";
+
+  const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
+  if (x.type === "SEND") x.type = "TRANSFER";
+  if (x.to === TARGERDATA.id && x.from !== POLid) {
+    othPart = (await PLX.getTarget(x.from, null, true)) || { tag: "Unknown#0000" };
+    if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
+    return `↔ \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+      + `*\`${x.type}\`* from [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+  }
+  if (x.from === TARGERDATA.id && x.to !== POLid) {
+    othPart = (await PLX.getTarget(x.to, null, true)) || { tag: "Unknown#0000" };
+    if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
+    return `↔  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+      + `*\`${x.type}\`* to [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+  }
+  if (x.to === POLid) return `📤  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
+  if (x.from === POLid) return `📥  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
+
+  return "\u200b";
+}
+
+const init = async (msg) => {
+  const Target = msg.author;
   const emb = new Embed();
 
-  const P = { lngs: message.lang };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd, message, opt: this.cat })) return;
+  const P = { lngs: msg.lang };
+  if (PLX.autoHelper([$t("helpkey", P)], { cmd, msg, opt: this.cat })) return;
 
   const bal = $t("$.balance", P);
   /*
@@ -29,7 +54,7 @@ const init = async function (message) {
     */
 
   const moment = require("moment");
-  moment.locale(message.lang[0]);
+  moment.locale(msg.lang[0]);
 
   const TARGERDATA = await DB.users.get({ id: Target.id });
   emb.color("#ffd156");
@@ -37,49 +62,12 @@ const init = async function (message) {
 
   if (TARGERDATA) {
     emb.description = `${invisibar}
-${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: message.lang })}: **${miliarize(TARGERDATA.modules.rubines, true)}**
-${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: message.lang })}: **${miliarize(TARGERDATA.modules.jades, true)}**
-${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: message.lang })}: **${miliarize(TARGERDATA.modules.sapphires, true)}**
+${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGERDATA.modules.rubines, true)}**
+${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGERDATA.modules.jades, true)}**
+${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGERDATA.modules.sapphires, true)}**
 ${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0, true)}**`;
 
     lastTrans = await DB.audits.find({ $or: [{ from: TARGERDATA.id }, { to: TARGERDATA.id }] }).sort({ timestamp: -1 }).limit(3);
-    async function lastTransBuild(x) {
-      if (!x) return "\u200b";
-
-      const POLid = "271394014358405121";
-
-      const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
-      if (x.type === "SEND") x.type = "TRANSFER";
-      if (x.to === TARGERDATA.id && x.from !== POLid) {
-        othPart = (await PLX.getTarget(x.from,null,true))||{tag:'Unknown#0000'};
-        if (!othPart) {
-          return ` \`${ts}\` **${x.amt}** ${x.currency} 
-\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
-        }
-        return `↔ \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* from [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
-      }
-      if (x.from === TARGERDATA.id && x.to !== POLid) {
-        othPart = (await PLX.getTarget(x.to,null,true))||{tag:'Unknown#0000'};
-        if (!othPart) {
-          return ` \`${ts}\` **${x.amt}** ${x.currency} 
-\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
-        }
-        return `↔  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* to [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
-      }
-      if (x.to === POLid) {
-        return `📤  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *${x.type}*`;
-      }
-      if (x.from === POLid) {
-        return `📥  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *${x.type}*`;
-      }
-
-      return "\u200b";
-    }
-
     emb.field("Last Transactions",
       `${await lastTransBuild(lastTrans[0])}
 ${await lastTransBuild(lastTrans[1])}

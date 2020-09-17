@@ -1,4 +1,4 @@
-const init = async function (msg) {
+const init = async (msg) => {
   const embed = new Embed();
 
   embed.image("https://media.discordapp.net/attachments/277391864552882176/674322352997400587/131.png");

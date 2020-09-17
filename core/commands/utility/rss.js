@@ -5,7 +5,7 @@ const YesNo = require("../../structures/YesNo");
 
 const parser = new RSS();
 
-const init = async function (msg) {
+const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
   if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 

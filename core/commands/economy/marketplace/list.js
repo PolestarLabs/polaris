@@ -21,6 +21,7 @@ const init = async (msg, args) => {
       case "boostepack":
       case "boostepacks":
         query = { item_type: "boosterpack" };
+        break;
       case "sticker":
       case "stickers":
         query = { item_type: "sticker" };
@@ -70,19 +71,19 @@ const init = async (msg, args) => {
   );
 
   async function Pagination(page, mss, recursion = 0) {
-    const tot_pages = Math.ceil(itemcount / 12);
-    page = page > tot_pages ? tot_pages : page < 1 ? 1 : page;
+    const totPages = Math.ceil(itemcount / 12);
+    page = page > totPages ? totPages : page < 1 ? 1 : page;
     const pagecontent = await DB.marketplace.find(query).limit(12).skip(12 * ((page || 1) - 1)).lean()
       .exec();
 
-    const procedure = function (...args) {
-      if (mss) return mss.edit(...args);
-      return msg.channel.send(...args);
+    const procedure = (...arg) => {
+      if (mss) return mss.edit(...arg);
+      return msg.channel.send(...arg);
     };
     const embed = new Embed();
     embed.author("User Marketplace Listings", "", paths.CDN);
-    if (tot_pages > 0) {
-      embed.description = `Showing entries (${page}/${tot_pages})
+    if (totPages > 0) {
+      embed.description = `Showing entries (${page}/${totPages})
                     *Use **\`${msg.prefix}market list [PAGE]\`** for a specific page*`;
     } else {
       embed.description = "No Entries were found, please check your search";
@@ -115,14 +116,14 @@ const init = async (msg, args) => {
     let mes = await procedure({ embed });
     const options = {
       page,
-      tot_pages,
+      tot_pages: totPages,
     };
     navigator(mes, msg, Pagination, options, recursion);
     mes = null;
     mss = null;
   }
 
-  Pagination(thispage).then((res) => {
+  return Pagination(thispage).then(() => {
     console.log("ok");
   });
 };
@@ -134,7 +135,7 @@ module.exports = {
   cooldown: 3000,
   aliases: ["ls", "entries"],
   hooks: {
-    preCommand: (msg) => msg.author.marketplacing = true,
-    postExecution: (msg) => msg.author.marketplacing = false,
+    preCommand: (msg) => (msg.author.marketplacing = true),
+    postExecution: (msg) => (msg.author.marketplacing = false),
   },
 };

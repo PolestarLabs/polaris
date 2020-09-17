@@ -1,4 +1,4 @@
-const init = async function (msg) {
+const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const target = Math.abs(parseInt(msg.args[0])) || 1;

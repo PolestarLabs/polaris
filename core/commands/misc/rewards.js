@@ -281,7 +281,7 @@ const queryGen = function queryGen(T, pushmo) {
 };
 
 const cmd = "rewards";
-const init = async function (message) {
+const init = async (msg) => {
   Member = message.member;
 
   if (message.guild.id !== "277391723322408960") {

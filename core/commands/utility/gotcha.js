@@ -1,6 +1,6 @@
 // const gear = require('../../utilities/Gearbox');
 
-const init = async function (msg) {
+const init = async (msg) => {
   try {
     const embed = new Embed();
     embed.color("#f8a863");
