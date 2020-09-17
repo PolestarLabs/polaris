@@ -4,12 +4,10 @@ const Timed = require("../../structures/TimedUsage");
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  if (!msg.mentions.length) return msg.channel.send($t("responses.errors.mentionRequired", P));
-  const Target = await PLX.getTarget(msg.args[0], msg.guild, true);
+  let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
   if (!Target) {
-    return msg.reply($t("responses.commend.noPerson", P));
+    Target = msg.author
   }
-  if (msg.author.id === Target.id) return msg.channel.send("no");
 
   const userData = await DB.users.getFull({ id: msg.author.id });
   const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
@@ -81,7 +79,8 @@ const init = async function (msg) {
 };
 
 const info = async (msg, args) => {
-  const Target = await PLX.getTarget(msg.args[0], msg.guild) || await PLX.getTarget(msg.args[1], msg.guild, msg.author);
+
+  const Target = await PLX.getTarget(args[0]||msg.author, msg.guild) ;
 
   const [targetData, targetDataC] = await Promise.all([
     (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
@@ -112,6 +111,7 @@ const info = async (msg, args) => {
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "commend",
   perms: 3,
   cat: "social",
