@@ -86,6 +86,7 @@ PLX.execQueue = [];
 PLX.commandPool = {};
 
 global._emoji = (E) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E);
+global._blank = (() => {});
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;

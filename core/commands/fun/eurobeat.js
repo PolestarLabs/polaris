@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (message) {
+const init = async (msg) => {
   const stuff = [
     "https://youtu.be/3NRCDOAO8JY",
     "https://youtu.be/dK36vthr32M",
@@ -55,12 +55,12 @@ const init = async function (message) {
 
   const rand = randomize(0, stuff.length - 1);
   const rand2 = randomize(0, stuff2.length - 1);
-  const thing = stuff[rand]; // message.author.id === "169551262981816321" ? : 'a wet trout'
+  const thing = stuff[rand]; // msg.author.id === "169551262981816321" ? : 'a wet trout'
 
   const m = `<:ae86:486789339628699648> | **${stuff2[rand2]} ${stuff3[rand]}**
       ${thing}`;
 
-  message.channel.send(m);
+  msg.channel.send(m);
 };
 
 module.exports = {

@@ -1,6 +1,6 @@
 const cmd = "pin";
 
-const init = async function (msg) {
+const init = async (msg) => {
   let messageGrab;
   if (msg.args.length === 0 || [msg.args[0], msg.args[1], msg.args[2]].some((a) => a === "^")) {
     messageGrab = await PLX.getPreviousMessage(msg);

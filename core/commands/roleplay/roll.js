@@ -4,7 +4,7 @@
 // const $t = locale.getT();
 const cmd = "roll";
 
-const init = async function (message) {
+const init = async (msg) => {
   const v = {};
 
   const P = { user: message.member.username, lngs: message.lang, prefix: message.prefix };

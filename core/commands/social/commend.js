@@ -1,7 +1,7 @@
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
-const init = async function (msg) {
+const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   if (!msg.mentions.length) return msg.channel.send($t("responses.errors.mentionRequired", P));
@@ -54,7 +54,7 @@ const init = async function (msg) {
     msg.channel.send({ embed });
   };
 
-  const reject = function (msg, Daily, r) {
+  const reject = (msg, Daily, r) => {
     P.remaining = moment.utc(r).fromNow(true);
     const dailyNope = $t("responses.commend.cooldown", P);
     const embed = new Embed();

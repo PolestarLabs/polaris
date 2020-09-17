@@ -1,6 +1,6 @@
 const DspHook = require("../../structures/DisposableWebhook.js");
 
-const init = async function (msg) {
+const init = async (msg) => {
   const avatars = [
     "https://www.folhamax.com/storage/webdisco/2019/05/11/395x253/63761de61ec13163ff1f2bb999dd30bd.jpg",
     "https://static.otvfoco.com.br/2019/03/Fausto.jpg",
@@ -25,6 +25,7 @@ const init = async function (msg) {
     "CHURRASQUEIRA DE CONTROLE REMOTO!",
   ];
 
+  // eslint-disable-next-line no-new
   new DspHook(msg, "Faustão", shuffle(avatars)[0], { payload: { content: shuffle(phrases)[0] }, once: true, reason: `+fausto [${msg.author.tag}]` });
 };
 module.exports = {

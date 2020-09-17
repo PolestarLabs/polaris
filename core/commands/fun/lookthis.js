@@ -1,6 +1,6 @@
 const Picto = require("../../utilities/Picto");
 
-const init = async function (msg) {
+const init = async (msg) => {
   let LINK = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
 
   try {

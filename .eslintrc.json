@@ -33,7 +33,10 @@
         "no-cond-assign": ["error", "except-parens"],
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
-        "prefer-const": ["error", { "destructuring": "all" }]
-        
+        "prefer-const": ["error", { "destructuring": "all" }],
+        "no-continue": "off",
+        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+        "no-multi-assign": "off"
     }
 }

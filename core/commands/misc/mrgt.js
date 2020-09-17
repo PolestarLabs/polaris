@@ -1,6 +1,6 @@
 const moment = require("moment");
 
-const init = async function (msg) {
+const init = async (msg) => {
   const USERDATA = await DB.users.get(msg.author.id);
 
   const MRG = USERDATA.married;

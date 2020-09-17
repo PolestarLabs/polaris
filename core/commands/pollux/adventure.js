@@ -1,7 +1,7 @@
 const { Venture, Journey } = require("../../archetypes/Venture.js");
 const ReactionMenu = require("../../structures/ReactionMenu");
 
-const init = async function (msg) {
+const init = async (msg) => {
   0;
 
   const LOCATIONS = [

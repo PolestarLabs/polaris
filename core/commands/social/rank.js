@@ -1,6 +1,6 @@
 const Picto = require("../../utilities/Picto.js");
 
-const init = async function (msg) {
+const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const TARGET = await PLX.getTarget(msg.args[0], msg.guild);

@@ -2,7 +2,7 @@ const TranslateBlob = require("../../structures/TranslationBlob");
 
 const cmd = "translate";
 
-const init = async function (msg) {
+const init = async (msg) => {
   const pre = await TranslateBlob.grabLang(msg);
   let ttt = pre.textToTrans;
   let newmes;
