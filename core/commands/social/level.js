@@ -18,7 +18,7 @@ function XPercent(x, l, f = 0.0427899) {
   return percent;
 }
 
-const init = async (msg) => {
+const init = async function (msg) {
   const canvas = Picto.new(220, 100);
   const ctx = canvas.getContext("2d");
 

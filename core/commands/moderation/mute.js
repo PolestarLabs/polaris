@@ -5,7 +5,7 @@
 
 const cmd = "mute";
 
-const init = async (msg) => {
+const init = async function (msg) {
   const Server = msg.guild;
   const Author = msg.author;
   const Member = Server.member(Author);

@@ -1,4 +1,4 @@
-const init = async (msg) => {
+const init = async function (msg) {
   const userData = await DB.users.get(msg.author.id);
   const oldInventory = userData.modules.inventory;
 

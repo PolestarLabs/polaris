@@ -3,7 +3,7 @@ const { inspect } = require("util");
 const os = require("os");
 /// / const DB = require('../../database/db_ops');
 
-const init = async (msg) => {
+const init = async function (msg) {
   const moment = require("moment");
   moment.locale(msg.lang[0] || "en");
 

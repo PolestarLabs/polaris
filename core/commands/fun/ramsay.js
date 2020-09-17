@@ -1,6 +1,6 @@
 const DspHook = require("../../structures/DisposableWebhook.js");
 
-const init = async (msg) => {
+const init = async function (msg) {
   const avatars = [
     "https://robbreportedit.files.wordpress.com/2018/04/gordon-ramsay-1-e1523056498302.jpg?w=1008",
     "https://i.ytimg.com/vi/AVMtt2o2KiI/hqdefault.jpg",
@@ -22,12 +22,8 @@ const init = async (msg) => {
     "I wish you'd jump on the oven, would make my life easier!",
 
   ];
-  // eslint-disable-next-line no-new
-  new DspHook(msg, "Gordon Ramsay", shuffle(avatars)[0], {
-    payload: { content: shuffle(phrases)[0] },
-    once: true,
-    reason: `+ramsay [${msg.author.tag}]`,
-  });
+
+  new DspHook(msg, "Gordon Ramsay", shuffle(avatars)[0], { payload: { content: shuffle(phrases)[0] }, once: true, reason: `+ramsay [${msg.author.tag}]` });
 };
 module.exports = {
   init,

@@ -1,7 +1,7 @@
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
-const init = async (msg) => {
+const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
@@ -52,7 +52,7 @@ const init = async (msg) => {
     msg.channel.send({ embed });
   };
 
-  const reject = (msg, Daily, r) => {
+  const reject = function (msg, Daily, r) {
     P.remaining = moment.utc(r).fromNow(true);
     const dailyNope = $t("responses.commend.cooldown", P);
     const embed = new Embed();

@@ -1,17 +1,21 @@
-const init = async (msg, args) => {
+const init = async function (msg, args, streak) {
   let rounds = args[0] || 10;
   if (rounds > 30) rounds = 30;
   const diff = Number(args[1]) || false;
   const theme = (args[2] || "").toLowerCase();
   let cround = 0;
   const scores = {};
+
   let QUESTIONS = require("./questions.json");
   if (diff) QUESTIONS = QUESTIONS.filter((q) => q.level === diff);
-  if (theme && theme !== "") QUESTIONS = QUESTIONS.filter((q) => q.allcats.toLowerCase().includes(theme));
+  if (theme && theme != "") QUESTIONS = QUESTIONS.filter((q) => q.allcats.toLowerCase().includes(theme));
+
+  if (msg.channel.trivia) return msg.reply("Theres already a game going on here!");
+  await triviaRun();
 
   async function triviaRun() {
     msg.channel.trivia = true;
-    if (QUESTIONS.length === 0 || cround + 1 > rounds) {
+    if (QUESTIONS.length === 0 || cround+1 > rounds) {
       msg.channel.trivia = false;
       return msg.channel.send({
         content: "no more questions",
@@ -21,30 +25,9 @@ const init = async (msg, args) => {
       });
     }
 
-    function correctCheck(res, Q) {
-      if (res.author.bot) return { end: false };
-      if (res.content === "abort" && res.author.id === msg.author.id) return { end: true };
-
-      const response = res.content
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .toLowerCase();
-      const answers = Q.answer.split(",").map((a) => a.trim().toLowerCase());
-      const correct = answers.includes(response);
-
-      if (correct) res.addReaction(_emoji("yep").reaction);
-      else res.addReaction(_emoji("nope").reaction);
-
-      let end = correct;
-      if (Q.type === "TF" && ["true", "false"].includes(response)) end = true;
-      if (!correct && ["pass"].includes(response)) end = true;
-
-      return { correct, response, end };
-    }
-
     const rand = randomize(1, QUESTIONS.length) - 1;
     const Q = QUESTIONS[rand];
-    QUESTIONS = QUESTIONS.filter((v, i) => i !== rand);
+    QUESTIONS = QUESTIONS.filter((v, i) => i != rand);
     const levels = ["Braindead", "My mom can do it", "Lemme think", "Goddammit", "What in tarnation"];
 
     const embed = {
@@ -58,7 +41,7 @@ const init = async (msg, args) => {
 
     embed.title = `Trivia: Round ${cround + 1}/${rounds}`;
 
-    return msg.channel.send({ embed }).then(async (m2) => {
+    msg.channel.send({ embed }).then(async (m2) => {
       const responses = await m2.channel.awaitMessages(
         (m3) => correctCheck(m3, Q).end,
         { maxMatches: 1, time: 15e3 },
@@ -71,7 +54,7 @@ const init = async (msg, args) => {
         return triviaRun();
       }
 
-      const { correct } = correctCheck(responses[0], Q);
+      const { correct, response } = correctCheck(responses[0], Q);
       if (responses[0].content === "abort" && responses[0].author === msg.author) {
         msg.channel.trivia = false;
         return msg.channel.send("Game cancelled!");
@@ -93,16 +76,33 @@ const init = async (msg, args) => {
       await wait(1);
       if (cround < rounds) return triviaRun();
       msg.channel.trivia = false;
-      return msg.channel.send({
+      msg.channel.send({
         embed: {
           fields: Object.keys(scores).map((i) => ({ name: scores[i].name, value: `Score: ${scores[i].score}` })),
         },
       });
     });
   }
+  function correctCheck(res, Q) {
+    if (res.author.bot) return { end: false };
+    if (res.content === "abort" && res.author.id === msg.author.id) return { end: true };
 
-  if (msg.channel.trivia) return msg.reply("Theres already a game going on here!");
-  return triviaRun();
+    const response = res.content
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+    const answers = Q.answer.split(",").map((a) => a.trim().toLowerCase());
+    const correct = answers.includes(response);
+
+    if (correct) res.addReaction(_emoji("yep").reaction);
+    else res.addReaction(_emoji("nope").reaction);
+
+    let end = correct;
+    if (Q.type === "TF" && ["true", "false"].includes(response)) end = true;
+    if (!correct && ["pass"].includes(response)) end = true;
+
+    return { correct, response, end };
+  }
 };
 
 module.exports = {

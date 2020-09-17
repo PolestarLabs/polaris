@@ -21,7 +21,7 @@ const init = async (msg, args) => {
     .color(await Picto.avgColor(imageLink))
     .field("Public", mdl.public ? _emoji("yep") : _emoji("nope"));
 
-  return msg.channel.send({ embed });
+  msg.channel.send({ embed });
 };
 
 module.exports = {

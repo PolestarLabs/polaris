@@ -22,9 +22,7 @@ const startGameCollector = async (game, msg, cb) => {
 
   if (result.stopped) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette STOP");
-    return msg.channel.send(better
-      ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`
-      : "You're a quitter!\nI haven't changed anything because you didn't even played.");
+    return msg.channel.send(better ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.` : "You're a quitter!\nI haven't changed anything because you didn't even played.");
   }
 
   const message = await msg.channel.send("Let's see if you're going to die now...");
@@ -36,10 +34,7 @@ const startGameCollector = async (game, msg, cb) => {
     return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.currentPayout}** rubines to your account.`);
   }
 
-  await message.edit(`**no bullet noise**\nNo bullet this time (${result.rounds} rounds remaining)...\n`
-    + `You currently have **${game.currentPayout} rubines.**\n`
-    + "Use `shoot` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\n"
-    + "Use `stop` to stop here and get your money.");
+  await message.edit(`*\*no bullet noise\**\nNo bullet this time (${result.rounds} rounds remaining)...\nYou currently have **${game.currentPayout} rubines.**\nUse \`shoot\` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\nUse \`stop\` to stop here and get your money.`);
   return cb(game, msg, cb);
 };
 
@@ -67,13 +62,11 @@ const startPlayerCollector = async (msg) => {
   return verifiedPlayers;
 };
 
-// START
-// Does member die?
-const playerRoulette = async (player, game) => {
-  const rst = game.handleInput("shoot");
-  if (rst.lost) await ECO.pay(player.id, player.money, "RUSSIANROULETTE");
-  return !!rst.lost;
-};
+const startMultiplayerLoop = async (msg, players) => {
+  const value = players.map((a) => a.money).reduce((a, b) => a + b);
+  let finished = false;
+  let round = 1;
+  let lost = false;
 
 const handlePlayers = async (message, players, game, gameFrame) => {
   let dead = null;
@@ -146,12 +139,10 @@ const newRound = async (msg, players, round = 0) => {
 
   return newRound(msg, players, round + 1);
 };
-// END
 
 const init = async (msg, args) => {
   if (args[0] === "multiplayer" || args[0] === "mp" || args[0] === "start") {
-    await msg.channel.send("Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
-      + "**The match starts in __20 seconds__.**");
+    await msg.channel.send("Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n**The match starts in __20 seconds__.**");
     const players = await startPlayerCollector(await msg.channel.send("**Total of rubines in the pool:** 0 rubines\n**Players**\n---"));
     if (players.length === 1) return msg.channel.send("If only 1 person is going to play, you should use singleplayer mode.");
     if (players.length === 0) return msg.channel.send("No one joined. I'm not playing this alone.");
@@ -161,16 +152,12 @@ const init = async (msg, args) => {
         image: { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` },
       },
     });
-    return newRound(msg, shuffle(players));
+    return startMultiplayerLoop(msg, shuffle(players));
   }
 
   const BET = parseInt(args[0]);
 
-  if (!BET) {
-    return msg.reply(
-      "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.",
-    );
-  }
+  if (!BET) return msg.reply("you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.");
   if (BET < 100) return msg.reply("You gotta bet at very least 100 RBN on thir");
   if (BET > 5000) return msg.reply("You can't put more than 5000 RBN at stake");
 
@@ -179,10 +166,8 @@ const init = async (msg, args) => {
 
   const game = new RussianRoulette(msg, BET);
 
-  await msg.channel.send("Russian Roulette? You probably already know the rules, so let's get started."
-    + `\nIf you survive this one, you're going to receive **${game.nextValue} rubines**.\n`
-    + "Use `shoot` to proceed (if you get shot, you'll lose your money).");
-  return startGameCollector(game, msg, startGameCollector);
+  await msg.channel.send(`Russian Roulette? You probably already know the rules, so let\'s get started.\nIf you survive this one, you\'re going to receive **${game.nextValue} rubines**.\nUse \`shoot\` to proceed (if you get shot, you'll lose your money).`);
+  startGameCollector(game, msg, startGameCollector);
 };
 
 module.exports = {

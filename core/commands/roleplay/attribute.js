@@ -4,7 +4,7 @@
 // const $t = locale.getT();
 const cmd = "attribute";
 
-const init = async (msg) => {
+const init = async function (message) {
   const P = { user: message.member.displayName, lang: message.lngs };
   if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message, opt: this.cat })) return;
 

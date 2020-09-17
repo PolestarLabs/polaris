@@ -3,7 +3,7 @@
 // const $t = locale.getT();
 const Gal = require("../../structures/Galleries");
 
-const init = async (msg) => {
+const init = async function (message) {
   // HELP TRIGGER
   const helpkey = $t("helpkey", {
     lngs: message.lang,

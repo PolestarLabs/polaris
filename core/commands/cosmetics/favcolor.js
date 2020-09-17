@@ -5,9 +5,9 @@
 
 const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
 
-const init = async (msg) => {
+const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
+  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   const colorChanged = $t("misc.colorChange", P);
   const getColor = require("../utility/color");
@@ -43,7 +43,7 @@ const init = async (msg) => {
   res.embed.footer = {};
   console.log(res);
   DB.users.set(msg.author.id, { $set: { "modules.favcolor": (`#${res.hex}`).replace("##", "#") } });
-  return msg.channel.send({ embed: res.embed });
+  msg.channel.send({ embed: res.embed });
 };
 module.exports = {
   init,

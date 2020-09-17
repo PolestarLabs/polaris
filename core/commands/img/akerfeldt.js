@@ -1,6 +1,6 @@
 const Gal = require("../../structures/Galleries");
 
-const init = async (msg) => {
+const init = async function (msg) {
   const embed = new Embed();
 
   const img = await Gal.randomOne("akerfeldt", true);

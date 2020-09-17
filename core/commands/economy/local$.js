@@ -4,14 +4,14 @@ const ECO = require("../../archetypes/Economy");
 // const locale = require('../../../utils/i18node');
 // const $t = locale.getT();
 
-const init = async (msg) => {
+const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
+  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   msg.author.customCurr = msg.author.customCurr || {};
   msg.author.customCurr[msg.guild.id] = msg.author.customCurr[msg.guild.id] || 0;
 
-  [subcommand] = msg.args;
+  subcommand = msg.args[0];
 
   /* ADM */
   // create
@@ -36,18 +36,18 @@ const init = async (msg) => {
       { maxMatches: 1, time: 30e3 });
 
     if (!responses) return msg.reply("timeout");
-    [pIcon] = responses[0].content.split(" ");
+    pIcon = responses[0].content.split(" ")[0];
 
     msg.channel.send("Initial Investment (RBN)");
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !Number.isNaN(parseInt(msg2.content)),
+            && !isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     pInvest = parseInt(responses[0].content) || 0;
 
     msg.channel.send(`Maximum Pool (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !Number.isNaN(parseInt(msg2.content)),
+            && !isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     pPool = parseInt(responses[0].content) || 0;
@@ -132,7 +132,6 @@ const init = async (msg) => {
 
     msg.guild.economy = eco;
   }
-  return null;
 };
 module.exports = {
   init,

@@ -7,7 +7,7 @@ const { riot } = require(`${appRoot}/config.json`);
 
 const cmd = "rotation";
 
-const init = async (msg) => {
+const init = async function (message) {
   const LANG = message.lang;
 
   const nope = $t("CMD.noDM", {

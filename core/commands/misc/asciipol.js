@@ -1,4 +1,4 @@
-const init = (msg) =>{
+const init = function (msg){
   let fs = require('fs')
   delete require.cache[require.resolve(appRoot+'/asciiPollux.js')]  
   let text = require(appRoot+'/asciiPollux.js').ascii();

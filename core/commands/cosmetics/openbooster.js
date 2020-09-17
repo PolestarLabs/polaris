@@ -1,6 +1,9 @@
-const init = async (msg) => {
+const fs = require("fs");
+const Picto = require("../../utilities/Picto.js");
+
+const init = async function (msg) {
   const P = { lngs: msg.lang };
-  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat })) return null;
+  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   const [userData, stickerData, boosterData] = await Promise.all([
     DB.users.getFull({ id: msg.author.id }),
@@ -12,7 +15,7 @@ const init = async (msg) => {
   // if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));
 
   function getRandomSticker(col, exc) {
-    const pile = shuffle(stickerData.filter((stk) => stk.series_id === col && stk.id !== exc));
+    const pile = shuffle(stickerData.filter((stk) => stk.series_id === col && stk.id != exc));
     return pile[randomize(0, pile.length - 1)];
   }
 
@@ -29,10 +32,11 @@ const init = async (msg) => {
   P.dashboard = `[${$t("terms.dashboard", P)}](${paths.DASH}/dashboard#/stickers)`;
   embed.author(_emoji(thisPack.rarity) + $t("interface.booster.title", P));
   embed.color = 0x36393f;
-  embed.description = `${"------------------------------------------------\n"
-  + `${stk1.new ? ":new:" : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
-  + `${stk2.new ? ":new:" : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
-  + "------------------------------------------------\n"}${
+  embed.description = `${`
+    ------------------------------------------------
+    ${stk1.new ? ":new:" : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}
+    ${stk2.new ? ":new:" : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}
+ ` + "------------------------------------------------\n"}${
     $t("interface.booster.checkStickersAt", P)}`;
 
   embed.image(`${paths.GENERATORS}/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}`);
@@ -43,7 +47,7 @@ const init = async (msg) => {
     userData.update({ $addToSet: { "modules.stickerInventory": { $each: [stk1.id, stk2.id] } } }),
     userData.removeItem(thisPack.id),
   ]);
-  return msg.channel.send({ embed });
+  msg.channel.send({ embed });
 };
 
 module.exports = {
