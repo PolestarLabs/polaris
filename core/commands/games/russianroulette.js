@@ -107,6 +107,7 @@ const handlePlayers = async (message, players, game, gameFrame) => {
 
 const newRound = async (msg, players, round = 0) => {
   // Initialise game
+  const value = players.map((a) => a.money).reduce((a, b) => a + b);
   const game = new RussianRoulette(null, 0);
   const gameFrame = {
     embed: {
