@@ -33,7 +33,7 @@ const startGameCollector = async (game, msg, cb) => {
     return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
   } if (result.won) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette FLAWLESS");
-    return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.payout}** rubines to your account.`);
+    return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.currentPayout}** rubines to your account.`);
   }
 
   await message.edit(`**no bullet noise**\nNo bullet this time (${result.rounds} rounds remaining)...\n`
