@@ -46,7 +46,7 @@ const startGameCollector = async (game, msg, cb) => {
 const startPlayerCollector = async (msg) => {
   const verifiedPlayers = [];
 
-  const filter = async (m) => m.content.startsWith("join ")
+  const filter = async (m) => m.content.toLowerCase().startsWith("join ")
       && !verifiedPlayers.filter((a) => a.id === m.author.id)[0]
       && !Number.isNaN(m.content.split(" ")[1])
       && parseInt(m.content.split(" ")[1]) > 0
@@ -100,6 +100,7 @@ const handlePlayers = async (message, players, game, gameFrame) => {
 
     // Tell players the status of that player
     await Promise.all([message.edit(gameFrame), wait(3)]);
+    if (died) break;
   }
   // End of round
   return dead;

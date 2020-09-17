@@ -7,6 +7,7 @@ exports.run = () => {
   global.paths = {
     CDN,GENERATORS,API,DASH,
     WIKI: "https://wiki.pollux.gg",
+    ASSETS: `${appRoot}/../assets/`,
     MISC: `${appRoot}/../v7/resources/misc/`,
     REACTIONS: `${appRoot}/../v7/resources/imgres/reactions/`,
 
