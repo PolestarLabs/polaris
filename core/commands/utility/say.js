@@ -1,6 +1,6 @@
 // const gear = require('../../utilities/Gearbox');
 
-const init = async function (msg) {
+const init = async function (msg,args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
@@ -15,7 +15,7 @@ const init = async function (msg) {
     const userEmbed = JSON.parse(msg.content.substr(msg.content.indexOf("embed") + 5).trim());
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
   } else {
-    msg.channel.send(msg.content.split(/ +/).slice(1).join(" "));
+    msg.channel.send(msg.args.join(" "));
   }
 };
 
