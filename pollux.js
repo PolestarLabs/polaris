@@ -1,5 +1,5 @@
 // STARTUP FLAIR
-process.stdout.write("\x1Bc");
+//process.stdout.write("\x1Bc");
 console.log(require("./asciiPollux.js").ascii());
 // ===========================================
 
