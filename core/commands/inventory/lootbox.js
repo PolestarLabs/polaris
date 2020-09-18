@@ -5,6 +5,7 @@ const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
 const init = async function (msg, args, userID) {
+  
   if (userID && args[10]?.id != userID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 

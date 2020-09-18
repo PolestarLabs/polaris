@@ -31,7 +31,7 @@ class GenericItemInventory {
 
     this.init = async (msg, args, userID) => {
       if (userID && args[10]?.id != userID) return "Only the owner can see inside";
-      msg.lang = msg.lang || [msg.channel.LANG];
+      msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
       const P = { lngs: msg.lang.concat("dev") };
 
@@ -63,7 +63,7 @@ class GenericItemInventory {
           Inventory.forEach((itm) => displayItem(itm, embed, P));
           response.embed = embed;
           return response;
-        } if (tot_pages === 0) { // soft comp to match false
+        } if (tot_pages == 0) { // soft comp to match false
           embed.description = `*${rand$t("responses.inventory.emptyJokes", P)}*`;
           return { embed };
         }
