@@ -1,6 +1,7 @@
 const Gal = require("../../structures/Galleries");
 
 const init = async function (msg) {
+  if (!msg.channel.nsfw) return $t("responses.errors.not-a-NSFW-channel", { lngs: msg.lang });
   const embed = new Embed();
 
   const img = await Gal.randomOne("ahegao", true);
