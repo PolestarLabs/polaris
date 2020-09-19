@@ -7,7 +7,7 @@ const A1 = `${paths.CDN}/build/coins/befli_h_s.png`;
 const B = `${paths.CDN}/build/coins/befli_tails.gif`;
 const B1 = `${paths.CDN}/build/coins/befli_t_s.png`;
 
-const init = async function (msg) {
+const init = async (msg) => {
   const userData = DB.users.get(msg.author.id);
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
@@ -17,8 +17,8 @@ const init = async function (msg) {
   let currency = msg.args[2] ? msg.args[2].toUpperCase() : "RBN";
 
   if (!bet || !call) {
-     PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
-     return;
+    PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
+    return null;
   }
 
   if (!["HEADS", "TAILS", $t("terms.coinHeads", P).toUpperCase(), $t("terms.coinTails", P).toUpperCase()].includes(call)) {
@@ -27,7 +27,7 @@ const init = async function (msg) {
 
   call = ["HEADS", $t("terms.coinHeads", P).toUpperCase()].includes(call) ? "HEADS" : "TAILS";
 
-  if (currency && currency != "RBN") {
+  if (currency && currency !== "RBN") {
     if ((await userData).donator) {
       // ok
     } else {
@@ -56,7 +56,11 @@ const init = async function (msg) {
     ECO.pay(msg.author, bet, "Gambling : Betflip", currency);
     if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
   } else {
-    return msg.channel.send(`Cannot afford. ${await userData.modules[(currency ? currency === "RBN" ? "rubines" : currency === "JDE" ? "jades" : currency === "SPH" ? "sapphires" : "rubines" : "rubines")]}/${bet}`);
+    return msg.channel.send(`Cannot afford. ${await userData.modules[(currency
+      ? currency === "RBN"
+        ? "rubines" : currency === "JDE"
+          ? "jades" : currency === "SPH"
+            ? "sapphires" : "rubines" : "rubines")]}/${bet}`);
   }
 
   const res = R === "HEADS" ? A : B;
@@ -71,12 +75,9 @@ const init = async function (msg) {
     betting **${bet} ${currency}**
     \u200b`;
 
-  msg.channel.send({ embed }).then(async (x) => {
+  return msg.channel.send({ embed }).then(async (x) => {
     embed.setColor(win ? "#0cc6ee" : "#ee0c2c");
-    embed.description = `... calling for **${call}**
-betting **${bet} ${currency}**
-and landed **${face}**!
-`;
+    embed.description = `... calling for **${call}**\nbetting **${bet} ${currency}**\nand landed **${face}**!`;
     embed.thumbnail.url = res2;
     await wait(5.5);
     P.prize = Math.ceil(bet * 1.5);

@@ -1,10 +1,11 @@
-const { Embed } = require("../../../utilities/Gearbox");
-const YesNo = require("../../../structures/YesNo");
+// const { Embed } = require("../../../utilities/Gearbox");
+// const YesNo = require("../../../structures/YesNo");
 
-const init = async (msg, args) => {
-
+// eslint-disable-next-line arrow-body-style
+const init = async (msg /* , args */) => {
   return msg.channel.send("Unlisting items is currently not available!");
 
+  /*
   const [offer, fullbase] = await Promise.all([
     DB.marketplace.get({ $or: [{ id: args[0] }, { item_id: args[0] }], author: msg.author.id }),
     (await DB.marketbase({ fullbase: 1 })).fullbase,
@@ -41,6 +42,7 @@ ${offer.price}${_emoji(offer.currency)}
       cancel: "Cancelled - Item was not deleted",
     },
   }));
+  */
 };
 
 module.exports = {
@@ -50,7 +52,7 @@ module.exports = {
   cooldown: 5000,
   aliases: ["del", "rem", "remove", "unlist"],
   hooks: {
-    preCommand: (msg) => msg.author.marketplacing = true,
-    postExecution: (msg) => msg.author.marketplacing = false,
+    preCommand: (msg) => (msg.author.marketplacing = true),
+    postExecution: (msg) => (msg.author.marketplacing = false),
   },
 };

@@ -2,22 +2,22 @@ const cmd = "synthesize";
 
 const Picto = require(`${appRoot}/core/utilities/Picto`);
 
-const init = async (msg, args) => {
-  const P = { lngs: msg.lang };
+const init = async (message, args) => {
+  const P = { lngs: message.lang };
 
-  const MSG = msg.content;
+  const MSG = message.content;
   const helpkey = $t("helpkey", {
-    lngs: msg.lang,
+    lngs: message.lang,
   });
   if (MSG.split(/ +/)[1] === helpkey || MSG.split(/ +/)[1] === "?" || MSG.split(/ +/)[1] === "help") {
-    return PLX.usage(cmd, msg, this.cat);
+    return PLX.usage(cmd, message, this.cat);
   }
 
   const canvas = Picto.new(400, 150);
   const ctx = canvas.getContext("2d");
 
-  const operation = msg.args[0] || "bg";
-  const userData = await DB.users.getFull({ id: msg.author.id });
+  const operation = message.args[0] || "bg";
+  const userData = await DB.users.getFull({ id: message.author.id });
   const embed = new Embed();
   let hasIt; let affordsIt; let canBuy; let selectedItem; let positive; let obtainable;
 
@@ -43,9 +43,9 @@ const init = async (msg, args) => {
 
   const YesNo = require("../../../structures/YesNo");
 
-  return msg.channel.send({ embed }, file(await canvas.toBuffer(), "synth.png")).then(async (m) => {
+  return message.channel.send({ embed }, file(await canvas.toBuffer(), "synth.png")).then(async (m) => {
     if (!hasIt && affordsIt && canBuy) {
-      YesNo(m, msg, positive, null, null, {
+      YesNo(m, message, positive, null, null, {
         embed,
         strings: {
           cancel: "Cancel!",

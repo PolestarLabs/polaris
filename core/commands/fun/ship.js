@@ -4,7 +4,7 @@ const init = async function init(msg, args) {
   const Canvas = Picto.new(796, 445);
   const ctx = Canvas.getContext("2d");
 
-  let rand = Number(args[2]) || randomize(0, 100);
+  const rand = Number(args[2]) || randomize(0, 100);
 
   const TargetA = await PLX.getTarget(msg.args[0], msg.guild);
   const TargetB = await PLX.getTarget(msg.args[1], msg.guild);
@@ -18,8 +18,6 @@ const init = async function init(msg, args) {
     Picto.getCanvas(TargetA.avatarURL),
     Picto.getCanvas(TargetB.avatarURL),
   ]);
-
-
 
   ctx.fillStyle = "#ffdeaa";
   ctx.fillRect(87, 105, 630, 190);

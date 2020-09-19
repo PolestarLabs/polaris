@@ -45,7 +45,9 @@ const init = async (msg, args) => {
   if (Target) targetItem = BASE.find((x) => x[param] === Target);
   if (Target === "last") targetItem = BASE.find((x) => x[param] === userData.modules[inventory][userData.modules[inventory].length - 1]);
 
-  console.log({ Target, inventory, targetItem }, userData.modules[inventory][userData.modules[inventory].length - 1], userData.modules[inventory].length);
+  console.log(
+    { Target, inventory, targetItem }, userData.modules[inventory][userData.modules[inventory].length - 1], userData.modules[inventory].length,
+  );
 
   if (userData.modules[inventory].includes(targetItem[param])) {
     P.rarity_emoji = _emoji(targetItem.rarity);
@@ -63,6 +65,7 @@ const init = async (msg, args) => {
         console.log("aaa");
         endpoint = "medals";
         break;
+      default: throw new RangeError(`Unexpected input: ${targetItem.type}`);
     }
 
     P.count = 1;
@@ -83,8 +86,8 @@ const init = async (msg, args) => {
       .footer(msg.author.tag, msg.author.avatarURL);
 
     const YesNo = require("../../structures/YesNo");
-    msg.channel.send({ embed }).then((m) => {
-      positive = async function (cancel) {
+    return msg.channel.send({ embed }).then((m) => {
+      positive = async () => {
         if (targetItem.type === "background") DB.users.set(msg.author.id, { $pull: { "modules.bgInventory": targetItem.code } });
         if (targetItem.type === "sticker") DB.users.set(msg.author.id, { $pull: { "modules.stickerInventory": targetItem.id } });
         if (targetItem.type === "medal") DB.users.set(msg.author.id, { $pull: { "modules.medalInventory": targetItem.icon } });
@@ -100,11 +103,10 @@ const init = async (msg, args) => {
           confirm: "OK",
           timeout: "Timeout",
         },
-      }).then((c) => msg.author.crafting = false);
+      }).then(() => (msg.author.crafting = false));
     });
-  } else {
-    return "nope";
   }
+  return "nope";
 };
 module.exports = {
   init,
