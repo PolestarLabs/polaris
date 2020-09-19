@@ -10,7 +10,7 @@ const init = async function (msg) {
   if (msg.author.id === Target.id) return msg.channel.createMessage("no");
 
   const serverData = await DB.servers.get(msg.guild.id);
-  P.imsorry = rand$t("responses.verbose.gomenasai");
+  P.imsorry = rand$t("responses.verbose.interjections.gomenasai");
   if (!PLX.modPass(msg.member, "kickMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));
 
   if (!msg.args[0]) {
