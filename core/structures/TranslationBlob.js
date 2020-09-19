@@ -144,32 +144,16 @@ module.exports = {
     });
   },
   grabLang(msg) {
-    let langTo; let langFrom; let textToTrans;
+    let langTo; let langFrom;
     const langsAvailable = Object.keys(translate.languages);
-    function oneArg() {
-      [langTo] = msg.args;
-      if (langsAvailable.includes(msg.args[0].toLowerCase())) {
-        textToTrans = msg.args.slice(1).join(" ");
-      }
-    }
-
-    if (msg.args.length > 2) {
-      if (langsAvailable.includes(msg.args[0].toLowerCase()) && langsAvailable.includes(msg.args[1].toLowerCase())) {
-        [langFrom, langTo] = msg.args;
-        textToTrans = msg.args.slice(2).join(" ");
-      } else {
-        oneArg();
-      }
-    } else if (msg.args.length > 1) {
-      oneArg();
-    }
-
-    if (!langTo) {
+    if (langsAvailable.includes(msg.args[0])) {
+      langFrom = langsAvailable.includes(msg.args[1]) ? msg.args.shift() : "auto";
+      langTo = msg.args.shift();
+    } else {
+      langFrom = "auto";
       [langTo] = (msg.channel.LANG || msg.guild.LANG || "en").split("-");
-      textToTrans = msg.args.join(" ");
     }
-    if (langTo === "dev") langTo = "en";
-
+    const textToTrans = msg.args.join(" ");
     return { textToTrans, langFrom, langTo };
   },
 
