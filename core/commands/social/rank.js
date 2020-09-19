@@ -3,7 +3,7 @@ const Picto = require("../../utilities/Picto.js");
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const TARGET = await PLX.getTarget(msg.args[0], msg.guild);
+  const TARGET = msg.args[0] ? await PLX.getTarget(msg.args[0], msg.guild) : msg.member;
   if (!TARGET) return msg.channel.send($t("responses.errors.kin404", P));
 
   let userData; let serverData; let selfLocal; let LRpos;
