@@ -96,17 +96,21 @@ const DEFAULT_CMD_OPTS = {
       }
     },
   },
-  errorMessage: (msg, err) => ({
-    embed: {
+  errorMessage: function errorMessage(msg, err) {
+    Error.captureStackTrace(this, errorMessage);
+    PLX.createMessage('488142183216709653', require('util').inspect(this.stack));
+    return ({
+      embed: {
       // description: "Oh **no**! Something went wrong...\n"
       // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
-      description: "Oh **no**! Something went wrong...\n"
+        description: "Oh **no**! Something went wrong...\n"
       + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${
         PLX.beta || cfg.testChannels.includes(msg.channel.id) ? ` \`\`\`js\n${err.stack}\`\`\`` : ""}`,
-      thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
-      color: 0xF05060,
-    },
-  }),
+        thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
+        color: 0xF05060,
+      },
+    });
+  },
   hidden: false,
 };
 
