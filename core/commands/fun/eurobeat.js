@@ -1,5 +1,5 @@
 // const gear = require('../../utilities/Gearbox');
-const init = async function (message) {
+const init = async (message) => {
   const stuff = [
     "https://youtu.be/3NRCDOAO8JY",
     "https://youtu.be/dK36vthr32M",

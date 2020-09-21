@@ -14,7 +14,7 @@ const init = async function (msg, args, userID) {
 
     embed.description =
         Inventory.length > 0 
-            ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open booster ${i.rarity}\``).join('\n')
+            ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open booster ${i.icon}\``).join('\n')
             :  `*${rand$t('responses.inventory.emptyJokes',P)}*`
 
     embed.footer = { 

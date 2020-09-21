@@ -33,7 +33,7 @@ module.exports = {
     }
 
     if (user && member && guild) return user;
-    if (!user && guild && isID) return await PLX.getRESTUser(ID);
+    if (!user && guild && isID) return PLX.getRESTUser(ID).catch(() => null);
     return user?.user || user;
   },
   // Get IMG from Channel MSGs

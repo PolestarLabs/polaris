@@ -19,7 +19,7 @@ const init = async (msg) => {
     if (msg.content.includes("fs")) return null;
     if (msg.content.includes("json")) return null;
     if (msg.content.includes("../../")) return null;
-    if (msg.content.includes("require")) return null;
+    // if (msg.content.includes("require")) return null;
   }
 
   let depthParam = 0;

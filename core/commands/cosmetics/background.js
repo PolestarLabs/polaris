@@ -1,5 +1,4 @@
 const cmd = "background";
-const fs = require("fs");
 const ECO = require("../../archetypes/Economy.js");
 
 const init = async (msg, args) => {
@@ -16,7 +15,7 @@ const init = async (msg, args) => {
     if (msg.args.some((arg) => (bg.tags || "").toLowerCase().includes(arg))) return true;
     return false;
   });
-  if (!selectedBG) selectedBG = shuffle(BGBASE)[28];
+  if (!selectedBG) [,,,,,,,,,,,,,,,,,,,,,,,,,,,, selectedBG] = shuffle(BGBASE);
 
   const embed = new Embed();
 
@@ -67,7 +66,7 @@ const init = async (msg, args) => {
         await ECO.pay(msg.author.id, _price, "bgshop_bot", "RBN");
       }
       if (!affordsIt) return cancellation();
-      await DB.users.set(
+      return DB.users.set(
         { id: msg.author.id },
         {
           $set: {
@@ -77,7 +76,7 @@ const init = async (msg, args) => {
             "modules.bgInventory": selectedBG.code,
           },
         },
-      );
+      ).then(() => {});
     }
 
     if (!hasIt && affordsIt && canBuy) {
