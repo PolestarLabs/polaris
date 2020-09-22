@@ -231,7 +231,7 @@ const drawTable = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
     });
   }
 
-  drawOpts.enemyStando ? c.drawImage(stando, 0, 0, 800, 600) : _blank();
+  drawOpts.enemyStando ? c.drawImage(stando, 0, 0, 800, 600) : (() => null)();
 
   return SCENE;
 };
