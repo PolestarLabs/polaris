@@ -170,7 +170,7 @@ init = async (msg) => {
   let Target_Database = await DB.users.get({ id: Target.id });
 
   if (Target_Database) Target_Database.type = "udata";
-  const PFLD = Target_Database.switches.profiled;
+  const PFLD = Target_Database.switches?.profiled || false;
  
   // Strictly accepts UDBData and DiscordUser/DiscordMember
   const USERPROFILE = new UserProfileModel(Target_Database, Target); 
