@@ -33,6 +33,7 @@
     "imageurl-base64": "^1.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.9.9",
+    "morse": "^0.1.0",
     "node-fetch": "^2.6.1",
     "open-graph-scraper": "^4.6.0",
     "request": "^2.88.2",
