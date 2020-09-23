@@ -33,8 +33,8 @@ const init = async (msg) => {
   const invisibar = "\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b";
   const code = msg.args.join(" ");
 
-  if (code.includes("child_process") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes("exec") && msg.author.id !== "88120564400553984") return null;
+  // if (code.includes("child_process") && msg.author.id !== "88120564400553984") return null;
+  // if (code.includes("exec") && msg.author.id !== "88120564400553984") return null;
   if (code.includes(".leave(") && msg.author.id !== "88120564400553984") return null;
   if (code.includes(".drop") && msg.author.id !== "88120564400553984") return null;
   if (code.includes("process.") && msg.author.id !== "88120564400553984") return null;
