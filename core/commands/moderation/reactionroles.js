@@ -12,7 +12,7 @@ const init = async (msg, args) => {
   const arg4 = msg.args[4]; // role
 
   const serverData = await DB.servers.get(msg.guild.id, { "modules.MODROLE": 1 });
-  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope);
+  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope).then(() => null);
 
   const rolefind = (x) => (msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find((rl) => rl.id === msg.roleMentions[0]));
 
