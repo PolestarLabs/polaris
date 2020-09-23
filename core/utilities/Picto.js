@@ -40,8 +40,6 @@ module.exports = {
 
   getCanvas: function getCanvas(...args){    
     return  Canvas.loadImage(...args).catch(err=>{
-      PLX.createMessage('488142183216709653', require('util').inspect(args))
-      PLX.createMessage('488142183216709653', require('util').inspect(err))
       console.error(...args)
       throw new Error(err)
     })

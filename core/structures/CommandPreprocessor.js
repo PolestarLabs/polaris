@@ -97,8 +97,6 @@ const DEFAULT_CMD_OPTS = {
     },
   },
   errorMessage: function errorMessage(msg, err) {
-    Error.captureStackTrace(this, errorMessage);
-    PLX.createMessage('488142183216709653', require('util').inspect(this.stack));
     return ({
       embed: {
       // description: "Oh **no**! Something went wrong...\n"

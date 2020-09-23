@@ -12,7 +12,7 @@ const init = async (msg, args) => {
   const arg4 = msg.args[4]; // role
 
   const serverData = await DB.servers.get(msg.guild.id, { "modules.MODROLE": 1 });
-  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope);
+  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope).then(() => null);
 
   const rolefind = (x) => (msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find((rl) => rl.id === msg.roleMentions[0]));
 
@@ -133,7 +133,7 @@ function list(ReactionData, msg) {
 \u200b\u2003 **${CH}**: <#${rea.channel}>
 \u200b\u2003 **${RC}/${RL}**:
 \u200b\u2003\u2003 ${
-  rea.rolemoji.map((rlmj) => `<:${rlmj.emoji}> <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
+  rea.rolemoji.map((rlmj) => `${rlmj.emoji.includes(":") ? `<:${rlmj.emoji}>` : rlmj.emoji} <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
 }
         
         `, true);
