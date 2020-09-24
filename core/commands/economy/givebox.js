@@ -4,13 +4,17 @@ const YesNo = require("../../structures/YesNo");
 const Timed = require("../../structures/TimedUsage");
 
 const boxtats = (list, R, cbx) => `\`\`\`md\n${
-  list
-    .map(
-      (box, i) => `${box.tradeable ? ">-" : "> "}${
-        i === R || box === cbx ? "✔️" : `[${i}]`
-      }[${box.name}]\n`,
-    )
-    .join("")
+  Array.isArray(list)
+    ? list
+      .map(
+        (box, i) => `${box.tradeable ? ">-" : "> "}${
+          i === R || box === cbx ? "✔️" : `[${i}]`
+        }[${box.name}]\n`,
+      )
+      .join("")
+    : `${box.tradeable ? ">-" : "> "}${
+      i === R || box === cbx ? "✔️" : `[${i}]`
+    }[${box.name}]\n`
 }\`\`\``;
 
 const init = async (msg, args) => {
