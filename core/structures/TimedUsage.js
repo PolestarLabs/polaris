@@ -67,7 +67,7 @@ ${_emoji("future")} ${dailyAvailable
     return message.channel.send({ embed: embe2 });
   }
 
-  if (!dailyAvailable && Author.id !== "88120564400553984"/**/) {
+  if (!dailyAvailable && !( PLX.timerBypass.includes(Author.id) )/**/) {
     const remain = userDaily + DAY;
     Daily.userDataStatic = userDaily;
     return reject(message, Daily, remain);
