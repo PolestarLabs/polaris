@@ -41,7 +41,7 @@ const init = async (msg, args) => {
     ${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(last).add(2, "hours").fromNow()}`;
     return message.channel.send({ embed: embe2 });
   };
-  async function boxTransfer(CHOSENBOX, R) {
+  async function boxTransfer(userBoxList, CHOSENBOX, R) {
     const embed = {};
     if (CHOSENBOX.tradeable) {
       P.boxname = CHOSENBOX.name;
