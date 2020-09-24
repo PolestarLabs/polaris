@@ -39,7 +39,7 @@ const init = async (msg, args) => {
   .add(2, "hours")
   .fromNow()}
         `;
-    return messaage.channel.send({ embed: embe2 });
+    return message.channel.send({ embed: embe2 });
   };
 
   // y
