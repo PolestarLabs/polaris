@@ -53,7 +53,8 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
 
   const embed = new Embed();
   embed.setColor("#d83668");
-  if (message.args.includes("status") || message.args.includes("stats")) {
+  if (message.args.includes("status") || message.args.includes("stats") || message.args.includes("info")) {
+    
     const remain = userDaily + DAY;
     if (info) return info(message, Daily, remain);
     const embe2 = new Embed();
@@ -67,7 +68,7 @@ ${_emoji("future")} ${dailyAvailable
     return message.channel.send({ embed: embe2 });
   }
 
-  if (!dailyAvailable && !( PLX.timerBypass.includes(Author.id) )/**/) {
+  if (!dailyAvailable && !( PLX.timerBypass?.includes(Author.id) )/**/) {
     const remain = userDaily + DAY;
     Daily.userDataStatic = userDaily;
     return reject(message, Daily, remain);
