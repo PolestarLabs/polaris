@@ -32,6 +32,7 @@ const init = async (msg, args) => {
     return message.channel.send({ embed: embe2 });
   };
   async function boxTransfer(CHOSENBOX, R) {
+    const embed = {};
     if (CHOSENBOX.tradeable) {
       P.boxname = CHOSENBOX.name;
       embed.description = `
