@@ -11,6 +11,7 @@ const init = async (msg, args) => {
     next: $t("responses.transfer.next", P),
   };
 
+  // y
   const reject = (message, Daily, r) => {
     P.remaining = moment.utc(r).fromNow(true);
     const dailyNope = $t("responses.give.cooldown", P);
@@ -20,6 +21,7 @@ const init = async (msg, args) => {
     return message.channel.send({ embed });
   };
 
+  // y
   const info = async (message, Daily) => {
     const { last } = await Daily.userData(message.author);
     const dailyAvailable = await Daily.dailyAvailable(message.author);
@@ -27,71 +29,25 @@ const init = async (msg, args) => {
     const embe2 = new Embed();
     embe2.setColor("#e35555");
     embe2.description = `
-    ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}
-    ${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(last).add(2, "hours").fromNow()}`;
-    return message.channel.send({ embed: embe2 });
+    ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment
+  .utc(last)
+  .fromNow()}
+    ${_emoji("future")} ${
+  dailyAvailable ? _emoji("online") : _emoji("dnd")
+} **${v.next}** ${moment
+  .utc(last)
+  .add(2, "hours")
+  .fromNow()}
+        `;
+    return messaage.channel.send({ embed: embe2 });
   };
-  async function boxTransfer(CHOSENBOX, R) {
-    if (CHOSENBOX.tradeable) {
-      P.boxname = CHOSENBOX.name;
-      embed.description = `
-         ${$t("responses.transfer.transferthisboxto", P)}    
 
-          ${boxtats(userBoxList, R, CHOSENBOX)}
-
-          ${$t("responses.trade.confirm10s", P).toUpperCase()}    
-          `;
-      await prompt.edit({ embed });
-      const yes = async () => {
-        const audit = await ECO.arbitraryAudit(
-          message.author.id,
-          Target.id,
-          `[${CHOSENBOX.id}]`,
-          "BOX",
-          ">",
-        );
-        await ECO.pay(message.author.id, 250, "Lootbox Transfer Tax");
-
-        userData.removeItem(CHOSENBOX.id);
-        targetData.addItem(CHOSENBOX.id);
-
-        embed.description = `
-              ${_emoji("yep")}${$t("responses.transfer.success", P)}    
-
-              ${$t("terms.TransactionFee")} **${250}${_emoji("RBN")}**
-              ${$t("terms.TransactionID")} \`${audit.transactionId}\`
-              `;
-        embed.color = 0x2deb88;
-        embed.image = {
-          url:
-          `${paths.CDN}/build/TRANSFER_BOX_1.gif`,
-        };
-        prompt.edit({ embed });
-        return true;
-      };
-
-      return (YesNo(prompt, message, yes, cancel, timeout, { time: 10e3 }));
-    }
-    embed.color = 0xff3636;
-    embed.description = `
-          **${CHOSENBOX.name}** cannot be transferred!
-
-          ${boxtats(userBoxList, R).replace("✔️", "❌")}
-
-          `;
-    embed.image = {
-      url:
-        `${paths.CDN}/build/TRANSFER_BOX_nope_4.gif`,
-    };
-    prompt.edit({ embed });
-    return false;
-  }
-
+  // y
   const precheck = async (message) => {
-    const Target = msg.mentions[0] || PLX.findUser(args[1] || "");
+    const Target = message.mentions[0] || PLX.findUser(args[1] || "");
     const preRarity = args[0] ? args[0].toUpperCase() : null;
 
-    const [userData,, Boxes] = await Promise.all([
+    const [userData, targetData, Boxes] = await Promise.all([
       DB.users.getFull({ id: message.author.id }),
       DB.users.getFull({ id: Target.id }),
       DB.items.find({ type: "box" }),
@@ -132,8 +88,6 @@ const init = async (msg, args) => {
       prompt.edit({ embed });
       return false;
     };
-
-    /*
     const cancel = () => {
       embed.color = 0xff3636;
       embed.description = $t("responses.transfer.cancel", P);
@@ -146,7 +100,62 @@ const init = async (msg, args) => {
       prompt.edit({ embed });
       return false;
     };
-    */
+
+    async function boxTransfer(CHOSENBOX, r) {
+      if (CHOSENBOX.tradeable) {
+        P.boxname = CHOSENBOX.name;
+        embed.description = `
+           ${$t("responses.transfer.transferthisboxto", P)}    
+
+            ${boxtats(userBoxList, r, CHOSENBOX)}
+
+            ${$t("responses.trade.confirm10s", P).toUpperCase()}    
+            `;
+        await prompt.edit({ embed });
+        const yes = async () => {
+          const audit = await ECO.arbitraryAudit(
+            message.author.id,
+            Target.id,
+            `[${CHOSENBOX.id}]`,
+            "BOX",
+            ">",
+          );
+          await ECO.pay(message.author.id, 250, "Lootbox Transfer Tax");
+
+          userData.removeItem(CHOSENBOX.id);
+          targetData.addItem(CHOSENBOX.id);
+
+          embed.description = `
+                ${_emoji("yep")}${$t("responses.transfer.success", P)}    
+
+                ${$t("terms.TransactionFee")} **${250}${_emoji("RBN")}**
+                ${$t("terms.TransactionID")} \`${audit.transactionId}\`
+                `;
+          embed.color = 0x2deb88;
+          embed.image = {
+            url:
+            `${paths.CDN}/build/TRANSFER_BOX_1.gif`,
+          };
+          prompt.edit({ embed });
+          return true;
+        };
+
+        return YesNo(prompt, message, yes, cancel, timeout, { time: 10e3 });
+      }
+      embed.color = 0xff3636;
+      embed.description = `
+            **${CHOSENBOX.name}** cannot be transferred!
+
+            ${boxtats(userBoxList, r).replace("✔️", "❌")}
+
+            `;
+      embed.image = {
+        url:
+          `${paths.CDN}/build/TRANSFER_BOX_nope_4.gif`,
+      };
+      prompt.edit({ embed });
+      return false;
+    }
 
     if (
       preRarity
@@ -169,6 +178,7 @@ const init = async (msg, args) => {
     const R = Math.abs(Number(responses[0].content));
     return boxTransfer(userBoxList[R], R);
   };
+
   const after = async () => {
     console.log("ok");
   };
