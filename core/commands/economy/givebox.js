@@ -175,7 +175,12 @@ const init = async (msg, args) => {
   };
 
   msg.author.looting = true;
-  await Timed.init(msg, "transfer_box", { day: 2 * 60 * 60 * 1000 }, after, reject, info, precheck);
+  try {
+    await Timed.init(msg, "transfer_box", { day: 2 * 60 * 60 * 1000 }, after, reject, info, precheck);
+  } catch (error) {
+    msg.author.looting = false;
+    throw error;
+  }
   msg.author.looting = false;
 };
 
