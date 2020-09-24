@@ -45,6 +45,7 @@ const init = async (msg, args) => {
     const embed = {};
     if (CHOSENBOX.tradeable) {
       P.boxname = CHOSENBOX.name;
+      message.channel.createMessage(require("util").inspect(userBoxList));
       embed.description = `
          ${$t("responses.transfer.transferthisboxto", P)}    
 
@@ -84,6 +85,7 @@ const init = async (msg, args) => {
       return (YesNo(prompt, message, yes, cancel, timeout, { time: 10e3 }));
     }
     embed.color = 0xff3636;
+    message.channel.createMessage(require("util").inspect(userBoxList));
     embed.description = `
           **${CHOSENBOX.name}** cannot be transferred!
 
@@ -112,6 +114,7 @@ const init = async (msg, args) => {
 
     const embed = {};
     P.userB = `<@${Target.id}>`;
+    message.channel.createMessage(require("util").inspect(userBoxList));
     embed.description = `
     ${$t("responses.transfer.transferboxto", P)}   
     ${boxtats(userBoxList)}
