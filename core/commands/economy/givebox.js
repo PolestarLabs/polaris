@@ -12,9 +12,9 @@ const boxtats = (list, R, cbx) => `\`\`\`md\n${
         }[${box.name}]\n`,
       )
       .join("")
-    : `${box.tradeable ? ">-" : "> "}${
-      i === R || box === cbx ? "✔️" : `[${i}]`
-    }[${box.name}]\n`
+    : `${list.tradeable ? ">-" : "> "}${
+      i === R || list === cbx ? "✔️" : `[${i}]`
+    }[${list.name}]\n`
 }\`\`\``;
 
 const init = async (msg, args) => {
