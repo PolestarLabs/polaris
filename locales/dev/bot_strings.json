@@ -128,6 +128,7 @@
             "chooseAmod": "Choose a module, would you.",
             "kinNone": "You need to tell me who I'm supposed to kick. Of course, I could always kick you instead.",
             "kin404": "I can't seem to find this person. Did they already leave? Perhaps they were a part of your imagination.",
+            "target404": "This target doesn't seem to be vaild. Double check if that's what you meant to send~",
             "unmutable": "No matter what you say, I will not mute this person.",
             "unperm": "I don't have the Perms to do this. Perhaps you should give me the Perms before commanding me to do something.",
             "noRoleHere": "Seems that Role isn't listed. Make sure you are telling me the role correctly.",
@@ -399,6 +400,7 @@
         "generic": {
 
             "inviteText": "Invite me to your server clicking [HERE]",
+            "selectIndex": "Please reply with the **number** of the option you want.",
             "cancel": "Changed your mind? Ok, see you later~",
             "noFundsBalance": "It seems you cannot afford this, your balance is {{number}} Rubines",
             "noFunds": "Not enough Rubines",
