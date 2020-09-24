@@ -3,6 +3,16 @@ const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
 const Timed = require("../../structures/TimedUsage");
 
+const boxtats = (list, R, cbx) => `\`\`\`md\n${
+  list
+    .map(
+      (box, i) => `${box.tradeable ? ">-" : "> "}${
+        i === R || box === cbx ? "✔️" : `[${i}]`
+      }[${box.name}]\n`,
+    )
+    .join("")
+}\`\`\``;
+
 const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
@@ -99,16 +109,6 @@ const init = async (msg, args) => {
     ]);
 
     const userBoxList = Boxes.filter((box) => userData.hasItem(box.id));
-
-    const boxtats = (list, R, cbx) => `\`\`\`md\n${
-      list
-        .map(
-          (box, i) => `${box.tradeable ? ">-" : "> "}${
-            i === R || box === cbx ? "✔️" : `[${i}]`
-          }[${box.name}]\n`,
-        )
-        .join("")
-    }\`\`\``;
 
     const embed = {};
     P.userB = `<@${Target.id}>`;
