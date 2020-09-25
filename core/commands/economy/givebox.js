@@ -52,7 +52,7 @@ const init = async (msg, args) => {
       message.command.invalidUsageMessage(message, message.args);
       return false;
     }
-    if (Target.id === message.id) return message.channel.send($("responses.give.not2self", P)).then(() => false);
+    if (Target.id === message.author.id) return message.channel.send($("responses.give.not2self", P)).then(() => false);
     const preRarity = args[0] ? args[0].toUpperCase() : null;
 
     const [userData, targetData, Boxes] = await Promise.all([
