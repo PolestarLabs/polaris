@@ -523,7 +523,8 @@
             ,"success": "**{{boxname}}** transferred to {{userB}}"
         },
         "give":{
-            "cooldown":"Hold up! You can transfer again in {{remaining}}!"
+            "cooldown":"Hold up! You can transfer again in {{remaining}}!",
+            "not2self": "Hold on, you can't give something to yourself!"
         },
         "inventory": {
             "noSuchBox": "Look, I can't see this box in there and I'm sure you can't either.",

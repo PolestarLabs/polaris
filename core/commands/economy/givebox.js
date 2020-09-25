@@ -45,13 +45,14 @@ const init = async (msg, args) => {
   // y
   const precheck = async (message) => {
     const Target = message.mentions[0] || await PLX.getTarget(message.args[1]);
-    console.log({Target})
-    if(!Target){
-      await message.channel.send($t("responses.errors.target404",P));
-      
-      message.command.invalidUsageMessage(message,message.args);
+    console.log({ Target });
+    if (!Target) {
+      await message.channel.send($t("responses.errors.target404", P));
+
+      message.command.invalidUsageMessage(message, message.args);
       return false;
     }
+    if (Target.id === message.id) return message.channel.send($("responses.give.not2self", P)).then(() => false);
     const preRarity = args[0] ? args[0].toUpperCase() : null;
 
     const [userData, targetData, Boxes] = await Promise.all([
@@ -61,13 +62,13 @@ const init = async (msg, args) => {
     ]);
 
     const userBoxList = Boxes.filter((box) => userData.hasItem(box.id));
-    const boxColor = ["⬜","🟩","🟦","🟪","🟧","🟥"];
+    const boxColor = ["⬜", "🟩", "🟦", "🟪", "🟧", "🟥"];
 
     const boxtats = (list, R, cbx) => `\`\`\`md\n${
       list
         .map(
           (box, i) => `${box.tradeable ? ">-" : "> "}${
-            boxColor[["C","U","R","SR","UR","XR"].indexOf(box.rarity)] 
+            boxColor[["C", "U", "R", "SR", "UR", "XR"].indexOf(box.rarity)]
           }${
             i === R || box === cbx ? "✔️" : `[${i}]`
           }${box.tradeable ? "[" : " "}${box.name}${box.tradeable ? "]" : " "}\n`,
@@ -75,14 +76,12 @@ const init = async (msg, args) => {
         .join("")
     }\`\`\``;
 
-    
-
     const embed = {};
     P.userB = `<@${Target.id}>`;
     embed.description = `
     ${$t("responses.transfer.transferboxto", P)}   
     ${boxtats(userBoxList)}
-    ${$t("responses.generic.selectIndex",P)}
+    ${$t("responses.generic.selectIndex", P)}
     `;
     embed.thumbnail = { url: Target.avatarURL };
     embed.footer = { text: message.author.tag, icon_url: message.author.avatarURL };
