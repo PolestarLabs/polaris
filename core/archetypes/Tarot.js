@@ -264,7 +264,11 @@ class Tarot {
 
     const SPREAD = this.spread;
     const tasks = [];
-    this.spread.forEach((currSpd) => tasks.push(ctx.drawImage(currSpd.card, currSpd.pose, skin), (spSize - SPREAD.length - 1) * 200, 0));
+    while (spSize) {
+      const currSpd = SPREAD.pop();
+      const L = SPREAD.length;
+      tasks.push(this.drawCard(currSpd.card, currSpd.pose, skin).then((c) => ctx.drawImage(c, (spSize - (L) - 1) * 200, 0)));
+    }
     await Promise.all(tasks);
     return canvas;
   }
