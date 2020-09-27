@@ -113,9 +113,9 @@ const TAROT = require('../../archetypes/Tarot');
 
       //console.log(Tarot);
   
-      let img = await Tarot.drawSpread(args[1]||'persona3');
+      let img = await Tarot.drawSpread('persona3');
 
-      console.log(img) 
+      console.log(img)
 
       msg.channel.send('',{file:img.toBuffer(),name:'tarot.png'} )
 
@@ -129,7 +129,7 @@ const TAROT = require('../../archetypes/Tarot');
   
       for (i = 0; i < S.length; i++) {
         if (typeof S[i] !== 'string') {
-          finalString += S[i][randomize(0, S[i].length - 1)]
+          finalString += S[i][gear.randomize(0, S[i].length - 1)]
   
         } else {
           finalString += S[i]
@@ -159,7 +159,7 @@ const TAROT = require('../../archetypes/Tarot');
   
   
   
-      let embed = new RichEmbed
+      let embed = new gear.RichEmbed
   
       embed.attachFiles({
         attachment: await canvas.toBuffer(),
