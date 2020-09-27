@@ -263,13 +263,9 @@ class Tarot {
     const ctx = canvas.getContext("2d");
 
     const SPREAD = this.spread;
-    while (SPREAD.length) {
-      const currSpd = SPREAD.pop();
-      ctx.drawImage(
-        await this.drawCard(currSpd.card, currSpd.pose, skin), // eslint-disable-line no-await-in-loop
-        (spSize - (SPREAD.length) - 1) * 200, 0,
-      );
-    }
+    const tasks = [];
+    this.spread.forEach((currSpd) => tasks.push(ctx.drawImage(currSpd.card, currSpd.pose, skin), (spSize - SPREAD.length - 1) * 200, 0));
+    await Promise.all(tasks);
     return canvas;
   }
 
