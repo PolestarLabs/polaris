@@ -8,12 +8,13 @@ const init = async function (msg) {
     return msg.reply($t("responses.errors.insuperms", P)).catch(console.error);
   }
   const AMT = Math.abs(parseInt(msg.args[0])) || 10;
-  const bucket = (await msg.channel.getMessages(AMT, msg.id)).map((m) => m.id);
+  const bucket = (await msg.channel.getMessages(AMT, msg.id)).map((m) => m.id).filter((m) => (Date.now() - (14 * 24 * 60 * 60) * 1e3) > m.createdAt);
 
   msg.channel.send("Deleting messages...").then((m) => m.delete());
   return msg.channel.deleteMessages(bucket).then((x) => {
     console.log(x);
-    msg.channel.send(`${_emoji("yep")} Deleted **${AMT}** messages`);
+    msg.channel.send(`${_emoji("yep")} Deleted **${bucket.length}** messages${bucket.length < AMT
+      ? `. The remaining ${AMT - bucket.length} messages are older than 14 days and could not be deleted` : ""}`);
   });
 };
 module.exports = {
