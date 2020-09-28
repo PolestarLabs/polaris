@@ -8,7 +8,7 @@ const init = async function (msg) {
     return msg.reply($t("responses.errors.insuperms", P)).catch(console.error);
   }
   const AMT = Math.abs(parseInt(msg.args[0])) || 10;
-  const bucket = (await msg.channel.getMessages(AMT, msg.id)).map((m) => m.id).filter((m) => (Date.now() - (14 * 24 * 60 * 60) * 1e3) > m.createdAt);
+  const bucket = (await msg.channel.getMessages(AMT, msg.id)).map((m) => m.id).filter((m) => (Date.now() - (14 * 24 * 60 * 60) * 1e3) < m.createdAt);
 
   msg.channel.send("Deleting messages...").then((m) => m.delete());
   return msg.channel.deleteMessages(bucket).then((x) => {
