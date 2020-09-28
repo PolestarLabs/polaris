@@ -3,7 +3,7 @@ const init = async function (msg) {
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   const ServerDATA = await DB.servers.get(msg.guild.id);
-  const modPass = PLX.modPass(msg.member, "manageMessages", ServerDATA);
+  const modPass = PLX.modPass(msg.member, "manageMessages", ServerDATA, msg.channel);
   if (!modPass) {
     return msg.reply($t("responses.errors.insuperms", P)).catch(console.error);
   }

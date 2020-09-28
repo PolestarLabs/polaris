@@ -67,14 +67,14 @@ module.exports = {
     }
     return false;
   },
-  modPass: function modPass(member, extra, sData = false) {
+  modPass: function modPass(member, extra, sData = false, channel = null) {
     if (sData?.modules.MODROLE) {
       if (member.hasRole(sData.modules.MODROLE)) return true;
     }
     if (member.permission.has("manageGuild") || member.permission.has("administrator")) {
       return true;
     }
-    if (member.permission.has(extra)) return true;
+    if (member.permission.has(extra) || channel.permissionsOf(member.id).has(extra)) return true;
 
     return false;
   },
