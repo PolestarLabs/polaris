@@ -8,12 +8,15 @@ const POLARIS_UI = {
   channel :"<:CHANNEL:743855295607996486>",
   override :"<:OVERRIDE:743898683673804901>",
   on_small :"<:ON:743855295612059698>",
-  off_small :"<:OFF:743855295872237688>",
+  off_small :"<:OFF:755769314929410108>",
+  partial_small :"<:OFF:755769283300294744>",
   on :"<:ON:743857968990388235>",
   off :"<:OFF:743857968906502215>",
   partial :"<:PARTIAL:743857969191714937>",
   onoff_neutral :"<:onoffneutral:743902508891504690>",
-
+  whitegreenem: "<:OFFPARTIAL:755769619557646417>",
+  whiteorangeem: "<:ONPARTIAL:755769619809304647>",
+  whiteredem: "<:NOTSOPARTIAL:755769619452526603>",
 
 
   loot: "<:loot:339957191027195905>",
