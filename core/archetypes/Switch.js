@@ -185,8 +185,7 @@ module.exports = class Switch {
 			DB.servers.set(this.guild.id, { $set: { "modules.DISABLED": this.gd } }),
 			DB.channels.set(this.channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
 		]).then(() => {
-			lastSaved = true;
-			omsg.edit(genSwitchEmbed(Switch));
+			this.unsaved = false;
 			return this.modules;
 		}).catch(e => {
 			MC.stop("error");
@@ -200,6 +199,8 @@ module.exports = class Switch {
 	 * @param {string} name cmd or cat name
 	 */
 	switch(name = "") {
+		this.unsaved = true;
+
 		name = name.toLowerCase();
 		const modules = this.modules;
 

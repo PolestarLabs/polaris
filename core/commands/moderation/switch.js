@@ -1,5 +1,7 @@
 // Create cat map with commands and other useful information
 const SwitchArch = require("../../archetypes/Switch");
+const cats = SwitchArch.categories,
+	catsArr = SwitchArch.categoriesArr;
 
 const
 	N_NOPE = _emoji("nope").name,
@@ -144,48 +146,43 @@ async function init(msg) {
 	listeners.set(msg.channel.id, reactionRemoveFunction);
 
 
-	let intoCat;
 	MC.on("message", m => {
 		m.delete().catch(_ => null);
 
 		let name;
 		if (m.content.startsWith(">")) {
-			intoCat = true;
 			name = m.content.slice(1).toLowerCase();
-		} else {
-			name = m.content.toLowerCase();
-		}
-
-		if (intoCat) {
-			// if intocat is enabled we go to the category's menu
-			intoCat = false;
 			Switch.category = name;
 			omsg.edit(genSwitchEmbed(Switch));
 			omsg.removeReaction("➡");
 			omsg.addReaction("⬅");
 		} else {
-			save();
+			name = m.content.toLowerCase();
 			let nname = name === "all" && Switch.mode === "category" ? Switch.category : name;
-			let ncurrentCat = name === "all" ? null : currentCat;
-			Switch.switch(nname);
+			if (name === "all") {
+				Switch.mode = "global";
+				Switch.switch(nname);
+				Switch.mode = "category";
+			}
 			omsg.edit(genSwitchEmbed(Switch));
 		}
 	});
 };
 
-function genSwitchEmbed(Switch, disable = false) {
+function genSwitchEmbed(Switch, options) {
 	if (!Switch || !(Switch instanceof SwitchArch)) throw new TypeError("GenSwitchEmbed: Switch not of type Switch");
 
 	const modules = Switch.modules,
-		cat = Switch.category, // current category if any
-		intoCat = Switch.mode === "category", // category mode
+		disable = options.disable || false, // whether exited
+		intoCat = options.intoCat || false, // this is a remedy, should be deleted prob
+		cat = Switch.mode === "category" ? Switch.category : null, // current category if any
 		cmode = Switch.scope === "channel", // channel mode
 		gdcmds = modules["gd"], // guild disabled
 		cdcmds = modules["cd"], // channel disabled
 		cecmds = modules["ce"]; // channel enabled
 
 	const embed = {
-		color: mode == "c" ? 0x7289da : 0xea6a3d, // TODO: change
+		color: Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO: change
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches`,
 		fields: [],
 	};
