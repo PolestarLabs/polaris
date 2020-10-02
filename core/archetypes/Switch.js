@@ -64,7 +64,7 @@ module.exports = class Switch {
 	 */
 	constructor(Guild, Channel, maxHistory = 10) {
 		if (!(Guild && Channel)) throw new Error("Switch: missing constructor arguments");
-		if (historyLength && historyLength < 0) throw new Error("HistoryLength must be more than 0");
+		if (maxHistory < 0) throw new Error("HistoryLength must be more than 0");
 		if (Channel.guild.id !== Guild.id) throw new Error("Switch: Channel not a child of Guild");
 
 		// Initiate modules
@@ -197,7 +197,7 @@ module.exports = class Switch {
 
 	/**
 	 * Switch state of a command or category
-	 * @param {string} name 
+	 * @param {string} name cmd or cat name
 	 */
 	switch(name = "") {
 		name = name.toLowerCase();

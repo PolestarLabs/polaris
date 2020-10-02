@@ -143,6 +143,8 @@ async function init(msg) {
 	};
 	listeners.set(msg.channel.id, reactionRemoveFunction);
 
+
+	let intoCat;
 	MC.on("message", m => {
 		m.delete().catch(_ => null);
 
@@ -157,13 +159,13 @@ async function init(msg) {
 		if (intoCat) {
 			// if intocat is enabled we go to the category's menu
 			intoCat = false;
-			currentCat = name;
+			Switch.category = name;
 			omsg.edit(genSwitchEmbed(Switch));
 			omsg.removeReaction("➡");
 			omsg.addReaction("⬅");
 		} else {
 			save();
-			let nname = name === "all" && currentCat ? currentCat : name;
+			let nname = name === "all" && Switch.mode === "category" ? Switch.category : name;
 			let ncurrentCat = name === "all" ? null : currentCat;
 			Switch.switch(nname);
 			omsg.edit(genSwitchEmbed(Switch));
