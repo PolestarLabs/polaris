@@ -64,13 +64,13 @@ module.exports = class Switch {
 	 */
 	constructor(Guild, Channel, maxHistory = 10) {
 		if (!(Guild && Channel)) throw new Error("Switch: missing constructor arguments");
-		if (maxHistory < 0) throw new Error("HistoryLength must be more than 0");
+		if (maxHistory < 0) throw new Error("maxHistory must be more than 0");
 		if (Channel.guild.id !== Guild.id) throw new Error("Switch: Channel not a child of Guild");
 
 		// Initiate modules
 		this.guild = Guild;
 		this.channel = Channel;
-		this.load();
+		this._load();
 
 		// Initiate history
 		this.maxHistory = maxHistory;
