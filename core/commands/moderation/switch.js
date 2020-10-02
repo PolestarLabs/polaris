@@ -107,7 +107,7 @@ async function init(msg) {
 			// exit command
 			MC.stop("User input");
 			RC.stop("user input");
-			omsg.edit(genSwitchEmbed(Switch));
+			omsg.edit(genSwitchEmbed(Switch, { disable: true }));
 
 			// let's make sure they meant to leave without saving
 			if (!lastSaved) {
@@ -173,8 +173,8 @@ function genSwitchEmbed(Switch, options) {
 	if (!Switch || !(Switch instanceof SwitchArch)) throw new TypeError("GenSwitchEmbed: Switch not of type Switch");
 
 	const modules = Switch.modules,
-		disable = options.disable || false, // whether exited
-		intoCat = options.intoCat || false, // this is a remedy, should be deleted prob
+		disable = options?.disable || false, // whether exited
+		intoCat = options?.intoCat || false, // this is a remedy, should be deleted prob
 		cat = Switch.mode === "category" ? Switch.category : null, // current category if any
 		cmode = Switch.scope === "channel", // channel mode
 		gdcmds = modules["gd"], // guild disabled
