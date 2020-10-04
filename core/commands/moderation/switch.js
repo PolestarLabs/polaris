@@ -52,6 +52,43 @@ const savingEmbed = {
 	},
 };
 
+const helpEmbed = {
+	embed: {
+		color: 0xffb366,
+		title: "Switch guide",
+		description: `Through switch you can control which commands are enabled/disabled server- or channel-wide.`,
+		fields: [
+			{
+				name: "Switching",
+				value: "> economy\nEnable/disable economy.\n> **>**economy\nShow economy commands.",
+				inline: true,
+			},
+			{
+				name: "Buttons",
+				value: `<:${R_NOPE}> exit\
+				\n<:${R_SAVE}> save\
+				\n<:${R_UNDO}> step back\
+				\n<:${R_CHANNEL}> channel mode`,
+				inline: true
+			},
+			{
+				name: "Advanced mode",
+				value: "Coming to you in the near future...",
+				inline: true,
+			},
+			{
+				name: "Different states",
+				value: `${_emoji("on")} enabled\
+				\n${_emoji("off")} disabled\
+				\n${R_WG} server: enabled | channel: disabled\
+				\n${R_WR} server: disabled | channel: enabled\
+				`,
+				inline: false,
+			},
+		],
+	}
+};
+
 const listeners = new Map();
 PLX.on("messageReactionRemove", (msg, emoji, userID) => { if (listeners.has(msg.channel.id || msg.channel)) listeners.get(msg.channel.id || msg.channel)(emoji, userID); });
 
@@ -84,11 +121,11 @@ async function init(msg) {
 
 	function messageFilter(m) {
 		if (msg.author.id !== m.author.id) return false;
-		if (m.content.toLowerCase() === "all") return true;
+		if (["all", "help"].includes(m.content.toLowerCase())) return true;
 		let name;
 		if (m.content.startsWith(">")) name = m.content.slice(1).toLowerCase();
 		else name = m.content.toLowerCase();
-		return (Switch.mode === "category" ? (cats[Switch.category]["cmds"].includes(name) || name === "all") : catsArr.includes(name));
+		return (Switch.mode === "category" ? cats[Switch.category]["cmds"].includes(name) : catsArr.includes(name));
 	}
 	const reactionFilter = r => msg.author.id === r.userID && menuEmoijisNames.flat().includes(r.emoji.name);
 	const MC = msg.channel.createMessageCollector(messageFilter, { time: 60e5 });
@@ -160,12 +197,23 @@ async function init(msg) {
 	MC.on("message", m => {
 		m.delete().catch(_ => null);
 
+		if (m.content.toLowerCase() === "help") {
+			omsg.edit(helpEmbed);
+			omsg.removeReactions();
+			omsg.channel.send(genSwitchEmbed(Switch)).then(async (nmsg) => {
+				omsg = nmsg;
+				for (emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
+			});
+			return;
+		}
+
 		let name;
 		if (m.content.startsWith(">")) {
 			name = m.content.slice(1).toLowerCase();
 			Switch.category = name;
+			Switch.mode = "category";
 			omsg.edit(genSwitchEmbed(Switch));
-			omsg.removeReaction("➡");
+			// omsg.removeReaction("➡"); remedy
 			omsg.addReaction("⬅");
 		} else {
 			name = m.content.toLowerCase();
@@ -199,8 +247,8 @@ function genSwitchEmbed(Switch, options) {
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches`,
 		fields: [],
 	};
-	embed.description = intoCat ? "**Selecting a category**" : `Current view: ${cmode ? "**Channel**" : "**Guild**"}`;
-	if (!disable) embed.description += "\n\nType a categories name to change it's settings.";
+	embed.description = intoCat ? "**Selecting a category**" : `${cmode ? "**Channel**" : "**Server**"} view`;
+	if (!disable) embed.description += " | change with #\nType `help` for instructions.";
 
 	if (!cat) {
 		const gdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => gdcmds.includes(cmd)));

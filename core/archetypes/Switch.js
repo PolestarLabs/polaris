@@ -8,30 +8,40 @@ function loadCategories(route = "") {
 	return new Promise((resolve, reject) => {
 		readdirAsync("./core/commands/" + route).then(async items => {
 			let obj = {};
-			console.log("\n\nClean object");
 			for (item of items) {
-				console.log(`Item name: ${item}`);
 				if (item.endsWith(".js")) {
-					console.log(`Adding item: ${item}`);
 					try {
 						const cmd = require(`../commands/${route}/${item}`);
 						if (cmd.hidden || cmd.pub === false || !cmd.cmd) continue;
 						if (!cmd.cat) cmd.cat = "uncategorized";
 						if (!obj[cmd.cat]) obj[cmd.cat] = { cmds: [] };
 						obj[cmd.cat.toLowerCase()]["cmds"].push(cmd.cmd.toLowerCase());
-						console.log("obj looks like:\n" + JSON.stringify(obj));
 					} catch (e) { console.warn(e); }
 				} else if (!item.includes(".")) {
 					await loadCategories(`${route}/${item}`).then(toApply => {
-						console.log(`\nAPPLYING:\n${JSON.stringify(toApply)}\n`);
 						Object.assign(obj, toApply);
 					});
-				} else {
-					console.warn(`Did not load ${item}`);
 				}
 			}
-			console.log("\nRETURNING:\n" + JSON.stringify(obj) + "\n\n");
 			resolve(obj);
+		});
+	});
+}
+
+/**
+ * For some reason this loads less cmds
+ */
+function loadCategories2() {
+	return new Promise((resolve, reject) => {
+		const cats = {};
+		const cmds = Object.keys(PLX.commands);
+		cmds.forEach((cmd, index, arr) => {
+			cmd = PLX.commands[cmd];
+			if (cmd.hidden || cmd.pub === false || !cmd.cmd) return;
+			if (!cmd.cat) cmd.cat = "uncategorized";
+			if (!cats[cmd.cat]) cats[cmd.cat] = { cmds: [] };
+			cats[cmd.cat.toLowerCase()]["cmds"].push(cmd.cmd.toLowerCase());
+			if (index === arr.length - 1) resolve(cats);
 		});
 	});
 }
@@ -46,15 +56,11 @@ class Categories {
 
 	constructor() {
 		loadCategories().then(toApply => {
-			console.log("************* D O N E *************");
-			console.log(JSON.stringify(toApply));
 			this.cats = toApply;
 			this.catsArr = Object.keys(this.cats).sort();
-			console.log("************* C A T S - A R R *************");
-			console.log(JSON.stringify(this.catsArr));
 			for (let cat of this.catsArr) {
 				this.cats[cat]["cmds"].sort();
-				this.cmdsArr = [...this.cmdsArr, this.cats[cat]["cmds"]];
+				this.cmdsArr = [...this.cmdsArr, ...this.cats[cat]["cmds"]];
 			}
 		});
 	}
@@ -223,12 +229,21 @@ module.exports = class Switch {
 		});
 	}
 
+	_saveHistory() {
+		// to manage history
+		if (this.historyPointer !== this.history.length - 1) this.history = this.history.slice(0, this.historyPointer);
+		this.history.push(this.modules);
+		this.historyPointer++;
+		if (this.history.length > this.maxHistory) this.history.splice(0, 1);
+	}
+
 	/**
 	 * Switch state of a command or category
 	 * @param {string} name cmd or cat name
 	 */
 	switch(name = "") {
 		this.unsaved = true;
+		this._saveHistory();
 
 		name = name.toLowerCase();
 		const { ce, cd, gd } = this.modules;
