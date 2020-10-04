@@ -1,43 +1,38 @@
-var gear = require("../../gearbox.js");
-var paths = require("../../paths.json");
-var fs = require("fs");
-var cmd = 'mw';
-const eko = require("../../archetypes/ekonomist.js")
-var locale = require('../../../utils/multilang_b');
-var mm = locale.getT();
-const Canvas = require("canvas");
+const oldBuildPath = "https://pollux.amarok.kr/build/"
+const Picto = require('../../utilities/Picto.js')
+const EventData = require('../../archetypes/Events.js');
+const EV = EventData.event_details; 
 
-var init = async function (message, userDB, DB) {
+const init = async function (message) {
   
-  const EV = require('./clockwork/halloween.js');
-  const eventData = await EV.userData(message.author);
-  
-  
- const canvas = new Canvas.createCanvas(200, 200);
-  const ctx = canvas.getContext('2d');
-  
+  const eventData = await EV.userData(message.author);  
+
+  const canvas = Picto.new(200, 200);
+  const ctx = canvas.getContext('2d');  
   ///=================
   
   
   let base = "fem"
-  //let skin = [message.args[0]||false,message.args[1]||false,message.args[2]||false]
-    let equipH = eventData.inventory.find(x=>x.id == eventData.head)||{};
+  let skin = [message.args[0]||false,message.args[1]||false,message.args[2]||false]
+  let equipH = eventData.inventory.find(x=>x.id == eventData.head)||{};
   let equipB = eventData.inventory.find(x=>x.id == eventData.body)||{};
   let equipF = eventData.inventory.find(x=>x.id == eventData.legs)||{};
   
+  /*
   let skin = [
     equipH.costume,
     equipB.costume,
     equipF.costume
-             ]
+    ]
+  */
   let top = `${base}_${skin[0]}_head.png` ;
   let mid = `${base}_${skin[1]}_body.png` ;
   let bot = `${base}_${skin[2]}_legs.png` ;
   
-  const _base = await gear.getCanvas(paths.BUILD+'event/halloween18/bodies/'+base+"_base.png");
-  const _top = await gear.getCanvas(paths.BUILD+'event/halloween18/bodies/' +top );
-  const _mid = await gear.getCanvas(paths.BUILD+'event/halloween18/bodies/' +mid );
-  const _bot = await gear.getCanvas(paths.BUILD+'event/halloween18/bodies/' +bot );
+  const _base = await Picto.getCanvas(oldBuildPath+'event/halloween18/bodies/'+base+"_base.png").catch(err=>Picto.new(1,1));
+  const _top = await Picto.getCanvas(oldBuildPath+'event/halloween18/bodies/' +top ).catch(err=>Picto.new(1,1));
+  const _mid = await Picto.getCanvas(oldBuildPath+'event/halloween18/bodies/' +mid ).catch(err=>Picto.new(1,1));
+  const _bot = await Picto.getCanvas(oldBuildPath+'event/halloween18/bodies/' +bot ).catch(err=>Picto.new(1,1));
     
   
   ctx.drawImage(_base,0,0,166,200)
@@ -52,10 +47,9 @@ var init = async function (message, userDB, DB) {
   await message.channel.send("```"+JSON.stringify({skin,equipH,
 equipB,
 equipF,})+"```",{
-                    files: [{
-                        attachment: await canvas.toBuffer(),
+                    file:  await canvas.toBuffer(),
                         name: "aassddff.png"
-                    }]
+                    
                 })
   
   
@@ -63,12 +57,11 @@ equipF,})+"```",{
 }
 
 
-
-module.exports = {
-  pub: false,
-  cmd: cmd,
-  perms: 3,
-  init: init,
-  cat: 'cosmetics',
-   botperms:["MANAGE_MESSAGES","ATTACH_FILES","EMBED_LINKS"]
-};
+module.exports={
+  init
+  ,pub:false
+  ,cmd:'cpst'
+  ,cat:'_event'
+  ,botPerms:['attachFiles','embedLinks','manageMessages']
+  ,aliases:[]
+}
