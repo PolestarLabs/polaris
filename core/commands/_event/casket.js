@@ -31,7 +31,7 @@ const init = async function (message){
   //if (Author.dailing === true) return message.channel.send("There's already a casket request going on!");
 
 
-  const USERDATA = await gear.userDB.findOne({ id: Author.id });
+  const USERDATA = await DB.users.findOne({ id: Author.id });
   const eventData = await EV.userData(Author);
 
 
@@ -72,7 +72,7 @@ const init = async function (message){
       embed_pos.thumbnail = {url: 'https://pollux.amarok.kr/build/event/halloween18/casket_opn.png' };
       embed_pos.description = `
   ${casket1}
-  **${gear.emoji(phab.rarity)+phab.name}** (\`${(phab.spook)} ${$t("events:halloween18.keywords.spook")}\`)
+  **${_emoji(phab.rarity)+phab.name}** (\`${(phab.spook)} ${$t("events:halloween18.keywords.spook")}\`)
   ${comment}
 
       `;
@@ -97,7 +97,7 @@ const init = async function (message){
       embed_pos.thumbnail = {url: 'https://pollux.amarok.kr/build/event/halloween18/casket_cls.png' };
       P.count = eventData.caskets;
       embed_pos.description = `\u200b
- ${mm("events:halloween18.caskets.hasCask",P)}
+ ${$t("events:halloween18.caskets.hasCask",P)}
  ${casketine2}
  `   
        message.channel.send({embed: embed_pos})
