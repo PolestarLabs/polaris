@@ -3,7 +3,7 @@ const ONGOING = "halloween";
 
 const boxIdentification = null;
 const boxPicture = null;
-const eventDetails = ONGOING ? require(`../events/clockwork/${ONGOING}`) : null;
+const eventDetails = ONGOING ? require(`../events/${ONGOING}`) : null;
 
 module.exports = {
   ongoing: ONGOING,
