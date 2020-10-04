@@ -1,7 +1,7 @@
 // Create cat map with commands and other useful information
 const SwitchArch = require("../../archetypes/Switch");
-const cats = SwitchArch.categories,
-	catsArr = SwitchArch.categoriesArr;
+let cats,
+	catsArr;
 
 const
 	N_NOPE = _emoji("nope").name,
@@ -66,6 +66,17 @@ async function init(msg) {
 	const Switch = new SwitchArch(msg.guild, msg.channel);
 	switches.set(msg.guild.id, Switch);
 
+	if (!cats || !catsArr) {
+		cats = Switch.categories;
+		catsArr = Switch.categoriesArr;
+	}
+
+	console.log("======= INSIDE SWITCH =========");
+	console.log("CATS:\n");
+	console.log(JSON.stringify(cats));
+	console.log("\n\n\nARR:\n");
+	console.log(JSON.stringify(catsArr));
+
 	let omsg = await msg.channel.send({ embed: { color: 0x22d, title: "Please wait", description: "Currently configuring everything..." } });
 	for (emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
 
@@ -77,7 +88,7 @@ async function init(msg) {
 		let name;
 		if (m.content.startsWith(">")) name = m.content.slice(1).toLowerCase();
 		else name = m.content.toLowerCase();
-		return (currentCat ? cats[currentCat]["cmds"].includes(name) : catsArr.includes(name));
+		return (Switch.mode === "category" ? (cats[Switch.category]["cmds"].includes(name) || name === "all") : catsArr.includes(name));
 	}
 	const reactionFilter = r => msg.author.id === r.userID && menuEmoijisNames.flat().includes(r.emoji.name);
 	const MC = msg.channel.createMessageCollector(messageFilter, { time: 60e5 });
@@ -110,7 +121,7 @@ async function init(msg) {
 			omsg.edit(genSwitchEmbed(Switch, { disable: true }));
 
 			// let's make sure they meant to leave without saving
-			if (!lastSaved) {
+			if (!Switch.saved) {
 				msg.channel.send({ embed: { color: 0x33D, title: "Oops! You didn't save your changes.", description: "Do you want to save your changes? (yes|no)" } }).then(savemsg => {
 					savemsg.addReaction(R_YEP);
 					savemsg.addReaction(R_NOPE);
@@ -158,11 +169,13 @@ async function init(msg) {
 			omsg.addReaction("⬅");
 		} else {
 			name = m.content.toLowerCase();
-			let nname = name === "all" && Switch.mode === "category" ? Switch.category : name;
 			if (name === "all") {
+				const nname = Switch.category;
 				Switch.mode = "global";
 				Switch.switch(nname);
 				Switch.mode = "category";
+			} else {
+				Switch.switch(name);
 			}
 			omsg.edit(genSwitchEmbed(Switch));
 		}
@@ -194,7 +207,7 @@ function genSwitchEmbed(Switch, options) {
 		const cdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cdcmds.includes(cmd)));
 		const cenabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cecmds.includes(cmd)));
 
-		for (cat of catsArr) {
+		for (let cat of catsArr) {
 			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat)) : gdisabledcats.includes(cat),
 				override = cmode && (cats[cat]["cmds"].some(cmd => cdcmds.includes(cmd) || cecmds.includes(cmd))),
 				disabledCount = cats[cat].cmds.map(cmd => ((gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)) ? 1 : 0).reduce((a, b) => a + b, 0),
