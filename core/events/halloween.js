@@ -1,11 +1,32 @@
-const gear = require('../../../gearbox.js');
 const upref = "https://pollux.amarok.kr/build/"
+
+/// PORTED FROM VANILLA GEARBOX
+const getRandomRarity = function(type="unshuffle"){
+    
+  let shuffled = shuffle(["UR","SR","SR","R","R","R","R","U","U","U","U","U","U","U","U","C","C","C","C","C","C","C","C","C","C","C","C","C",
+  "UR","SR","SR","R","R","R","R","U","U","U","U","U","U","C","C","C","C","C","C","C","C","C","C"]);
+  let result;
+  if (type == "shuffle"){
+    result =  (shuffled[randomize(0,shuffled.length-1)]);
+  }
+let rand = randomize(0,1000);
+  result = "C";
+  if(rand<=700) result = "U";
+  if(rand<=450) result = "R";
+  if(rand<=250) result = "SR";
+  if(rand<=100) result = "UR";
+  //40 20 15 10 5  
+  if (type == "debug"){
+    result =  { shuffld : (shuffled[randomize(0,shuffled.length-1)]), enum: result, rand,array:JSON.stringify(shuffled)};
+  }
+  return result;  
+}
 
 module.exports = {
   
 
 userData: async function(Author){
-  const USERDATA = await gear.userDB.findOne({id:Author.id}).lean().exec();
+  const USERDATA = await DB.users.findOne({id:Author.id}).lean().exec();
   let eventData = (USERDATA.eventData||{}).halloween18;  
   if(!eventData) {
     //return message.channel.send(noEventPart);
@@ -17,14 +38,14 @@ userData: async function(Author){
       feet: null,
       caskets:0
     }
-    await gear.userDB.set(Author.id,{$set:{'eventData.halloween18':eventData}});
+    await DB.users.set(Author.id,{$set:{'eventData.halloween18':eventData}});
   }
     return eventData;
 },
   
   phabricate: function (Author) {
-    let rarity = gear.getRandomRarity();
-    let type =  gear.shuffle(["head","body","legs","head","body","legs"])[gear.randomize(0,5)]
+    let rarity = getRandomRarity();
+    let type =  shuffle(["head","body","legs","head","body","legs"])[randomize(0,5)]
     let costume =  this._costumes()
     let costumeName =  this._costumes('name',costume)
     let aspect = this._adjectives();
@@ -99,10 +120,10 @@ userData: async function(Author){
  
     
   ]
-  list = gear.shuffle(list)
-  list = gear.shuffle(list)
-  list = gear.shuffle(list)
-  let index = gear.randomize(0,list.length-1)
+  list = shuffle(list)
+  list = shuffle(list)
+  list = shuffle(list)
+  let index = randomize(0,list.length-1)
   return list[index];
    },
   
@@ -153,19 +174,19 @@ userData: async function(Author){
     ,"Spoopy"
     ,"Spooky Scary"
   ] 
-  let index = gear.randomize(0,list.length-1)
+  let index = randomize(0,list.length-1)
   if(arg)return list;
   return list[index];
  },
   
   getSpook: function(rar){
     
-    if(rar=="C")  return gear.randomize(02,15);
-    if(rar=="U")  return gear.randomize(10,25);
-    if(rar=="R")  return gear.randomize(20,35);
-    if(rar=="SR") return gear.randomize(32,60);
-    if(rar=="UR") return gear.randomize(55,99);
-    if(rar=="XR") return gear.randomize(75,95);
+    if(rar=="C")  return randomize(02,15);
+    if(rar=="U")  return randomize(10,25);
+    if(rar=="R")  return randomize(20,35);
+    if(rar=="SR") return randomize(32,60);
+    if(rar=="UR") return randomize(55,99);
+    if(rar=="XR") return randomize(75,95);
     
   }
    
