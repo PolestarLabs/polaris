@@ -1,50 +1,46 @@
-const gear = require("../../gearbox.js");
-const paths = require("../../paths.json");
-const moment = require("moment");
-const rq = require('request');
-//const locale = require('../../../utils/multilang_b');
-//const mm = locale.getT();
+const EventData = require('../../archetypes/Events.js');
+const EV = EventData.event_details; 
 
-var init = async function (message, userDB, DB) {
+
+init = async function (msg) {
   
 
-  let embed = new gear.RichEmbed;
+  let embed = {}
 
-  embed.setTitle("Buy event Sticker")
-  embed.setDescription("Would you like to buy this Sticker for <:candy1:366437119658557440> **800 Candy**?")
-  embed.setColor( "#c553e0");
-  embed.setImage( "https://pollux.amarok.kr/build/nox500.png");
+  embed.title = "Buy event Sticker"
+  embed.description = "Would you like to buy this Sticker for <:candy1:366437119658557440> **800 Candy**?"
+  embed.color = 0xc553e0;
+  embed.image = {url: "https://pollux.amarok.kr/build/nox500.png" };
   
-  message.channel.send({embed}).then(async m=>{
-    m.react(gear.yep.r);
-    m.react(gear.nope.r);
+  msg.channel.send({embed}).then(async m=>{
+    m.addReaction(_emoji('yep').reaction);
+    m.addReaction(_emoji('nope').reaction);
     
-    const res = await m.awaitReactions(re=>re.users.has(message.author.id),{max:1,time:10000});
+    const res = await m.awaitReactions(re=>  re.userID == msg.author.id,{maxMatches:1,time:10000});
     
-    if(res.size === 0) return message.channel.send(gear.emoji('nope')+" `TIMEOUT`");
+    if(res.size === 0) return msg.channel.send(_emoji('nope')+" `TIMEOUT`");
     
-    if (res.first().emoji.name == "yep"){
+    if (res[0].emoji.name == "yep"){
       
-     const EV = require('./clockwork/halloween.js');
-     const USERDATA = await gear.userDB.findOne({
-       id: message.author.id
+     const USERDATA = await DB.users.findOne({
+       id: msg.author.id
      },{'modules.stickerInventory':1,eventData:1,eventGoodie:1});
-     const eventData = await EV.userData(message.author);
+     const eventData = await EV.userData(msg.author);
       
         if(USERDATA.modules.stickerInventory.includes("nox250")){
-          return  message.reply(gear.emoji('nope')+"Oopsie... I think you already have this!");
+          return  msg.reply(_emoji('nope')+"Oopsie... I think you already have this!");
         }
       if(eventData.candy >= 800 ){
-        await gear.userDB.set(message.author.id,{$inc:{'eventData.halloween18.candy':-800},$addToSet:{'modules.stickerInventory':'nox250'}});
-        message.reply(gear.emoji('yep')+"All set! Equip this sticker at the **Dashboard** (https://pollux.amarok.kr/dashboard)");
+        await DB.users.set(msg.author.id,{$inc:{'eventData.halloween18.candy':-800},$addToSet:{'modules.stickerInventory':'nox250'}});
+        msg.reply(_emoji('yep')+"All set! Equip this sticker at the **Dashboard** (https://pollux.amarok.kr/dashboard)");
         
       }else{
-        message.reply(gear.emoji('nope')+"Oops... You can't afford it. You have only "+eventData.candy+" Candy...")
+        msg.reply(_emoji('nope')+"Oops... You can't afford it. You have only "+eventData.candy+" Candy...")
       }
       
     }
-    if (res.first().emoji.name == "nope"){
-      return message.channel.send(gear.emoji('nope')+" `CANCEL`");
+    if (res[0].emoji.name == "nope"){
+      return msg.channel.send(_emoji('nope')+" `CANCEL`");
     }
     
   })
