@@ -1,10 +1,12 @@
-const ongoing = null;
+
+const ONGOING = "halloween";
+
 const boxIdentification = null;
 const boxPicture = null;
-const eventDetails = ongoing ? require(`../../funfest/clockwork/${ongoing}`) : null;
+const eventDetails = ONGOING ? require(`../events/clockwork/${ONGOING}`) : null;
 
 module.exports = {
-  ongoing,
+  ongoing: ONGOING,
   box_identification: boxIdentification,
   box_picture: boxPicture,
   event_details: eventDetails,
