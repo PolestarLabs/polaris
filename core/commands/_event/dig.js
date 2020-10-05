@@ -74,8 +74,7 @@ const init = async function (msg) {
 
   //if (Author.dailing === true) return message.channel.send("There's already a dig request going on!");
 
-  //const STREAK_EXPIRE = 1.296e+8*2
-
+  //const STREAK_EXPIRE = 1.296e+8*2embed
   const DAY = 2.16e7;
   const now = Date.now();
 
@@ -108,9 +107,9 @@ const init = async function (msg) {
       "events:halloween18.dig.shovel",
       P
     )}](https://pollux.amarok.kr/crafting#shovel "Pollux Website: Crafting Guide")**`;
-    embed.setDescription(
+    embed.description = 
       ":no_entry_sign: " + $t("events:halloween18.dig.needShovel", P)
-    );
+    ;
 
     return msg.reply({ embed });
   }
