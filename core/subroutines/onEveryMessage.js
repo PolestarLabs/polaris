@@ -139,6 +139,7 @@ async function levelChecks(msg) {
 }
 
 module.exports = async (msg) => {
+  return;
   if (!msg.guild) return;
   if (msg.channel.type === 1) return;
 
