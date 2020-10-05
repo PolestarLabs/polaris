@@ -1,3 +1,54 @@
+
+/*
+
+                         __    _                                   
+                    _wr""        "-q__                             
+                 _dP                 9m_     
+               _#P                     9#_                         
+              d#@                       9#m                        
+             d##                         ###                       
+            J###                         ###L                      
+            {###K                       J###K                      
+            ]####K      ___aaa___      J####F                      
+        __gmM######_  w#P""   ""9#m  _d#####Mmw__                  
+     _g##############mZ_         __g##############m_               
+   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_             
+  a###""          ,Z"#####@" '######"\g          ""M##m            
+ J#@"             0L  "*##     ##@"  J#              *#K           
+ #"               `#    "_gmwgm_~    dF               `#_          
+7F                 "#_   ]#####F   _dK                 JE          
+]                    *m__ ##### __g@"                   F          
+                       "PJ#####LP"                                 
+ `                       0######_                      '           
+                       _0########_                                   
+     .               _d#####^#####m__              ,              
+      "*w_________am#####P"   ~9#####mw_________w*"                  
+          ""9@#####@M""           ""P@#####@M""                    
+
+
+ VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD 
+
+
+######################################################################
+######################################################################
+####                                                              ####
+####             THIS IS DIRECT PORT OF OLD CODE                  ####
+####                                                              ####
+####     AND SHOULD _NOT_ BE USED WITH THE NEW CODEBASE           ####
+####                                                              ####
+######################################################################
+####                                                              ####
+####                THINGS TO BE PROPERLY PORTED:                 ####
+####                                                              ####
+####     -- Proper use of async/await                             ####
+####     -- Database: EVENT INVENTORY                             ####
+####     -- Vanilla asset paths that might not be available       ####
+####                                                              ####
+######################################################################
+######################################################################
+*/
+
+
 const oldBuildPath = "https://pollux.amarok.kr/build/"
 const Picto = require('../../utilities/Picto.js')
 const EventData = require('../../archetypes/Events.js');
