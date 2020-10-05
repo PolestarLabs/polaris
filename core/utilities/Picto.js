@@ -51,6 +51,18 @@ module.exports = {
     })
   },
 
+  getFullCanvas: function getCanvas(...args){
+    return Canvas.loadImage(...args).catch(err=>{
+      console.error(...args)
+      throw new Error(err)
+    }).then( img => {
+      let canvas = Canvas.createCanvas(img.width,img.height);
+      let c = canvas.getContext('2d');
+      c.drawImage(img,0,0);
+      return canvas;
+    })      
+  },
+
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
