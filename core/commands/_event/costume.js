@@ -77,15 +77,16 @@ const init = async function (msg){
     if ( Number(msg.args[1]) <= eventData.inventory.length ){
         if( msg.author.trading ==true )return msg.addReaction(_emoji("nope").reaction);
 
-        let thisItem = eventData.inventory[Number(msg.args[1])-1]
+        let thisItem = eventData.inventory[Number(msg.args[1])-1];
+        if (!thisItem) return msg.addReaction(_emoji("nope").reaction),null;
         let previousItem = eventData.inventory.find(x=>x.type===thisItem.type && x.equipped === true);
         if(previousItem){
           await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':previousItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();
         }
         await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':true}}).lean().exec();
         await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+thisItem.type]:thisItem.id}}).lean().exec();
-      
-     return  msg.addReaction(_emoji("yep").reaction)
+
+       return msg.addReaction(_emoji("yep").reaction), null;
 
     }
   }  
@@ -99,14 +100,14 @@ const init = async function (msg){
           await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
           await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+thisItem.type]:null}}).lean().exec();
       
-     return  msg.addReaction(_emoji("yep").reaction);
+      msg.addReaction(_emoji("yep").reaction);
 
     }else if(["head","body","legs"].includes(msg.args[1])){
       let thisItem = eventData.inventory.find(x=>x.id==eventData[msg.args[1]] )
-      msg.reply("```"+JSON.stringify(thisItem)+"```")
+      //msg.reply("```"+JSON.stringify(thisItem)+"```")
       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
       await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+msg.args[1]]:null}}).lean().exec();
-      return  msg.addReaction(_emoji("yep").reaction);
+      msg.addReaction(_emoji("yep").reaction);
       
       
     }else if(msg.args[1]=="all"){
@@ -117,9 +118,10 @@ const init = async function (msg){
              'eventData.halloween18.legs':null,
              'eventData.halloween18.body':null
            }});
-       return  msg.addReaction(_emoji("yep").reaction);
+      msg.addReaction(_emoji("yep").reaction);
       
     }
+    return;
   }
   
   if (msg.args[0] == "set" || msg.args[1] == "gender"){
@@ -172,17 +174,17 @@ if(Target.id == "271394014358405121"){
 let spookPowa = $t("events:halloween18.keywords.spookPowa",P)
 embed.fields = [
   { name: "**`🎩 Head  \u200b`**\u200b*`"+`[${equipH.spook||0}](+${equipH.aspectBonus||0})\`*`,
-    value: equipH.id?gear.emoji(equipH.rarity)+equipH.name:"---",
+    value: equipH.id?_emoji(equipH.rarity)+equipH.name:"---",
     inline: true
   },
   { 
     name: "**`👕 Body  \u200b`**\u200b*`"+`[${equipB.spook||0}](+${equipB.aspectBonus||0})\`*`,
-    value: equipB.id?gear.emoji(equipB.rarity)+equipB.name:"---",
+    value: equipB.id?_emoji(equipB.rarity)+equipB.name:"---",
     inline: true
   },
   { 
     name: "**`👞 Legs  \u200b`**\u200b*`"+`[${equipF.spook||0}](+${equipF.aspectBonus||0})\`*`,
-    value: equipF.id?gear.emoji(equipF.rarity)+equipF.name:"---",
+    value: equipF.id?_emoji(equipF.rarity)+equipF.name:"---",
     inline: true
   },
   {
@@ -299,7 +301,7 @@ module.exports={
   ,cmd:'costume'
   ,cat:'_event'
   ,botPerms:['attachFiles','embedLinks']
-  ,aliases:[]
+  ,aliases:['cst']
 }
 
 
