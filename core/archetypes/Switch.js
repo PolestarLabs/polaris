@@ -193,6 +193,12 @@ module.exports = class Switch {
 			if (!guildobj) guildobj = DB.guilds.new(this.guild);
 			if (!channelobj) channelobj = DB.channels.new(this.channel);
 
+			console.log("\n\nGUILD AND CHANNEL OBJECTS:\n");
+			console.log(require("util").inspect(guildobj));
+			console.log("\n\n\n");
+			console.log(require("util").inspect(channelobj));
+			console.log("\n\n\n");
+
 			this.gd = guildobj.modules?.DISABLED || [];
 			this.cd = channelobj.modules?.DISABLED || [];
 			this.ce = channelobj.modules?.ENABLED || [];
