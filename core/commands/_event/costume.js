@@ -111,7 +111,9 @@ const init = async function (msg){
       
       
     }else if(msg.args[1]=="all"){
-      DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
        await DB.users.updateOne({id:Author.id},{$set:
            {
              'eventData.halloween18.head':null,
@@ -135,7 +137,8 @@ const init = async function (msg){
     else
       return msg.reply("Invalid Gender");
     
-    return  msg.addReaction(_emoji("yep").reaction);
+    msg.addReaction(_emoji("yep").reaction);
+    return;
 
     }
   
