@@ -178,7 +178,9 @@ function checkEquip(it){
   
 //-----TRADE   
   if (msg.args[0] == "trade"){    
-    if (msg.args[1]&&msg.args[2]){
+    let parsedItemIndex = Number(msg.args[1]?.replace(/[^0-9]/g,''));
+    if (!parsedItemIndex) return "Invalid Trade";
+    if (msg.args[1]&&msg.args[2] && parsedItemIndex <= eventData.inventory.length){
       if( msg.args[2] && PLX.users.find(u=>u.id==msg.args[2].replace(/[^0-9]/g,'')) ){
         let target = PLX.users.find(u=>u.id==msg.args[2].replace(/[^0-9]/g,''));
         let item = eventData.inventory[Number(msg.args[1].replace(/[^0-9]/g,''))-1]
@@ -267,9 +269,9 @@ targetData = await targetData;
         }
 
         
-        let c_embed = {}();
+        let c_embed = {};
         
-        c_embed.setTitle(confimrTrade)
+        c_embed.title = confimrTrade
         
        let confirmPiece1 = `
 **${tradeSummary}**
@@ -300,26 +302,31 @@ targetData = await targetData;
             c_embed.color = 0x3db75e;
             c_embed.footer = {text: transConfirm, icon_url: "https://cdn.discordapp.com/emojis/339398829050953728.png"};
             mes.edit({embed:c_embed})
-            mes.reactions.removeAll()
+            mes.removeReactions()
             
 let me_targetInv = eventData.inventory
 let me_compiledInv = me_targetInv.filter(itm=>item.id!=itm.id);            
 let me_queryStringOut = {$set:{"eventData.halloween18.inventory":me_compiledInv}}
 let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
             
+
+
             await DB.users.set(Author.id, me_queryStringOut);
             await DB.users.set(Author.id, queryStringIn);
             await DB.users.set(target.id, queryStringOut);
             
             await wait(1);
             await DB.users.set(target.id, me_queryStringIn);
+
+
+            
                     
             
           }else{
             c_embed.color = 0xe2253b;
             c_embed.footer = {text: transDeclined, icon_url: "https://cdn.discordapp.com/emojis/339398829088571402.png"};
             mes.edit({embed:c_embed})
-            return mes.reactions.removeAll()
+            return mes.removeReactions()
           }
           
         })
