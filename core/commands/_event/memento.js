@@ -96,7 +96,7 @@ const init = async function (msg){
   embed.fields =[];
 
   const parts = {head:"Hat",body:"Vest",legs:"Legs"}
-    let ind = eventData.memento
+    let ind = eventData.memento || [];
   for (i in costumes) {
     let things = ""
   for (i2 in parts) {
