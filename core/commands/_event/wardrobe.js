@@ -1,74 +1,125 @@
-const {
-        RichEmbed,
-        yep,
-        emoji,
-        userDB,
-        nope,
-        cleanup,
-        wait
-      } = require("../../gearbox.js");
+
+/*
+
+                         __    _                                   
+                    _wr""        "-q__                             
+                 _dP                 9m_     
+               _#P                     9#_                         
+              d#@                       9#m                        
+             d##                         ###                       
+            J###                         ###L                      
+            {###K                       J###K                      
+            ]####K      ___aaa___      J####F                      
+        __gmM######_  w#P""   ""9#m  _d#####Mmw__                  
+     _g##############mZ_         __g##############m_               
+   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_             
+  a###""          ,Z"#####@" '######"\g          ""M##m            
+ J#@"             0L  "*##     ##@"  J#              *#K           
+ #"               `#    "_gmwgm_~    dF               `#_          
+7F                 "#_   ]#####F   _dK                 JE          
+]                    *m__ ##### __g@"                   F          
+                       "PJ#####LP"                                 
+ `                       0######_                      '           
+                       _0########_                                   
+     .               _d#####^#####m__              ,              
+      "*w_________am#####P"   ~9#####mw_________w*"                  
+          ""9@#####@M""           ""P@#####@M""                    
+
+
+ VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD   -   VANILLA CODE AHEAD 
+
+######################################################################
+######################################################################
+####                                                              ####
+####             THIS IS DIRECT PORT OF OLD CODE                  ####
+####                                                              ####
+####     AND SHOULD _NOT_ BE USED WITH THE NEW CODEBASE           ####
+####                                                              ####
+######################################################################
+####                                                              ####
+####                THINGS TO BE PROPERLY PORTED:                 ####
+####                                                              ####
+####     -- Proper use of async/await                             ####
+####     -- Database: INVENTORY here is handled the old way       ####
+####     -- Timed Command: does not use TimedCommand module       ####
+####                                                              ####
+####                                                              ####
+######################################################################
+######################################################################
+*/
+
+
+const moment = require("moment");
+
+  
+const YEP = _emoji('yep');
+const NOPE = _emoji('nope');
+const EventData = require('../../archetypes/Events.js');
+const EV = EventData.event_details; 
+const Picto = require('../../utilities/Picto.js')
+
+const oldBuildPath = "https://pollux.amarok.kr/build/"
+
+
+const init = async function (msg){
+
+  const P = {lngs: msg.lang, user: msg.author.tag };
+  moment.locale(msg.lang[0]);
+
+  const Author = msg.author  
+  
+  const USERDATA = await DB.users.findOne({ id: Author.id });
+  const eventData = await EV.userData(Author);
+
+
+
+
 
 //const locale = require('../../../utils/multilang_b');
 //const mm = locale.getT();
 
-const cmd = 'wardrobe';
 
-const EV = require('./clockwork/halloween.js');
-
-
-const init = async function (message) {
-
-
-//GATHER DATA
-  const Author = message.author
-  const USERDATA = await userDB.findOne({id: Author.id}).lean().exec();
-  const eventData = await EV.userData(Author);
-  
-    const P = {
-      lngs: message.lang,
-      user: Author
-    }
     
 //STATIC STRINGS    
     
-  const noEventPart     = mm("events:generic.noEventPart",P);
-  const examples_t      = mm("events:halloween18.tradeExamples",P);     
-  const gotCasket       = mm("events:halloween18.caskets.gotCasket",P);
-  const noCasket        = mm("events:halloween18.caskets.noCasket",P);
-  const wardrobeBrief   = mm("events:halloween18.wardrobe.brief",P);
-  const t_garments      = mm("events:halloween18.wardrobe.garments",P) ;
-  const spookyWardrobe  = mm("events:halloween18.wardrobe.spookyWardrobe",P) ;
+  const noEventPart     = $t("events:generic.noEventPart",P);
+  const examples_t      = $t("events:halloween18.tradeExamples",P);     
+  const gotCasket       = $t("events:halloween18.caskets.gotCasket",P);
+  const noCasket        = $t("events:halloween18.caskets.noCasket",P);
+  const wardrobeBrief   = $t("events:halloween18.wardrobe.brief",P);
+  const t_garments      = $t("events:halloween18.wardrobe.garments",P) ;
+  const spookyWardrobe  = $t("events:halloween18.wardrobe.spookyWardrobe",P) ;
   
-  const confirmDestroy  = mm("responses.items.confirmDestroy",P);
-  const destroyWhat     = mm("responses.items.destroyWhat",P);
-  const cantDestroy     = mm("responses.items.cantDestroy",P);
-  const destroyConfirmed= mm("responses.items.destroyed",P);  
+  const confirmDestroy  = $t("responses.items.confirmDestroy",P);
+  const destroyWhat     = $t("responses.items.destroyWhat",P);
+  const cantDestroy     = $t("responses.items.cantDestroy",P);
+  const destroyConfirmed= $t("responses.items.destroyed",P);  
   
-  const t_rubines       = mm("keywords.RBN_plural",P);
-  const t_AMOUNT        = mm("terms.amount",P).toUpperCase();
+  const t_rubines       = $t("keywords.RBN_plural",P);
+  const t_AMOUNT        = $t("terms.amount",P).toUpperCase();
   
-  const exchangeWhat    = mm("responses.trade.exchangeWhat",P);
-  const tradeStert      = mm("responses.trade.tradeStert",P);
-  const has10toOffer    = mm("responses.trade.has10toOffer",P);        
-  const tradeSummary    = mm("responses.trade.tradeSummary",P);
-  const confimrTrade    = mm("responses.trade.confimrTrade",P);
-  const plsConfirmTrade = mm("responses.trade.plsConfirmTrade",P);
-  const confirmPiece2   = mm("responses.trade.trade.confirm10s",P);
-  const transConfirm    = mm("responses.trade.confirmed",P);
-  const transDeclined   = mm("responses.trade.declined",P);
-  const transTimeout    = mm("responses.trade.timeout",P);
+  const exchangeWhat    = $t("responses.trade.exchangeWhat",P);
+  const tradeStert      = $t("responses.trade.tradeStert",P);
+  const has10toOffer    = $t("responses.trade.has10toOffer",P);        
+  const tradeSummary    = $t("responses.trade.tradeSummary",P);
+  const confimrTrade    = $t("responses.trade.confimrTrade",P);
+  const plsConfirmTrade = $t("responses.trade.plsConfirmTrade",P);
+  const confirmPiece2   = $t("responses.trade.trade.confirm10s",P);
+  const transConfirm    = $t("responses.trade.confirmed",P);
+  const transDeclined   = $t("responses.trade.declined",P);
+  const transTimeout    = $t("responses.trade.timeout",P);
   
-  const confirmSave    = mm("events:halloween18.wardrobe.confirmSave",P) ;
-  const confirmSave2    = mm("events:halloween18.wardrobe.confirmSave2",P) ;
-  const alreadYhere    = mm("events:halloween18.wardrobe.mementoExists",P) ;
-  const mementoDamaged    = mm("events:halloween18.wardrobe.mementoDamaged",P) ;
+  const confirmSave    = $t("events:halloween18.wardrobe.confirmSave",P) ;
+  const confirmSave2    = $t("events:halloween18.wardrobe.confirmSave2",P) ;
+  const alreadYhere    = $t("events:halloween18.wardrobe.mementoExists",P) ;
+  const mementoDamaged    = $t("events:halloween18.wardrobe.mementoDamaged",P) ;
   
 //-----
   
   
 function checkEquip(it){
    if(it.equipped === true){
-      message.reply (emoji('nope')+"`ITEM IS EQUIPPED`");
+      msg.reply (_emoji('nope')+"`ITEM IS EQUIPPED`");
      return true;
     }      
 }
@@ -78,83 +129,83 @@ function checkEquip(it){
 //SUBS
   
 //-----DESTROY
-  if (message.args[0] == "destroy"){
-    if (message.args[1]){
-      let item = eventData.inventory[Number(message.args[1].replace(/[^0-9]/g,''))-1]      
+  if (msg.args[0] == "destroy"){
+    if (msg.args[1]){
+      let item = eventData.inventory[Number(msg.args[1].replace(/[^0-9]/g,''))-1]      
       if(!item){
-        return message.reply(cantDestroy);
+        return msg.reply(cantDestroy);
       }
 
       
-      let itemPresent = emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
+      let itemPresent = _emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
       if (checkEquip(item) === true) return;
-      let x_embed = new RichEmbed;
+      let x_embed = {};
       x_embed.description = itemPresent;
-      x_embed.setColor("#ffb62c")
+      x_embed.color = 0xffb62c
       
-      if( message.author.trading ==true)return message.react(nope.r);
-      message.author.trading = true;
-      message.channel.send(confirmDestroy,{embed:x_embed}).then(async mes=>{
-          await mes.react(yep.r);
-          mes.react(nope.r);
+      if( msg.author.trading ==true)return msg.addReaction(NOPE.reaction);
+      msg.author.trading = true;
+      msg.channel.send( {content: confirmDestroy, embed:x_embed}).then(async mes=>{
+          await mes.addReaction(YEP.reaction);
+          mes.addReaction(NOPE.reaction);
           
-          const reas = await mes.awaitReactions(rea=>rea.users.has(message.author.id),{max:1,time:10000});
+          const reas = await mes.awaitReactions(rea=>rea.userID === msg.author.id,{maxMatches:1,time:10000});
               
-      message.author.trading = false;
-          if(reas.size == 0 ) return message.channel.send("`TIMEOUT`");
-          if(reas.first().emoji.id === yep.i){
-            x_embed.setColor("#3db75e")
-            x_embed.description = emoji("jade")+" 1000 "+mm('keywords.JDE_plural',P);
-            await userDB.set(Author.id, {$inc:{'modules.jades':1000}});        
+      msg.author.trading = false;
+          if(reas.size == 0 ) return msg.channel.send("`TIMEOUT`");
+          if(reas?.[0].emoji.id === YEP.id){
+            x_embed.color = 0x3db75e
+            x_embed.description = _emoji("jade")+" 1000 "+$t('keywords.JDE_plural',P);
+            await DB.users.set(Author.id, {$inc:{'modules.jades':1000}});        
             let neoinvent = eventData.inventory.filter(x=>x.id!==item.id);
-            await userDB.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});            
-            mes.reactions.removeAll();
-            mes.edit(destroyConfirmed,{embed:x_embed})
+            await DB.users.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});            
+            mes.removeReactions();
+            mes.edit({content: destroyConfirmed,embed:x_embed})
           }
-          if(reas.first().emoji.id === nope.i){
-            x_embed.setColor("#e2253b")
+          if(reas?.[0].emoji.id === NOPE.id){
+            x_embed.color = 0xe2253b
             mes.delete();
-             return message.channel.send("`CANCEL`");
+             return msg.channel.send("`CANCEL`");
           }        
         
     })
     }else{
-  message.reply(destroyWhat)
+  msg.reply(destroyWhat)
     }
     return;
   }
 //-----   
   
 //-----TRADE   
-  if (message.args[0] == "trade"){    
-    if (message.args[1]&&message.args[2]){
-      if( message.args[2] && message.botUser.users.get(message.args[2].replace(/[^0-9]/g,'')) ){
-        let target = message.botUser.users.get(message.args[2].replace(/[^0-9]/g,''));
-        let item = eventData.inventory[Number(message.args[1].replace(/[^0-9]/g,''))-1]
-        let itemPresent = emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
+  if (msg.args[0] == "trade"){    
+    if (msg.args[1]&&msg.args[2]){
+      if( msg.args[2] && PLX.users.find(u=>u.id==msg.args[2].replace(/[^0-9]/g,'')) ){
+        let target = PLX.users.find(u=>u.id==msg.args[2].replace(/[^0-9]/g,''));
+        let item = eventData.inventory[Number(msg.args[1].replace(/[^0-9]/g,''))-1]
+        let itemPresent = _emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
         if (checkEquip(item) === true) return;
         P.targetName = target.tag
         P.targetMention = target
           
-        if(target.id == message.author.id){
-          message.react("🇳");   
-          message.react("🇴");
-          message.react("🇵");
-          message.react("🇪");
+        if(target.id == msg.author.id){
+          msg.addReaction("🇳");   
+          msg.addReaction("🇴");
+          msg.addReaction("🇵");
+          msg.addReaction("🇪");
           return;
         }
-            if( message.author.trading ==true || target.trading ==true || target.id == message.author.id)return message.react(nope.r);
+            if( msg.author.trading ==true || target.trading ==true || target.id == msg.author.id)return msg.addReaction(NOPE.reaction);
  
-            message.author.trading = true;
+            msg.author.trading = true;
             target.trading = true;
         
-        let tradestart = await message.channel.send  (
+        let tradestart = await msg.channel.send  (
           `  
   __${tradeStert}__
 >>> \`TRADE\` ${itemPresent}
->>> ${target} 
+>>> ${target.tag} 
 
-${mm("responses.trade.has10toOffer",P)}
+${$t("responses.trade.has10toOffer",P)}
 \`\`\`ml
 (* ${exchangeWhat} *)
 R ['${t_AMOUNT}'] |-> ${t_rubines}
@@ -166,18 +217,18 @@ ${examples_t}
         
   
    
-let targetData = userDB.findOne({id:target.id}).lean().exec();
-const tradeRes =        await message.channel.awaitMessages(msg=>msg.author.id==target.id && msg.content.match(/^[RGrg] +[0-9]+$/),{max:1,time:18000});
+let targetData = DB.users.findOne({id:target.id}).lean().exec();
+const tradeRes =        await msg.channel.awaitMessages(msg=>msg.author.id==target.id && msg.content.match(/^[RGrg] +[0-9]+$/),{maxMatches:1,time:18000});
 targetData = await targetData;
         
-            message.author.trading = false;
+            msg.author.trading = false;
             target.trading = false;
         
-        if (tradeRes.size===0) return message.channel.send("`💔 TIMEOUT`");
+        if (tradeRes.length == 0 ) return msg.channel.send("`💔 TIMEOUT`");
         
-        let trad = tradeRes.first().content.toUpperCase().split(/ +/);
+        let trad = tradeRes?.[0]?.content?.toUpperCase()?.split(/ +/);
         let numInput = Math.abs(parseInt(trad[1]));
-        if(isNaN(numInput)) return message.channel.send("`💔 INVALID NUMBER`")
+        if(isNaN(numInput)) return msg.channel.send("`💔 INVALID NUMBER`")
         let tradeSubject,queryStringOut,queryStringIn;
         
         if(trad[0]=="G"){
@@ -186,11 +237,11 @@ targetData = await targetData;
           let itemComing = targetInv[numInput-1];
           
           if(itemComing.equipped === true){
-             return tradeRes.first().reply (emoji('nope')+"`💔 ITEM IS EQUIPPED`");
+             return tradeRes?.[0].reply (_emoji('nope')+"`💔 ITEM IS EQUIPPED`");
           }
           
-          tradeSubject = emoji(itemComing.rarity)+"**"+itemComing.name+"** ["+itemComing.spook+"]"
-          if(!itemComing) return message.reply ("`💔 INVALID ITEM");
+          tradeSubject = _emoji(itemComing.rarity)+"**"+itemComing.name+"** ["+itemComing.spook+"]"
+          if(!itemComing) return msg.reply ("`💔 INVALID ITEM");
           
           let compiledInv = targetInv.filter(itm=>itm.id!=itemComing.id);
           
@@ -199,24 +250,24 @@ targetData = await targetData;
           
         }
         
-        cleanup([message,tradestart,tradeRes.first()])
-        if(targetData.eventData.halloween18.inventory.length>11 && trad[0]!=="G")return tradeRes.first().reply("`💔 MAX ITEMS LIMIT`");
+        [msg,tradestart,tradeRes?.[0]].forEach(x=>x.delete().catch(err=>null));
+        if(targetData.eventData.halloween18.inventory.length>11 && trad[0]!=="G")return tradeRes?.[0].reply("`💔 MAX ITEMS LIMIT`");
         
         if(trad[0]=="R"){
-        if(targetData.modules.rubines < numInput)return message.reply("`💔 INSUFFICIENT FUNDS`");
-          tradeSubject = "**"+numInput+"** x Rubines "+emoji("rubine")
+        if(targetData.modules.rubines < numInput)return msg.reply("`💔 INSUFFICIENT FUNDS`");
+          tradeSubject = "**"+numInput+"** x Rubines "+_emoji("rubine")
           queryStringOut = {$inc:{"modules.rubines":-numInput}}
           queryStringIn  = {$inc:{"modules.rubines":numInput}}
         }
         if(trad[0]=="C"){
-        if(targetData.eventData.halloween18.candy < numInput)return message.reply("`💔 INSUFFICIENT CANDY`");
+        if(targetData.eventData.halloween18.candy < numInput)return msg.reply("`💔 INSUFFICIENT CANDY`");
           tradeSubject = "**"+numInput+"** x Candy "+EV.emoji.candy1
           queryStringOut = {$inc:{"eventData.halloween18.candy":-numInput}}
           queryStringIn  = {$inc:{"eventData.halloween18.candy":numInput}}
         }
 
         
-        let c_embed = new RichEmbed();
+        let c_embed = {}();
         
         c_embed.setTitle(confimrTrade)
         
@@ -227,27 +278,27 @@ targetData = await targetData;
 \u200b
 `
        
-       c_embed.setDescription(confirmPiece1 + confirmPiece2)
+       c_embed.description= confirmPiece1 + confirmPiece2
           
           
-          message.reply(plsConfirmTrade,{embed:c_embed}).then(async mes=>{
-          await mes.react(yep.r);
-           mes.react(nope.r);
+          msg.reply({content:plsConfirmTrade,embed:c_embed}).then(async mes=>{
+          await mes.addReaction(YEP.reaction);
+           mes.addReaction(NOPE.reaction);
           
-          const reas = await mes.awaitReactions(rea=>rea.users.has(message.author.id),{max:1,time:10000});
-            c_embed.setDescription(confirmPiece1)
+          const reas = await mes.awaitReactions(rea=>rea.userID === msg.author.id,{maxMatches:1,time:10000});
+            c_embed.description= confirmPiece1
             let ts= new Date();
-            c_embed.setTimestamp(ts)
+            c_embed.timestamp= ts
             
           if(reas.size == 0 ) {
-            c_embed.setColor("#ffb62c");
-            c_embed.setFooter(transTimeout,"https://cdn.discordapp.com/emojis/476214608592633866.png?v=1");
+            c_embed.color = 0xffb62c;
+            c_embed.footer = {text: transTimeout, icon_url: "https://cdn.discordapp.com/emojis/476214608592633866.png?v=1"};
             mes.edit({embed:c_embed})
-            return message.channel.send("`TIMEOUT`");
+            return msg.channel.send("`TIMEOUT`");
           }
-          if(reas.first().emoji.id === yep.i){
-            c_embed.setColor("#3db75e");
-            c_embed.setFooter(transConfirm,"https://cdn.discordapp.com/emojis/339398829050953728.png");
+          if(reas?.[0].emoji.id === YEP.id){
+            c_embed.color = 0x3db75e;
+            c_embed.footer = {text: transConfirm, icon_url: "https://cdn.discordapp.com/emojis/339398829050953728.png"};
             mes.edit({embed:c_embed})
             mes.reactions.removeAll()
             
@@ -256,17 +307,17 @@ let me_compiledInv = me_targetInv.filter(itm=>item.id!=itm.id);
 let me_queryStringOut = {$set:{"eventData.halloween18.inventory":me_compiledInv}}
 let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
             
-            await userDB.set(Author.id, me_queryStringOut);
-            await userDB.set(Author.id, queryStringIn);
-            await userDB.set(target.id, queryStringOut);
+            await DB.users.set(Author.id, me_queryStringOut);
+            await DB.users.set(Author.id, queryStringIn);
+            await DB.users.set(target.id, queryStringOut);
             
             await wait(1);
-            await userDB.set(target.id, me_queryStringIn);
+            await DB.users.set(target.id, me_queryStringIn);
                     
             
           }else{
-            c_embed.setColor("#e2253b");
-            c_embed.setFooter(transDeclined,"https://cdn.discordapp.com/emojis/339398829088571402.png");
+            c_embed.color = 0xe2253b;
+            c_embed.footer = {text: transDeclined, icon_url: "https://cdn.discordapp.com/emojis/339398829088571402.png"};
             mes.edit({embed:c_embed})
             return mes.reactions.removeAll()
           }
@@ -277,66 +328,66 @@ let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
         
       }else{
         miniUsage = "`+wardrobe trade [#ID] >[@USER]<`"
-        return message.reply ( miniUsage )        ;
+        return msg.reply ( miniUsage )        ;
       }
     }else{
       miniUsage = "`+wardrobe trade [#ID] [@USER]`"
-      return message.reply ( miniUsage );
+      return msg.reply ( miniUsage );
     }
   }
 //-----     
   
 
 //----MEMENTO
-  if (["keep","memento"].includes(message.args[0])){
-    if (message.args[1]){
-      let item = eventData.inventory[Number(message.args[1].replace(/[^0-9]/g,''))-1]      
+  if (["keep","memento"].includes(msg.args[0])){
+    if (msg.args[1]){
+      let item = eventData.inventory[Number(msg.args[1].replace(/[^0-9]/g,''))-1]      
       if(!item){
-        return message.reply(`INVALID ITEM`);
+        return msg.reply(`INVALID ITEM`);
       }      
-      let itemPresent = emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
+      let itemPresent = _emoji(item.rarity)+"**"+item.name+"** ["+item.spook+"]"
       if (checkEquip(item) === true) return;
-      let embed = new RichEmbed;
+      let embed = {};
       embed.description = itemPresent;
-      embed.setColor("#ffb62c")
+      embed.color = 0xffb62c
         let memento = eventData.memento || [];
 
       if(memento.filter(itm=>itm.type==item.type && itm.costume == item.costume).length>0){
-        message.react(nope.r);
-        return message.reply(alreadYhere)
+        msg.addReaction(NOPE.reaction);
+        return msg.reply(alreadYhere)
       }
-       if(item.spook<0) return message.reply(mementoDamaged);
+       if(item.spook<0) return msg.reply(mementoDamaged);
       
-      if( message.author.trading ==true)return message.react(nope.r);
-      let mes = await message.channel.send(confirmSave,{embed})
+      if( msg.author.trading ==true)return msg.addReaction(NOPE.reaction);
+      let mes = await msg.channel.send( {content:confirmSave, embed})
       
-      mes.react(yep.r)
-      mes.react(nope.r)
-      const reas = await mes.awaitReactions(rea => rea.users.has(message.author.id), {
-        max: 1,
+      mes.addReaction(YEP.reaction)
+      mes.addReaction(NOPE.reaction)
+      const reas = await mes.awaitReactions(rea => rea.userID === msg.author.id, {
+        maxMatches: 1,
         time: 10000
-      });
+      }).catch(e=>[]);
 
-      message.author.trading = false;
-      if (reas.size == 0) return message.channel.send("`TIMEOUT`");
-      if (reas.first().emoji.id === yep.i) {
+      msg.author.trading = false;
+      if (reas.size == 0) return msg.channel.send("`TIMEOUT`");
+      if (reas?.[0].emoji.id === YEP.id) {
         
          let neoinvent = eventData.inventory.filter(x=>x.id!==item.id);
-            await userDB.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});     
+            await DB.users.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});     
         memento.push(item)
      
         
-            await userDB.set(Author.id, {$set:{'eventData.halloween18.memento':memento}});         
-        embed.setColor("#ff50bc") 
-            mes.reactions.removeAll();
-            mes.edit(emoji('yep')+confirmSave2,{embed});
+            await DB.users.set(Author.id, {$set:{'eventData.halloween18.memento':memento}});         
+        embed.color = 0xff50bc 
+            mes.removeReactions();
+            mes.edit( {content: _emoji('yep')+confirmSave2,embed});
             
         if(memento.length == 13){
-          await userDB.set(Author.id, {$inc:{'eventGoodie':1000}});   
+          await DB.users.set(Author.id, {$inc:{'eventGoodie':1000}});   
           mes.channel.send("You got 1000 bonus Event Tokens for completing 50% of your Memento Collection!")
         }
         else if(memento.length == 27){
-          await userDB.set(Author.id, {$addToSet:{'modules.achievements':"memento_completionist"},$inc:{'eventGoodie':2000}});   
+          await DB.users.set(Author.id, {$addToSet:{'modules.achievements':"memento_completionist"},$inc:{'eventGoodie':2000}});   
           mes.channel.send("You got 2000 bonus Event Tokens for completing 100% of your Memento Collection!")
           
         }
@@ -344,9 +395,9 @@ let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
         
           }
         
-      if (reas.first().emoji.id === nope.i) {
+      if (reas?.[0].emoji.id === NOPE.id) {
         mes.delete();
-        return message.channel.send("`CANCEL`");
+        return msg.channel.send("`CANCEL`");
       }      
       
       }
@@ -356,33 +407,36 @@ let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
 //----  
   
 //DEFAULT
-  const embed = new RichEmbed;embed.setColor("#3b6987");
+  const embed = {};
+  embed.color = 0x3b6987;
+  embed.fields = []
 
   for (i in eventData.inventory) {
     let ind = eventData.inventory
-    embed.addField(
-      emoji(ind[i].rarity) + ind[i].name + (ind[i].augment ? " +" + ind[i].augment : ""),
-    ` \`\`\`ml
+    embed.fields.push({
+     name: _emoji(ind[i].rarity) + ind[i].name + (ind[i].augment ? " +" + ind[i].augment : ""),
+value: ` \`\`\`ml
 ${ind[i].equipped===true?"🔒":" "}[#${((Number(i)+1)+"").padStart(2,0)}]|${(ind[i].spook+"").padStart(2,0)}SPK${ ind[i].aspectBonus?"(+"+(ind[i].aspectBonus+"").padStart(2,0)+")":""  }
-\`\`\``, true)
+\`\`\``, 
+inline: !0
+    })
 }
 
-  embed.setAuthor(spookyWardrobe, Author.displayAvatarURL());
-  //embed.setDescription(wardrobeBrief);
-  embed.setFooter("Pollux Halloween Event 2018", "https://pollux.amarok.kr/medals/pumpxd.png");
-  embed.setThumbnail("https://pollux.amarok.kr/build/event/halloween18/wardrobe.png");
+  embed.footer = {name: spookyWardrobe, avatar_url:  Author.avatarURL};
+  //embed.description= wardrobeBrief;
+  embed.footer = {text: "Pollux Halloween Event 2020", icon_url:  "https://pollux.amarok.kr/medals/pumpxd.png"};
+  //embed.thumbnail= {url: "https://pollux.amarok.kr/build/event/halloween18/wardrobe.png"};
 
-  message.channel.send({embed});
+  msg.channel.send({embed});
   
 }
 
-module.exports = {
-  pub: true,
-  cmd: cmd,
-  perms: 3,
-  botperms: ["EMBED_LINKS", "SEND_MESSAGES", "ATTACH_FILES"],
-  init: init,
-  cat: 'event',
-  exp: 15,
-  cool: 1000
-};
+
+ module.exports={
+   init
+   ,pub:false
+   ,cmd:'wardrobe'
+   ,cat:'_event'
+   ,botPerms:['attachFiles','embedLinks']
+   ,aliases:[]
+ }
