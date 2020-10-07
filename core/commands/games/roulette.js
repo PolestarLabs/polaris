@@ -23,11 +23,12 @@ const settings = {
 function toHex(bet) {
   const betTypes = ["straight", "split", "street", "square", "basket", "dstreet", "dozen", "column", "snake", "manque", "passe", "colour", "parity"];
   const type = betTypes.indexOf(bet.type).toString(16);
-  const offset = bet.offset || bet.number === "d"
+  
+  const offset = bet.offset ?? (bet.number === "d"
     ? 2 : bet.number === 0
       ? 1 : bet.numbers?.sort()[1] - bet.numbers?.sort()[0] === 3
         ? 1 : bet.type === "straight"
-          ? 0 : 2;
+          ? 0 : 2);
   const number = Math.abs((bet.number || bet.numbers?.sort()[0] || 0) - 1).toString(36);
 
   return `${type}${offset}${number}`;
@@ -85,6 +86,8 @@ function getBoard(userData) {
     offset: dozen & column: 1-3 - colour: 0 = black, 1 = red - parity: 0 = even, 1 = uneven
   */
   let data = "";
+
+  
   Object.keys(userData).forEach((k) => {
     data += `${k}_`;
     data += userData[k].hash += "_";
@@ -200,7 +203,8 @@ const init = async (msg) => {
     Game.users[userID].hash = m.author.avatar || m.author.defaultAvatar;
     boardEmbed.image = { url: getBoard(Game.users) }; // readded for testing
     updateFeed(userID, bet);
-    return m.addReaction(_emoji("chipOK").reaction);
+    //return m.addReaction(_emoji("chipOK").reaction);
+    m.delete();
   });
 
   Collector.on("end", async () => {
@@ -215,7 +219,8 @@ const init = async (msg) => {
 
     const resultsEmbed = { color: settings.resultsEmbedColor, fields: [] };
     resultsEmbed.title = $t("games.roulette.resultsTitle", P);
-    resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: _emoji(`roulette${displayNumber}`) });
+    resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: `**\`${displayNumber}\`**`});
+    resultsEmbed.image = { url: "attachment://roulette.png" };
 
     let value;
     if (validatedResults.length) {
@@ -238,8 +243,10 @@ const init = async (msg) => {
     }
     resultsEmbed.fields.push({ name: $t("games.roulette.resultsPlayer"), value });
 
-    setTimeout(() => {
-      wheelmsg.edit({ embed: resultsEmbed });
+    setTimeout( async () => {
+      boardEmbed.image = {};
+      boardmsg.edit({ embed: boardEmbed });
+      wheelmsg.channel.send({ embed: resultsEmbed },{name:"roulette.png", file: (await resolveFile(getBoard(Game.users))) });
     }, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
   });
   return null;
