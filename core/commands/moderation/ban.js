@@ -10,7 +10,7 @@ const init = async function (msg) {
   if (msg.author.id === Target.id) return msg.channel.createMessage("no");
 
   const serverData = await DB.servers.get(msg.guild.id);
-  P.imsorry = rand$t("responses.verbose.gomenasai");
+  P.imsorry = rand$t("responses.verbose.interjections.gomenasai");
   if (!PLX.modPass(msg.member, "banMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));
 
   if (!msg.args[0]) {
@@ -19,7 +19,7 @@ const init = async function (msg) {
   if (!Target) {
     return msg.channel.send($t("responses.errors.kin404", P));
   }
-  if (Target.id == msg.author.id) {
+  if (Target.id === msg.author.id) {
     return msg.channel.send($t("responses.errors.cantKickSelf", P));
   }
   if (!(msg.guild.member(Target).kickable)) {
@@ -31,7 +31,7 @@ const init = async function (msg) {
   let isFalse = false;
 
   function isParam(arg) {
-    if (arg === "-purge" || arg == "-p") {
+    if (arg === "-purge" || arg === "-p") {
       clear = 7;
       msg.args.splice(1, 1);
       return true;
@@ -65,7 +65,7 @@ const init = async function (msg) {
 
   let reason;
   let pre_msg;
-  if (msg.args.length == 1) {
+  if (msg.args.length === 1) {
     embed.description = `*\`\`\`${$t("interface.kickban.waitingForReason", P)}\`\`\`*`;
     pre_msg = await msg.channel.send({ content: _emoji("loading") + $t("interface.kickban.includeReason", P), embed });
     const resp = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id,
@@ -89,7 +89,7 @@ const init = async function (msg) {
       msg.channel.send($t("interface.kickban.noReason", P));
     }
     return null;
-  } if (reason && reason == "cancel") {
+  } if (reason && reason === "cancel") {
     embed.color = 0xee1225;
     if (!pre_msg) return null;
     embed.description = `\u200b\n${$t("interface.kickban.cancelled", P)}\n\u200b`;
@@ -104,9 +104,10 @@ const init = async function (msg) {
     pre_msg = await msg.channel.send({ embed });
   }
 
-  const post_reason = `${reason}\n  [MOD: ${msg.author.tag}]`;
 
-  PLX.banGuildMember(msg.guild.id, Target.id, clear, post_reason).then((banned) => {
+  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`).replace(/[\u{0080}-\u{FFFF}]/gu,"?");
+
+  const postban = (banned)=>{
     if (soft) {
       PLX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
     }
@@ -120,8 +121,16 @@ const init = async function (msg) {
 
     userBanned = null;
     Target = null;
-  }).catch((err) => {
-    msg.channel.send($t("interface.kickban.userKickError", P)); console.error(err);
+  }
+
+  PLX.banGuildMember(msg.guild.id, Target.id, clear, post_reason).then( postban )
+  .catch((err) => {
+    PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
+      .then(postban)
+      .catch(err=>{
+        msg.channel.send($t("interface.kickban.userKickError", P)); 
+        console.error(err);
+    })
   });
 };
 

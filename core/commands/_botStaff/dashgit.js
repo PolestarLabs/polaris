@@ -1,6 +1,6 @@
 const { exec } = require("child_process");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   exec(`git ${args.join(" ")}`, {
     cwd: "/home/pollux/polaris/dashboard",
   }, (error, stdout, stderr) => {

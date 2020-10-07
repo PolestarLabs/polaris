@@ -1,7 +1,7 @@
 // const gear = require('../../utilities/Gearbox');
 // const DB = require('../../database/db_ops');
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
@@ -12,9 +12,9 @@ const init = async function (msg, args) {
   const arg4 = msg.args[4]; // role
 
   const serverData = await DB.servers.get(msg.guild.id, { "modules.MODROLE": 1 });
-  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope);
+  if (!PLX.modPass(msg.member, "manageRoles", serverData)) return msg.addReaction(nope).then(() => null);
 
-  const rolefind = (x) => (msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find((rl) => rl.id == msg.roleMentions[0]));
+  const rolefind = (x) => (msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find((rl) => rl.id === msg.roleMentions[0]));
 
   const ACK = `${rand$t("responses.verbose.interjections.acknowledged", P)} `;
   const YATT = `${rand$t("responses.verbose.interjections.yatta", P)} `;
@@ -29,12 +29,12 @@ const init = async function (msg, args) {
   const disROLE = $t("terms.discord.role", P);
   const disREACT = $t("terms.discord.reaction", P);
 
-  if (subcommand == "add") {
+  if (subcommand === "add") {
     try {
       if (/^<#[0-9]{11,19}>$/.test(arg1)) {
         const channel = msg.channelMentions[0];
         PLX.getMessage(channel, arg2).then((message) => {
-          if (msg.guild.roles.find((r) => r.id == rolefind(4).id)) {
+          if (msg.guild.roles.find((r) => r.id === rolefind(4).id)) {
             const role = rolefind(4);
             argmoji = arg3.replace("<:a:", "").replace(">", "").replace("<:", "");
             message.addReaction(argmoji).then((ok) => {
@@ -76,12 +76,12 @@ const init = async function (msg, args) {
 
   const ReactionData = await DB.reactRoles.find({ server: msg.guild.id });
 
-  if (subcommand == "del") {
+  if (subcommand === "del") {
     const emojiQuery = (arg2 || ""); // .replace("<:a:","").replace(">","").replace("<:","");
 
-    const messageReactionData = ReactionData.find((r) => r.message == arg1);
+    const messageReactionData = ReactionData.find((r) => r.message === arg1);
     if (arg1 && messageReactionData) {
-      const reactionItem = messageReactionData.rolemoji.find((e) => e.emoji == emojiQuery);
+      const reactionItem = messageReactionData.rolemoji.find((e) => e.emoji === emojiQuery);
       if (arg2 && reactionItem) {
         DB.reactRoles.set({ server: msg.guild.id, message: arg1 }, { $pull: { rolemoji: reactionItem } });
         PLX.removeMessageReaction(messageReactionData.channel, arg1, emojiQuery).catch((e) => null);
@@ -98,10 +98,10 @@ const init = async function (msg, args) {
       list(ReactionData, msg);
     }
   }
-  if (subcommand == "list") {
+  if (subcommand === "list") {
     return list(ReactionData, msg);
   }
-  if (subcommand == "clear") {
+  if (subcommand === "clear") {
     await DB.reactRoles.remove({ server: msg.guild.id });
     msg.channel.send(ACK + $t("interface.reactroles.removeAll", P));
   }
@@ -122,7 +122,7 @@ function list(ReactionData, msg) {
   CH = $t("terms.discord.channel", { lngs: msg.lang });
   RL = $t("terms.discord.role_plural", { lngs: msg.lang });
   RC = $t("terms.discord.reaction_plural", { lngs: msg.lang });
-  if (ReactionData.length == 0) {
+  if (ReactionData.length === 0) {
     return msg.channel.send($t("interface.reactroles.noroleshere", { lngs: msg.lang }));
   }
   embed.description = $t("interface.reactroles.reactrolesfor", { lngs: msg.lang, server: msg.guild.name });
@@ -133,7 +133,7 @@ function list(ReactionData, msg) {
 \u200b\u2003 **${CH}**: <#${rea.channel}>
 \u200b\u2003 **${RC}/${RL}**:
 \u200b\u2003\u2003 ${
-  rea.rolemoji.map((rlmj) => `<:${rlmj.emoji}> <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
+  rea.rolemoji.map((rlmj) => `${rlmj.emoji.includes(":") ? `<:${rlmj.emoji}>` : rlmj.emoji} <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
 }
         
         `, true);

@@ -1,7 +1,9 @@
 const YesNo = require("../../structures/YesNo.js");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const Target = PLX.findMember(msg.mentions[0]?.id, msg.guild.members);
+
+  if (!Target) return this.invalidUsageMessage(msg);
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
   const V = {};
@@ -9,10 +11,10 @@ const init = async function (msg, args) {
   V.ringTutorial = $t("responses.marry.ringTutorial", P);
   V.ringUsage = `**${$t("terms.usage", P)}:** \`${msg.prefix}marry @USER [jade|rubine|sapphire|stardust|<other>]\``;
 
-  if (Target.id == msg.author.id) {
+  if (Target.id === msg.author.id) {
     return $t("responses.marry.cantMarrySelf", P);
   }
-  if (Target.id == PLX.user.id) {
+  if (Target.id === PLX.user.id) {
     return $t("responses.marry.cantMarryPollux", P);
   }
 
@@ -154,8 +156,8 @@ const init = async function (msg, args) {
   };
   const DontFeat = (m) => function DoNotFeat() {
     const res = { content: featurePrompt.content, embed: featurePrompt.embeds[0] };
-    if (m == msg.author.id) pL = featPieceLEFT(`${_emoji("nope")} :broken_heart:`);
-    if (m == Target.id) pR = featPieceRIGHT(`:broken_heart: ${_emoji("nope")} `);
+    if (m === msg.author.id) pL = featPieceLEFT(`${_emoji("nope")} :broken_heart:`);
+    if (m === Target.id) pR = featPieceRIGHT(`:broken_heart: ${_emoji("nope")} `);
     featurePromptState = res;
     mutateFeaturePrompt(res);
   };
@@ -204,12 +206,12 @@ function noRingResponse(Rings, userData, P) {
 }
 
 function determineRing(arg, Rings) {
-  if (!arg || arg == "") return null;
+  if (!arg || arg === "") return null;
   arg = arg.toLowerCase();
   const selectRing = Rings.find((ring) => {
-    if (ring.id == arg) return true;
-    if (ring.name == arg) return true;
-    if (ring.icon == arg) return true;
+    if (ring.id === arg) return true;
+    if (ring.name === arg) return true;
+    if (ring.icon === arg) return true;
     if (arg.includes(ring.icon)) return true;
     if (ring.id.endsWith(arg)) return true;
 
@@ -221,12 +223,12 @@ function determineRing(arg, Rings) {
 
 async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, upgradePrompt) {
   const Target = PLX.findMember(msg.mentions[0].id, msg.guild.members);
-  if (Target.id == msg.author.id) return $t("responses.marry.cantMarrySelf", P);
+  if (Target.id === msg.author.id) return $t("responses.marry.cantMarrySelf", P);
   const P = { lngs: msg.lang, prefix: msg.prefix };
   P.userA = msg.member.nick || msg.author.username;
   P.userB = Target.nick || Target.user.username;
 
-  if (!(userData?.id == msg.author.id && RING && mrgPresent)) {
+  if (!(userData?.id === msg.author.id && RING && mrgPresent)) {
     [userData, Rings] = await Promise.all([DB.users.getFull({ id: msg.author.id }), DB.items.find({ subtype: "ring" })]);
     RING = determineRing(args[0], Rings) || determineRing(args[1], Rings);
 

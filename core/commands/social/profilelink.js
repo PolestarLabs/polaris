@@ -9,7 +9,7 @@ const init = async function (msg) {
   const userdata = await DB.users.getFull({ id: TARGET.id });
   if (!userdata) return msg.channel.send("User not in DB");
   const adress = userdata.personalhandle || userdata.id;
-  const mess = `<:Userlocation:338762651423473668> | ${paths.CDN}/p/${adress}`;
+  const mess = `<:Userlocation:338762651423473668> | ${paths.DASH}/p/${adress}`;
   msg.channel.send(mess);
 };
 module.exports = {

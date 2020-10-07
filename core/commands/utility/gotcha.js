@@ -14,7 +14,7 @@ const init = async function (msg) {
         embed.timestamp(snipe.timestamp);
         if (snipe.msg_old.attachment) embed.image(snipe.msg_old.attachment.proxy_url);
         msg.channel.send({ embed });
-      } else if (Object.keys(snipe)[1] == "msg_new") {
+      } else if (Object.keys(snipe)[1] === "msg_new") {
         embed.description = `\`\`\` ${snipe.msg_old.content}\`\`\` \n**edited to**\`\`\`${snipe.msg_new.content}\`\`\``;
         embed.timestamp(snipe.timestamp);
         embed.footer(snipe.author.tag, snipe.author.avatarURL);

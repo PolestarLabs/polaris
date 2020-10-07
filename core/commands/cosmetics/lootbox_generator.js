@@ -57,7 +57,8 @@ staticAssets.load = Promise.all([
   delete staticAssets.load;
 });
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
+
   if (!staticAssets.loaded) await staticAssets.load;
   if (VisualsCache.size > 800) VisualsCache.clear();
 
@@ -88,7 +89,7 @@ const init = async function (msg, args) {
     await lootbox.compileVisuals;
 
     let preRoll;
-    if (currentRoll == 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
+    if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
     else preRoll = msg.channel.send(REROLL_MSG(P));
 
     const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
@@ -105,20 +106,20 @@ const init = async function (msg, args) {
     const message = await msg.channel.send(...firstRoll);
 
     message.addReaction("⭐").catch((e) => null);
-    if (canReroll) message.addReaction(_emoji("retweet").reaction).catch((e) => null);
+    if (canReroll) message.addReaction("🔁").catch((e) => null);
 
     return message.awaitReactions((reaction) => {
-      if (reaction.author.id == PLX.user.id) return false;
-      if (reaction.emoji.id === _emoji("retweet").id) {
+      if (reaction.author.id === PLX.user.id) return false;
+      if (reaction.emoji.name === "🔁") {
         return canReroll;
-      } if (reaction.emoji.name == "⭐") return true;
+      } if (reaction.emoji.name === "⭐") return true;
     }, { time: 15000, maxMatches: 1 }).catch((e) => {
       console.error(e);
-      message.removeReaction(_emoji("retweet").reaction);
+      message.removeReaction("🔁");
     }).then(async (reas) => {
       const choice = reas?.[0];
 
-      if (choice?.emoji.id === _emoji("retweet").id) {
+      if (choice?.emoji.name === "🔁") {
         message.delete();
         currentRoll++;
         return process();
@@ -132,6 +133,7 @@ const init = async function (msg, args) {
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
+      LootingUsers.delete(msg.author.id);
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
                 >>> ${lootbox.content.map((x) => {
@@ -160,7 +162,7 @@ function renderCard(item, visual, P) {
 
   ctx.globalCompositeOperation = "overlay";
   ctx.rotate(-1.5708);
-  P.count = item.type == "gems" ? 2 : 1;
+  P.count = item.type === "gems" ? 2 : 1;
   const itemTypePrint = (item.type !== "gems" ? $t(`keywords.${item.type}`, P) : $t(`keywords.${item.currency}`, P)).toUpperCase();
   Picto.setAndDraw(ctx,
     Picto.tag(ctx, itemTypePrint, "600 50px 'AvenirNextRoundedW01-Bold'", "#FFF"),
@@ -172,7 +174,7 @@ function renderCard(item, visual, P) {
   ctx.shadowOffsetY = 5;
   ctx.shadowBlur = 10;
 
-  if (item.type == "background") {
+  if (item.type === "background") {
     const ox = -25;
     const oy = 125;
     const odx = 240;
@@ -188,10 +190,10 @@ function renderCard(item, visual, P) {
     ctx.shadowColor = "#2248";
     ctx.translate(0, -10);
     ctx.rotate(0.2);
-  } else if (item.type == "medal") {
+  } else if (item.type === "medal") {
     const itemW = 150;
     ctx.drawImage(itemVisual, CARD_WIDTH / 2 - itemW / 2, 190 - itemW / 2, itemW, itemW);
-  } else if (item.type == "boosterpack") {
+  } else if (item.type === "boosterpack") {
     const itemW = 210;
     ctx.translate((CARD_WIDTH / 2 - itemW / 2 + 30), (190 - 300 / 2));
     ctx.rotate(0.17);
@@ -262,11 +264,11 @@ function renderDupeTag(rarity, P) {
 function getPrize(loot, USERDATA) {
   if (["boosterpack", "item"].includes(loot.type)) return USERDATA.addItem(loot.id);
 
-  if (loot.type == "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
+  if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
 
-  if (loot.type == "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
+  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
 
-  if (loot.type == "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
+  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
 }
 function determineRerollCost(box, rollNum, USERDATA) {
   let stake = Math.round(
@@ -310,12 +312,12 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   const itemCards = lootbox.content.map((item, i) => renderCard(item, lootbox.visuals[i], P));
 
   if (itemCards.length <= 3) {
-    if (itemCards.length == 3) ctx.drawImage(back, 0, 0, 800, 600);
+    if (itemCards.length === 3) ctx.drawImage(back, 0, 0, 800, 600);
     ctx.translate(0, 10);
     itemCards.forEach((card, i, a) => {
-      if (a.length == 1) i = 1;
+      if (a.length === 1) i = 1;
       const angle = -0.05 + (0.05 * i);
-      const moveY = Math.abs(i - 1) + (i || 15) - (i == 2 ? 25 : 0);
+      const moveY = Math.abs(i - 1) + (i || 15) - (i === 2 ? 25 : 0);
       const moveX = i - 1 * 15 + i * 16;
 
       ctx.translate(moveX, moveY);
@@ -352,7 +354,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
       hasDupes = true;
       loot.isDupe = true;
       const dupe = renderDupeTag(loot.rarity, P);
-      if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length == 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
+      if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length === 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
       else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
     }
   });
@@ -370,7 +372,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   ctx.drawImage(bonusName.item, 620 - bonusName.width, 535);
 
   P.k_emoji = "`⭐`";
-  P.r_emoji = _emoji("retweet");
+  P.r_emoji = "`🔁`";
   P.amt = `${_emoji("RBN")}** ${miliarize(rerollCost, true, "\u202F")}**`;
   P.count = totalRerolls - currentRoll;
   P.x_frags = `${_emoji("cosmo")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
@@ -418,7 +420,6 @@ module.exports = {
     postCommand: (m) => LootingUsers.delete(m.author.id),
   },
   errorMessage: (msg, err) => {
-    LootingUsers.delete(msg.author.id);
     return {
       embed: {
         description: "Something went wrong...\nIf this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n \n***Your Lootbox __was not__ removed from your inventory!***",

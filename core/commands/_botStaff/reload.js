@@ -1,7 +1,7 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   PLX.registerCommands(true);
   translateEngineStart();
-  if (args[0] == "hard") {
+  if (args[0] === "hard") {
     Object.keys(require.cache).forEach((R) => {
       if (R.includes("node_modules")) return;
       if (R.includes("bot/pollux.js")) return;

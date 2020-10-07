@@ -5,7 +5,8 @@ const ID_REGEX = /^\d{17,19}$/;
 
 module.exports = {
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
-    query = query?.trim();
+    
+    query = typeof query === 'string' ? query?.trim() : query?.id;
     if (!query) return null;
 
     const ID = query.replace(CLEAN_ID_REGEX, "");
@@ -32,13 +33,13 @@ module.exports = {
     }
 
     if (user && member && guild) return user;
-    if (!user && guild && isID) return await PLX.getRESTUser(ID);
+    if (!user && guild && isID) return PLX.getRESTUser(ID).catch(() => null);
     return user?.user || user;
   },
   // Get IMG from Channel MSGs
   getChannelImg: async function getChannelImg(message, nopool) {
     const hasImageURL = message.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
-    if (hasImageURL) return hasImageURL[0];
+    if (hasImageURL) return "https://proxy.pollux.workers.dev/?pollux_url="+encodeURIComponent(hasImageURL[0]);
     if (message.attachments[0]) return message.attachments[0].url;
     const sevmesgs = message.channel.messages;
 
@@ -66,14 +67,14 @@ module.exports = {
     }
     return false;
   },
-  modPass: function modPass(member, extra, sData = false) {
+  modPass: function modPass(member, extra, sData = false, channel = null) {
     if (sData?.modules.MODROLE) {
       if (member.hasRole(sData.modules.MODROLE)) return true;
     }
     if (member.permission.has("manageGuild") || member.permission.has("administrator")) {
       return true;
     }
-    if (member.permission.has(extra)) return true;
+    if (member.permission.has(extra) || channel.permissionsOf(member.id).has(extra)) return true;
 
     return false;
   },

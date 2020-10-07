@@ -3,10 +3,10 @@ const axios = require("axios");
 module.exports = {
 
   randomOne: async (gallery, dlink) => {
-    let Url = `${paths.CDN}/random/${gallery}`;
+    let Url = `${paths.DASH}/random/${gallery}`;
 
     if (dlink) {
-      Url = `${paths.CDN}/random/redir/${gallery}?json=1`;
+      Url = `${paths.DASH}/random/redir/${gallery}?json=1`;
       const response = await axios.get(Url);
       return response.data;
     }
@@ -18,7 +18,7 @@ module.exports = {
   },
 
   randomOneIndexed: async (gallery, url = false) => {
-    Url = `${paths.CDN}/random/${gallery}`;
+    Url = `${paths.DASH}/random/${gallery}`;
     const preRes = await axios.get(`${Url}/size`, {
       headers: { Accept: "json" },
       responseType: "json",
@@ -36,7 +36,7 @@ module.exports = {
   },
 
   indexedOne: async (gallery, index = 0) => {
-    Url = `${paths.CDN}/random/${gallery}/${index}`;
+    Url = `${paths.DASH}/random/${gallery}/${index}`;
     const response = await axios.get(Url, {
       headers: { Accept: "*" },
       responseType: "arraybuffer",
@@ -44,7 +44,7 @@ module.exports = {
     return response.data;
   },
   filteredOne: async (gallery, filter) => {
-    Url = `${paths.CDN}/random/${gallery}/filter/${filter}?json=1`;
+    Url = `${paths.DASH}/random/${gallery}/filter/${filter}?json=1`;
     const response = await axios.get(Url, {
       headers: { Accept: "json" },
       responseType: "json",

@@ -3,7 +3,7 @@ const Picto = require("../../utilities/Picto.js");
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const TARGET = await PLX.getTarget(msg.args[0], msg.guild);
+  const TARGET = msg.args[0] ? await PLX.getTarget(msg.args[0], msg.guild) : msg.member;
   if (!TARGET) return msg.channel.send($t("responses.errors.kin404", P));
 
   let userData; let serverData; let selfLocal; let LRpos;
@@ -34,7 +34,7 @@ const init = async function (msg) {
   await Promise.all([
     _back = await Picto.getCanvas(`${paths.BUILD}/profile/mainframe_mini.png`),
     _bg = await Picto.getCanvas(`${paths.CDN}/backdrops/${userData.modules.bgID}.png`),
-    _flair = await Picto.getCanvas(`${paths.CDN}/flairs/${userData.modules.flairTop || "default"}.png`),
+    _flair = await Picto.getCanvas(`${paths.CDN}/flairs/${userData.modules.flairTop || "default"}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) ),
     _mask = await Picto.getCanvas(`${paths.BUILD}/profile/bgmask.png`),
     _roundel = await Picto.XChart(120, percent, userData.modules.favcolor, undefined, level, $t("website.level", P)),
     _hexavat = await Picto.makeHex(210, TARGET.avatarURL),

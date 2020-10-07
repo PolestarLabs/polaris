@@ -1,9 +1,16 @@
-const { Member } = require("eris");
 const moment = require("moment");
+
+function XPercent(X, Lv, f = 0.0427899) {
+  const toNEXT = Math.trunc(((Lv + 1) / f) ** 2);
+  const toTHIS = Math.trunc((Lv / f) ** 2);
+  const PACE = toNEXT - toTHIS;
+  const PROGRESS = X - toTHIS;
+  const percent = PROGRESS / PACE;
+  return percent;
+}
 
 class UserProfileModel {
   constructor(userDBData, userDiscordData) {
-
     this.ID = userDiscordData.id;
     this.server = userDiscordData.guild?.id;
     this.localName = userDiscordData.guild ? userDiscordData.nick || userDiscordData.user.username : userDiscordData.tag;
@@ -34,9 +41,9 @@ class UserProfileModel {
     this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
 
     if (this.medals.length > 0) {
-      const valid_medals = this.medals.filter((mdl) => mdl && mdl != "0").map((v) => this.medals.indexOf(v));
-      const arrange = valid_medals.length <= 4 ? valid_medals.length : 9;
-      this.medalsArrangement = { style: arrange, valid: valid_medals };
+      const validMedals = this.medals.filter((mdl) => mdl && mdl !== "0").map((v) => this.medals.indexOf(v));
+      const arrange = validMedals.length <= 4 ? validMedals.length : 9;
+      this.medalsArrangement = { style: arrange, valid: validMedals };
     }
   }
 
@@ -46,51 +53,46 @@ class UserProfileModel {
   }
 
   get localData() {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
       if (!this.server) {
         this.thx = "---";
         this.localRank = "---";
         return resolve(false);
       }
 
-      const svRankData = await DB.localranks.get({ user: this.ID, server: this.server });
-      this.thx = svRankData?.thx || 0;
-      this.localRank = await DB.localranks
-        .find({ server: this.server, exp: { $gt: svRankData?.exp || 0 } }, {}).countDocuments().exec();
-      return resolve(true);
+      return DB.localranks.get({ user: this.ID, server: this.server }).then(async (svRankData) => {
+        this.thx = svRankData?.thx || 0;
+        this.localRank = await DB.localranks
+          .find({ server: this.server, exp: { $gt: svRankData?.exp || 0 } }, {}).countDocuments().exec();
+        return resolve(true);
+      });
     });
   }
 
   get wifeData() {
-    return new Promise(async (resolve) => {
+    return new Promise((resolve) => {
       if (this.wife) return resolve(this.wife);
       if (!this.marriage) return resolve(null);
-      const marriage = await DB.relationships.findOne({ type: "marriage", _id: this.marriage });
-      if (!marriage) return resolve(null);
-      const wifeID = marriage.users.find((usr) => usr != this.ID);
-      if (!wifeID) return resolve(null);
-      const discordWife = PLX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || { username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
+      return DB.relationships.findOne({ type: "marriage", _id: this.marriage }).then(async (marriage) => {
+        if (!marriage) return resolve(null);
+        const wifeID = marriage.users.find((usr) => usr !== this.ID);
+        if (!wifeID) return resolve(null);
+        const discordWife = PLX.users.get(wifeID)
+          || (await DB.users.get(wifeID)).meta
+          || { username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
 
-      this.wife = {
-        ring: marriage.ring,
-        initiative: marriage.initiative === this.ID,
-        lovepoints: marriage.lovepoints || 0,
-        since: moment.utc(marriage.since).fromNow(true),
-        wifeName: discordWife.username,
-        wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
-      };
-      resolve(this.wife);
+        this.wife = {
+          ring: marriage.ring,
+          initiative: marriage.initiative === this.ID,
+          lovepoints: marriage.lovepoints || 0,
+          since: moment.utc(marriage.since).fromNow(true),
+          wifeName: discordWife.username,
+          wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
+        };
+        return resolve(this.wife);
+      });
     });
   }
-}
-
-function XPercent(X, Lv, f = 0.0427899) {
-  const toNEXT = Math.trunc(Math.pow((Lv + 1) / f, 2));
-  const toTHIS = Math.trunc(Math.pow(Lv / f, 2));
-  const PACE = toNEXT - toTHIS;
-  const PROGRESS = X - toTHIS;
-  const percent = PROGRESS / PACE;
-  return percent;
 }
 
 module.exports = UserProfileModel;

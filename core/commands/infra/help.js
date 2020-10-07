@@ -8,7 +8,7 @@ const init = async (msg) => {
   };
 
   const helpkey = $t("helpkey", P);
-  if (msg.content.split(/ +/)[1] == helpkey || msg.content.split(/ +/)[1] == "?" || msg.content.split(/ +/)[1] == "help") {
+  if (msg.content.split(/ +/)[1] === helpkey || msg.content.split(/ +/)[1] === "?" || msg.content.split(/ +/)[1] === "help") {
     const embed = new Embed();
     embed.setDescription($t("usage.askingHelpForHelp", P));
     return msg.channel.send({ embed });
@@ -33,9 +33,9 @@ const init = async (msg) => {
   const inviteme = $t("help.inviteme", P);
   const useful = $t("help.useful", P);
 
-  const commlink = `${paths.CDN}/commands`;
-  const suplink = `${paths.CDN}/support`;
-  const invitelink = `${paths.CDN}/invite`;
+  const commlink = `${paths.DASH}/commands`;
+  const suplink = `${paths.DASH}/support`;
+  const invitelink = `${paths.DASH}/invite`;
 
   const hEmbed = new Embed();
 
@@ -103,7 +103,7 @@ ${$t("interface.help.greetings", P)}
       .title($t("interface.help.avail_cmd", P))
       .description($t("interface.help.avail_cmdlist", P));
 
-    commands.map((cmd) => cmd.group).filter((itm, pos, me) => me.indexOf(itm) == pos).forEach((cmdGroup) => {
+    commands.map((cmd) => cmd.group).filter((itm, pos, me) => me.indexOf(itm) === pos).forEach((cmdGroup) => {
       let gComs = "";
       commands.filter((cmd) => cmd.group === cmdGroup).forEach((cmd) => {
         if (cmd.pub && !cmd.group.startsWith("_")) {

@@ -1,5 +1,5 @@
 // STARTUP FLAIR
-process.stdout.write("\x1Bc");
+//process.stdout.write("\x1Bc");
 console.log(require("./asciiPollux.js").ascii());
 // ===========================================
 
@@ -52,7 +52,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   defaultImageSize: 512,
   restMode: true,
   defaultImageFormat: "png",
-  intents: 5639,
+  intents: 5767,
   disableEvents: {
     TYPING_START: true,
     TYPING_STOP: true,
@@ -64,6 +64,8 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
   prefix: ["===", "p!+", "@mention"],
 });
+
+global.MARKET_TOKEN = cfg["pollux-api-token"]
 
 PLX.engine = Eris;
 PLX.beta = process.env.NODE_ENV !== "production";

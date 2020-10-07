@@ -1,3 +1,4 @@
+/*
 const kickIn = [
   "I see that ",
   "Seems like ",
@@ -18,7 +19,7 @@ const intermezzo = [
   ", yet ",
   ", then ",
 ];
-const connect_2 = [
+const connect2 = [
   "now seems to ",
   "now ",
   "decided to ",
@@ -93,7 +94,7 @@ const S = [
   connect,
   " {{start}} ",
   intermezzo,
-  connect_2,
+  connect2,
   " {{mid}} ",
   intermission,
   // ligature,
@@ -103,10 +104,11 @@ const S = [
   // happen,
   last,
 ];
+*/
 
 const TAROT = require("../../archetypes/Tarot");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const Tarot = new TAROT(msg, Number(args[0] || 3));
 
   // console.log(Tarot);
@@ -115,9 +117,9 @@ const init = async function (msg, args) {
 
   console.log(img);
 
-  msg.channel.send("", { file: img.toBuffer(), name: "tarot.png" });
+  return msg.channel.send("", { file: img.toBuffer(), name: "tarot.png" });
 
-  return;
+  /*
   try {
     let finalString = "";
 
@@ -130,12 +132,12 @@ const init = async function (msg, args) {
     }
 
     const startup = `
-    Spread:
-    **${ARCANA[arcana[0]].Arcana}**:\`${position[0]}\`
-    **${ARCANA[arcana[1]].Arcana}**:\`${position[1]}\`
-    **${ARCANA[arcana[2]].Arcana}**:\`${position[2]}\`
-    --
-    `;
+  Spread:
+  **${ARCANA[arcana[0]].Arcana}**:\`${position[0]}\`
+  **${ARCANA[arcana[1]].Arcana}**:\`${position[1]}\`
+  **${ARCANA[arcana[2]].Arcana}**:\`${position[2]}\`
+  --
+  `;
     pc = "";
     finalString = finalString
       .replace("{{start}}", pc + ARCANA[arcana[0]][`${position[0]}.START`] + pc)
@@ -157,23 +159,24 @@ const init = async function (msg, args) {
     embed.setDescription(pc2 + finalString + pc2);
     embed.setTitle("3 Card Spread Fortune");
     embed.setFooter("Current Deck: Persona 3", "https://lh3.googleusercontent.com/-9YpgeohI1lo/AAAAAAAAAAI/AAAAAAAACFA/u3wB6SrW4Vo/s640/photo.jpg");
-    embed.setColor("#951d2f");
+    embed.color = 0x951d2f;
 
     message.channel.send({
       embed,
     }).catch((e) => message.channel.send(startup + finalString));
 
     /*
-        message.channel.send(startup+finalString,{
-                          files: [{
-                              attachment: await canvas.toBuffer(),
-                              name: "tarot.png"
-                          }]
-                      })
-        */
+      message.channel.send(startup+finalString,{
+                        files: [{
+                            attachment: await canvas.toBuffer(),
+                            name: "tarot.png"
+                        }]
+                    })
+      * /
   } catch (e) {
     console.error(e);
   }
+  */
 };
 
 module.exports = {

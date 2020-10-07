@@ -3,11 +3,11 @@
 // const $t = locale.getT();
 const ECO = require(`${appRoot}/core/archetypes/Economy`);
 // const DB = require(appRoot+"/core/database/db_ops");
-const Picto = require(`${appRoot}/core/utilities/Picto`);
+// const Picto = require(`${appRoot}/core/utilities/Picto`);
 const Timed = require(`${appRoot}/core/structures/TimedUsage`);
 const Premium = require(`${appRoot}/core/utilities/Premium`);
 
-const init = function (message) {
+const init = (message) => {
   const moment = require("moment");
   moment.locale(message.lang[0] || "en");
 
@@ -21,11 +21,11 @@ const init = function (message) {
     expirestr: $t("daily.expirestr", P),
   };
 
-  if (message.args[0] == "info") {
+  if (message.args[0] === "info") {
     message.args[0] = "status";
     message.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
   }
-  const after = async function (msg, Dly) {
+  const after = async (msg, Dly) => {
     ddy = await Dly.userData(msg.author);
 
     const emblem = await Premium.getTier(Author);
@@ -38,8 +38,8 @@ const init = function (message) {
     }
 
     const Canvas = require("canvas");
-    const canvas = new Canvas.createCanvas(250, 250);
-    const ctx = canvas.getContext("2d");
+    const canvas = Canvas.createCanvas(250, 250);
+    canvas.getContext("2d");
 
     // backwards compat
     DB.users.set(Author.id, { $set: { "modules.daily": now } });
@@ -61,15 +61,15 @@ const init = function (message) {
 
       let gemstone = "";
 
-      if ((hardStreak % 10) == 0) {
+      if ((hardStreak % 10) === 0) {
         const dailyStreak = $t("$.dailyStreak", P).replace("500", "**500**");
         embed.description += `\n${_emoji("ticket") + dailyStreak}`;
 
         await ECO.receive(Author.id, 500, "daily_10streak", "RBN");
       }
 
-      if ((hardStreak % 3) == 0) {
-        if ((hardStreak % 10) != 0) gemstone = "j";
+      if ((hardStreak % 3) === 0) {
+        if ((hardStreak % 10) !== 0) gemstone = "j";
 
         const dailyStreak = $t("interface.daily.dailyStreakJades", P);
         embed.description += `\n${_emoji("jade") + dailyStreak}`;
@@ -77,7 +77,7 @@ const init = function (message) {
         await ECO.receive(Author.id, 1000, "daily_3streak", "JDE", "+");
       }
 
-      if ((hardStreak % 200) == 0) {
+      if ((hardStreak % 200) === 0) {
         gemstone = "S";
 
         const dailyStreak = $t("interface.daily.dailyStreakSapphs", P);
@@ -86,7 +86,7 @@ const init = function (message) {
         await ECO.receive(Author.id, 1, "daily_250streak", "SPH");
       }
 
-      if ((hardStreak % 365) == 0) {
+      if ((hardStreak % 365) === 0) {
         gemstone = "S";
 
         const dailyStreak = $t("interface.daily.dailyStreakSapphs", P);
@@ -95,9 +95,9 @@ const init = function (message) {
         await ECO.receive(Author.id, 1, "daily_365streak", "SPH", "+");
       }
 
-      embed.description += `${"\n\n" + "*Streak: **"}${hardStreak || 0}***.`;
+      embed.description += `*Streak: **${hardStreak || 0}***.`;
 
-      embed.thumbnail(`${paths.CDN}/build/daily/${gemstone == "S" ? "ringsaph" : gemstone + (hardStreak % 10)}.gif`);
+      embed.thumbnail(`${paths.CDN}/build/daily/${gemstone === "S" ? "ringsaph" : gemstone + (hardStreak % 10)}.gif`);
 
       userachinv = userData.modules.achievements;
       if (hardStreak >= 10 && !userachinv.includes("10daily")) {
@@ -123,23 +123,23 @@ const init = function (message) {
       }
 
       embed.footer(Author.tag, Author.displayAvatarURL);
-      message.channel.send({ embed }).catch((e) => null);
+      message.channel.send({ embed }).catch(() => null);
     });
   };
 
-  const reject = function (message, Daily, r) {
+  const reject = (msg, Daily, r) => {
     P.remaining = moment.utc(r).fromNow(true);
     const dailyNope = $t("$.dailyNope", P);
-    message.reply(_emoji("nope") + dailyNope);
+    msg.reply(_emoji("nope") + dailyNope);
     const embed = new Embed();
     embed.setColor("#e35555");
     embed.description(`
     ${_emoji("time")} **${v.last}** ${moment.utc(Daily.userDataStatic).fromNow()}
     ${_emoji("expired")} **${v.expirestr}** ${moment.utc(Daily.userDataStatic + Daily.expiration).fromNow()}
         `);
-    return message.channel.send({ embed });
+    return msg.channel.send({ embed });
   };
-  const info = async function (msg, Daily) {
+  const info = async (msg, Daily) => {
     const userDaily = await Daily.userData(msg.author);
     const dailyAvailable = await Daily.dailyAvailable(msg.author);
     const streakGoes = await Daily.keepStreak(msg.author);
@@ -147,12 +147,12 @@ const init = function (message) {
 
     const embe2 = new Embed();
     embe2.setColor("#e35555");
-    embe2.description(`
-    ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily.last).fromNow()}
-    ${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily.last).add(20, "hours").fromNow()}
-    ${_emoji("expired")} ${streakGoes ? _emoji("online") : _emoji("dnd")} **${v.expirestr}** ${streakGoes ? `${moment.utc(userDaily.last + Daily.expiration).fromNow()} !` : "I have bad news for you..."}
-    ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`(Hard) | \`${streak % 10}x\`(Soft)
-      `);
+    embe2.description(`${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily.last).fromNow()}`
+      + `${_emoji("future")} ${dailyAvailable
+        ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily.last).add(20, "hours").fromNow()}`
+      + `${_emoji("expired")} ${streakGoes ? _emoji("online") : _emoji("dnd")} **${v.expirestr}**`
+      + `${streakGoes ? `${moment.utc(userDaily.last + Daily.expiration).fromNow()} !` : "I have bad news for you..."}
+    ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`(Hard) | \`${streak % 10}x\`(Soft)`);
     return message.channel.send({ embed: embe2 });
   };
 

@@ -5,9 +5,11 @@ const Vision = require("@google-cloud/vision/");
 const cmd = "read";
 const init = async function (message, cmdPiece = false) {
   return new Promise(async (resolve) => {
-    i2b(message.args[0], async (err, img) => {
-      if (err) {
-        const nwurl = await PLX.getChannelImg(message);
+    let url = "https://proxy.pollux.workers.dev/?pollux_url="+encodeURIComponent(message.args[0]);
+    i2b(url, async (err, img) => {
+      if (err) { 
+        let nwurl = await PLX.getChannelImg(message);
+        if(nwurl.includes("cdn.discordapp")) nwurl = decodeURIComponent(nwurl.replace('https://proxy.pollux.workers.dev/?pollux_url=',''));
         if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
         return i2b(nwurl, (err, b64) => resolve(vere(b64.base64, message, cmdPiece)));
       }
@@ -55,7 +57,7 @@ async function vere(base64, message, cmdPiece) {
       if (reas.length === 0) return;
       const Rea = reas[0];
       const LF = TranslateBlob.LANGFLAGS;
-      const rLang = Object.keys(LF).find((x) => LF[x] == Rea.emoji.name);
+      const rLang = Object.keys(LF).find((x) => LF[x] === Rea.emoji.name);
       const translated = await TranslateBlob.translate(detections, lang, rLang, true);
       embed.description = `\`\`\`${translated}\`\`\`(translated to ${TranslateBlob.LANGNAMES[rLang]})`;
       mes.edit({ embed });

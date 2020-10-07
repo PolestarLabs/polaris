@@ -76,7 +76,7 @@ const init = async function (msg) {
     const pi = Math.PI;
     const startR = pi * 3 / 2; let
       endR = pToR(pcent) * pi;
-    if (pcent == "1") { endR = pi * 7 / 2; }
+    if (pcent === "1") { endR = pi * 7 / 2; }
     const rx = size / 2; const
       ry = rx;
     const canvas_proto = Picto.new(size, size);
@@ -182,5 +182,5 @@ const init = async function (msg) {
 };
 
 module.exports = {
-  pub: true, cmd, perms: 3, init, cat: "misc", aliases: ["lv"],
+  pub: true, cmd, perms: 3, init, cat: "misc", aliases: ["lv","lvl"],
 };

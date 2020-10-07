@@ -7,19 +7,19 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
   } = await Template("medal", args, userData);
 
   const hasIt = userData.modules.medalInventory.includes(selectedItem.icon);
-  const positive = async function positiveForBGs(cancellation) {
+  const positive = async (cancellation) => {
     if (!hasIt && affordsIt) {
       userData.removeItem(payCoin, 1);
     }
     if (!affordsIt) return cancellation();
-    await DB.users.set({ id: userData.id }, {
+    return DB.users.set({ id: userData.id }, {
       $addToSet: { "modules.medalInventory": selectedItem.icon },
-    });
+    }).then(() => {});
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);
   embed.description = `
-**${selectedItem.name}**  \`${selectedItem.icon}\` **[\`INFO\`](${paths.CDN}/medalshop "Medal Shop" )**
+**${selectedItem.name}**  \`${selectedItem.icon}\` **[\`INFO\`](${paths.DASH}/medalshop "Medal Shop" )**
 `;
 
   SynthPrompt(hasIt, embed, obtainable, affordsIt, P);

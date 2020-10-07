@@ -22,7 +22,7 @@ class Blackjack {
 
   hit(hand, powerups) {
     if (this.deck.length === 0) {
-      if (decks.get(this.guildID)?.length || 0 !== 0) {
+      if ((decks.get(this.guildID)?.length || 0) !== 0) {
         this.deck = decks.get(this.guildID);
       } else {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
@@ -74,11 +74,11 @@ class Blackjack {
     let aces = 0;
     hand.forEach((card) => {
       value += Blackjack._cardValue(card);
-      if (Blackjack._cardValue(card) === 11) aces++;
+      if (Blackjack._cardValue(card) === 11) aces += 1;
     });
     while (value > 21 && aces > 0) {
       value -= 10;
-      aces--;
+      aces -= 1;
     }
     if (value === 21 && hand.length === 2) return false;
     return aces !== 0;
@@ -92,11 +92,11 @@ class Blackjack {
     }
     hand.forEach((card) => {
       value += Blackjack._cardValue(card);
-      if (Blackjack._cardValue(card) === 11) aces++;
+      if (Blackjack._cardValue(card) === 11) aces += 1;
     });
     while (value > 21 && aces > 0) {
       value -= 10;
-      aces--;
+      aces -= 1;
     }
     if (value === 21 && hand.length === 2) return "Blackjack";
     return value;

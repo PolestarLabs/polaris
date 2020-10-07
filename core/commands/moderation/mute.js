@@ -58,7 +58,8 @@ const init = async function (msg) {
   let timeTx; let time;
 
   if (msg.args[2] != undefined && !isNaN(msg.args[2]) && Number(msg.args[2]) != 0) {
-    timeTx = msg.args[2] + (msg.args[2] == 1 ? " minute." : " minutes.");
+    timeTx = msg.args[2] + (msg.args[2] === 1 ? " minute." : " minutes.");
+    time = Number(msg.args[2])
   } else {
     time = 24 * 60;
     timeTx = "undetermined time.";
@@ -66,20 +67,22 @@ const init = async function (msg) {
 
   if (time > 60) {
     const unit = Math.floor(time / 60);
-    timeTx = unit + (unit == 1 ? " hour" : " hours");
+    timeTx = unit + (unit === 1 ? " hour" : " hours");
   }
   if (time > 60 * 24) {
     const unit = Math.floor(time / (60 * 24));
-    timeTx = unit + (unit == 1 ? " day" : " days");
+    timeTx = unit + (unit === 1 ? " day" : " days");
   }
   if (time > 60 * 24 * 7) {
     const unit = Math.floor(time / (60 * 24 * 7));
-    timeTx = unit + (unit == 1 ? " week" : " weeks");
+    timeTx = unit + (unit === 1 ? " week" : " weeks");
   }
   if (time > 60 * 24 * 30) {
     const unit = Math.floor(time / (60 * 24 * 30));
-    timeTx = unit + (unit == 1 ? " month" : " months");
+    timeTx = unit + (unit === 1 ? " month" : " months");
   }
+
+  console.log({time})
 
   const MUTED = "MUTED";
   const wasMUTED = "was Muted";
@@ -96,7 +99,7 @@ const init = async function (msg) {
   const muteRole = ServerDATA.modules.MUTEROLE;
   if (
     !muteRole
-      || (!Server.roles.find((x) => x.id == muteRole)
+      || (!Server.roles.find((x) => x.id === muteRole)
         && !Server.roles.find((x) => x.name === "POLLUX-MUTE"))
   ) {
     Server.createRole(
@@ -112,21 +115,21 @@ const init = async function (msg) {
           "No Mute Role Setup, Creating **POLLUX-MUTE**...",
         );
         DB.servers.set(Server.id, { $set: { "modules.MUTEROLE": role.id } });
-        setupMute(role);
+        setupMute(role,time);
         commitMute(role.id, true);
       })
       .catch(console.error);
   } else if (Server.roles.find((x) => x.name === "POLLUX-MUTE")) {
     const r = Server.roles.find((x) => x.name === "POLLUX-MUTE");
-    setupMute(r);
+    setupMute(r,time);
     commitMute(r);
-  } else if (Server.roles.find((x) => x.id == muteRole)) {
-    const r = Server.roles.find((x) => x.id == muteRole);
-    setupMute(r);
+  } else if (Server.roles.find((x) => x.id === muteRole)) {
+    const r = Server.roles.find((x) => x.id === muteRole);
+    setupMute(r,time);
     commitMute(muteRole);
   }
 
-  async function setupMute(role) {
+  async function setupMute(role,time) {
     Target.addRole(
       role.id,
       `MUTED BY ${msg.author.tag}  (${msg.author.id})`,
@@ -139,7 +142,7 @@ const init = async function (msg) {
     );
   }
   async function roleout(tm, role) {
-    if (tm == undefined) return false;
+    if (tm === undefined) return false;
     return setTimeout((f) => {
       Target.removeRole(role.id, "Mute Expired");
       DB.mutes.expire({ S: Target.guild.id, U: Target.id });
@@ -217,6 +220,7 @@ const init = async function (msg) {
     const now = Date.now();
     const time = minutes * 60000;
     const freedom = now + time;
+    console.log({now,minutes,freedom})
     DB.mutes.add({ S: Mem.guild.id, U: Mem.id, E: freedom });
   }
 

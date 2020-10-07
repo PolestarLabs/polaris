@@ -5,6 +5,7 @@ const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
 const init = async function (msg, args, userID) {
+  
   if (userID && args[10]?.id != userID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
@@ -37,6 +38,7 @@ const init = async function (msg, args, userID) {
 const open = async function (msg, args, userID) {
   args = args.map((a) => (typeof a === "string" ? a.toUpperCase() : a));
 
+
   INVOKERS.delete(userID || msg.author.id);
   INV_STATUS.delete(userID || msg.author.id);
 
@@ -44,7 +46,7 @@ const open = async function (msg, args, userID) {
 
   const userInventory = new INVENTORY(userID || msg.author.id, "box");
   const Inventory = await userInventory.listItems();
-  const selectedBox = Inventory.find((bx) => bx.rarity == args[0]);
+  const selectedBox = Inventory.find((bx) => bx.rarity === args[0]);
 
   if (!selectedBox) return $t("responses.inventory.noSuchBox", { lngs: msg.lang });
   this.hooks = GENERATOR.hooks;
@@ -55,7 +57,7 @@ const reactionOption = (rar) => ({
   emoji: _emoji(rar).reaction,
   type: "cancel",
   response: (msg, args, uid) => open(args[0], [rar, args[1]], uid),
-  filter: (msg, emj, uid) => INVOKERS.get(uid) == msg.id && INV_STATUS.get(uid).includes(emj.substr(0, 2).replace("_", "")) && !LOOTING.get(uid),
+  filter: (msg, emj, uid) =>  INVOKERS.get(uid) === msg.id && INV_STATUS.get(uid).includes( rar ) //&& !LOOTING.get(uid)
 });
 
 module.exports = {

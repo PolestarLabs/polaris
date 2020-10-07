@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const embed = {};
   embed.description = `
      **\\ℹ  -  Available options for \`${msg.prefix}open\`:**

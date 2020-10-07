@@ -133,7 +133,7 @@ init = async (msg) => {
   };
 
   // PROFILE FRAME
-  if (msg.content.split(/ +/).slice(1)[0] == "frame") {
+  if (msg.content.split(/ +/).slice(1)[0] === "frame") {
     const ag = msg.content.split(/ +/).slice(1)[1];
     const dDATA = await DB.users.get(msg.author.id);
     const frame = dDATA.switches?.profileFrame;
@@ -154,9 +154,9 @@ init = async (msg) => {
       }).then((x) => null); // msg.addReaction(':switchoff:343511248085843968'));
     }
 
-    if (ag == "on") {
+    if (ag === "on") {
       switchon();
-    } else if (ag == "off") {
+    } else if (ag === "off") {
       switchoff();
     } else {
       frame ? switchoff() : switchon();
@@ -170,6 +170,7 @@ init = async (msg) => {
   let Target_Database = await DB.users.get({ id: Target.id });
 
   if (Target_Database) Target_Database.type = "udata";
+  const PFLD = Target_Database.switches?.profiled || false;
  
   // Strictly accepts UDBData and DiscordUser/DiscordMember
   const USERPROFILE = new UserProfileModel(Target_Database, Target); 
@@ -190,7 +191,7 @@ init = async (msg) => {
     img.defaultAvi   = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
     img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex"}.png`);
     img.background   = Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
-    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`);
+    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) );
     img.sticker      = USERPROFILE.sticker && Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
     img.flag         = USERPROFILE.countryFlag && Picto.getCanvas(paths.CDN + "/build/flags/"          + USERPROFILE.countryFlag  + ".png");
     img.aviFrame     = USERPROFILE.profileFrame && Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
@@ -320,10 +321,10 @@ init = async (msg) => {
 
         const WIFE = USERPROFILE.wife;
         let ringTierColor = "white";
-        if (WIFE.ring == "stardust") ringTierColor = "#2d6fe8";
-        if (WIFE.ring == "sapphire") ringTierColor = "#DaA905";
-        if (WIFE.ring == "rubine") ringTierColor = "#DaA905";
-        if (WIFE.ring == "jade") ringTierColor = "#7888a7";
+        if (WIFE.ring === "stardust") ringTierColor = "#2d6fe8";
+        if (WIFE.ring === "sapphire") ringTierColor = "#DaA905";
+        if (WIFE.ring === "rubine") ringTierColor = "#DaA905";
+        if (WIFE.ring === "jade") ringTierColor = "#7888a7";
 
         ctx.shadowBlur = 25;
         ctx.shadowColor = "rgba(30,30,30,.5)";
@@ -426,19 +427,19 @@ init = async (msg) => {
       valid_medals = USERPROFILE.medalsArrangement.style;
       valid = USERPROFILE.medalsArrangement.valid;
 
-      if (valid_medals == 1) {
+      if (valid_medals === 1) {
         const x = XYZ.medals.X + (150 / 2 - 50);
         const y = XYZ.medals.Y + (150 / 2 - 50);
 
         img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x, y, 150, 150));
-      } else if (valid_medals == 2) {
+      } else if (valid_medals === 2) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y + 100;
         await Promise.all([
           img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
           img.medals[valid[1]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
         ]);
-      } else if (valid_medals == 3) {
+      } else if (valid_medals === 3) {
         const x = XYZ.medals.X;
         const x1 = XYZ.medals.X + (200 / 2 - 50);
         const y = XYZ.medals.Y;
@@ -447,7 +448,7 @@ init = async (msg) => {
           img.medals[valid[1]].canvas.then((IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
           img.medals[valid[2]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
         ]);
-      } else if (valid_medals == 4) {
+      } else if (valid_medals === 4) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y;
         await Promise.all([
@@ -522,7 +523,7 @@ init = async (msg) => {
               ctx.drawImage(tierframe, 160 + 268, 565);
             }
 
-            if (bottomTag == "translator" && Target_Database.switches.translator) {
+            if (bottomTag === "translator" && Target_Database.switches.translator) {
               const flag = await Picto.getCanvas(`${paths.BUILD}flags/${Target_Database.switches.translator}.png`);
               ctx.drawImage(flag, 160 + 313, 573, 32, 21);
             }

@@ -5,7 +5,7 @@ const init = async function (msg) {
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   const embed = new Embed();
-  embed.setDescription(`:love_letter: ${$t("CMD.inviteText", { lngs: msg.lang })}(${paths.CDN}/invite) !`);
+  embed.setDescription(`:love_letter: ${$t("CMD.inviteText", { lngs: msg.lang })}(${paths.DASH}/invite) !`);
   embed.setColor("#ea7d7d");
 
   msg.channel.send({ embed });

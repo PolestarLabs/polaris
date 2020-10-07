@@ -7,20 +7,20 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
   } = await Template("background", args, userData);
 
   const hasIt = userData.modules.bgInventory.includes(selectedItem.code);
-  const positive = async function positiveForBGs(cancellation) {
+  const positive = async (cancellation) => {
     if (!hasIt && affordsIt) {
       userData.removeItem(payCoin, 1);
     }
     if (!affordsIt) return cancellation();
-    await DB.users.set({ id: userData.id }, {
+    return DB.users.set({ id: userData.id }, {
       $set: { "modules.bgID": selectedItem.code },
       $addToSet: { "modules.bgInventory": selectedItem.code },
-    });
+    }).then(() => {});
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);
   embed.description = `
-   **${selectedItem.name}**  \`${selectedItem.code}\` **[\`INFO\`](${paths.CDN}/bgshop "Background Shop" )**
+   **${selectedItem.name}**  \`${selectedItem.code}\` **[\`INFO\`](${paths.DASH}/bgshop "Background Shop" )**
   `;
 
   SynthPrompt(hasIt, embed, obtainable, affordsIt, P);

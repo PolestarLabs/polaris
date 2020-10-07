@@ -55,8 +55,8 @@ const init = async function (message) {
   const dicesRolled = rollEq.match(DICE_REGEX);
 
   if (!dicesRolled) return message.channel.send($t("games.dice.noDiceRolled", P));
-  const SINGLEROLL = (dicesRolled.length == 1 && !rollEq.match(MTH));
-  const SIMPLEROLL = (dicesRolled.length == 1 && rollEq.match(MTH) != null);
+  const SINGLEROLL = (dicesRolled.length === 1 && !rollEq.match(MTH));
+  const SIMPLEROLL = (dicesRolled.length === 1 && rollEq.match(MTH) != null);
 
   if (dicesRolled.length > 5) return message.reply($t("games.dice.onlyRoll5", P));
   const MAX_DISP = Math.floor(dicesRolled.length / 25) || 25;
@@ -98,7 +98,7 @@ const init = async function (message) {
     P.val = rollTotal;
     const andGot = $t("games.dice.andGot", P);
 
-    const commentary = rollTotal == diceFaces * diceAmount ? "⭐" : (rollTotal == 1 || rollTotal == diceAmount) ? "💀" : "";
+    const commentary = rollTotal === diceFaces * diceAmount ? "⭐" : (rollTotal === 1 || rollTotal === diceAmount) ? "💀" : "";
     const dicepost = andGot + commentary;
 
     diceArray.push({

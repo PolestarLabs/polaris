@@ -26,7 +26,7 @@ const topCommend = async (m) => {
       (isUsr(x) ? "**" : "")
                 + x.name.slice(0, 16) + (x.name.length > 15 ? "..." : "")
                 + (isUsr(x) ? "**" : "")
-    }](${paths.CDN}/p/${x.id})*`,
+    }](${paths.DASH}/p/${x.id})*`,
   );
 
   const listCommenders = commendedSort.slice(0, 3).map(
@@ -34,7 +34,7 @@ const topCommend = async (m) => {
       (isUsr(x) ? "**" : "")
                 + x.name.slice(0, 16) + (x.name.length > 15 ? "..." : "")
                 + (isUsr(x) ? "**" : "")
-    }](${paths.CDN}/p/${x.id})*`,
+    }](${paths.DASH}/p/${x.id})*`,
   );
 
   const listCommend2 = commendSort.slice(3, 10).map(
@@ -42,7 +42,7 @@ const topCommend = async (m) => {
       (isUsr(x) ? "**" : "")
                 + x.name.slice(0, 16) + (x.name.length > 15 ? "..." : "")
                 + (isUsr(x) ? "**" : "")
-    }](${paths.CDN}/p/${x.id})*`,
+    }](${paths.DASH}/p/${x.id})*`,
   );
 
   const listCommenders2 = commendedSort.slice(3, 10).map(
@@ -50,7 +50,7 @@ const topCommend = async (m) => {
       (isUsr(x) ? "**" : "")
                 + x.name.slice(0, 16) + (x.name.length > 15 ? "..." : "")
                 + (isUsr(x) ? "**" : "")
-    }](${paths.CDN}/p/${x.id})*`,
+    }](${paths.DASH}/p/${x.id})*`,
   );
 
   const embed = {

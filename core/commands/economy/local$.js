@@ -4,18 +4,18 @@ const ECO = require("../../archetypes/Economy");
 // const locale = require('../../../utils/i18node');
 // const $t = locale.getT();
 
-const init = async function (msg) {
+const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
 
   msg.author.customCurr = msg.author.customCurr || {};
   msg.author.customCurr[msg.guild.id] = msg.author.customCurr[msg.guild.id] || 0;
 
-  subcommand = msg.args[0];
+  [subcommand] = msg.args;
 
   /* ADM */
   // create
-  if (subcommand == "create") {
+  if (subcommand === "create") {
     msg.channel.send("Choose name");
     let responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
             && msg2.content.length < 16,
@@ -36,18 +36,18 @@ const init = async function (msg) {
       { maxMatches: 1, time: 30e3 });
 
     if (!responses) return msg.reply("timeout");
-    pIcon = responses[0].content.split(" ")[0];
+    [pIcon] = responses[0].content.split(" ");
 
     msg.channel.send("Initial Investment (RBN)");
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !isNaN(parseInt(msg2.content)),
+            && !Number.isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     pInvest = parseInt(responses[0].content) || 0;
 
     msg.channel.send(`Maximum Pool (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !isNaN(parseInt(msg2.content)),
+            && !Number.isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     pPool = parseInt(responses[0].content) || 0;
@@ -132,6 +132,7 @@ const init = async function (msg) {
 
     msg.guild.economy = eco;
   }
+  return null;
 };
 module.exports = {
   init,

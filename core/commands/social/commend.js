@@ -4,19 +4,17 @@ const Timed = require("../../structures/TimedUsage");
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  if (!msg.mentions.length) return msg.channel.send($t("responses.errors.mentionRequired", P));
-  const Target = await PLX.getTarget(msg.args[0], msg.guild, true);
+  let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
   if (!Target) {
-    return msg.reply($t("responses.commend.noPerson", P));
+    Target = msg.author
   }
-  if (msg.author.id === Target.id) return msg.channel.send("no");
 
   const userData = await DB.users.getFull({ id: msg.author.id });
   const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
   const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
   const preafter = async function preafter(M, D) {
-    if (userData.modules.inventory.find((itm) => itm.id == "commendtoken")?.count >= 1) {
+    if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
       if (Target.id === msg.author.id) {
         msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
         return false;
@@ -81,7 +79,8 @@ const init = async function (msg) {
 };
 
 const info = async (msg, args) => {
-  const Target = await PLX.getTarget(msg.args[0], msg.guild) || await PLX.getTarget(msg.args[1], msg.guild, msg.author);
+
+  const Target = await PLX.getTarget(args[0]||msg.author, msg.guild) ;
 
   const [targetData, targetDataC] = await Promise.all([
     (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
@@ -89,7 +88,7 @@ const info = async (msg, args) => {
   ]);
 
   const metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
-  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id == u.id).meta.tag, amt: u.count }));
+  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id).meta.tag, amt: u.count }));
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(
@@ -112,6 +111,7 @@ const info = async (msg, args) => {
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "commend",
   perms: 3,
   cat: "social",

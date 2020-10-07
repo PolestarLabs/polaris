@@ -9,7 +9,7 @@ const init = async function (msg) {
     msg.args[0] === "role" && msg.args[1] && (msg.roleMentions.length > 0 || rolefind(1))
         || msg.args[1] === "role" && msg.args[2] && (msg.roleMentions.length > 0 || rolefind(2))
   ) {
-    trueArgs = msg.guild.members.filter((memb) => memb.roles.some((rl) => msg.roleMentions.includes(rl) || (rolefind(1) || rolefind(2))?.id == rl)).map((m) => m.user.tag);
+    trueArgs = msg.guild.members.filter((memb) => memb.roles.some((rl) => msg.roleMentions.includes(rl) || (rolefind(1) || rolefind(2))?.id === rl)).map((m) => m.user.tag);
   }
 
   if (trueArgs.length < 2) {
@@ -58,7 +58,7 @@ const init = async function (msg) {
   }
 
   async function sendArgs(a, i, m) {
-    if (target == a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
+    if (target === a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
     if (target > a.length) {
       a_len = target - a.length;
       while (a_len--) {
@@ -68,8 +68,8 @@ const init = async function (msg) {
     }
     await wait(0.85);
     if (!m && a.length <= 3) m = await msg.channel.send(phabricate(a));
-    if (a.length == 2) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
-    if (a.length == 3) {
+    if (a.length === 2) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
+    if (a.length === 3) {
       a = shuffle(a);
       a.pop();
       return { msg: m, array: a };
@@ -87,6 +87,7 @@ const init = async function (msg) {
 };
 module.exports = {
   init,
+  argsRequired: true,
   pub: true,
   cmd: "choose",
   perms: 3,

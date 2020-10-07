@@ -1,4 +1,4 @@
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   const TOTAL = Number(args[1]) || 32;
   let ShardID = (Number(args[0] || msg.guild.id) >> 22) % (TOTAL);
   if (ShardID < 0) ShardID = TOTAL + ShardID;

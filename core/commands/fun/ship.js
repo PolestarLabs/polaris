@@ -1,6 +1,6 @@
 const Picto = require("../../utilities/Picto");
 
-const init = async function (msg, args) {
+const init = async function init(msg, args) {
   const Canvas = Picto.new(796, 445);
   const ctx = Canvas.getContext("2d");
 
@@ -49,17 +49,19 @@ const init = async function (msg, args) {
   ctx.shadowOffsetY = 1;
   ctx.shadowBlur = 10;
   ctx.shadowColor = "rgba(30,30,80,.2)";
-  const mainW = Picto.popOutTxt(ctx, rand.toString().padStart(3, " "), 0, 0, "80px 'Corporate Logo Rounded'", "#fff", null, { style: "#f69", line: 20 }, -1).w;
+  const mainW = Picto.popOutTxt(
+    ctx, rand.toString().padStart(3, " "), 0, 0, "80px 'Corporate Logo Rounded'",
+    "#fff", null, { style: "#f69", line: 20 }, -1,
+  ).w;
   ctx.rotate(0.195 - 0.05);
-  Picto.popOutTxt(ctx, "%", mainW - 30, 15, "44px 'Corporate Logo Rounded'", "#fff", null, { style: "#f69", line: 15 }, -1).w;
+  Picto.popOutTxt(ctx, "%", mainW - 30, 15, "44px 'Corporate Logo Rounded'", "#fff", null, { style: "#f69", line: 15 }, -1);
   ctx.rotate(0.05);
   ctx.translate(-300, -80);
-  const response = rand == 69
-    ? "Nice."
-    : rand == 24 && ["pt", "pt-BR"].includes(msg.lang[0] || msg.lang)
-      ? "Mas afinal qual dos dois vem de quatro?"
-      : $t(`responses.ship.quotes.${Math.floor(rand / 10)}.${randomize(0, 1)}`, { lngs: msg.lang });
-  msg.channel.send(response, file(Canvas.toBuffer(), "ship.png"));
+  let response;
+  if (rand === 69) response = "Nice.";
+  else if (rand === 24 && ["pt", "pt-BR"].includes(msg.lang[0] || msg.lang)) response = "Mas afinal qual dos dois vem de quatro?";
+  else response = $t(`responses.ship.quotes.${Math.floor(rand / 10)}.${randomize(0, 1)}`, { lngs: msg.lang });
+  return msg.channel.send(response, file(Canvas.toBuffer(), "ship.png"));
 };
 
 module.exports = {

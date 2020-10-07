@@ -3,8 +3,18 @@ const ReactionMenu = require("../../structures/ReactionMenu");
 
 const init = async function (msg) {
   0;
-
+  
   const LOCATIONS = [
+    {
+      name: "City 0",
+      id: "city0",
+      type: "city",
+      aliases: ["city", "city 0"],
+      emoji: "🏙",
+      rank: 0,
+      image: "https://cdn.discordapp.com/attachments/488142034776096772/689004836985110538/venture_field.gif",
+      //replaces: ["city0"],
+    },
     {
       name: "Desert 1",
       id: "desert1",
@@ -13,16 +23,6 @@ const init = async function (msg) {
       emoji: "🏜️",
       rank: 1,
       image: "https://cdn.discordapp.com/attachments/488142034776096772/689004833100922913/venture_desert.gif",
-
-    },
-    {
-      name: "Mountain 1",
-      id: "mountain1",
-      type: "mountain",
-      aliases: ["mountain 1"],
-      emoji: "🏔",
-      rank: 1,
-      image: "https://cdn.discordapp.com/attachments/488142034776096772/689004826922844176/venture_snow.gif",
 
     },
     {
@@ -35,6 +35,16 @@ const init = async function (msg) {
       image: "https://cdn.discordapp.com/attachments/488142034776096772/689004836985110538/venture_field.gif",
     },
     {
+      name: "Mountain 1",
+      id: "mountain1",
+      type: "mountain",
+      aliases: ["mountain 1"],
+      emoji: "🏔",
+      rank: 1,
+      image: "https://cdn.discordapp.com/attachments/488142034776096772/689004826922844176/venture_snow.gif",
+
+    },
+    {
       name: "Field 2",
       id: "field2",
       type: "field",
@@ -42,7 +52,7 @@ const init = async function (msg) {
       emoji: "🏞️",
       rank: 2,
       image: "https://cdn.discordapp.com/attachments/488142034776096772/689004836985110538/venture_field.gif",
-      replaces: ["field1"],
+      replaces: ["field1","desert1"],
     },
   ].filter((loc, i, a) => !a.map((y) => (y.replaces || []).join(" ")).join(" ").includes(loc.id));
 
@@ -80,6 +90,8 @@ const init = async function (msg) {
     },
   };
 
+  locationEmbed.embed.fields.push({name:"\u200b",value: "*You can also type the ID of the desired location. By default you will be sent to the highest level available.*"});
+
   const tally = await msg.channel.send({ embed: tallyEmbed });
 
   const res_LOC = await Screen(locationEmbed, LOCATIONS.map((x) => x.emoji));
@@ -114,9 +126,9 @@ const init = async function (msg) {
     ${TIME_OPTS.join("\n")}`;
   const res_DUR = await Screen({ embed }, TIMES);
   //-----------------------------------------------
-  const selectedTime = res_DUR.res.index == 0 ? 1
-    : res_DUR.res.index == 1 ? 5
-      : res_DUR.res.index == 2 ? 10 : 0;
+  const selectedTime = res_DUR.res.index === 0 ? 1
+    : res_DUR.res.index === 1 ? 5
+      : res_DUR.res.index === 2 ? 10 : 0;
   //-----------------------------------------------
   delete embed.title;
   embed.description = TIME_OPTS[res_DUR.res.index];
@@ -131,7 +143,7 @@ const init = async function (msg) {
   const userData = await DB.users.get(msg.author.id);
   userData.supplied_rubines = selectedInsurance;
 
-  const Adventure = new Venture(userData, selectedTime, "desert");
+  const Adventure = new Venture(userData, selectedTime, selectedLocation);
   const journeyLog = new Journey(Adventure);
 
   msg.channel.send(`\`\`\`json\n${JSON.stringify({ Adventure })}\`\`\``);
@@ -139,7 +151,7 @@ const init = async function (msg) {
 
   async function Screen(message, choices) {
     const menu = await msg.channel.send(message);
-    let res = await ReactionMenu(menu, msg, choices, { time: 5000 });
+    let res = await ReactionMenu(menu, msg, choices, { time: 35000 });
     if (!res) res = new ReactionMenu.choice(choices[0], 0);
     return { res, menuMessage: menu };
   }
@@ -152,5 +164,5 @@ module.exports = {
   perms: 3,
   cat: "pollux",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["venture", "explore"],
+  aliases: ["venture", "explore","adv"],
 };

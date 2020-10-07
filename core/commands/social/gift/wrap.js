@@ -1,6 +1,6 @@
 const ReactionMenu = require("../../../structures/ReactionMenu");
 
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   let itemType = args[0];
   const itemId = args[1];
   const userData = await DB.users.getFull({ id: msg.author.id });

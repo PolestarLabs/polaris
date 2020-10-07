@@ -38,7 +38,12 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: Canvas.loadImage,
+  getCanvas: function getCanvas(...args){    
+    return  Canvas.loadImage(...args).catch(err=>{
+      console.error(...args)
+      throw new Error(err)
+    })
+  },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
@@ -100,7 +105,13 @@ module.exports = {
   },
 
   avgColor: async function avgColor(link, blockSize = 5) {
-    imgEl = await Canvas.loadImage(link);
+    let imgEl 
+    try{
+      imgEl = await Canvas.loadImage(link);
+    }catch(err){
+      console.error(err);
+      return "#000000"
+    }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 
     const canvas = Canvas.createCanvas(imgEl.width, imgEl.height);

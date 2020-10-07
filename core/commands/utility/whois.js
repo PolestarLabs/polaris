@@ -27,7 +27,7 @@ const EasterEggs = {
   },
 
 };
-const init = async function (msg, args) {
+const init = async (msg, args) => {
   let J; let EasterEgg;
   switch (args[0]?.toLowerCase()) {
     case "bad":
@@ -115,15 +115,15 @@ const init = async function (msg, args) {
   const { web, desktop, mobile } = J ? EasterEgg.s : TARGET.clientStatus || { web: "offline", desktop: "offline", mobile: "offline" };
 
   Picto.setAndDraw(ctx,
-    Picto.tag(ctx, mobile, "600 18pt \"JMH Typewriter\"", mobile == "offline" ? "#322" : mobile == "online" ? "#151" : mobile == "dnd" ? "#511" : "#551"),
+    Picto.tag(ctx, mobile, "600 18pt \"JMH Typewriter\"", mobile === "offline" ? "#322" : mobile === "online" ? "#151" : mobile === "dnd" ? "#511" : "#551"),
     606, 438, 300, "center");
 
   Picto.setAndDraw(ctx,
-    Picto.tag(ctx, desktop, "600 18pt \"JMH Typewriter\"", desktop == "offline" ? "#322" : desktop == "online" ? "#151" : desktop == "dnd" ? "#511" : "#551"),
+    Picto.tag(ctx, desktop, "600 18pt \"JMH Typewriter\"", desktop === "offline" ? "#322" : desktop === "online" ? "#151" : desktop === "dnd" ? "#511" : "#551"),
     606, 478, 300, "center");
 
   Picto.setAndDraw(ctx,
-    Picto.tag(ctx, web, "600 18pt \"JMH Typewriter\"", web == "offline" ? "#322" : web == "online" ? "#151" : web == "dnd" ? "#511" : "#551"),
+    Picto.tag(ctx, web, "600 18pt \"JMH Typewriter\"", web === "offline" ? "#322" : web === "online" ? "#151" : web === "dnd" ? "#511" : "#551"),
     606, 516, 300, "center");
 
   Picto.setAndDraw(ctx,
@@ -156,7 +156,7 @@ module.exports = {
         if (msg.embeds.length > 0) return { content: "", embed: null };
         return {
           embed: {
-            author: { icon_url: TARGET.avatarURL, name: (TARGET.user || TARGET).tag, url: `${paths.CDN}/profile/${TARGET.id}` },
+            author: { icon_url: TARGET.avatarURL, name: (TARGET.user || TARGET).tag, url: `${paths.DASH}/profile/${TARGET.id}` },
             fields: [
               { name: "Roles", value: (TARGET.roles || []).map((x) => `<@&${x}>`).join() || "N/A" },
               { name: "Pollux Blacklisted?", value: PLX.blacklistedUsers.includes(TARGET.id) ? "Yes" : "No", inline: !0 },

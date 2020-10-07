@@ -19,16 +19,16 @@ const init = async function (msg) {
 
   if (purgeFilter.length < 5 && !isNaN(parseInt(purgeFilter, 10))) return `It looks like you meant to just clear messages. Use \`${msg.prefix}clear ${purgeFilter}\` instead.`;
 
-  if (purgeFilter == "bots") {
+  if (purgeFilter === "bots") {
     filter = (mes) => mes.author.bot;
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages from Bots`;
-  } else if (purgeFilter == "content") {
+  } else if (purgeFilter === "content") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 250;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including *\`${censor}\`*`;
     filter = (mes) => mes.content.includes(censor);
-  } else if (purgeFilter == "images") {
+  } else if (purgeFilter === "images") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including Images`;
@@ -44,7 +44,7 @@ const init = async function (msg) {
         }
       }
     };
-  } else if (purgeFilter == "images") {
+  } else if (purgeFilter === "images") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = "Purged %X messages **not** including any images";
@@ -61,7 +61,7 @@ const init = async function (msg) {
       }
       return true;
     };
-  } else if (purgeFilter == "links") {
+  } else if (purgeFilter === "links") {
     censor = msg.args.slice(1).join(" ");
     count = msg.args[1] || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages including Links`;
@@ -71,7 +71,7 @@ const init = async function (msg) {
     if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
     count = parseInt(msg.args[1]) || 100;
     endMessage = `${revFil ? "Filtered" : "Purged %X"} messages from user ${Target.tag}`;
-    filter = (mes) => mes.author.id == Target.id;
+    filter = (mes) => mes.author.id === Target.id;
   }
 
   let newFilter;

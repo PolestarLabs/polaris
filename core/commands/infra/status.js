@@ -46,9 +46,9 @@ const init = async function (msg) {
 
   emb.field("\u200b", "𝙻𝚒𝚗𝚔𝚜 ", false);
   emb.field("Donate", "<a:polluxYAY:482436838523404288>  [Pollux on Patreon](https://patreon.com/Pollux)", true);
-  emb.field("Invite", `:love_letter:  [Pollux.gg/invite](${paths.CDN}/invite)     \u200b`, true);
-  emb.field("Commands", `:gear:  [Pollux.gg/commands](${paths.CDN}/commands)`, true);
-  emb.field("Support Server", `:question:  [Pollux's Mansion](${paths.CDN}/support)    \u200b`, true);
+  emb.field("Invite", `:love_letter:  [Pollux.gg/invite](${paths.DASH}/invite)     \u200b`, true);
+  emb.field("Commands", `:gear:  [Pollux.gg/commands](${paths.DASH}/commands)`, true);
+  emb.field("Support Server", `:question:  [Pollux's Mansion](${paths.DASH}/support)    \u200b`, true);
   emb.field("Twitter", "<:twitter:510526878139023380>  [@maidPollux](https://twitter.com/maidPollux)    \u200b", true);
   emb.field("Subreddit", "<:reddit:510526878038360074>   [/r/Pollux](https://reddit.com/r/Pollux)    \u200b", true);
 

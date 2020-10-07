@@ -23,9 +23,9 @@ const init = async function (message) {
   let vars = USERDATA.switches?.variables;
 
   if (["add", "set"].includes(action)) {
-    if (vars && vars.length == 25) return message.reply("Max Attributes Reached (25)");
-    if (tag == "all") return message.reply("`all` is a reserved tag!");
-    if (vars && vars.find((ex) => ex.tag == tag)) {
+    if (vars && vars.length === 25) return message.reply("Max Attributes Reached (25)");
+    if (tag === "all") return message.reply("`all` is a reserved tag!");
+    if (vars && vars.find((ex) => ex.tag === tag)) {
       await DB.users.set({ id: message.author.id, "switches.variables.tag": tag }, { $set: { "switches.variables.$.value": value } });
     } else {
       await DB.users.set(message.author.id, { $push: { "switches.variables": { tag, value } } });
@@ -33,8 +33,8 @@ const init = async function (message) {
   }
 
   if (["ren", "rename"].includes(action)) {
-    if (tag == "all") return message.reply("Cannot rename all!");
-    if (vars && vars.find((ex) => ex.tag == tag)) {
+    if (tag === "all") return message.reply("Cannot rename all!");
+    if (vars && vars.find((ex) => ex.tag === tag)) {
       await DB.users.set({ id: message.author.id, "switches.variables.tag": tag }, { $set: { "switches.variables.$.tag": value } });
     } else {
       await DB.users.set(message.author.id, { $push: { "switches.variables": { tag, value } } });
@@ -42,7 +42,7 @@ const init = async function (message) {
   }
 
   if (["delete", "remove", "del", "rem"].includes(action)) {
-    if (tag == "all") {
+    if (tag === "all") {
       await DB.users.set({ id: message.author.id }, { $set: { "switches.variables": [] } });
     } else {
       await DB.users.set({ id: message.author.id }, { $pull: { "switches.variables": { tag } } });
@@ -61,7 +61,7 @@ const init = async function (message) {
   embed.footer(message.author.tag, message.author.avatarURL);
   embed.color("#f29d15");
 
-  if (embed.fields.length == 0) embed.setDescription(`*No attributes set! Set some with \`${message.prefix}attribute [add|set] [TAG] [VALUE]\`*`);
+  if (embed.fields.length === 0) embed.setDescription(`*No attributes set! Set some with \`${message.prefix}attribute [add|set] [TAG] [VALUE]\`*`);
   message.channel.send({ embed });
 };
 

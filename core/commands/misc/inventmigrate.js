@@ -5,7 +5,7 @@ const init = async function (msg) {
   const newInventory = [];
 
   oldInventory.forEach((item) => {
-    const currItem = newInventory.find((sub) => sub.id == item);
+    const currItem = newInventory.find((sub) => sub.id === item);
     if (currItem) currItem.count++;
     else newInventory.push({ id: item, count: 1 });
   });
