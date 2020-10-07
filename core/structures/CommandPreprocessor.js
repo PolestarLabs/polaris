@@ -21,7 +21,7 @@ const POST_EXEC = function CommandPostExecution(msg, args, success) {
 */
 
 const PERMS_CALC = function CommandPermission(msg) {
-  if (PLX.blacklistedUsers.includes(msg.author.id)) {
+  if (PLX.blacklistedUsers?.includes(msg.author.id)) {
     msg.addReaction(":BLACKLISTED_USER:406192511070240780");
     return false;
   }
@@ -54,14 +54,17 @@ const DEFAULT_CMD_OPTS = {
   caseInsensitive: true,
   invalidUsageMessage: (msg) => {
     if (msg.command.parentCommand) {
-      msg.command.cmd = msg.command.parentCommand.cmd;
-      msg.command.cat = msg.command.parentCommand.cat;
-      msg.command.scope = msg.command.parentCommand.scope;
-      msg.command.related = msg.command.parentCommand.related;
-      msg.command.aliases = msg.command.parentCommand.aliases;
+      Object.assign(msg.command,msg.command.parentCommand)
     }
+    console.log(msg.command)
     PLX.autoHelper("force", {
-      msg, cmd: msg.command.cmd, opt: msg.command.cat, aliases: msg.command.aliases, scope: msg.command.scope, related: msg.command.related,
+      msg, 
+      cmd: msg.command.cmd, 
+      opt: msg.command.cat, 
+      aliases: msg.command.aliases, 
+      scope: msg.command.scope, 
+      related: msg.command.related, 
+      helpImage: msg.command.helpImage
     });
   },
   cooldown: 3456.777,
@@ -127,6 +130,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].cat = commandFile.cat;
     PLX.commands[CMD.label].scope = commandFile.scope;
     PLX.commands[CMD.label].related = commandFile.related;
+    PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
     PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks","useExternalEmojis"].push(commandFile.botPerms);
     if (commandFile.subs) {
@@ -151,7 +155,7 @@ const registerOne = (folder, _cmd) => {
       });
     }
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
-    return undefined;
+    return null;
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
