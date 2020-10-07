@@ -58,26 +58,26 @@ const init = async function (msg) {
 
   const Author = msg.author;
 
-  const USERDATA = await DB.users.findOne({ id: Author.id });
+  const USERDATA = await DB.users.findOne({ id: Author.id }).lean();
   const eventData = await EV.userData(Author);
 
   const v = {
-    last: $t("daily.lastdly", P),
-    next: $t("daily.next", P),
-    streakcurr: $t("daily.streakcurr", P),
-    expirestr: $t("daily.expirestr", P),
+    last: $t("interface.daily.lastdly", P),
+    next: $t("interface.daily.next", P),
+    streakcurr: $t("interface.daily.streakcurr", P),
+    expirestr: $t("interface.daily.expirestr", P),
   };
 
   if (Author.dailing === true) return msg.channel.send("Spooky.");
 
   //const STREAK_EXPIRE = 1.296e+8*2
   const DAY = 2.16e7;
-
   const now = Date.now();
-
 
   const userDaily =
     ((USERDATA.eventData || {}).halloween18 || {}).dailysec || 1;
+
+  msg.reply("usDl: "+userDaily)
 
   const dailyAvailable = now - userDaily >= DAY;
 
@@ -97,9 +97,6 @@ const init = async function (msg) {
     embe2.color = 0xe35555;
     embe2.description = `
 ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
-${_emoji("expired")} **${v.expirestr}** ${moment
-      .utc(userDaily + STREAK_EXPIRE)
-      .fromNow()}
     `;
 
     msg.channel.send({
