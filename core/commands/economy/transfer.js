@@ -32,8 +32,8 @@ const init = async (msg) => {
 
   // ======================================================================
   const v = {
-    last: $t("daily.lastdly", P),
-    next: $t("daily.next", P),
+    last: $t("interface.daily.lastdly", P),
+    next: $t("interface.daily.next", P),
   };
 
   const reject = (message, Daily, r) => {

@@ -37,10 +37,10 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
 
   const Daily = new DailyCmd(cmd, opts);
   const v = {
-    last: $t("daily.lastdly", P),
-    next: $t("daily.next", P),
-    streakcurr: $t("daily.streakcurr", P),
-    expirestr: $t("daily.expirestr", P),
+    last: $t("interface.daily.lastdly", P),
+    next: $t("interface.daily.next", P),
+    streakcurr: $t("interface.daily.streakcurr", P),
+    expirestr: $t("interface.daily.expirestr", P),
   };
 
   const Author = message.author;

@@ -15,10 +15,10 @@ const init = (message) => {
   const now = Date.now();
   const P = { lngs: message.lang };
   const v = {
-    last: $t("daily.lastdly", P),
-    next: $t("daily.next", P),
-    streakcurr: $t("daily.streakcurr", P),
-    expirestr: $t("daily.expirestr", P),
+    last: $t("interface.daily.lastdly", P),
+    next: $t("interface.daily.next", P),
+    streakcurr: $t("interface.daily.streakcurr", P),
+    expirestr: $t("interface.daily.expirestr", P),
   };
 
   if (message.args[0] === "info") {
