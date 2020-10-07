@@ -23,9 +23,9 @@ const bets = {
     check(n) {
       return this.offset ? this.numbers.includes(n) : !this.numbers.includes(n);
     },
-    numbers: [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35],
+    numbers: [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
   },
-  parity: { type: "parity", reward: 1, check(n) { return !!parseInt(n) && (n % 2) ^ this.offset; } },
+  parity: { type: "parity", reward: 1, check(n) { return !!parseInt(n) && (mod % 2) === this.offset; } },
 };
 
 const dividers = ["-"];
@@ -33,7 +33,7 @@ const dividers = ["-"];
 const squareCheck = (n) => !!(n % 3) && n > 0 && n < 33;
 
 const splitCheck = (n1, n2) => (n1 < n2 ? n1 - n2 === -1 && n1 % 3 !== 0 : n1 - n2 === 1 && n2 % 3 !== 0)
-    || (n1 > n2 ? n1 - n2 === 3 : n2 - n1 === 3);
+  || (n1 > n2 ? n1 - n2 === 3 : n2 - n1 === 3);
 
 const streetCheck = (n1, n2) => (n1 > n2 ? n1 - n2 === 2 && n1 % 3 === 0 : n2 - n1 === 2 && n2 % 3 === 0);
 
