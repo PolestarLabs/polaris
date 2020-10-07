@@ -127,6 +127,7 @@
             "chooseAmod": "Selecione um módulo, fazendo o favor.",
             "kinNone": "Tu precisa me dizer de quem eu vou chutar a bunda ~~antes que eu chute a sua~~!",
             "kin404": "Opsie, não achei essa pessoa :< Ela ainda está por aqui? Ela sequer existe? Não é sua imaginação? TEM CERTEZA???",
+            "target404": "Parece que esse alvo não é válido. Confira se foi isso que você pretendia enviar~",
             "unmutable": "Não importa o que diga, não vou mutar essa pessoa.",
             "unperm": "Por algum raio de razão eu não tenho permissões. MIMDÁ PERMISSÃO",
             "noRoleHere": "Este Cargo não está na lista.",
@@ -273,19 +274,23 @@
             "isEmpty": "Não tem nada pra remover aqui!"
         },
         "discoin": {
-            "desc": "Sua transação está sendo processada, aguarde pela resposta de %BOT% confirmando.",
-            "intake": "**Rubines** da Pollux (RBN) para Câmbio:",
-            "outtake": "**%CURRNAME%** de %BOTNAME%'s ({{$}}) a receber:",
-            "remainder": "Limite restante para {{$}}",
-            "receiptCode": "Recibo da Transação",
-            "amNaN": "Quantidade Inválida",
-            "invalidCurr": "Esta moeda não existe!",
-            "invalidAmt": "Você não pode fazer Câmbio dessa quantidade! ",
-            "unverified": "Você ainda não teve confirmação para fazer Câmbios.\nConfirme sua conta em [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Seu limite de Câmbio foi atingido!",
-            "globalLimit": "As operações foram encerradas por hoje, obrigadinha!",
-            "takedis": "Guarde esse código em caso de dar algum ruim.",
-            "ex-succ": "Câmbio realizado com sucesso!"
+            "links": "Links Relevantes:",
+            "list": "Lista de moedas",
+            "graphs": "Gráficos em tempo real",
+            "guide": "Guia do usuário",
+            "tax": "Informação fiscal",
+            "tax_desc": "Taxa de câmbio: **{{exchange}}%**\nImposto de renda: **{{income}}%**\nTaxa de transferência: **{{transfer}}%**",
+            "discoin_desc": "Seus Rubines estão sendo transferidos, uma confirmação de {{bot}} chegará assim que a transação for concluída.",
+            "receipt": "Aqui está o recibo de sua transação:",
+            "receiptnoDM": "Não pude entregar nas mensagens diretas, então aqui está seu recibo:",
+            "takedis": "Guarde esse recibo, caso seus Rubines não cheguem ao destino.",
+            "invalidCurr": "Essa moeda não existe! Use `{{prefix}}exchange` para ver todas as moedas disponíveis.",
+            "debt": "Você não pode trocar um valor negativo, troque pelo menos 1 Rubine!",
+            "zero": "Troque ao minímo 1 Rubine.",
+            "perMin": "O mínimo é {{perMin}} Rubines por transação.",
+            "perMax": "O máximo por transação é de {{perMax}} Rubines.",
+            "dailyMax": "Você atingiu o máximo diário de {{dailyMax}} Rubines.",
+            "unreachable": "Não pude alcançar o Discoin, tente novamente mais tarde."
         },
         "langIntro": {
             "global": "OK, de agora em diante eu vou falar em {{LANGUAGE}} nesse servidor. {{LANGJOKE}}",
@@ -400,6 +405,7 @@
         },
         "generic": {
             "inviteText": "Me convide pro seu servidor clicando [AQUI]",
+            "selectIndex": "Por favor responda com o **número** da opção desejada.",
             "cancel": "Mudou de ideia? Tá bom então, nos vemos depois~",
             "noFundsBalance": "Você não tá com toda essa bola não... Você só tem {{number}} Rubines",
             "noFunds": "Err.. Você não tem Rubines suficientes.",
@@ -520,7 +526,8 @@
             "success": "**{{boxname}}** transferida para {{userB}}"
         },
         "give": {
-            "cooldown": "Peraí! Você só pode transferir novamente em {{remaining}}!"
+            "cooldown": "Peraí! Você só pode transferir novamente em {{remaining}}!",
+            "not2self": "Espera aí, você não pode dar algo para si mesmo!"
         },
         "inventory": {
             "noSuchBox": "Olha, eu não vejo nenhuma caixa desse tipo aqui e tenho certeza que você também não.",
@@ -738,25 +745,25 @@
             "newgame": "Hora de jogar um pouco de Blackjack, você conhece as regras, certo? Então vamos começar.",
             "result": "Resultado:",
             "bust": "Estourou",
-            "youwin": "",
-            "youlose": "",
+            "youwin": "Parabéns! Você ganhou, *dessa vez*.",
+            "youlose": "Oh? Ganhei, que pena de você~.",
             "hit": "Responda com `hit` para puxar mais uma carta,",
             "stand": "Manter",
             "split": "`split` para dividir sua mão,",
             "double": "`double` para dobrar sua aposta e puxar uma última carta,",
             "pass": "ou `stand` para passar.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
+            "surrender": "Render-se",
+            "insurance": "Seguro",
+            "surrender_res": "Você se rendeu, isso é uma pena... Aqui está como ficaria meu jogo se continuássemos:",
+            "joker": "Ah não! Um Coringa! Você é muito sortudo~",
+            "blackjack_win": "Um Blackjack? Isso é impossível! Será que contei as cartas errado?",
+            "blackjack_lose": "BLACKJACK baby, na sua cara! \\❤",
+            "double_win": "Voce foi tão ousado em dobrar sua aposta. Parabéns!",
+            "double_lose": "O dobro da expectativa, o dobro da decepção.",
+            "insurance_lost": "Mas o seguro é meu! Hehe~ Me dê esses {{insurance}} Rubines.",
+            "insurance_win": "Você tinha um seguro, aqui, pegue {{insurance}} Rubines de volta.",
+            "surrender_helper": "Se você não está se sentindo confiante você pode `render-se` e perder apenas metade da sua aposta",
+            "insurance_helper": "Eu tenho um Às aberto nessa partida, você pode adicionar um `seguro` para proteger-se de um Blackjack.",
             "splitbreak": "Detalhamento dos Splits:",
             "switchdeck": "Agora vamos jogar BlackJack usando o baralho **{{deckname}}**!",
             "switchdeckEgg": "Agora vamos jogar BlackJack usando o caralho– digo, o **baralho** {{deckname}}!\nAi meu deus que horror dsclp!",
@@ -780,6 +787,43 @@
             "zero_2": "Ih... Deu ruim, levou nada.",
             "zero_3": "Mais sorte da próxima vez, chuchu. Acredito em você! :wink:"
         },
+        "roulette": {
+            "boardTitle": "Roleta da Pollux",
+            "boardDescription": "Pode colocar suas apostas! `bet [amt] [bet] <1-3>`\nUse `bet help` para um tutorial detalhado sobre apostas.",
+            "betPlaced": [
+                "{{user}} apostou {{amount}} em {{bet}}"
+            ],
+            "helpTitle": "Apostando na Roleta 101",
+            "helpDescription": "Você pode encontrar mais informações na wiki da Pollux!",
+            "resultsTitle": "Resultados da Roleta",
+            "resultsDescription": "O número sorteado foi {{number}}.",
+            "resultsPlayer": "Resultado do jogador ",
+            "resultsWin": [
+                "Parabéns! Você ganhou {{count}}$t(keywords.RBN_plural)."
+            ],
+            "resultsLoss": [
+                "Vou pegar {{count}} $t(keywords.RBN_plural) de você."
+            ],
+            "resultsDraw": [
+                "Você não ganhou, mas também não perdeu."
+            ],
+            "resultsInvalid": "Você perdeu seu dinheiro de alguma forma, então suas apostas foram dispensadas.",
+            "resultsNoBet": "Infelizmente, não houveram apostas...",
+            "wheelDescription": "{{seconds}} segundos faltando para colocar suas apostas!",
+            "wheelEnd": "A roleta decidirá seu destino.",
+            "notSoFast": "Você está apostando rápido demais.",
+            "invalidBet": "Não consigo entender essa aposta.",
+            "missingAll": "Não foi possível encontrar sua aposta.",
+            "missingAmount": "Desculpe. Você não pode apostar sem dinheiro.",
+            "missingBet": "Hm, onde está a sua aposta?",
+            "zeroAmount": "Aposte pelo menos 1 $t(keywords.RBN)!",
+            "notAllowed": "Você não pode colocar essa aposta nesse momento.",
+            "noMoney": "Você não possui dinheiro suficiente",
+            "minperBet": "A contagem mínima de apostas é {{count}} $t(keywords.RBN).",
+            "maxPerBet": "Apostas não podem ultrapassar {{count}}$t(keywords.RBN).",
+            "maxBets": "Acalme-se, você já colocou {{count}} apostas.",
+            "maxtotal": "Não posso deixar você apostar mais de {{count}} total!"
+        },
         "ceilingBet": "Você não pode apostar mais do que **{{number}}** $t(keywords.RBN_plural) neste jogo!",
         "tryAgain": "Tentar de novo?",
         "alreadyPlaying": "Calma lá! Nós já estamos jogando!"
@@ -796,7 +840,7 @@
             "*Sugoi!* Olhem essa Caixa que eu achei!",
             "Opa, eu tenho quase certeza que você vai querer ver esta Caixa aqui."
         ],
-        "duplicate": "",
+        "duplicate": "DUPLICATA",
         "lootPick": "Todos vocês tem **__20 Segundos__** para disputar ela! Digite `{{prefix}}pick` para ter uma chance de pegar!",
         "goesTo": "Acabou o tempo! Vamos ver quem fica com a Caixa.\n**Essa Caixa vai ser sorteada entre:**",
         "congrats": "Parabéns! Essa Caixa foi enviada pro seu **inventário**. Você pode abrir ela usando o comando `{{prefix}}lootbox`.",
@@ -817,11 +861,11 @@
         "contesting": "Candidatos para esta Caixa",
         "eventDrop": "E tem mais! Esta é uma **CAIXA DE EVENTO** o que significa que tem **coisas mais legais ainda** dentro!",
         "notThisbox": "Você não tem essa Caixa. Tenta `{{prefix}}lootbox` de novo para ver as opções.",
-        "options_new": "",
-        "rerollRemain_new": "",
-        "rerollRemain_new_plural": "",
-        "hasDupes": "",
-        "allItemsAdded": ""
+        "options_new": "{{k_emoji}}Manter | {{r_emoji}}Sortear novamente{{amt}}",
+        "rerollRemain_new": "Você pode sortear **uma** última vez!",
+        "rerollRemain_new_plural": "Você pode sortear mais **{{count}}** vezes!",
+        "hasDupes": "{{x_frags}} de itens duplicados!",
+        "allItemsAdded": "Todos os itens foram adicionados ao seu inventário!"
     },
     "eastereggs": {
         "konodioda": "Você achou que fosse a Pollux, **mas era EU, DIO**!",
