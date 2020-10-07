@@ -299,7 +299,7 @@ const pricetab = {
       m.addReaction("↩")
       m.addReaction(_emoji('nope').reaction)
           const reas = await m.awaitReactions(rea=>rea.userID === msg.author.id,{maxMatches:1,time:20000}).catch(e=>[]);
-          if(reas.size == 0 ) {
+          if(reas.size == 0 || !reas[0]) {
              msg.channel.send("`TIMEOUT`");
             return PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");
           } 
