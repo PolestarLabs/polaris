@@ -128,7 +128,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].scope = commandFile.scope;
     PLX.commands[CMD.label].related = commandFile.related;
     PLX.commands[CMD.label].module = folder;
-    PLX.commands[CMD.label].botPerms = commandFile.botPerms;
+    PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks","useExternalEmojis"].push(commandFile.botPerms);
     if (commandFile.subs) {
       commandFile.subs.forEach((sub) => {
         delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
