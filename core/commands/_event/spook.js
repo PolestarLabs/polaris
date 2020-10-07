@@ -77,8 +77,6 @@ const init = async function (msg) {
   const userDaily =
     ((USERDATA.eventData || {}).halloween18 || {}).dailysec || 1;
 
-  msg.reply("usDl: "+userDaily)
-
   const dailyAvailable = now - userDaily >= DAY;
 
   const embed = {}
