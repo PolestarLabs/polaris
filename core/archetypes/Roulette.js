@@ -105,15 +105,15 @@ module.exports = class Roulette {
     const offset = parseInt(params[2]);
 
     if (bet === "basket") return { ...valid, ...bets.basket };
-    if (bet === "snake") return { ...valid, ...bets.snake };
-    if (bet === "manque") return { ...valid, ...bets.manque };
-    if (bet === "passe") return { ...valid, ...bets.passe };
-    if (bet === "even" || bet === "oneven") return { ...valid, ...bets.parity, offset: bet === "even" ? 0 : 1 };
-    if (bet === "red" || bet === "black") return { ...valid, ...bets.colour, offset: bet === "black" ? 0 : 1 };
+    if (bet === "snake" || bet === "snek") return { ...valid, ...bets.snake };
+    if (bet === "manque" || bet === "low") return { ...valid, ...bets.manque };
+    if (bet === "passe" || bet === "high") return { ...valid, ...bets.passe };
+    if (["even","odd","uneven","pair","impair"].includes(bet)) return { ...valid, ...bets.parity, offset: (bet === "even" || bet === "pair") ? 0 : 1 };
+    if (["red","rouge","noir","black"].includes(bet)) return { ...valid, ...bets.colour, offset: (bet === "black" || bet === "noir") ? 0 : 1 };
 
     if (offset && offset >= 1 && offset <= 3) {
-      if (bet === "column") return { ...valid, ...bets.column, offset };
-      if (bet === "dozen") return { ...valid, ...bets.dozen, offset };
+      if (["column","col","c"].includes(bet)) return { ...valid, ...bets.column, offset };
+      if (["dozen","dzn","d","12"].includes(bet)) return { ...valid, ...bets.dozen, offset };
     }
 
     if (bet === "square" && squareCheck(offset)) {
