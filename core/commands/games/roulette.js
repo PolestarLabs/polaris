@@ -1,3 +1,4 @@
+const config = require("../../../../dashboard/config");
 const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
 // const Picto = require("../../utilities/Picto");
@@ -11,7 +12,7 @@ const settings = {
   helpEmbedColor: 0x2b2b3b,
   wheelEmbedColor: 0x2b2b3b,
   resultsEmbedColor: 0x2b2b3b,
-  helpURL: "https://cdn.discordapp.com/attachments/488142183216709653/719951843756867612/unknown.png",
+  helpURL: "https://cdn.discordapp.com/attachments/488142034776096772/763483297929363466/cheatsheet.png",
   minPerBet: 1,
   maxPerBet: 2500,
   maxBets: 10,
@@ -219,8 +220,9 @@ const init = async (msg) => {
 
     const resultsEmbed = { color: settings.resultsEmbedColor, fields: [] };
     resultsEmbed.title = $t("games.roulette.resultsTitle", P);
-    resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: `**\`${displayNumber}\`**`});
+    resultsEmbed.description = $t("games.roulette.resultsDescription",{ P, number: _emoji(`roulette${displayNumber}`) });
     resultsEmbed.image = { url: "attachment://roulette.png" };
+    resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
 
     let value;
     if (validatedResults.length) {
@@ -261,4 +263,5 @@ module.exports = {
   cat: "gambling",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
+  helpImage: settings.helpURL
 };
