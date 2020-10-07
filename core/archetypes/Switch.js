@@ -102,14 +102,14 @@ module.exports = class Switch {
 		if (maxHistory < 0) throw new TypeError("maxHistory must be more than 0");
 		if (Channel.guild.id !== Guild.id) throw new TypeError("Switch: Channel not a child of Guild");
 
-		// Initiate modules
+		// Initiate modules - await load if timing problems arise.
 		this.guild = Guild;
 		this.channel = Channel;
 		this._load();
 
 		// Initiate history
 		this.maxHistory = maxHistory;
-		this.save();
+		this._saveHistory();
 	}
 
 	/*********************\
@@ -257,6 +257,8 @@ module.exports = class Switch {
 			cnewdisabledcmds,
 			cnewenabledcmds;
 
+		console.log(require("util").inspect(this.modules));
+
 		if (this._mode === "category") { // we're inside a category so cmd
 			if (!this.commandsArr.includes(name)) throw new TypeError(`Switch.switch(): Could not find given command: ${name}`);
 
@@ -273,10 +275,11 @@ module.exports = class Switch {
 					if (cd.indexOf(name) === -1) cd.push(name);
 				} else if (disabledByGuild ? disabledByChannel : enabledByChannel) {
 					// make neutral
-					cd.splice(cd.indexOf(name), 1);
+					if (disabledByChannel) cd.splice(cd.indexOf(name), 1);
+					else ce.splice(ce.indexOf(name), 1);
 				} else {
 					// enable command
-					ce.push(name);
+					if (ce.indexOf(name) === -1) ce.push(name);
 				};
 			} else { // guild mode
 				if (disabledByGuild) gd.splice(gd.indexOf(name), 1);
@@ -336,6 +339,8 @@ module.exports = class Switch {
 			cd: cnewdisabledcmds || cd,
 			ce: cnewenabledcmds || ce,
 		};
+
+		console.log(require("util").inspect(this.modules));
 
 		return this.modules;
 	}
