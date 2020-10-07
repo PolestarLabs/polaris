@@ -25,7 +25,7 @@ const bets = {
     },
     numbers: [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36],
   },
-  parity: { type: "parity", reward: 1, check(n) { return !!parseInt(n) && (mod % 2) === this.offset; } },
+  parity: { type: "parity", reward: 1, check(n) { return !!parseInt(n) && (n % 2) === this.offset; } },
 };
 
 const dividers = ["-"];
