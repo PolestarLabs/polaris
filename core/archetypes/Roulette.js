@@ -101,7 +101,7 @@ module.exports = class Roulette {
 
     const bet = params[1]?.toLowerCase();
     if (!bet) return { valid: false, reason: "missingBet" };
-    if (bet.length > 6) return { valid: false, reason: "invalidBet" };
+    if (bet.length > 7) return { valid: false, reason: "invalidBet" };
     const offset = parseInt(params[2]);
 
     if (bet === "basket") return { ...valid, ...bets.basket };
@@ -119,8 +119,19 @@ module.exports = class Roulette {
     if (bet === "square" && squareCheck(offset)) {
       return { ...valid, ...bets.square, numbers: [offset, (offset + 1), (offset + 3), (offset + 4)] };
     }
-
+    
     // split and street
+    if (bet === "split" && splitCheck(offset,offset+1)) {
+      return { ...valid, ...bets.split, numbers: [offset, (offset+1)]};
+    }
+    if (bet === "street" && streetCheck(offset,offset+2)) {
+      return { ...valid, ...bets.street, numbers: [offset, (offset + 1), (offset + 2)] };
+    }
+    if (bet === "dstreet" && dstreetCheck(offset,offset+5)) {
+      return { ...valid, ...bets.dstreet, numbers: [offset, (offset + 5)] };
+    }
+    
+    // smart detect
     let divider;
     for (divider of dividers) {
       if (bet.includes(divider)) break;
