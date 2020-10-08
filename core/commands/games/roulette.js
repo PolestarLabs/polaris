@@ -113,7 +113,7 @@ function translate(bet) {
   const _b = "\u2002"//_emoji('__'); 
 
   switch (bet.type) {
-    case "straight": return `${e(bet.number)}${_b}Straight **${(bet.number)}**` ;
+    case "straight": return `${e(bet.number)}${_b}Straight **${(bet.number==="d"?"00":bet.number)}**` ;
     case "split": return `${_emoji("split")}${_b}${e(bet.numbers[0])} & ${e(bet.numbers[1])}`;
     case "street": return `${_emoji("street")}${_b}${e(bet.numbers[0])}- ${e(bet.numbers[1])}`;
     case "square": return `${_emoji("square")}${_b}${e(bet.numbers[0])} ${e(bet.numbers[1])} ${e(bet.numbers[2])} ${e(bet.numbers[3])}`;
@@ -230,7 +230,7 @@ const init = async (msg) => {
     resultsEmbed.title = $t("games.roulette.resultsTitle", P);
     resultsEmbed.description = $t("games.roulette.resultsDescription",{ P, number: _emoji(`roulette${displayNumber}`) });
     resultsEmbed.image = { url: "attachment://roulette.png" };
-    resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
+    //resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
 
     let value;
     if (validatedResults.length) {
