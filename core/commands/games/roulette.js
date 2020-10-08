@@ -76,7 +76,7 @@ async function generateWheel() {
   return "https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif";
 }
 
-function getBoard(userData) {
+function getBoard(userData,highlight) {
   /*
     bet {
       amount: integer
@@ -101,7 +101,7 @@ function getBoard(userData) {
 
   const imageURL = `${paths.DASH}/generators/roulette.png?data=${data}`;
 
-  return imageURL;
+  return imageURL + (highlight?"&h="+highlight:"");
 }
 
 function e(number) {
@@ -109,20 +109,23 @@ function e(number) {
 }
 
 function translate(bet) {
+
+  const _b = "\u2002"//_emoji('__'); 
+
   switch (bet.type) {
-    case "straight": return `${e(bet.number)}`;
-    case "split": return `${e(bet.numbers[0])} & ${e(bet.numbers[1])}`;
-    case "street": return `${e(bet.numbers[0])}- ${e(bet.numbers[1])}`;
-    case "square": return `${e(bet.numbers[0])}, ${e(bet.numbers[1])}, ${e(bet.numbers[2])} & ${e(bet.numbers[3])}`;
-    // basket
-    case "dstreet": return `${e(bet.numbers[0])}through ${e(bet.numbers[1])}`;
-    case "dozen": return `${e(1 + 12 * (bet.offset - 1))}through ${e(12 * bet.offset)}`;
-    case "column": return `column ${bet.offset}`;
-    // snake
-    // manque
-    // passe
-    case "colour": return !bet.offset ? "black" : "red";
-    case "parity": return !bet.offset ? "even" : "uneven";
+    case "straight": return `${e(bet.number)}${_b}Straight **${(bet.number)}**` ;
+    case "split": return `${_emoji("split")}${_b}${e(bet.numbers[0])} & ${e(bet.numbers[1])}`;
+    case "street": return `${_emoji("street")}${_b}${e(bet.numbers[0])}- ${e(bet.numbers[1])}`;
+    case "square": return `${_emoji("square")}${_b}${e(bet.numbers[0])} ${e(bet.numbers[1])} ${e(bet.numbers[2])} ${e(bet.numbers[3])}`;
+    case "basket": return `${_emoji("basket")}${_b}Basket`; // basket
+    case "dstreet": return `${_emoji("dstreet")}${_b}${e(bet.numbers[0])} > ${e(bet.numbers[1])}`;
+    case "dozen": return  `${_emoji("dozen"+bet.offset)}${_b}${e(1 + 12 * (bet.offset - 1))} ~ ${e(12 * bet.offset)}`;
+    case "column": return `${_emoji("column"+bet.offset)}${_b}Column ${bet.offset}`;
+    case "snake": return  `${_emoji("snake")}${_b}Snake`;      // snake
+    case "manque": return `${_emoji("manque")}${_b}Manque`;    // manque
+    case "passe": return  `${_emoji("passe")}${_b}Passe`;      // passe
+    case "colour": return !bet.offset ? `${_emoji("noir")}${_b}Noir` : `${_emoji("rouge")}${_b}Rouge` ;
+    case "parity": return !bet.offset ? `${_emoji("even")}${_b}Pair` : `${_emoji("odd")}${_b}Impair`;
     default: return bet.type;
   }
 }
@@ -172,10 +175,15 @@ const init = async (msg) => {
   const feed = [];
   function updateFeed(userID, bet) {
     if (feed.length === 5) feed.splice(0, 1);
-    const betPlacedStrings = $t("games.roulette.betPlaced", {
+    /*const betPlacedStrings = $t("games.roulette.betPlaced", {
       P, user: `<@${userID}>`, amount: `**${miliarize(bet.amount)}** ${_emoji("RBN")}`, bet: translate(bet), returnObjects: true,
-    });
-    feed.push(`> ${betPlacedStrings[Math.floor(Math.random() * betPlacedStrings.length)]}`);
+    });*/
+    //feed.push(`> ${betPlacedStrings[Math.floor(Math.random() * betPlacedStrings.length)]}`);
+    
+    const betPlacedString = `<@${userID}>: **\`${ (bet.amount+"").padStart(4," ") }\`** ${_emoji("RBN")} \u2002→ \u2002${translate(bet)}`
+    feed.push(`> ${betPlacedString}`);
+    
+    
     boardEmbed.fields[0].value = feed.join("\n");
     boardmsg.edit({ embed: boardEmbed });
   }
@@ -249,7 +257,7 @@ const init = async (msg) => {
       boardEmbed.image = {};
       boardmsg.edit({ embed: boardEmbed });
       //wheelmsg.delete();
-      wheelmsg.channel.send({ embed: resultsEmbed },{name:"roulette.png", file: (await resolveFile(getBoard(Game.users))) });
+      wheelmsg.channel.send({ embed: resultsEmbed },{name:"roulette.png", file: (await resolveFile(getBoard(Game.users,displayNumber))) });
     }, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
   });
   return null;
