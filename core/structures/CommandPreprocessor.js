@@ -54,9 +54,14 @@ const DEFAULT_CMD_OPTS = {
   caseInsensitive: true,
   invalidUsageMessage: (msg) => {
     if (msg.command.parentCommand) {
-      Object.assign(msg.command,msg.command.parentCommand)
+      msg.command.cmd = msg.command.parentCommand.cmd;
+      msg.command.cat = msg.command.parentCommand.cat;
+      msg.command.scope = msg.command.parentCommand.scope;
+      msg.command.related = msg.command.parentCommand.related;
+      msg.command.aliases = msg.command.parentCommand.aliases;
+      msg.command.helpImage = msg.command.parentCommand.helpImage;
     }
-    console.log(msg.command)
+    
     PLX.autoHelper("force", {
       msg, 
       cmd: msg.command.cmd, 
