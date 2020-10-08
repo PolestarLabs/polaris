@@ -82,7 +82,7 @@ const POLARIS_UI = {
 
   //ROULETTE
   roulette19: "<:roulette19:763433091267821589>",
-roulette00: "<:roulette00:763433091297050636>",
+  roulette00: "<:roulette00:763623494101499905>",
 roulette5: "<:roulette5:763433091309633620>",
 roulette14: "<:roulette14:763433091322216529>",
 roulette1: "<:roulette1:763433091346989148>",
@@ -119,6 +119,28 @@ roulette30: "<:roulette30:763433092069195786>",
 roulette24: "<:roulette24:763433092098555915>",
 roulette7: "<:roulette7:763433092983291914>",
 roulette36: "<:roulette36:763433093062459412>",
+
+
+rouge: "<a:rouge:763625777420828683>",
+dozen2: "<a:dozen2:763625777513758732>",
+column: "<a:column:763625777534468097>",
+odd: "<a:odd:763625777680875521>",
+even: "<a:even:763625778130190336>",
+column2: "<a:column2:763625777727668265>",
+basket: "<a:basket:763625777731731476>",
+dozen3: "<a:dozen3:763625777735794719>",
+dozen: "<a:dozen:763625777752834048>",
+manque: "<a:manque:763625777753227295>",
+street: "<a:street:763625777756372993>",
+noir: "<a:noir:763625777777606656>",
+column1: "<a:column1:763625777786257418>",
+snake: "<a:snake:763625777802641458>",
+dstreet: "<a:doublestreet:763625777803296819>",
+square: "<a:square:763625777824006175>",
+dozen1: "<a:dozen1:763625777861886033>",
+column3: "<a:column3:763625777895440394>",
+split: "<a:split:763625778025463828>",
+passe: "<a:passe:763625778175934514>",
 
   // BLACKJACK
   plxcards: "<:plxcards:598784000353370113>",
