@@ -1,22 +1,49 @@
 const POLARIS_UI = {
+ 
 
+  nope :"<:NOPE:763616715036033084>",
+  yep :" <:YEP:763616714914922527>",
+  maybe :"<:MAYB:763616754743115796>",
+  
+  save :"<:SAVE:763615045182554172>",
+  undo :"<:UNDO:763615045032083476>",
+  channel :"<:CHANNEL:763615045099323392>",
+  override: "<:override:763615044520509502>",
 
-  nope :"<:NOPE:743900666476363907>",
-  yep :"<:YEP:743855295578505288>",
-  save :"<:SAVE:743900666753319054>",
-  undo :"<:UNDO:743856646882721876>",
-  channel :"<:CHANNEL:743855295607996486>",
-  override :"<:OVERRIDE:743898683673804901>",
-  on_small :"<:ON:743855295612059698>",
-  off_small :"<:OFF:755769314929410108>",
-  partial_small :"<:OFF:755769283300294744>",
-  on :"<:ON:743857968990388235>",
-  off :"<:OFF:743857968906502215>",
-  partial :"<:PARTIAL:743857969191714937>",
-  onoff_neutral :"<:onoffneutral:743902508891504690>",
-  whitegreenem: "<:OFFPARTIAL:755769619557646417>",
-  whiteorangeem: "<:ONPARTIAL:755769619809304647>",
-  whiteredem: "<:NOTSOPARTIAL:755769619452526603>",
+  on_small : "<:swon:763615045024088104>",
+  off_small : "<:swpartial:763615045048467456>",
+  partial_small : "<:swoff:763615045174427649>",
+
+  on : "<:switchON:763615044936007701>",
+  off : "<:switchOFF:763615045128945694>",
+  partial : "<:switchPARTIAL:763615045011374082>",
+  onoff_neutral : "<:switchNEUTRAL:763615045153456128>",
+
+  whitegreenem: "<:switchpartialON:763615045133139968>",
+  whiteredem: "<:switchpartialOFF:763615045111906314>",
+  whiteorangeem: "<:switchpartialPARTIAL:763615044914642975>",
+
+  cogs: "<:cogs:763615044625760287>",
+ 
+
+  // NAMED COPIES
+
+  swon: "<:swon:763615045024088104>",
+  swpartial: "<:swpartial:763615045048467456>",
+  swoff: "<:swoff:763615045174427649>",
+  
+  switchpartialON: "<:switchpartialON:763615045133139968>",
+  switchpartialOFF: "<:switchpartialOFF:763615045111906314>",
+  switchpartialPARTIAL: "<:switchpartialPARTIAL:763615044914642975>",
+  
+  switchON: "<:switchON:763615044936007701>",
+  switchOFF: "<:switchOFF:763615045128945694>",
+  switchPARTIAL: "<:switchPARTIAL:763615045011374082>",
+  switchNEUTRAL: "<:switchNEUTRAL:763615045153456128>",
+  
+  
+  return: "<:return:763615045090803713>",
+
 
 
   loot: "<:loot:339957191027195905>",
