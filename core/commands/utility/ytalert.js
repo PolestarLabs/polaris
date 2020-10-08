@@ -116,7 +116,7 @@ async function feedEmbed(item, data) {
 
   const ogs = require("open-graph-scraper");
   const results = await ogs({ url: data.link }).catch((e) => { console.error(e); return false; });
-  const img_link = results?.data.ogImage.url || null;
+  const img_link = results?.data?.ogImage?.url || null;
   if (img_link) embed.thumbnail = { url: img_link.startsWith("//") ? img_link.replace("//", "http://") : img_link };
 
   return embed;
