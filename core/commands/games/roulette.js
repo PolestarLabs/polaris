@@ -4,7 +4,7 @@ const Roulette = require("../../archetypes/Roulette");
 // const Picto = require("../../utilities/Picto");
 
 const settings = {
-  collectTime: 35e3,
+  collectTime: 45e3,
   sendWheelTime: 30e3,
   wheelSpinTime: 10e3,
   // @flicky (set to 0/null to ignore)
@@ -173,7 +173,7 @@ const init = async (msg) => {
   function updateFeed(userID, bet) {
     if (feed.length === 5) feed.splice(0, 1);
     const betPlacedStrings = $t("games.roulette.betPlaced", {
-      P, user: `<@${userID}>`, amount: `${_emoji("RBN")}${miliarize(bet.amount)}`, bet: translate(bet), returnObjects: true,
+      P, user: `<@${userID}>`, amount: `**${miliarize(bet.amount)}** ${_emoji("RBN")}`, bet: translate(bet), returnObjects: true,
     });
     feed.push(`> ${betPlacedStrings[Math.floor(Math.random() * betPlacedStrings.length)]}`);
     boardEmbed.fields[0].value = feed.join("\n");
@@ -231,9 +231,9 @@ const init = async (msg) => {
         if (result.invalid) {
           resultStrings = $t("games.roulette.resultsInvalid", P);
         } else if (result.payout > 0) {
-          resultStrings = $t("games.roulette.resultsWin", { P, count: result.payout, returnObjects: true });
+          resultStrings = $t("games.roulette.resultsWin", { P, e: _emoji('RBN') ,count: result.payout, returnObjects: true });
         } else if (result.payout < 0) {
-          resultStrings = $t("games.roulette.resultsLoss", { P, count: parseInt(result.payout), returnObjects: true });
+          resultStrings = $t("games.roulette.resultsLoss", { P, e: _emoji('RBN') ,count: Math.abs(parseInt(result.payout)), returnObjects: true });
         } else {
           resultStrings = $t("games.roulette.resultsDraw", { P, returnObjects: true });
         }
@@ -248,6 +248,7 @@ const init = async (msg) => {
     setTimeout( async () => {
       boardEmbed.image = {};
       boardmsg.edit({ embed: boardEmbed });
+      //wheelmsg.delete();
       wheelmsg.channel.send({ embed: resultsEmbed },{name:"roulette.png", file: (await resolveFile(getBoard(Game.users))) });
     }, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
   });
@@ -258,7 +259,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "roulette",
-  cooldown: 60e3,
+  cooldown: 0e3,
   perms: 3,
   cat: "gambling",
   botPerms: ["attachFiles", "embedLinks"],
