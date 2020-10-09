@@ -104,7 +104,7 @@ async function feedEmbed(item, data) {
     ogs({ url: data.link || (embed.url.split(`${"//"[1]}`).split("/")[0]) }).catch((e) => { console.error(e); return false; }),
   ]);
 
-  embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png" };
+  embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png" };
   embed.image = normalizeImage(results);
   embed.author.icon_url = "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png";
 
