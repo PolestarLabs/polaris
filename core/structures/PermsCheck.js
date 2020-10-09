@@ -2,8 +2,6 @@
 // const $t = i18node.getT();
 
 exports.run = function run(cat, msg, perms) {
-  msg.channel.createMessage(JSON.stringify(msg.channel.permissionsOf(PLX.user.id).json))
-  msg.channel.createMessage(require("util").inspect(perms))
   if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) {
     return "error";// 'error chan permis catchcheck'
   }
