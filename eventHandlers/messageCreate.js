@@ -23,6 +23,10 @@ module.exports = async (msg) => {
     }
   }
 
+  if (msg.content.startsWith('eval ')) {
+    msg.channel.createMessage(require("util").inspect(await eval(msg.content.replace('eval ', ''))).substr(0, 1975))
+  }
+
   //-----------------------------------------------------------
 
   meSubs(msg);
