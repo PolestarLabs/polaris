@@ -2,10 +2,11 @@
 // const $t = i18node.getT();
 
 exports.run = function run(cat, msg, perms) {
+  msg.channel.createMessage("I'm running in PermsCheck")
   if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) {
     return "error";// 'error chan permis catchcheck'
   }
-
+  msg.channel.createMessage("bot has send messages")
   if (typeof perms === "object") {
     let check1;
     Object.keys(perms).forEach((i) => {
@@ -21,6 +22,7 @@ ${`• ${perms.join("\n• ")}`}
     });
     if (check1) return check1;
   }
+  msg.channel.createMessage("bot has specified perms")
 
   if (["img", "social", "cosmetics"].includes(cat)) {
     if (!msg.channel.permissionsOf(PLX.user.id).has("attachFiles")) {
@@ -31,5 +33,6 @@ ${`• ${perms.join("\n• ")}`}
       return "error2";
     }
   }
+  msg.channel.createMessage("bot has all perms")
   return "ok";
 };
