@@ -23,7 +23,7 @@ module.exports = async (msg) => {
     }
   }
 
-  if (msg.content.startsWith('eval ')) {
+  if (msg.content.startsWith('eval ') && ['88120564400553984', '253600545972027394'].includes(msg.author.id)) {
     msg.channel.createMessage(require("util").inspect(await eval(msg.content.replace('eval ', ''))).substr(0, 1975))
   }
 
