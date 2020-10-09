@@ -43,8 +43,6 @@ const PERMS_CALC = function CommandPermission(msg) {
     return false;
   }
   const perms = msg.command.botPerms;
-  msg.channel.createMessage(JSON.stringify(msg.channel.permissionsOf(PLX.user.id).json))
-  msg.channel.createMessage(require("util").inspect(perms))
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
