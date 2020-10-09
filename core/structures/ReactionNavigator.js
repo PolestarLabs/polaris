@@ -30,8 +30,8 @@ module.exports = async function ReactionNavigator(m, msg, pagefun, options = {},
     }
   });
 
-  if (!reas?.length !== 0) return null;
-  m.removeReactions().catch();
+  if (!reas || reas.length === 0) return null;
+  m.removeReactions().catch(console.error);
 
   if (!isFirst && reas.length === 1 && reas[0].emoji.name === "◀") {
     options = null;

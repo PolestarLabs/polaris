@@ -73,8 +73,7 @@ const init = async (msg, args) => {
   async function Pagination(page, mss, recursion = 0) {
     const totPages = Math.ceil(itemcount / 12);
     page = page > totPages ? totPages : page < 1 ? 1 : page;
-    const pagecontent = await DB.marketplace.find(query).limit(12).skip(12 * ((page || 1) - 1)).lean()
-      .exec();
+    const pagecontent = await DB.marketplace.find(query).limit(12).skip(12 * ((page || 1) - 1)).lean();
 
     const procedure = (...arg) => {
       if (mss) return mss.edit(...arg);
@@ -119,14 +118,12 @@ const init = async (msg, args) => {
       tot_pages: totPages,
     };
     navigator(mes, msg, Pagination, options, recursion);
-    mes = null;
-    mss = null;
+    //mes = null;
+    //mss = null;
   }
 
-  return Pagination(thispage).then(() => {
-    console.log("ok");
-  });
-};
+  Pagination(thispage)
+}
 
 module.exports = {
   init,
