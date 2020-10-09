@@ -32,6 +32,7 @@ ${`• ${perms.join("\n• ")}`}
 `);
       return "error2";
     }
+    msg.channel.createMessage("bot has perms for category")
   }
   msg.channel.createMessage("bot has all perms")
   return "ok";
