@@ -173,16 +173,18 @@ const init = async (msg) => {
   const boardmsg = await msg.channel.send({ embed: boardEmbed });
 
   const feed = [];
-  function updateFeed(userID, bet) {
+  function updateFeed(userID,bet) {
     if (feed.length === 5) feed.splice(0, 1);
-    /*const betPlacedStrings = $t("games.roulette.betPlaced", {
-      P, user: `<@${userID}>`, amount: `**${miliarize(bet.amount)}** ${_emoji("RBN")}`, bet: translate(bet), returnObjects: true,
-    });*/
-    //feed.push(`> ${betPlacedStrings[Math.floor(Math.random() * betPlacedStrings.length)]}`);
-    
+    /*
+    P.user = userName;
+    P.amount = `**${miliarize(bet.amount)}** ${_emoji("RBN")}`;
+    P.bet = translate(bet);
+
+    const commentary = rand$t("games.roulette.betPlaced", P);    
+    */
+
     const betPlacedString = `<@${userID}>: **\`${ (bet.amount+"").padStart(4," ") }\`** ${_emoji("RBN")} \u2002→ \u2002${translate(bet)}`
     feed.push(`> ${betPlacedString}`);
-    
     
     boardEmbed.fields[0].value = feed.join("\n");
     boardmsg.edit({ embed: boardEmbed });
