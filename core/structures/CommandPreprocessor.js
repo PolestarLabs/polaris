@@ -46,7 +46,6 @@ const PERMS_CALC = function CommandPermission(msg) {
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
-    msg.channel.createMessage(permchk);
     if (permchk !== "ok") return false;
   }
   if (disabled) msg.commandDeny = true;
