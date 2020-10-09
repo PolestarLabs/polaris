@@ -13,6 +13,7 @@ class ReactionCollector extends EventEmitter {
     this.bot.on("messageReactionAdd", this.listener);
     if (this.options.time) setTimeout(() => this.stop("time"), this.options.time);
     else setTimeout(() => this.stop("time"), 10000);
+    if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
   }
 
   verify(message, emoji, userID) {
@@ -27,9 +28,11 @@ class ReactionCollector extends EventEmitter {
     };
 
     if (!this.filter || this.filter(reaction)) {
+      if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(reaction);
       this.emit("emoji", emoji);
       if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
+      if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
       return true;
     }
     return false;
@@ -50,5 +53,9 @@ module.exports = (Eris) => {
       if (reas === "time" && col.length === 0) reject(new Error("timeOut--"));
       else resolve(col);
     }));
+  };
+
+  Eris.Message.prototype.createReactionCollector = function createReactionCollector(filter, options) {
+    return new ReactionCollector(this, filter, options);
   };
 };

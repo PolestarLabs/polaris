@@ -1,4 +1,50 @@
 const POLARIS_UI = {
+ 
+
+  nope :"<:NOPE:763616715036033084>",
+  yep :" <:YEP:763616714914922527>",
+  maybe :"<:MAYB:763616754743115796>",
+  
+  save :"<:SAVE:763615045182554172>",
+  undo :"<:UNDO:763615045032083476>",
+  channel :"<:CHANNEL:763615045099323392>",
+  override: "<:override:763615044520509502>",
+
+  on_small : "<:swon:763615045024088104>",
+  off_small : "<:swpartial:763615045048467456>",
+  partial_small : "<:swoff:763615045174427649>",
+
+  on : "<:switchON:763615044936007701>",
+  off : "<:switchOFF:763615045128945694>",
+  partial : "<:switchPARTIAL:763615045011374082>",
+  onoff_neutral : "<:switchNEUTRAL:763615045153456128>",
+
+  whitegreenem: "<:switchpartialON:763615045133139968>",
+  whiteredem: "<:switchpartialOFF:763615045111906314>",
+  whiteorangeem: "<:switchpartialPARTIAL:763615044914642975>",
+
+  cogs: "<:cogs:763615044625760287>",
+ 
+
+  // NAMED COPIES
+
+  swon: "<:swon:763615045024088104>",
+  swpartial: "<:swpartial:763615045048467456>",
+  swoff: "<:swoff:763615045174427649>",
+  
+  switchpartialON: "<:switchpartialON:763615045133139968>",
+  switchpartialOFF: "<:switchpartialOFF:763615045111906314>",
+  switchpartialPARTIAL: "<:switchpartialPARTIAL:763615044914642975>",
+  
+  switchON: "<:switchON:763615044936007701>",
+  switchOFF: "<:switchOFF:763615045128945694>",
+  switchPARTIAL: "<:switchPARTIAL:763615045011374082>",
+  switchNEUTRAL: "<:switchNEUTRAL:763615045153456128>",
+  
+  
+  return: "<:return:763615045090803713>",
+
+
 
   loot: "<:loot:339957191027195905>",
   // token: "<:token:597978242535915526>",
@@ -280,8 +326,8 @@ const emojibank = {
   check: "<:check:314349398811475968>",
   xmark: "<:xmark:314349398824058880>",
   empty: "<:empty:314349398723264512>",
-  yep: "<:yep:339398829050953728>",
-  nope: "<:nope:339398829088571402>",
+  //yep: "<:yep:339398829050953728>",
+  //nope: "<:nope:339398829088571402>",
 
   windky: "<:windky:386609737241853952>",
 
