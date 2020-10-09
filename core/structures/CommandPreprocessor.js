@@ -188,4 +188,5 @@ module.exports = {
   commandRoutine,
   registerOne,
   DEFAULT_CMD_OPTS,
+  PERMS_CALC,
 };
