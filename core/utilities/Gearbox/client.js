@@ -74,7 +74,7 @@ module.exports = {
     if (member.permission.has("manageGuild") || member.permission.has("administrator")) {
       return true;
     }
-    if (member.permission.has(extra) || channel.permissionsOf(member.id).has(extra)) return true;
+    if (member.permission.has(extra) || channel?.permissionsOf?.(member.id).has(extra)) return true;
 
     return false;
   },
