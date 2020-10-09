@@ -775,22 +775,42 @@
         "roulette": {
             "boardTitle": "Pollux Roulette Fantastique",
             "boardDescription": "Ladies and gentlemen, weebs and otomes. You may now place your bets!\n**You have __45 seconds__ until the roulette spins!**\n\n Place your bets replying with: `bet [AMOUNT] [BET TYPE]`\nUse `bet help` or `{{prefix}}roulette help` for a detailed tutorial.",
-            "betPlaced": [
-                "{{user}} has placed {{amount}} on {{bet}}"
-            ],
             "helpTitle": "Roulette Betting 101",
             "helpDescription": "You can find more information on the [Pollux wiki](https://wiki.pollux.gg)!",
             "resultsTitle": "Roulette Results",
             "resultsDescription": "The winning number was {{number}}.",
             "resultsPlayer": "Player Result ",
             "resultsWin": [
+                "Woah! Against all odds, you won **{{count}}**{{e}} $t(keywords.RBN)!",
+                "Hmph. I'll add **{{count}}**{{e}} $t(keywords.RBN) to your account, and look into changing these odds . . .",
+                "I can't believe you beat me! I mean, I really don't believe it. Here's your prize of **{{count}}**{{e}} $t(keywords.RBN).",
+                "How did I lose **{{count}}**{{e}} $t(keywords.RBN) like that?!",
+                "Congratulations! You've depleted **{{count}}**{{e}} $t(keywords.RBN) from my savings. I hope you're happy.",
+                "Alright, you're slightly luckier than the average player. Take your **{{count}}**{{e}} $t(keywords.RBN).",
+                "Please don't spend all your new **{{count}}**{{e}} $t(keywords.RBN) on the club next door. Please.",
+                "Oh, interesting. You've won **{{count}}**{{e}} $t(keywords.RBN) from me. Now, do you think you can keep your luck up?",
                 "Congrats! You've won **{{count}}**{{e}} $t(keywords.RBN)."
             ],
-            "resultsLoss": [
+            "resultsLoss": [                
+                "The house always wins, honey, and today, I win **{{count}}**{{e}} $t(keywords.RBN).",
+                "You're **{{count}}**{{e}} $t(keywords.RBN) poorer than when you started. I'm sure your luck will turn if you play just one more game, though.",
+                "What an interesting strategy. It cost you **{{count}}**{{e}} $t(keywords.RBN).",
+                "Ouch! Are you even trying? I'll ask my new **{{count}}**{{e}} $t(keywords.RBN), I guess.",
+                "I don't know why I was worried. That'll be **{{count}}**{{e}} $t(keywords.RBN), please.",
+                "Thank you for your contribution of **{{count}}**{{e}} $t(keywords.RBN) to the Pollux Event Fund.",
+                "Oh goodness! That's another **{{count}}**{{e}} $t(keywords.RBN) you're down.",
                 "I'll be taking **{{count}}**{{e}} $t(keywords.RBN) from you."
             ],
             "resultsDraw": [
-                "You didn't win, but at least you didn't lose."
+                "You didn't win, but at least you didn't lose.",
+                "You broke even. So boring! Rematch!",
+                "Well, you got nothing. You had fun, though, right? That's what matters!",
+                "Draw... hmph. Come again, and next time bring more money.",
+                "What?! A draw?! Unacceptable, use that damn command again!",
+                "Huh. We both lose and yet we both win. Do you think that philosophy can be applied to life, too?",
+                "Ooh, that was fun. Don't leave me waiting too long for the next round.",
+                "Hmm, you didn't do too badly . . . maybe one of the waitresses can top up your drink.",
+                "It's a tie! You keep what's yours, and I keep what's mine. Deal?"
             ],
             "resultsInvalid": "You somehow lost your money so your bets were dismissed.",
             "resultsNoBet": "Sadly no one placed a bet... I am *devastated* 💔",
