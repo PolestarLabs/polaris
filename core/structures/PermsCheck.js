@@ -24,7 +24,7 @@ exports.run = function run(cat, msg, perms) {
       msg.channel.send(`${
         $t("error.iNeedThesePerms", { lngs: msg.lang })
       }\n${
-        `• ${perms.map((p,i)=> permsPass[i] + p  ).join("\n• ")}`
+        `${perms.map((p,i)=> permsPass[i] + p  ).join("\n• ")}`
       }`).catch(err=>null);
     }
 
