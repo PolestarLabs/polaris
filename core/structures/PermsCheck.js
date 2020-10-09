@@ -3,6 +3,7 @@
 
 exports.run = function run(cat, msg, perms) {
   msg.channel.createMessage("I'm running in PermsCheck")
+  msg.channel.createMessage(JSON.stringify(msg.channel.permissionsOf(PLX.user.id).json))
   if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) {
     return "error";// 'error chan permis catchcheck'
   }
@@ -13,9 +14,7 @@ exports.run = function run(cat, msg, perms) {
       if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i])) {
         try {
           msg.addReaction(":nope:339398829088571402");
-          msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })}
-${`• ${perms.join("\n• ")}`}
-`);
+          msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })}\n${`• ${perms.join("\n• ")}`}`);
         } catch (e) {} // eslint-disable-line no-empty
         check1 = "error1";
       }
