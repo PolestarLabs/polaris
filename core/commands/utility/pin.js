@@ -28,7 +28,7 @@ const init = async function (msg) {
   messageGrab.pin().then((ok) => {
     msg.channel.send({ embed });
   }).catch((err) => {
-    msg.channel.send(`${_emoji("nope")} **Couldn't pin message! Pin limit has been reached!**`);
+    msg.channel.send(`${_emoji("nope")} **Couldn't pin message! ${err.message}**`);
   });
 };
 
@@ -38,4 +38,5 @@ module.exports = {
   perms: 3,
   init,
   cat: "util",
+  botPerms: ["manageMessages", "embedLinks"],
 };
