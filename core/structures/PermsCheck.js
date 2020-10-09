@@ -8,15 +8,27 @@ exports.run = function run(cat, msg, perms) {
 
   if (typeof perms === "object") {
     let check1;
+    let permsPass = []
     Object.keys(perms).forEach((i) => {
       if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i])) {
-        try {
-          msg.addReaction(":nope:339398829088571402");
-          msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })}\n${`• ${perms.join("\n• ")}`}`);
-        } catch (e) {} // eslint-disable-line no-empty
+        permsPass.push(_emoji('nope'))
         check1 = "error1";
+      }else{
+        permsPass.push(_emoji('yep'))
       }
+      
     });
+    
+    if(check1 == "error1"){
+      msg.addReaction(_emoji('nope')).catch(err=>null);
+      msg.channel.send(`${
+        $t("error.iNeedThesePerms", { lngs: msg.lang })
+      }\n${
+        `• ${perms.map((p,i)=> permsPass[i] + p  ).join("\n• ")}`
+      }`).catch(err=>null);
+    }
+
+
     if (check1) return check1;
   }
 
