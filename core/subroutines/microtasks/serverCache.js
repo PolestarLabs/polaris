@@ -42,6 +42,7 @@ module.exports = {
         if (!thisChannel) return undefined;
         thisChannel.LANG = ch.modules.LANGUAGE;
         thisChannel.DISABLED = ch.modules.DISABLED;
+        thisChannel.ENABLED = ch.modules.ENABLED;
         return { meta: thisChannel.name, id: ch.id };
       });
       if (res) res.end(JSON.stringify(map));
