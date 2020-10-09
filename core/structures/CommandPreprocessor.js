@@ -141,7 +141,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].related = commandFile.related;
     PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
-    PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "useExternalEmojis"].concat(commandFile.botPerms || []);
+    PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "externalEmojis"].concat(commandFile.botPerms || []);
     if (commandFile.subs) {
       commandFile.subs.forEach((sub) => {
         delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
