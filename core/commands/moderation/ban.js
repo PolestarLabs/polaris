@@ -142,4 +142,5 @@ module.exports = {
   cat: "mod",
   botPerms: ["banMembers"],
   aliases: [],
+  argsRequired: true,
 };
