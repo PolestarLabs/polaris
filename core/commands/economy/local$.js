@@ -11,17 +11,18 @@ const init = async (msg) => {
   msg.author.customCurr = msg.author.customCurr || {};
   msg.author.customCurr[msg.guild.id] = msg.author.customCurr[msg.guild.id] || 0;
 
-  [subcommand] = msg.args;
+  const [subcommand] = msg.args;
 
   /* ADM */
   // create
   if (subcommand === "create") {
+    msg.channel.send("`[WARNING]` This subcommand will error. Feel free to ignore it. We'll come back to it later");
     msg.channel.send("Choose name");
     let responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
             && msg2.content.length < 16,
     { maxMatches: 1, time: 30e3 });
 
-    pName = responses[0].content;
+    const pName = responses[0].content;
     if (!responses) return msg.reply("timeout");
 
     msg.channel.send("Choose 4-letter code");
@@ -29,28 +30,28 @@ const init = async (msg) => {
       { maxMatches: 1, time: 30e3 });
 
     if (!responses) return msg.reply("timeout");
-    pCode = responses[0].content.substr(0, 4).toUpperCase();
+    const pCode = responses[0].content.substr(0, 4).toUpperCase();
 
     msg.channel.send("Choose LOCAL Emoji");
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id,
       { maxMatches: 1, time: 30e3 });
 
     if (!responses) return msg.reply("timeout");
-    [pIcon] = responses[0].content.split(" ");
+    const [pIcon] = responses[0].content.split(" ");
 
     msg.channel.send("Initial Investment (RBN)");
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
             && !Number.isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
-    pInvest = parseInt(responses[0].content) || 0;
+    const pInvest = parseInt(responses[0].content) || 0;
 
     msg.channel.send(`Maximum Pool (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
             && !Number.isNaN(parseInt(msg2.content)),
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
-    pPool = parseInt(responses[0].content) || 0;
+    const pPool = parseInt(responses[0].content) || 0;
 
     msg.reply(`
         Name: **${pName}**
@@ -142,4 +143,5 @@ module.exports = {
   cat: "economy",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
+  argsRequired: true,
 };
