@@ -150,10 +150,9 @@ const init = async function (msg) {
   msg.channel.send(`\`\`\`json\n${JSON.stringify({ journeyLog })}\`\`\``);
 
   async function Screen(message, choices) {
-    msg.channel.createMessage('Inside Screen func')
     const menu = await msg.channel.send(message);
     let res = await ReactionMenu(menu, msg, choices, { time: 35000 });
-    if (!res) res = new ReactionMenu.choice(choices[0], 0);
+    if (!res) res = ReactionMenu.choice(choices[0], 0);
     return { res, menuMessage: menu };
   }
 };
