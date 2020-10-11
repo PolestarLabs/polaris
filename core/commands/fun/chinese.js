@@ -4,7 +4,7 @@
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper(["noargs",
-    $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+    $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
 
   const phrase = msg.args.join(" ");
   let decomp = phrase.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
@@ -34,7 +34,7 @@ const init = async (msg) => {
   decomp = decomp.replace(/X/g, "乂");
   decomp = decomp.replace(/Z/g, "乙");
 
-  msg.channel.send({ embed: { color: 14948144, description: `:flag_cn: \u2003${decomp}` } });
+  return msg.channel.send({ embed: { color: 14948144, description: `:flag_cn: \u2003${decomp}` } });
 };
 module.exports = {
   init,
@@ -44,4 +44,5 @@ module.exports = {
   cat: "fun",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
+  argsRequired: true,
 };

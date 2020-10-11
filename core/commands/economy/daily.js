@@ -48,7 +48,7 @@ const init = (message) => {
       Author.dailing = false;
       // minibuster.up(message,hardStreak+softStreak*10)
 
-      const streak = userData.counter?.daily.streak;
+      const streak = userData.counters?.daily.streak;
       const hardStreak = streak;
 
       await Promise.all([

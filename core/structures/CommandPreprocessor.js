@@ -79,7 +79,7 @@ const DEFAULT_CMD_OPTS = {
   cooldownReturns: 2,
   requirements: { custom: PERMS_CALC },
   permissionMessage: (msg) => (msg.commandDeny
-    ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang }))
+    ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
     : msg.addReaction(_emoji("nope").reaction)),
   hooks: {
     preCommand: (m, a) => {

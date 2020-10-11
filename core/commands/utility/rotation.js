@@ -160,4 +160,5 @@ module.exports = {
   perms: 3,
   init,
   cat: "util",
+  argsRequired: true,
 };

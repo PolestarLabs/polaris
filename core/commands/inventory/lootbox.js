@@ -14,7 +14,7 @@ const init = async function (msg, args, userID) {
 
   const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
   embed.description = Inventory.length > 0
-    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open box ${i.rarity}\``).join("\n")
+    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open box ${i.icon}\``).join("\n")
     : `*${rand$t("responses.inventory.emptyJokes", { lngs: msg.lang })}*`;
 
   args[0] = msg;
