@@ -41,7 +41,13 @@ module.exports = {
   getCanvas: function getCanvas(...args){    
     return  Canvas.loadImage(...args).catch(err=>{
       console.error(...args)
-      throw new Error(err)
+      const canvas = Canvas.createCanvas(250, 250);
+      const c = canvas.getContext("2d");
+      c.fillStyle = "#F0F";
+      c.fillRect(0,0,250,250);
+      c.fillStyle = "#000";
+      c.fillText("ERROR LOADING: "+[...args]+" !");
+      return canvas;
     })
   },
 
