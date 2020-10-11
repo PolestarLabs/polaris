@@ -24,6 +24,8 @@ function loadCategories(route = "") {
 				}
 			}
 			resolve(obj);
+		}).catch(err=> {
+			// Dashboard Fallback
 		});
 	});
 }
