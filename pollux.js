@@ -213,6 +213,8 @@ PLX.once("ready", async () => {
 
   hook.info(`**INFO:** Cluster connected and all shards reported online!
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
+
+  require('./core/utilities/debugTools');
 });
 
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
