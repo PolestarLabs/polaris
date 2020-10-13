@@ -136,7 +136,7 @@ const init = async (msg, args) => {
       LootingUsers.delete(msg.author.id);
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
-                >>> ${lootbox.content.map((x) => {
+>>> ${lootbox.content.map((x) => {
     let label = x.name
       ? `${_emoji(x.type)} **${$t(`keywords.${x.type}`)}:** ${x.name}`
       : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
@@ -392,7 +392,7 @@ ${
 
             `,
       image: {
-        url: "attachment://Lootbox.png",
+        //url: "attachment://Lootbox.png",
       },
       thumbnail: { url: paths.CDN + (currentRoll ? "/build/LOOT/rerollbox.gif" : "/build/LOOT/openbox.gif") },
       color: parseInt(lootbox.color.replace("#", ""), 16),
