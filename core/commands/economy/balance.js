@@ -14,7 +14,7 @@ const init = async (msg) => {
   const P = { lngs: msg.lang };
   if (PLX.autoHelper([$t("helpkey", P)], { cmd, msg, opt: this.cat })) return;
 
-  const bal = $t("$.balance", P);
+  const bal = $t("responses.$.balance", P);
   /*
     const put =  $t('$.lewdery',P);
     const jog =  $t('$.gambling',P);
@@ -32,7 +32,7 @@ const init = async (msg) => {
   moment.locale(msg.lang[0]);
 
   const TARGETDATA = await DB.users.get({ id: Target.id });
-  emb.color("#ffd156");
+  emb.color("#ffc156");
   emb.title(bal);
 
   async function lastTransBuild(x) {
@@ -61,17 +61,28 @@ const init = async (msg) => {
   }
 
   if (TARGETDATA) {
-    emb.description = `${invisibar}\n`
-    + `${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.rubines, true)}**`
-    + `${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.jades, true)}**`
-    + `${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.sapphires, true)}**`
-    + `${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`;
 
-    lastTrans = await DB.audits.find({ $or: [{ from: TARGETDATA.id }, { to: TARGETDATA.id }] }).sort({ timestamp: -1 }).limit(3);
+    
+    emb.field("\u200bClassic Gems",`\u200b`
+    + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.rubines, true)}**`
+    + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.sapphires, true)}**`
+    + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.jades, true)}**`,
+    true)
+    
+    emb.field("\u200bPolaris Gems",`\u200b`
+    + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find(i=>i.id==='cosmo_fragment')?.count||0, true)}**`
+    + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.prisms, true)}**`
+    + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
+    + `\n${invisibar}`,
+    true)
+
+    lastTrans = await DB.audits.find({ $or: [{ from: TARGETDATA.id }, { to: TARGETDATA.id }] }).sort({ timestamp: -1 }).limit(5);
     emb.field("Last Transactions",
       `${await lastTransBuild(lastTrans[0])}
 ${await lastTransBuild(lastTrans[1])}
 ${await lastTransBuild(lastTrans[2])}
+${await lastTransBuild(lastTrans[3])}
+${await lastTransBuild(lastTrans[4])}
 `, false);
   } else {
     emb.description(`User \`${Target.id}\` not found in Pollux Database`);
@@ -83,6 +94,7 @@ ${await lastTransBuild(lastTrans[2])}
     emb.fields = [];
     emb.fields = [];
   }
+  emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`)
   msg.channel.send({ embed: emb });
 };
 module.exports = {
