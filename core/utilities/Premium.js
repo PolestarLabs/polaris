@@ -3,12 +3,25 @@ const baseline = 125;
 
 module.exports = {
 
+  DAILY:{
+    antimatter: 500,
+    astatine: 100,
+    uranium: 75,
+    zircon: 50,
+    palladium: 25,
+    lithium: 15,
+    carbon: 10,
+    iridium: 10,
+    aluminium: 5,
+    plastic: 1,
+  },
+
   getTier: function getTier(user) {
     return new Promise((resolve) => {
       DB.users.get(user.id).then((usr) => {
         const tier = usr.donator;
         // if((usr.premium||{}).active)
-        resolve(tier || false);
+        resolve(tier || null);
         // else resolve (false);
       });
     });
