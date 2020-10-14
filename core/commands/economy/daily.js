@@ -35,6 +35,22 @@ const constantAssets = Promise.all([
 const DAY = .01 * 60e3
 
 
+function awardPrizes(userData,myDaily,actions){
+  return Promise.all(actions,Promise.all([
+    myDaily.RBN ? ECO.receive(userData.id,myDaily.RBN,"Daily Rewards","RBN") : 0,
+    myDaily.JDE ? ECO.receive(userData.id,myDaily.JDE,"Daily Rewards","JDE") : 0,
+    myDaily.SPH ? ECO.receive(userData.id,myDaily.SPH,"Daily Rewards","SPH") : 0,
+    myDaily.PSM ? ECO.receive(userData.id,myDaily.PSM,"Daily Rewards","PSM") : 0,
+    DB.users.set(userData.id,{
+      $inc:{        
+        'modules.exp': myDaily.EXP || 0,
+        'eventTokens': myDaily.evToken || 0,
+      }
+    })
+  ]));
+}
+
+
 const init = async (msg,args) => {
   const [boost,expTag,expTagInsu,expTagWARNING,expTagLOST,donoTag,super10,prev100,prev30,prev10,soft100,soft30,soft10,soft9,soft8,soft7,soft6,soft5,soft4,soft3,soft2,soft1] = await constantAssets; 
 
@@ -74,7 +90,7 @@ const init = async (msg,args) => {
       
       PSM: 0,
       comToken: 0,
-      cosmoFragment: 0,
+      cosmo_fragment: 0,
       
       boosterpack: 0,
       EXP: Math.max(~~(streak/2),10),
@@ -103,16 +119,16 @@ const init = async (msg,args) => {
     if(softStreak==1) myDaily.RBN += 150;
     if(softStreak==2) myDaily.RBN += 150;
     if(softStreak==3) myDaily.JDE += 1000;
-    if(softStreak==4) myDaily.cosmoFragment += 25;
+    if(softStreak==4) myDaily.cosmo_fragment += 25;
     if(softStreak==5) myDaily.JDE += 1500;
     if(softStreak==6) myDaily.lootbox_C += 1;
     if(softStreak==7) myDaily.RBN += 350;
-    if(softStreak==8) myDaily.cosmoFragment += 25;
+    if(softStreak==8) myDaily.cosmo_fragment += 25;
     if(softStreak==9) myDaily.comToken += 5;    
     if(is(10)){
       myDaily.RBN += 500;
       myDaily.JDE += 2500;
-      myDaily.cosmoFragment += 35;
+      myDaily.cosmo_fragment += 35;
       myDaily.boosterpack += 1;
       myDaily.EXP += 10;
       if (!is(50) && !is(100) && !is(30)) myDaily.lootbox_U += 1;
@@ -142,7 +158,7 @@ const init = async (msg,args) => {
       myDaily.SPH += 10;     
     }
     if(dailyPLXMember?.premiumSince){
-      myDaily.PSM = miliarize(~~(( Date.now() - new Date(msg.member.premiumSince).getTime() ) / (24 * 60 * 60e3) / 10));
+      myDaily.PSM = ~~(( Date.now() - new Date(msg.member.premiumSince).getTime() ) / (24 * 60 * 60e3) / 10);
       ctx.drawImage(boost,0-50,0);
     }    
     if (userData.donator){
@@ -168,7 +184,7 @@ const init = async (msg,args) => {
     let text_EXP= Picto.tag(ctx,"EXP", "italic 900 18px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
     let number_STREAK= Picto.tag(ctx,streak,"italic 900 32px 'Panton Black'","#FFF") //,{line: 6, style: "#223"} )
     let number_STREAK_PRIZE= Picto.tag(ctx, myDaily.EXP,"italic 900 38px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
-    let number_BOOST_PRIZE= Picto.tag(ctx, "+"+myDaily.PSM,"italic 900 35px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
+    let number_BOOST_PRIZE= Picto.tag(ctx, "+"+miliarize(myDaily.PSM),"italic 900 35px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
     
     /////////////////////////////////////////////////
     
@@ -219,6 +235,7 @@ const init = async (msg,args) => {
     let lootAction = (x)=>null;
     let boosterAction = (x)=>null;
     let itemAction = (x)=>null;
+    let fragAction = (x)=>null;
     let tokenAction = (x)=>null;
 
     let fields = [
@@ -243,8 +260,14 @@ const init = async (msg,args) => {
       if(itm === 'boosterpack'){
         boosterAction = (x)=> userData.addItem(x);
       }
+
+      if(itm === 'cosmo_fragment'){
+        itemName   = $t(`items:cosmo_fragment`,P);
+        fragAction = (x)=> userData.addItem('cosmo_fragment',myDaily[itm]);
+      }
+
       if(itm === 'item'){
-        itemAction = (x)=> userData.addItem(x);
+        itemAction = (x)=> userData.addItem(x); // for later
       }
       
       if(itm === 'comToken'){
@@ -256,7 +279,8 @@ const init = async (msg,args) => {
       //if(P.count) items.push( `${_emoji(itm)} **${P.count}** ${$t("keywords."+itm,P)}` );
     })
 
-    PLX.sendJSON(msg.channel.id,DAILY)
+    
+
     let sq = -10;
     let bar =""
     while(sq++){
@@ -295,6 +319,9 @@ const init = async (msg,args) => {
       inline: false
     })
   }
+
+  const actions = [ lootAction, boosterAction, itemAction, fragAction, tokenAction ];
+  await awardPrizes(userData,myDaily,actions);
 
     msg.channel.send({
       embed:{
