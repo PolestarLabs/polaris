@@ -36,7 +36,10 @@
         "sticker": "Sticker",
         "sticker_plural": "Stickers",
         "background": "Background",
-        "background_plural": "Backgrounds"
+        "background_plural": "Backgrounds",
+        "EXP": "Progression EXP",
+        "PSM": "Boosting Prism",
+        "PSM_plural": "Boosting Prisms"
     },
     "terms": {
         "transferDenied": "Transfer Denied",
@@ -408,6 +411,13 @@
             "minus_rubines": "I'm taking %R $t(keywords.RBN_plural) from your balance okay~?"
         },
         "daily": {
+            "insuranceConsumed" : "You missed your daily timing... but don't worry!\n**Your insurance was consumed and your streak still goes on**.\nInsurances remaining: **{{insuCount}}**\n*Be sure to apply it again to your daily with `{{prefix}}use keepstreak daily`*",
+            "streakLost" : "Oh noooo, your you missed daily timing and your streak is now lost! But don't worry. You can still use a **Streak Restorer** to get back where you were before ({{oldStreak}})!",
+            "noRestorerInfo" : "You can craft a restorer with `{{prefix}}craft streakfix`",
+            "yesRestorerInfo" : "You have a restorer in your inventory! Try `{{prefix}}use streakfix` to use it!",
+            "dailyBonus": [
+                "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:"
+            ],
             "dailyGet": "{{emoji}} You've received 100 Rubines as your daily bonus!",
             "dailyNope": "{{emoji}} Hmm? Seems you already claimed your Rubines, you can get more in: **{{remaining}}**",
             "dailyStreak": "{{emoji}} **+500 Rubines** for 10 days of Dailies in a row!"
