@@ -1,12 +1,10 @@
-const { Embed } = require('../../utilities/Gearbox');
 const INVENTORY = require('../../archetypes/Inventory');
 
 
-
-
 const init = async function (msg, args, userID) {
-    if (userID && args[10]?.id != userID) return "Only the owner can see inside";
-    msg.lang = msg.lang||[msg.channel.LANG];
+
+    if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
+    msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
     const P =  {lngs:msg.lang};
 
@@ -16,7 +14,7 @@ const init = async function (msg, args, userID) {
 
     embed.description =
         Inventory.length > 0 
-            ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open booster ${i.rarity}\``).join('\n')
+            ? Inventory.map(i => `${_emoji(i.rarity)}  **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open booster ${i.icon}\``).join('\n')
             :  `*${rand$t('responses.inventory.emptyJokes',P)}*`
 
     embed.footer = { 
@@ -24,7 +22,8 @@ const init = async function (msg, args, userID) {
         ,icon_url: (args[12]||msg).author.avatarURL
     }
 
-    return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',P)}`, embed }
+    console.log("POINT")
+    return { content: `${_emoji('BOOSTER')} ${$t('responses.inventory.browsingBooster',P)}`, embed };
 
 }
 

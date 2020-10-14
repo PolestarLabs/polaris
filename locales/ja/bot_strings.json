@@ -796,18 +796,17 @@
             "スゴイ！ 私が見つけたこの ルーツボックス を見てください！",
             ""
         ],
+        "duplicate": "",
         "lootPick": "あなたはそれをすべて争うために、**__ 20 Seconds __** を持っています！ `{{prefix}}pick` を入力してリクエストしてください！",
         "goesTo": "時間切れ！ 誰がこの箱を入手しているのか見てみましょう。\n**このルーツボックスは、以下の間で抽選されます:**",
         "congrats": "",
         "opening": "{{user}} 彼/彼女の ルーツボックス を開いた...",
         "contains": "",
-        "options": "あなたはそれを維持するか、{{amt}} を支払ってそれを再登録することができます",
         "keep": "それを保つ",
         "reroll": "もう一度転がす",
         "rerolled": "ボックスコンテンツを再読み込みしてみましょう...",
         "noMoreRolls": "あなたはリロールを使い果たしました。この結果で我慢してください。",
         "noFunds": "あなたはリロールを買う余裕がない、次回は運が良い。",
-        "rerollRemain": "残りのリロール：",
         "addedRubines": "あなたの天びんに{{X}}ルビンを追加しました",
         "addedJades": "{{X}} の翡翠があなたのポーチに追加さました",
         "addedMedal": "",
@@ -817,7 +816,12 @@
         "morons": "あなたは **バカの束です** ！ あなたはLootboxをスリップさせます。 ]:U",
         "contesting": "このボックスのエントリー：",
         "eventDrop": "",
-        "notThisbox": "このようなボックスはありません。 `{{prefix}}lootbox`をもう一度試してみてください。利用可能なオプションは〜"
+        "notThisbox": "このようなボックスはありません。 `{{prefix}}lootbox`をもう一度試してみてください。利用可能なオプションは〜",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "あなたはそれがポルックスだったと思っていましたが **私はDIO **でした！",

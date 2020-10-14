@@ -326,5 +326,20 @@
     "fork": {
        "name": "Fork",
        "description": "With four times the stabbing ability of a knife, but half the impact, it's double the value!"
-    }
+    },
+    "lootbox_C_D": {
+      "name": "Common Daily Lootbox"
+   },
+   "lootbox_U_D": {
+      "name": "Uncommon Daily Lootbox"
+   },
+   "lootbox_R_D": {
+      "name": "Rare Daily Lootbox"
+   },
+   "lootbox_SR_D": {
+      "name": "Super Rare Daily Lootbox"
+   },
+   "lootbox_UR_D": {
+       "name": "Ultra Rare Daily Lootbox"
+   }
  }

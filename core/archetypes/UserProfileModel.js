@@ -1,104 +1,98 @@
-const {Member} = require('eris');
 const moment = require("moment");
-// const DB = require('../database/db_ops')
 
-class UserProfileModel{
-    constructor(userData,discordMember){
-      // Discord Data
-      if(!discordMember) discordMember = PLX.users.get(userData.id||userData);
-      
-      if(!discordMember && userData?.constructor.modelName !== "UserDB" && userData?.type!="udata" ) discordMember = userData;
-      if(typeof discordMember === 'string') discordMember = PLX.users.get(discordMember);
-      const notMember = discordMember && discordMember.constructor != Member;
-      
-      this.ID = discordMember.id;
-      this.server = notMember ? null : discordMember.guild.id;
-      this.localName = notMember ? discordMember.tag : discordMember.nick || discordMember.user.username;
-      this.avatar = notMember ? discordMember.avatarURL : discordMember.user.avatarURL;
-      this.bot = discordMember.bot;
-      
-      // Pollux User Data
-      if(!userData || !userData.modules) {
-        userData = {modules:{}};
-        this.PARTIAL = true;
+function XPercent(X, Lv, f = 0.0427899) {
+  const toNEXT = Math.trunc(((Lv + 1) / f) ** 2);
+  const toTHIS = Math.trunc((Lv / f) ** 2);
+  const PACE = toNEXT - toTHIS;
+  const PROGRESS = X - toTHIS;
+  const percent = PROGRESS / PACE;
+  return percent;
+}
+
+class UserProfileModel {
+  constructor(userDBData, userDiscordData) {
+    this.ID = userDiscordData.id;
+    this.server = userDiscordData.guild?.id;
+    this.localName = userDiscordData.guild ? userDiscordData.nick || userDiscordData.user.username : userDiscordData.tag;
+    this.avatar = userDiscordData.avatarURL;
+    this.bot = userDiscordData.bot;
+
+    // Pollux User Data
+    if (!userDBData || !userDBData.modules) {
+      userDBData = { modules: {} };
+      this.PARTIAL = true;
+    }
+
+    this.favColor = /^#[0-9,A-F,a-f]{6}$/.test(userDBData.modules.favcolor) ? userDBData.modules.favcolor : "#dd5383";
+    this.tagline = userDBData.modules.tagline || "";
+    this.background = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userDBData.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6";
+    this.personalText = userDBData.modules.persotext || "";
+    this.exp = userDBData.modules.exp || 0;
+    this.level = userDBData.modules.level || 0;
+    this.percent = XPercent(this.exp, this.level) || 0;
+    this.sticker = userDBData.modules.sticker || null;
+    this.flair = userDBData.modules.flairTop || "default";
+    this.rubines = userDBData.modules.rubines || 0;
+    this.sapphires = userDBData.modules.sapphires || 0;
+    this.medals = userDBData.modules.medals || [];
+    this.marriage = userDBData.featuredMarriage || null;
+    this.commend = userDBData.modules.commend || 0;
+    this.countryFlag = userDBData.personal?.country || null;
+    this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
+
+    if (this.medals.length > 0) {
+      const validMedals = this.medals.filter((mdl) => mdl && mdl !== "0").map((v) => this.medals.indexOf(v));
+      const arrange = validMedals.length <= 4 ? validMedals.length : 9;
+      this.medalsArrangement = { style: arrange, valid: validMedals };
+    }
+  }
+
+  get globalRank() {
+    return DB.users
+      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec();
+  }
+
+  get localData() {
+    return new Promise((resolve) => {
+      if (!this.server) {
+        this.thx = "---";
+        this.localRank = "---";
+        return resolve(false);
       }
-  
-      this.favColor     = /^#[0-9,A-F,a-f]{6}$/.test(userData.modules.favcolor) ? userData.modules.favcolor : "#dd5383";
-      this.tagline      = userData.modules.tagline  || ""; 
-      this.background   = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userData.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"; 
-      this.personalText = userData.modules.persotext|| "";
-      this.exp          = userData.modules.exp      || 0;
-      this.level        = userData.modules.level    || 0;
-      this.percent      = XPercent(this.exp,this.level) || 0;
-      this.sticker      = userData.modules.sticker  || null;
-      this.flair        = userData.modules.flairTop || 'default';
-      this.rubines      = userData.modules.rubines  || 0;
-      this.sapphires    = userData.modules.sapphires  || 0;
-      this.medals       = userData.modules.medals   || [];
-      this.marriage     = userData.featuredMarriage || null;
-      this.commend      = userData.modules.commend  || 0;
-      this.countryFlag  = userData.personal?.country || null;
-      this.profileFrame = userData.switches?.profileFrame === true ? userData.donator : null;
-      
-      if(this.medals.length>0){
-        let valid_medals = this.medals.filter(mdl=>mdl&&mdl!="0").map(v=> this.medals.indexOf(v) );
-        let arrange = valid_medals.length <= 4 ? valid_medals.length : 9; 
-        this.medalsArrangement = {style:arrange,valid:valid_medals}
-      }      
-    }
-  
-    get globalRank (){
-       return DB.users
-          .find({"modules.exp": {$gt: this.exp} },{} ).countDocuments().exec();
-    }
-  
-    get localData (){
-      return new Promise(async resolve=>{
-        if (!this.server){
-          this.thx = "---"
-          this.localRank = "---"
-          return resolve(false);
-        }
-      
-        let svRankData = await DB.localranks.get({user:this.ID,server:this.server});
+
+      return DB.localranks.get({ user: this.ID, server: this.server }).then(async (svRankData) => {
         this.thx = svRankData?.thx || 0;
         this.localRank = await DB.localranks
-          .find({server:this.server,exp:{$gt:svRankData?.exp||0}},{}).countDocuments().exec();
+          .find({ server: this.server, exp: { $gt: svRankData?.exp || 0 } }, {}).countDocuments().exec();
         return resolve(true);
-      })
-    }
-  
-    get wifeData (){
-      return new Promise(async resolve=>{
-        if (this.wife) return resolve(this.wife);
-        if (!this.marriage) return resolve(null);
-        const marriage = await DB.relationships.findOne({type:'marriage', _id: this.marriage });
+      });
+    });
+  }
+
+  get wifeData() {
+    return new Promise((resolve) => {
+      if (this.wife) return resolve(this.wife);
+      if (!this.marriage) return resolve(null);
+      return DB.relationships.findOne({ type: "marriage", _id: this.marriage }).then(async (marriage) => {
         if (!marriage) return resolve(null);
-        const wifeID = marriage.users.find(usr=>usr!=this.ID);
+        const wifeID = marriage.users.find((usr) => usr !== this.ID);
         if (!wifeID) return resolve(null);
-        let discordWife = PLX.users.get(wifeID) || (await DB.users.get(wifeID)).meta || {username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
-  
+        const discordWife = PLX.users.get(wifeID)
+          || (await DB.users.get(wifeID)).meta
+          || { username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
+
         this.wife = {
           ring: marriage.ring,
           initiative: marriage.initiative === this.ID,
-          lovepoints: marriage.lovepoints||0,
-          since:  moment.utc(marriage.since).fromNow(true),
+          lovepoints: marriage.lovepoints || 0,
+          since: moment.utc(marriage.since).fromNow(true),
           wifeName: discordWife.username,
-          wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512","size=64")
-        }
-        resolve(this.wife);
+          wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
+        };
+        return resolve(this.wife);
       });
-    }
-  
+    });
   }
+}
 
-  function XPercent(X, Lv, f = 0.0427899) {
-    let toNEXT = Math.trunc(Math.pow((Lv + 1) / f, 2));
-    let toTHIS = Math.trunc(Math.pow(Lv / f, 2));
-    let PACE = toNEXT - toTHIS;
-    let PROGRESS = X - toTHIS
-    let percent = PROGRESS / PACE;
-    return percent;
-  }
-
-module.exports = UserProfileModel  
+module.exports = UserProfileModel;

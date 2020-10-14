@@ -796,18 +796,17 @@
             "Amazing! Look at what I've found!",
             "Hey, I'm pretty sure you want to see this Lootbox here."
         ],
+        "duplicate": "",
         "lootPick": "You all have **__20 Seconds__** to dispute it! Type `{{prefix}}pick` for a chance to claim it!",
         "goesTo": "Time's up! Let's see who's getting this Box.\n**This Loot Box will be raffled between:**",
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
         "opening": "{{user}} opened their Lootbox...",
         "contains": "This {{adjective}} Lootbox contains",
-        "options": "You can either keep it, or reroll it by paying {{amt}}",
         "keep": "Keep it",
         "reroll": "Reroll it",
         "rerolled": "Let's try again, rerolling the box content...",
         "noMoreRolls": "You've ran out of rerolls, you'll have to stick with this result.",
         "noFunds": "You need more Rubines to reroll, perhaps next time.",
-        "rerollRemain": "Rerolls remaining:",
         "addedRubines": "{{X}} Rubines have been added to your Balance",
         "addedJades": "{{X}} Jades have been added to your Pouch",
         "addedMedal": "**{{itm}}** Medal has been added to your Medals Pocket",
@@ -817,7 +816,12 @@
         "morons": "You let a Lootbox slip by? What am I saying, of course you did.",
         "contesting": "Entries for this Box:",
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
-        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own."
+        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "You thought that it was Pollux, **but it was ME, DIO**!",

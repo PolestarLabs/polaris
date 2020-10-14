@@ -1,0 +1,74 @@
+{
+    "env": {
+        "commonjs": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly",
+        "clusterNames": "readonly",
+        "GNums": "readonly",
+        "appRoot": "readonly",
+        "PLX": "readonly",
+        "MARKET_TOKEN": "writable",
+        "hook": "readonly",
+        "nope": "writable",
+        "reload": "writable",
+        "invisibar": "writable",
+        "Embed": "readonly",
+        "RichEmbed": "readonly",
+        "weightedRand": "readonly",
+        "randomize": "readonly",
+        "miliarize": "readonly",
+        "shuffle": "readonly",
+        "capitalize": "readonly",
+        "objCount": "readonly",
+        "resolveFile": "readonly",
+        "file": "readonly",
+        "_emoji": "readonly",
+        "promiseLibrary": "readonly",
+        "DB": "readonly",
+        "translateEngineStart": "readonly",
+        "i18n": "readonly",
+        "$t": "readonly",
+        "rand$t": "readonly",
+        "Achievements": "readonly",
+        "userLimits": "readonly",
+        "fakeFeed": "writable",
+        "piggyback": "readonly",
+        "paths": "readonly"
+    },
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "ecmaVersion": 2018
+    },
+    "rules": {
+        "quotes": ["error", "double"],
+        "no-param-reassign": "off",
+        "global-require": "off",
+        "import/no-dynamic-require": "off",
+        "no-console": "off",
+        "no-underscore-dangle": "off",
+        "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true, "Property": true } }],
+        "max-len": ["error", 150],
+        "no-bitwise": "off",
+        "class-methods-use-this": "off",
+        "no-plusplus": "off",
+        "radix": ["error", "as-needed"],
+        "no-return-assign": ["error", "except-parens"],
+        "no-cond-assign": ["error", "except-parens"],
+        "no-restricted-syntax": "off",
+        "no-nested-ternary": "off",
+        "prefer-const": ["error", { "destructuring": "all" }],
+        "no-continue": "off",
+        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+        "no-multi-assign": "off"
+
+        
+    }
+}

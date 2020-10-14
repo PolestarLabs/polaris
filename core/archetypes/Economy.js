@@ -7,143 +7,125 @@ const CURRENCIES = {
   LCL: false,
   AMY: "amethysts",
   EMD: "emeralds",
-  TPZ: "topazes"
-} 
+  TPZ: "topazes",
+};
 
-
-function checkFunds (user,amt, currency = "RBN"){
+function checkFunds(user, amt, currency = "RBN") {
   const uID = user.id || user;
-  
+
   amt = parseInt(amt);
-  if(typeof amt != 'number') return false;
-  
-  return new Promise(async (resolve,reject)=>{
-    let userData = await DB.users.get(uID,{["modules."+CURRENCIES[currency]]:1});
-    console.log(userData.modules[CURRENCIES[currency]])
-    if (userData.modules[CURRENCIES[currency]] < amt) return resolve(false);
-    else resolve(true);    
-  })
-};
+  if (typeof amt !== "number") return false;
 
-function pay(user,amt,type = "OTHER",currency = "RBN"){
-  if(amt == 0) return;
-  const uID = user.id || user;
-  return new Promise(async (resolve,reject)=>{   
-    
-    if(typeof amt != 'number') resolve("Amount informed is not a Number");
-    amt = parseInt(amt);    
-           
-    checkFunds(user,amt,currency).then(async ok=>{
-      let now = Date.now();
-      let payload = {
-        subtype: "PAYMENT",
-        type: type,
-        currency,
-        transaction: "-",
-        from: uID,
-        to: "271394014358405121",
-        timestamp:now,
-        transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-        amt
-      }
-      await Promise.all([
-         DB.users.set(uID,{$inc:{["modules."+CURRENCIES[currency]]:-amt}})
-        ,DB.users.set("271394014358405121",{$inc:{["modules."+CURRENCIES[currency]]:+amt}})
-        ,DB.audits.new(payload)
-      ]);
-      resolve(payload);  
-    }).catch(err=>{
-      reject("No Funds"); 
-    });
-    
+  return DB.users.get(uID, { [`modules.${CURRENCIES[currency]}`]: 1 }).then((userData) => {
+    console.log(userData.modules[CURRENCIES[currency]]);
+    if (userData.modules[CURRENCIES[currency]] < amt) return false;
+    return true;
   });
-};
+}
 
-function receive(user,amt,type = "OTHER",currency = "RBN"){
-  if(amt == 0) return;
+function pay(user, amt, type = "OTHER", currency = "RBN") {
+  if (amt === 0) return null;
   const uID = user.id || user;
-  return new Promise(async (resolve,reject)=>{
-    
-    if(typeof amt != 'number') reject("Amount informed is not a Number");
-    amt = parseInt(amt);    
-    
-    let now = Date.now();
-    let payload = {
-      subtype: "INCOME",
-      type: type,
+  if (typeof amt !== "number") return "Amount informed is not a Number";
+  amt = parseInt(amt);
+
+  return checkFunds(user, amt, currency).then(async () => {
+    const now = Date.now();
+    const payload = {
+      subtype: "PAYMENT",
+      type,
       currency,
-      transaction: "+",
-      from: "271394014358405121",
-      to: uID,
-      timestamp:now,
+      transaction: "-",
+      from: uID,
+      to: "271394014358405121",
+      timestamp: now,
       transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-      amt
-    }
+      amt,
+    };
     await Promise.all([
-         DB.users.set("271394014358405121",{$inc:{["modules."+CURRENCIES[currency]]:-amt}})
-        ,DB.users.set(uID,{$inc:{["modules."+CURRENCIES[currency]]:+amt}})
-        ,DB.audits.new(payload)
+      DB.users.set(uID, { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
+      DB.users.set("271394014358405121", { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
+      DB.audits.new(payload),
     ]);
-    resolve(payload);    
-  });
-};
+    return payload;
+  }).catch(() => new Error("No Funds"));
+}
 
-function transfer(userFrom,userTo,amt,type = "SEND",currency = "RBN"){
-  if(amt == 0) return;
+function receive(user, amt, type = "OTHER", currency = "RBN") {
+  if (amt === 0) return null;
+  const uID = user.id || user;
+  if (typeof amt !== "number") reject("Amount informed is not a Number");
+  amt = parseInt(amt);
+
+  const now = Date.now();
+  const payload = {
+    subtype: "INCOME",
+    type,
+    currency,
+    transaction: "+",
+    from: "271394014358405121",
+    to: uID,
+    timestamp: now,
+    transactionId: `${currency}${now.toString(32).toUpperCase()}`,
+    amt,
+  };
+  return Promise.all([
+    DB.users.set("271394014358405121", { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
+    DB.users.set(uID, { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
+    DB.audits.new(payload),
+  ]).then(() => payload);
+}
+
+function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
+  if (amt === 0) return null;
   const fromID = userFrom.id || userFrom;
-  const toID   = userTo.id   || userTo;
-  return new Promise(async (resolve,reject)=>{
-    
-    if(typeof amt != 'number') reject("Amount informed is not a Number");
-    amt = Math.abs(parseInt(amt));
-   
-    checkFunds(userFrom,amt,currency).then(async ok=>{
-      let now = Date.now();
-      let payload = {
-        subtype: "TRANSFER",
-        type: type,
-        currency,
-        transaction: ">",
-        from: fromID,
-        to: toID,
-        timestamp:now,
-        transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-        amt
-      }
-      await Promise.all([        
-         DB.users.set(fromID,{$inc:{["modules."+CURRENCIES[currency]]:-amt}})
-        ,DB.users.set(toID  ,{$inc:{["modules."+CURRENCIES[currency]]:+amt}})
-        ,DB.audits.new(payload)
-      ]);
-      resolve(payload);  
-    }).catch(err=>{
-      reject("No Funds"); 
-    });
-  });
-};
+  const toID = userTo.id || userTo;
+  if (typeof amt !== "number") throw new Error("Amount informed is not a Number");
+  amt = Math.abs(parseInt(amt));
 
-async function arbitraryAudit(from,to,type,tag="OTH",trans,amt= 1){
-  let now = Date.now();
-      let payload = {
-        subtype: "ARBITRARY",
-        type: type,
-        currency:  tag,
-        transaction: trans || "!!",
-        from: from.id||from,
-        to: to.id||to,
-        timestamp:now,
-        transactionId: `${tag}${now.toString(32).toUpperCase()}`,
-        amt 
-      }
-      await DB.audits.new(payload);
-      return payload;
-};
+  return checkFunds(userFrom, amt, currency).then(async () => {
+    const now = Date.now();
+    const payload = {
+      subtype: "TRANSFER",
+      type,
+      currency,
+      transaction: ">",
+      from: fromID,
+      to: toID,
+      timestamp: now,
+      transactionId: `${currency}${now.toString(32).toUpperCase()}`,
+      amt,
+    };
+    return Promise.all([
+      DB.users.set(fromID, { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
+      DB.users.set(toID, { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
+      DB.audits.new(payload),
+    ]).then(() => payload);
+  }).catch(() => new Error("No Funds"));
+}
 
-module.exports= {
+async function arbitraryAudit(from, to, type, tag = "OTH", trans, amt = 1) {
+  const now = Date.now();
+  const payload = {
+    subtype: "ARBITRARY",
+    type,
+    currency: tag,
+    transaction: trans || "!!",
+    from: from.id || from,
+    to: to.id || to,
+    timestamp: now,
+    transactionId: `${tag}${now.toString(32).toUpperCase()}`,
+    amt,
+  };
+  await DB.audits.new(payload);
+  return payload;
+}
+
+module.exports = {
   checkFunds,
   pay,
   receive,
   transfer,
   arbitraryAudit,
-  CURRENCIES
-}
+  CURRENCIES,
+};

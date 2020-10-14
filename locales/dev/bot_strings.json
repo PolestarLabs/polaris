@@ -21,7 +21,7 @@
         "evToken": "Event Token",
         "evToken_plural": "Event Tokens",
         "lootbox": "Lootbox",
-        "lootbox_plural": "Lootboxes",        
+        "lootbox_plural": "Lootboxes",
         "consumable": "Consumable",
         "consumable_plural": "Consumables",
         "junk": "Junk",
@@ -36,7 +36,10 @@
         "sticker": "Sticker",
         "sticker_plural": "Stickers",
         "background": "Background",
-        "background_plural": "Backgrounds"
+        "background_plural": "Backgrounds",
+        "EXP": "Progression EXP",
+        "PSM": "Boosting Prism",
+        "PSM_plural": "Boosting Prisms"
     },
     "terms": {
         "transferDenied": "Transfer Denied",
@@ -128,6 +131,7 @@
             "chooseAmod": "Choose a module, would you.",
             "kinNone": "You need to tell me who I'm supposed to kick. Of course, I could always kick you instead.",
             "kin404": "I can't seem to find this person. Did they already leave? Perhaps they were a part of your imagination.",
+            "target404": "This target doesn't seem to be vaild. Double check if that's what you meant to send~",
             "unmutable": "No matter what you say, I will not mute this person.",
             "unperm": "I don't have the Perms to do this. Perhaps you should give me the Perms before commanding me to do something.",
             "noRoleHere": "Seems that Role isn't listed. Make sure you are telling me the role correctly.",
@@ -149,7 +153,7 @@
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
         },
         "cooldown":{
-            "generic": [    
+            "generic": [
                 "Hang on, I need a minute!",
                 "I'm not a printer, please slow down!",
                 "Try again in a few seconds, please.",
@@ -160,7 +164,7 @@
                 "What's the rush?!",
                 "I need a moment to breathe!",
                 "Honey, please, one at a time.",
-                "*You're going too fast senpai uwu I can't take it uwu*"   
+                "*You're going too fast senpai uwu I can't take it uwu*"
               ]
         },
         "warnings": {
@@ -277,19 +281,23 @@
             "isEmpty": "There's nothing there to remove!"
         },
         "discoin": {
-            "desc": "Your Rubines are being sent, a response from %BOT% will come as soon as it arrives.",
-            "intake": "Pollux **Rubines** (RBN) Exchanged:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) to Receive:",
-            "remainder": "Remaining Limit for {{$}}",
-            "receiptCode": "Transaction Receipt Code",
-            "amNaN": "Invalid quantity",
-            "invalidCurr": "That Currency doesn't exist!",
-            "invalidAmt": "You can't exchange that amount! ",
-            "unverified": "You are not verified to make exchanges.\nPlease verify yourself at [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Your exchange limit for today has been reached!",
-            "globalLimit": "You've reached your Discoin limit, try again tomorrow.",
-            "takedis": "Keep this code in case your Rubines don't reach their destination.",
-            "ex-succ": "Exchange Successful!"
+						"links": "Relevant links:",
+						"list": "Currency list",
+						"graphs": "Live graphs",
+						"guide": "Users guide",
+						"tax": "Tax information",
+						"tax_desc": "Exchange tax: **{{exchange}}%**\nIncome Tax: **{{income}}%**\nTransfer Tax: **{{transfer}}%**" ,
+            "discoin_desc": "Your Rubines are being sent, a response from {{bot}} will come as soon as it arrives.",
+						"receipt": "Here is your transaction receipt:",
+						"receiptnoDM": "I couldn't deliver it in dms, so here is your receipt:",
+						"takedis": "Keep this receipt in case your Rubines don't reach their destination.",
+            "invalidCurr": "That Currency doesn't exist! Use `{{prefix}}exchange` to see all available currencies.",
+            "debt": "You can't exchange debt, exchange at least 1 Rubine!",
+						"zero": "Exchange at least 1 Rubine.",
+						"perMin": "The minimum is {{perMin}} Rubines per transaction.",
+						"perMax": "The maximum per transcation is {{perMax}} Rubines.",
+						"dailyMax": "You've hit the daily maximum of {{dailyMax}} Rubines.",
+						"unreachable": "Discoin could not be reached, try again at a later time."
         },
         "langIntro": {
             "global": "Okay, from now on I'll speak {{LANGUAGE}} in this server. {{LANGJOKE}}",
@@ -336,7 +344,6 @@
             ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
             ,"cantMarryPollux" : "No way! Shoo!"
         },
-        
             "ship": {
                 "needTupipo": "The Love Calculator does not work with just one person, my dear.",
                 "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!"
@@ -376,8 +383,6 @@
                 ]
             ]
         },
-        
-        
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
@@ -398,6 +403,7 @@
         "generic": {
 
             "inviteText": "Invite me to your server clicking [HERE]",
+            "selectIndex": "Please reply with the **number** of the option you want.",
             "cancel": "Changed your mind? Ok, see you later~",
             "noFundsBalance": "It seems you cannot afford this, your balance is {{number}} Rubines",
             "noFunds": "Not enough Rubines",
@@ -405,6 +411,13 @@
             "minus_rubines": "I'm taking %R $t(keywords.RBN_plural) from your balance okay~?"
         },
         "daily": {
+            "insuranceConsumed" : "You missed your daily timing... but don't worry!\n**Your insurance was consumed and your streak still goes on**.\nInsurances remaining: **{{insuCount}}**\n*Be sure to apply it again to your daily with `{{prefix}}use keepstreak daily`*",
+            "streakLost" : "Oh noooo, your you missed daily timing and your streak is now lost! But don't worry. You can still use a **Streak Restorer** to get back where you were before ({{oldStreak}})!",
+            "noRestorerInfo" : "You can craft a restorer with `{{prefix}}craft streakfix`",
+            "yesRestorerInfo" : "You have a restorer in your inventory! Try `{{prefix}}use streakfix` to use it!",
+            "dailyBonus": [
+                "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:"
+            ],
             "dailyGet": "{{emoji}} You've received 100 Rubines as your daily bonus!",
             "dailyNope": "{{emoji}} Hmm? Seems you already claimed your Rubines, you can get more in: **{{remaining}}**",
             "dailyStreak": "{{emoji}} **+500 Rubines** for 10 days of Dailies in a row!"
@@ -513,7 +526,6 @@
         "transfer":{
             "lastdly":"Last Box Transfer:",
             "next":"Next Transfer available {{in X hours}}",
-        
             "transferboxto": "Transferring  Box to {{userB}}"
             ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
             ,"timeout": "**Transfer Timed Out!**"
@@ -521,7 +533,8 @@
             ,"success": "**{{boxname}}** transferred to {{userB}}"
         },
         "give":{
-            "cooldown":"Hold up! You can transfer again in {{remaining}}!"
+            "cooldown":"Hold up! You can transfer again in {{remaining}}!",
+            "not2self": "Hold on, you can't give something to yourself!"
         },
         "inventory": {
             "noSuchBox": "Look, I can't see this box in there and I'm sure you can't either.",
@@ -768,6 +781,63 @@
             "zero_1": "Oh my, seems all your Rubines are mine now.",
             "zero_2": "Not a single hit? that's a shame.",
             "zero_3": "Perhaps if you try again you might win something?"
+        },
+        "roulette": {
+            "boardTitle": "Pollux Roulette Fantastique",
+            "boardDescription": "Ladies and gentlemen, weebs and otomes. You may now place your bets!\n**You have __45 seconds__ until the roulette spins!**\n\n Place your bets replying with: `bet [AMOUNT] [BET TYPE]`\nUse `bet help` or `{{prefix}}roulette help` for a detailed tutorial.",
+            "helpTitle": "Roulette Betting 101",
+            "helpDescription": "You can find more information on the [Pollux wiki](https://wiki.pollux.gg)!",
+            "resultsTitle": "Roulette Results",
+            "resultsDescription": "The winning number was {{number}}.",
+            "resultsPlayer": "Player Result ",
+            "resultsWin": [
+                "Woah! Against all odds, you won **{{count}}**{{e}} $t(keywords.RBN)!",
+                "Hmph. I'll add **{{count}}**{{e}} $t(keywords.RBN) to your account, and look into changing these odds . . .",
+                "I can't believe you beat me! I mean, I really don't believe it. Here's your prize of **{{count}}**{{e}} $t(keywords.RBN).",
+                "How did I lose **{{count}}**{{e}} $t(keywords.RBN) like that?!",
+                "Congratulations! You've depleted **{{count}}**{{e}} $t(keywords.RBN) from my savings. I hope you're happy.",
+                "Alright, you're slightly luckier than the average player. Take your **{{count}}**{{e}} $t(keywords.RBN).",
+                "Please don't spend all your new **{{count}}**{{e}} $t(keywords.RBN) on the club next door. Please.",
+                "Oh, interesting. You've won **{{count}}**{{e}} $t(keywords.RBN) from me. Now, do you think you can keep your luck up?",
+                "Congrats! You've won **{{count}}**{{e}} $t(keywords.RBN)."
+            ],
+            "resultsLoss": [                
+                "The house always wins, honey, and today, I win **{{count}}**{{e}} $t(keywords.RBN).",
+                "You're **{{count}}**{{e}} $t(keywords.RBN) poorer than when you started. I'm sure your luck will turn if you play just one more game, though.",
+                "What an interesting strategy. It cost you **{{count}}**{{e}} $t(keywords.RBN).",
+                "Ouch! Are you even trying? I'll ask my new **{{count}}**{{e}} $t(keywords.RBN), I guess.",
+                "I don't know why I was worried. That'll be **{{count}}**{{e}} $t(keywords.RBN), please.",
+                "Thank you for your contribution of **{{count}}**{{e}} $t(keywords.RBN) to the Pollux Event Fund.",
+                "Oh goodness! That's another **{{count}}**{{e}} $t(keywords.RBN) you're down.",
+                "I'll be taking **{{count}}**{{e}} $t(keywords.RBN) from you."
+            ],
+            "resultsDraw": [
+                "You didn't win, but at least you didn't lose.",
+                "You broke even. So boring! Rematch!",
+                "Well, you got nothing. You had fun, though, right? That's what matters!",
+                "Draw... hmph. Come again, and next time bring more money.",
+                "What?! A draw?! Unacceptable, use that damn command again!",
+                "Huh. We both lose and yet we both win. Do you think that philosophy can be applied to life, too?",
+                "Ooh, that was fun. Don't leave me waiting too long for the next round.",
+                "Hmm, you didn't do too badly . . . maybe one of the waitresses can top up your drink.",
+                "It's a tie! You keep what's yours, and I keep what's mine. Deal?"
+            ],
+            "resultsInvalid": "You somehow lost your money so your bets were dismissed.",
+            "resultsNoBet": "Sadly no one placed a bet... I am *devastated* 💔",
+            "wheelDescription": "{{seconds}} seconds left to place your bets! Step it up!! Add just one more!!! What if today is your lucky day~?",
+            "wheelEnd": "**Time's up, boys and girls!**\nThe wheel will now decide your fate... There's no turning back now.",
+            "notSoFast": "You are placing bets too fast.",
+            "invalidBet": "Sorry, I can't understand that bet.",
+            "missingAll": "Couldn't find your bet.",
+            "missingAmount": "Sorry, honey. You can't bet without money.",
+            "missingBet": "Um, where's your bet?",
+            "zeroAmount": "Bet at least 1 $t(keywords.RBN)!",
+            "notAllowed": "You can't place this bet right now. Shoo!",
+            "noMoney": "You don't have enough money, m'dear...",
+            "minperBet": "Grow some spheres, minimum bet here is **{{count}} $t(keywords.RBN)**, kid.",
+            "maxPerBet": "Woah there, rich kid! Bets can't be higher than {{count}} $t(keywords.RBN).",
+            "maxBets": "Calm down, you've already placed {{count}} bets.",
+            "maxtotal": "Ok, ok, hold on! You can't bet more than {{count}} $t(keywords.RBN) in total!"
         },
         "ceilingBet": "You can't bet more than **{{number}}** $t(keywords.RBN_plural) in this game.",
         "tryAgain": "Try again?",

@@ -1,187 +1,359 @@
-// const gear = require(appRoot+"/core/utilities/Gearbox");
-//const locale = require(appRoot+'/utils/i18node');
-//const $t = locale.getT();
-const ECO = require(appRoot+"/core/archetypes/Economy");
-// const DB = require(appRoot+"/core/database/db_ops");
-const Picto = require(appRoot+"/core/utilities/Picto");
-const Timed = require(appRoot+"/core/structures/TimedUsage");
-const Premium = require(appRoot+"/core/utilities/Premium");
+const Timed = require(`../../structures/TimedUsage`);
+const Premium = require(`../../utilities/Premium`);
 
-const init = function(message){
-  
-let moment = require("moment");
-    moment.locale(message.lang[0]||'en');
+const Picto = require("../../utilities/Picto.js");
+const ECO = require("../../archetypes/Economy");
 
-let Author = message.author
-let now = Date.now()
-const P={lngs:message.lang}
-const v={
-    last: $t('daily.lastdly',P),
-    next: $t('daily.next',P),
-    streakcurr: $t('daily.streakcurr',P),
-    expirestr: $t('daily.expirestr',P),
-}  
+const _ASSETS = paths.CDN + "/build/daily/"
 
-if(message.args[0]=="info"){
-  message.args[0] = "status";
-  message.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*")
-}
-    let after = async function(msg,Dly){
-        ddy = await Dly.userData(msg.author);
-
-
-      let emblem = await Premium.getTier(Author);
-      let myDaily = await Premium.getDaily(Author) || 125;
-
-      const embed = new Embed;
-      embed.color = 0xd83668;
-      if (emblem) {
-        embed.author(emblem.toUpperCase()+"-boosted Daily!","http://pollux.fun/images/donate/" + emblem + "-small.png")
-      }
-
-      const Canvas = require("canvas");
-      const canvas = new Canvas.createCanvas(250, 250);
-      const ctx = canvas.getContext('2d');
-
-      //backwards compat
-      DB.users.set(Author.id, {$set:{'modules.daily':now}});
-
-      DB.users.getFull({id:Author.id}).then(async userData=>{
-        Author.dailing = false;
-        //minibuster.up(message,hardStreak+softStreak*10)
-        
-
-        let streak = userData.counter?.daily.streak;
-        let hardStreak = streak
+const constantAssets = Promise.all([
+  Picto.getCanvas(_ASSETS + "boost.png"),
+  Picto.getCanvas(_ASSETS + "exptag.png"),
+  Picto.getCanvas(_ASSETS + "exptag-insu.png"),
+  Picto.getCanvas(_ASSETS + "streakwarn.png"),
+  Picto.getCanvas(_ASSETS + "streaklost.png"),
+  Picto.getCanvas(_ASSETS + "dono-tag.png"),
+  Picto.getCanvas(_ASSETS + "super.png"),
+  Picto.getCanvas(_ASSETS + "prev100.png"),
+  Picto.getCanvas(_ASSETS + "prev30.png"),
+  Picto.getCanvas(_ASSETS + "prev10.png"),
+  Picto.getCanvas(_ASSETS + "soft100.png"),
+  Picto.getCanvas(_ASSETS + "soft30.png"),
+  Picto.getCanvas(_ASSETS + "soft10.png"),
+  Picto.getCanvas(_ASSETS + "soft9.png"),
+  Picto.getCanvas(_ASSETS + "soft8.png"),
+  Picto.getCanvas(_ASSETS + "soft7.png"),
+  Picto.getCanvas(_ASSETS + "soft6.png"),
+  Picto.getCanvas(_ASSETS + "soft5.png"),
+  Picto.getCanvas(_ASSETS + "soft4.png"),
+  Picto.getCanvas(_ASSETS + "soft3.png"),
+  Picto.getCanvas(_ASSETS + "soft2.png"),
+  Picto.getCanvas(_ASSETS + "soft1.png"),
+]);
 
 
-        await Promise.all([
-          userData.addXP(streak),
-          ECO.receive(Author.id,myDaily,"daily","RBN")
-        ]);
-
-        let dailyGet = $t('$.dailyGet',P).replace("100", "**" + myDaily + "**")
-        embed.setDescription("\n" + _emoji('rubine') + dailyGet);
-
-        let gemstone = ""
-
-        if ((hardStreak%10) == 0) {          
-
-          let dailyStreak = $t('$.dailyStreak', P).replace("500", "**500**")
-          embed.description += "\n" + (_emoji('ticket') + dailyStreak)
-
-            await ECO.receive(Author.id,500,"daily_10streak","RBN");
-
-        }
-
-        if ((hardStreak%3) == 0) {
-
-          if((hardStreak%10)!=0) gemstone="j";
-         
-          let dailyStreak = $t('interface.daily.dailyStreakJades', P)
-          embed.description += "\n" + (_emoji('jade') + dailyStreak)
-
-          await ECO.receive(Author.id,1000,"daily_3streak","JDE","+");
-        }
-
-        if ((hardStreak%200) == 0) {
-
-          gemstone="S"
-          
-          let dailyStreak = $t('interface.daily.dailyStreakSapphs', P)
-          embed.description += "\n" + (_emoji('sapphire') + dailyStreak)
-
-          await ECO.receive(Author.id,1,"daily_250streak","SPH");
-        }
-        
-        if ((hardStreak%365) == 0) {
-          gemstone="S"
-         
-          let dailyStreak = $t('interface.daily.dailyStreakSapphs', P)
-          embed.description += "\n" + (_emoji('sapphire') + dailyStreak)
-
-          await ECO.receive(Author.id,1,"daily_365streak","SPH","+");
-        }
-
-        embed.description += "\n\n" + "*Streak: **"+(hardStreak||0)+"***."
+const DAY = .01 * 60e3
 
 
-        embed.thumbnail( paths.CDN + "/build/daily/"+ ( gemstone=="S" ? "ringsaph" : gemstone + (hardStreak%10) ) + ".gif" );
+const init = async (msg,args) => {
+  const [boost,expTag,expTagInsu,expTagWARNING,expTagLOST,donoTag,super10,prev100,prev30,prev10,soft100,soft30,soft10,soft9,soft8,soft7,soft6,soft5,soft4,soft3,soft2,soft1] = await constantAssets; 
 
-        userachinv=userData.modules.achievements;
-        if(hardStreak>=10 && !userachinv.includes('10daily')){
-          
-          await DB.users.set(Author.id,{$addToSet:{'modules.achievements':"10daily",'modules.medalInventory':'10daily'}});
-          message.reply("**New Achievement!** Clockwork Collector | Collected 10 Dailies")
-        }
-          if(hardStreak>=30 && !userachinv.includes('30daily')){
-          
-            await DB.users.set(Author.id,{$addToSet:{'modules.achievements':"30daily",'modules.medalInventory':'30daily'}});
-            message.reply("**New Achievement!** Collector of the Month | Collected 30 Dailies")
-        }
-          if(hardStreak>=100 && !userachinv.includes('100daily')){
-          
-            await DB.users.set(Author.id,{$addToSet:{'modules.achievements':"100daily",'modules.medalInventory':'100daily'}});
-            message.reply("**New Achievement!** Compulsive Collector | Collected 100 Dailies")
-        }
-          if(hardStreak>=200 && !userachinv.includes('200daily')){
-          
-            await DB.users.set(Author.id,{$addToSet:{'modules.achievements':"200daily",'modules.medalInventory':'200daily'}});
-            message.reply("**New Achievement!** Blood for a silver Sapphire | Collected 200 Dailies")
-        }
-        
-        
-        if (userData.spdaily && userData.spdaily.amt){
-          embed.addField(Author.dDATA.spdaily.title,"+"+Author.dDATA.spdaily.amt+_emoji('rubine'));
-          await ECO.receive(message.author.id,Author.dDATA.spdaily.amt,"special_daily_boost","RBN","+");
-        }
+  const moment = require("moment");
+  moment.locale(msg.lang[0] || "en");
 
-        embed.footer(Author.tag,Author.displayAvatarURL);
-        message.channel.send({embed}).catch(e=>null);
+  const Author = msg.author;
+  const now = Date.now();
+  const P = { lngs: msg.lang , prefix: msg.prefix};
+  const v = {
+    last: $t("interface.daily.lastdly", P),
+    next: $t("interface.daily.next", P),
+    streakcurr: $t("interface.daily.streakcurr", P),
+    expirestr: $t("interface.daily.expirestr", P),
+  };
 
-    });
-}
-
-    let reject = function(message,Daily,r){
-          
-        P.remaining=  moment.utc(r).fromNow(true)
-        let dailyNope = $t('$.dailyNope',P);
-        message.reply(_emoji('nope') + dailyNope);
-        let embed=new Embed;
-        embed.color = 0xe35555;
-        embed.description(`
-    ${_emoji('time')   } **${v.last}** ${ moment.utc(Daily.userDataStatic).fromNow()}
-    ${_emoji('expired')} **${v.expirestr}** ${moment.utc(Daily.userDataStatic+Daily.expiration).fromNow() }
-        `);
-        return message.channel.send({embed:embed});
-    }
-    let info = async function(msg,Daily){
-        let userDaily = await Daily.userData(msg.author);
-        let dailyAvailable = await Daily.dailyAvailable(msg.author);
-        let streakGoes = await Daily.keepStreak(msg.author);
-        let streak = userDaily.streak;
-
-        let embe2=new Embed;
-        embe2.color = 0xe35555
-        embe2.description(`
-    ${_emoji('time')   } ${_emoji('offline')} **${v.last}** ${ moment.utc(userDaily.last).fromNow()}
-    ${_emoji('future') } ${dailyAvailable?_emoji('online'):_emoji('dnd')} **${v.next}** ${ moment.utc(userDaily.last).add(20,'hours').fromNow() }
-    ${_emoji('expired')} ${streakGoes?_emoji('online'):_emoji('dnd')} **${v.expirestr}** ${streakGoes ? moment.utc(userDaily.last+Daily.expiration).fromNow() +" !": "I have bad news for you..." }
-    ${_emoji('expense')} ${_emoji('offline')} **${v.streakcurr}** \`${streak }x\`(Hard) | \`${streak%10 }x\`(Soft)
-      `)
-            return message.channel.send({embed:embe2});
-    }
-
-    Timed.init(message,"daily",{streak:true,expiration:1.296e+8*1.8},after,reject,info);
+  if (msg.args[0] === "info") {
+    msg.args[0] = "status";
+    msg.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
+  }
+  const success = async (msg, DAILY) => {
     
-}
+    //const premiumTier = await Premium.getTier(msg.author);
+    const userData = await DB.users.getFull(msg.author.id);
+    const dailyPLXMember = await PLX.getRESTGuildMember("277391723322408960",msg.author.id);
+  
+    let dailyCard = Picto.new(800,600);
+    let ctx = dailyCard.getContext('2d');
 
-module.exports={
-  init
-  ,pub:true
-  ,cmd:'daily'
-  ,perms:3
-  ,cat:'economy'
-  ,botPerms:['attachFiles','embedLinks']
-  ,aliases:['dly']
-}
+    //let streak = Number(args[0]||1)
+    let streak = DAILY.userDaily.streak
+
+    let myDaily = {
+      RBN: 0,
+      JDE: 0,
+      SPH: 0,
+      
+      PSM: 0,
+      comToken: 0,
+      cosmoFragment: 0,
+      
+      boosterpack: 0,
+      EXP: Math.max(~~(streak/2),10),
+      
+      stickers: 0,
+      evToken: 0,
+      
+      lootbox_C: 0,
+      lootbox_U: 0,
+      lootbox_R: 0,
+      lootbox_SR: 0,
+      lootbox_UR: 0,
+    };
+
+    let softStreak = streak % 10 || 10;
+    const is = (x)=> !(streak%x);
+    let isRoadTo30 = (streak%30) > 20;
+    let isRoadTo50 = (streak%50) > 40;
+    let isRoadTo100 = (streak%100) > 90;    
+    
+    ctx.drawImage(eval("soft"+softStreak),0,0);
+    //if(isRoadTo30 && !is(30)) ctx.drawImage(prev30,0,0);
+    if(isRoadTo50 && !is(50)) ctx.drawImage(prev30,0,0);
+    if(isRoadTo100 && !is(100)) ctx.drawImage(prev100,0,0);
+    
+    if(softStreak==1) myDaily.RBN += 150;
+    if(softStreak==2) myDaily.RBN += 150;
+    if(softStreak==3) myDaily.JDE += 1000;
+    if(softStreak==4) myDaily.cosmoFragment += 25;
+    if(softStreak==5) myDaily.JDE += 1500;
+    if(softStreak==6) myDaily.lootbox_C += 1;
+    if(softStreak==7) myDaily.RBN += 350;
+    if(softStreak==8) myDaily.cosmoFragment += 25;
+    if(softStreak==9) myDaily.comToken += 5;    
+    if(is(10)){
+      myDaily.RBN += 500;
+      myDaily.JDE += 2500;
+      myDaily.cosmoFragment += 35;
+      myDaily.boosterpack += 1;
+      myDaily.EXP += 10;
+      if (!is(50) && !is(100) && !is(30)) myDaily.lootbox_U += 1;
+    }    
+    if(is(30)){
+      myDaily.EXP += 10;
+      //ctx.clearRect(0, 0, 800, 600);
+      //ctx.drawImage(soft30,0,0);
+      myDaily.lootbox_R += 1;
+    }
+    if(is(50)){
+      myDaily.EXP += 10;
+      myDaily.SPH += 1;
+      ctx.clearRect(0, 0, 800, 600);
+      ctx.drawImage(soft30,0,0);
+      if (!is(100)) myDaily.lootbox_SR += 1;
+    }
+    if(is(100)){
+      myDaily.EXP += 25;
+      myDaily.SPH += 5;
+      ctx.clearRect(0, 0, 800, 600);
+      ctx.drawImage(soft100,0,0);
+      myDaily.lootbox_UR += 1;
+    }    
+    if(is(1000)){
+      myDaily.EXP += 250;
+      myDaily.SPH += 10;     
+    }
+    if(dailyPLXMember?.premiumSince){
+      myDaily.PSM = miliarize(~~(( Date.now() - new Date(msg.member.premiumSince).getTime() ) / (24 * 60 * 60e3) / 10));
+      ctx.drawImage(boost,0-50,0);
+    }    
+    if (userData.donator){
+      let donoBoost =  Premium.DAILY[userData.donator];
+      let donoEmblem = await Picto.getCanvas(paths.CDN + "/images/donate/icony/" + userData.donator + "-small.png" );
+      myDaily.RBN += donoBoost;
+      let number_DONOBOOST = Picto.tag(ctx,"+ "+donoBoost,"italic 900 38px 'Panton Black'","#FFF" ,{line: 6, style: "#223"} );
+      let text_DONOBOOST = Picto.tag(ctx,(userData.donator?.toUpperCase()||"UNKNOWN"),"italic 900 15px 'Panton Black'","#FFF");
+      ctx.drawImage(donoTag,0,0);
+      ctx.drawImage(number_DONOBOOST.item,683 - number_DONOBOOST.width ,11);
+      ctx.drawImage(text_DONOBOOST.item,668 - text_DONOBOOST.width ,53);
+      ctx.drawImage(donoEmblem,698 ,14,52,52);
+    }
+    
+    
+
+    ctx.save()
+    ctx.rotate(.04490658503988659)
+    Picto.popOutTxt(ctx,"Daily Rewards",60,40,"italic 900 45px 'Panton Black'","#FFF",300,{style:'#1b1b25',line:12})
+    ctx.restore()
+    
+    let text_STREAK= Picto.tag(ctx,"STREAK ","italic 900 14px 'Panton Black'","#FFF") //,{line: 6, style: "#223"} )
+    let text_EXP= Picto.tag(ctx,"EXP", "italic 900 18px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
+    let number_STREAK= Picto.tag(ctx,streak,"italic 900 32px 'Panton Black'","#FFF") //,{line: 6, style: "#223"} )
+    let number_STREAK_PRIZE= Picto.tag(ctx, myDaily.EXP,"italic 900 38px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
+    let number_BOOST_PRIZE= Picto.tag(ctx, "+"+myDaily.PSM,"italic 900 35px 'Panton Black'","#FFF",{line: 6, style: "#223"} )
+    
+    /////////////////////////////////////////////////
+    
+    if(myDaily.PSM) ctx.drawImage(number_BOOST_PRIZE.item,660-35,540);
+
+
+    if(DAILY.userDaily.insured) ctx.drawImage(expTagInsu,0,0);
+    else if(DAILY.streakStatus === 'recovered') {
+      ctx.drawImage(expTagWARNING,0,0);
+      Picto.popOutTxt(ctx, 
+        $t("Streak insurance activated!",P),
+        360,540,
+        "italic 900 35px 'Panton Black'","#FFF" , 400,
+        {line: 8, style: "#223"},
+      )
+    }
+    else if(DAILY.streakStatus === 'lost'){
+      ctx.drawImage(expTagLOST,0,0);
+      Picto.popOutTxt(ctx, 
+        $t("Streak Lost!",P),
+        22,506,
+        "italic 900 42px 'Panton Black'","#FFF" , 400,
+        {line: 8, style: "#F23"},
+      )
+    }
+    else ctx.drawImage(expTag,0,0);
+ 
+
+    
+    if(DAILY.streakStatus !== 'lost'){
+      ctx.rotate(-.03490658503988659)
+      ctx.drawImage(number_STREAK.item,258-number_STREAK.width/2,526);
+      ctx.drawImage(text_STREAK.item,221,557);
+      ctx.drawImage(number_STREAK_PRIZE.item,160-number_STREAK_PRIZE.width,530);
+      ctx.drawImage(text_EXP.item,200-text_EXP.width,537);
+      ctx.rotate(.03490658503988659)
+    }
+    
+    
+ 
+
+
+
+
+
+
+
+    let lootAction = (x)=>null;
+    let boosterAction = (x)=>null;
+    let itemAction = (x)=>null;
+    let tokenAction = (x)=>null;
+
+    let fields = [
+      {name:'\u200b',value:'\u200b',inline:true},
+      {name:'\u200b',value:'\u200b',inline:true},
+      {name:'\u200b',value:'\u200b',inline:true},
+    ];
+    for (i in myDaily) !myDaily[i] ? delete myDaily[i] : null;
+    let items = Object.keys(myDaily).map((itm,i)=>{
+
+      let index = (i) % 2
+
+      P.count = myDaily[itm];
+      let itemName = $t("keywords."+itm,P);
+      
+
+      if(itm.startsWith('lootbox_')){
+        let tier = itm.substr(8);
+        lootAction = (x)=> userData.addItem(`lootbox_${tier}_D`);
+        itemName   = $t(`items:lootbox_${tier}_D.name`,P);
+      }
+      if(itm === 'boosterpack'){
+        boosterAction = (x)=> userData.addItem(x);
+      }
+      if(itm === 'item'){
+        itemAction = (x)=> userData.addItem(x);
+      }
+      
+      if(itm === 'comToken'){
+        tokenAction = (x)=> userData.addItem('commendtoken',x);
+        itemName = $t("items:commendtoken.name",P);
+      }
+      
+      if(P.count) fields[index].value+=( `${_emoji(itm)} **${P.count}** ${itemName}\n` );
+      //if(P.count) items.push( `${_emoji(itm)} **${P.count}** ${$t("keywords."+itm,P)}` );
+    })
+
+    PLX.sendJSON(msg.channel.id,DAILY)
+    let sq = -10;
+    let bar =""
+    while(sq++){
+      if(10+sq > softStreak) bar += "\⬛";
+      else bar += "\🟦"
+    }
+/*
+
+
+    if(DAILY.streakStatus === 'lost' && DAILY.userDaily.lastStreak > 1){
+      fields.push({
+        name: "\u200b",
+        value: "⚠ **Streak Lost**",
+        inline: false
+      }) 
+    }
+
+    /*
+
+    */
+   let postmortem;
+   if(DAILY.streakStatus === 'recovered'){
+    P.insuCount = userData.modules.inventory.find(i=>i.id==='keepstreak')?.count || 0; 
+    postmortem = $t('responses.daily.insuranceConsumed',P)  
+  }
+   if(DAILY.streakStatus === 'lost'){
+    P.oldStreak = DAILY.userDaily.lastStreak
+    let streakfixes = userData.modules.inventory.find(i=>i.id==='streakfix')?.count || 0; 
+    postmortem = $t('responses.daily.streakLost',P) + "\n" + (streakfixes? $t('responses.daily.yesRestorerInfo',P) : $t('responses.daily.noRestorerInfo',P) )
+  }
+
+  if(DAILY.streakStatus.pass && randomize(0,5) === 3){
+    fields.push({
+      name: "Want to boost your dailies further?",
+      value:"Check out the full extra rewards set [**HERE**]"+`(${paths.DASH})`,
+      inline: false
+    })
+  }
+
+    msg.channel.send({
+      embed:{
+      description:`
+☕ ${rand$t('responses.daily.dailyBonus',P)}
+      `,
+      fields,
+      timestamp: new Date(),
+      footer: {icon_url:msg.author.avatarURL,text: `${msg.author.tag}\u2002•  ${bar}`},
+      color:0x03dffc,
+      image: {url:"attachment://daily.png"}
+    }},{ file: dailyCard.toBuffer('image/png'), name: "daily.png" }).then(x=>{
+      if(postmortem){
+        msg.channel.send(postmortem)
+      }
+    });
+
+
+  }
+ 
+  const info = async (msg, Daily) => {
+    const userDaily = Daily.userDaily;
+    const dailyAvailable = Daily.dailyAvailable(msg.author);
+    const streakGoes = Daily.keepStreak(msg.author);
+    const { streak } = userDaily;
+
+    const embe2 = new Embed();
+    embe2.setColor("#e35555");
+    embe2.description(`${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily.last).fromNow()}`
+      + `${_emoji("future")} ${dailyAvailable
+        ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily.last).add(DAY/60e3, "minutes").fromNow()}`
+      + `${_emoji("expired")} ${streakGoes ? _emoji("online") : _emoji("dnd")} **${v.expirestr}**`
+      + `${streakGoes ? `${moment.utc(userDaily.last + Daily.expiration).fromNow()} !` : "I have bad news for you..."}
+    ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`(Hard) | \`${streak % 10}x\`(Soft)`);
+    return msg.channel.send({ embed: embe2 });
+  };
+
+
+  const reject = (message,D,REM) => {
+    return message.channel.send("big phat no " + REM);
+  }
+
+  Timed.init(
+    msg,
+    "daily",
+    {day: DAY, expiration: DAY + (DAY*1000), streak: true},
+    success,reject,info,
+  );
+
+
+ // Timed.init(msg, "daily", { streak: true, expiration: 1.296e+8 * 1.8 }, after, reject, info);
+};
+
+module.exports = {
+  init,
+  pub: true,
+  cmd: "daily",
+  perms: 3,
+  cat: "economy",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: ["dly"],
+};
