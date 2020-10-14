@@ -1,3 +1,7 @@
+const DAY = 22 * 60 * 60e3
+const EXPIRE = DAY + DAY / 2
+
+
 const Timed = require(`../../structures/TimedUsage`);
 const Premium = require(`../../utilities/Premium`);
 
@@ -32,7 +36,6 @@ const constantAssets = Promise.all([
 ]);
 
 
-const DAY = .01 * 60e3
 
 
 function awardPrizes(userData,myDaily,actions){
@@ -71,11 +74,13 @@ const init = async (msg,args) => {
     msg.args[0] = "status";
     msg.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
   }
+  const userData = await DB.users.getFull(msg.author.id);
+  const dailyPLXMember = await PLX.getRESTGuildMember("277391723322408960",msg.author.id);
+
+
   const success = async (msg, DAILY) => {
     
     //const premiumTier = await Premium.getTier(msg.author);
-    const userData = await DB.users.getFull(msg.author.id);
-    const dailyPLXMember = await PLX.getRESTGuildMember("277391723322408960",msg.author.id);
   
     let dailyCard = Picto.new(800,600);
     let ctx = dailyCard.getContext('2d');
@@ -250,6 +255,7 @@ const init = async (msg,args) => {
 
       P.count = myDaily[itm];
       let itemName = $t("keywords."+itm,P);
+      let itemoji = _emoji(itm);
       
 
       if(itm.startsWith('lootbox_')){
@@ -258,12 +264,19 @@ const init = async (msg,args) => {
         itemName   = $t(`items:lootbox_${tier}_D.name`,P);
       }
       if(itm === 'boosterpack'){
-        boosterAction = userData.addItem(x);
+        
+        let newBooster = async () => {
+          let BOOSTERS = await DB.items.find({type:'booster',rarity:{$in:['C','U','R']}});
+          shuffle(BOOSTERS);
+          await userData.addItem( BOOSTERS[0], myDaily[itm]);
+        }
+        boosterAction = newBooster();
       }
 
       if(itm === 'cosmo_fragment'){
         itemName   = $t(`items:cosmo_fragment.name`,P);
         fragAction = userData.addItem('cosmo_fragment',myDaily[itm]);
+        itemoji = _emoji('COS');
       }
 
       if(itm === 'item'){
@@ -271,11 +284,11 @@ const init = async (msg,args) => {
       }
       
       if(itm === 'comToken'){
-        tokenAction = userData.addItem('commendtoken',x);
+        tokenAction = userData.addItem('commendtoken',myDaily[itm]);
         itemName = $t("items:commendtoken.name",P);
       }
       
-      if(P.count) fields[index].value+=( `${_emoji(itm)} **${P.count}** ${itemName}\n` );
+      if(P.count) fields[index].value+=( `${itemoji} **${P.count}** ${itemName}\n` );
       //if(P.count) items.push( `${_emoji(itm)} **${P.count}** ${$t("keywords."+itm,P)}` );
     })
 
@@ -347,16 +360,44 @@ const init = async (msg,args) => {
     const dailyAvailable = Daily.dailyAvailable(msg.author);
     const streakGoes = Daily.keepStreak(msg.author);
     const { streak } = userDaily;
+    
+    const powerups = []
+    if(dailyPLXMember.premiumSince) powerups.push(_emoji('PSM'));
+    if(userData.donator) powerups.push(_emoji(userData.donator));
 
-    const embe2 = new Embed();
-    embe2.setColor("#e35555");
-    embe2.description(`${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily.last).fromNow()}`
-      + `${_emoji("future")} ${dailyAvailable
-        ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily.last).add(DAY/60e3, "minutes").fromNow()}`
-      + `${_emoji("expired")} ${streakGoes ? _emoji("online") : _emoji("dnd")} **${v.expirestr}**`
-      + `${streakGoes ? `${moment.utc(userDaily.last + Daily.expiration).fromNow()} !` : "I have bad news for you..."}
-    ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`(Hard) | \`${streak % 10}x\`(Soft)`);
-    return msg.channel.send({ embed: embe2 });
+
+
+    const embed = {
+      color: 0xE34555,
+      title: `Daily Status`,
+      description:`
+${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily.last).fromNow()}
+${_emoji("future")} ${
+  dailyAvailable 
+  ? _emoji("online") 
+  : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily.last).add(DAY/60e3, "minutes").fromNow()}
+${_emoji("expired")} ${streakGoes ? _emoji("online") : _emoji("dnd")} **${v.expirestr}** ${
+  streakGoes 
+  ? ` ${moment.duration( -(Date.now() - userDaily.last - Daily.expiration) ).humanize({h:1000})}!` 
+  : "I have bad news for you..."}
+${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
+`,
+      fields:[
+        {
+          name:"Powerups",
+          value: powerups.join(" • "),
+          inline: !0,
+        },
+        {
+          name:"Insurance",
+          value: Daily.insured ? _emoji('yep') : _emoji('nope'),
+          inline: !0,
+        },
+      ],
+      footer: {icon_url:msg.author.avatarURL,text: `${msg.author.tag}\u2002`},
+    }
+
+    return msg.channel.send({ embed });
   };
 
 
@@ -367,7 +408,7 @@ const init = async (msg,args) => {
   Timed.init(
     msg,
     "daily",
-    {day: DAY, expiration: DAY + (DAY*1000), streak: true},
+    {day: DAY, expiration: EXPIRE, streak: true},
     success,reject,info,
   );
 
