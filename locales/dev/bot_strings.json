@@ -12,6 +12,8 @@
         "synthGems": "Synthesis Gems",
         "cosmoFragment": "Cosmo Fragment",
         "cosmoFragment_plural": "Cosmo Fragments",
+        "COS": "Cosmo Fragment",
+        "COS_plural": "Cosmo Fragments",
         "C": "Common",
         "U": "Uncommon",
         "R": "Rare",
@@ -456,7 +458,8 @@
             "cash1000": "I'd almost consider you rich, Almost.",
             "cash5000": "Oh? How did YOU get so rich?",
             "cash10000": "Did you steal from a bank? Should I call the cops?",
-            "cashInfinite": "You really shouldn't cheat you know."
+            "cashInfinite": "You really shouldn't cheat you know.",
+            "balance" : "Balance"
         },
         "greet": {
             "byeOFF": "You disabled the bye message? Perhaps that's for the best, they wouldn't see it anyway.",
