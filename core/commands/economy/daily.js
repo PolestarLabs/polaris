@@ -232,11 +232,11 @@ const init = async (msg,args) => {
 
 
 
-    let lootAction = (x)=>null;
-    let boosterAction = (x)=>null;
-    let itemAction = (x)=>null;
-    let fragAction = (x)=>null;
-    let tokenAction = (x)=>null;
+    let lootAction = null;
+    let boosterAction = null;
+    let itemAction = null;
+    let fragAction = null;
+    let tokenAction = null;
 
     let fields = [
       {name:'\u200b',value:'\u200b',inline:true},
@@ -254,24 +254,24 @@ const init = async (msg,args) => {
 
       if(itm.startsWith('lootbox_')){
         let tier = itm.substr(8);
-        lootAction = (x)=> userData.addItem(`lootbox_${tier}_D`);
+        lootAction = userData.addItem(`lootbox_${tier}_D`);
         itemName   = $t(`items:lootbox_${tier}_D.name`,P);
       }
       if(itm === 'boosterpack'){
-        boosterAction = (x)=> userData.addItem(x);
+        boosterAction = userData.addItem(x);
       }
 
       if(itm === 'cosmo_fragment'){
-        itemName   = $t(`items:cosmo_fragment`,P);
-        fragAction = (x)=> userData.addItem('cosmo_fragment',myDaily[itm]);
+        itemName   = $t(`items:cosmo_fragment.name`,P);
+        fragAction = userData.addItem('cosmo_fragment',myDaily[itm]);
       }
 
       if(itm === 'item'){
-        itemAction = (x)=> userData.addItem(x); // for later
+        itemAction = userData.addItem(x); // for later
       }
       
       if(itm === 'comToken'){
-        tokenAction = (x)=> userData.addItem('commendtoken',x);
+        tokenAction = userData.addItem('commendtoken',x);
         itemName = $t("items:commendtoken.name",P);
       }
       
