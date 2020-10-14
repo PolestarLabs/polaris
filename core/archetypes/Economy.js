@@ -8,6 +8,7 @@ const CURRENCIES = {
   AMY: "amethysts",
   EMD: "emeralds",
   TPZ: "topazes",
+  PSM: "prisms"
 };
 
 function checkFunds(user, amt, currency = "RBN") {
@@ -54,7 +55,10 @@ function pay(user, amt, type = "OTHER", currency = "RBN") {
 function receive(user, amt, type = "OTHER", currency = "RBN") {
   if (amt === 0) return null;
   const uID = user.id || user;
-  if (typeof amt !== "number") reject("Amount informed is not a Number");
+  if (typeof amt !== "number") {
+    console.error(" Economy ERROR >> ".bgRed + `AMOUNT OF ${currency} (${amt}) IS NOT A NUMBER (${typeof amt})`);
+    return Promise.reject("Amount informed is not a Number");
+  }
   amt = parseInt(amt);
 
   const now = Date.now();
