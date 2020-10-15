@@ -14,6 +14,7 @@ const init = async (msg) => {
     return null;
   }
   if (msg.author.id === TARGET.id) return msg.channel.createMessage("no.");
+  if (msg.author.id === PLX.user.id) return msg.channel.createMessage("no.");
 
   const [USERDATA, TARGETDATA] = await Promise.all([
     DB.users.get(msg.author.id),
