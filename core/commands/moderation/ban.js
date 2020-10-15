@@ -7,7 +7,7 @@ const init = async function (msg) {
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
   let Target = await PLX.getTarget(msg.args[0], msg.guild);
-  if (msg.author.id === Target.id) return msg.channel.createMessage("no");
+  if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
 
   const serverData = await DB.servers.get(msg.guild.id);
   P.imsorry = rand$t("responses.verbose.interjections.gomenasai");

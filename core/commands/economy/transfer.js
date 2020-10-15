@@ -13,8 +13,8 @@ const init = async (msg) => {
     PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
     return null;
   }
-  if (msg.author.id === TARGET.id) return msg.channel.createMessage("no.");
-  if (msg.author.id === PLX.user.id) return msg.channel.createMessage("no.");
+  if (msg.author.id === TARGET.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
+  if (msg.author.id === PLX.user.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] BOT_USER");
 
   const [USERDATA, TARGETDATA] = await Promise.all([
     DB.users.get(msg.author.id),
