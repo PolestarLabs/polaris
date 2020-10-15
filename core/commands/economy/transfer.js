@@ -14,7 +14,7 @@ const init = async (msg) => {
     return null;
   }
   if (msg.author.id === TARGET.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
-  if (msg.author.id === PLX.user.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] BOT_USER");
+  if (TARGET.id === PLX.user.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] BOT_USER");
 
   const [USERDATA, TARGETDATA] = await Promise.all([
     DB.users.get(msg.author.id),
