@@ -1,7 +1,7 @@
 // const gear = require("../utilities/Gearbox/global");
-module.exports = async function yesNo(m, message, yes = false, no = false, timeout = false, options) {
+module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
   options = options || {};
-  const embed = options.embed || m.embeds?.[0] || false;
+  const embed = options.embed || promptMessage.embeds?.[0] || false;
   const avoidEdit = options.avoidEdit || !embed || false;
   const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
   const time = options.time || 15000;
@@ -20,41 +20,41 @@ module.exports = async function yesNo(m, message, yes = false, no = false, timeo
     id: _emoji('nope').id
   };
 
-  await m.addReaction(YA.r);
-  m.addReaction(NA.r);
+  await promptMessage.addReaction(YA.r);
+  promptMessage.addReaction(NA.r);
 
-  const reas = await m.awaitReactions({
+  const reas = await promptMessage.awaitReactions({
     maxMatches: 1,
-    authorOnly: options.approver || message.author.id,
+    authorOnly: options.approver || commandMessage.author.id,
     time,
   }).catch((err) => {
     console.error(err)
-    if (clearReacts) m.removeReactions().catch(() => null);
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 16499716;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.timeout };
 
-      m.edit({ embed });
+      promptMessage.edit({ embed });
     }
-    if (timeout && typeof timeout === "function") return timeout(m);
-    if (timeout) return timeout;
+    if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
+    if (timeoutFunction) return timeoutFunction;
     return null;
   });
    
   if (!reas?.length) return null;
  
   function cancellation() {
-    if (clearReacts) m.removeReactions().catch(() => null);
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 16268605;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.cancel };
 
-      m.edit({ embed });
+      promptMessage.edit({ embed });
     }
-    if (typeof no === "function") return no(m);
-    if (no) return no;
+    if (typeof noFunction === "function") return noFunction(promptMessage);
+    if (noFunction) return noFunction;
     return null;
   }
 
@@ -63,15 +63,15 @@ module.exports = async function yesNo(m, message, yes = false, no = false, timeo
   }
 
   if (reas.length === 1 && reas[0].emoji.id === YA.id) {
-    if (clearReacts) m.removeReactions().catch(() => null);
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 1234499;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.confirm };
-      m.edit({ embed });
+      promptMessage.edit({ embed });
     }
-    if (yes && typeof yes === "function") return yes(cancellation, m);
-    if (yes) return yes;
+    if (yesFunction && typeof yesFunction === "function") return yesFunction(cancellation, promptMessage);
+    if (yesFunction) return yesFunction;
   }
   return undefined;
 };
