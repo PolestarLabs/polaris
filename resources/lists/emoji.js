@@ -663,9 +663,11 @@ function getShallowMoji(identifier) {
 shallowEmojiBank();
 
 class PolluxEmoji extends String {
-  constructor(identifier) {
+  constructor(identifier,fallback) {
     const print = emojibank[identifier]
       || getShallowMoji(identifier).string
+      || getShallowMoji(fallback||"____").string
+      || fallback
       || "⬜";
 
     super(`${print} `);

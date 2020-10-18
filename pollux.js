@@ -85,7 +85,7 @@ Object.assign(PLX, Gearbox.Client);
 PLX.execQueue = [];
 PLX.commandPool = {};
 
-global._emoji = (E) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E);
+global._emoji = (E,F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E,F);
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;
