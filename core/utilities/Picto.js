@@ -41,7 +41,8 @@ module.exports = {
   getCanvas: function getCanvas(...args){    
     return  Canvas.loadImage(...args).catch(err=>{
       console.error(...args)
-      throw new Error(err)
+      let canvas = Canvas.createCanvas(32,32);
+      return canvas;
     })
   },
 
