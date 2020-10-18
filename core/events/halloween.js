@@ -95,12 +95,12 @@ userData: async function(Author){
     return eventData;
 },
   
-  phabricate: function (Author) {
-    let rarity = getRandomRarity();
-    let type =  shuffle(["head","body","legs","head","body","legs"])[randomize(0,3)]
-    let costume =  this._costumes()
-    let costumeName =  this._costumes('name',costume)
-    let aspect = this._adjectives();
+  phabricate: function (Author,typ,rar,cos,name,asp) {
+    let rarity = rar || getRandomRarity();
+    let type =  typ || shuffle(["head","body","legs","head","body","legs"])[randomize(0,3)]
+    let costume = cos || this._costumes()
+    let costumeName = name || this._costumes('name',costume)
+    let aspect = asp || this._adjectives();
     let aspectBonus =  Math.ceil((this._adjectives(true).indexOf(aspect)));
     
     let item =
