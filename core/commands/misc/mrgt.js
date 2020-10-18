@@ -45,8 +45,6 @@ const init = async function (msg,args,resolve) {
 
   const newMARRIAGES = await Promise.all(prefilt.map(marriageToRelationship));
 
-  console.log(newMARRIAGES);
-
   function buildDescription(nMAR){
     return `
 **Total Marriages:** ${MRG.length}
@@ -74,7 +72,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`).join("")}
   let last;
   let transferlist = [];
   Collector.on("message", async (m) => {
-    m.delete();
+    m?.delete();
     last?.delete();
     let finalMessage = ""
     if(m.content === 'ok') return Collector.stop();
@@ -84,8 +82,8 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`).join("")}
     if(imported >= 3) {
      finalMessage += "-5 "+_emoji('SPH')
     }
-    //await DB.users.set(msg.author.id, { $pull: { married: { id: newMARRIAGES[subaction].users.find((x) => x != msg.author.id) } } });
-    //const newM = await DB.relationships.create("marriage", newMARRIAGES[subaction].users, newMARRIAGES[subaction].initiative, newMARRIAGES[subaction].ring);
+    await DB.users.set(msg.author.id, { $pull: { married: { id: newMARRIAGES[index].users.find((x) => x != msg.author.id) } } });
+    const newM = await DB.relationships.create("marriage", newMARRIAGES[index].users, newMARRIAGES[index].initiative, newMARRIAGES[index].ring);
     //
     //msg.channel.send(`${_emoji("yep")} created. ${newM._id}`);
     finalMessage += (`\n${_emoji("yep")} created. \`${newMARRIAGES[index].users}\``);
@@ -112,8 +110,9 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`).join("")}
 > ${transferlist.join(' | ')}
     Cost: **${ 5*Math.max(imported-3,0) || "Free"}**
     `}});
-    if(typeof resolve == 'function') resolve(res);
+    if(typeof resolve == 'function') resolve({res,cost: 5*Math.max(imported-3,0) || 0, imported});
   })
+  if(!newMARRIAGES.find(x=>!x.transferred)) return Collector.stop();
 
 
  
