@@ -1,7 +1,7 @@
-const init = async function (msg) {
+const init = async function (msg,args,silent) {
   const userData = await DB.users.get(msg.author.id);
+  
   const oldInventory = userData.modules.inventory;
-
   const newInventory = [];
 
   oldInventory.forEach((item) => {
@@ -10,12 +10,13 @@ const init = async function (msg) {
     else newInventory.push({ id: item, count: 1 });
   });
 
-  console.log(newInventory);
-  msg.channel.send(`\`\`\`js\n${JSON.stringify(newInventory).replace(/},/g, "},\n").slice(0, 1990)}\`\`\``);
+  if(!silent) return;
+  return newInventory;
 };
+ 
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   cmd: "inventmigrate",
   perms: 3,
   cat: "misc",
