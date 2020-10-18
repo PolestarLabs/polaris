@@ -204,7 +204,7 @@ const init = async (message) => {
       }
     }
     message.author.crafting = false;
-    return message.reply("Invalid Craft Code");
+    //return message.reply("Invalid Craft Code");
   } catch (e) {
     message.author.crafting = false;
     return console.error(e);
