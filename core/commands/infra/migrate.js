@@ -1,10 +1,31 @@
 const YesNo = require('../../structures/YesNo.js')
+ 
+
+function SAPPHIREFACTOR(don, pastDon){
+let tiers = {
+    antimatter: 10,
+    astatine: 8,
+    uranium: 7,
+    zircon: 6,
+    palladium: 5,
+    lithium: 4,
+    carbon: 4,
+    iridium: 3,
+    iron: 3,
+    aluminium: 2,
+    plastic: 1,
+  }
+
+ return (1+(tiers[don] || 0)) + ( (1+ (tiers[pastDon] || 0)) / 10)
+}
 
 const init = async function (msg,args){
 
 
     const embed = {};
-    const yesNoOptions = {embed,clearReacts:true,time:120e3}
+    const yesNoOptions = {embed,clearReacts:true,time:120e3};
+
+    let userData = await DB.users.get(msg.author.id);
 
     embed.color = 0x2b2b3F;
     embed.title = "Transfer in progress..."
@@ -14,7 +35,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
 **Do you agree with those?**
     `
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦⬛⬛⬛⬛⬛⬛`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛`}
 
     let prompt = await msg.channel.send({embed});
 
@@ -36,7 +57,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 **Are you ready?**
     `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦⬛⬛⬛⬛⬛`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛`}
 
     await wait(1);
     await prompt.edit({embed});
@@ -51,7 +72,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 ${_emoji('loading')} • Transferring marriage
        `
        embed.color = 0x2b2b3F;
-       embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦⬛⬛⬛⬛`}
+       embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛`}
        
     await wait(1);
     await prompt.edit({embed});
@@ -80,10 +101,31 @@ ${_emoji('loading')} • Converting inventory
 
            `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦⬛⬛⬛`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦⬛⬛⬛⬛⬛⬛⬛⬛⬛`}
     await wait(1);
     await prompt.edit({embed});
+    
+    
+    const oldInventory = userData.modules.inventory;
+    const newInventory = [];
+
+    oldInventory.forEach((item) => {
+        if(item.id) continue;
+        const currItem = newInventory.find((sub) => sub.id === item);
+
+        if (currItem){
+            if(currItem.id.includes('lootbox') && currItem.count <= 10) currItem.count++;
+        } 
+        else newInventory.push({ id: item, count: 1 });
+    });
+    
+    await DB.users.set(msg.author.id, {$set: {'modules.inventory': newInventory} }).catch(console.error);
+
+    userData.modules.inventory = newInventory; 
+
     await wait(1);
+    
+
 
 
            
@@ -94,9 +136,11 @@ ${_emoji('loading')} • Capping Lootboxes
 
 `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦⬛⬛`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛⬛⬛⬛`}
     await wait(1);
     await prompt.edit({embed});
+
+ 
     await wait(1);
 
 
@@ -105,46 +149,71 @@ ${_emoji('loading')} • Capping Lootboxes
 ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
-${_emoji('loading')} • Recalculating Rubines
-
-`
-    embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦⬛`}
-    await wait(1);
-    await prompt.edit({embed});
-    await wait(1);
-
-
-           
-    embed.description = `
-${_emoji('yep')} • Transferring Marriages
-${_emoji('yep')} • Converting Inventory
-${_emoji('yep')} • Capping Lootboxes
-${_emoji('yep')} • Recalculating Rubines
-${_emoji('loading')} • Baking a Cake
-${_emoji('loading')} • Awarding **Touhou Classic** Deck Skin
-
-`
-    embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦`}
-    await wait(1);
-    await prompt.edit({embed});
-    await wait(1);
-
-
-           
-    embed.description = `
-${_emoji('yep')} • Transferring Marriages
-${_emoji('yep')} • Converting Inventory
-${_emoji('yep')} • Capping Lootboxes
-${_emoji('yep')} • Recalculating Rubines
-${_emoji('loading')} • Baking a Cake
-${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
+${_emoji('loading')} • Recalculating Gemstones
 ${_emoji('loading')} • Awarding Bonus Sapphires
 
 `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛⬛⬛`}
+    await wait(1);
+    await prompt.edit({embed});
+    
+    let newRubines = Math.min( userData.modules.rubines, userData.modules.dyStreakHard * 15);
+    let oldRubines = userData.modules.rubines;
+    let jades      = ~~(userData.modules.jades / 2);
+    let saph       = ~~(userData.modules.sapphires * (SAPPHIREFACTOR(userData.donator,userData.formerDonator)) / 10 + 1 );
+    
+    await DB.users.set(msg.author.id, {$set: 
+        {
+            'modules.rubines' : newRubines,
+            'modules.rubinesOld' : oldRubines,
+            'modules.jades' : jades,
+            'modules.sapphires' :saph,
+        } 
+    })
+    
+
+
+    await wait(1);
+
+
+           
+    embed.description = `
+${_emoji('yep')} • Transferring Marriages
+${_emoji('yep')} • Converting Inventory
+${_emoji('yep')} • Capping Lootboxes
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('loading')} • Baking a Cake`
+    embed.color = 0x2b2b3F;
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛⬛`}
+    await wait(1);
+    await prompt.edit({embed});
+    msg.channel.send({embed:{description:`(${newRubines} ${_emoji('RBN')}) (${jades} ${_emoji('JDE')}) (${saph} ${_emoji('SPH')})`,title:"Gemstones Recalculated"}})
+    embed.description+= `\n${_emoji('loading')} • Awarding **Touhou Classic** Deck Skin`
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛`}
+    await wait(2);
+
+    await DB.users.set(msg.author.id,{$inc:{'modules.sapphires': -1 * marriage_transfer_res.cost || 0}})
+
+           
+    embed.description = `
+${_emoji('yep')} • Transferring Marriages
+${_emoji('yep')} • Converting Inventory
+${_emoji('yep')} • Capping Lootboxes
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('loading')} • Baking a Cake
+${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
+
+
+`
+
+    await DB.users.set(msg.author.id,{$addToSet: {'modules.skinInventory':'casino_touhou-classic' } });
+
+
+    embed.color = 0x2b2b3F;
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛`}
     await wait(1);
     await prompt.edit({embed});
     await wait(1);
@@ -156,15 +225,15 @@ ${_emoji('loading')} • Awarding Bonus Sapphires
 ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
-${_emoji('yep')} • Recalculating Rubines
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
-${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('loading')} • Declaring Rubines Income Tax 
 
 `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛`}
     await wait(1);
     await prompt.edit({embed});
     await wait(1);
@@ -175,18 +244,47 @@ ${_emoji('loading')} • Declaring Rubines Income Tax
 ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
-${_emoji('yep')} • Recalculating Rubines
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
-${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('yep')} • Declaring Rubines Income Tax 
+${_emoji('loading')} • Converting Cosmetics IDs
+
+`
+
+
+
+embed.color = 0x2b2b3F;
+embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦⬛⬛`}
+    await wait(1);
+    await wait(1);
+    await prompt.edit({embed});
+    
+    let myBGs = userData.modules.bgInventory;
+    let myBGsFULL = await DB.cosmetics.find({code:{$in:myBGs}}).lean();
+
+    //await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
+
+           
+    embed.description = `
+${_emoji('yep')} • Transferring Marriages
+${_emoji('yep')} • Converting Inventory
+${_emoji('yep')} • Capping Lootboxes
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('loading')} • Baking a Cake
+${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
+${_emoji('yep')} • Declaring Rubines Income Tax 
+${_emoji('nope')} • Converting Cosmetics IDs (Waiting for BGs sheet)
 
 `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦⬛`}
+    await wait(1);
     await wait(1);
     await prompt.edit({embed});
-    await wait(2);
+    await wait(1);
 
 
            
@@ -194,15 +292,17 @@ ${_emoji('yep')} • Declaring Rubines Income Tax
 ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
-${_emoji('yep')} • Recalculating Rubines
+${_emoji('yep')} • Recalculating Gemstones
+${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('yep')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
-${_emoji('yep')} • Awarding Bonus Sapphires
 ${_emoji('yep')} • Declaring Rubines Income Tax 
+${_emoji('nope')} • Converting Cosmetics IDs (Waiting for BGs sheet)
 
 `
     embed.color = 0x2b2b3F;
-    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦`}
+    embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦🟦`}
+    await wait(1);
     await wait(1);
     await prompt.edit({embed});
     await wait(1);
