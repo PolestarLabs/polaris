@@ -128,15 +128,17 @@ userData: async function(Author){
        if (operation == "name"){
          
          let items ={
-           nurse: "Nurse",
+           //nurse: "Nurse",
             wizard: "Wizard",
             devil: "Devil",
             vamp: "Vampire",
-            frank: "Frank",
-            chicken: "Chicken",
-            cow: "Cow",
-            mummy: "Mummy",
+            werewolf: "Werewolf",
+            chicken: "Duck",
+            clown: "Clown",
+            pirate: "Pirate",
+            //mummy: "Mummy",
             scrow: "Scarecrow",
+            jiangshi: "Jiangshi",
          }
          
          return items[ex]
@@ -144,34 +146,19 @@ userData: async function(Author){
      }
      
   let list = [
-    "nurse",
-    "nurse",
-    "vamp",
-    "vamp",
-    
-    "wizard",
-    "wizard",
-    
-    "devil",
-    "devil",
-    
-    "frank",
-    
-    "chicken",
-    
-    
-    "cow",
-
-    
-    "mummy",
-
-
-    
-    "scrow"
-
  
-    
+    "wizard",
+    "devil",
+    "vamp",
+    "werewolf",
+    "chicken",
+    "clown",
+    "pirate",
+    "scrow",
+    "jiangshi",
+ 
   ]
+    
   list = shuffle(list)
   list = shuffle(list)
   list = shuffle(list)
@@ -238,7 +225,7 @@ userData: async function(Author){
     if(rar=="R")  return randomize(20,35);
     if(rar=="SR") return randomize(32,60);
     if(rar=="UR") return randomize(55,99);
-    if(rar=="XR") return randomize(75,95);
+    if(rar=="XR") return randomize(75,115);
     
   }
    
