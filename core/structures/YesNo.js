@@ -55,7 +55,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     }
     if (typeof noFunction === "function") return noFunction(promptMessage);
     if (noFunction) return noFunction;
-    return null;
+    if (!noFunction) return false;    
   }
 
   if (reas.length === 1 && reas[0].emoji.id === NA.id) {
@@ -72,6 +72,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     }
     if (yesFunction && typeof yesFunction === "function") return yesFunction(cancellation, promptMessage);
     if (yesFunction) return yesFunction;
+    if (!yesFunction) return true;
   }
   return undefined;
 };
