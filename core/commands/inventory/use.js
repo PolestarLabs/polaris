@@ -6,6 +6,8 @@ const init = async function (msg,args){
     const ITEM = args[0];
     const ITEM_ARGUMENTS = args.slice(1);
 
+    if (!ITEM) return msg.channel.send(_emoji('nope') + `*"Use"*... use **what**?`);
+
     if(userData.hasItem(ITEM)){
         try{
             const itemDetails = DB.items.get(ITEM);
