@@ -11,12 +11,12 @@ exports.run = (msg, args, userData, itemDetails) => {
         if((destinationCounter.lastStreak||0) <= destinationCounter.streak ) return msg.channel.send("You cannot restore your streak backwards.");
 
         let promptMessage = await msg.channel.send({embed:{description:"Would you like to consume your Streakfix ?"+`
-[${destinationCounter.streak}] >> [${destinationCounter.lastStreak}]        
+\`${TARGET}\` [${destinationCounter.streak}] >> [${destinationCounter.lastStreak}]        
         `}});
 
         YesNo(promptMessage,msg,
             async (cancel,prompt)=>{
-                await userData.update({},{[`counters.${TARGET}.streak`]:destinationCounter.lastStreak});
+                await DB.users.set(userData.id,{[`counters.${TARGET}.streak`]:destinationCounter.lastStreak});
                 resolve("OK")
             },
             ()=>{
