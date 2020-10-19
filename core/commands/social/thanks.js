@@ -1,4 +1,4 @@
-const DAY = 1.00036e+6;
+const DAY = 3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
