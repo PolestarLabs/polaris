@@ -123,7 +123,6 @@
     },
     "responses": {
         "errors": {
-
             "iNeedThesePerms": "The following permissions are not present to proceed correctly:\n{{PERMSLIST}}",
             "denied": "You are not authorized to use this. This commands requires a Elevation Rank of {{rankNeed}}, your Rank is {{rankMe}}. Contact the Server owner or a Mod.",
             "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
@@ -143,7 +142,6 @@
             "kbanNone": "I need a target to ban, I could always ban you instead.",
             "cantKickHim": "I oh-so-cannot do that to this person. I am not allowed to harm my superiors.",
             "cantKickSelf": "You cannot ban or kick yourself doe!",
-
             "superRoleNope": "It seems **{{user}}** does not have the Role **{{group}}**.",
             "banNone": "I need a target to ban, I could always ban you instead.",
             "unpermB": "I don't seem to have enough perms to process this.",
@@ -152,9 +150,10 @@
             "noChannelGiven": "You need to tell me which channel to log the activities into.",
             "emojiError": "I couldn't add this Emoji. Check reaction permissions or if the Emoji is valid...",
             "insuperms": "{{imsorry}} I can't do that for you if you don't have permission yourself.",
-            "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere."
+            "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere.",
+            "unparsable": "This isn't a valid embed, maybe you could try {{link}}?"
         },
-        "cooldown":{
+        "cooldown": {
             "generic": [
                 "Hang on, I need a minute!",
                 "I'm not a printer, please slow down!",
@@ -167,7 +166,7 @@
                 "I need a moment to breathe!",
                 "Honey, please, one at a time.",
                 "*You're going too fast senpai uwu I can't take it uwu*"
-              ]
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\n But don't worry, I've trimmed the text for you~",
@@ -245,7 +244,6 @@
                     "Noooo!",
                     "Geez!"
                 ]
-
             }
         },
         "moderation": {
@@ -263,12 +261,11 @@
             "failure": "Oh no, It seems something went wrong. I'm sorry."
         },
         "equip": {
-            "getMoreBG":"Get more Backgrounds",
-            "NFSALE":"NOT FOR SALE",
-            "equipOwned":"You already have this Background. Equip it?",
-            "buyThisBG":"Buy this Background?",
-            "successBG":"`Success!` Background acquired and equipped! 😉",
-
+            "getMoreBG": "Get more Backgrounds",
+            "NFSALE": "NOT FOR SALE",
+            "equipOwned": "You already have this Background. Equip it?",
+            "buyThisBG": "Buy this Background?",
+            "successBG": "`Success!` Background acquired and equipped! 😉",
             "nomedals": "Oh? Seems you don't have any medals to equip. Perhaps you should buy some first?",
             "equipSlot": "Choose a slot to equip your brand new medal!",
             "timeout": "Did you not want to equip a Medal? Call me again when you want to equip one.",
@@ -283,23 +280,23 @@
             "isEmpty": "There's nothing there to remove!"
         },
         "discoin": {
-						"links": "Relevant links:",
-						"list": "Currency list",
-						"graphs": "Live graphs",
-						"guide": "Users guide",
-						"tax": "Tax information",
-						"tax_desc": "Exchange tax: **{{exchange}}%**\nIncome Tax: **{{income}}%**\nTransfer Tax: **{{transfer}}%**" ,
+            "links": "Relevant links:",
+            "list": "Currency list",
+            "graphs": "Live graphs",
+            "guide": "Users guide",
+            "tax": "Tax information",
+            "tax_desc": "Exchange tax: **{{exchange}}%**\nIncome Tax: **{{income}}%**\nTransfer Tax: **{{transfer}}%**",
             "discoin_desc": "Your Rubines are being sent, a response from {{bot}} will come as soon as it arrives.",
-						"receipt": "Here is your transaction receipt:",
-						"receiptnoDM": "I couldn't deliver it in dms, so here is your receipt:",
-						"takedis": "Keep this receipt in case your Rubines don't reach their destination.",
+            "receipt": "Here is your transaction receipt:",
+            "receiptnoDM": "I couldn't deliver it in dms, so here is your receipt:",
+            "takedis": "Keep this receipt in case your Rubines don't reach their destination.",
             "invalidCurr": "That Currency doesn't exist! Use `{{prefix}}exchange` to see all available currencies.",
             "debt": "You can't exchange debt, exchange at least 1 Rubine!",
-						"zero": "Exchange at least 1 Rubine.",
-						"perMin": "The minimum is {{perMin}} Rubines per transaction.",
-						"perMax": "The maximum per transcation is {{perMax}} Rubines.",
-						"dailyMax": "You've hit the daily maximum of {{dailyMax}} Rubines.",
-						"unreachable": "Discoin could not be reached, try again at a later time."
+            "zero": "Exchange at least 1 Rubine.",
+            "perMin": "The minimum is {{perMin}} Rubines per transaction.",
+            "perMax": "The maximum per transcation is {{perMax}} Rubines.",
+            "dailyMax": "You've hit the daily maximum of {{dailyMax}} Rubines.",
+            "unreachable": "Discoin could not be reached, try again at a later time."
         },
         "langIntro": {
             "global": "Okay, from now on I'll speak {{LANGUAGE}} in this server. {{LANGJOKE}}",
@@ -310,7 +307,6 @@
             "persotexUpdate": "I've changed your personal text to: {{pstext}}\nUse `{{prefix}}profile` to see the new line on your ProfileCard. I'm sure someone will enjoy it."
         },
         "trade": {
-
             "exchangeWhat": "What you want to give in exchange?",
             "tradeStert": "**{{user.tag}}** started a Trade",
             "has10toOffer": "{{targetName}} has 10s to offer something in exchange",
@@ -328,59 +324,70 @@
             "cantDestroy": "I can't destroy this.",
             "destroyed": "Item destroyed! This is what remained from it:"
         },
-        "marry":{
-            "needRing":"You need a Ring to propose, where are your manners?"
-            ,"ringTutorial":"*Currently you have no wedding rings to be used.*\n\nTo get a Ring, you need to craft one.\nFor that you have to buy a **Partial Ring** at the [**Crafting Workshop**]({{craftingURL}} \"Pollux Crafting Workshop!\") and spend either Rubines, Jades, or Sapphires, plus any additional materials to make a Jewel for it.\nYou can also spend all of them to make the ultimate gemstone wedding ring!\n\nCraft rings using `{{prefix}}craft`, start by crafting the **Partial Ring** (`{{prefix}}craft partial-ring`) then adding the gemstone of your choice with `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. These 4 are the *basic rings* made solely with gemstones, some items will allow you to make different rings!"
-            ,"noneOfThisRing": "Double-check your pockets, there's no such ring on your Inventory."
-            ,"availableRings": "Available rings are:"
-            ,"proposal" : "{{userA}} has proposed to **{{userB}}** with the **{{ringname}}**.\n{{userB}} do you accept?"
-            ,"actuallyNone": "Actually you have *none*{{'none' refers to 'rings'}}. Go get one! **Now!**"
-            ,"saidYes" : "{{userB}} said YES!"
-            ,"saidNo" : "{{userB}} said no..."
-            ,"saidNothing" : "{{userB}} ran away... look at them go... oh well... wanna drink something?"
-            ,"addToFeatured" : "Would you like to show {{userB}} as your featured lover in your ProfileCard?"
-            ,"addToFeatured2" : "{{userB}} Would you like to do the same with {{userA}}?"
-            ,"addToFeatured3" : "Display your new spouse in Profile Cards?"
-            ,"alreadyMarriedUp" : "Looks like you're already married to {{userB}}. Would you like to upgrade the ring from *{{ringA}}* to **{{ringB}}**?"
-            ,"alreadyMarriedInf" : "You're already married to {{userB}} with an identical or superior ring (*{{ringB}}*)! What are you trying to do?"
-            ,"cantMarrySelf" : "I am pretty modern and all, but... self-marriage is a bit too much don't you think?"
-            ,"cantMarryPollux" : "No way! Shoo!"
+        "marry": {
+            "needRing": "You need a Ring to propose, where are your manners?",
+            "ringTutorial": "*Currently you have no wedding rings to be used.*\n\nTo get a Ring, you need to craft one.\nFor that you have to buy a **Partial Ring** at the [**Crafting Workshop**]({{craftingURL}} \"Pollux Crafting Workshop!\") and spend either Rubines, Jades, or Sapphires, plus any additional materials to make a Jewel for it.\nYou can also spend all of them to make the ultimate gemstone wedding ring!\n\nCraft rings using `{{prefix}}craft`, start by crafting the **Partial Ring** (`{{prefix}}craft partial-ring`) then adding the gemstone of your choice with `{{prefix}}craft [ring-jade|ring-rubine|ring-sapphire|ring-stardust]`. These 4 are the *basic rings* made solely with gemstones, some items will allow you to make different rings!",
+            "noneOfThisRing": "Double-check your pockets, there's no such ring on your Inventory.",
+            "availableRings": "Available rings are:",
+            "proposal": "{{userA}} has proposed to **{{userB}}** with the **{{ringname}}**.\n{{userB}} do you accept?",
+            "actuallyNone": "Actually you have *none*{{'none' refers to 'rings'}}. Go get one! **Now!**",
+            "saidYes": "{{userB}} said YES!",
+            "saidNo": "{{userB}} said no...",
+            "saidNothing": "{{userB}} ran away... look at them go... oh well... wanna drink something?",
+            "addToFeatured": "Would you like to show {{userB}} as your featured lover in your ProfileCard?",
+            "addToFeatured2": "{{userB}} Would you like to do the same with {{userA}}?",
+            "addToFeatured3": "Display your new spouse in Profile Cards?",
+            "alreadyMarriedUp": "Looks like you're already married to {{userB}}. Would you like to upgrade the ring from *{{ringA}}* to **{{ringB}}**?",
+            "alreadyMarriedInf": "You're already married to {{userB}} with an identical or superior ring (*{{ringB}}*)! What are you trying to do?",
+            "cantMarrySelf": "I am pretty modern and all, but... self-marriage is a bit too much don't you think?",
+            "cantMarryPollux": "No way! Shoo!"
         },
-            "ship": {
-                "needTupipo": "The Love Calculator does not work with just one person, my dear.",
-                "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!"
-                ,"quotes":[
-                ["Oh. _Oh no._",
+        "ship": {
+            "needTupipo": "The Love Calculator does not work with just one person, my dear.",
+            "need2diffpipo": "Unless this person is capable of mitosis, they still count as one person, I need **two** people!",
+            "quotes": [
+                [
+                    "Oh. _Oh no._",
                     "YOUR HOROSCOPES ARE NOT IN ALIGNMENT, PLEASE REFRAIN FROM FURTHER CONTACT."
                 ],
-                ["There was only a slight hesitation before that swipe left.",
+                [
+                    "There was only a slight hesitation before that swipe left.",
                     "Although you're familiar with each other, you don't want to get _that_ kind of familiar."
                 ],
-                ["You guys could work as a couple the same way a tomato could work in a salad.",
+                [
+                    "You guys could work as a couple the same way a tomato could work in a salad.",
                     "Hey! You don't hate each other! That's a start, right?"
                 ],
-                ["Ooh, what a spicy relationship. The spice is flour, maybe, but it's still a spice, isn't it?",
+                [
+                    "Ooh, what a spicy relationship. The spice is flour, maybe, but it's still a spice, isn't it?",
                     "A few more dates and maybe some sparks will fly!"
                 ],
-                ["Woah, almost a match! ",
+                [
+                    "Woah, almost a match! ",
                     "Every relationship can use a bit of work, I guess."
                 ],
-                ["It's a match! Your odds are about as good as mine!",
+                [
+                    "It's a match! Your odds are about as good as mine!",
                     "Mmm, I'd watch this slow burn romance as a movie."
                 ],
-                ["We're edging up into _like like_ territory!",
+                [
+                    "We're edging up into _like like_ territory!",
                     "Cosying up, are we?"
                 ],
-                ["Psst, Flicky and I are betting on your success. Have you crafted a partial ring yet?",
+                [
+                    "Psst, Flicky and I are betting on your success. Have you crafted a partial ring yet?",
                     "Stop holding back! Confess your feelings!"
                 ],
-                ["I ship it!",
+                [
+                    "I ship it!",
                     "You cutie pies are just two peas in a pod!"
                 ],
-                ["Damn, you guys are almost _perfect_ for each other!",
+                [
+                    "Damn, you guys are almost _perfect_ for each other!",
                     "So, which one of you is getting pregnant?"
                 ],
-                ["THE POWER COUPLE HAS ARRIVED.",
+                [
+                    "THE POWER COUPLE HAS ARRIVED.",
                     "Soulmates! Amazing!"
                 ]
             ]
@@ -406,7 +413,6 @@
             "noselfRoles": "There are no Self-Roles in this Server"
         },
         "generic": {
-
             "inviteText": "Invite me to your server clicking [HERE]",
             "selectIndex": "Please reply with the **number** of the option you want.",
             "cancel": "Changed your mind? Ok, see you later~",
@@ -416,17 +422,16 @@
             "minus_rubines": "I'm taking %R $t(keywords.RBN_plural) from your balance okay~?"
         },
         "daily": {
-            "insuranceConsumed" : "You missed your daily timing... but don't worry!\n**Your insurance was consumed and your streak still goes on**.\nInsurances remaining: **{{insuCount}}**\n*Be sure to apply it again to your daily with `{{prefix}}use keepstreak daily`*",
-            "streakLost" : "Oh noooo, your you missed daily timing and your streak is now lost! But don't worry. You can still use a **Streak Restorer** to get back where you were before ({{oldStreak}})!",
-            "noRestorerInfo" : "You can craft a restorer with `{{prefix}}craft streakfix`",
-            "yesRestorerInfo" : "You have a restorer in your inventory! Try `{{prefix}}use streakfix` to use it!",
+            "insuranceConsumed": "You missed your daily timing... but don't worry!\n**Your insurance was consumed and your streak still goes on**.\nInsurances remaining: **{{insuCount}}**\n*Be sure to apply it again to your daily with `{{prefix}}use keepstreak daily`*",
+            "streakLost": "Oh noooo, your you missed daily timing and your streak is now lost! But don't worry. You can still use a **Streak Restorer** to get back where you were before ({{oldStreak}})!",
+            "noRestorerInfo": "You can craft a restorer with `{{prefix}}craft streakfix`",
+            "yesRestorerInfo": "You have a restorer in your inventory! Try `{{prefix}}use streakfix` to use it!",
             "dailyBonus": [
                 "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:"
             ],
             "dailyGet": "{{emoji}} You've received 100 Rubines as your daily bonus!",
             "dailyNope": "{{emoji}} Hmm? Seems you already claimed your Rubines, you can get more in: **{{remaining}}**",
             "dailyStreak": "{{emoji}} **+500 Rubines** for 10 days of Dailies in a row!"
-
         },
         "toggle": {
             "disabledSer": "The **{{module}}** module has been disabled **Globally**.",
@@ -444,7 +449,6 @@
             "confirm": ":fleur_de_lis:  **{{who}}** has kindly added **+1Rep** to **{{target}}**. They must be nice.",
             "cooldown": "Hold on, You can rep again in {{remaining}}. Please be patient."
         },
-
         "$": {
             "insuFloor": "You do not have enough Rubines. You need at least **{{number}}** {{emoji}}",
             "insuBet": "Bet at least {{number}}",
@@ -462,7 +466,7 @@
             "cash5000": "Oh? How did YOU get so rich?",
             "cash10000": "Did you steal from a bank? Should I call the cops?",
             "cashInfinite": "You really shouldn't cheat you know.",
-            "balance" : "Balance"
+            "balance": "Balance"
         },
         "greet": {
             "byeOFF": "You disabled the bye message? Perhaps that's for the best, they wouldn't see it anyway.",
@@ -519,33 +523,33 @@
             "noSelf": "You know you can't do that to yourself don't you?"
         },
         "crafting": {
-            "craftingItem":"Crafting `{{item_name}}`",
+            "craftingItem": "Crafting `{{item_name}}`",
             "noitem": "I couldn't find this item",
             "noitemu": "Could not find this Item or anything like it",
             "materialMissing": "There are missing materials in your inventory, I cannot craft this.",
             "materialPresent": "All materials are available in your inventory, proceed with the crafting?",
             "didyoumean": "I couldn't find this item. By any chance do you mean one of these?",
-            "didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?"
-            ,"timeout":"Timeout! You took too much to decide, the crafting furnace now is cold."
-            ,"cancel": "Cancelled! Did you just waste both of our times?"
-            ,"crafted": "Success! Look, here's your item! Brand new and shining~"
+            "didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?",
+            "timeout": "Timeout! You took too much to decide, the crafting furnace now is cold.",
+            "cancel": "Cancelled! Did you just waste both of our times?",
+            "crafted": "Success! Look, here's your item! Brand new and shining~"
         },
         "misc": {
             "memberSince": "{{target}} has been a member since: {{joinedstamp}}",
             "aviOK": "Alright, I've changed my photo for you. You can change my propic again in {{cooldown}}",
             "colorChange": "Your favorite color has been saved!"
         },
-        "transfer":{
-            "lastdly":"Last Box Transfer:",
-            "next":"Next Transfer available {{in X hours}}",
-            "transferboxto": "Transferring  Box to {{userB}}"
-            ,"transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} "
-            ,"timeout": "**Transfer Timed Out!**"
-            ,"cancel": "**Transfer Cancelled!**"
-            ,"success": "**{{boxname}}** transferred to {{userB}}"
+        "transfer": {
+            "lastdly": "Last Box Transfer:",
+            "next": "Next Transfer available {{in X hours}}",
+            "transferboxto": "Transferring  Box to {{userB}}",
+            "transferthisboxto": "Transferring  **{{boxname}}** to {{userB}} ",
+            "timeout": "**Transfer Timed Out!**",
+            "cancel": "**Transfer Cancelled!**",
+            "success": "**{{boxname}}** transferred to {{userB}}"
         },
-        "give":{
-            "cooldown":"Hold up! You can transfer again in {{remaining}}!",
+        "give": {
+            "cooldown": "Hold up! You can transfer again in {{remaining}}!",
             "not2self": "Hold on, you can't give something to yourself!"
         },
         "inventory": {
@@ -559,50 +563,75 @@
             "browsingKEY": "This is your **Key Items** Inventory\n*These items unlock certain features from other commands or entire modules.*",
             "browsingMATERIAL": "This is your **Crafting Material Items** Inventory\n*You can use them to craft other items.*",
             "emptyJokes": [
-                "Fill this inventory with your tears because it is empty.", "There is nothing in this Inventory but spiders.\nThey all stare at you and clap. Bravo.", "The inventory is as empty as your heart.", "Nothing to see here. Move along.", "This inventory contains: disappointment.", "<Insert item here>", "...Nope, still empty.", "The inventory is empty, but you may now fill it with your tears.", "You must be awfully optimistic if you think more items are just going to appear in this inventory.", "This inventory is oh so very empty.", "You have....a whole lotta nothing", "You will not find a finer empty inventory anywhere.", "You open the empty inventory and stare inside. The inventory stares back accusingly.", "This inventory is now full of disappointment...", "You stare into the abyss, the abyss stares back at you.", "\"FEED ME SEYMOUR\"", "You open the inventory to the familiar sight of nothing. Oh how you've missed that!", "This inventory looks sad and deflated now that it is empty.", "When you gaze long enough into the empty inventory, the inventory gazes back into you.", "This inventory was once full of wondrous treasures. Then you came along...", "This inventory is on strike until further notice", "A single tumbleweed rolls from one side of the inventory to another", "As you open the empty inventory, a number of trapped, screaming souls come swirling out... That's probably normal.", "The inventory is empty, but at least the interior looks really nice. Velvet-lined and everything.", "There's nothing in this inventory, but you imagine all the things it COULD'VE been...", "Even though there wasn't anything in the inventory, opening it showered you in confetti! Yay!", "This inventory is as empty as my well of creativity after writing all this messages"
+                "Fill this inventory with your tears because it is empty.",
+                "There is nothing in this Inventory but spiders.\nThey all stare at you and clap. Bravo.",
+                "The inventory is as empty as your heart.",
+                "Nothing to see here. Move along.",
+                "This inventory contains: disappointment.",
+                "<Insert item here>",
+                "...Nope, still empty.",
+                "The inventory is empty, but you may now fill it with your tears.",
+                "You must be awfully optimistic if you think more items are just going to appear in this inventory.",
+                "This inventory is oh so very empty.",
+                "You have....a whole lotta nothing",
+                "You will not find a finer empty inventory anywhere.",
+                "You open the empty inventory and stare inside. The inventory stares back accusingly.",
+                "This inventory is now full of disappointment...",
+                "You stare into the abyss, the abyss stares back at you.",
+                "\"FEED ME SEYMOUR\"",
+                "You open the inventory to the familiar sight of nothing. Oh how you've missed that!",
+                "This inventory looks sad and deflated now that it is empty.",
+                "When you gaze long enough into the empty inventory, the inventory gazes back into you.",
+                "This inventory was once full of wondrous treasures. Then you came along...",
+                "This inventory is on strike until further notice",
+                "A single tumbleweed rolls from one side of the inventory to another",
+                "As you open the empty inventory, a number of trapped, screaming souls come swirling out... That's probably normal.",
+                "The inventory is empty, but at least the interior looks really nice. Velvet-lined and everything.",
+                "There's nothing in this inventory, but you imagine all the things it COULD'VE been...",
+                "Even though there wasn't anything in the inventory, opening it showered you in confetti! Yay!",
+                "This inventory is as empty as my well of creativity after writing all this messages"
             ]
         }
     },
     "interface": {
         "generic": {
-            "deleted":"Deleted:",
-            "cancel":"Cancelled!",
-            "timeout":"Timeout!",
-            "cantAfford":"Ah, you can't afford this... :(",
+            "deleted": "Deleted:",
+            "cancel": "Cancelled!",
+            "timeout": "Timeout!",
+            "cantAfford": "Ah, you can't afford this... :(",
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?",
-            "alotWentOn" : "A lot went on in this day...",
-            "alreadyOwnThis" : "Hey, you already own this one!"
+            "alotWentOn": "A lot went on in this day...",
+            "alreadyOwnThis": "Hey, you already own this one!"
         },
-        "reminders":{
+        "reminders": {
             "currentActive": "These are your current active reminders:",
             "noneToDelete": "No reminders to delete!",
             "maxActive": "You can only have **{{count}}** active reminders at a time!",
             "errorWhen": "Sorry, this is confusing. I didn't understand *when* you want me to remind that.",
             "errorTARDIS": "Excuse me time traveler, I cannot go to the past to remind you of what you already forgot.",
-            "reminderOk" : "Ok I'll remind you of {{appointment}} by **{{time}} (UTC)** {{location}}",
-            "reminderChannel" : "at {{channel}}",
-            "reminderDMs" : "in your DMs"
-
+            "reminderOk": "Ok I'll remind you of {{appointment}} by **{{time}} (UTC)** {{location}}",
+            "reminderChannel": "at {{channel}}",
+            "reminderDMs": "in your DMs"
         },
-        "brackets":{
-            "maxRR":"Max limit for Roundrobin: 16"
-            ,"maxBK":"Max limit for Brackets: 32"
-            ,"RRt":":trophy: Round-Robin Brackets"
-            ,"BKt":":trophy: Tournament Brackets"
-            ,"match":"Match"
-            ,"round":"Round"
-            ,"preround":"Pre-Round"
-            ,"team":"TEAM {{X}}"
-            ,"winner":"Winner"
-            ,"bracketX":"Bracket {{AB}}"
+        "brackets": {
+            "maxRR": "Max limit for Roundrobin: 16",
+            "maxBK": "Max limit for Brackets: 32",
+            "RRt": ":trophy: Round-Robin Brackets",
+            "BKt": ":trophy: Tournament Brackets",
+            "match": "Match",
+            "round": "Round",
+            "preround": "Pre-Round",
+            "team": "TEAM {{X}}",
+            "winner": "Winner",
+            "bracketX": "Bracket {{AB}}"
         },
-        "synthfrag":{
-            "magifrag":"Cosmetics Fragmentation",
-            "disenchant":"Would you like to disenchant this?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n into **{{count}} $t(keywords.cosmoFragment)** ?"
-            ,"cosmeticSynth":"Cosmetic Item Synthesis"
-            ,"confirmSynth":"Do you want me to synthesize this?"
-            ,"nogemsforThis":"Looks like you don't have enough gems for this synthesis..."
+        "synthfrag": {
+            "magifrag": "Cosmetics Fragmentation",
+            "disenchant": "Would you like to disenchant this?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n into **{{count}} $t(keywords.cosmoFragment)** ?",
+            "cosmeticSynth": "Cosmetic Item Synthesis",
+            "confirmSynth": "Do you want me to synthesize this?",
+            "nogemsforThis": "Looks like you don't have enough gems for this synthesis..."
         },
         "booster": {
             "checkStickersAt": "Check your stickers and equip them at the {{dashboard}}",
@@ -614,15 +643,20 @@
             "cancelled": "Cancelled by the moderator",
             "userKicked": "I have *gently* kicked {{user}} out of here.",
             "kickFlavs": [
-                "Gently enough so they can still walk back in.", "I hope they can still sit after this.", "Don't try this at home.", "No animals were harmed.", "They're gonna be ok... I guess."
+                "Gently enough so they can still walk back in.",
+                "I hope they can still sit after this.",
+                "Don't try this at home.",
+                "No animals were harmed.",
+                "They're gonna be ok... I guess."
             ],
             "userBanned": "I have *not-so-gently* banned {{user}}. This person is not welcome here anymore,",
             "userSoftBanned": "I have *gently* banned {{user}}. Sadly I couldn't completelly obliterate this person,",
             "banFlavs": [
-                    "I hope they step on a LEGO.", "you can now make fun of him.", "who's next?", "don't be like them{{'them' refers to 'this person'}}, kids."
-                ]
-
-                ,
+                "I hope they step on a LEGO.",
+                "you can now make fun of him.",
+                "who's next?",
+                "don't be like them{{'them' refers to 'this person'}}, kids."
+            ],
             "includeReason": "You forgot to tell me *why* this person is being punished.\nState the reason below: `(20s)`",
             "userKickError": "Something went wrong, oof."
         },
@@ -634,34 +668,22 @@
             "noFeed": "There are no Feeds set up in this Server",
             "noTube": "There are no YouTube notifications set up in this Server",
             "noTwitch": "There are no Twitch alerts set up in this Server",
-
             "stateIDorURL": "You forgot to give me an ID or URL to remove from here. Check `{{prefix}}{{command}} list` if you forgot them~",
             "listRemove": "To remove one, just try `{{prefix}}{{command}} remove [Index #]`",
-            "channelUpdate": "I've set the Default posting Channel to {{channelID}}!"
-
-                ,
+            "channelUpdate": "I've set the Default posting Channel to {{channelID}}!",
             "invalidRSS": "Hey, this is not a valid RSS address! Be sure you're doing it right.",
             "invalidTwitch": "Look, theres no Twitch user around with that name. Check carefully what you're typing!",
-            "invalidYoutube": "Um, that doesn't look like a YouTube channel. Not one that I know at least..."
-
-                ,
+            "invalidYoutube": "Um, that doesn't look like a YouTube channel. Not one that I know at least...",
             "listShowRSS": "RSS Feed List for this Server",
             "listShowTwitch": "Twitch Streams being posted in this Server",
-            "listShowYoutube": "New YouTube video alerts for this Server"
-
-                ,
+            "listShowYoutube": "New YouTube video alerts for this Server",
             "savedSubLastRSS": "**Saved**! - Submitting latest Posts from this Feed at {{channelID}}. Further ones will be checked every **30 minutes**",
             "savedSubLastTwitch": "**Saved**! - A notification will be posted at {{channelID}} when this Channel goes live. Checked every **15 Minutes**",
-            "savedSubLastYoutube": "**Saved**! - Submitting latest video from this channel at {{channelID}}. Checked every **1 hour**"
-
-                ,
+            "savedSubLastYoutube": "**Saved**! - Submitting latest video from this channel at {{channelID}}. Checked every **1 hour**",
             "feedLimitRSS": "This server can only have **5** RSS feeds at once.",
             "feedLimitTwitch": "This server can only have **2** Twitch Channel updates at once.",
             "feedLimitYoutube": "This server can only have **1** YouTube Channel alert at once.",
             "donateToIncrease": "If you need a higher limit, consider [Donating]({{donationLink}}) or [apllying for Pollux Partnership]({{partnershipLink}})"
-
-
-
         },
         "autoRolesforThis": "Self-assignable Roles for this Server",
         "daily": {
@@ -681,9 +703,7 @@
             "timeout": "Nuke Timed Out!",
             "completed": "Server Info has been successfully wiped and reset. Try using **+serverinfo** to see if everything was properly reset. I'm no responsible for any afterward Nuclear Fallout contamination."
         },
-        "pleasewait": {
-
-        },
+        "pleasewait": {},
         "reactroles": {
             "reactrolesfor": "Reaction Roles for {{server}}",
             "removeAll": "I've removed all Reactions Registry from here. But you'll have to clear manually any reactions from the messages themselves.",
@@ -692,7 +712,6 @@
             "removedAllFrom": "Removed all reactions from {{ID}}~",
             "noReactionDel": "To delete a Role Reaction, use `{{prefix}}reactionroles del [MESSAGE ID] [EMOJI]`. You can ommit `EMOJI` if you want to delete all Reactions from that Message too~",
             "success": "Reaction Roles will be seen in this message:"
-
         },
         "shuffle": {
             "picking": "Picking... {{as in 'picking from a list'}}",
@@ -708,12 +727,10 @@
             "quick_useful": " Commands you might find useful",
             "quick_enjoy": "Commands you might enjoy playing around with",
             "quick_didntask": " Commands you didn't ask for",
-
             "avail_cmd": "Available Commands",
             "avail_cmdlist": "List of commands currently available and supported ({{commandcount}}).",
             "notenough": "Is this tiny box not enough?",
             "trythese": "Try one of these",
-
             "curr_info": "Currency Information",
             "currency_overview": "My currency system is relatively complex and has several limitations and protective features. Every transaction is logged and can be traced easily, that ensures your hard work will not be eclipsed by cheaters. We log over 30 thousand transactions every day.   \n        \n    •  Everyone starts with a bunch of **Jades** and **Rubines**, and with one **Lootbox**.\n\u200b\n",
             "rubines_desc": "\n*My main currency, bright-pink gemstones made of special hexagonal scalenohedrons of Al₂O₃Cr, used for pretty much everything!*\n        Can be obtained from Daily Bonuses (`{{prefix}}daily`), Lootboxes (`+box`) and Gambling Games (`+blackjack`, `+slots`, etc.). As well as from trades with other users once you reach Level 5 and have at least a 10-day Daily Streak.\n",
@@ -729,7 +746,6 @@
             "youhave10": "You have 10 seconds to guess the country this flag belongs to. **GO!**",
             "wellDone": "{{interjection}} **{{user}}** got it! This is the flag of **{{country}}**",
             "noGuess": "{{interjectionB}} Looks like nobody guessed it... Better luck next time!"
-
         },
         "coinflip": {
             "coinVictory": "{{interjection}} You won! You got **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
@@ -813,7 +829,7 @@
                 "Oh, interesting. You've won **{{count}}**{{e}} $t(keywords.RBN) from me. Now, do you think you can keep your luck up?",
                 "Congrats! You've won **{{count}}**{{e}} $t(keywords.RBN)."
             ],
-            "resultsLoss": [                
+            "resultsLoss": [
                 "The house always wins, honey, and today, I win **{{count}}**{{e}} $t(keywords.RBN).",
                 "You're **{{count}}**{{e}} $t(keywords.RBN) poorer than when you started. I'm sure your luck will turn if you play just one more game, though.",
                 "What an interesting strategy. It cost you **{{count}}**{{e}} $t(keywords.RBN).",
@@ -867,19 +883,17 @@
             "Amazing! Look at what I've found!",
             "Hey, I'm pretty sure you want to see this Lootbox here."
         ],
-        "duplicate":"DUPLICATE",
+        "duplicate": "DUPLICATE",
         "lootPick": "You all have **__20 Seconds__** to dispute it! Type `{{prefix}}pick` for a chance to claim it!",
         "goesTo": "Time's up! Let's see who's getting this Box.\n**This Loot Box will be raffled between:**",
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
         "opening": "{{user}} opened their Lootbox...",
         "contains": "This {{adjective}} Lootbox contains",
-
         "keep": "Keep it",
         "reroll": "Reroll it",
         "rerolled": "Let's try again, rerolling the box content...",
         "noMoreRolls": "You've ran out of rerolls, you'll have to stick with this result.",
         "noFunds": "You need more Rubines to reroll, perhaps next time.",
-  
         "addedRubines": "{{X}} Rubines have been added to your Balance",
         "addedJades": "{{X}} Jades have been added to your Pouch",
         "addedMedal": "**{{itm}}** Medal has been added to your Medals Pocket",
@@ -890,15 +904,12 @@
         "contesting": "Entries for this Box:",
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
         "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
-        
-        
-        "options_new": "{{k_emoji}}Keep | {{r_emoji}}Reroll {{amt}}",             
+        "options_new": "{{k_emoji}}Keep | {{r_emoji}}Reroll {{amt}}",
         "rerollRemain_new": "You can reroll **one** last time!",
         "rerollRemain_new_plural": "You can reroll **{{count}}** more times!",
-        "hasDupes" : "{{x_frags}} from duplicate items!",
-        "allItemsAdded" : "All items have been added to your inventory!"
+        "hasDupes": "{{x_frags}} from duplicate items!",
+        "allItemsAdded": "All items have been added to your inventory!"
     },
-
     "eastereggs": {
         "konodioda": "You thought that it was Pollux, **but it was ME, DIO**!",
         "vacuum": "**{{user}}** has given **+1 Rep** to the Void. {{amount}} reps have been thrown into there so far."
@@ -908,5 +919,4 @@
         "reactThis": "React to this message to auto-receive the roles"
     },
     "helpkey": "help"
-
 }
