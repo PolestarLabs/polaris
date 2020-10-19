@@ -24,6 +24,7 @@ const POLARIS_UI = {
   whiteorangeem: "<:switchpartialPARTIAL:763615044914642975>",
 
   cogs: "<:cogs:763615044625760287>",
+  THX: "<:THX:767860827435827230>",
  
 
   // NAMED COPIES
