@@ -19,10 +19,11 @@ const init = async function (msg, args) {
       const decimal = parseInt(match[1]);
       embedstr = embedstr.replace(match[0], match[0].replace(match[1], decimal.toString()));
     }
+    let userEmbed;
     try {
-      const userEmbed = JSON.parse(embedstr);
+      userEmbed = JSON.parse(embedstr);
     } catch (e) {
-      return msg.channel.send($t("responses.errors.unparsable", P));
+      return msg.channel.send({ embed: { description: $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }) } });
     }
     msg.delete().catch(e => null);
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
