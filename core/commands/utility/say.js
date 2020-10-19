@@ -14,13 +14,16 @@ const init = async function (msg, args) {
     }
     let embedstr = msg.content.substr(msg.content.indexOf("embed") + 5).trim();
     // Check for hex colour representation
-    const match = embedstr.match(/"color":\s*(0[xX][0-9a-f]{0,6})/i);
+    const match = embedstr.match(/"color":\s*(0[x][0-9a-f]{0,6})/i);
     if (match) { // Parse the match to decimal
       const decimal = parseInt(match[1]);
       embedstr = embedstr.replace(match[0], match[0].replace(match[1], decimal.toString()));
     }
-
-    const userEmbed = JSON.parse(embedstr);
+    try {
+      const userEmbed = JSON.parse(embedstr);
+    } catch (e) {
+      msg.channel.send($t("responses.errors.unparsable", P));
+    }
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
   } else {
     msg.channel.send(msg.args.join(" "));
