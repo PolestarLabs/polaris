@@ -22,8 +22,9 @@ const init = async function (msg, args) {
     try {
       const userEmbed = JSON.parse(embedstr);
     } catch (e) {
-      msg.channel.send($t("responses.errors.unparsable", P));
+      return msg.channel.send($t("responses.errors.unparsable", P));
     }
+    msg.delete().catch(e => null);
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
   } else {
     msg.channel.send(msg.args.join(" "));
@@ -33,7 +34,6 @@ const init = async function (msg, args) {
 module.exports = {
   init,
   pub: true,
-  deleteCommand: true,
   cmd: "say",
   perms: 3,
   cat: "util",

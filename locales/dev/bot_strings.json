@@ -151,7 +151,7 @@
             "emojiError": "I couldn't add this Emoji. Check reaction permissions or if the Emoji is valid...",
             "insuperms": "{{imsorry}} I can't do that for you if you don't have permission yourself.",
             "not-a-NSFW-channel": "This channel isn't set to NSFW. Don't go leaving your \"artwork\" everywhere.",
-            "unparsable": "I couldn't turn this into an embed, have you tried Embed Architect?"
+            "unparsable": "This isn't a valid embed, maybe you could try Pollux Embed Architect?"
         },
         "cooldown": {
             "generic": [
