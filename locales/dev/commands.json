@@ -123,55 +123,53 @@
 		"attribute": "An advanced notepad for RPG players! Store notes, attributes, and even entire roll scripts here!",
 		"commend": "Show your appreciation to someone publicly",
 		"thx": "Show your appreciation with a simple \"thanks\".",
-		"rpgen": "Generates NPCs and Mini-plotlines for classic-ish RPG adventures."
-		,"choose": "Choose N entries from a list of items, or among members of a Role"
-		,"brackets": "Create a quick table for your fancy in-house tournaments"
-		,"reactionroles": "Push for Role. Life has never been so easy!"
-		,"maidpic": "Posts a random Maid"
-		,"neko": "Posts a random Neko"
-		,"transfer": "Send Rubines or Boxes to a friend"
-		,"consumable": "$t(bot_strings:responses.inventory.browsingCONSUMABLE)"
-		,"boosterpack": "$t(bot_strings:responses.inventory.browsingBOOSTERPACK)"
-		,"junk": "$t(bot_strings:responses.inventory.browsingJUNK)"
-		,"material": "$t(bot_strings:responses.inventory.browsingMATERIAL)"
-		,"key": "$t(bot_strings:responses.inventory.browsingKEY)"
-		,"lootbox": "$t(bot_strings:responses.inventory.browsingLOOTBOX)"
-		,"minesweeper": "Stock Minesweeper game, for when you feel like you're in eternal boredom!"
-		,"localnews": "What is *Local Man* up to in your server right now?"
-		,"ramen": "Tasty ramen pics!"
-		,"safebooru": "Cute pics from Safebooru"
-		,"eurobeat": "In dire need of an instant Eurobeat at this very moment? I got you covered!"
-		,"didyoumean": "Google thinks you meant something else"
-		,"open" : "***Transitive verb** - allowing access, passage, or a view through an empty space; not closed or blocked up.*\nUse this to **open** things that *can* be opened!"
-		,"fragment":"Cosmetic items are very mystical, use this to disenchant them into fragments that you can use to create new ones!"
-		,"tagline": "A one-liner that best describes you"
-		,"personaltext": "Up to 4 lines of anything you want to tell the world"
-		,"rss":"Receive RSS Feeds right at your server!"
-		,"ytalert":"Post new videos from a YouTube Channel to your server!"
-		,"reminder": "Never forget that thing again! \"What thing\" you ask? See, you already forgot it!",
-		"pin": "Ever wanted to pin a message, but without having to reach your mouse or awkwardly fiddle around the mobile interface? **WORRY NO MORE!** Here it is!"
-		,"read&translate":"Read + Translate commands in a useful chained version! Read text from an image and translate it immediately afterwards! "
-		,"gotcha":"Recovers the last message edited or deleted by someone recently on the channel. Useful for sniping *smartassery*."
-
+		"rpgen": "Generates NPCs and Mini-plotlines for classic-ish RPG adventures.",
+		"choose": "Choose N entries from a list of items, or among members of a Role",
+		"brackets": "Create a quick table for your fancy in-house tournaments",
+		"reactionroles": "Push for Role. Life has never been so easy!",
+		"maidpic": "Posts a random Maid",
+		"neko": "Posts a random Neko",
+		"transfer": "Send Rubines or Boxes to a friend",
+		"consumable": "$t(bot_strings:responses.inventory.browsingCONSUMABLE)",
+		"boosterpack": "$t(bot_strings:responses.inventory.browsingBOOSTERPACK)",
+		"junk": "$t(bot_strings:responses.inventory.browsingJUNK)",
+		"material": "$t(bot_strings:responses.inventory.browsingMATERIAL)",
+		"key": "$t(bot_strings:responses.inventory.browsingKEY)",
+		"lootbox": "$t(bot_strings:responses.inventory.browsingLOOTBOX)",
+		"minesweeper": "Stock Minesweeper game, for when you feel like you're in eternal boredom!",
+		"localnews": "What is *Local Man* up to in your server right now?",
+		"ramen": "Tasty ramen pics!",
+		"safebooru": "Cute pics from Safebooru",
+		"eurobeat": "In dire need of an instant Eurobeat at this very moment? I got you covered!",
+		"didyoumean": "Google thinks you meant something else",
+		"open": "***Transitive verb** - allowing access, passage, or a view through an empty space; not closed or blocked up.*\nUse this to **open** things that *can* be opened!",
+		"fragment": "Cosmetic items are very mystical, use this to disenchant them into fragments that you can use to create new ones!",
+		"tagline": "A one-liner that best describes you",
+		"personaltext": "Up to 4 lines of anything you want to tell the world",
+		"rss": "Receive RSS Feeds right at your server!",
+		"ytalert": "Post new videos from a YouTube Channel to your server!",
+		"reminder": "Never forget that thing again! \"What thing\" you ask? See, you already forgot it!",
+		"pin": "Ever wanted to pin a message, but without having to reach your mouse or awkwardly fiddle around the mobile interface? **WORRY NO MORE!** Here it is!",
+		"read&translate": "Read + Translate commands in a useful chained version! Read text from an image and translate it immediately afterwards! ",
+		"gotcha": "Recovers the last message edited or deleted by someone recently on the channel. Useful for sniping *smartassery*."
 	},
 	"usage": {
-		"pin": "`{{prefix}}pin` - Pins the last message posted to the channel\n`{{prefix}}pin [Message ID]` Pins a specific message, regardless of its channel."
-		,"reminder":"`{{prefix}}reminder (list|delete) [Reminder Text and Time (| Time) ] (-c #channel)`\n\nThe most basic usage is: `{{prefix}}reminder do this in 3 hours`, `{{prefix}}reminder do this next tuesday 2pm`, `{{prefix}}reminder do this tomorrow 14:34 PST`\nThe default reminder channel is via DMs, if you want to specify a channel try: `{{prefix}}reminder do this 14:20 -c #channel`\n\nIn some cases the wording can be confusing, so to completely isolate the timer from the text you can use `|`:\n`{{prefix}}reminder watch 007: Tomorrow never dies | next friday` Here the word 'tomorrow' could confuse things a bit, so using `|` ensures only what is past it will be accounted as time.\n\nTo list your current reminders:\n`{{prefix}}reminder list`\nTo remove reminders:\n`{{prefix}}reminder delete (index)` Removes the reminder at the `index` position. Removes the last one if none is specified.",
-		"ytalert":"`{{prefix}}ytalert [add|remove|list] [Channel URL | Channel ID] (#channel)`\n\n`{{prefix}}rss add [URL] #channel` Starts posting new videos from that YouTube channel at #channel or at the channel the command was used if no channel was tagged.\n`{{prefix}}ytalert remove 1` `{{prefix}}ytalert remove [URL]` Removes the YouTube Channel from position 1 (see `list`) or with the specified URL.\n`{{prefix}}ytalert list` Lists all currently active YouTube alerts.\n\n>**New videos update every 1 hour*",
-		"rss":"`{{prefix}}rss [add|remove|list] [RSS URL] (#channel)`\n\n`{{prefix}}rss add [URL] #channel` Starts posting from that Feed at #channel or at the channel the command was used if no channel was tagged.\n`{{prefix}}rss remove 1` `{{prefix}}rss remove [URL]` Removes the RSS feed from position 1 (see `list`) or with the specified URL.\n`{{prefix}}rss list` Lists all currently active RSS feeds.\n\n>**Feeds update every 15 minutes*",
-		"personaltext":"`{{prefix}}ptxt [Your text here]`\nThis is displayed in your Profile Card",
-		"tagline":"`{{prefix}}tagline [Your text here]`\nThis is displayed in your Profile Card",
-		"fragment":"`{{prefix}}fragment [bg | medal | sticker] [last | ITEM_ID ]`\n `last` Breaks the last Cosmetic of that type you've obtained, and gives you **Cosmo Shards** acording to its rarity tier.\n`ITEM ID` Using the item ID points directly to a specific cosmetic in your inventory. ",
+		"pin": "`{{prefix}}pin` - Pins the last message posted to the channel\n`{{prefix}}pin [Message ID]` Pins a specific message, regardless of its channel.",
+		"reminder": "`{{prefix}}reminder (list|delete) [Reminder Text and Time (| Time) ] (-c #channel)`\n\nThe most basic usage is: `{{prefix}}reminder do this in 3 hours`, `{{prefix}}reminder do this next tuesday 2pm`, `{{prefix}}reminder do this tomorrow 14:34 PST`\nThe default reminder channel is via DMs, if you want to specify a channel try: `{{prefix}}reminder do this 14:20 -c #channel`\n\nIn some cases the wording can be confusing, so to completely isolate the timer from the text you can use `|`:\n`{{prefix}}reminder watch 007: Tomorrow never dies | next friday` Here the word 'tomorrow' could confuse things a bit, so using `|` ensures only what is past it will be accounted as time.\n\nTo list your current reminders:\n`{{prefix}}reminder list`\nTo remove reminders:\n`{{prefix}}reminder delete (index)` Removes the reminder at the `index` position. Removes the last one if none is specified.",
+		"ytalert": "`{{prefix}}ytalert [add|remove|list] [Channel URL | Channel ID] (#channel)`\n\n`{{prefix}}rss add [URL] #channel` Starts posting new videos from that YouTube channel at #channel or at the channel the command was used if no channel was tagged.\n`{{prefix}}ytalert remove 1` `{{prefix}}ytalert remove [URL]` Removes the YouTube Channel from position 1 (see `list`) or with the specified URL.\n`{{prefix}}ytalert list` Lists all currently active YouTube alerts.\n\n>**New videos update every 1 hour*",
+		"rss": "`{{prefix}}rss [add|remove|list] [RSS URL] (#channel)`\n\n`{{prefix}}rss add [URL] #channel` Starts posting from that Feed at #channel or at the channel the command was used if no channel was tagged.\n`{{prefix}}rss remove 1` `{{prefix}}rss remove [URL]` Removes the RSS feed from position 1 (see `list`) or with the specified URL.\n`{{prefix}}rss list` Lists all currently active RSS feeds.\n\n>**Feeds update every 15 minutes*",
+		"personaltext": "`{{prefix}}ptxt [Your text here]`\nThis is displayed in your Profile Card",
+		"tagline": "`{{prefix}}tagline [Your text here]`\nThis is displayed in your Profile Card",
+		"fragment": "`{{prefix}}fragment [bg | medal | sticker] [last | ITEM_ID ]`\n `last` Breaks the last Cosmetic of that type you've obtained, and gives you **Cosmo Shards** acording to its rarity tier.\n`ITEM ID` Using the item ID points directly to a specific cosmetic in your inventory. ",
 		"open": "I can open the following things for you:\n  • <:BOOSTER:596658667345149954> **Boosters**: Which contain stickers `{{prefix}}open booster [name]` \n • <:LOOTBOX:596658668238274560> **Lootboxes**: Which contain many cool things inside `{{prefix}}open box [tier]`\n\nWhat I **can't** open:\n  • \\💙 Your Heart\n  • \\🧠 Your Mind\n  • \\🥚 Eggs\n  • \\🏢 A venture capital firm",
-		"didyoumean":"`{{prefix}}dym [Any Text | ([Message ID | ^ ] [Any Text]) ]`\nAny text following `dym` will be used for your 'Did you mean...?' response.\n\n`{{prefix}}dym [MESSAGE ID] [Text here]` If you want to target a specific message to quote\n`{{prefix}}dym [Your text here] ^` to quote the message immediately above. the `^` can be anywhere in the text. Note that all occurences of `^` will be erased.",
+		"didyoumean": "`{{prefix}}dym [Any Text | ([Message ID | ^ ] [Any Text]) ]`\nAny text following `dym` will be used for your 'Did you mean...?' response.\n\n`{{prefix}}dym [MESSAGE ID] [Text here]` If you want to target a specific message to quote\n`{{prefix}}dym [Your text here] ^` to quote the message immediately above. the `^` can be anywhere in the text. Note that all occurences of `^` will be erased.",
 		"safebooru": "`{{prefix}}safebooru [tags]`\nFor spacing use  `_` :*`{{prefix}}safe blue_hair`*\nFor multiple tags use `+` :*`{{prefix}}safe blue_hair+pointy_ears`*\nTo ignore certain tags, use `-` before them: *`{{prefix}}safe blue_hair+pointy_ears+-1girl`*\n\n$t(commands:addends.booru)",
 		"localnews": "`{{prefix}}localnews [Text Headline] (Image Link | @someone)` Will take every text on it and try the following:\n -Find an image link, if an invalid link is provided, it will be blank\n -If there is no link, it will check for mentions, and use their profile picture\n -If that also fails, it will try to find the last image posted in the channel or an image posted alongside the message\n -If everything fails, it will use your own profile picture\n\n*If no headline whatsoever is provided, it will show a random actual headline from CNN*",
 		"transfer": "**Requires crafting a [Transfer License]({{websiteRoot}}/grimoire/transferlicense)!**\n\n`{{prefix}}transfer [Amount] [@user]` Will transfer Rubines to @User. 4hs Cooldown\n\n`{{prefix}}transfer box [Rarity (optional)] [@user]` Will transfer a Lootbox to @User. 2hs Cooldown\n\n$t(commands:meta.referCrafting)",
 		"reactionroles": "`{{prefix}}reactionroles [add|del|list|clear] [#channel] [Message ID] [EMOJI] [Role Name | @Role]`\nQuite an extensive command huh? Let's break it down:\n\nTo add a new Reaction for a Role to a message:\n`{{prefix}}reactionroles add #channel MESSAGE_ID :emoji: My Awesome Role`\n\nTo remove one or all Reaction bindings from a Message:\n`{{prefix}}reactionroles del MESSAGE_ID :emoji:` For one emoji/role pair only.\n`{{prefix}}reactionroles del MESSAGE_ID` For all emojis from that Message\n\nYou can see all Message/Role/Reaction bindings with `{{prefix}}reactionroles list`\n\nYou can nuke the entire thing with `{{prefix}}reactionroles clear`\n\nRequires the user to have either `MANAGE SERVER` or `MANAGE ROLES` permissions, or a Pollux ModRole",
 		"brackets": "`{{prefix}}brackets (-rr ) [number | list of entrants (comma-separated) | role <@role | Role Name> ]`\n\n`{{prefix}}brackets 10` Generates Regular Brackets for 10 Teams (With pre-matches for Byes) (max.32)\n`{{prefix}}brackets -rr role Tournament` Generates a Round-Robin Match Table for all members in the @Tournament role (max.16)\n`{{prefix}}brackets team 1, team 2, team 3, team 4` Generates Regular Brackets for the listed teams (max.32)",
-
-		"choose": "`{{prefix}}choose [Number (optional)] item1, item2, item3` for any arbitrary list.\n`{{prefix}}choose [Number (optional)] [@role | Role Name]` for members within a Role.\n\nWhen picking among more than 6 items, a list breakdown will be shown for dramatic purposes."
-		,"rpgen": "`{{prefix}}rpgen [npc | (hook [player | npc ]) ]` - If no args are provided, `npc` will be used.\n`rpgen NPC` Generates a random NPC with name, race, a few traits, and a color.\n`rpgen HOOK [npc | player]` Will create a random happening to hook a story, adding `player` will include players into the hook.",
+		"choose": "`{{prefix}}choose [Number (optional)] item1, item2, item3` for any arbitrary list.\n`{{prefix}}choose [Number (optional)] [@role | Role Name]` for members within a Role.\n\nWhen picking among more than 6 items, a list breakdown will be shown for dramatic purposes.",
+		"rpgen": "`{{prefix}}rpgen [npc | (hook [player | npc ]) ]` - If no args are provided, `npc` will be used.\n`rpgen NPC` Generates a random NPC with name, race, a few traits, and a color.\n`rpgen HOOK [npc | player]` Will create a random happening to hook a story, adding `player` will include players into the hook.",
 		"thx": "`{{prefix}}thx @someone` - Adds +1 *'Thanks'* to that person.\nThanks points are **local** and follow the same rules as the previous `{{prefix}}rep` (4 hours cooldown, no self-thanking), except they don't propagate globally.\nUse this to quickly tell someone is helpful within the community without the need of great lengths like in `{{prefix}}commend`.",
 		"commend": "`{{prefix}}commend [@user | info | stats @user]`\nCommending requires you to have at least one **Commendation Token** to be spent. These can be obtained from Lootboxes or crafted.\n\n`{{prefix}}commend @user` +1 Commend someone\n`{{prefix}}commend info` Check your cooldown, you can commend people every 4 hours\n`{{prefix}}commend stats @user` Check detailed information on a certain user's commendings.\n$t(commands:meta.referCrafting)",
 		"attribute": "`{{prefix}}attribute [set|del|list|ren] [tag name (one word only)] [value (any length you want)]`\n\n `add | set [name] [value]` - Creates a new tag/attribute. `value` can be anything from numbers to full annotations\n `dell | rem [name]` - Deletes a tag/attribute. Accepts `all` as an argument to wipe all items.\n `list`- Self explanatory\n `ren [current] [new]` - Renames a tag/attribute. Tags should be ONE-WORD only!\n\nAdd `!` before a tag name to tell it is a macro (used for `{{prefix}}roll`). Macros are used to script dice rolls and simple equations.\n • Macros accept other macros nested inside it except by itself. 25 iterations limit.\n • Macros accept non-macro attributes.\n • Result of macros cannot be used as # of dices. *(But **non**macro attributes can, remember to add a space after it)*\n • All attributes are case-sensitive.\n\nExample of Macro Attributes:\n**!Fireball** `6d8 + INT` | **!DarkEnergy** `4d12 + WIS` | **!HellFire** `(!Fireball - CON) / (!DarkEnergy * 2)`\nYou can create macros as complex as you wish, as long as they respect the rules above.",
@@ -225,7 +223,6 @@
 		"fortunecookie": "`{{prefix}}fortunecookie` (This command has some issues)",
 		"menu": "[Discontinued]",
 		"puto": "Only available on the following languages: [PT-BR]",
-
 		"ship": "`{{prefix}}ship @friend1 @friend2` You can use their IDs if you don't want to ping them",
 		"triggered": "`{{prefix}}triggered [@someone]`",
 		"menesueco": "Only available on the following languages: [PT-BR]",
@@ -248,12 +245,10 @@
 		"np": "`{{prefix}}np`",
 		"play": "`{{prefix}}play [youtube search | youtube link]`",
 		"playlist": "`{{prefix}}playlist`",
-
 		"personaltxt": "`{{prefix}}personaltxt [ Text goes here ]`",
 		"rep": "`{{prefix}}rep @someone_else`",
 		"servers": "`{{prefix}}servers`",
-		"read&translate":"`{{prefix}}read&translate (From To | To) (Image Link)`\n\n`(From | To)` Optional - 2 letter codes of the languages you want to translate from/to. (ISO 639-1 Code)\nIf only one language is supplied, it will be translated TO that language, and the FROM language will be autodetected.\nIf no languages are supplied, it will autodetect FROM and use the server language as TO.\n`(Image Link)` Optional - A link to an image to be read from, attaching an image to the command message also works. If no image is supplied, one will be found from the channel history.\n\n**See also:** `{{prefix}}translate` `{{prefix}}read` ",
-
+		"read&translate": "`{{prefix}}read&translate (From To | To) (Image Link)`\n\n`(From | To)` Optional - 2 letter codes of the languages you want to translate from/to. (ISO 639-1 Code)\nIf only one language is supplied, it will be translated TO that language, and the FROM language will be autodetected.\nIf no languages are supplied, it will autodetect FROM and use the server language as TO.\n`(Image Link)` Optional - A link to an image to be read from, attaching an image to the command message also works. If no image is supplied, one will be found from the channel history.\n\n**See also:** `{{prefix}}translate` `{{prefix}}read` ",
 		"read": "`{{prefix}}read` Gets last image posted if available on cache\n`{{prefix}} read [ url|image attachment ]` Reads text contained on an image attached or linked",
 		"roll": "**Basic:**\n`{{prefix}}roll [[Amount]<d(Faces)>] [extra operations]`\n`{{prefix}}roll d20` | `{{prefix}}roll 5d6` | `{{prefix}}roll 150d12` | `{{prefix}}roll 10d4 + 8` | `{{prefix}}roll d12 - 10` | `{{prefix}}roll 60d7 / 7` | `{{prefix}}roll 1d100*5`\n\n Add thrill to your rolls by adding a delay (In seconds): `{{prefix}}roll 1d20 -t 5`\n\n**Advanced:**\nYou can use special shorthands and *\"macros\"* to simplify complex rolls or include attributes like DEX/INT/STR or whatever you may want to call them. To configure these, please refer to the `{{prefix}}attribute` command.\n\n Example of Attribute usage:\n `{{prefix}}roll 1d20 + DEX` - if you have a DEX value saved\n `{{prefix}}roll !Fireball` - if you have a \"Fireball\" predefined roll macro *(e.g. 6d6 + INT)*. Every macro should have a `!` on its name, refer to `attribute` command for more info.\n `{{prefix}}roll DEX d6` - runs as many d6 as you have DEX.",
 		"translate": "`{{prefix}}translate (From To | To) [Text | Message ID | ^]`\n\n`(From | To)` Optional - 2 letter codes of the languages you want to translate from/to. (ISO 639-1 Code)\nIf only one language is supplied, it will be translated TO that language, and the FROM language will be autodetected.\nIf no languages are supplied, it will autodetect FROM and use the server language as TO.\n`[Text | Message ID | ^]` Required - The text to be translated, a Message ID, or `^` to translate the previous message.\n\n**See also:** `{{prefix}}read&translate` ",
@@ -275,7 +270,7 @@
 		"eggtrade": "**Making a Trade**\n`{{prefix}}trade [Egg ID] @someone`\nE.g.`{{prefix}}trade U2 @someone` Will trade the *Aquamarine Pulse Egg* with *@Someone*\n\n**Accepting a Trade**\nTo accept an incoming trade, you have 30s to respond the offer with *accept* + one of your Eggs' ID, only two-way trades are allowed.\n`accept SR1` Will send *Dark Magician Egg* in exchange for the *Aquamarine Pulse Egg* sent by the first user.\n\n**You can only trade every 2 hours, so be careful. __Missed trades will use up your cooldown!__**",
 		"lewd": "`{{prefix}}lewd`\nYou can also choose from which curator you will want to see the picks from! Just type their name after the command like `{{prefix}}lewd pollyanna` for example, to see only stuff curated by **Pollyanna**.\n\n Our current curator squad is:\n {{squad}}",
 		"marry": "Marriage relies directly on `{{prefix}}craft`, since you need a ring before you can propose.\n\nTo marry your loved one, do `{{prefix}}marry @user [ring]`. There are 4 tiers of wedding rings, each one made of a different gemstone, to show off how fancy your marriage is. \n\nExample usage: `{{prefix}}marry @someone rubine` to propose with a Rubine ring.\n$t(commands:meta.referCrafting)",
-		"craft": "`{{prefix}}craft [item code]`\n You can find the item code and all information at http://pollux.fun/crafting.\n\nTo craft an item you need to own all required materials, some materials need to be crafted in order to be available, those are not autocrafted when doing a higher tier item.",
+		"craft": "`{{prefix}}craft [item code]`\n You can find the item code and all information at {{websiteRoot}}/crafting.\n\nTo craft an item you need to own all required materials, some materials need to be crafted in order to be available, those are not autocrafted when doing a higher tier item.",
 		"divorce": "`{{prefix}}divorce` To show everyone you are married to. whether that is one person or a whole harem!\n`{{prefix}}divorce [@user || Discord ID]` To divorce that person"
 	},
 	"modules": {
@@ -299,16 +294,16 @@
 		"util": "Utility",
 		"music": "Music"
 	},
-	"meta":{
-		"notDocumented" : "*This command has not been documented yet.* :c"
-		,"referCrafting": "_____\n*This command require items obtained from [Crafting]({{websiteRoot}}/crafting), please check `{{prefix}}craft help` as well to understand more about it~*"
+	"meta": {
+		"notDocumented": "*This command has not been documented yet.* :c",
+		"referCrafting": "_____\n*This command require items obtained from [Crafting]({{websiteRoot}}/crafting), please check `{{prefix}}craft help` as well to understand more about it~*"
 	},
-	"addends":{
+	"addends": {
 		"booru": "{{prepend}} You can tick the ⭐ reaction to save results to your [Personal Gallery]({{websiteRoot}}/dash/boorusave)",
-		"guessingGames":""
-		,"infra" : "{{prepend}} 'Infra' Commands are meant to check meta information and aren't documented."
-		,"inventory" : "{{prepend}} This is one of the many pockets of your **Inventory**.\nYou can check it with `{{prefix}}inventory` "
-		,"minigames" : "{{prepend}} This is a simple minigame, ready to play!"
-		,"requireTag" : "`{{prefix}}{{command}} [@someone]`"
+		"guessingGames": "",
+		"infra": "{{prepend}} 'Infra' Commands are meant to check meta information and aren't documented.",
+		"inventory": "{{prepend}} This is one of the many pockets of your **Inventory**.\nYou can check it with `{{prefix}}inventory` ",
+		"minigames": "{{prepend}} This is a simple minigame, ready to play!",
+		"requireTag": "`{{prefix}}{{command}} [@someone]`"
 	}
 }
