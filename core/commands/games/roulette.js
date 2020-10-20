@@ -21,16 +21,17 @@ const settings = {
   noticeTimeout: 5e3,
 };
 
+const numSort = (a,b) => a-b;
 function toHex(bet) {
   const betTypes = ["straight", "split", "street", "square", "basket", "dstreet", "dozen", "column", "snake", "manque", "passe", "colour", "parity"];
   const type = betTypes.indexOf(bet.type).toString(16);
   
   const offset = bet.offset ?? (bet.number === "d"
     ? 2 : bet.number === 0
-      ? 1 : bet.numbers?.sort()[1] - bet.numbers?.sort()[0] === 3
+      ? 1 : bet.numbers?.sort(numSort)[1] - bet.numbers?.sort(numSort)[0] === 3
         ? 1 : bet.type === "straight"
           ? 0 : 2);
-  const number = Math.abs((bet.number || bet.numbers?.sort()[0] || 0) - 1).toString(36);
+  const number = Math.abs((bet.number || bet.numbers?.sort(numSort)[0] || 0) - 1).toString(36);
 
   return `${type}${offset}${number}`;
 }
