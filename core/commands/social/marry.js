@@ -178,19 +178,6 @@ const init = async (msg, args) => {
   featurePromptState.embed.color = 0x41f0ed;
   featurePrompt.edit(featurePromptState);
 };
-module.exports = {
-  init,
-  pub: true,
-  cmd: "marry",
-  perms: 3,
-  cat: "social",
-  botPerms: ["attachFiles", "embedLinks", "manageMessages"],
-  autoSubs: [
-    { label: "upgrade", gen: upgradeMarriage, options: { argsRequired: true } },
-  ],
-  aliases: [],
-  argsRequired: true,
-};
 
 function noRingResponse(Rings, userData, P) {
   let ringCollection = Rings.map((ring) => (userData.hasItem(ring.id) ? `${ring.emoji} **${ring.name}**\n` : "")).filter((r) => r != "");
@@ -264,3 +251,17 @@ async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, up
     (upgradePrompt).edit(noRingResponse(Rings, userData, P));
   }
 }
+
+module.exports = {
+  init,
+  pub: true,
+  cmd: "marry",
+  perms: 3,
+  cat: "social",
+  botPerms: ["attachFiles", "embedLinks", "manageMessages"],
+  autoSubs: [
+    { label: "upgrade", gen: upgradeMarriage, options: { argsRequired: true } },
+  ],
+  aliases: [],
+  argsRequired: true,
+};

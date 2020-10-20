@@ -1,3 +1,4 @@
+//@ts-check
 const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
@@ -11,11 +12,11 @@ const init = async (message) => {
     if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message, opt: this.cat })) return null;
     //------------
 
-    if (message.author.crafting) return null;
+    if (message.author.crafting) return null; // ignore if already crafting
     message.author.crafting = true;
 
     let [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
-      DB.items.find({}).lean().exec()]);
+    DB.items.find({}).lean().exec()]);
 
     const embed = new Embed();
     embed.description = "";
@@ -25,7 +26,7 @@ const init = async (message) => {
     if (!arg) return null;
     let craftedItem = ITEMS.find((itm) => itm.id === arg || itm.code === arg);
 
-    if (!craftedItem) {
+    if (!craftedItem) { // try finding the item the user meant
       message.author.crafting = false;
       arg = message.args.join(" ").toLowerCase();
 
@@ -53,11 +54,11 @@ const init = async (message) => {
       const res = DYM.length === 1 && $t("responses.crafting.didyoumeanOne", P);
       if (DYM.length > 0) {
         const stepMessage = await message.channel.send(`${sorry} ${res}\n> • ${DYM.join("\n> • ")}`);
-        if (DYM.length > 1) return null;
+        if (DYM.length > 1) return;
         if ((await YesNo(stepMessage, message, true, false, null)) === true) {
           [craftedItem] = ITEMS;
         } else {
-          return null;
+          return;
         }
       } else {
         return message.channel.send($t("responses.crafting.noitemu", P));
@@ -77,131 +78,114 @@ const init = async (message) => {
     });
 
     // message.reply("`console res`")
-    if (craftedItem) {
-      const ICON = craftedItem.icon || "";
-      embed.thumbnail(`${paths.CDN}/build/items/${ICON}.png`);
+    const ICON = craftedItem.icon || "";
+    embed.thumbnail(`${paths.CDN}/build/items/${ICON}.png`);
 
-      const MAT = craftedItem.materials || [];
-      const GC = craftedItem.gemcraft;
-      let fails = 0;
-      let matDisplay = "";
-      let craftExplan = "";
+    const MAT = craftedItem.materials || [];
+    const GC = craftedItem.gemcraft;
+    let fails = 0;
+    let matDisplay = "";
+    let craftExplan = "";
 
-      if (GC.jades) {
-        const afford = userData.modules.jades >= GC.jades;
-        let icona = "yep";
-        if (!afford) {
-          icona = "nope";
-          fails += 1;
-        }
-        matDisplay += `\n${_emoji(icona)} | ${_emoji("jade")}**${miliarize(GC.jades, true)}** x ${$t("keywords.JDE", P)}`;
+    // check against the gems whether the user has enough (if necessary); 
+    ["jades", "rubines", "sapphires"].forEach(gem => {
+      if (!GC[gem]) return;
+      const afford = userData.modules[gem] >= GC[gem];
+      let icona = "yep";
+      if (!afford) {
+        icona = "nope";
+        fails += 1;
       }
+      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 2))}**${miliarize(GC[gem], true)}** x ${$t(`keywords.${gem}`, P)}`;
+    });
 
-      if (GC.rubines) {
-        const afford = userData.modules.rubines >= GC.rubines;
-        let icona = "yep";
-        if (!afford) {
-          icona = "nope";
-          fails += 1;
-        }
-        matDisplay += `\n${_emoji(icona)} | ${_emoji("rubine")}**${miliarize(GC.rubines, true)}** x ${$t("keywords.RBN", P)}`;
+    // check against all necessary materials whether the user has enough; 
+    MAT.forEach((material) => {
+      let icona = "yep";
+
+      const materialName = material.id || material;
+      const amtInPosession = userData.modules.inventory.find((itm) => itm.id === materialName)?.count || 0;
+      const amtRequired = material.amt || objCount(MAT, materialName);
+
+      if (amtInPosession < amtRequired) {
+        icona = "nope";
+        fails += 1;
       }
-
-      if (GC.sapphires) {
-        const afford = userData.modules.sapphires >= GC.sapphires;
-        let icona = "yep";
-        if (!afford) {
-          icona = "nope";
-          fails += 1;
-        }
-        matDisplay += `\n${_emoji(icona)} | ${_emoji("sapphire")}**${miliarize(GC.sapphires, true)}** x ${$t("keywords.SPH", P)}`;
-      }
-
-      MAT.forEach((material) => {
-        let icona = "yep";
-
-        materialName = material.id || material;
-
-        amtInPosession = userData.modules.inventory.find((itm) => itm.id === materialName)?.count || 0;
-        amtRequired = material.amt || objCount(MAT, materialName);
-
-        if (amtInPosession >= amtRequired) {
-        // message.reply('ok')
-
-        } else {
-          icona = "nope";
-          fails += 1;
-        }
-        matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName).emoji}`
+      matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName).emoji}`
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
-      });
-      if (fails > 0) {
-        embed.setColor("#ed3a19");
-        craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
-        embed.description = matDisplay + craftExplan;
-        message.author.crafting = false;
-        message.channel.send({ embed });
-      } else {
-        craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
-        embed.description = matDisplay + craftExplan;
-        message.channel.send({ embed }).then(async (m) => {
-          const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
-          const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
+    });
 
-          await m.addReaction(YA.r);
-          m.addReaction(NA.r);
+    if (fails > 0) { // If not enough gems/materials
+      embed.setColor("#ed3a19");
+      const craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
+      embed.description = matDisplay + craftExplan;
+      message.author.crafting = false;
+      message.channel.send({ embed });
+    } else { // If all gems and materials available
+      const craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
+      embed.description = matDisplay + craftExplan;
+      // Show craft cost & info
+      message.channel.send({ embed }).then(async (m) => {
+        const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
+        const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
 
-          const reas = await m.awaitReactions({
-            maxMatches: 1,
-            time: 10000,
-            authorOnly: message.author.id,
-          }).catch(() => {
-            embed.setColor("#ffd900");
-            embed.description = matDisplay;
-            embed.footer($t("responses.crafting.timeout", P));
-            m.edit({ embed });
-            m.removeReactions().catch();
-            return (message.author.crafting = false);
+        await m.addReaction(YA.r);
+        m.addReaction(NA.r);
+
+        // Confirmation of craft through reactions
+        const reas = await m.awaitReactions({
+          maxMatches: 1,
+          time: 10000,
+          authorOnly: message.author.id,
+        }).catch(() => {
+          embed.setColor("#ffd900");
+          embed.description = matDisplay;
+          embed.footer($t("responses.crafting.timeout", P));
+          m.edit({ embed });
+          m.removeReactions().catch();
+          return (message.author.crafting = false);
+        });
+
+        if (reas.length === 0) return;
+
+        // craft is cancelled
+        if (reas.length === 1 && reas[0].emoji.id === NA.id) {
+          embed.setColor("#db4448");
+          embed.footer($t("responses.crafting.cancel", P));
+          embed.description = matDisplay;
+          m.edit({ embed });
+          m.removeReactions().catch();
+          return (message.author.crafting = false);
+        }
+
+        // craft is confirmed
+        if (reas.length === 1 && reas[0].emoji.id === YA.id) {
+          await Promise.all(
+            [ECO.pay(message.author.id, GC.rubines, "crafting", "RBN"),
+            ECO.pay(message.author.id, GC.jades, "crafting", "JDE"),
+            ECO.pay(message.author.id, GC.sapphires, "crafting", "SPH")],
+          );
+
+          MAT.forEach(async (itm) => {
+            console.log(itm);
+            if (itm.amt) {
+              await userData.removeItem(itm.id, itm.amt);
+            } else {
+              await userData.removeItem(itm);
+            }
           });
 
-          if (reas.length === 0) return null;
+          await DB.items.receive(message.author.id, craftedItem.id);
 
-          if (reas.length === 1 && reas[0].emoji.id === NA.id) {
-            embed.setColor("#db4448");
-            embed.footer($t("responses.crafting.cancel", P));
-            embed.description = matDisplay;
-            m.edit({ embed });
-            m.removeReactions().catch();
-            return (message.author.crafting = false);
-          }
-          if (reas.length === 1 && reas[0].emoji.id === YA.id) {
-            await Promise.all(
-              [ECO.pay(message.author.id, GC.rubines, "crafting", "RBN"),
-                ECO.pay(message.author.id, GC.jades, "crafting", "JDE"),
-                ECO.pay(message.author.id, GC.sapphires, "crafting", "SPH")],
-            );
-
-            MAT.forEach(async (itm) => {
-              console.log(itm);
-              if (itm.amt) {
-                await userData.removeItem(itm.id, itm.amt);
-              } else {
-                await userData.removeItem(itm);
-              }
-            });
-
-            await DB.items.receive(message.author.id, craftedItem.id);
-
-            message.author.crafting = false;
-            embed.setColor("#78eb87");
-            embed.description = matDisplay;
-            embed.footer($t("responses.crafting.crafted", P));
-            m.removeReactions().catch();
-            return m.edit({ embed });
-          }
-          return null;
-        });
-      }
+          message.author.crafting = false;
+          embed.setColor("#78eb87");
+          embed.description = matDisplay;
+          embed.footer($t("responses.crafting.crafted", P));
+          m.removeReactions().catch();
+          return m.edit({ embed });
+        }
+        return;
+      });
     }
     message.author.crafting = false;
     //return message.reply("Invalid Craft Code");
