@@ -145,7 +145,8 @@ module.exports = {
   },
   grabLang(msg) {
     let langTo; let langFrom;
-    const langsAvailable = Object.keys(translate.languages);
+    const langsAvailable = Object.keys(translate.languages).map((l) => l.toLowerCase());
+    msg.args[0] = this.replaceLang(msg.args[0])
     if (langsAvailable.includes(msg.args[0])) {
       langFrom = langsAvailable.includes(msg.args[1]) ? msg.args.shift() : "auto";
       langTo = msg.args.shift();
@@ -183,6 +184,45 @@ module.exports = {
 
     return { textToTrans, langFrom, langTo };
     */
+  },
+
+  /**
+   * @param {String} key
+   */
+  replaceLang(key) {
+    switch (key) {
+      case "al": key = "sq"; return key;
+      case "arm": key = "hy"; return key;
+      case "baq": key = "eu"; return key;
+      case "cn": key = "zh-CN"; return key;
+      case "cn-hk": key = "zh-TW"; return key;
+      case "cn-mo": key = "zh-TW"; return key;
+      case "cro": key = "hr"; return key;
+      case "cz": key = "cs"; return key;
+      case "epo": key = "eo"; return key;
+      case "fil": key = "tl"; return key;
+      case "frr": key = "fy"; return key;
+      case "frs": key = "fy"; return key;
+      case "fry": key = "fy"; return key;
+      case "gal": key = "gd"; return key;
+      case "geo": key = "ka"; return key;
+      case "gre": key = "el"; return key;
+      case "hk": key = "zh-TW"; return key;
+      case "ir": key = "ga"; return key;
+      case "jav": key = "jw"; return key;
+      case "jp": key = "ja"; return key;
+      case "kaz": key = "kk"; return key;
+      case "kr": key = "ka"; return key;
+      case "mao": key = "mi"; return key;
+      case "may": key = "ms"; return key;
+      case "mo": key = "zh-TW"; return key;
+      case "per": key = "fa"; return key;
+      case "se": key = "sv"; return key;
+      case "tj": key = "tg"; return key;
+      case "tw": key = "zh-TW"; return key;
+      case "wel": key = "cy"; return key;
+      default: return key;
+    }
   },
 
 };
