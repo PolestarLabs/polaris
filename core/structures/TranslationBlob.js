@@ -128,13 +128,19 @@ module.exports = {
         embed.title("Pollux Machine Translation 5000");
         if (textToTrans.length > 1015) embed.description = $t("responses.warnings.translationTexTooLong", { lngs: [langTo, langFrom, "en", "dev"] });
         embed.field(
-          `${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]}`,
+          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}`,
           `${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
         );
         embed.field(
           `${LANGFLAGS[langTo]} ${translate.languages[langTo]}`,
           `${(textToTrans.length < 1015 ? "```fix\n" : "") + res.text}\`\`\``,
         );
+        if (langFrom !== langFromPost) {
+          embed.field(
+            `\u200b`,
+            `Detected language: ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]}`,
+          );
+        }
         if (txOnly) return resolve(res.text);
         return resolve({ embed });
       }).catch((err) => {
@@ -146,7 +152,7 @@ module.exports = {
   grabLang(msg) {
     let langTo; let langFrom;
     const langsAvailable = Object.keys(translate.languages).map((l) => l.toLowerCase());
-    msg.args[0] = this.replaceLang(msg.args[0])
+    msg.args[0] = this.replaceLang(msg.args[0]);
     if (langsAvailable.includes(msg.args[0])) {
       langFrom = langsAvailable.includes(msg.args[1]) ? msg.args.shift() : "auto";
       langTo = msg.args.shift();
