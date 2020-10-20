@@ -26,7 +26,11 @@ const init = async function (msg, args) {
     } catch (e) {
       return msg.channel.send({ embed: { description: $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }) } });
     }
-    msg.delete().catch(e => null);
+    try{
+      msg.delete().catch(err=>null)
+    }catch(e){
+      // prevent breaking with saytochannel
+    }
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
   } else {
     msg.channel.send(msg.args.join(" "));
