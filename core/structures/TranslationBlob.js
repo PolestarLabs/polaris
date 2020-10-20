@@ -128,7 +128,7 @@ module.exports = {
         embed.title("Pollux Machine Translation 5000");
         if (textToTrans.length > 1015) embed.description = $t("responses.warnings.translationTexTooLong", { lngs: [langTo, langFrom, "en", "dev"] });
         embed.field(
-          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}`,
+          `${LANGFLAGS[langFrom || langFromPost]} ${translate.languages[langFrom || langFromPost]}`,
           `${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
         );
         embed.field(
