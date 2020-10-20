@@ -3,12 +3,15 @@
         "RBN": "Rubine",
         "RBN_fullname": "Rubine Gems",
         "RBN_plural": "Rubines",
+        "rubines": "{{keywords.RBN_plural}}",
         "JDE": "Jade",
         "JDE_fullname": "Jades Dust",
         "JDE_plural": "Jades",
+        "jades": "{{keywords.JDE_plural}}",
         "SPH": "Sapphire",
         "SPH_fullname": "Sapphire Shards",
         "SPH_plural": "Sapphires",
+        "sapphires": "{{keywords.SPH_plural}}",
         "synthGems": "Synthesis Gems",
         "cosmoFragment": "Cosmo Fragment",
         "cosmoFragment_plural": "Cosmo Fragments",
@@ -392,8 +395,8 @@
                 ]
             ]
         },
-        "thx":{
-            "after":"{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times.",
+        "thx": {
+            "after": "{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times.",
             "wipe": "This will remove **all** {{THX}} points from {{user}}. **Are you sure you want to do that?**"
         },
         "divorce": {
@@ -517,7 +520,7 @@
             "noItem": "You need a Commendation Token, and you don't have one. You need them in order to commend people.",
             "commendationLimit": ""
         },
-        "timers_generic":{
+        "timers_generic": {
             "cooldown": "Hold up m'dear! You can do this again in {{remaining}}",
             "check_no": "You still gotta wait about {{remaining}} to use `{{command}}` again~",
             "check_yes": "Good news! You can use `{{command}}` anytime now!",

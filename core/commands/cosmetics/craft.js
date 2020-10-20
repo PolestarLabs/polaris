@@ -96,7 +96,7 @@ const init = async (message) => {
         icona = "nope";
         fails += 1;
       }
-      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 2))}**${miliarize(GC[gem], true)}** x ${$t(`keywords.${gem}`, P)}`;
+      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem], true)}** x ${$t(`keywords.${gem}`, P)}`;
     });
 
     // check against all necessary materials whether the user has enough; 
