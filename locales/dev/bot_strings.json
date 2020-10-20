@@ -124,7 +124,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "The following permissions are not present to proceed correctly:\n{{PERMSLIST}}",
-            "denied": "You are not authorized to use this. This commands requires a Elevation Rank of {{rankNeed}}, your Rank is {{rankMe}}. Contact the Server owner or a Mod.",
+            "denied": "Nope! You are not authorized to use this.",
             "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
             "genericInvalid": "Oh my, Seems that Command is Invalid ;~;",
             "prefixChng": "Alright, My prefix is now {{prefix}}, try it out using '{{prefix}}stats'. ",
@@ -392,6 +392,10 @@
                 ]
             ]
         },
+        "thx":{
+            "after":"{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times.",
+            "wipe": "This will remove **all** {{THX}} points from {{user}}. **Are you sure you want to do that?**"
+        },
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
@@ -512,6 +516,12 @@
             "check_yes": "You can commend again now if you have tokens available!",
             "noItem": "You need a Commendation Token, and you don't have one. You need them in order to commend people.",
             "commendationLimit": ""
+        },
+        "timers_generic":{
+            "cooldown": "Hold up m'dear! You can do this again in {{remaining}}",
+            "check_no": "You still gotta wait about {{remaining}} to use `{{command}}` again~",
+            "check_yes": "Good news! You can use `{{command}}` anytime now!",
+            "noSelf": "You know you can't do that to yourself don't you?"
         },
         "crafting": {
             "craftingItem": "Crafting `{{item_name}}`",

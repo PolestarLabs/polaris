@@ -71,6 +71,22 @@ const topCommend = async (m) => {
   return { embed };
 };
 
+const topThanks = async(msg)=>{
+  const rank = await DB.localranks.find({server:msg.guild.id, thx: {$gt:0} }).sort({thx:-1}).limit(10).lean();
+  let rankmap = rank.map((usr,i)=>
+    `${_emoji( "rank"+ (i+1))} - **\`${(usr.thx||0).toString().padStart(2,' ')}\`**×${_emoji('THX')}\u2002<@${usr.user}> `
+  ).join('\n')
+
+  return {embed:{
+    description:rankmap,
+    footer: {
+      icon_url: msg.guild.iconURL,
+      text: msg.guild.name
+    }
+  }}
+}
+
+
 module.exports = {
   init: topGlobal,
   pub: true,
@@ -87,7 +103,15 @@ module.exports = {
         aliases: ["rep", "com", "rec"],
         invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "commend", opt: "social" }); },
       },
-    },,
+    },
+    {
+      label: "thanks",
+      gen: topThanks,
+      options: {
+        aliases: ["thx", "obg", "vlw", "svp"],
+        invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "thanks", opt: "social" }); },
+      },
+    },
     { label: "server", gen: topServer, options: { aliases: ["local", "here", "sv"] } },
     { label: "global", gen: topGlobal, options: { aliases: ["all", "world"] } },
   ],

@@ -47,11 +47,11 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
  • Your **Rubines** will be reset. You'll get to keep your current Daily Streak × 15.
  • Your **Jades** will be halved.
  • Your **Sapphires** will be increased by **20%** *(if you have an active supporter tier you get +10% per tier level. Max +80%)*.
- • Your **Marriages** will be transfered unless they're with yourself or with a repeated person, if someone you're married to already did the transfer, they will be skipped.
+ • Your **Marriages** will be transferred unless they're with yourself or with a repeated person, if someone you're married to already did the transfer, they will be skipped.
  
  • Your **Inventory** will be kept, but we'll convert it to the new system, this might take a while. Stuff like event boxes might be lost in this step.
  • You will receive a special "Touhou Classic" deck skin for being a pre-Polaris player, thank you~.
- • You will receive 1 Sapphire for every month of daily streak (applied *after* the 10%+ multi).
+ • You will receive 1 Sapphire for every month of daily streak (applied *after* the 20%+ multi).
  
 
 **Are you ready?**
@@ -110,7 +110,7 @@ ${_emoji('loading')} • Converting inventory
     const newInventory = [];
 
     oldInventory.forEach((item) => {
-        if(item.id) continue;
+        if(item.id) return;
         const currItem = newInventory.find((sub) => sub.id === item);
 
         if (currItem){
