@@ -51,7 +51,7 @@ const init = async (message) => {
 
       const DYM = ITEMS.slice(0, 5).filter((y) => y.diffScore < 5).map((x) => `${x.name} (\`${x.code}\`)`);
       const sorry = rand$t("responses.verbose.interjections.gomenasai", P);
-      const res = $t("responses.crafting.didyoumeanOne", P);
+      const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
       if (DYM.length > 0) {
         const stepMessage = await message.channel.send(`${sorry} ${res}\n> • ${DYM.join("\n> • ")}`);
         if (DYM.length > 1) return;
