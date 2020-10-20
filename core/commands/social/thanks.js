@@ -1,3 +1,5 @@
+const {autoSubs:topAutoSubs} = require('./top.js');
+
 const DAY = 3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
@@ -56,6 +58,10 @@ const init = async function (msg,args) {
 };
  
 
+let topAutoSub = topAutoSubs.find(a=>a.label=='thanks');
+topAutoSub.label = "top";
+
+const YesNo = require('../../structures/YesNo.js'); 
 
 module.exports={
     init
@@ -64,5 +70,40 @@ module.exports={
     ,cat:'social'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['thx','obg','svp']
-    
+    ,autoSubs:[
+        topAutoSub,
+        {
+            label: "clear",
+            gen: async (msg,args) => {
+                const ServerDATA = await DB.servers.get(msg.guild.id);
+                const modPass = PLX.modPass(msg.member, "manageServer", ServerDATA);
+                
+                const P = {lngs:msg.lang};
+
+
+                if (!modPass) return $t('responses.errors.denied', P);
+                let Target = await PLX.getTarget(msg.args[0]||msg.author, msg.guild);
+                if (!Target) return  $t('responses.errors.target404', P);
+                P.user = `<@${Target.id}>`
+                let embed = {
+                    description: $t('responses.thx.wipe', P),
+                    color: 0xEE5522
+                }
+                let prompt = await msg.channel.send({embed});
+
+                YesNo(prompt,msg,false,false,false,{embed}).then( async res=>{
+                    console.log(res)
+                    if (res === true) await DB.localranks.set({user:Target.id,server:msg.guild.id},{thx:0}).catch(err=>{
+                        console.error(err);
+                        msg.channel.send("Oop! Something went wrong!")
+                    });
+                });
+
+            },
+            options: {
+              aliases: ["wipe", "reset"],
+              invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "thanks", opt: "social" }); },
+            },
+        },
+    ]
 }
