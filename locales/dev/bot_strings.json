@@ -124,7 +124,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "The following permissions are not present to proceed correctly:\n{{PERMSLIST}}",
-            "denied": "You are not authorized to use this. This commands requires a Elevation Rank of {{rankNeed}}, your Rank is {{rankMe}}. Contact the Server owner or a Mod.",
+            "denied": "Nope! You are not authorized to use this.",
             "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
             "genericInvalid": "Oh my, Seems that Command is Invalid ;~;",
             "prefixChng": "Alright, My prefix is now {{prefix}}, try it out using '{{prefix}}stats'. ",
@@ -393,7 +393,8 @@
             ]
         },
         "thx":{
-            "after":"{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times."
+            "after":"{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times.",
+            "wipe": "This will remove **all** {{THX}} points from {{user}}. **Are you sure you want to do that?**"
         },
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
