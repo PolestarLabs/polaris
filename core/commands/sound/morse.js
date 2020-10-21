@@ -18,20 +18,20 @@ const space = " ";//"<:space:747373996269371513>"
 const init = async function (msg, args) {
 
   let P = { lngs: msg.lang };
-  let string = args.join(' ');
-  string.replace(/[À-Åà-å]/gm, "A")
-    .replace(/[Ææ]/, "AE")
-    .replace(/[Çç]/gm, "C")
-    .replace(/[Ð]/, "D")
-    .replace(/[È-Ëè-ë]/, "E")
-    .replace(/[Ì-Ïì-ï]/, "I")
-    .replace(/[Ññ]/, "N")
-    .replace(/[Ò-Øðò-ø]/, "O")
-    .replace(/[ßẞ]/, "S")
-    .replace(/[Ù-Üù-ü]/, "U")
-    .replace(/[Ýýÿ]/, "Y")
-    .replace(/[þÞ]/, "TH");
-  string = string.toUpperCase();
+  let string = args.join(' ')
+    .replace(/[À-Åà-å]/gmi, "A")
+    .replace(/[Ææ]/gmi, "AE")
+    .replace(/[Çç]/gmi, "C")
+    .replace(/[Ð]/gmi, "D")
+    .replace(/[È-Ëè-ë]/gmi, "E")
+    .replace(/[Ì-Ïì-ï]/gmi, "I")
+    .replace(/[Ññ]/gmi, "N")
+    .replace(/[Ò-Øðò-ø]/gmi, "O")
+    .replace(/[ßẞ]/gmi, "S")
+    .replace(/[Ù-Üù-ü]/gmi, "U")
+    .replace(/[Ýýÿ]/gmi, "Y")
+    .replace(/[þÞ]/gmi, "TH")
+    .toUpperCase();;
   let code = morse_txt.encode(string);
 
   let outputTX = code.replace(/\.\.\.\.\.\.\./g, " ");
