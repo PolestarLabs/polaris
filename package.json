@@ -42,6 +42,7 @@
     "uws": "^99.0.0",
     "xml2js": "^0.4.23",
     "ytdl-core": "^3.2.2",
+    "pixelmatch": "^4.0.2",
     "zlib-sync": "^0.1.6"
   },
   "devDependencies": {
