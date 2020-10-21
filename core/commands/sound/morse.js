@@ -18,7 +18,20 @@ const space = " ";//"<:space:747373996269371513>"
 const init = async function (msg, args) {
 
   let P = { lngs: msg.lang };
-  let string = args.join(' ').toUpperCase();
+  let string = args.join(' ');
+  string.replace(/[À-Åà-å]/gm, "A")
+    .replace(/[Ææ]/, "AE")
+    .replace(/[Çç]/gm, "C")
+    .replace(/[Ð]/, "D")
+    .replace(/[È-Ëè-ë]/, "E")
+    .replace(/[Ì-Ïì-ï]/, "I")
+    .replace(/[Ññ]/, "N")
+    .replace(/[Ò-Øðò-ø]/, "O")
+    .replace(/[ßẞ]/, "S")
+    .replace(/[Ù-Üù-ü]/, "U")
+    .replace(/[Ýýÿ]/, "Y")
+    .replace(/[þÞ]/, "TH");
+  string = string.toUpperCase();
   let code = morse_txt.encode(string);
 
   let outputTX = code.replace(/\.\.\.\.\.\.\./g, " ");
