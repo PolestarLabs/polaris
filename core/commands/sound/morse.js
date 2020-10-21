@@ -33,7 +33,7 @@ const init = async function (msg, args) {
   console.log(embed);
 
   if (!msg.member.voiceState.channelID) {
-    msg.channel.send({ content: $t('CMD.enterVoiceBetterExperience', P), embed });
+    msg.channel.send({ content: $t('responses.warnings.enterVoiceBetterExperience', P), embed });
   } else {
 
     const output = new Stream.PassThrough();

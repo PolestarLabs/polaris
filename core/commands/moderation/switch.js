@@ -1,4 +1,3 @@
-//@ts-check
 // Create cat map with commands and other useful information
 const SwitchArch = require("../../archetypes/Switch");
 let cats,
