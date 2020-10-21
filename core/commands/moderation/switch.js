@@ -1,3 +1,4 @@
+//@ts-check
 // Create cat map with commands and other useful information
 const SwitchArch = require("../../archetypes/Switch");
 let cats,
@@ -9,9 +10,10 @@ const
 	N_CHANNEL = _emoji("channel").name,
 	N_SAVE = _emoji("save").name,
 	N_UNDO = _emoji("undo").name,
-	N_WG = _emoji("whitegreenem").name,
-	N_WO = _emoji("whiteorangeem").name,
-	N_WR = _emoji("whiteredem").name,
+	N_REDO = _emoji("redo").name,
+	N_WG = _emoji("switchpartialON").name,
+	N_WO = _emoji("switchpartialPARTIAL").name,
+	N_WR = _emoji("switchpartialOFF").name,
 	OVERRIDE = _emoji("override"),
 
 	R_NOPE = _emoji("nope").reaction,
@@ -19,18 +21,20 @@ const
 	R_CHANNEL = _emoji("channel").reaction,
 	R_SAVE = _emoji("save").reaction,
 	R_UNDO = _emoji("undo").reaction,
-	R_WG = `<:${_emoji("ONPARTIAL").reaction}>`,
-	R_WO = `<:${_emoji("NOTSOPARTIAL").reaction}>`,
-	R_WR = `<:${_emoji("OFFPARTIAL").reaction}>`,
+	R_REDO = _emoji("redo").reaction,
+	R_WG = `<:${_emoji("switchpartialON").reaction}>`,
+	R_WO = `<:${_emoji("switchpartialPARTIAL").reaction}>`,
+	R_WR = `<:${_emoji("switchpartialOFF").reaction}>`,
 
-	MINI_ON = _emoji("on_small"),
-	MINI_OFF = _emoji("off_small");
+	MINI_ON = _emoji("swon"),
+	MINI_OFF = _emoji("swoff");
 
 // Menu emojis
 const menuEmoijis = [
 	R_NOPE,
 	R_SAVE,
 	R_UNDO,
+	R_REDO,
 	R_CHANNEL,
 	["", "⬅"]]; // ["➡", "⬅"]
 // Menu emojis
@@ -38,8 +42,11 @@ const menuEmoijisNames = [
 	N_NOPE,
 	N_SAVE,
 	N_UNDO,
+	N_REDO,
 	N_CHANNEL,
 	["", "⬅"]]; // ["➡", "⬅"]
+
+const inputs = ["help", "all", "exit", "save", "<", "undo", "redo", "mode", "return"];
 
 // Only one switch per guild to combat race conditions
 const switches = new Map();
@@ -58,26 +65,27 @@ const helpEmbed = {
 	embed: {
 		color: 0xffb366,
 		title: "Switch guide",
-		description: `Through switch you can control which commands are enabled/disabled server- or channel-wide. All of the buttons are also available as typed commands.`,
+		description: `Through switch you can control which commands are enabled/disabled server- or channel-wide.`,
 		fields: [
-			{
-				name: "Switching",
-				value: "> economy\nEnable/disable economy.\n> **>**economy\nShow economy commands.",
-				inline: true,
-			},
 			{
 				name: "Buttons",
 				value: `<:${R_NOPE}> exit\
 				\n<:${R_SAVE}> save\
 				\n<:${R_UNDO}> undo\
-				\n<:${R_CHANNEL}> mode (channel)\
+				\n<:${R_REDO}> redo\
+				\n<:${R_CHANNEL}> mode\
 				\n> ⬅ return\
 				`,
 				inline: true
 			},
 			{
-				name: "Advanced mode",
-				value: "Coming to you in the near future...",
+				name: "Switching",
+				value: "> economy\nEnable/disable economy.\n\n> **>**economy\nShow economy commands.",
+				inline: true,
+			},
+			{
+				name: "Commands",
+				value: inputs.map(inp => `\`${inp}\``).join("\t"),
 				inline: true,
 			},
 			{
@@ -122,7 +130,10 @@ async function init(msg) {
 	if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
 	// Only one switch per guild or things would get messed up.
-	if (switches.get(msg.guild.id)) return msg.reply("There is already a switch open in this guild");
+	if (switches.has(msg.guild.id)) {
+		const link = switches.get(msg.guild.id).messageLink;
+		return msg.channel.send({ embed: { description: `${_emoji("nope")} There's already a switch open [here](${link}).` } });
+	}
 	// Make new switch
 	const Switch = new SwitchArch(msg.guild, msg.channel);
 	switches.set(msg.guild.id, Switch);
@@ -135,12 +146,12 @@ async function init(msg) {
 
 	// Add buttons to the switch msg, then send switch msg
 	let omsg = await msg.channel.send({ embed: { color: 0x22d, title: "Please wait", description: "Currently configuring everything..." } });
-	for (emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
+	Switch.messageLink = `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${omsg.id}`; // Add message link to Switch for when user tries to open a second one in the server
+	for (let emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
 	omsg.edit(genSwitchEmbed(Switch));
 
 	// Start message and reaction collectors
 	// inputs holds all valid messages besides category/command names
-	const inputs = ["help", "all", "exit", "save", "<", "undo", "mode", "return"];
 	function messageFilter(m) {
 		if (msg.author.id !== m.author.id) return false;
 		if (inputs.includes(m.content.toLowerCase())) return true;
@@ -214,13 +225,19 @@ async function init(msg) {
 				omsg.edit(genSwitchEmbed(Switch));
 				break;
 
-			case "mode":
+			case "redo":
+			case N_REDO:
+				Switch.redo();
+				omsg.edit(genSwitchEmbed(Switch));
+				break;
+
 			case N_CHANNEL:
+				Switch.mode = "guild"; // emote should work one way only
+			case "mode":
 				if (Switch.scope === "channel") Switch.mode = "guild";
 				else Switch.mode = "channel";
 				omsg.edit(genSwitchEmbed(Switch));
 				break;
-
 
 			case "return":
 			case "<":
@@ -232,9 +249,7 @@ async function init(msg) {
 
 
 			case "all":
-				Switch.mode = "global";
-				Switch.switch(Switch.category);
-				Switch.mode = "category";
+				Switch.switch("all");
 				omsg.edit(genSwitchEmbed(Switch));
 				break;
 
@@ -285,7 +300,7 @@ async function init(msg) {
  * Function to make visualize Switch state
  * Returns Message params with MessageEmbed
  * @param {*} Switch the Switch instance for which to visualize
- * @param {*} options { disable: Bool }
+ * @param {*} [options] { disable: Bool }
  */
 function genSwitchEmbed(Switch, options) {
 	/**
@@ -328,8 +343,11 @@ function genSwitchEmbed(Switch, options) {
 		color: Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO: change
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches : ${cmode ? "**Channel**" : "**Server**"} mode`,
 		fields: [],
+		footer: {
+			text: `Change: ${Math.max(0, Switch.historyPointer)}/${Math.max(0, Switch.history.length - 1)}`
+		}
 	};
-	if (!disable) embed.description += " | change with #\nType `help` for instructions.";
+	if (!disable) embed.description = "Type `help` for instructions.";
 
 	if (!cat) {
 		const gdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => gdcmds.includes(cmd)));
@@ -380,4 +398,5 @@ module.exports = {
 	aliases: [],
 	botPerms: ["manageMessages"],
 	guildOnly: true,
+	protected: true,
 };
