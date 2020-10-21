@@ -68,7 +68,7 @@ module.exports = async function yesNo(m, message, yes = false, no = false, timeo
       embed.color = 1234499;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.confirm };
-      m.edit({ embed });
+      m.edit({ embed }).catch(err=>null);
     }
     if (yes && typeof yes === "function") return yes(cancellation, m);
     if (yes) return yes;
