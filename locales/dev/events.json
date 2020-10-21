@@ -1,6 +1,17 @@
 { 
 
+  "halloween20": {
+    "avatar":{
+      "dusk":"Your avatar tells you're in the **Dusk Covenant**",
+      "night":"Your avatar tells you're in the **Umbral Covenant**",
+      "inad":"It doesn't seem to be aligned with any of the covenants. Try `{{prefix}}eventavatar [umbral|dusk]` to pick one!",
+      "fine":"It seems to be just fine!",
+      "opos":"It seems to be the opposite of what you intended.",
+      "diff":"It does not belong to any of the covenants."
+    }
+  },
   "halloween18": {
+    
     "noctix":{
 
       "acCask":   "Teehee. After you get the first, you can't stop anymore, huh? So, what are you giving me in exchange for this **Casket**?" ,
