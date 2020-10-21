@@ -11,9 +11,9 @@ const
 	N_SAVE = _emoji("save").name,
 	N_UNDO = _emoji("undo").name,
 	N_REDO = _emoji("redo").name,
-	N_WG = _emoji("whitegreenem").name,
-	N_WO = _emoji("whiteorangeem").name,
-	N_WR = _emoji("whiteredem").name,
+	N_WG = _emoji("switchpartialON").name,
+	N_WO = _emoji("switchpartialPARTIAL").name,
+	N_WR = _emoji("switchpartialOFF").name,
 	OVERRIDE = _emoji("override"),
 
 	R_NOPE = _emoji("nope").reaction,
@@ -22,9 +22,9 @@ const
 	R_SAVE = _emoji("save").reaction,
 	R_UNDO = _emoji("undo").reaction,
 	R_REDO = _emoji("redo").reaction,
-	R_WG = `<:${_emoji("ONPARTIAL").reaction}>`,
-	R_WO = `<:${_emoji("NOTSOPARTIAL").reaction}>`,
-	R_WR = `<:${_emoji("OFFPARTIAL").reaction}>`,
+	R_WG = `<:${_emoji("switchpartialON").reaction}>`,
+	R_WO = `<:${_emoji("switchpartialPARTIAL").reaction}>`,
+	R_WR = `<:${_emoji("switchpartialOFF").reaction}>`,
 
 	MINI_ON = _emoji("swon"),
 	MINI_OFF = _emoji("swoff");
@@ -130,7 +130,10 @@ async function init(msg) {
 	if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
 	// Only one switch per guild or things would get messed up.
-	if (switches.get(msg.guild.id)) return msg.reply("There is already a switch open in this guild");
+	if (switches.has(msg.guild.id)) {
+		const link = switches.get(msg.guild.id).messageLink;
+		return msg.channel.send({ embed: { description: `${_emoji("nope")} There's already a switch open [here](${link}).` } });
+	}
 	// Make new switch
 	const Switch = new SwitchArch(msg.guild, msg.channel);
 	switches.set(msg.guild.id, Switch);
@@ -143,7 +146,8 @@ async function init(msg) {
 
 	// Add buttons to the switch msg, then send switch msg
 	let omsg = await msg.channel.send({ embed: { color: 0x22d, title: "Please wait", description: "Currently configuring everything..." } });
-	for (emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
+	Switch.messageLink = `https://discordapp.com/channels/${msg.guild.id}/${msg.channel.id}/${omsg.id}`; // Add message link to Switch for when user tries to open a second one in the server
+	for (let emoji of menuEmoijis) if (!Array.isArray(emoji) || emoji[0].length) await omsg.addReaction(Array.isArray(emoji) ? emoji[0] : emoji);
 	omsg.edit(genSwitchEmbed(Switch));
 
 	// Start message and reaction collectors
@@ -296,7 +300,7 @@ async function init(msg) {
  * Function to make visualize Switch state
  * Returns Message params with MessageEmbed
  * @param {*} Switch the Switch instance for which to visualize
- * @param {*} options { disable: Bool }
+ * @param {*} [options] { disable: Bool }
  */
 function genSwitchEmbed(Switch, options) {
 	/**
@@ -394,4 +398,5 @@ module.exports = {
 	aliases: [],
 	botPerms: ["manageMessages"],
 	guildOnly: true,
+	protected: true,
 };

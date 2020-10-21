@@ -13,7 +13,7 @@ function loadCategories(route = "") {
 				if (item.endsWith(".js")) {
 					try {
 						const cmd = require(`../commands/${route}/${item}`);
-						if (cmd.hidden || cmd.pub === false || !cmd.cmd) continue;
+						if (cmd.hidden || cmd.protected || cmd.pub === false || !cmd.cmd) continue;
 						if (!cmd.cat) cmd.cat = "uncategorized";
 						if (!obj[cmd.cat]) obj[cmd.cat] = { cmds: [] };
 						obj[cmd.cat.toLowerCase()]["cmds"].push(cmd.cmd.toLowerCase());
@@ -93,6 +93,8 @@ module.exports = class Switch {
 	categories = categories.cats; // { cat: [..., command, ...] }
 	categoriesArr = categories.catsArr; // [..., category, ...] abc sorted
 	commandsArr = categories.cmdsArr; // [..., command, ...] [category → abc] sorted
+
+	messageLink = null; // variable for command implementation
 
 	/**
 	 * SWITCH
