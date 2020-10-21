@@ -1,3 +1,4 @@
+//@ts-check
 const readdirAsync = Promise.promisify(require("fs").readdir);
 
 /**
@@ -8,7 +9,7 @@ function loadCategories(route = "") {
 	return new Promise((resolve, reject) => {
 		readdirAsync("./core/commands/" + route).then(async items => {
 			let obj = {};
-			for (item of items) {
+			for (let item of items) {
 				if (item.endsWith(".js")) {
 					try {
 						const cmd = require(`../commands/${route}/${item}`);
@@ -24,7 +25,7 @@ function loadCategories(route = "") {
 				}
 			}
 			resolve(obj);
-		}).catch(err=> {
+		}).catch(err => {
 			// Dashboard Fallback
 		});
 	});
@@ -51,6 +52,7 @@ function loadCategories2() {
 /**
  * Just a way to get this loading to function before Switch is called
  */
+let ready = false;
 class Categories {
 	cats = {};
 	catsArr = [];
@@ -67,13 +69,13 @@ class Categories {
 		});
 	}
 }
-const categories = new Categories;
+const categories = new Categories();
 
 
 
 module.exports = class Switch {
-	guild;
-	channel;
+	_guild;
+	_channel;
 
 	gd = []; // Guild Disabled Commands
 	cd = []; // Channel Disabled Commands
@@ -81,7 +83,7 @@ module.exports = class Switch {
 
 	history = []; // Keep a history
 	maxHistory; // max length of history
-	historyPointer = 0;
+	historyPointer = -1;
 
 	_scope = "guild"; // (g)uild / (c)hannel
 	_mode = "global"; // (g)lobal / (c)ategory
@@ -105,13 +107,12 @@ module.exports = class Switch {
 		if (Channel.guild.id !== Guild.id) throw new TypeError("Switch: Channel not a child of Guild");
 
 		// Initiate modules - await load if timing problems arise.
-		this.guild = Guild;
-		this.channel = Channel;
+		this._guild = Guild;
+		this._channel = Channel;
 		this._load();
 
 		// Initiate history
 		this.maxHistory = maxHistory;
-		this._saveHistory();
 	}
 
 	/*********************\
@@ -138,7 +139,7 @@ module.exports = class Switch {
 	set mode(newMode = "") {
 		if (!newMode || typeof newMode !== "string") throw new TypeError("Switch - set mode: new mode has to be of type String");
 		newMode = newMode.toLowerCase();
-		if (!["channel", "guild", "global", "category"].includes(newMode)) return new Error("Switch - set mode: unknown mode\nAvailable: [guild/channel & global/category]");
+		if (!["channel", "guild", "global", "category"].includes(newMode)) throw new Error("Switch - set mode: unknown mode\nAvailable: [guild/channel & global/category]");
 		if (["channel", "guild"].includes(newMode)) this._scope = newMode;
 		else this._mode = newMode;
 	}
@@ -180,26 +181,21 @@ module.exports = class Switch {
 	 */
 	setChannel(channel) {
 		// check valid param
-		if (!channel.guild?.id || channel.guild?.id !== this.guild.id) throw new TypeError("Channel has to be a child of the Guild this switch was instanciated with");
+		if (!channel.guild?.id || channel.guild?.id !== this._guild.id) throw new TypeError("Channel has to be a child of the Guild this switch was instanciated with");
 		this.history = [];
-		this.channel = channel;
+		this.historyPointer = 0;
+		this._channel = channel;
 		return this._load();
 	}
 
 	_load() {
 		// Load or create modules
 		return Promise.all([
-			DB.servers.get(this.guild.id),
-			DB.channels.get(this.channel.id),
+			DB.servers.get(this._guild.id),
+			DB.channels.get(this._channel.id),
 		]).then(([guildobj, channelobj]) => {
-			if (!guildobj) guildobj = DB.guilds.new(this.guild);
-			if (!channelobj) channelobj = DB.channels.new(this.channel);
-
-			console.log("\n\nGUILD AND CHANNEL OBJECTS:\n");
-			console.log(require("util").inspect(guildobj));
-			console.log("\n\n\n");
-			console.log(require("util").inspect(channelobj));
-			console.log("\n\n\n");
+			if (!guildobj) guildobj = DB.guilds.new(this._guild);
+			if (!channelobj) channelobj = DB.channels.new(this._channel);
 
 			this.gd = guildobj.modules?.DISABLED || [];
 			this.cd = channelobj.modules?.DISABLED || [];
@@ -214,8 +210,8 @@ module.exports = class Switch {
 	 * @param {number} amt
 	 */
 	redo(amt = 1) {
-		if (this.historyPointer + amt === this.history.length - 1) return this.modules;
-		this.historyPointer += amount;
+		if (this.historyPointer + amt > this.history.length - 1) return this.modules;
+		this.historyPointer += amt;
 		this.modules = this.history[this.historyPointer];
 		return this.modules;
 	}
@@ -225,8 +221,8 @@ module.exports = class Switch {
 	 */
 	save() {
 		return Promise.all([
-			DB.servers.set(this.guild.id, { $set: { "modules.DISABLED": this.gd } }),
-			DB.channels.set(this.channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
+			DB.servers.set(this._guild.id, { $set: { "modules.DISABLED": this.gd } }),
+			DB.channels.set(this._channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
 		]).then(() => {
 			this.unsaved = false;
 			return this.modules;
@@ -239,112 +235,114 @@ module.exports = class Switch {
 
 	_saveHistory() {
 		// to manage history
-		if (this.historyPointer !== this.history.length - 1) this.history = this.history.slice(0, this.historyPointer);
+		if (this.historyPointer !== this.history.length - 1) this.history = this.history.slice(0, this.historyPointer + 1);
 		this.history.push(this.modules);
-		this.historyPointer++;
 		if (this.history.length > this.maxHistory) this.history.splice(0, 1);
+		else this.historyPointer++;
+		console.table(this.history);
+		console.log(`Pointer: ${this.historyPointer}`);
 	}
 
 	/**
 	 * Switch state of a command or category
-	 * @param {string} name cmd or cat name
+	 * @param {string} name cmd/cat name or alternatively "all"
 	 */
 	switch(name = "") {
-		this.unsaved = true;
-		this._saveHistory();
-
 		name = name.toLowerCase();
-		const { ce, cd, gd } = this.modules;
-		let gnewdisabledcmds,
-			cnewdisabledcmds,
-			cnewenabledcmds;
 
-		console.log(require("util").inspect(this.modules));
+		// initializing some values
+		this.unsaved = true;
+		if (!this.history.length) this._saveHistory();
 
-		if (this._mode === "category") { // we're inside a category so cmd
-			if (!this.commandsArr.includes(name)) throw new TypeError(`Switch.switch(): Could not find given command: ${name}`);
+		if (name === "all" && this.mode === "global") {
+			// "all" inside a category means switch entire category on/neutral/off
+			// which is the same logic as doing it from global view
+			// so look outside this if statement for that code
+			if (this.scope === "guild") {
+				// if anything's disabled, enable everything
+				// otherwise disable everything
+				if (this.gd.length) this.guildAllEnable();
+				else this.guildAllDisable();
 
-			let disabledByGuild = gd.includes(name);
-			if (this._scope === "channel") { // channel mode
-				// GUILD DISABLED: neutral → on → off → neutral;
-				// GUILD ENABLED: neutral → off → on → neutral;
-
-				let enabledByChannel = ce.includes(name);
-				let disabledByChannel = cd.includes(name);
-				if (disabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
-					// disable command
-					ce.splice(ce.indexOf(name), 1);
-					if (cd.indexOf(name) === -1) cd.push(name);
-				} else if (disabledByGuild ? disabledByChannel : enabledByChannel) {
-					// make neutral
-					if (disabledByChannel) cd.splice(cd.indexOf(name), 1);
-					else ce.splice(ce.indexOf(name), 1);
-				} else {
-					// enable command
-					if (ce.indexOf(name) === -1) ce.push(name);
-				};
-			} else { // guild mode
-				if (disabledByGuild) gd.splice(gd.indexOf(name), 1);
-				else gd.push(name);
+				this._saveHistory();
+				return this.modules;
 			}
-		} else { // enabling/disabling an entire category.
-			if (!this.categoriesArr.includes(name)) throw new TypeError(`Switch.switch(): Could not find category: ${name}`);
 
-			if (this._scope === "channel") { // channel mode
-				if (name === "all") {
-					// neutral -> enabled -> disabled -> neutral...
-					if (this.categoriesArr.every(cat => this.categories[cat]["cmds"]).every(cmd => ce.includes(cmd))) {
-						cnewenabledcmds === [];
-						cnewdisabledcmds = this.categoriesArr.map(cat => this.categories[cat]["cmds"]).flat();
-					} else if (this.categoriesArr.every(cat => this.categories[cat]["cmds"]).every(cmd => cd.includes(cmd))) {
-						cnewdisabledcmds = [];
-					} else {
-						cnewenabledcmds = this.categoriesArr.map(cat => this.categories[cat]["cmds"]).flat();
-					}
-				} else {
-					const catcmds = this.categories[name]["cmds"];
-					// GUILD MIX/DISABLED: neutral → on → off → neutral;
-					// GUILD ENABLED: neutral → off → on → neutral;
-					const enabledByChannel = catcmds.every(cmd => ce.includes(cmd));
-					const disabledByChannel = catcmds.every(cmd => cd.includes(cmd));
-					const someDisabledByGuild = catcmds.some(cmd => gd.includes(cmd));
+			if (this.scope === "channel") {
+				// First enable everything, then disable, then neutral, then enable...
+				if (this.categories.map(cat => cat.cmds).flat().every(cmd => this.gd.includes(cmd))) this.channelAllNeutral(); // all were disabled
+				else if (this.categories.map(cat => cat.cmds).flat().every(cmd => this.ce.includes(cmd))) this.channelAllDisable(); // all were enabled
+				else this.channelAllEnable(); // they were not all disabled nor all enabled
 
-					if (someDisabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
-						// disable cat
-						cnewenabledcmds = ce.filter(cmd => !catcmds.includes(cmd));
-						cnewdisabledcmds = [...cd, ...catcmds.filter(cmd => !cd.includes(cmd))];
-					} else if (someDisabledByGuild ? (disabledByChannel && !enabledByChannel) : enabledByChannel) {
-						// make neutral
-						cnewenabledcmds = ce.filter(cmd => !catcmds.includes(cmd));
-						cnewdisabledcmds = cd.filter(cmd => !catcmds.includes(cmd));
-					} else {
-						// enable cat
-						cnewenabledcmds = [...ce, ...catcmds.filter(cmd => !ce.includes(cmd))];
-						cnewdisabledcmds = cd.filter(cmd => !catcmds.includes(cmd));
-					}
-				}
-			} else { // guild mode
-
-				if (name === "all") {
-					if (!gd.length) gnewdisabledcmds = this.categoriesArr.map(cat => this.categories[cat]["cmds"]).flat();
-					else gnewdisabledcmds = [];
-				} else {
-					const gdcmds = this.categories[name]["cmds"].filter(cmd => gd.includes(cmd));
-					if (gdcmds.length) gnewdisabledcmds = gd.filter(cmd => !gdcmds.includes(cmd));
-					else gnewdisabledcmds = [...gd, ...this.categories[name]["cmds"]];
-				}
+				this._saveHistory();
+				return this.modules;
 			}
 		}
 
-		this.modules = {
-			gd: gnewdisabledcmds || gd,
-			cd: cnewdisabledcmds || cd,
-			ce: cnewenabledcmds || ce,
-		};
+		if (this.mode === "global" && !(this.categoriesArr.includes(name) || name === "all")) throw new TypeError(`Switch.switch(): Could not find category: ${name}`);
+		if (this.mode === "category" && !(this.commandsArr.includes(name) || name === "all")) throw new TypeError(`Switch.switch(): Could not find given command: ${name}`);
 
-		console.log(require("util").inspect(this.modules));
+		if (this.scope === "guild") {
+			if (this.mode === "global" || name === "all") {
+				if (name === "all") name = this.catPointer;
+				// ?? -> disable all -> enable all
+				if (this.categories[name]["cmds"].every(cmd => this.gd.includes(cmd))) this.guildCategoryEnable(name);
+				else this.guildCategoryDisable(name);
 
-		return this.modules;
+				this._saveHistory();
+				return this.modules;
+			}
+
+			if (this.mode === "category" && name !== "all") {
+				// disabled -> enabled, enabled -> disabled
+				if (this.gd.includes(name)) this.guildCommandEnable(name);
+				else this.guildCommandDisable(name);
+
+				this._saveHistory();
+				return this.modules;
+			}
+		}
+
+		if (this.scope === "channel") {
+			// GUILD MIX/DISABLED: neutral → on → off → neutral;
+			// GUILD ENABLED: neutral → off → on → neutral;
+
+			if (this.mode === "global" || name === "all") {
+				if (name === "all") name = this.catPointer;
+				const catcmds = this.categories[name]["cmds"];
+				const enabledByChannel = catcmds.every(cmd => this.ce.includes(cmd));
+				const disabledByChannel = catcmds.every(cmd => this.cd.includes(cmd));
+				const someDisabledByGuild = catcmds.some(cmd => this.gd.includes(cmd));
+
+				if (someDisabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
+					this.channelCategoryDisable(name);
+				} else if (someDisabledByGuild ? (disabledByChannel && !enabledByChannel) : enabledByChannel) {
+					this.channelCategoryNeutral(name);
+				} else {
+					this.channelCategoryEnable(name);
+				}
+
+				this._saveHistory();
+				return this.modules;
+			}
+
+			if (this.mode === "category") {
+				const disabledByGuild = this.gd.includes(name);
+				const enabledByChannel = this.ce.includes(name);
+				const disabledByChannel = this.cd.includes(name);
+
+				if (disabledByGuild ? enabledByChannel : (!enabledByChannel && !disabledByChannel)) {
+					this.channelCommandDisable(name);
+				} else if (disabledByGuild ? disabledByChannel : enabledByChannel) {
+					this.channelCommandNeutral(name);
+				} else {
+					this.channelCommandEnable(name);
+				};
+
+				this._saveHistory();
+				return this.modules;
+			}
+		}
 	}
 
 	/**
@@ -356,5 +354,62 @@ module.exports = class Switch {
 		this.historyPointer--;
 		this.modules = this.history[this.historyPointer];
 		return this.modules;
+	}
+
+
+	/**
+	 * Some methods to shorten switch code and readable.
+	 * Works like this.scope.mode.action;
+	 */
+	guildAllEnable() { this.gd = []; }
+	guildAllDisable() { this.gd = Object.keys(this.categories).map(cat => this.categories[cat].cmds).flat(); }
+
+	guildCategoryEnable(category) {
+		this.gd = this.gd.filter(cmd => !this.categories[category]["cmds"].includes(cmd));
+	}
+	guildCategoryDisable(category) {
+		this.gd = [...this.gd,
+		...this.categories[category]["cmds"].filter(cmd => !this.gd.includes(cmd))];
+	}
+
+	guildCommandEnable(command) {
+		if (this.gd.includes(command)) this.gd.splice(this.gd.indexOf(command), 1);
+	}
+	guildCommandDisable(command) {
+		if (!this.gd.includes(command)) this.gd.push(command);
+	}
+
+
+	channelAllEnable() { this.cd = []; this.ce = this.categories.map(cat => cat.cmds).flat(); }
+	channelAllNeutral() { this.cd = []; this.ce = []; }
+	channelAllDisable() { this.ce = []; this.cd = this.categories.map(cat => cat.cmds).flat(); }
+
+	channelCategoryEnable(category) {
+		const cmds = this.categories[category]["cmds"];
+		this.ce = [...this.ce, ...cmds.filter(cmd => !this.ce.includes(cmd))];
+		this.cd = this.cd.filter(cmd => !cmds.includes(cmd));
+	}
+	channelCategoryNeutral(category) {
+		const cmds = this.categories[category]["cmds"];
+		this.ce = this.ce.filter(cmd => !cmds.includes(cmd));
+		this.cd = this.cd.filter(cmd => !cmds.includes(cmd));
+	}
+	channelCategoryDisable(category) {
+		const cmds = this.categories[category]["cmds"];
+		this.ce = this.ce.filter(cmd => !cmds.includes(cmd));
+		this.cd = [...this.cd, ...cmds.filter(cmd => !this.cd.includes(cmd))];
+	}
+
+	channelCommandEnable(command) {
+		if (!this.ce.includes(command)) this.ce.push(command);
+		if (this.cd.includes(command)) this.cd.splice(this.cd.indexOf(command), 1);
+	}
+	channelCommandNeutral(command) {
+		if (this.ce.includes(command)) this.ce.splice(this.ce.indexOf(command), 1);
+		if (this.cd.includes(command)) this.cd.splice(this.cd.indexOf(command), 1);
+	}
+	channelCommandDisable(command) {
+		if (this.ce.includes(command)) this.ce.splice(this.ce.indexOf(command), 1);
+		if (!this.cd.includes(command)) this.cd.push(command);
 	}
 };
