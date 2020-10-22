@@ -1,11 +1,11 @@
- 
+
 
 const CLEAN_ID_REGEX = /[<!@>]/g;
 const ID_REGEX = /^\d{17,19}$/;
 
 module.exports = {
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
-    
+
     query = typeof query === 'string' ? query?.trim() : query?.id;
     if (!query) return null;
 
@@ -18,14 +18,14 @@ module.exports = {
     switch (true) {
       case guild && !strict:
         user = isID ? await guild.getRESTMember(ID).catch(() => null) : PLX.findMember(query, guild.members);
-        if (user) user = Object.assign(PLX.findMember(ID, guild.members), user);
+        if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && strict:
         user = await PLX.getRESTUser(ID).catch(() => null);
         break;
       case guild && strict:
         user = await guild.getRESTMember(ID).catch(() => null);
-        if (user) user = Object.assign(PLX.findMember(ID, guild.members), user);
+        if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && !strict:
       default:
@@ -39,7 +39,7 @@ module.exports = {
   // Get IMG from Channel MSGs
   getChannelImg: async function getChannelImg(message, nopool) {
     const hasImageURL = message.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
-    if (hasImageURL) return "https://proxy.pollux.workers.dev/?pollux_url="+encodeURIComponent(hasImageURL[0]);
+    if (hasImageURL) return "https://proxy.pollux.workers.dev/?pollux_url=" + encodeURIComponent(hasImageURL[0]);
     if (message.attachments[0]) return message.attachments[0].url;
     const sevmesgs = message.channel.messages;
 
@@ -62,7 +62,7 @@ module.exports = {
     if (messpool?.length > 0) {
       return (
         messpool[messpool.length - 1].attachments[0]
-            || messpool[messpool.length - 1].embeds[0]
+        || messpool[messpool.length - 1].embeds[0]
       ).url;
     }
     return false;
@@ -113,10 +113,10 @@ module.exports = {
     }
 
     if (trigger.includes(message.content.split(/ +/)[1])
-        || message.content.split(/ +/)[1] === "?"
-        || message.content.split(/ +/)[1] === "help"
-        || (message.content.split(/ +/).length === 1 && trigger.includes("noargs"))
-        || trigger === "force"
+      || message.content.split(/ +/)[1] === "?"
+      || message.content.split(/ +/)[1] === "help"
+      || (message.content.split(/ +/).length === 1 && trigger.includes("noargs"))
+      || trigger === "force"
     ) {
       // this.usage(cmd,message,opt,aliases);
       const usage = require("../../structures/UsageHelper.js");
