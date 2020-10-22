@@ -13,7 +13,7 @@ config.json
 *.png
 tunnel.js
 rewinder.js
-Pollux-9b33db6de8e0.json
+pollux-172700-4fc2e6c49940.json
 node_modules
 core/commands/_botStaff/testing.js
 core/commands/_botStaff/eval.js
