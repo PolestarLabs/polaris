@@ -20,12 +20,6 @@ const init = async function (msg) {
   const modPass = PLX.modPass(Member, "kickMembers", ServerDATA);
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);
 
-  console.log({ Target });
-
-  Target = Server.member(await Target);
-
-  console.log({ Target });
-
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   if (!Target.kickable) return msg.channel.send($t("responses.errors.unmutable", P));
 
@@ -59,7 +53,7 @@ const init = async function (msg) {
 
   if (msg.args[2] != undefined && !isNaN(msg.args[2]) && Number(msg.args[2]) != 0) {
     timeTx = msg.args[2] + (msg.args[2] === 1 ? " minute." : " minutes.");
-    time = Number(msg.args[2])
+    time = Number(msg.args[2]);
   } else {
     time = 24 * 60;
     timeTx = "undetermined time.";
@@ -82,7 +76,7 @@ const init = async function (msg) {
     timeTx = unit + (unit === 1 ? " month" : " months");
   }
 
-  console.log({time})
+  console.log({ time });
 
   const MUTED = "MUTED";
   const wasMUTED = "was Muted";
@@ -99,8 +93,8 @@ const init = async function (msg) {
   const muteRole = ServerDATA.modules.MUTEROLE;
   if (
     !muteRole
-      || (!Server.roles.find((x) => x.id === muteRole)
-        && !Server.roles.find((x) => x.name === "POLLUX-MUTE"))
+    || (!Server.roles.find((x) => x.id === muteRole)
+      && !Server.roles.find((x) => x.name === "POLLUX-MUTE"))
   ) {
     Server.createRole(
       {
@@ -115,21 +109,21 @@ const init = async function (msg) {
           "No Mute Role Setup, Creating **POLLUX-MUTE**...",
         );
         DB.servers.set(Server.id, { $set: { "modules.MUTEROLE": role.id } });
-        setupMute(role,time);
+        setupMute(role, time);
         commitMute(role.id, true);
       })
       .catch(console.error);
   } else if (Server.roles.find((x) => x.name === "POLLUX-MUTE")) {
     const r = Server.roles.find((x) => x.name === "POLLUX-MUTE");
-    setupMute(r,time);
+    setupMute(r, time);
     commitMute(r);
   } else if (Server.roles.find((x) => x.id === muteRole)) {
     const r = Server.roles.find((x) => x.id === muteRole);
-    setupMute(r,time);
+    setupMute(r, time);
     commitMute(muteRole);
   }
 
-  async function setupMute(role,time) {
+  async function setupMute(role, time) {
     Target.addRole(
       role.id,
       `MUTED BY ${msg.author.tag}  (${msg.author.id})`,
@@ -171,8 +165,7 @@ const init = async function (msg) {
       emb.setThumbnail(Target.user.avatarURL);
       emb.setTitle(`:mute: ${MUTED}`);
       emb.setDescription(
-        `**${
-          `${Target.user.username}#${Target.user.discriminator}`
+        `**${`${Target.user.username}#${Target.user.discriminator}`
         }** ${wasMUTED}`,
       );
       // emb.addField("Channel",mess.channel,true)
@@ -198,8 +191,7 @@ const init = async function (msg) {
       RevokeEmb.setThumbnail(Target.user.avatarURL);
       RevokeEmb.setTitle(`:mute: ${UNMUTE}`);
       RevokeEmb.setDescription(
-        `**${
-          `${Target.user.username}#${Target.user.discriminator}`
+        `**${`${Target.user.username}#${Target.user.discriminator}`
         }** ${wasAUTOUNMUTE}`,
       );
       RevokeEmb.addField(RESPO, bot.user, true);
@@ -220,7 +212,7 @@ const init = async function (msg) {
     const now = Date.now();
     const time = minutes * 60000;
     const freedom = now + time;
-    console.log({now,minutes,freedom})
+    console.log({ now, minutes, freedom });
     DB.mutes.add({ S: Mem.guild.id, U: Mem.id, E: freedom });
   }
 
@@ -248,8 +240,7 @@ const init = async function (msg) {
       if (first === true) {
         Promise.all(promiseBucket).then((x) => {
           msg.channel.send(
-            `\`Could not edit Mute overrides in ${
-              erroredChans
+            `\`Could not edit Mute overrides in ${erroredChans
             } Channels 💔\``,
           );
         });
