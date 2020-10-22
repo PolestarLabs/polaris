@@ -129,8 +129,8 @@ module.exports = {
         if (textToTrans.length > 1015) embed.description = $t("responses.warnings.translationTexTooLong", { lngs: [langTo, langFrom, "en", "dev"] });
         if (langFrom === "auto") langFrom = langFromPost;
         embed.field(
-          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}${langFrom === langFromPost ? "" : ` (detected ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]})`}`,
-          `${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
+          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}`,
+          `${langFrom === langFromPost ? "" : ` (detected ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]})`}${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
         );
         embed.field(
           `${LANGFLAGS[langTo]} ${translate.languages[langTo]}`,
