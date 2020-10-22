@@ -10,7 +10,7 @@ exports.run = function run(cat, msg, perms) {
     let check1;
     let permsPass = []
     Object.keys(perms).forEach((i) => {
-      if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i])) {
+      if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i]) && !msg.guild.member(PLX.user.id).hasPermission(perms[i])) {
         permsPass.push(_emoji('nope'))
         check1 = "error1";
       }else{
