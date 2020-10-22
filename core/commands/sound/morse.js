@@ -31,7 +31,7 @@ const init = async function (msg, args) {
     .replace(/[Ù-Üù-ü]/gmi, "U")
     .replace(/[Ýýÿ]/gmi, "Y")
     .replace(/[þÞ]/gmi, "TH")
-    .toUpperCase();;
+    .toUpperCase();
   let code = morse_txt.encode(string);
 
   let outputTX = code.replace(/\.\.\.\.\.\.\./g, " ");

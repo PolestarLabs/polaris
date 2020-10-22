@@ -129,19 +129,13 @@ module.exports = {
         if (textToTrans.length > 1015) embed.description = $t("responses.warnings.translationTexTooLong", { lngs: [langTo, langFrom, "en", "dev"] });
         if (langFrom === "auto") langFrom = langFromPost;
         embed.field(
-          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}`,
+          `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}${langFrom === langFromPost ? "" : ` (detected ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]})`}`,
           `${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
         );
         embed.field(
           `${LANGFLAGS[langTo]} ${translate.languages[langTo]}`,
           `${(textToTrans.length < 1015 ? "```fix\n" : "") + res.text}\`\`\``,
         );
-        if (langFrom !== langFromPost) {
-          embed.field(
-            `\u200b`,
-            `Detected language: ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]}`,
-          );
-        }
         if (txOnly) return resolve(res.text);
         return resolve({ embed });
       }).catch((err) => {
