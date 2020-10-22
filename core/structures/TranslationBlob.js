@@ -130,7 +130,7 @@ module.exports = {
         if (langFrom === "auto") langFrom = langFromPost;
         embed.field(
           `${LANGFLAGS[langFrom]} ${translate.languages[langFrom]}`,
-          `${langFrom === langFromPost ? "" : `_Detected ${LANGFLAGS[langFromPost]} ${translate.languages[langFromPost]}_`}${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
+          `${langFrom === langFromPost ? "" : `_Detected  ${LANGFLAGS[langFromPost]}${translate.languages[langFromPost]}_`}${(textToTrans.length < 1015 ? "*```tex\n" : "") + textToTrans}\`\`\`*`,
         );
         embed.field(
           `${LANGFLAGS[langTo]} ${translate.languages[langTo]}`,
