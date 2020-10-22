@@ -9,7 +9,7 @@ const init = async function (msg) {
   const Server = msg.guild;
   const Author = msg.author;
   const Member = Server.member(Author);
-  let Target = await PLX.getTarget(msg.args[0], msg.guild);
+  let Target = await PLX.getRESTGuildMember(msg.guild, msg.args[0]);
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
   const bot = msg.botUser;
 
