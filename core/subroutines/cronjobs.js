@@ -148,7 +148,7 @@ exports.run = async function run() {
         temps.forEach((tprl) => {
           DB.servers.get(tprl.server.id).then(async (/* svData */) => {
             const logSERVER = PLX.guilds.get(tprl.server);
-            const logUSER = PLX.findUser(tprl.user);
+            const logUSER = await PLX.resolveUser(tprl.user);
             if (!logSERVER || !logUSER) return;
             const logMEMBER = logSERVER.member(logUSER);
             if (!logMEMBER) return;
@@ -219,7 +219,7 @@ exports.run = async function run() {
               // activity logs stuff (LEGACY CODE)
               return undefined;
               /*
-              const logUSER = PLX.findUser(mtu.user);
+              const logUSER = await PLX.resolveUser(mtu.user);
               if (!logSERVER || !logUSER) return;
               const logMEMBER = logSERVER.member(logUSER);
               if (!logMEMBER) return;

@@ -262,27 +262,6 @@ PLX.setAvatar = async (url) => {
     console.error(err);
   }
 };
-PLX.findUser = (query) => {
-  if (!query) return null;
-  query = query.toLowerCase().trim();
-
-  let result = PLX.users.get(query.match(/[0-9]{16,19}/)?.[0]);
-  if (!result) result = PLX.users.find((user) => user.username.toLowerCase() === query);
-  if (!result) result = PLX.users.find((user) => user.username.toLowerCase().includes(query));
-  return result || null;
-};
-
-PLX.findMember = (query, members) => {
-  if (!query) return null;
-  query = query.toLowerCase().trim();
-
-  let result = members.get(query.match(/[0-9]{17,19}/)?.[0]);
-  if (!result) result = members.find((member) => member.user.username.toLowerCase() === query);
-  if (!result) result = members.find((member) => member.nick && member.nick.toLowerCase() === query);
-  if (!result) result = members.find((member) => member.user.username.toLowerCase().includes(query));
-  if (!result) result = members.find((member) => member.nick && member.nick.toLowerCase().includes(query));
-  return result || null;
-};
 
 function postConnect() {
   console.log("Discord Client Connected".cyan);
