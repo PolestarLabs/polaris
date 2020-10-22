@@ -109,11 +109,14 @@ const S = [
 const TAROT = require("../../archetypes/Tarot");
 
 const init = async (msg, args) => {
-  const Tarot = new TAROT(msg, Number(args[0] || 3));
+  const amt = parseInt(args[0]) || 3;
+  const skin = parseInt(args[0]) ? args.slice(1).join(" ") || "persona3" : args.join(" ") || "persona3";
+
+  const Tarot = new TAROT(msg, amt);
 
   // console.log(Tarot);
 
-  const img = await Tarot.drawSpread(args[1] || "persona3");
+  const img = await Tarot.drawSpread(skin);
 
   console.log(img);
 

@@ -244,7 +244,7 @@ class Tarot {
     const card = Picto.new(200, 350);
     const ctx = card.getContext("2d");
     const cardPic = await Picto.getCanvas(`${paths.CDN}/build/cards/tarot/${deck}/${arcana.id}.png`);
-    const posname  = Picto.tag(ctx, posit, "400 20px Panton", "#A5A5A3");
+    const posname = Picto.tag(ctx, posit, "400 20px Panton", "#A5A5A3");
     Picto.setAndDraw(ctx, posname, 100, 20, 180, "center");
     const arcaname = Picto.tag(ctx, arcana.Arcana, "900 24px Panton");
     Picto.setAndDraw(ctx, arcaname, 100, 310, 180, "center");
@@ -262,7 +262,7 @@ class Tarot {
     const canvas = Picto.new(200 * spSize, 350);
     const ctx = canvas.getContext("2d");
 
-    await Promise.all( this.spread.map((currSpd,i)=> this.drawCard(currSpd.card, currSpd.pose, skin).then((c) => ctx.drawImage(c, (spSize - i - 1) * 200, 0)) ) );
+    await Promise.all(this.spread.map((currSpd, i) => this.drawCard(currSpd.card, currSpd.pose, skin).then((c) => ctx.drawImage(c, (spSize - i - 1) * 200, 0))));
 
     return canvas;
   }
