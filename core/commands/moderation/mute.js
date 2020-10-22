@@ -5,11 +5,11 @@
 
 const cmd = "mute";
 
-const init = async function (msg) {
+const init = async function (msg,args) {
   const Server = msg.guild;
   const Author = msg.author;
   const Member = Server.member(Author);
-  let Target = await PLX.getRESTGuildMember(msg.guild, msg.args[0]);
+  let Target = await PLX.resolveMember(msg.guild,args[0],{softMatch:true})
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
   const bot = msg.botUser;
 
@@ -94,7 +94,7 @@ const init = async function (msg) {
   if (
     !muteRole
     || (!Server.roles.find((x) => x.id === muteRole)
-      && !Server.roles.find((x) => x.name === "POLLUX-MUTE"))
+      && !Server.roles.find((x) => x.name.includes("POLLUX-MUTE") ))
   ) {
     Server.createRole(
       {
