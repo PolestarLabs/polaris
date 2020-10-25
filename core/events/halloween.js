@@ -78,10 +78,10 @@ module.exports = {
   
 
 userData: async function(Author){
-  const USERDATA = await DB.users.findOne({id:Author.id||Author}).lean().exec();
+  const USERDATA = await DB.users.findOne({id:Author.id||Author}).lean();
   if(!USERDATA) USERDATA = await DB.users.new(Author);
 
-  let eventData = (USERDATA.eventData||{}).halloween18;  
+  let eventData = (USERDATA.eventData||{}).halloween20;  
   if(!eventData) {
     eventData = {
       inventory:[],
@@ -131,15 +131,17 @@ userData: async function(Author){
          let items ={
            //nurse: "Nurse",
             wizard: "Wizard",
-            devil: "Devil",
-            vamp: "Vampire",
+            demon: "Demon",
+            vampire: "Vampire",
             werewolf: "Werewolf",
-            chicken: "Duck",
+            duck: "Duck",
             clown: "Clown",
             pirate: "Pirate",
-            //mummy: "Mummy",
+            mummy: "Mummy",
             scrow: "Scarecrow",
-            jiangshi: "Jiangshi",
+            astronaut: "Astronaut",
+           // jiangshi: "Jiangshi",
+           // alraune: "Alraune",
          }
          
          return items[ex]
@@ -149,14 +151,17 @@ userData: async function(Author){
   let list = [
  
     "wizard",
-    "devil",
-    "vamp",
+    "demon",
+    "vampire",
+    "mummy",
     "werewolf",
-    "chicken",
+    "duck",
     "clown",
     "pirate",
     "scrow",
+    "astronaut",
     "jiangshi",
+    "alraune",
  
   ]
     
