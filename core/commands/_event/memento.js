@@ -58,7 +58,7 @@ const EventData = require('../../archetypes/Events.js');
 const EV = EventData.event_details; 
 const Picto = require('../../utilities/Picto.js')
 
-const oldBuildPath = "https://pollux.amarok.kr/build/"
+const oldBuildPath = "https://vanilla.pollux.gg/build/"
 
 
 const init = async function (msg){
@@ -76,15 +76,17 @@ const init = async function (msg){
 //STATIC STRINGS    
     
          let costumes ={
-           nurse: "💉 Nurse",
+           werewolf: "🐺 Werewolf",
             wizard: "🔮 Wizard",
-            devil: "👺 Devil",
-            vamp: "🦇 Vampire",
-            frank: "🗿 Frank",
-            chicken: "🐔 Chicken",
-            cow: "🐮 Cow",
+            demon: "👺 Devil",
+            vampire: "🦇 Vampire",
+            astronaut: "🚀 Astronaut",
+            duck: "🦆 Duck",
+            pirate: "☠ Pirate",
             mummy: "⚰ Mummy",
             scrow: "🎃 Scarecrow",
+            //jiangshi: "☯ Jiangshi",
+            //alraune: "🌹 Alraune",
          }
    
 //let targetData = userDB.findOne({id:target.id}).lean().exec();
@@ -105,11 +107,11 @@ const init = async function (msg){
     things += parts[i2]+": "+(item.id?_emoji(item.rarity):"")+" **"+itemName+"**\n"
   }
     embed.fields.push( {name: costumes[i], value:things, inline:true});
-}
+  }
 
   embed.author={name: Author.tag+"'s Memento Collection", avatar_url: Author.avatarURL};
-  //embed.setDescription(wardrobeBrief);
-  embed.footer = {text:"Pollux Halloween Event 2018", icon_url: "https://pollux.amarok.kr/medals/pumpxd.png"};
+
+  embed.footer = {text:"Pollux Halloween Event 2020", icon_url: "https://pollux.amarok.kr/medals/pumpxd.png"};
  
 
   msg.channel.send({embed});
