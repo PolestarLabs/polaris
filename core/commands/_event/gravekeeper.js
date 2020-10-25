@@ -43,7 +43,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID,"events:halloween20.acSpellbind",'wicked_rose',350,2500,50)
+                buySomething(msg,uID,"events:halloween20.acRose",'wicked_rose',350,2500,50)
             }, 
         },{
             emoji: 'casket:504412718753644555',
