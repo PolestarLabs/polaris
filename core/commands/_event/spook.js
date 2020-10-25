@@ -154,24 +154,24 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
 
   await DB.users.set(Author.id, {
     $set: {
-      "eventData.halloween18.dailysec": now,
+      "eventData.halloween20.dailysec": now,
     },
     $inc: {
-      "eventData.halloween18.candy": candyDrop,
+      "eventData.halloween20.candy": candyDrop,
     },
   });
 
   await DB.users.updateOne(
     {
       id: Author.id,
-      "eventData.halloween18.inventory.id": equipH.id,
+      "eventData.halloween20.inventory.id": equipH.id,
     },
     {
       $inc: {
-        "eventData.halloween18.inventory.$.spook": -Math.abs(
+        "eventData.halloween20.inventory.$.spook": -Math.abs(
           Math.ceil(1 + noise * rfac[0] || 5)
         ),
-        "eventData.halloween18.inventory.$.uses": 1,
+        "eventData.halloween20.inventory.$.uses": 1,
       },
     }
   );
@@ -179,14 +179,14 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
   await DB.users.updateOne(
     {
       id: Author.id,
-      "eventData.halloween18.inventory.id": equipB.id,
+      "eventData.halloween20.inventory.id": equipB.id,
     },
     {
       $inc: {
-        "eventData.halloween18.inventory.$.spook": -Math.abs(
+        "eventData.halloween20.inventory.$.spook": -Math.abs(
           Math.ceil(1 + noise * rfac[1] || 5)
         ),
-        "eventData.halloween18.inventory.$.uses": 1,
+        "eventData.halloween20.inventory.$.uses": 1,
       },
     }
   );
@@ -194,14 +194,14 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
   await DB.users.updateOne(
     {
       id: Author.id,
-      "eventData.halloween18.inventory.id": equipF.id,
+      "eventData.halloween20.inventory.id": equipF.id,
     },
     {
       $inc: {
-        "eventData.halloween18.inventory.$.spook": -Math.abs(
+        "eventData.halloween20.inventory.$.spook": -Math.abs(
           Math.ceil(1 + noise * rfac[2] || 5)
         ),
-        "eventData.halloween18.inventory.$.uses": 1,
+        "eventData.halloween20.inventory.$.uses": 1,
       },
     }
   );

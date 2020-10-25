@@ -108,8 +108,8 @@ const init = async function (message){
     if (eventData.caskets > 0) {
 
       let phab = EV.phabricate(Author);
-      DB.users.set(Author.id,{$inc:{"eventData.halloween18.caskets":-1}});
-      DB.users.set(Author.id,{$push:{"eventData.halloween18.inventory":phab}});
+      DB.users.set(Author.id,{$inc:{"eventData.halloween20.caskets":-1}});
+      DB.users.set(Author.id,{$push:{"eventData.halloween20.inventory":phab}});
         
       embed_pre.thumbnail = { url: 'https://pollux.amarok.kr/build/event/halloween18/casket_cls.png' };
         

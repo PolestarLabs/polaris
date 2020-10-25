@@ -83,7 +83,6 @@ userData: async function(Author){
 
   let eventData = (USERDATA.eventData||{}).halloween18;  
   if(!eventData) {
-    //return message.channel.send(noEventPart);
     eventData = {
       inventory:[],
       candy: 0,
@@ -92,7 +91,7 @@ userData: async function(Author){
       feet: null,
       caskets:0
     }
-    await DB.users.set(Author.id,{$set:{'eventData.halloween18':eventData}});
+    await DB.users.set(Author.id,{$set:{'eventData.halloween20':eventData}});
   }
     return eventData;
 },

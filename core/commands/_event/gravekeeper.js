@@ -50,7 +50,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID, 'events:halloween18.noctix.acCask' ,{$inc:{'eventData.halloween18.caskets':1}},666,3000,25)
+                buySomething(msg,uID, 'events:halloween18.noctix.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},666,3000,25)
             },
             
         },{
@@ -125,10 +125,10 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             }else if(typeof DBquery === 'object'){
                 await DB.users.set(userID, DBquery);
             }
-            await DB.users.set(userID,{$inc:{'eventData.halloween18.candy': -priceC }});
+            await DB.users.set(userID,{$inc:{'eventData.halloween20.candy': -priceC }});
             promptEmbed.description = (_emoji('yep')+ $t('events:halloween18.noctix.completeC',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween18.affinityNox': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': weight + covBonus }})
         }else{
             prompt.removeReactions()
             promptEmbed.description = (_emoji('nope')+$t('events:halloween18.noctix.noCashC',P) )
@@ -146,7 +146,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             await DB.users.set(userID,{$inc:{'modules.rubines': -priceR }});
             promptEmbed.description = (_emoji('yep')+$t('events:halloween18.noctix.completeR',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween18.affinityNox': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': weight + covBonus }})
         }else{
             promptEmbed.description = (_emoji('nope')+$t('events:halloween18.noctix.noCashR',P) )
             return prompt.edit({embed:promptEmbed});

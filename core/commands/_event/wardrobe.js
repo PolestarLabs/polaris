@@ -158,7 +158,7 @@ function checkEquip(it){
             x_embed.description = _emoji("jade")+" 1000 "+$t('keywords.JDE_plural',P);
             await DB.users.set(Author.id, {$inc:{'modules.jades':1000}});        
             let neoinvent = eventData.inventory.filter(x=>x.id!==item.id);
-            await DB.users.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});            
+            await DB.users.set(Author.id, {$set:{'eventData.halloween20.inventory':neoinvent}});            
             mes.removeReactions();
             mes.edit({content: destroyConfirmed,embed:x_embed})
           }
@@ -235,7 +235,7 @@ targetData = await targetData;
         
         if(trad[0]=="G"){
           
-          let targetInv = targetData.eventData.halloween18.inventory
+          let targetInv = targetData.eventData.halloween20.inventory
           let itemComing = targetInv[numInput-1];
           
           if(itemComing.equipped === true){
@@ -247,13 +247,13 @@ targetData = await targetData;
           
           let compiledInv = targetInv.filter(itm=>itm.id!=itemComing.id);
           
-          queryStringOut = {$set:{"eventData.halloween18.inventory":compiledInv}}
-          queryStringIn  = {$push:{"eventData.halloween18.inventory":itemComing}}
+          queryStringOut = {$set:{"eventData.halloween20.inventory":compiledInv}}
+          queryStringIn  = {$push:{"eventData.halloween20.inventory":itemComing}}
           
         }
         
         [msg,tradestart,tradeRes?.[0]].forEach(x=>x.delete().catch(err=>null));
-        if(targetData.eventData.halloween18.inventory.length>11 && trad[0]!=="G")return tradeRes?.[0].reply("`💔 MAX ITEMS LIMIT`");
+        if(targetData.eventData.halloween20.inventory.length>11 && trad[0]!=="G")return tradeRes?.[0].reply("`💔 MAX ITEMS LIMIT`");
         
         if(trad[0]=="R"){
         if(targetData.modules.rubines < numInput)return msg.reply("`💔 INSUFFICIENT FUNDS`");
@@ -262,10 +262,10 @@ targetData = await targetData;
           queryStringIn  = {$inc:{"modules.rubines":numInput}}
         }
         if(trad[0]=="C"){
-        if(targetData.eventData.halloween18.candy < numInput)return msg.reply("`💔 INSUFFICIENT CANDY`");
+        if(targetData.eventData.halloween20.candy < numInput)return msg.reply("`💔 INSUFFICIENT CANDY`");
           tradeSubject = "**"+numInput+"** x Candy "+EV.emoji.candy1
-          queryStringOut = {$inc:{"eventData.halloween18.candy":-numInput}}
-          queryStringIn  = {$inc:{"eventData.halloween18.candy":numInput}}
+          queryStringOut = {$inc:{"eventData.halloween20.candy":-numInput}}
+          queryStringIn  = {$inc:{"eventData.halloween20.candy":numInput}}
         }
 
         
@@ -306,8 +306,8 @@ targetData = await targetData;
             
 let me_targetInv = eventData.inventory
 let me_compiledInv = me_targetInv.filter(itm=>item.id!=itm.id);            
-let me_queryStringOut = {$set:{"eventData.halloween18.inventory":me_compiledInv}}
-let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
+let me_queryStringOut = {$set:{"eventData.halloween20.inventory":me_compiledInv}}
+let me_queryStringIn  = {$push:{"eventData.halloween20.inventory":item}}
             
 
 
@@ -380,11 +380,11 @@ let me_queryStringIn  = {$push:{"eventData.halloween18.inventory":item}}
       if (reas?.[0].emoji.id === YEP.id) {
         
          let neoinvent = eventData.inventory.filter(x=>x.id!==item.id);
-            await DB.users.set(Author.id, {$set:{'eventData.halloween18.inventory':neoinvent}});     
+            await DB.users.set(Author.id, {$set:{'eventData.halloween20.inventory':neoinvent}});     
         memento.push(item)
      
         
-            await DB.users.set(Author.id, {$set:{'eventData.halloween18.memento':memento}});         
+            await DB.users.set(Author.id, {$set:{'eventData.halloween20.memento':memento}});         
         embed.color = 0xff50bc 
             mes.removeReactions();
             mes.edit( {content: _emoji('yep')+confirmSave2,embed});

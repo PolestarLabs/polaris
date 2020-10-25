@@ -31,7 +31,7 @@ init = async function (msg) {
           return  msg.reply(_emoji('nope')+"Oopsie... I think you already have this!");
         }
       if(eventData.candy >= 800 ){
-        await DB.users.set(msg.author.id,{$inc:{'eventData.halloween18.candy':-800},$addToSet:{'modules.stickerInventory':'nox250'}});
+        await DB.users.set(msg.author.id,{$inc:{'eventData.halloween20.candy':-800},$addToSet:{'modules.stickerInventory':'nox250'}});
         msg.reply(_emoji('yep')+"All set! Equip this sticker at the **Dashboard** (https://pollux.amarok.kr/dashboard)");
         
       }else{

@@ -81,10 +81,10 @@ const init = async function (msg){
         if (!thisItem) return msg.addReaction(_emoji("nope").reaction),null;
         let previousItem = eventData.inventory.find(x=>x.type===thisItem.type && x.equipped === true);
         if(previousItem){
-          await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':previousItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();
+          await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.id':previousItem.id},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();
         }
-        await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':true}}).lean().exec();
-        await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+thisItem.type]:thisItem.id}}).lean().exec();
+        await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.id':thisItem.id},{$set:{'eventData.halloween20.inventory.$.equipped':true}}).lean().exec();
+        await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween20.'+thisItem.type]:thisItem.id}}).lean().exec();
 
        return msg.addReaction(_emoji("yep").reaction), null;
 
@@ -95,28 +95,28 @@ const init = async function (msg){
     if ( Number(msg.args[1]) <= eventData.inventory.length ){
 
         let thisItem = eventData.inventory[Number(msg.args[1])-1]
-          await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
-          await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+thisItem.type]:null}}).lean().exec();
+          await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.id':thisItem.id},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();   
+          await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween20.'+thisItem.type]:null}}).lean().exec();
       
       msg.addReaction(_emoji("yep").reaction);
 
     }else if(["head","body","legs"].includes(msg.args[1])){
       let thisItem = eventData.inventory.find(x=>x.id==eventData[msg.args[1]] )
       //msg.reply("```"+JSON.stringify(thisItem)+"```")
-      await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.id':thisItem.id},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
-      await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween18.'+msg.args[1]]:null}}).lean().exec();
+      await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.id':thisItem.id},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();   
+      await DB.users.updateOne({id:Author.id},{$set:{['eventData.halloween20.'+msg.args[1]]:null}}).lean().exec();
       msg.addReaction(_emoji("yep").reaction);
       
       
     }else if(msg.args[1]=="all"){
-       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
-       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
-       await DB.users.updateOne({id:Author.id,'eventData.halloween18.inventory.equipped':true},{$set:{'eventData.halloween18.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.equipped':true},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.equipped':true},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();   
+       await DB.users.updateOne({id:Author.id,'eventData.halloween20.inventory.equipped':true},{$set:{'eventData.halloween20.inventory.$.equipped':false}}).lean().exec();   
        await DB.users.updateOne({id:Author.id},{$set:
            {
-             'eventData.halloween18.head':null,
-             'eventData.halloween18.legs':null,
-             'eventData.halloween18.body':null
+             'eventData.halloween20.head':null,
+             'eventData.halloween20.legs':null,
+             'eventData.halloween20.body':null
            }});
       msg.addReaction(_emoji("yep").reaction);
       
@@ -129,9 +129,9 @@ const init = async function (msg){
     let resolve = msg.args[2] || msg.args[1]
     if (!resolve) return msg.reply("Missing parameter");
     if(["girl","female","gal","woman"].includes(resolve.toLowerCase()))
-          await DB.users.set(Author.id,{$set: {"eventData.halloween18.gender": "girl"}});
+          await DB.users.set(Author.id,{$set: {"eventData.halloween20.gender": "girl"}});
     else if (["boy","male","guy","man"].includes(resolve.toLowerCase()))
-          await DB.users.set(Author.id,{$set: {"eventData.halloween18.gender": "boy"}});
+          await DB.users.set(Author.id,{$set: {"eventData.halloween20.gender": "boy"}});
     else
       return msg.reply("Invalid Gender");
     

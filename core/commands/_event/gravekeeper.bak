@@ -159,7 +159,7 @@ const pricetab = {
            await wait(1);
           PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeR});
         }else if (curr == "candy"){
-          await DB.users.set(msg.author.id,{$inc:{"eventData.halloween18.candy":-total}});
+          await DB.users.set(msg.author.id,{$inc:{"eventData.halloween20.candy":-total}});
            await wait(1);
           PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeC});
         }
@@ -192,16 +192,16 @@ const pricetab = {
             return PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");
           }
           if(item == "acDoll"){
-            await DB.users.set(msg.author.id,{$set:{"eventData.halloween18.dailysec":0},
-                                                 $inc:{"eventData.halloween18.candy":-pricetab.acDoll.c}});
+            await DB.users.set(msg.author.id,{$set:{"eventData.halloween20.dailysec":0},
+                                                 $inc:{"eventData.halloween20.candy":-pricetab.acDoll.c}});
             await wait(1);
             await PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeC});
             PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");
             return true;
           }
           if(item == "acCask"){
-            await DB.users.set(msg.author.id,{ $inc:{"eventData.halloween18.caskets":1,
-                                                        "eventData.halloween18.candy":-pricetab.acCask.c}});
+            await DB.users.set(msg.author.id,{ $inc:{"eventData.halloween20.caskets":1,
+                                                        "eventData.halloween20.candy":-pricetab.acCask.c}});
             await wait(1);
             await PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeC});
             PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");
@@ -222,7 +222,7 @@ const pricetab = {
           }
           if(item == "acDoll"){
             //await DB.audits.new(msg.author.id,pricetab.acDoll.r,"event-gravekeeper(DOLL)","RBN","-");
-            await DB.users.set(msg.author.id,{$set:{"eventData.halloween18.dailysec":0},
+            await DB.users.set(msg.author.id,{$set:{"eventData.halloween20.dailysec":0},
                                                  $inc:{"modules.rubines":-pricetab.acDoll.r}});
             await PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeR});
             PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");
@@ -230,7 +230,7 @@ const pricetab = {
           }
           if(item == "acCask"){
             //await DB.audits.new(msg.author.id,pricetab.acCask.r,"event-gravekeeper(CASKET)","RBN","-");
-            await DB.users.set(msg.author.id,{ $inc:{"eventData.halloween18.caskets":1,
+            await DB.users.set(msg.author.id,{ $inc:{"eventData.halloween20.caskets":1,
                                                         "modules.rubines":-pricetab.acCask.r}});
             await PLX.executeWebhook(wh.id,wh.token,{wait:!0, content: completeR});
             PLX.deleteWebhook(wh.id,wh.token,"Gravekeeper Session Over");

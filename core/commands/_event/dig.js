@@ -139,7 +139,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
         {
           $inc: {
             eventDaily: +((DAY / 6) * 4),
-            "eventData.halloween18.caskets": 2,
+            "eventData.halloween20.caskets": 2,
           },
         }
       )
@@ -152,7 +152,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
     await DB.users
       .updateOne(
         { id: Author.id },
-        { $inc: { "eventData.halloween18.caskets": 1 } }
+        { $inc: { "eventData.halloween20.caskets": 1 } }
       )
       .lean()
       .exec();
