@@ -71,7 +71,7 @@ const init = async function (msg){
   const USERDATA = await DB.users.findOne({ id: Author.id });
   const eventData = await EV.userData(Author);
 
-
+console.log(eventData)
 
 
 
@@ -395,6 +395,7 @@ let me_queryStringIn  = {$push:{"eventData.halloween20.inventory":item}}
         }
         else if(memento.length == 27){
           await DB.users.set(Author.id, {$addToSet:{'modules.achievements':"memento_completionist"},$inc:{'eventGoodie':2000}});   
+          await DB.users.set(Author.id, {$addToSet:{'modules.flairsInventory':"memento_completionist_2020"}});
           mes.channel.send("You got 2000 bonus Event Tokens for completing 100% of your Memento Collection!")
           
         }
@@ -418,7 +419,9 @@ let me_queryStringIn  = {$push:{"eventData.halloween20.inventory":item}}
   embed.color = 0x3b6987;
   embed.fields = []
 
+  console.log()
   for (i in eventData.inventory) {
+    console.log(i)
     let ind = eventData.inventory
     embed.fields.push({
      name: _emoji(ind[i].rarity) + ind[i].name + (ind[i].augment ? " +" + ind[i].augment : ""),
