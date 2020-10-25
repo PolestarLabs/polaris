@@ -78,7 +78,9 @@ module.exports = {
   
 
 userData: async function(Author){
-  const USERDATA = await DB.users.findOne({id:Author.id}).lean().exec();
+  const USERDATA = await DB.users.findOne({id:Author.id||Author}).lean().exec();
+  if(!USERDATA) USERDATA = await DB.users.new(Author);
+
   let eventData = (USERDATA.eventData||{}).halloween18;  
   if(!eventData) {
     //return message.channel.send(noEventPart);
@@ -95,7 +97,7 @@ userData: async function(Author){
     return eventData;
 },
   
-  phabricate: function (Author,typ,rar,cos,name,asp) {
+  phabricate: function (Author,typ,rar,cos,name,asp,aug) {
     let rarity = rar || getRandomRarity();
     let type =  typ || shuffle(["head","body","legs","head","body","legs"])[randomize(0,3)]
     let costume = cos || this._costumes()
@@ -107,7 +109,7 @@ userData: async function(Author){
     { name : aspect+" "+costumeName+" "+(type=="head"?"Hat":type=="body"?"Vest":"Legs")
     , id : Author.id+"|"+Date.now()
     , rarity
-    , spook : this.getSpook(rarity)
+    , spook : this.getSpook(rarity) + (aug||0)
     , augment : 0
     , aspect 
     , aspectBonus 
