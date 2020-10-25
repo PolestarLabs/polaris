@@ -2,9 +2,9 @@
 
   "halloween20": {
 
-    "acAmulet":"",
-    "acSpellbind":"",
-    "arsTitle":"",
+    "acAmulet":"Sweet, and what you're giving me for these?",
+    "acRose":"What are you giving me in exchange of these, kid?",
+    "arsTitle":"Arsenika - The Dusk Priestess",
     "covenants":{
       "dusk":"The Dusk Covenant",
       "umbral":"The Umbral Covenant",
@@ -15,6 +15,25 @@
       "joinUmbral": "You're joining the **Umbral Covenant**.",
       "joinUmbralAffinity": "This increases affinity with **Noctix** the Underworld's Gravekeeper"
     },
+    "amuletCantAfford":"Sorry, but you need at least {{emj}} **2 Ancient Amulets** to exchange for a piece of Jiangshi garment",
+    "amuletExchangePrompt":"Do you want to exchange {{emj}} **2 Ancient Amulets** for {{emj2}} **1 Jiangshi Costume Piece**?",
+    "amuletExchangeSuccess":"You exchanged your Amulets with some exotic gear! This is what you found:\n{{rar}} **{{item}}**",
+    
+    "roseCantAfford":"Sorry, but you need at least {{emj}} **2 Wicked Roses** to exchange for a piece of Alraune garment",
+    "roseExchangePrompt":"Do you want to exchange {{emj}} **2 Wicked Roses** for {{emj2}} **1 Alraune Costume Piece**?",
+    "roseExchangeSuccess":"You exchanged your Amulets with some exotic gear! This is what you found:\n{{rar}} **{{item}}**",
+    
+    "australis":{
+      "greet" :     "Oh my, oh my, you've found me! I thought maybe with this beanie on I could blend in more easily. I couldn't be more wrong.\nAnyway, this town is bustling with people giving away candy here and there. I also got some exotic stuff you might enjoy.\nHave a look!" ,
+      "amulet" :    "Aha, this one? This is some really ancient amulet I found somewhere far away. They're just like the bunch of knock-offs the crazy orange sister is giving away, but this one is something else!\nHow about it? I can take five or your knock-off replicas. {{amuletemj}} **5 Ancient Amulets** " ,
+      "roses" :     "This one i found in a box full of old stuff in a mausoleum close to the cemetary. Nobody seemed to care so I took them all. They look in perfect condition! Are you taking one?\nI'd like {{roseemj}} **5 Wicked Roses** on it, please." ,
+      "candy" :     "People think my attire is some sort of costume, and they gave me candy whenever I knocked at their doors. Pretty fun huh? I can sell you a bunch of them for {{rbnemj}} **10 000 Rubines**" ,
+      "jiangshi" :  "This one is one of my favorites! I can give you them in exchange for a good condition **Jiangshi Set**" ,
+      "alraune" :   "This one was one of my best finds! Those can be yours for a complete **Alraune Set**.",
+      "sticker" :   "Do you like Stickers? These ones I made myself! They're absolute high quality and one of a kind. **2500 Candy** for them. Deal?",  
+      "finisher" :  "Perfect! It was a pleasure to do business with you~"
+    },
+
     "avatar":{
       "clickHere": "Click here and download this image to use as avatar.",
       "preview": "This is a preview of your avatar. Confirm to receive a larger version.",
@@ -26,22 +45,22 @@
       "diff":"It does not belong to any of the covenants."
     },
     "arsenika":{
-      "acCask":   "Teehee. After you get the first, you can't stop anymore, huh? So, what are you giving me in exchange for this **Casket**?" ,
+      "acCask":   "Good. You're doing me a favor removing this from my parish's backyard... but what are you giving me in exchange for this **Casket**?" ,
       
-      "acToken":   "Tokens, tokens for the stupid tin can with tits. Y'all only think of that. Fine, what are you gonna give me for these?" ,
-      "noCashR":"You see, these red gemstones mean nothing to me but... that doesn't mean I'm gonna give you a discount!",
-      "noCashC":"I can't do business on an empty stomach, you'll need to bring me more candy if you want a deal!",
+      "acToken":   "Right, right. Tokens it is... What you have there for these?" ,
+      "noCashR": "Hmmm hmmm, you see, our parish is kinda in need of funding, so I can't do this for free for you.",
+      "noCashC":"You're doing a poor job at getting those candies huh? It seems you don't have enough of them.",
 
-      "howMany":"So, how many of these do you want?",
+      "howMany":"So, how many of these do you want?  *wink* *wink*",
 
-      "completeC":"Yum! Very good, thanks for the candy. Now return to your realm and have fun!",
-      "completeR":"Nice. I'm sure I'll find a use for these gems someday. Now return to your realm and have fun!",
+      "completeC": "This candy will be put to good use. Now go back to the town and have fun!",
+      "completeR": "Eheheh, nice! Thanks for the contribution to the Dusk Parish's fund~",
 
-      "timeout":"Um, if you're not doing anything... can we go back to our world now?",
-      "timeout2":"Shut up, tin head! Let your master think!\nWait... where are you two going?",
-      "cancel":"Hm? Nothing? Well, you know where to find me.",
+      "timeout":"Hey sonny, I know the place is beautiful but you can't stay here all night... shoo!",
+      "timeout2":"",
+      "cancel":"Hm? Nothing? Were you here to admire my flawless figure?.",
 
-      "greet":"Greetings. It seems your obsession for the dead has brought you to me. How... *sweet*...\nWell, you're in the right place! I can offer a variety of goods for you. The same way you're a fanatic for corpse fashion, I'm a fanatic for candy! Bring me all the ones you have!\n\n**By the way**, this is tomato juice what I'm drinking. Stop looking at me like that!",
+      "greet":"Hello hello little one! What brings you here? Oh. I see... so, have you been to our parish before? We're in need of some funding so we're accepting some Candies and Rubines in exchange of some goodies. What do you think?"
    
     }
   },
