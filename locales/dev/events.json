@@ -2,6 +2,9 @@
 
   "halloween20": {
 
+    "acAmulet":"",
+    "acSpellbind":"",
+    "arsTitle":"",
     "covenants":{
       "dusk":"The Dusk Covenant",
       "umbral":"The Umbral Covenant",
@@ -21,15 +24,11 @@
       "fine":"It seems to be just fine!",
       "opos":"It seems to be the opposite of what you intended.",
       "diff":"It does not belong to any of the covenants."
-    }
-  },
-  "halloween18": {
-    
-    "noctix":{
-
+    },
+    "arsenika":{
       "acCask":   "Teehee. After you get the first, you can't stop anymore, huh? So, what are you giving me in exchange for this **Casket**?" ,
-      "acDoll":   "Oooh, sneaky one~ This doll will automatically wander around as soon as you pay me, how you'd like to pay for it?" ,
-      "acToken":   "Tokens, tokens for the stupid tin can with tits. Y'all only think on that. Fine, what are you gonna give me for these?" ,
+      
+      "acToken":   "Tokens, tokens for the stupid tin can with tits. Y'all only think of that. Fine, what are you gonna give me for these?" ,
       "noCashR":"You see, these red gemstones mean nothing to me but... that doesn't mean I'm gonna give you a discount!",
       "noCashC":"I can't do business on an empty stomach, you'll need to bring me more candy if you want a deal!",
 
@@ -42,7 +41,30 @@
       "timeout2":"Shut up, tin head! Let your master think!\nWait... where are you two going?",
       "cancel":"Hm? Nothing? Well, you know where to find me.",
 
-      "greet":"Greetings. It seems your obsession for the dead has brought you to me. How... *sweet*., I should say...\nWell, you're in the right place! I can offer a variety of goods for you. The same way you're a fanatic for corpse fashion, I'm a fanatic for candy! Bring me all the ones you have!\n\n**By the way**, this is tomato juice what I'm drinking. Stop looking at me like that!",
+      "greet":"Greetings. It seems your obsession for the dead has brought you to me. How... *sweet*...\nWell, you're in the right place! I can offer a variety of goods for you. The same way you're a fanatic for corpse fashion, I'm a fanatic for candy! Bring me all the ones you have!\n\n**By the way**, this is tomato juice what I'm drinking. Stop looking at me like that!",
+   
+    }
+  },
+  "halloween18": {
+    
+    "noctix":{
+
+      "acCask":   "Teehee. After you get the first, you can't stop anymore, huh? So, what are you giving me in exchange for this **Casket**?" ,
+      "acDoll":   "Oooh, sneaky one~ This doll will automatically wander around as soon as you pay me, how you'd like to pay for it?" ,
+      "acToken":   "Tokens, tokens for the stupid tin can with tits. Y'all only think of that. Fine, what are you gonna give me for these?" ,
+      "noCashR":"You see, these red gemstones mean nothing to me but... that doesn't mean I'm gonna give you a discount!",
+      "noCashC":"I can't do business on an empty stomach, you'll need to bring me more candy if you want a deal!",
+
+      "howMany":"So, how many of these do you want?",
+
+      "completeC":"Yum! Very good, thanks for the candy. Now return to your realm and have fun!",
+      "completeR":"Nice. I'm sure I'll find a use for these gems someday. Now return to your realm and have fun!",
+
+      "timeout":"Um, if you're not doing anything... can we go back to our world now?",
+      "timeout2":"Shut up, tin head! Let your master think!\nWait... where are you two going?",
+      "cancel":"Hm? Nothing? Well, you know where to find me.",
+
+      "greet":"Greetings. It seems your obsession for the dead has brought you to me. How... *sweet*...\nWell, you're in the right place! I can offer a variety of goods for you. The same way you're a fanatic for corpse fashion, I'm a fanatic for candy! Bring me all the ones you have!\n\n**By the way**, this is tomato juice what I'm drinking. Stop looking at me like that!",
       "list":"**Caskets**\nThese contain the spookiest garments to be used as your ultra spoopy costume, spook people around and they'll give more candy!\n**Decoy Doll** \nA cursed artifact that will wander around and make your neighbours forget that you've been to their door a couple minutes ago. Use it to bypass the 6h cooldown from spooking.\n**Event Tokens**\nGive these to that stupid robot girl you hang around with. She will trade them for decorative stuff."
 
     },
