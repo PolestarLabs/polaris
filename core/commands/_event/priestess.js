@@ -128,7 +128,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             await DB.users.set(userID,{$inc:{'eventData.halloween20.candy': -priceC }});
             promptEmbed.description = (_emoji('yep')+ $t('events:halloween20.arsenika.completeC',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityArs': weight + covBonus }})
         }else{
             prompt.removeReactions()
             promptEmbed.description = (_emoji('nope')+$t('events:halloween20.arsenika.noCashC',P) )
@@ -146,7 +146,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             await DB.users.set(userID,{$inc:{'modules.rubines': -priceR }});
             promptEmbed.description = (_emoji('yep')+$t('events:halloween20.arsenika.completeR',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityArs': weight + covBonus }})
         }else{
             promptEmbed.description = (_emoji('nope')+$t('events:halloween20.arsenika.noCashR',P) )
             return prompt.edit({embed:promptEmbed});
