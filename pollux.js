@@ -151,7 +151,7 @@ global.translateEngineStart = () => {
       },
     }, (err, t) => {
       if (err) {
-        console.warn("• ".yellow, "Failed to Load Some Translations".yellow, `\n${err.map((e) => e.path.gray).join("\n")}`);
+        console.warn("• ".yellow, "Failed to Load Some Translations".yellow, `\n${err.map((e) => e.path?.gray).join("\n")}`);
       }
       console.log("• ".green, "Translation Engine Loaded");
 
