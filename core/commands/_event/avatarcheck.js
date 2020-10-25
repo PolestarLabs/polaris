@@ -53,10 +53,12 @@ const init= async function run(msg,args) {
       {includeAA:false,threshold:.1}
     );
     
-    
-    if(checkUMBRA === 0) msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.night",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
-    if(checkDUSK === 0)  msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.dusk",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
-    if( (checkDUSK > 5) || (checkUMBRA > 5) ) msg.channel.send(_emoji('nope')+" "+$t("events:halloween20.avatar.inad",P));
+    if(args !== true){
+
+      if(checkUMBRA === 0) msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.night",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
+      else if (checkDUSK === 0)  msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.dusk",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
+      else msg.channel.send(_emoji('nope')+" "+$t("events:halloween20.avatar.inad",P));
+    }
  
     if(args === true){
         return checkUMBRA === 0 ? 'umbral' : checkDUSK === 0 ? 'dusk' : 'none';
