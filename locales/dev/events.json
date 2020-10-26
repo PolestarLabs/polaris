@@ -15,12 +15,12 @@
       "joinUmbral": "You're joining the **Umbral Covenant**.",
       "joinUmbralAffinity": "This increases affinity with **Noctix** the Underworld's Gravekeeper"
     },
-    "amuletCantAfford":"Sorry, but you need at least {{emj}} **2 Ancient Amulets** to exchange for a piece of Jiangshi garment",
-    "amuletExchangePrompt":"Do you want to exchange {{emj}} **2 Ancient Amulets** for {{emj2}} **1 Jiangshi Costume Piece**?",
+    "amuletCantAfford":"Sorry, but you need at least {{emj}} **5 Ancient Amulets** to exchange for a piece of Jiangshi garment",
+    "amuletExchangePrompt":"Do you want to exchange {{emj}} **5 Ancient Amulets** for {{emj2}} **1 Jiangshi Costume Piece**?",
     "amuletExchangeSuccess":"You exchanged your Amulets with some exotic gear! This is what you found:\n{{rar}} **{{item}}**",
     
-    "roseCantAfford":"Sorry, but you need at least {{emj}} **2 Wicked Roses** to exchange for a piece of Alraune garment",
-    "roseExchangePrompt":"Do you want to exchange {{emj}} **2 Wicked Roses** for {{emj2}} **1 Alraune Costume Piece**?",
+    "roseCantAfford":"Sorry, but you need at least {{emj}} **5 Wicked Roses** to exchange for a piece of Alraune garment",
+    "roseExchangePrompt":"Do you want to exchange {{emj}} **5 Wicked Roses** for {{emj2}} **1 Alraune Costume Piece**?",
     "roseExchangeSuccess":"You exchanged your Amulets with some exotic gear! This is what you found:\n{{rar}} **{{item}}**",
     
     "australis":{
@@ -33,7 +33,8 @@
       "jiangshi" :  "This one is one of my favorites! I can give you them in exchange for a good condition **Jiangshi Set**. {{tier}} or above" ,
       "alraune" :   "This one was one of my best finds! Those can be yours for a complete **Alraune Set**. {{tier}} or above",
       "sticker" :   "Do you like Stickers? These ones I made myself! They're absolute high quality and one of a kind. **2500 Candy** for them. Deal?",  
-      "finisher" :  "Perfect! It was a pleasure to do business with you~"
+      "finisher" :  "Perfect! It was a pleasure to do business with you~",
+      "cancel" :  "Ok, i'll be waiting here if you change your mind"
     },
 
     "avatar":{
