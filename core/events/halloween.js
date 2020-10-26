@@ -63,10 +63,10 @@ const getRandomRarity = function(type="unshuffle"){
   }
 let rand = randomize(0,1000);
   result = "C";
-  if(rand<=700) result = "U";
-  if(rand<=450) result = "R";
-  if(rand<=250) result = "SR";
-  if(rand<=100) result = "UR";
+  if(rand<=600) result = "U";
+  if(rand<=350) result = "R";
+  if(rand<=50) result = "SR";
+  if(rand<=10) result = "UR";
   //40 20 15 10 5  
   if (type == "debug"){
     result =  { shuffld : (shuffled[randomize(0,shuffled.length-1)]), enum: result, rand,array:JSON.stringify(shuffled)};
@@ -140,8 +140,8 @@ userData: async function(Author){
             mummy: "Mummy",
             scrow: "Scarecrow",
             astronaut: "Astronaut",
-           // jiangshi: "Jiangshi",
-           // alraune: "Alraune",
+            jiangshi: "Jiangshi",
+            alraune: "Alraune",
          }
          
          return items[ex]
@@ -154,14 +154,19 @@ userData: async function(Author){
     "demon",
     "vampire",
     "mummy",
+    "mummy",
     "werewolf",
+    "werewolf",
+    "duck",
     "duck",
     "clown",
     "pirate",
     "scrow",
+    "scrow",
+    "scrow",
+    "scrow",
     "astronaut",
-    "jiangshi",
-    "alraune",
+
  
   ]
     
