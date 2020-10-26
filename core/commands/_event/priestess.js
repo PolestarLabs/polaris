@@ -3,6 +3,7 @@ const ECO = require('../../archetypes/Economy.js');
 const avicheck = require('./avatarcheck.js')
 const EventData = require('../../archetypes/Events.js');
 const EV = EventData.event_details; 
+const INVOKERS   = new Map();
 
 const init = async function (msg){
     const P = {lngs:msg.lang}
@@ -18,20 +19,22 @@ const init = async function (msg){
     const covenant = await avicheck.init(msg,true);
 
     embed.image = {url: paths.Build + '/events/halloween20/ars-store.png?'}
-
+    
     embed.description = $t('events:halloween20.arsenika.greet',P)
     embed.fields = [
-        {name: "Affinity with Arsenika",value: (eventData.affinityArs || 0) + "/500", inline:true},
+        {name: "Affinity with Arsenika",value: (eventData.affinityArs || 0) + "/5000", inline:true},
         {name: "Affinity Bonus",value: (covenant === 'dusk' ? 25 : covenant === 'umbral' ? -25 : 0) + "%", inline:true},
     ]
-
+    
     let postMsg = await msg.channel.send({embed});
+    INVOKERS.set(msg.author.id,postMsg.id) 
 
     return postMsg;
 
 }
 module.exports={
     init
+    ,cooldown: 20000
     ,pub:true
     ,cmd:'priestess'
     ,cat:'_event'
@@ -40,13 +43,15 @@ module.exports={
     ,reactionButtons:[
         {
             emoji: 'amulet:767214978972254239',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID,'events:halloween20.acAmulet' ,'ancient_amulet',350,2500,50)
+                buySomething(msg,uID,'events:halloween20.acAmulet' ,'ancient_amulet',350,2500,5)
             }, 
         },{
             emoji: 'casket:504412718753644555',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
@@ -55,11 +60,12 @@ module.exports={
             
         },{
             emoji: 'EVT:765986694691422208',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();                
 
-                let prompt = msg.channel.send( "**"+$t('events:halloween20.arsenika.howMany')+"**");
+                let prompt = await msg.channel.send( "**"+$t('events:halloween20.arsenika.howMany')+"**");
                 let res = await msg.channel.awaitMessages(m=>m.author.id === uID && (Number(m.content) > 0),{maxMatches:1,time:15e3});
                 if (!res[0]) return msg.channel.send("Are you gonna just look at me like that?");
                 prompt.delete().catch(err=>null);
@@ -67,11 +73,12 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:0}},1,100,.5)
+                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,.5)
             },
             
         },{
             emoji: "❌",
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "cancel", 
             response: async (msg,args,uID) => {
                 msg.channel.send($t('events:halloween20.arsenika.cancel',{lngs:[msg.channel.LANG||msg.guild.LANG,'dev']}));
@@ -84,6 +91,7 @@ module.exports={
 
 async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weight=1){
 
+
     const P = {lngs:[msg.channel.LANG||msg.guild.LANG,'dev']}
 
     console.log(userID)
@@ -93,7 +101,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     //msg.edit({embed});
     let promptEmbed = {
         title: $t('events:halloween20.arsTitle',P),
-        thumbnail: {url:"https://cdn.discordapp.com/attachments/488142034776096772/769335416590696458/unknown.png"},
+        thumbnail: {url:"https://cdn.discordapp.com/attachments/488142034776096772/770110704303996938/unknown.png"},
         description: `${$t(what,P)}
 
 <:CANDY:769023260050325535> **${priceC}**
@@ -113,6 +121,14 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     
     const eventData = await EV.userData(userID);
     const userData = await DB.users.getFull(userID);
+
+    if(what === 'events:halloween20.arsenika.acCask'){
+        if(eventData.caskets >= 5){
+            return "you can't hold more than 5 caskets at a time!";
+        }        
+    }
+
+
     prompt.removeReactions()
 
     const covenant = await avicheck.init(rea.author,true);
