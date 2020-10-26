@@ -9,7 +9,7 @@ const init = async function (msg){
 
     let userData = await DB.users.getFull(msg.author.id);
 
-    let hasTwo = userData.hasItem('ancient_amulet',2); // two?
+    let hasTwo = userData.modules.inventory.find(i=> i.id === 'ancient_amulets')?.count >= 5; // two?
     P.emj = "<:amulet:767214978972254239>"
     P.emj2 = "☯"
 
@@ -31,7 +31,7 @@ const init = async function (msg){
             let phab = EV.phabricate(msg.author,null,null,'jiangshi', 'Jiangshi',null,20);
             
             await Promise.all([
-                userData.removeItem('ancient_amulet',2),
+                userData.removeItem('ancient_amulet',5),
                 DB.users.set(msg.author.id,{$push:{"eventData.halloween20.inventory":phab}})
             ]);
             
@@ -50,7 +50,7 @@ const init = async function (msg){
 
        
     }else{
-        return $t('events:hallowen20.amuletCantAfford',P);
+        return $t('events:halloween20.amuletCantAfford',P);
     }
 
 
