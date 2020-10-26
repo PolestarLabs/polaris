@@ -21,7 +21,7 @@ const init= async function run(msg,args) {
     ]);
 
 
-    const dimensions = [30,30]
+    const dimensions = [5,5]
 
     let PROPIC= Picto.new(...dimensions);
     let ca=PROPIC.getContext("2d");
@@ -55,6 +55,8 @@ const init= async function run(msg,args) {
     
     if(args !== true){
 
+      console.log({checkDUSK,checkUMBRA})
+
       if(checkUMBRA === 0) msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.night",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
       else if (checkDUSK === 0)  msg.channel.send(_emoji('yep')+" "+$t("events:halloween20.avatar.dusk",P)+"\n"+$t("events:halloween20.avatar.fine",P) );
       else msg.channel.send(_emoji('nope')+" "+$t("events:halloween20.avatar.inad",P));
@@ -66,7 +68,7 @@ const init= async function run(msg,args) {
 
  
   }catch(e){
-    console.error(e)
+    
   }
 
 }
@@ -75,6 +77,7 @@ const init= async function run(msg,args) {
 module.exports = {
     pub: false,
     cmd: "avatarcheck",
+    aliases:['checkavatar'],
     perms: 3,
     init: init,
     cat: 'event',
