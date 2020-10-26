@@ -32,7 +32,7 @@ class Microserver {
         });
       }
     });
-    const port = `190${(PLX.cluster.id || "0").toString().padStart(2, "0")}`;
+    const port = `${PLX.user.id === '578913818961248256' ? 199 : 190}${(PLX.cluster.id || "0").toString().padStart(2, "0")}`;
     server.listen(Number(port));
     console.info("Shard cluster", (PLX.cluster.name || "NONAME").yellow, "microserver listening at port", port.green);
   }
