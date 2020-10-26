@@ -9,7 +9,7 @@ const init = async function (msg){
 
     let userData = await DB.users.getFull(msg.author.id);
 
-    let hasTwo = userData.modules.inventory.find(i=> i.id === 'ancient_amulets')?.count >= 5; // two?
+    let hasTwo = userData.modules.inventory.find(i=> i.id === 'ancient_amulet')?.count >= 5; // two?
     P.emj = "<:amulet:767214978972254239>"
     P.emj2 = "☯"
 
