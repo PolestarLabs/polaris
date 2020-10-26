@@ -71,11 +71,11 @@ const init = async function (msg) {
   if (Author.dailing === true) return msg.channel.send("Spooky.");
 
   //const STREAK_EXPIRE = 1.296e+8*2
-  const DAY = 2.16e7;
+  const DAY = 6 * 60 * 60000;
   const now = Date.now();
 
   const userDaily =
-    ((USERDATA.eventData || {}).halloween18 || {}).dailysec || 1;
+    ((USERDATA.eventData || {}).halloween20 || {}).dailysec || 1;
 
   const dailyAvailable = now - userDaily >= DAY;
 
@@ -138,6 +138,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
   let noise = randomize(-10, +10);
   let candyDrop = totalSpook + noise;
   candyDrop = candyDrop < 0 ? 1 : candyDrop;
+  candyDrop = ~~(candyDrop*0.8)
 
   if (totalSpook < 5) {
     return msg.reply($t("events:halloween18.spook.advisor", P));
