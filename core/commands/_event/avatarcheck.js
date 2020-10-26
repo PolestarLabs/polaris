@@ -25,15 +25,15 @@ const init= async function run(msg,args) {
 
     let PROPIC= Picto.new(...dimensions);
     let ca=PROPIC.getContext("2d");
-    ca.drawImage(propicCanvas,0, 0);
+    ca.drawImage(propicCanvas,-5, -5);
 
     let DUSK= Picto.new(...dimensions);
     let ca2=DUSK.getContext("2d");
-    ca2.drawImage(duskCanvas,0, 0);
+    ca2.drawImage(duskCanvas,-5, -5);
 
     let UMBRAL= Picto.new(...dimensions);
     let ca3=UMBRAL.getContext("2d");
-    ca3.drawImage(umbralCanvas,0, 0);
+    ca3.drawImage(umbralCanvas,-5, -5);
 
     
     const [PROPIC_BUFFER,DUSK_BUFFER,UMBRAL_BUFFER] = await Promise.all([
