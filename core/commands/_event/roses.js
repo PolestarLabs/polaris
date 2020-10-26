@@ -9,11 +9,12 @@ const init = async function (msg){
 
     let userData = await DB.users.getFull(msg.author.id);
 
-    let hasTwo = userData.amountItem('wicked_rose') >= 2; // two?
+    let hasTwo = userData.modules.inventory.find(i=> i.id === 'wicked_rose')?.count >= 5; // two?
     P.emj = "<:wickedrose:769730202782793809>";
     P.emj2 = "🌹";
 
-    if (hasTwo){
+    console.log({hasTwo})
+    if (hasTwo === true){
 
         let promptEmbed = {
             description: $t('events:halloween20.roseExchangePrompt',P),
@@ -31,7 +32,7 @@ const init = async function (msg){
             let phab = EV.phabricate(msg.author,null,null,'alraune', 'Alraune',null,20);
             
             await Promise.all([
-                userData.removeItem('wicked_rose',2),
+                userData.removeItem('wicked_rose',5),
                 DB.users.set(msg.author.id,{$push:{"eventData.halloween20.inventory":phab}})
             ]);
             
@@ -50,7 +51,7 @@ const init = async function (msg){
 
        
     }else{
-        return $t('events:hallowen20.roseCantAfford',P);
+        return $t('events:halloween20.roseCantAfford',P);
     }
 
 
