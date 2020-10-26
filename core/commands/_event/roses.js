@@ -9,7 +9,7 @@ const init = async function (msg){
 
     let userData = await DB.users.getFull(msg.author.id);
 
-    let hasTwo = userData.hasItem('wicked_rose',2); // two?
+    let hasTwo = userData.amountItem('wicked_rose') >= 2; // two?
     P.emj = "<:wickedrose:769730202782793809>";
     P.emj2 = "🌹";
 
