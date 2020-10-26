@@ -16,24 +16,34 @@ const init = async function (msg,args){
     const P = {lngs: msg.lang,prefix:msg.prefix};
  
 
-    let prompt = await msg.channel.send("choose");
-    prompt.addReaction('🌇');
-    prompt.addReaction('🌃');
+    let prompt,joining;
+    
+if(!args || (args[0] != 'dusk' && args[0] !='umbral')){
 
-    const reas = await prompt.awaitReactions({
+        prompt = await msg.channel.send("Select the covenant you want to join: "+`
+        🌇 - Dusk
+        🌃 - Umbral
+        `);
+        prompt.addReaction('🌇');
+        prompt.addReaction('🌃');
+        
+        const reas = await prompt.awaitReactions({
       maxMatches: 1,
       authorOnly: msg.author.id,
       time: 25e3,
     }).catch(err=>0);
     if (!reas?.length)  return _emoji('nope') + "`TIMEOUT`";
-
-    let joining;
-
+    
+    
     if (reas.length === 1 && reas[0].emoji.name === "🌇") joining = 'dusk';
     else if (reas.length === 1 && reas[0].emoji.name === '🌃') joining = 'umbral';
     else return _emoji('nope') + "Error";
-
     prompt.delete()
+}else{
+    joining = args[0]
+}
+
+
 
     let frame= await Picto.getCanvas( frames[joining] );
     let pix= await Picto.getCanvas(propic);
