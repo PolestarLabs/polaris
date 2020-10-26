@@ -25,11 +25,13 @@
     
     "australis":{
       "greet" :     "Oh my, oh my, you've found me! I thought maybe with this beanie on I could blend in more easily. I couldn't be more wrong.\nAnyway, this town is bustling with people giving away candy here and there. I also got some exotic stuff you might enjoy.\nHave a look!" ,
+      "alreadyOwn" :     "I know we're in a capitalist world but you have no reason to own more than one of this. Look at something else!" ,
+      "notEnough" :    "Looks like you don't have enough of these for me. Get back here when you've got some..." ,
       "amulet" :    "Aha, this one? This is some really ancient amulet I found somewhere far away. They're just like the bunch of knock-offs the crazy orange sister is giving away, but this one is something else!\nHow about it? I can take five or your knock-off replicas. {{amuletemj}} **5 Ancient Amulets** " ,
       "roses" :     "This one i found in a box full of old stuff in a mausoleum close to the cemetary. Nobody seemed to care so I took them all. They look in perfect condition! Are you taking one?\nI'd like {{roseemj}} **5 Wicked Roses** on it, please." ,
       "candy" :     "People think my attire is some sort of costume, and they gave me candy whenever I knocked at their doors. Pretty fun huh? I can sell you a bunch of them for {{rbnemj}} **10 000 Rubines**" ,
-      "jiangshi" :  "This one is one of my favorites! I can give you them in exchange for a good condition **Jiangshi Set**" ,
-      "alraune" :   "This one was one of my best finds! Those can be yours for a complete **Alraune Set**.",
+      "jiangshi" :  "This one is one of my favorites! I can give you them in exchange for a good condition **Jiangshi Set**. {{tier}} or above" ,
+      "alraune" :   "This one was one of my best finds! Those can be yours for a complete **Alraune Set**. {{tier}} or above",
       "sticker" :   "Do you like Stickers? These ones I made myself! They're absolute high quality and one of a kind. **2500 Candy** for them. Deal?",  
       "finisher" :  "Perfect! It was a pleasure to do business with you~"
     },
