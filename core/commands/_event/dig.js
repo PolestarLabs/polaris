@@ -75,7 +75,7 @@ const init = async function (msg) {
   //if (Author.dailing === true) return message.channel.send("There's already a dig request going on!");
 
   //const STREAK_EXPIRE = 1.296e+8*2embed
-  const DAY = 2.16e7;
+  const DAY = 6 * 60 * 60000;
   const now = Date.now();
 
   const userDaily = USERDATA.eventDaily || 1;
@@ -86,8 +86,8 @@ const init = async function (msg) {
 
   if (msg.content.endsWith("info")) {
     let infoEmbed = {};
-    infoEmbed.setColor("#e35555");
-    infoEmbed.setDescription(
+    infoEmbed.color = 0xe35555;
+    infoEmbed.description =(
       "**" +v.last +"** " +
         moment.utc(userDaily).fromNow() +"\n" +
         v.next + " " +
@@ -195,7 +195,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
         .lean()
         .exec();
       msg.channel.send(
-        rand$t("responses.verbose.interjections.ohmy_negative", mm, P) +
+        rand$t("responses.verbose.interjections.ohmy_negative",  P) +
           $t("events:halloween18.dig.shovelbroke", P)
       );
     }
