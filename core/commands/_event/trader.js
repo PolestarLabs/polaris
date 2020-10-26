@@ -19,13 +19,14 @@ const init = async function (msg){
     };
 
     const covenant = await avicheck.init(msg,true);
-    const userData = await DB.users.getFull(msg.author.id);
+    const userData = await DB.users.get(msg.author.id);
     
     
     embed.image = {url: paths.Build + '/events/halloween20/aus-store.png?'}
     
     embed.description = $t('events:halloween20.australis.greet',P);
     embed.fields = [
+        {name:"Candy",value:userData?.eventData?.halloween20?.candy||0 ,inline:!0},
         {name:"Ancient Amulets",value:userData.modules.inventory.find(i=> i.id === 'ancient_amulet')?.count||0 ,inline:!0},
         {name:"Wicked Roses",value:userData.modules.inventory.find(i=> i.id === 'wicked_rose')?.count||0 ,inline:!0}
     ]
@@ -69,21 +70,22 @@ module.exports={
            
             }, 
         },{
-            emoji: ':CANDY:769023260050325535',
+            emoji: 'CANDY:769023260050325535',
             type: "edit",
             filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             response: async (msg,args,uID) => {
-                msg.removeReactions();
                 const userData = await DB.users.get(uID);
                 const P = [msg.channel.LANG||msg.guild.LANG];
-                const resEmbed = msg.embeds[0];
+                let nms = await msg.channel.send({embed:{description:'Loading...'}});
+                const resEmbed = nms.embeds[0];
                 resEmbed.thumbnail = {
                     url: "https://cdn.discordapp.com/emojis/769023260050325535.png?v=1"
                 }
+                msg.removeReactions();
 
                 if(userData.modules.rubines < 10000){
                     resEmbed.description = $t('events:halloween20.australis.notEnough',P);
-                    return {embed:resEmbed};
+                    await nms.edit( {embed:resEmbed} );
                 };
                 
                 await Promise.all([
@@ -92,7 +94,7 @@ module.exports={
                 ]);
             
                 resEmbed.description = $t('events:halloween20.australis.finisher',P);
-                return {embed:resEmbed};
+                await nms.edit( {embed:resEmbed} );
             },
             
         },{
