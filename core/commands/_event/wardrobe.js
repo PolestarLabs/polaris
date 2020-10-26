@@ -256,6 +256,7 @@ targetData = await targetData;
         if(targetData.eventData.halloween20.inventory.length>11 && trad[0]!=="G")return tradeRes?.[0].reply("`💔 MAX ITEMS LIMIT`");
         
         if(trad[0]=="R"){
+        if( numInput < 500) return msg.channel.send("`💔 INVALID NUMBER (ONLY 500+)`");
         if(targetData.modules.rubines < numInput)return msg.reply("`💔 INSUFFICIENT FUNDS`");
           tradeSubject = "**"+numInput+"** x Rubines "+_emoji("rubine")
           queryStringOut = {$inc:{"modules.rubines":-numInput}}
