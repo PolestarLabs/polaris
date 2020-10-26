@@ -96,7 +96,8 @@
       "BOO":"**BOO!**",
       "followup":"That was scary indeed. You got **{{count}} Candy** for such spoopiness~\n\n*But your costume has lost Spook Power for being already known in the neighbourhood.*",
       "cooldown": "The neighbourhood is still startled from your last spook... wait up {{Xhours}} before showing up again!",
-      "cooldown_alt": "The neighbourhood is still startled from your last spook... wait up {{Xhours}} before showing up again, or buy a **decoy doll** from the **Gravekeeper**!"
+      "cooldown_alt": "The neighbourhood is still startled from your last spook... wait up {{Xhours}} before showing up again!"
+      ,"cooldown_alt_old": "The neighbourhood is still startled from your last spook... wait up {{Xhours}} before showing up again, or buy a **decoy doll** from the **Gravekeeper**!"
 
 
     },
