@@ -119,6 +119,25 @@ module.exports={
             },
             
         },{
+            emoji: '⭐',
+            type: "edit",
+            response: async (msg,args,uID) => {
+                msg.removeReactions();
+
+                const P = [msg.channel.LANG||msg.guild.LANG];
+                let promptEmbed = {
+                    description:  $t('events:halloween20.australis.sticker',P)
+                };
+                const response = await msg.channel.send({embed: promptEmbed});
+                YesNo(response,{author:{id:uID}},async (c,m)=>{
+                    await candyForSticker(m,uID,['ars','ars-ur2']).then(r=> {
+                        console.log(r)
+                        m.edit(r)
+                    });
+                })
+            },
+            
+        },{
             emoji: "❌",
             type: "cancel", 
             response: async (msg,args,uID) => {
@@ -191,6 +210,42 @@ async function flairForCostume(msg,uID,FLAIR,COSTUME){
     }
     const newCostumeInv = eventData.inventory.filter(it=> !costumeFiltered.includes(it.id));
     await DB.users.set(uID,{$set:{'eventData.halloween20.inventory':newCostumeInv}});
+
+    resEmbed.description = $t('events:halloween20.australis.finisher',P);
+    return {embed:resEmbed}; 
+ 
+}
+
+
+async function candyForSticker(msg,uID,STICKERS){
+    const userData = await DB.users.getFull(uID);
+    const P = [msg.channel.LANG||msg.guild.LANG];
+    const resEmbed = msg.embeds[0];
+    const eventData = await EV.userData(uID);
+    P.tier = _emoji('R');
+
+    const [STICKER1,STICKER2] = STICKERS;
+
+    if (eventData.candy < 2500) {
+        resEmbed.description = $t('events:halloween20.australis.notEnough',P);        
+        resEmbed.color = 0xCC2233;
+        resEmbed.footer.text= "❌";
+        return {embed:resEmbed};
+    }
+
+
+    if (userData.modules.stickerInventory.includes(STICKER1)){
+        await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER1}});
+    }else if (userData.modules.flairsInventory.includes(STICKER2)){
+        resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
+        resEmbed.color = 0xCC2233;
+        resEmbed.footer.text= "❌";
+        return {embed:resEmbed};
+    }else{
+        await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER2}});
+    }
+  
+    await DB.users.set(uID,{$inc:{'eventData.halloween20.candy':-2500}});
 
     resEmbed.description = $t('events:halloween20.australis.finisher',P);
     return {embed:resEmbed}; 
