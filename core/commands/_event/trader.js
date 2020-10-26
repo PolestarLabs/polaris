@@ -4,6 +4,8 @@ const ECO = require('../../archetypes/Economy.js');
 const avicheck = require('./avatarcheck.js')
 const EventData = require('../../archetypes/Events.js');
 const EV = EventData.event_details; 
+const INVOKERS   = new Map();
+
 
 const init = async function (msg){
     const P = {lngs:msg.lang}
@@ -17,13 +19,20 @@ const init = async function (msg){
     };
 
     const covenant = await avicheck.init(msg,true);
-
+    const userData = await DB.users.getFull(msg.author.id);
+    
+    
     embed.image = {url: paths.Build + '/events/halloween20/aus-store.png?'}
-
+    
     embed.description = $t('events:halloween20.australis.greet',P);
-
-
+    embed.fields = [
+        {name:"Ancient Amulets",value:userData.modules.inventory.find(i=> i.id === 'ancient_amulet')?.count||0 ,inline:!0},
+        {name:"Wicked Roses",value:userData.modules.inventory.find(i=> i.id === 'wicked_rose')?.count||0 ,inline:!0}
+    ]
+    
+    
     let postMsg = await msg.channel.send({embed});
+    INVOKERS.set(msg.author.id,postMsg.id) 
 
     return postMsg;
 
@@ -38,23 +47,31 @@ module.exports={
     ,reactionButtons:[
         {
             emoji: 'amulet:767214978972254239',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();
-                let res = await flairForItem(msg,uID,'ofuda','ancient_amulet',5);
-                return res;
+                let nms = await msg.channel.send({embed:{description:'Loading...'}});
+                let res = await flairForItem(nms,uID,'ofuda','ancient_amulet',5);
+                return 1;
+               
             }, 
         },{
             emoji: 'wickedrose:769730202782793809',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();
-                let res = await flairForItem(msg,uID,'noctix_honeymoon','wicked_rose',5);
-                return res;
+                let nms = await msg.channel.send({embed:{description:'Loading...'}});
+                let res = await flairForItem(nms,uID,'noctix_honeymoon','wicked_rose',5);
+
+                return "2";
+           
             }, 
         },{
             emoji: ':CANDY:769023260050325535',
             type: "edit",
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             response: async (msg,args,uID) => {
                 msg.removeReactions();
                 const userData = await DB.users.get(uID);
@@ -80,6 +97,7 @@ module.exports={
             
         },{
             emoji: '☯️',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();
@@ -90,7 +108,7 @@ module.exports={
                     thumbnail: {url: paths.CDN + "/build/events/halloween20/jiangshis.png" }
                 };
                 const response = await msg.channel.send({embed: promptEmbed});
-                YesNo(response,{author:{id:uID}},async (c,m)=>{
+                await YesNo(response,{author:{id:uID}},async (c,m)=>{
                     await flairForCostume(m,uID,['jiangshi-g','jiangshi-b'],'jiangshi').then(r=> {
                         console.log(r)
                         m.edit(r)
@@ -100,17 +118,18 @@ module.exports={
             
         },{
             emoji: '🌹',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();
-
+                
                 const P = [msg.channel.LANG||msg.guild.LANG];
                 let promptEmbed = {
                     description:  $t('events:halloween20.australis.alraune',P),
                     thumbnail: {url: paths.CDN + "/build/events/halloween20/alraunes.png"}
                 };
                 const response = await msg.channel.send({embed: promptEmbed});
-                YesNo(response,{author:{id:uID}},async (c,m)=>{
+                await YesNo(response,{author:{id:uID}},async (c,m)=>{
                     await flairForCostume(m,uID,['alraune-g','alraune-b'],'alraune').then(r=> {
                         console.log(r)
                         m.edit(r)
@@ -120,6 +139,7 @@ module.exports={
             
         },{
             emoji: '⭐',
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "edit",
             response: async (msg,args,uID) => {
                 msg.removeReactions();
@@ -139,6 +159,7 @@ module.exports={
             
         },{
             emoji: "❌",
+            filter:(msg,emj,uid)=> INVOKERS.get(uid) === msg.id,
             type: "cancel", 
             response: async (msg,args,uID) => {
                 msg.channel.send($t('events:halloween20.australis.cancel',{lngs:[msg.channel.LANG||msg.guild.LANG,'dev']}));
@@ -155,21 +176,22 @@ async function flairForItem(msg,uID,FLAIR,ITM,AMT){
     resEmbed.thumbnail = {
         url: paths.CDN + "/flairs/"+FLAIR+".png"
     }
+
     
-    if(userData.amountItem(ITM) < AMT){
+    if(userData.modules.inventory.find(i=> i.id === ITM)?.count < AMT){
         resEmbed.description = $t('events:halloween20.australis.notEnough',P);
-        return {embed:resEmbed};
+        return msg.edit({embed:resEmbed});
     };
     if(userData.modules.flairsInventory.includes(FLAIR)){
         resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
-        return {embed:resEmbed};
+       return  msg.edit({embed:resEmbed});
     };
 
-    await DB.users.set(uID,{$addToSet:{'module.flairsInventory':FLAIR }});
+    await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':FLAIR }});
     await userData.removeItem(ITM,AMT);                               
 
     resEmbed.description = $t('events:halloween20.australis.finisher',P);
-    return {embed:resEmbed};
+   return msg.edit({embed:resEmbed});
 }
 
 
