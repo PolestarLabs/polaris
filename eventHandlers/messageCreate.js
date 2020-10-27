@@ -28,7 +28,7 @@ module.exports = async (msg) => {
     try {
       evaled = await eval(msg.content.replace("eval ", ""));
     } catch (error) {
-      evaled = error.stack;
+      evaled = error.message;
     }
     if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
     msg.channel.createMessage(evaled.substr(0, 1975));
