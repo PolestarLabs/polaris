@@ -24,13 +24,14 @@ module.exports = async (msg) => {
   }
 
   if (msg.content.startsWith("eval ") && ["88120564400553984", "253600545972027394", "124989722668957700"].includes(msg.author.id)) {
-    msg.channel.createMessage(require("util").inspect((async () => {
-      try {
-        return await eval(msg.content.replace("eval ", ""));
-      } catch (error) {
-        return error.stack;
-      }
-    })()).substr(0, 1975));
+    let evaled;
+    try {
+      evaled = await eval(msg.content.replace("eval ", ""));
+    } catch (error) {
+      evaled = error.stack;
+    }
+    if (typeof evaled !== "string") evaled = require("util").inspect(evaled);
+    msg.channel.createMessage(evaled.substr(0, 1975));
   }
 
   //-----------------------------------------------------------
