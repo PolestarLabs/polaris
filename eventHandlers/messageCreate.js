@@ -23,8 +23,14 @@ module.exports = async (msg) => {
     }
   }
 
-  if (msg.content.startsWith('eval ') && ['88120564400553984', '253600545972027394'].includes(msg.author.id)) {
-    msg.channel.createMessage(require("util").inspect(await eval(msg.content.replace('eval ', ''))).substr(0, 1975))
+  if (msg.content.startsWith("eval ") && ["88120564400553984", "253600545972027394", "124989722668957700"].includes(msg.author.id)) {
+    msg.channel.createMessage(require("util").inspect((async () => {
+      try {
+        return await eval(msg.content.replace("eval ", ""));
+      } catch (error) {
+        return error.stack;
+      }
+    })()).substr(0, 1975));
   }
 
   //-----------------------------------------------------------
