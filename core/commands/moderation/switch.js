@@ -356,7 +356,7 @@ function genSwitchEmbed(Switch, options) {
 		for (let cat of catsArr) {
 			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat)) : gdisabledcats.includes(cat),
 				override = cmode && (cats[cat]["cmds"].some(cmd => cdcmds.includes(cmd) || cecmds.includes(cmd))),
-				disabledCount = cats[cat].cmds.map(cmd => ((gdcmds.includes(cmd) || cdcmds.includes(cmd)) && cmode ? !cecmds.includes(cmd) : true) ? 1 : 0).reduce((a, b) => a + b, 0),
+				disabledCount = cats[cat].cmds.filter(cmd => (gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)).length,
 				catName = cat.slice(0, 1).toUpperCase() + cat.slice(1);
 			embed.fields.push({
 				name: `${(disabled ? (override && cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? R_WO : _emoji("partial")) : (override && cmode ? R_WG : _emoji("on")))} ${catName}`,
