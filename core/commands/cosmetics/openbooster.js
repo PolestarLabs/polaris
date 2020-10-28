@@ -40,7 +40,7 @@ const init = async (msg) => {
   embed.footer(msg.author.tag, msg.author.avatarURL);
 
   await Promise.all([
-    userData.update({ $addToSet: { "modules.stickerInventory": { $each: [stk1.id, stk2.id] } } }),
+    DB.users.set(userData.id,{ $addToSet: { "modules.stickerInventory": { $each: [stk1.id, stk2.id] } } }),
     userData.removeItem(thisPack.id),
   ]);
   return msg.channel.send({ embed });
