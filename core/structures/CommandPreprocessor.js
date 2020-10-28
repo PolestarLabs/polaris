@@ -54,8 +54,7 @@ const PERMS_CALC = function CommandPermission(msg) {
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
     if (permchk !== "ok") return false;
   }
-  if (disabled) msg.commandDeny = true;
-  return (!disabled && (!uIDs.length || uIDs.includes(msg.author.id)));
+  return (!uIDs.length || uIDs.includes(msg.author.id));
 };
 
 const DEFAULT_CMD_OPTS = {
