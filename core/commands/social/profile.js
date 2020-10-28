@@ -29,15 +29,15 @@ const XYZ = {
   },
 
   commend: {
-    X: 43, Y: 25, W: 80, A: "center",
+    X: 40, Y: 25, W: 80, A: "center",
   },
   name: {
-    X: 279, Y: 505-4, W: 400, A: "left",
+    X: 290+373, Y: 505-4, W: 400, A: "right",
   },
   tagline: {
-    X: 290, Y: 542, W: 400, A: "left",
+    X: 300+363, Y: 542, W: 400, A: "right",
   },
-  medals: { X: 96-20, Y: 377 },
+  medals: { X: 96-15, Y: 377 },
 
   rubines: { X: 706 - 420, Y: 521 - 500, W: 440 },
   sapphires: { X: 706 - 420, Y: 521 - 500, W: 440 },
@@ -63,11 +63,11 @@ const XYZ = {
   sticker: {
     X: 272, Y: 305, W: 220, H: 220,
   },
-  avatar: { X: 20, Y: 110 }, // 123
+  avatar: { X: 20, Y: 123 }, // 123
   flair: {
     X: 694, Y: 470, W: 100, H: 120,
   },
-  flag: { X: 748, Y: 276 },
+  flag: { X: 15, Y: 544 },
   offset_hex: 20,
 };
 const COLORS = {
@@ -203,6 +203,7 @@ init = async (msg) => {
     //= ========================================
 
     let img = {};
+    img.sidebar        = Picto.getCanvas(`${paths.CDN}/build/profile/sidebar.png`);
     img.ranks        = Picto.getCanvas(`${paths.CDN}/build/profile/global-server-tag.png`);
     img.defaultAvi   = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
     img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex-2"}.png`);
@@ -291,7 +292,8 @@ init = async (msg) => {
     ctx.globalCompositeOperation = "source-over";
 
     // FULL I/O PARALLELISM   \m/
-
+    let z; // CURSOR
+    
     const backdrop = new Promise(async (resolveAll) => {
       const backmost = new Promise(async (resolveBack) => {
         const canvas = Picto.new(800, 600);
@@ -302,33 +304,19 @@ init = async (msg) => {
           };
           Picto.roundRect(ctx, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H, rad, IMG);
           // ctx.drawImage( IMG, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H);
-
           img.mainframe.then((mainframe) => {
-            const colorstrap = Picto.new(62, 600);
-            const cx = colorstrap.getContext("2d");
-
-            cx.fillStyle = USERPROFILE.favColor;
-            Picto.roundRect(cx,0,0,63,580,10,cx.fillStyle,false);// cx.fillRect(0, 0, 63, 580);
-            cx.globalAlpha = 0.9;
-            cx.globalCompositeOperation = "destination-atop";
-            cx.drawImage(mainframe, -10, -10);
-
-            cx.globalCompositeOperation = "multiply";
-            cx.drawImage(mainframe, -10, -10);
-
-            ctx.drawImage(mainframe, 0, 0);
-            ctx.globalAlpha = 0.9;
-            ctx.drawImage(colorstrap, 9, 10);
-            ctx.globalAlpha = 1;
-
-            Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {
-              ctx.globalAlpha = 0.65;
-              ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
-              ctx.globalAlpha = 1;
-              return resolveBack(canvas);
-            });
-            mainframe = null;
+                  
+              ctx.drawImage(mainframe, 0, 0);
+        
+              Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {
+                ctx.globalAlpha = 0.65;
+                ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
+                ctx.globalAlpha = 1;
+                return resolveBack(canvas);
+              });
+          // mainframe = null;
           });
+         
         });
       });
 
@@ -379,39 +367,6 @@ init = async (msg) => {
       });
     });
 
-    let z; // CURSOR
-    //= ====================================================
-    //                             FOREGROUND TEXT ELEMENTS
-    //= ====================================================
-
-    if (isMarried) {
-      ["wifeName", "lovepoints", "wifeSince"].forEach((z) => {
-        Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y, XYZ[z].W, XYZ[z].A);
-      });
-      ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y); // 513 265
-    }else{
-      ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y+80); // 513 265
-    }
-    
-    ["name", "tagline", "globalRank", "localRank"].forEach((z) => {
-      if (!Target.bot || ["name", "tagline"].includes(z)) {
-        Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y +(z.includes('Rank')&&!isMarried?80:0), XYZ[z].W, XYZ[z].A);
-      }
-    });
-
-    ["persotex"].forEach((z) => {
-      ctx.drawImage(txt[z].item, XYZ[z].X, XYZ[z].Y);// XYZ[z].W,  XYZ[z].A )
-    });
-
-    z = "commend";
-    Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
-
-    const THX = Picto.tag(ctx, "THX", "900 30px 'Panton Black',Sans", "#ffffff");
-    ctx.globalAlpha = 0.5;
-    ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425);
-    ctx.globalAlpha = 0.8;
-    ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
-    ctx.globalAlpha = 1;
 
     const foreground = new Promise(async (resolveAll) => {
       const canvas = Picto.new(800, 600);
@@ -448,6 +403,10 @@ init = async (msg) => {
         resolveAll(canvas);
       });
     });
+
+    
+
+    
 
     if (USERPROFILE.medalsArrangement && USERPROFILE.medalsArrangement.valid.length > 0) {
       valid_medals = USERPROFILE.medalsArrangement.style;
@@ -504,6 +463,63 @@ init = async (msg) => {
         });
       }
     }
+    img.sidebar.then((sidebar) => {          
+    
+      const colorstrap = Picto.new(100, 643);
+      const cx = colorstrap.getContext("2d");
+
+      cx.fillStyle = USERPROFILE.favColor;
+      Picto.roundRect(cx,0,0,80,643,10,cx.fillStyle,false);
+      cx.globalAlpha = 0.9;
+      cx.globalCompositeOperation = "destination-atop";
+      cx.drawImage(sidebar,0,0);
+
+      cx.globalCompositeOperation = "multiply";
+      cx.drawImage(sidebar, 0,0);
+
+      ctx.drawImage(colorstrap, 0, 0);
+      ctx.globalAlpha = 1;
+
+      Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {
+        ctx.globalAlpha = 0.65;
+        ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
+        ctx.globalAlpha = 1;
+      });
+    });
+
+    
+      //= ====================================================
+      //                             FOREGROUND TEXT ELEMENTS
+      //= ====================================================
+
+      if (isMarried) {
+        ["wifeName", "lovepoints", "wifeSince"].forEach((z) => {
+          Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y, XYZ[z].W, XYZ[z].A);
+        });
+        ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y); // 513 265
+      }else{
+        ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y+80); // 513 265
+      }
+      
+      ["name", "tagline", "globalRank", "localRank"].forEach((z) => {
+        if (!Target.bot || ["name", "tagline"].includes(z)) {
+          Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y +(z.includes('Rank')&&!isMarried?80:0), XYZ[z].W, XYZ[z].A);
+        }
+      });
+
+      ["persotex"].forEach((z) => {
+        ctx.drawImage(txt[z].item, XYZ[z].X, XYZ[z].Y);// XYZ[z].W,  XYZ[z].A )
+      });
+
+      z = "commend";
+      Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
+
+      const THX = Picto.tag(ctx, "THX", "900 30px 'Panton Black',Sans", "#ffffff");
+      ctx.globalAlpha = 0.5;
+      ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425);
+      ctx.globalAlpha = 0.8;
+      ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
+      ctx.globalAlpha = 1;
 
     const hexes = new Promise(async (resolve) => {
       const canvas3 = Picto.new(800, 600);
