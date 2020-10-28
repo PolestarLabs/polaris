@@ -35,9 +35,9 @@ const PERMS_CALC = function CommandPermission(msg) {
   }
 
   const GUILD = msg.guild || {};
-  const CHANNEL = msg.channel;
+  const CHANNEL = msg.channel || {};
   if (!CHANNEL.ENABLED?.includes(msg.command.label)) {
-    if (CHANNEL?.DISABLED?.includes(msg.command.label)) {
+    if (CHANNEL.DISABLED?.includes(msg.command.label)) {
       msg.commandDenyChn = true;
     } else if (GUILD?.DISABLED?.includes(msg.command.label)) {
       msg.commandDenySer = true;
@@ -54,7 +54,7 @@ const PERMS_CALC = function CommandPermission(msg) {
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
     if (permchk !== "ok") return false;
   }
-  return (!uIDs.length || uIDs.includes(msg.author.id));
+  return (!(msg.commandDenyChn || msg.commandDenySer) || !uIDs.length || uIDs.includes(msg.author.id));
 };
 
 const DEFAULT_CMD_OPTS = {
