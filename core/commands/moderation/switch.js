@@ -351,10 +351,10 @@ function genSwitchEmbed(Switch, options) {
 	if (!cat) {
 		const gdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => gdcmds.includes(cmd)));
 		const cdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cdcmds.includes(cmd)));
-		const cenabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cecmds.includes(cmd)));
+		const cpartialenabledcats = catsArr.filter(cat => cats[cat]["cmds"].some(cmd => cecmds.includes(cmd)));
 
 		for (let cat of catsArr) {
-			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat)) : gdisabledcats.includes(cat),
+			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cpartialenabledcats.includes(cat)) : gdisabledcats.includes(cat),
 				override = cmode && (cats[cat]["cmds"].some(cmd => cdcmds.includes(cmd) || cecmds.includes(cmd))),
 				disabledCount = cats[cat].cmds.filter(cmd => (gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)).length,
 				catName = cat.slice(0, 1).toUpperCase() + cat.slice(1);
