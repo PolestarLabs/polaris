@@ -73,10 +73,12 @@ module.exports = {
     const h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
 
+    
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
-
+    
     const item = Canvas.createCanvas(w, h + H);
     const c = item.getContext("2d");
+ 
 
     c.font = ctx.font;
     if (stroke) {
@@ -95,6 +97,7 @@ module.exports = {
   },
 
   tagMoji: async function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+    
     ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
@@ -104,10 +107,10 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
 
-    const item = Canvas.createCanvas(w*(1.1)+20, 1.1*(h + H) );
+    const item = Canvas.createCanvas(w, 1.1*(h + H) );
     const c = item.getContext("2d");
-
     c.font = ctx.font;
+    
     if (stroke) {
       c.strokeStyle = stroke.style;
       c.lineWidth = stroke.line;
@@ -117,7 +120,7 @@ module.exports = {
     await fillTextWithTwemoji(c,
       text,
       1 + (stroke ? stroke.line / 2 : 0),
-      H + (stroke ? stroke.line / 2 : 0)+((h+H)*.1),
+      H + (stroke ? stroke.line / 2 : 0)+((h+H)*.1), {maxWidth:w}
     );
 
     return { item, height: h + H, width: w }; // legacy
