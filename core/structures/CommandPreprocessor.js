@@ -36,7 +36,13 @@ const PERMS_CALC = function CommandPermission(msg) {
 
   const GUILD = msg.guild || {};
   const CHANNEL = msg.channel;
-  const disabled = (GUILD?.DISABLED?.includes(msg.command.label) || CHANNEL.DISABLED?.includes(msg.command.label)) && !CHANNEL.ENABLED?.includes(msg.command.label);
+  if (!CHANNEL.ENABLED?.includes(msg.command.label)) {
+    if (CHANNEL?.DISABLED?.includes(msg.command.label)) {
+      msg.commandDenyChn = true;
+    } else if (GUILD?.DISABLED?.includes(msg.command.label)) {
+      msg.commandDenySer = true;
+    }
+  }
 
   if (msg.author.looting === true) {
     msg.addReaction(_emoji("nope").reaction);
@@ -48,8 +54,7 @@ const PERMS_CALC = function CommandPermission(msg) {
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
     if (permchk !== "ok") return false;
   }
-  if (disabled) msg.commandDeny = true;
-  return (!disabled && (!uIDs.length || uIDs.includes(msg.author.id)));
+  return (!uIDs.length || uIDs.includes(msg.author.id));
 };
 
 const DEFAULT_CMD_OPTS = {
@@ -63,14 +68,14 @@ const DEFAULT_CMD_OPTS = {
       msg.command.aliases = msg.command.parentCommand.aliases;
       msg.command.helpImage = msg.command.parentCommand.helpImage;
     }
-    
+
     PLX.autoHelper("force", {
-      msg, 
-      cmd: msg.command.cmd, 
-      opt: msg.command.cat, 
-      aliases: msg.command.aliases, 
-      scope: msg.command.scope, 
-      related: msg.command.related, 
+      msg,
+      cmd: msg.command.cmd,
+      opt: msg.command.cat,
+      aliases: msg.command.aliases,
+      scope: msg.command.scope,
+      related: msg.command.related,
       helpImage: msg.command.helpImage
     });
   },
@@ -78,9 +83,10 @@ const DEFAULT_CMD_OPTS = {
   cooldownMessage: (msg) => `⏱ ${rand$t([`responses.cooldown.${msg.command.cmd}`, "responses.cooldown.generic"], { lngs: msg.lang })}`,
   cooldownReturns: 2,
   requirements: { custom: PERMS_CALC },
-  permissionMessage: (msg) => (msg.commandDeny
-    ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
-    : msg.addReaction(_emoji("nope").reaction)),
+  permissionMessage: (msg) => (msg.commandDenyChn
+    ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
+    : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
+      : msg.addReaction(_emoji("nope").reaction)),
   hooks: {
     preCommand: (m, a) => {
       m.args = a;
@@ -109,11 +115,10 @@ const DEFAULT_CMD_OPTS = {
   errorMessage: function errorMessage(msg, err) {
     return ({
       embed: {
-      // description: "Oh **no**! Something went wrong...\n"
-      // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
+        // description: "Oh **no**! Something went wrong...\n"
+        // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
         description: "Oh **no**! Something went wrong...\n"
-      + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${
-        PLX.beta || cfg.testChannels.includes(msg.channel.id) ? ` \`\`\`js\n${err.stack}\`\`\`` : ""}`,
+          + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${PLX.beta || cfg.testChannels.includes(msg.channel.id) ? ` \`\`\`js\n${err.stack}\`\`\`` : ""}`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
         color: 0xF05060,
       },
