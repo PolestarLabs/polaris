@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "",
-            "disabledChn": "A {{module}} modult már nem lehet a #{{channel}} channelen használni.",
+            "disabledChn": "A {{module}} modult már nem lehet a <#{{channel}}> channelen használni.",
             "disabledComSer": "",
-            "disabledComChn": "A **{{command}}** parancsot most már nem lehet a #{{channel}} channelen használni",
+            "disabledComChn": "A **{{command}}** parancsot most már nem lehet a <#{{channel}}> channelen használni",
             "enabledSer": "",
-            "enabledChn": "A **{{module}}** modul most már használható a #{{channel}} channelen",
+            "enabledChn": "A **{{module}}** modul most már használható a <#{{channel}}> channelen",
             "enabledComSer": "",
-            "enabledComChn": "A **{{command}}** parancs most már használható a #{{channel}} channelen"
+            "enabledComChn": "A **{{command}}** parancs most már használható a <#{{channel}}> channelen"
         },
         "reput": {
             "noSelf": "Nem, nem engedem, hogy fényezd magad.",

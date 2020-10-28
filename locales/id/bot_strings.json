@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "_Module_ **{{module}}** telah dimatikan secara **Global**.",
-            "disabledChn": "_Module_ {{module}} telah dimatikan pada #{{channel}}",
+            "disabledChn": "_Module_ {{module}} telah dimatikan pada <#{{channel}}>",
             "disabledComSer": "Perintah {{command}} telah dimatikan secara **Global**.",
-            "disabledComChn": "Perintah {{command}} telah dimatikan pada #{{channel}}",
+            "disabledComChn": "Perintah {{command}} telah dimatikan pada <#{{channel}}>",
             "enabledSer": "_Module_ **{{module}}** telah diperbolehkan secara **Global**.",
-            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada #{{channel}}",
+            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada <#{{channel}}>",
             "enabledComSer": "Perintah **{{command}}** telah diperbolehkan secara **Global**",
-            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada #{{channel}}"
+            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Enggak, aku tidak bisa memberi _rep_ ke dirimu sendiri.",

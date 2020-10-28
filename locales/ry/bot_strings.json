@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** wgah'n mgep mgepah nafl mgepgoka **globally**.",
-            "disabledChn": "{{module}} wgah'n mgep mgepah nafl ph'nglui mgepgoka Channel #{{channel}}",
+            "disabledChn": "{{module}} wgah'n mgep mgepah nafl ph'nglui mgepgoka Channel <#{{channel}}>",
             "disabledComSer": "**{{command}}** ulnah mgep mgepah nafl mgepgoka **Globally**",
-            "disabledComChn": "**{{command}}** command has been not granted in #{{channel}}",
+            "disabledComChn": "**{{command}}** command has been not granted in <#{{channel}}>",
             "enabledSer": "**{{module}}** wgah'n mgep mgepah mgepgoka **globally**",
-            "enabledChn": "**{{module}}** wgah'n mgep mgepah ph'nglui mgepgoka #{{channel}}",
+            "enabledChn": "**{{module}}** wgah'n mgep mgepah ph'nglui mgepgoka <#{{channel}}>",
             "enabledComSer": "**{{command}}** ulnah mgep mgepah mgepgoka **Globally**",
-            "enabledComChn": "**{{command}}** ulnah mgep mgepah ph'nglui mgepgoka channel #{{channel}}"
+            "enabledComChn": "**{{command}}** ulnah mgep mgepah ph'nglui mgepgoka channel <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Mg ymg'Rep.",

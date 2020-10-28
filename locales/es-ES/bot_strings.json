@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "El módulo **{{module}}** ha sido deshabilitado **Globalmente**.",
-            "disabledChn": "El módulo {{module}} ha sido deshabilitado en el canal #{{channel}}",
+            "disabledChn": "El módulo {{module}} ha sido deshabilitado en el canal <#{{channel}}>",
             "disabledComSer": "El comando **{{command}}** ha sido deshabilitado **Globalmente**",
-            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal #{{channel}}",
+            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal <#{{channel}}>",
             "enabledSer": "El módulo **{{module}}** ha sido deshabilitado **Globalmente**",
-            "enabledChn": "El módulo **{{module}}** ha sido habilitado en el canal #{{channel}}",
+            "enabledChn": "El módulo **{{module}}** ha sido habilitado en el canal <#{{channel}}>",
             "enabledComSer": "El comando **{{command}}** ha sido habilitado **Globalmente**",
-            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal #{{channel}}"
+            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal <#{{channel}}>"
         },
         "reput": {
             "noSelf": "No, me niego a que te subas la reputación tú mismo.",

@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Le module **{{module}}** a été **globalement** désactivé.␣ ",
-            "disabledChn": "Le module {{module}} a été désactivé dans le salon #{{channel}}",
+            "disabledChn": "Le module {{module}} a été désactivé dans le salon <#{{channel}}>",
             "disabledComSer": "La commande **{{command}}** a été **globalement** désactivée.",
-            "disabledComChn": "La commande **{{command}}** a été désactivée dans le salon #{{channel}}",
+            "disabledComChn": "La commande **{{command}}** a été désactivée dans le salon <#{{channel}}>",
             "enabledSer": "Le module **{{module}}** a été **globalement** activé.",
-            "enabledChn": "Le **{{module}}** a été activé pour le salon #{{channel}} ",
+            "enabledChn": "Le **{{module}}** a été activé pour le salon <#{{channel}}> ",
             "enabledComSer": "La commande **{{command}}** a été **globalement** activée. ",
-            "enabledComChn": "La commande **{{command}}** a été activée pour le salon #{{channel}} "
+            "enabledComChn": "La commande **{{command}}** a été activée pour le salon <#{{channel}}> "
         },
         "reput": {
             "noSelf": "Hey hey gros malin! Tu peux pas te rep tout seul!",

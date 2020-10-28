@@ -413,11 +413,11 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** 모듈이 **세계적으로** 비활성화되었습니다.",
-            "disabledChn": "모듈 {{module}} 이 #{{channel}} 채널에서 비활성화되었습니다",
+            "disabledChn": "모듈 {{module}} 이 <#{{channel}}> 채널에서 비활성화되었습니다",
             "disabledComSer": "**{{command}}** 코멘드가 **세계적으로** 비활성화되었습니다",
-            "disabledComChn": "**{{command}}** 코멘드가 #{{channel}} 에서 비활성화되었습니다.",
+            "disabledComChn": "**{{command}}** 코멘드가 <#{{channel}}> 에서 비활성화되었습니다.",
             "enabledSer": "**{{module}}** 모듈이 **세계적으로** 활성화되었습니다.",
-            "enabledChn": "모듈 {{module}} 이 #{{channel}} 채널에서 활성화되었습니다",
+            "enabledChn": "모듈 {{module}} 이 <#{{channel}}> 채널에서 활성화되었습니다",
             "enabledComSer": "**{{command}}** 코멘드가 **세계적으로** 활성화되었습니다",
             "enabledComChn": "** {{command}} ** 명령이 채널에서 사용 설정되었습니다."
         },

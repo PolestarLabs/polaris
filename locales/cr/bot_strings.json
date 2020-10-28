@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "THE **{{module}}** MODULE HAS BEEN DISABLED **GLOBALLY**.",
-            "disabledChn": "THE {{module}} MODULE HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}",
+            "disabledChn": "THE {{module}} MODULE HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>",
             "disabledComSer": "THE **{{command}}** COMMAND HAS BEEN DISABLED **GLOBALLY**.",
-            "disabledComChn": "THE **{{command}}** COMMAND HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}.",
+            "disabledComChn": "THE **{{command}}** COMMAND HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>.",
             "enabledSer": "THE **{{module}}** MODULE HAS BEEN ENABLED **GLOBALLY**.",
-            "enabledChn": "THE **{{module}}** MODULE HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}.",
+            "enabledChn": "THE **{{module}}** MODULE HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>.",
             "enabledComSer": "THE **{{command}}** COMMAND HAS BEEN ENABLED **GLOBALLY**.",
-            "enabledComChn": "THE **{{command}}** COMMAND HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, #{{channel}}."
+            "enabledComChn": "THE **{{command}}** COMMAND HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>."
         },
         "reput": {
             "noSelf": "NO, I REFUSE TO LET YOU ~~HIGH NOON~~ REP YOURSELF.",

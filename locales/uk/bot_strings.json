@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** модуль вимкнений. **Globally**",
-            "disabledChn": "{{Module}} модуль вимкнений на каналі #{{channel}}",
+            "disabledChn": "{{Module}} модуль вимкнений на каналі <#{{channel}}>",
             "disabledComSer": "**{{command}}** команда вимкнена **Globally**",
-            "disabledComChn": "Команда **{{command}}** вимкнена на каналі #{{channel}}",
+            "disabledComChn": "Команда **{{command}}** вимкнена на каналі <#{{channel}}>",
             "enabledSer": "**{{module}}** модуль включений **Globally**",
-            "enabledChn": "**{{module}}** модуль включений на каналі #{{channel}}",
+            "enabledChn": "**{{module}}** модуль включений на каналі <#{{channel}}>",
             "enabledComSer": "**{{command}}** команда була включена **Globally**",
-            "enabledComChn": "**{{command}}** команда була включена на каналі #{{channel}}"
+            "enabledComChn": "**{{command}}** команда була включена на каналі <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Ні, я не дозволяю вам дякувати самого себе.",

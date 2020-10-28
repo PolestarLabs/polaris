@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Modul **{{module}}** byl **globálně** vypnut.",
-            "disabledChn": "Modul **{{module}}* byl vypnut v kanálu #{{channel}}.",
+            "disabledChn": "Modul **{{module}}* byl vypnut v kanálu <#{{channel}}>.",
             "disabledComSer": "Příkaz **{{command}}** byl **globálně** vypnut.",
-            "disabledComChn": "Příkaz **{{command}}** byl vypnut v kanálu #{{channel}}.",
+            "disabledComChn": "Příkaz **{{command}}** byl vypnut v kanálu <#{{channel}}>.",
             "enabledSer": "Modul **{{module}}** byl **globálně** zapnut.",
-            "enabledChn": "Modul **{{module}}* byl zapnut v kanálu #{{channel}}.",
+            "enabledChn": "Modul **{{module}}* byl zapnut v kanálu <#{{channel}}>.",
             "enabledComSer": "Příkaz **{{command}}** byl **globálně** zapnut.",
-            "enabledComChn": "Příkaz **{{command}}** byl zapnut v kanálu #{{channel}}."
+            "enabledComChn": "Příkaz **{{command}}** byl zapnut v kanálu <#{{channel}}>."
         },
         "reput": {
             "noSelf": "Hej, chytrolíne! Nemůžeš si dát rep!",
