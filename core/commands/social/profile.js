@@ -180,7 +180,7 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
-  const Target = ((await (PLX.resolveMember(msg.args[0],msg.guild).catch(e=>null))|| (await PLX.resolveUser(msg.args[0]).catch(e=>console.error(e)) ) ) ) || msg.member;
+  const Target = ((await (PLX.resolveMember(msg.guild,msg.args[0]).catch(e=>null))|| (await PLX.resolveUser(msg.args[0]).catch(e=>console.error(e)) ) ) ) || msg.member;
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({ id: Target.id });
