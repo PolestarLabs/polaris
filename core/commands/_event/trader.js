@@ -85,7 +85,7 @@ module.exports={
 
                 if(userData.modules.rubines < 10000){
                     resEmbed.description = $t('events:halloween20.australis.notEnough',P);
-                    await nms.edit( {embed:resEmbed} );
+                    return nms.edit( {embed:resEmbed} );
                 };
                 
                 await Promise.all([
