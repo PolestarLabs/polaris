@@ -55,7 +55,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID, 'events:halloween18.noctix.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},666,3000,25)
+                buySomething(msg,uID, 'events:halloween18.noctix.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},666,3000,2)
             },
             
         },{
