@@ -262,7 +262,8 @@ module.exports = {
   },
 
   setAndDraw: function setAndDraw(ct, img, x, y, maxW = 300, align = "left") {
-    let w = img.width;
+
+    let w = img.w || img.width;
     w = w > maxW ? maxW : w;
 
     if (align === "left") {
