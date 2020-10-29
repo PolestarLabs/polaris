@@ -6,7 +6,7 @@ const Picto = require("../../utilities/Picto.js");
 const XYZ = {
   global_roundel: { X: 680, Y: 0 },
   persotex: {
-    W: 296, H: 95, X: 480, Y: 395,
+    W: 280, H: 95, X: 500, Y: 395,
   },
 
   wifeRect: {
@@ -32,10 +32,10 @@ const XYZ = {
     X: 40, Y: 25, W: 80, A: "center",
   },
   name: {
-    X: 290+373, Y: 505-4, W: 400, A: "right",
+    X: 290+403, Y: 505-7, W: 400, A: "right",
   },
   tagline: {
-    X: 300+363, Y: 542, W: 400, A: "right",
+    X: 300+363, Y: 545, W: 400, A: "right",
   },
   medals: { X: 96-15, Y: 377 },
 
@@ -61,13 +61,13 @@ const XYZ = {
     X: 70, Y: 15, W: 710, H: 345,
   },
   sticker: {
-    X: 272, Y: 305, W: 220, H: 220,
+    X: 286, Y: 350, W: 225, H: 225,
   },
   avatar: { X: 20, Y: 123 }, // 123
   flair: {
     X: 694, Y: 470, W: 100, H: 120,
   },
-  flag: { X: 15, Y: 544 },
+  flag: { X: 15, Y: 534 },
   offset_hex: 20,
 };
 const COLORS = {
@@ -81,13 +81,13 @@ const COLORS = {
 };
 const TEXT = {
   NAME: {
-    SIZE: 38,
+    SIZE: 44,
     WEIGHT: 900,
     FAMILY: "Panton Black",
     COLOR: "#2b2b3b",
   },
   TAGLINE: {
-    SIZE: 16,
+    SIZE: 18,
     WEIGHT: 900,
     FAMILY: "Panton",
     COLOR: "#2b2b3b",
@@ -180,7 +180,8 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
-  const Target = await PLX.getTarget(msg.args[0],msg.guild,false,true) || msg.member;
+  const Target = ((await (PLX.resolveMember(msg.args[0],msg.guild).catch(e=>null))|| (await PLX.resolveUser(msg.args[0]).catch(e=>console.error(e)) ) ) ) || msg.member;
+
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({ id: Target.id });
 
@@ -206,9 +207,14 @@ init = async (msg) => {
     img.sidebar        = Picto.getCanvas(`${paths.CDN}/build/profile/sidebar.png`);
     img.ranks        = Picto.getCanvas(`${paths.CDN}/build/profile/global-server-tag.png`);
     img.defaultAvi   = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
-    img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex-2"}.png`);
-    img.background   = Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
-    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) );
+    img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_bot" : "mainframe_bot" : "mainframe-nex-2"}.png`);
+    img.background   = Target.bot 
+    ? Picto.getCanvas(`${paths.CDN}/build/profile/${      
+      PFLD ? Target.id : 'generic-bot'
+    }.png`)
+    : Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
+
+    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${Target.bot?'bot':USERPROFILE.flair}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) );
     img.sticker      = USERPROFILE.sticker && Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
     img.flag         = USERPROFILE.countryFlag && Picto.getCanvas(paths.CDN + "/build/flags/"          + USERPROFILE.countryFlag  + ".png");
     img.aviFrame     = USERPROFILE.profileFrame && Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
@@ -234,14 +240,11 @@ init = async (msg) => {
     let txt_type;
 
     txt_type = "NAME";
-    Picto.tagMoji(ctx, USERPROFILE.localName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR)
-    .then(res=> txt.name = res);
+    txt.name = await Picto.tagMoji(ctx, USERPROFILE.localName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
     
     txt_type = "TAGLINE";
     txt.tagline = Picto.tag(ctx, USERPROFILE.tagline, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR)
-    //.then(res=>  = res);
 
-    // This can create a race condition ^ | Though it is not likely due to how promises work 
 
 
     txt_type = "PERSOTEX";
@@ -272,7 +275,7 @@ init = async (msg) => {
 
     const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
     if (isMarried) {
-      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar).catch;
+      img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar).catch(err=>null);
       // img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
       img.wifeHeart = Picto.getCanvas(`${paths.CDN}/build/items/ring_${USERPROFILE.wife.ring}.png`);
     }
@@ -298,26 +301,13 @@ init = async (msg) => {
       const backmost = new Promise(async (resolveBack) => {
         const canvas = Picto.new(800, 600);
         const ctx = canvas.getContext("2d");
-        img.background.then(async (IMG) => {
+        let [IMG,mainframe] = await Promise.all([img.background,img.mainframe]);
           const rad = {
             tl: 0, tr: 30, br: 0, bl: 0,
           };
           Picto.roundRect(ctx, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H, rad, IMG);
-          // ctx.drawImage( IMG, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H);
-          img.mainframe.then((mainframe) => {
-                  
-              ctx.drawImage(mainframe, 0, 0);
-        
-              Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {
-                ctx.globalAlpha = 0.65;
-                ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
-                ctx.globalAlpha = 1;
-                return resolveBack(canvas);
-              });
-          // mainframe = null;
-          });
-         
-        });
+          ctx.drawImage(mainframe, 0, 0);        
+          return resolveBack(canvas);
       });
 
       const canvas = Picto.new(800, 600);
@@ -350,9 +340,9 @@ init = async (msg) => {
         await img.wifeHeart.then((IMG) => ctx.drawImage(IMG, wR.X + 6, wR.Y + 6, 55, 55));
 
         try {
-          Picto.roundRect(ctx, wR.X + wR.W - wR.H, wR.Y + 3, wR.H - 6, wR.H - 6, wR.H / 2, (await img.wifeAvatar));
+          Picto.roundRect(ctx, wR.X + wR.W - wR.H +3, wR.Y + 3, wR.H - 8, wR.H - 8, wR.H / 2, (await img.wifeAvatar));
         } catch (e) {
-          Picto.roundRect(ctx, wR.X + wR.W - wR.H, wR.Y + 3, wR.H - 6, wR.H - 6, wR.H / 2, (await img.defaultAvi));
+          Picto.roundRect(ctx, wR.X + wR.W - wR.H +3, wR.Y + 3, wR.H - 8, wR.H - 8, wR.H / 2, (await img.defaultAvi));
         }
         ctx.restore();
       }
@@ -463,29 +453,30 @@ init = async (msg) => {
         });
       }
     }
-    img.sidebar.then((sidebar) => {          
+    const sidebar = await img.sidebar;
+  
+    const colorstrap = Picto.new(100, 643);
+    const cx = colorstrap.getContext("2d");
+
+    cx.fillStyle = USERPROFILE.favColor;
+    Picto.roundRect(cx,0,0,80,643,10,cx.fillStyle,false);
+    cx.globalAlpha = 0.9;
+    cx.globalCompositeOperation = "destination-atop";
+    cx.drawImage(sidebar,0,0);
     
-      const colorstrap = Picto.new(100, 643);
-      const cx = colorstrap.getContext("2d");
-
-      cx.fillStyle = USERPROFILE.favColor;
-      Picto.roundRect(cx,0,0,80,643,10,cx.fillStyle,false);
-      cx.globalAlpha = 0.9;
-      cx.globalCompositeOperation = "destination-atop";
-      cx.drawImage(sidebar,0,0);
-
-      cx.globalCompositeOperation = "multiply";
-      cx.drawImage(sidebar, 0,0);
-
-      ctx.drawImage(colorstrap, 0, 0);
+    cx.globalCompositeOperation = "multiply";
+    cx.drawImage(sidebar, 0,0);
+    
+    ctx.drawImage(colorstrap, 0, 0);
+    ctx.globalAlpha = 1;
+    
+    
+    await Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {;
+      ctx.globalAlpha = 0.65;
+      ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
       ctx.globalAlpha = 1;
-
-      Picto.getCanvas(`${paths.CDN}/build/profile/litostar.png`).then((IMG) => {
-        ctx.globalAlpha = 0.65;
-        ctx.drawImage(IMG, XYZ.commend.X - 53, XYZ.commend.Y - 25);
-        ctx.globalAlpha = 1;
-      });
     });
+
 
     
       //= ====================================================
@@ -496,30 +487,68 @@ init = async (msg) => {
         ["wifeName", "lovepoints", "wifeSince"].forEach((z) => {
           Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y, XYZ[z].W, XYZ[z].A);
         });
-        ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y); // 513 265
+        if (!Target.bot) ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y); // 513 265
       }else{
-        ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y+80); // 513 265
+        if (!Target.bot) ctx.drawImage(await img.ranks,XYZ.ranks.X,XYZ.ranks.Y+80); // 513 265
       }
       
       ["name", "tagline", "globalRank", "localRank"].forEach((z) => {
         if (!Target.bot || ["name", "tagline"].includes(z)) {
-          Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y +(z.includes('Rank')&&!isMarried?80:0), XYZ[z].W, XYZ[z].A);
+          if(z=='name'){
+            //Picto.popOutTxt(ctx,txt[z],XYZ[z].X, XYZ[z].Y,,XYZ[z].W,)
+
+
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y +(z.includes('Rank')&&!isMarried?80:0), XYZ[z].W, XYZ[z].A);
+            ctx.globalCompositeOperation = 'destination-over'
+            
+            let cctx =  txt[z].item.getContext('2d');
+            let id = cctx.getImageData(0,0,txt[z].width,txt[z].height+50);
+            let data = id.data;
+            for (let i = 0; i < data.length; i += 4) {
+              let r = data[i];
+              let g = data[i + 1];
+              let b = data[i + 2];
+              let y = 0.299 * r + 0.587 * g + 0.114 * b;
+              data[i] = 255;
+              data[i + 1] = 255;
+              data[i + 2] = 255;
+            }
+            cctx.putImageData(id, 0, 0);
+            
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X -3, XYZ[z].Y +0, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X -0, XYZ[z].Y -3, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X +3, XYZ[z].Y -0, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X +0, XYZ[z].Y +3, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X -3, XYZ[z].Y +3, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X -3, XYZ[z].Y -3, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X +3, XYZ[z].Y -3, XYZ[z].W, XYZ[z].A);
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X +3, XYZ[z].Y +3, XYZ[z].W, XYZ[z].A);
+            ctx.globalCompositeOperation = 'source-over'
+            //ctx.filter =  'none'
+            
+          }else{
+            Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y +(z.includes('Rank')&&!isMarried?80:0), XYZ[z].W, XYZ[z].A);
+          }
         }
       });
 
       ["persotex"].forEach((z) => {
+        
         ctx.drawImage(txt[z].item, XYZ[z].X, XYZ[z].Y);// XYZ[z].W,  XYZ[z].A )
+
       });
 
       z = "commend";
       Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
 
-      const THX = Picto.tag(ctx, "THX", "900 30px 'Panton Black',Sans", "#ffffff");
-      ctx.globalAlpha = 0.5;
-      ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425);
-      ctx.globalAlpha = 0.8;
-      ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
-      ctx.globalAlpha = 1;
+      if (!Target.bot){
+        const THX = Picto.tag(ctx, "THX", "900 30px 'Panton Black',Sans", "#ffffff");
+        ctx.globalAlpha = 0.5;
+        ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425);
+        ctx.globalAlpha = 0.8;
+        ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
+        ctx.globalAlpha = 1;
+      }
 
     const hexes = new Promise(async (resolve) => {
       const canvas3 = Picto.new(800, 600);
