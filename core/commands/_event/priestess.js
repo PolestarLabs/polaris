@@ -55,7 +55,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID, 'events:halloween20.arsenika.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},666,3000,25)
+                buySomething(msg,uID, 'events:halloween20.arsenika.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},500,5000,25)
             },
             
         },{
@@ -73,7 +73,7 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,.5)
+                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*2,amt*50,.5)
             },
             
         },{
