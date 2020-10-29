@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Moduł **{{module}}** został wyłączony **Globalnie**",
-            "disabledChn": "Moduł {{module}} został wyłączony na kanale #{{channel}}",
+            "disabledChn": "Moduł {{module}} został wyłączony na kanale <#{{channel}}>",
             "disabledComSer": "Komenda **{{command}}** została wyłączona **Globalnie**",
-            "disabledComChn": "Komenda **{{command}}** została wyłączona na #{{channel}}",
+            "disabledComChn": "Komenda **{{command}}** została wyłączona na <#{{channel}}>",
             "enabledSer": "Moduł **{{module}}** został włączony **Globalnie**",
-            "enabledChn": "Moduł **{{module}}** został włączony na #{{channel}}",
+            "enabledChn": "Moduł **{{module}}** został włączony na <#{{channel}}>",
             "enabledComSer": "Komenda **{{command}}** została włączona **Globalnie**",
-            "enabledComChn": "Komenda **{{command}}** została włączona na kanale #{{channel}}"
+            "enabledComChn": "Komenda **{{command}}** została włączona na kanale <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Nie, nie pozwolę ci na dawanie reputacji sobie.",

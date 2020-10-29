@@ -419,13 +419,13 @@
         },
         "toggle": {
             "disabledSer": "O módulo **{{module}}** foi desabilitado **globalmente**",
-            "disabledChn": "O módulo **{{module}}** foi desabilitado no canal #{{channel}}",
+            "disabledChn": "O módulo **{{module}}** foi desabilitado no canal <#{{channel}}>",
             "disabledComSer": "O comando **{{command}}** foi desabilitado **globalmente**",
-            "disabledComChn": "O comando **{{command}}** foi desabilitado no canal #{{channel}}",
+            "disabledComChn": "O comando **{{command}}** foi desabilitado no canal <#{{channel}}>",
             "enabledSer": "O módulo **{{module}}** foi habilitado **globalmente**",
-            "enabledChn": "O módulo **{{module}}** foi habilitado no canal #{{channel}}",
+            "enabledChn": "O módulo **{{module}}** foi habilitado no canal <#{{channel}}>",
             "enabledComSer": "O comando **{{command}}** foi habilitado **globalmente**",
-            "enabledComChn": "O comando **{{command}}** foi habilitado no canal #{{channel}}"
+            "enabledComChn": "O comando **{{command}}** foi habilitado no canal <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Alguém aqui acha que pode me enganar... Ninguém pode dar Rep para si mesmo/a!",

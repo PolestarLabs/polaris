@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}**モジュールは無効になっています **グローバル**",
-            "disabledChn": "{{module}}モジュールは、チャネル #{{channel}}で無効にされています",
+            "disabledChn": "{{module}}モジュールは、チャネル <#{{channel}}>で無効にされています",
             "disabledComSer": "**{{command}}** 명령이 비활성화되었습니다 **グローバル**",
-            "disabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용 중지되었습니다.",
+            "disabledComChn": "**{{command}}** 명령은 채널 <#{{channel}}>에서 사용 중지되었습니다.",
             "enabledSer": "**{{module}}** 모듈이 활성화되었습니다. **グローバル**",
-            "enabledChn": "채널 #{{channel}}에서 **{{module}}** 모듈을 사용하도록 설정했습니다.",
+            "enabledChn": "채널 <#{{channel}}>에서 **{{module}}** 모듈을 사용하도록 설정했습니다.",
             "enabledComSer": "**{{command}}** 명령이 활성화되었습니다 **グローバル**",
-            "enabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용하도록 설정되었습니다."
+            "enabledComChn": "**{{command}}** 명령은 채널 <#{{channel}}>에서 사용하도록 설정되었습니다."
         },
         "reput": {
             "noSelf": "ねえ、スマートなお尻！ あなたは自分自身にそれをすることはできません！",

@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Il modulo **{{module}}** è stato disabilitato **Globalmente**.",
-            "disabledChn": "Il modulo {{module}} è stato disabilitato nel canale #{{channel}}",
+            "disabledChn": "Il modulo {{module}} è stato disabilitato nel canale <#{{channel}}>",
             "disabledComSer": "Il comando **{{command}}** è stato disabilitato **Globalmente**",
-            "disabledComChn": "Il comando **{{command}}** è stato disabilitato nel #{{channel}}",
+            "disabledComChn": "Il comando **{{command}}** è stato disabilitato nel <#{{channel}}>",
             "enabledSer": "Il modulo **{{module}}** è stato abilitato **Globalmente**",
-            "enabledChn": "Il modulo **{{module}}** è stato abilitato in #{{channel}}",
+            "enabledChn": "Il modulo **{{module}}** è stato abilitato in <#{{channel}}>",
             "enabledComSer": "Il comando **{{command}}** è stato abilitato **Globalmente**",
-            "enabledComChn": "Il comando **{{command}}** è stato abilitato nel canale #{{channel}}"
+            "enabledComChn": "Il comando **{{command}}** è stato abilitato nel canale <#{{channel}}>"
         },
         "reput": {
             "noSelf": "No, mi rifiuto di lasciarti riposare.",

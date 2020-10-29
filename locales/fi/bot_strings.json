@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Moduuli **{{module}}** on kytketty pois päältä **Globaalisti**.",
-            "disabledChn": "Moduuli {{module}} on kytketty pois päältä kanavalla #{{channel}}",
+            "disabledChn": "Moduuli {{module}} on kytketty pois päältä kanavalla <#{{channel}}>",
             "disabledComSer": "Käsky **{{command}}** on kytketty pois päältä **Globaalisti**",
-            "disabledComChn": "Käsky **{{command}}** on kytketty pois päältä kanavalla #{{channel}}",
+            "disabledComChn": "Käsky **{{command}}** on kytketty pois päältä kanavalla <#{{channel}}>",
             "enabledSer": "Moduuli **{{module}}** on kytketty päälle **Globaalisti**",
-            "enabledChn": "Moduuli **{{module}}** on kytketty päälle kanavalla #{{channel}}",
+            "enabledChn": "Moduuli **{{module}}** on kytketty päälle kanavalla <#{{channel}}>",
             "enabledComSer": "Käsky **{{command}}** on kytketty päälle **Globaalisti**",
-            "enabledComChn": "Käsky **{{command}}** on kytketty päälle kanavalla #{{channel}}"
+            "enabledComChn": "Käsky **{{command}}** on kytketty päälle kanavalla <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Ei, kieltäydyn antamasta sinun antaa mainetta itsellesi.",

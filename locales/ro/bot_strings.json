@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Modulul **{{module}}** a fost dezactivat **Global** .␣",
-            "disabledChn": "Modulul {{module}} a fost dezactivat in canalul #{{channel}}",
+            "disabledChn": "Modulul {{module}} a fost dezactivat in canalul <#{{channel}}>",
             "disabledComSer": "Comanda **{{command}}**a fost dezactivata **Global**",
-            "disabledComChn": "Comanda **{{command}}** a fost dezactivata in canalul #{{channel}}",
+            "disabledComChn": "Comanda **{{command}}** a fost dezactivata in canalul <#{{channel}}>",
             "enabledSer": "Modulul **{{module}}** a fost activat **Global**",
-            "enabledChn": "Modulul {{module}} a fost activat in canalul #{{channel}}",
+            "enabledChn": "Modulul {{module}} a fost activat in canalul <#{{channel}}>",
             "enabledComSer": "Comanda **{{command}}**a fost activata **Global**",
-            "enabledComChn": "Comanda **{{command}}** a fost activata in canalul #{{channel}}"
+            "enabledComChn": "Comanda **{{command}}** a fost activata in canalul <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Hei, desteptule! Nu poti sa iti dai reputatie singur!",

@@ -351,15 +351,15 @@ function genSwitchEmbed(Switch, options) {
 	if (!cat) {
 		const gdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => gdcmds.includes(cmd)));
 		const cdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cdcmds.includes(cmd)));
-		const cenabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => cecmds.includes(cmd)));
+		const cpartialenabledcats = catsArr.filter(cat => cats[cat]["cmds"].some(cmd => cecmds.includes(cmd)));
 
 		for (let cat of catsArr) {
-			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cenabledcats.includes(cat)) : gdisabledcats.includes(cat),
+			const disabled = cmode ? ((gdisabledcats.includes(cat) || cdisabledcats.includes(cat)) && !cpartialenabledcats.includes(cat)) : gdisabledcats.includes(cat),
 				override = cmode && (cats[cat]["cmds"].some(cmd => cdcmds.includes(cmd) || cecmds.includes(cmd))),
 				disabledCount = cats[cat].cmds.filter(cmd => (gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)).length,
 				catName = cat.slice(0, 1).toUpperCase() + cat.slice(1);
 			embed.fields.push({
-				name: `${(disabled ? (override && cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? R_WO : _emoji("partial")) : (override && cmode ? R_WG : _emoji("on")))} ${catName}`,
+				name: `${(disabled ? (override && cmode ? _emoji("off") : cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? _emoji("partial") : cmode ? R_WO : _emoji("partial")) : (override && cmode ? _emoji("on") : cmode ? R_WG : _emoji("on")))} ${catName}`,
 				value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length - disabledCount}    ${MINI_OFF}${disabledCount}` : `${cats[cat]["cmds"].length} commands`,
 				inline: true,
 			});

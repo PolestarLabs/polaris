@@ -415,11 +415,11 @@
             "disabledSer": "Modulen **{{module}}** har blitt avslått **Globally**",
             "disabledChn": "Modulen {{module}} har blitt avslått i kanalen # {{channel}}",
             "disabledComSer": "Kommandoen **{{command}}** har blitt avslått **Globalt** ",
-            "disabledComChn": "Kommandoen **{{command}}**  har blitt avslått i  #{{channel}}",
+            "disabledComChn": "Kommandoen **{{command}}**  har blitt avslått i  <#{{channel}}>",
             "enabledSer": "Modulen **{{module}}** har blitt slått på **Globalt** ",
-            "enabledChn": "Modulen **{{module}}** har blitt slått på i #{{channel}}",
+            "enabledChn": "Modulen **{{module}}** har blitt slått på i <#{{channel}}>",
             "enabledComSer": "Kommandoen **{{command}}** har blitt stått på **globalt** ",
-            "enabledComChn": "Kommandoen *{{command}}** har blitt slått på i kanalen #{{channel}}"
+            "enabledComChn": "Kommandoen *{{command}}** har blitt slått på i kanalen <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Nei, jeg nekter å la deg representere deg selv.",

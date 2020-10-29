@@ -223,6 +223,11 @@ module.exports = class Switch {
 	 */
 	save() {
 		return Promise.all([
+			() => {
+				this._guild.DISABLED = this.gd;
+				this._channel.DISABLED = this.cd;
+				this._channel.ENABLED = this.ce;
+			},
 			DB.servers.set(this._guild.id, { $set: { "modules.DISABLED": this.gd } }),
 			DB.channels.set(this._channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
 		]).then(() => {

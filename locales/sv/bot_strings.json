@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Modulen **{{module}}** har inaktiverats **Globalt**.",
-            "disabledChn": "{{module}} modulen har inaktiverats i kanalen #{{channel}}",
+            "disabledChn": "{{module}} modulen har inaktiverats i kanalen <#{{channel}}>",
             "disabledComSer": "**{{command}}**-kommandot har inaktiverats **globalt**",
-            "disabledComChn": "**{{command}}** kommandot har inaktiverats i #{{channel}}",
+            "disabledComChn": "**{{command}}** kommandot har inaktiverats i <#{{channel}}>",
             "enabledSer": "Modulen **{{module}}** har aktiverats **globalt**",
-            "enabledChn": "Modulen **{{module}}** har aktiverats i #{{channel}}",
+            "enabledChn": "Modulen **{{module}}** har aktiverats i <#{{channel}}>",
             "enabledComSer": "**{{command}}**-kommandot har aktiverats **globalt**",
-            "enabledComChn": "**{{command}}** kommandot har aktiverats i kanalen #{{channel}}"
+            "enabledComChn": "**{{command}}** kommandot har aktiverats i kanalen <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Nej, jag vägrar att låta dig göra det.",

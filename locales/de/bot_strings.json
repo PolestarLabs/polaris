@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Schade, das **{{module}}** Modul wurde **Globally** deaktiviert.\nWie gemein...\n",
-            "disabledChn": "Schade, das **{{module}}** Modul wurde in dem Channel #{{channel}} deaktiviert.\n",
+            "disabledChn": "Schade, das **{{module}}** Modul wurde in dem Channel <#{{channel}}> deaktiviert.\n",
             "disabledComSer": "Schade, das **{{command}}** Kommando wurde **Globally** deaktiviert.",
             "disabledComChn": "Schade, das **{{command}}** Kommando wurde **Globally** deaktiviert.\nWie gemein...",
             "enabledSer": "Schade, das **{{module}}** Modul wurde **Global** deaktiviert.\nWie gemein...",
-            "enabledChn": "Das **{{module}}** Modul wurde im channel #{{channel}} erlaubt.",
+            "enabledChn": "Das **{{module}}** Modul wurde im channel <#{{channel}}> erlaubt.",
             "enabledComSer": "Der **{{command}}** Befehl wurde **Global** aktiviert",
-            "enabledComChn": "Der **{{command}}** Befehl wurde im Channel #{{channel}} erlaubt"
+            "enabledComChn": "Der **{{command}}** Befehl wurde im Channel <#{{channel}}> erlaubt"
         },
         "reput": {
             "noSelf": "Hey Hey Süßer! Du kannst das nicht bei dir selbst ausführen ... ",

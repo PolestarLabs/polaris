@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** модуль выключен.  **Глобально**",
-            "disabledChn": "{{module}} модуль выключен на канале #{{channel}}",
+            "disabledChn": "{{module}} модуль выключен на канале <#{{channel}}>",
             "disabledComSer": "**{{command}}** команда выключена **Глобально**",
-            "disabledComChn": "Команда **{{command}}** выключена на канале #{{channel}}",
+            "disabledComChn": "Команда **{{command}}** выключена на канале <#{{channel}}>",
             "enabledSer": "**{{module}}** модуль включен **Глобально**",
-            "enabledChn": "**{{module}}** модуль включен на канале #{{channel}}",
+            "enabledChn": "**{{module}}** модуль включен на канале <#{{channel}}>",
             "enabledComSer": "**{{command}}* команда была включена **Глобально**",
-            "enabledComChn": "**{{command}}** команда была включена на канале #{{channel}}"
+            "enabledComChn": "**{{command}}** команда была включена на канале <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Нет, я не разрешаю вам давать + к репутации самому себе.",
