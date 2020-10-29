@@ -78,7 +78,7 @@ class UserProfileModel {
         const wifeID = marriage.users.find((usr) => usr !== this.ID);
         if (!wifeID) return resolve(null);
         const discordWife = PLX.users.get(wifeID)
-          || (await DB.users.get(wifeID)).meta
+          || ( await PLX.resolveUser(wifeID))
           || { username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
 
         this.wife = {
