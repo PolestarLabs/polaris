@@ -163,7 +163,7 @@ async function init(msg) {
 
 	// On emoji added
 	RC.on("emoji", emoji => {
-		if (![N_NOPE, N_CHANNEL, "⬅].includes(emoji.name)) omsg.removeReaction(`${emoji.name}:${emoji.id}`, msg.author.id).catch(e => null);
+		if (![N_NOPE, N_CHANNEL, "⬅"].includes(emoji.name)) omsg.removeReaction(`${emoji.name}:${emoji.id}`, msg.author.id).catch(e => null);
 		handleInput(emoji.name);
 	});
 
