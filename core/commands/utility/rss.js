@@ -103,9 +103,9 @@ async function feedEmbed(item, data) {
     ogs({ url: data.link || (embed.url.split(`${"//"[1]}`).split("/")[0]) }).catch((e) => { console.error(e); return false; }),
   ]);
 
-  embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png" };
+  embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://img.icons8.com/dusk/344/rss.png" };
   embed.image = item['media:content']?.$?.url || normalizeImage(results);
-  embed.author.icon_url = "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png";
+  embed.author.icon_url = "https://img.icons8.com/dusk/344/rss.png";
 
   console.log("EMBED.".red);
   console.log({ embed });
