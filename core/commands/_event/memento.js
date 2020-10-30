@@ -78,15 +78,16 @@ const init = async function (msg){
          let costumes ={
            werewolf: "🐺 Werewolf",
             wizard: "🔮 Wizard",
-            demon: "👺 Devil",
+            demon: "👺 Demon",
             vampire: "🦇 Vampire",
             astronaut: "🚀 Astronaut",
             duck: "🦆 Duck",
             pirate: "☠ Pirate",
             mummy: "⚰ Mummy",
             scrow: "🎃 Scarecrow",
-            //jiangshi: "☯ Jiangshi",
-            //alraune: "🌹 Alraune",
+            jiangshi: "☯ Jiangshi",
+            alraune: "🌹 Alraune",
+            clown: "🤡 Clown",
          }
    
 //let targetData = userDB.findOne({id:target.id}).lean().exec();
