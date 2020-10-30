@@ -243,10 +243,6 @@ module.exports = class Switch {
 		this.history.push(this.modules);
 		if (this.history.length > this.maxHistory) this.history.splice(0, 1);
 		else this.historyPointer++;
-		const tolog = JSON.parse(JSON.stringify(this.history));
-		tolog.push(this.historyPointer);
-		tolog.push(this.saved);
-		console.table(tolog);
 	}
 
 	/**
@@ -276,8 +272,8 @@ module.exports = class Switch {
 
 			if (this.scope === "channel") {
 				// First enable everything, then disable, then neutral, then enable...
-				if (this.categories.map(cat => cat.cmds).flat().every(cmd => this.gd.includes(cmd))) this.channelAllNeutral(); // all were disabled
-				else if (this.categories.map(cat => cat.cmds).flat().every(cmd => this.ce.includes(cmd))) this.channelAllDisable(); // all were enabled
+				if (Object.keys(this.categories).map(cat => this.categories[cat].cmds).flat().every(cmd => this.ce.includes(cmd))) this.channelAllDisable(); // all were enabled
+				else if (Object.keys(this.categories).map(cat => this.categories[cat].cmds).flat().every(cmd => this.cd.includes(cmd))) this.channelAllNeutral(); // all were disabled
 				else this.channelAllEnable(); // they were not all disabled nor all enabled
 
 				this._saveHistory();
@@ -386,9 +382,9 @@ module.exports = class Switch {
 	}
 
 
-	channelAllEnable() { this.cd = []; this.ce = this.categories.map(cat => cat.cmds).flat(); }
+	channelAllEnable() { this.cd = []; this.ce = Object.keys(this.categories).map(cat => this.categories[cat].cmds).flat(); }
 	channelAllNeutral() { this.cd = []; this.ce = []; }
-	channelAllDisable() { this.ce = []; this.cd = this.categories.map(cat => cat.cmds).flat(); }
+	channelAllDisable() { this.ce = []; this.cd = Object.keys(this.categories).map(cat => this.categories[cat].cmds).flat(); }
 
 	channelCategoryEnable(category) {
 		const cmds = this.categories[category]["cmds"];
