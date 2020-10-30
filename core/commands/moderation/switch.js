@@ -90,10 +90,8 @@ const helpEmbed = {
 			{
 				name: "Channel states",
 				value: `When you switch in channel mode, things get more difficult.\nThis is what the different states mean:
-				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")} on/mixed/off following server settings\
-				\n> ${R_WG} enabled in channel, has priority over server settings\
-				\n> ${R_WO} some enabled, some disabled, not matching server settings (category view)\
-				\n> ${R_WR} disabled in channel, has priority over server settings\
+				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")} server mode: on/partial/off | channel mode: overrides server\
+				\n> ${R_WG}/${R_WO}/${R_WR} channel mode: following server settings\
 				`,
 				inline: false,
 			},

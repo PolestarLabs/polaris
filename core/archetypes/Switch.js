@@ -224,9 +224,9 @@ module.exports = class Switch {
 	save() {
 		return Promise.all([
 			() => {
-				this._guild.DISABLED = this.gd;
-				this._channel.DISABLED = this.cd;
-				this._channel.ENABLED = this.ce;
+				Object.assign(PLX.guilds.get(this._guild.id), { DISABLED: this.gd });
+				const channel = PLX.getChannels(this._channel.id);
+				Object.assign(channel, { ENABLED: this.ce, DISABLED: this.cd });
 			},
 			DB.servers.set(this._guild.id, { $set: { "modules.DISABLED": this.gd } }),
 			DB.channels.set(this._channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
@@ -234,8 +234,6 @@ module.exports = class Switch {
 			this.unsaved = false;
 			return this.modules;
 		}).catch(e => {
-			MC.stop("error");
-			RC.stop("error");
 			throw new Error("Couldn't save changes");
 		});
 	}
