@@ -14,7 +14,7 @@ const topCommend = async (m) => {
 
   ]);
 
-  CommendRank.forEach((usr) => { usr.name = PLX.findUser(usr.id)?.username || usr.name; });
+  CommendRank.forEach((usr) => { usr.name = PLX.resolveUser(usr.id)?.username || usr.name; });
 
   const commendSort = CommendRank.sort((a, b) => (a.modules.commend || 0) - (b.modules.commend || 0)).reverse().slice(0, 10);
   const commendedSort = CommendRank.sort((a, b) => (a.modules.commended || 0) - (b.modules.commended || 0)).reverse().slice(0, 10);

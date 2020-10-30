@@ -80,7 +80,7 @@ module.exports = {
         break;
       case !guild && !strict:
       default:
-        user = isID ? await PLX.getRESTUser(ID).catch(() => null) : null /* PLX.findUser(query)*/;
+        user = isID ? await PLX.getRESTUser(ID).catch(() => null) : null /* PLX.resolveUser(query)*/;
     }
 
     if (user && member && guild) return user;
