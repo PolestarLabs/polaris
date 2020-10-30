@@ -225,7 +225,7 @@ module.exports = class Switch {
 		return Promise.all([
 			() => {
 				Object.assign(PLX.guilds.get(this._guild.id), { DISABLED: this.gd });
-				Object.assign(PLX.getChannels(this._channel.id), { ENABLED: this.ce, DISABLED: this.cd });
+				Object.assign(PLX.getChannels(this._channel.id) || {}, { ENABLED: this.ce, DISABLED: this.cd });
 			},
 			DB.servers.set(this._guild.id, { $set: { "modules.DISABLED": this.gd } }),
 			DB.channels.set(this._channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
