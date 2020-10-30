@@ -1,4 +1,5 @@
 // Create cat map with commands and other useful information
+const Switch = require("../../archetypes/Switch");
 const SwitchArch = require("../../archetypes/Switch");
 let cats,
 	catsArr;
@@ -165,7 +166,7 @@ async function init(msg) {
 	const inactivityInterval = setInterval(() => {
 		if (!wasActive) return exit(true);
 		wasActive = false;
-	}, 6e4);
+	}, 6e3);
 
 	// On emoji added
 	RC.on("emoji", emoji => {
@@ -280,21 +281,21 @@ async function init(msg) {
 		switches.delete(msg.guild.id);
 		MC.stop("User input");
 		RC.stop("user input");
-		omsg.edit(genSwitchEmbed(Switch, { disable: true }));
+		omsg.edit(genSwitchEmbed(Switch, { disable: true, inactive: true }));
 
 		clearInterval(inactivityInterval);
-		const msg = inactive ? "Oops! You were inactive for too long."
+		const embedTitle = inactive ? "Oops! You were inactive for too long."
 			: "Oops! You didn't save your changes.";
 
 		// let's make sure they meant to leave without saving
 		if (!Switch.saved) {
-			msg.channel.send({ embed: { color: 0x33D, title: "Oops! You didn't save your changes.", description: "Do you want to save your changes? (yes|no)" } }).then(savemsg => {
+			msg.channel.send({ embed: { color: 0x33D, title: embedTitle, description: "Do you want to save your changes? (yes|no)" } }).then(savemsg => {
 				savemsg.addReaction(R_YEP);
 				savemsg.addReaction(R_NOPE);
 				Promise.race([
 					msg.channel.awaitMessages(m => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: 6e4 }),
 					savemsg.awaitReactions(r => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: 6e4 }),
-					setTimeout(() => [], 2 * 6e4),
+					new Promise(resolve => setTimeout(() => resolve([]), 2 * 6e4)),
 				]).then(r => {
 					if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP)) {
 						savemsg.edit(savingEmbed);
@@ -306,8 +307,6 @@ async function init(msg) {
 					}
 				});
 			});
-		} else {
-			msg.channel.send({ embed: { color: 0x666699, description: "The Switch has been closed due to inactivity." } });
 		}
 	}
 };
@@ -315,8 +314,8 @@ async function init(msg) {
 /**
  * Function to make visualize Switch state
  * Returns Message params with MessageEmbed
- * @param {*} Switch the Switch instance for which to visualize
- * @param {*} [options] { disable: Bool }
+ * @param {SwitchArch} Switch the Switch instance for which to visualize
+ * @param {object} [options] { disable: Bool }
  */
 function genSwitchEmbed(Switch, options) {
 	/**
@@ -349,6 +348,7 @@ function genSwitchEmbed(Switch, options) {
 
 	const modules = Switch.modules,
 		disable = options?.disable || false, // whether exited
+		inactive = options?.inactive || false,
 		cat = Switch.mode === "category" ? Switch.category : null, // current category if any
 		cmode = Switch.scope === "channel", // channel mode
 		gdcmds = modules["gd"], // guild disabled
@@ -356,14 +356,15 @@ function genSwitchEmbed(Switch, options) {
 		cecmds = modules["ce"]; // channel enabled
 
 	const embed = {
-		color: Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO: change
+		color: disable ? 0x666699 : Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO: change
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches : ${cmode ? "**Channel**" : "**Server**"} mode`,
 		fields: [],
-		footer: {
-			text: `Change: ${Math.max(0, Switch.historyPointer)}/${Math.max(0, Switch.history.length - 1)}`
-		}
 	};
-	if (!disable) embed.description = "Type `help` for instructions.";
+	if (!disable) {
+		embed.description = "Type `help` for instructions.";
+		embed.footer = { text: `Change: ${Math.max(0, Switch.historyPointer)}/${Math.max(0, Switch.history.length - 1)}` };
+	}
+	if (inactive) embed.description = "The Switch was closed due to inactivity.";
 
 	if (!cat) {
 		const gdisabledcats = catsArr.filter(cat => cats[cat]["cmds"].every(cmd => gdcmds.includes(cmd)));

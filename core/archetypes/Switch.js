@@ -243,8 +243,10 @@ module.exports = class Switch {
 		this.history.push(this.modules);
 		if (this.history.length > this.maxHistory) this.history.splice(0, 1);
 		else this.historyPointer++;
-		console.table(this.history);
-		console.log(`Pointer: ${this.historyPointer}`);
+		const tolog = JSON.parse(JSON.stringify(this.history));
+		tolog.push(this.historyPointer);
+		tolog.push(this.saved);
+		console.table(tolog);
 	}
 
 	/**
