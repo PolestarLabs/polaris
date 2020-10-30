@@ -223,10 +223,10 @@ module.exports = class Switch {
 	 */
 	save() {
 		return Promise.all([
-			() => {
+			(() => {
 				Object.assign(PLX.guilds.get(this._guild.id), { DISABLED: this.gd });
 				Object.assign(PLX.getChannel(this._channel.id) || {}, { ENABLED: this.ce, DISABLED: this.cd });
-			},
+			})(),
 			DB.servers.set(this._guild.id, { $set: { "modules.DISABLED": this.gd } }),
 			DB.channels.set(this._channel.id, { $set: { "modules.DISABLED": this.cd, "modules.ENABLED": this.ce } }),
 		]).then(() => {
