@@ -300,7 +300,7 @@ async function init(msg) {
 					if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP)) {
 						savemsg.edit(savingEmbed);
 						Switch.save().then(() => {
-							savemsg.edit({ embed: { color: 0x33D, title: `${R_YEP} Rest assured, I've saved your changes.` } });
+							savemsg.edit({ embed: { color: 0x33D, title: `<:${R_YEP}> Rest assured, I've saved your changes.` } });
 							savemsg.removeReactions();
 						});
 					} else {
