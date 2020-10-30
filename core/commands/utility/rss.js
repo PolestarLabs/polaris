@@ -87,7 +87,6 @@ const init = async function (msg) {
 };
 
 async function feedEmbed(item, data) {
-  console.log({ data });
 
   const embed = new Embed();
   const ogs = require("open-graph-scraper");
@@ -105,7 +104,7 @@ async function feedEmbed(item, data) {
   ]);
 
   embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png" };
-  embed.image = normalizeImage(results);
+  embed.image = item['media:content']?.$?.url || normalizeImage(results);
   embed.author.icon_url = "https://cdn.pixabay.com/photo/2017/06/25/14/38/rss-2440955_960_720.png";
 
   console.log("EMBED.".red);
@@ -113,8 +112,10 @@ async function feedEmbed(item, data) {
   return embed;
 }
 
+
 function normalizeImage(results) {
-  const img_link = results?.data?.ogImage?.url || null;
+  console.log({results})
+  const img_link = results?.result?.ogImage?.url || null;
   const res = img_link ? { url: img_link.startsWith("//") ? img_link.replace("//", "http://") : img_link } : null;
   return res;
 }
