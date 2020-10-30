@@ -17,6 +17,7 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
+  moment.locale(msg.lang[0] || 'en')
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
