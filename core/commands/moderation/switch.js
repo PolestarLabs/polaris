@@ -161,14 +161,22 @@ async function init(msg) {
 	const MC = msg.channel.createMessageCollector(messageFilter, { time: 60e5 });
 	const RC = omsg.createReactionCollector(reactionFilter, { time: 60e5 });
 
+	let wasActive = true;
+	const inactivityInterval = setInterval(() => {
+		if (!wasActive) return exit(true);
+		wasActive = false;
+	}, 6e4);
+
 	// On emoji added
 	RC.on("emoji", emoji => {
+		wasActive = true;
 		if (![N_NOPE, N_CHANNEL, "⬅"].includes(emoji.name)) omsg.removeReaction(`${emoji.name}:${emoji.id}`, msg.author.id).catch(e => null);
 		handleInput(emoji.name);
 	});
 
 	// On emoji removed
 	const reactionRemoveFunction = (emoji, userID) => {
+		wasActive = true;
 		if (userID !== msg.author.id) return;
 		if (emoji.name === N_CHANNEL) {
 			Switch.mode = "guild";
@@ -179,6 +187,7 @@ async function init(msg) {
 
 	// On message
 	MC.on("message", m => {
+		wasActive = true;
 		m.delete().catch(_ => null);
 		const content = m.content.toLowerCase();
 
@@ -196,12 +205,6 @@ async function init(msg) {
 			omsg.edit(genSwitchEmbed(Switch));
 		}
 	});
-
-	let wasActive = true;
-	setInterval(() => {
-		if (!wasActive) exit(true);
-		wasActive = false;
-	}, 6e4);
 
 	// Handle generic input from message/reaction
 	// Switch for DRY code and easy to build on
@@ -246,9 +249,11 @@ async function init(msg) {
 			case "<":
 			case "⬅":
 				Switch.mode = "global";
-				omsg.edit(genSwitchEmbed(Switch));
-				omsg.removeReaction("⬅");
-				omsg.removeReaction("⬅", msg.author.id);
+				Promise.all([
+					omsg.edit(genSwitchEmbed(Switch)),
+					omsg.removeReaction("⬅"),
+					omsg.removeReaction("⬅", msg.author.id),
+				]);
 				break;
 
 
@@ -277,6 +282,7 @@ async function init(msg) {
 		RC.stop("user input");
 		omsg.edit(genSwitchEmbed(Switch, { disable: true }));
 
+		clearInterval(inactivityInterval);
 		const msg = inactive ? "Oops! You were inactive for too long."
 			: "Oops! You didn't save your changes.";
 
