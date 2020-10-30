@@ -104,7 +104,7 @@ async function feedEmbed(item, data) {
   ]);
 
   embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://img.icons8.com/dusk/344/rss.png" };
-  embed.image = item['media:content']?.$?.url || normalizeImage(results);
+  embed.image = {url:item['media:content']?.$?.url } || normalizeImage(results);
   embed.author.icon_url = "https://img.icons8.com/dusk/344/rss.png";
 
   console.log("EMBED.".red);
