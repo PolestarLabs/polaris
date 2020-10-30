@@ -6,7 +6,7 @@ const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
-  const Target = await PLX.getTarget(msg.args[0], msg.guild);
+  const Target = await PLX.resolveMember( msg.guild, msg.args[0]);
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
 
   const serverData = await DB.servers.get(msg.guild.id);
@@ -22,14 +22,14 @@ const init = async function (msg) {
   if (Target.id === msg.author.id) {
     return msg.channel.send($t("responses.errors.cantKickSelf", P));
   }
-  if (!(msg.guild.member(Target).kickable)) {
+  if (!Target.kickable) {
     return msg.channel.send($t("responses.errors.cantKickHim", P));
   }
 
   const embed = new Embed();
-  P.user = Target.tag;
+  P.user = Target.user.tag;
   // embed.author = $('interface.kickban.kickingUser',P);
-  embed.author(`👢 Kicking user [${P.user}]`, Target.avatarURL);
+  embed.author(`👢 Kicking user [${P.user}]`, Target.user.avatarURL);
   embed.footer(msg.author.tag, msg.author.avatarURL);
   embed.timestamp(new Date());
   embed.color = 0x36393f;
@@ -79,10 +79,11 @@ const init = async function (msg) {
 
   const post_reason = `${reason} [MOD: ${msg.author.tag} `;
 
-  PLX.kickGuildMember(msg.guild.id, Target.id, post_reason).then((m) => {
+  PLX.kickGuildMember(msg.guild.id, Target.id, post_reason).then(async (m) => {
     embed.color = 0x3355EE;
     embed.description = `${_emoji("yep")}  ${$t("interface.kickban.userKicked", P)}\n${rand$t("interface.kickban.kickFlavs", P)}\n\`\`\` ${reason} \`\`\``;
     if (pre_msg) {
+      await wait(1)
       pre_msg.edit({ content: "", embed });
     } else {
       msg.channel.send({ embed });
