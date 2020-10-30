@@ -242,6 +242,7 @@ async function init(msg) {
 				Switch.mode = "global";
 				omsg.edit(genSwitchEmbed(Switch));
 				omsg.removeReaction("⬅");
+				omsg.removeReaction("⬅", omsg.author.id);
 				break;
 
 
