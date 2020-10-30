@@ -197,6 +197,12 @@ async function init(msg) {
 		}
 	});
 
+	let wasActive = true;
+	setInterval(() => {
+		if (!wasActive) exit(true);
+		wasActive = false;
+	}, 6e4);
+
 	// Handle generic input from message/reaction
 	// Switch for DRY code and easy to build on
 	function handleInput(input = "") {
@@ -242,7 +248,7 @@ async function init(msg) {
 				Switch.mode = "global";
 				omsg.edit(genSwitchEmbed(Switch));
 				omsg.removeReaction("⬅");
-				omsg.removeReaction("⬅", omsg.author.id);
+				omsg.removeReaction("⬅", msg.author.id);
 				break;
 
 
@@ -263,13 +269,16 @@ async function init(msg) {
 	}
 
 	// Exit function; too complex to put in Switch
-	function exit() {
+	function exit(inactive = false) {
 		// exit command
 		omsg.removeReactions();
 		switches.delete(msg.guild.id);
 		MC.stop("User input");
 		RC.stop("user input");
 		omsg.edit(genSwitchEmbed(Switch, { disable: true }));
+
+		const msg = inactive ? "Oops! You were inactive for too long."
+			: "Oops! You didn't save your changes.";
 
 		// let's make sure they meant to leave without saving
 		if (!Switch.saved) {
@@ -279,6 +288,7 @@ async function init(msg) {
 				Promise.race([
 					msg.channel.awaitMessages(m => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: 6e4 }),
 					savemsg.awaitReactions(r => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: 6e4 }),
+					setTimeout(() => [], 2 * 6e4),
 				]).then(r => {
 					if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP)) {
 						savemsg.edit(savingEmbed);
