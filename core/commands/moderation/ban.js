@@ -6,7 +6,7 @@ const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
-  let Target = await PLX.getTarget(msg.args[0], msg.guild);
+  let Target = await PLX.resolveMember(msg.guild, msg.args[0]);
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
 
   const serverData = await DB.servers.get(msg.guild.id);
@@ -22,7 +22,7 @@ const init = async function (msg) {
   if (Target.id === msg.author.id) {
     return msg.channel.send($t("responses.errors.cantKickSelf", P));
   }
-  if (!(msg.guild.member(Target).kickable)) {
+  if (!Target.kickable) {
     return msg.channel.send($t("responses.errors.cantKickHim", P));
   }
 
@@ -53,10 +53,10 @@ const init = async function (msg) {
 
   if (isFalse) return console.log("false ban");
 
-  P.user = Target.tag;
+  P.user = Target.user.tag;
   const embed = new Embed();
   // embed.author = $('interface.kickban.kickingUser',P);
-  embed.author(`🔨 Banning user [${P.user}]`, Target.avatarURL);
+  embed.author(`🔨 Banning user [${P.user}]`, Target.user.avatarURL);
   embed.footer(msg.author.tag, msg.author.avatarURL);
   embed.timestamp(new Date());
   embed.color = 0x36393f;
@@ -99,17 +99,21 @@ const init = async function (msg) {
     });
     return;
   }
-
+ 
   if (!pre_msg) {
     pre_msg = await msg.channel.send({ embed });
   }
 
 
-  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`).replace(/[\u{0080}-\u{FFFF}]/gu,"?");
+  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`)
+  const sanitize = x=> x.replace(/[\u{0080}-\u{FFFF}]/gu,"?");
 
-  const postban = (banned)=>{
+  const postban = async (banned)=>{
+    console.log('postban')
+    await wait(1);
+    console.log('wawa')
     if (soft) {
-      PLX.unbanGuildMember(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
+      PLX.unbean(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
     }
     embed.color = 0xDD8A55;
     embed.description = `${_emoji("yep")}  ${$t(`interface.kickban.${soft ? "userSoftBanned" : "userBanned"}`, P)} ${rand$t("interface.kickban.banFlavs", P)}\n\`\`\` ${reason} \`\`\``;
@@ -123,8 +127,9 @@ const init = async function (msg) {
     Target = null;
   }
 
-  PLX.banGuildMember(msg.guild.id, Target.id, clear, post_reason).then( postban )
+  PLX.bean(msg.guild.id, Target.id, clear, post_reason).then( postban )
   .catch((err) => {
+    console.log(err)
     PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
       .then(postban)
       .catch(err=>{
