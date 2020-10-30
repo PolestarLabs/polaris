@@ -11,6 +11,7 @@ const Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
+const axios           = require("axios");
 const Eris            = require("eris-additions")(ERIS);
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
@@ -263,6 +264,14 @@ PLX.setAvatar = async (url) => {
   }
 };
 
+
+PLX.bean = (guild,user,delete_message_days=0,reason="No reason specified") => {
+  return axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days,reason }, {headers: { Authorization: PLX.token }})
+}
+PLX.unbean = (guild,user,delete_message_days=0,reason="No reason specified") => {
+  return axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days,reason }, {headers: { Authorization: PLX.token }})
+}
+
 function postConnect() {
   console.log("Discord Client Connected".cyan);
   // POST STATS TO LISTS
@@ -281,3 +290,6 @@ process.on("unhandledRejection", (err) => {
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
+
+
+
