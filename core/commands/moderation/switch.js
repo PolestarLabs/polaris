@@ -53,7 +53,7 @@ const switches = new Map();
 // Embed during time it takes to save changes
 const savingEmbed = {
 	embed: {
-		color: 0x000, // TODO: change
+		color: 0xff5050, // TODO: change
 		title: "Standby, saving changes...",
 		description: "Both server and channel changes will be saved.",
 	},
@@ -306,6 +306,8 @@ async function init(msg) {
 					}
 				});
 			});
+		} else {
+			msg.channel.send({ embed: { color: 0x666699, description: "The Switch has been closed due to inactivity." } });
 		}
 	}
 };
