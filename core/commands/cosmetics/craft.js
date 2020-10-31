@@ -1,4 +1,3 @@
-//@ts-check
 const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
