@@ -14,12 +14,18 @@ exports.run = async (feed) => {
     if (!data) return console.warn("[RSS]: ".yellow + "Failed to parse DATA object.");
     data.items = data.items?.filter((x) => x.link.startsWith("http"));
 
+    
     if ((feed.last?.guid||feed.last?.id) !== (data.items[0]?.guid||data.items[0]?.id)) {
+
         const embed = await RSSembedGenerator(data.items[0], data);
+        let newFeed = data.items[0];
+        newFeed.media = newFeed['media:content']?.$;
+        delete newFeed['media:content']?.$;
+
         await DB.feed.updateOne(
             { server: feed.server, url: feed.url },
-            { $set: { last: data.items[0], thumb: embed.thumbnail.url } },
-            ).catch(() => null);
+            { $set: { last: newFeed, thumb: embed.thumbnail.url } },
+            ).catch(console.error);
             
             PLX.getChannel(feed.channel).send({ embed });
         }

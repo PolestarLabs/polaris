@@ -107,14 +107,11 @@ async function feedEmbed(item, data) {
   embed.image = {url:item['media:content']?.$?.url } || normalizeImage(results);
   embed.author.icon_url = "https://img.icons8.com/dusk/344/rss.png";
 
-  console.log("EMBED.".red);
-  console.log({ embed });
   return embed;
 }
 
 
 function normalizeImage(results) {
-  console.log({results})
   const img_link = results?.result?.ogImage?.url || null;
   const res = img_link ? { url: img_link.startsWith("//") ? img_link.replace("//", "http://") : img_link } : null;
   return res;
