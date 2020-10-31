@@ -4,16 +4,16 @@ const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
 const ECO = require("../../archetypes/Economy.js");
 
-const init = async (message) => {
+const init = async (msg,args) => {
   try {
-    setTimeout(() => (message.author.crafting = false), 25000);
+    setTimeout(() => (msg.author.crafting = false), 25000);
     // HELP TRIGGER
-    const P = { lngs: message.lang };
-    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message, opt: this.cat })) return null;
+    const P = { lngs: msg.lang };
+    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return null;
     //------------
 
-    if (message.author.crafting) return null; // ignore if already crafting
-    message.author.crafting = true;
+    if (msg.author.crafting) return null; // ignore if already crafting
+    msg.author.crafting = true;
 
     let [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
     DB.items.find({}).lean().exec()]);
@@ -21,29 +21,37 @@ const init = async (message) => {
     const embed = new Embed();
     embed.description = "";
     embed.setColor("#71dbfa");
+      
+    let amount = ~~(Math.abs(Number(args[0])))
 
-    let arg = message.content.split(/ +/).slice(1)[0];
-    if (!arg) return null;
-    let craftedItem = ITEMS.find((itm) => itm.id === arg || itm.code === arg);
+    console.log({amount})
+    if ( isNaN(amount) || amount <= 0 ) amount = 1;
+    else args.shift();
+
+    let toBeCrafted = args.join(" ").toLowerCase();
+
+    console.log(toBeCrafted,amount)
+
+    if (!args) return null;
+    let craftedItem = ITEMS.find((itm) => itm.id === toBeCrafted || itm.code === toBeCrafted);
 
     if (!craftedItem) { // try finding the item the user meant
-      message.author.crafting = false;
-      arg = message.args.join(" ").toLowerCase();
+      msg.author.crafting = false;
 
       ITEMS = ITEMS.map((itm) => {
-        itm.diff = diff(arg, itm.name.toLowerCase());
+        itm.diff = diff(toBeCrafted, itm.name.toLowerCase());
         itm.diffs = {};
         itm.diffs.E = itm.diff.filter((x) => x[0] === 0).length;
         itm.diffs.I = itm.diff.filter((x) => x[0] === 1).length;
         itm.diffs.D = itm.diff.filter((x) => x[0] === -1).length;
-        itm.diffScore = itm.diff.filter((x) => x[1].length > arg.length / 2 && x[0] !== 0).length
-          + itm.diff.filter((x) => x[1].length > arg.length / 2 && x[0] === -1).length * 4
-          + itm.diff.filter((x) => x[1].length > arg.length / 2 && x[0] === 1).length * 0.8
+        itm.diffScore = itm.diff.filter((x) => x[1].length > toBeCrafted.length / 2 && x[0] !== 0).length
+          + itm.diff.filter((x) => x[1].length > toBeCrafted.length / 2 && x[0] === -1).length * 4
+          + itm.diff.filter((x) => x[1].length > toBeCrafted.length / 2 && x[0] === 1).length * 0.8
           + itm.diff.length * 1.35
           + itm.diffs.D * 1.6
           + itm.diffs.I * 1.2
           - itm.diffs.E * 3
-          - itm.diff.filter((x) => x[1].length > arg.length / 2 && x[0] === 0).length * 2.6;
+          - itm.diff.filter((x) => x[1].length > toBeCrafted.length / 2 && x[0] === 0).length * 2.6;
         return itm;
       });
 
@@ -53,27 +61,27 @@ const init = async (message) => {
       const sorry = rand$t("responses.verbose.interjections.gomenasai", P);
       const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
       if (DYM.length > 0) {
-        const stepMessage = await message.channel.send(`${sorry} ${res}\n> • ${DYM.join("\n> • ")}`);
+        const stepMessage = await msg.channel.send(`${sorry} ${res}\n> • ${DYM.join("\n> • ")}`);
         if (DYM.length > 1) return;
-        if ((await YesNo(stepMessage, message, true, false, null)) === true) {
+        if ((await YesNo(stepMessage, msg, true, false, null)) === true) {
           [craftedItem] = ITEMS;
         } else {
           return;
         }
       } else {
-        return message.channel.send($t("responses.crafting.noitemu", P));
+        return msg.channel.send($t("responses.crafting.noitemu", P));
       }
     }
 
     if (!craftedItem) {
-      message.author.crafting = false;
-      return message.reply($t("responses.crafting.noitem", P));
+      msg.author.crafting = false;
+      return msg.reply($t("responses.crafting.noitem", P));
     }
 
     P.item_name = craftedItem.name;
-    embed.title(craftedItem?.emoji + $t("responses.crafting.craftingItem", P));
+    embed.title((craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount);
 
-    const userData = await DB.users.getFull({ id: message.author.id }, {
+    const userData = await DB.users.getFull({ id: msg.author.id }, {
       id: 1, "modules.sapphires": 1, "modules.jades": 1, "modules.rubines": 1, "modules.inventory": 1,
     });
 
@@ -90,13 +98,13 @@ const init = async (message) => {
     // check against the gems whether the user has enough (if necessary); 
     ["jades", "rubines", "sapphires"].forEach(gem => {
       if (!GC[gem]) return;
-      const afford = userData.modules[gem] >= GC[gem];
+      const afford = userData.modules[gem] >= GC[gem] * amount;
       let icona = "yep";
       if (!afford) {
         icona = "nope";
         fails += 1;
       }
-      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem], true)}** x ${$t(`keywords.${gem}`, P)}`;
+      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}`, P)}`;
     });
 
     // check against all necessary materials whether the user has enough; 
@@ -105,13 +113,14 @@ const init = async (message) => {
 
       const materialName = material.id || material;
       const amtInPosession = userData.modules.inventory.find((itm) => itm.id === materialName)?.count || 0;
-      const amtRequired = material.amt || objCount(MAT, materialName);
+      const amtRequired = (material.count || objCount(MAT, materialName)) * amount;
 
       if (amtInPosession < amtRequired) {
         icona = "nope";
         fails += 1;
       }
-      matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName).emoji}`
+      console.log(materialName)
+      matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName)?.emoji || '📦'}`
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
     });
 
@@ -119,13 +128,13 @@ const init = async (message) => {
       embed.setColor("#ed3a19");
       const craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
       embed.description = matDisplay + craftExplan;
-      message.author.crafting = false;
-      message.channel.send({ embed });
+      msg.author.crafting = false;
+      msg.channel.send({ embed });
     } else { // If all gems and materials available
       const craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
       embed.description = matDisplay + craftExplan;
       // Show craft cost & info
-      message.channel.send({ embed }).then(async (m) => {
+      msg.channel.send({ embed }).then(async (m) => {
         const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
         const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
 
@@ -136,14 +145,14 @@ const init = async (message) => {
         const reas = await m.awaitReactions({
           maxMatches: 1,
           time: 10000,
-          authorOnly: message.author.id,
+          authorOnly: msg.author.id,
         }).catch(() => {
           embed.setColor("#ffd900");
           embed.description = matDisplay;
           embed.footer($t("responses.crafting.timeout", P));
           m.edit({ embed });
           m.removeReactions().catch();
-          return (message.author.crafting = false);
+          return (msg.author.crafting = false);
         });
 
         if (reas.length === 0) return;
@@ -155,29 +164,29 @@ const init = async (message) => {
           embed.description = matDisplay;
           m.edit({ embed });
           m.removeReactions().catch();
-          return (message.author.crafting = false);
+          return (msg.author.crafting = false);
         }
 
         // craft is confirmed
         if (reas.length === 1 && reas[0].emoji.id === YA.id) {
           await Promise.all(
-            [ECO.pay(message.author.id, GC.rubines, "crafting", "RBN"),
-            ECO.pay(message.author.id, GC.jades, "crafting", "JDE"),
-            ECO.pay(message.author.id, GC.sapphires, "crafting", "SPH")],
+            [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
+            ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
+            ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
           );
 
           MAT.forEach(async (itm) => {
             console.log(itm);
-            if (itm.amt) {
-              await userData.removeItem(itm.id, itm.amt);
+            if (itm.count) {
+              await userData.removeItem(itm.id, itm.count * amount);
             } else {
               await userData.removeItem(itm);
             }
           });
 
-          await DB.items.receive(message.author.id, craftedItem.id);
+          await DB.items.receive(msg.author.id, craftedItem.id*amount);
 
-          message.author.crafting = false;
+          msg.author.crafting = false;
           embed.setColor("#78eb87");
           embed.description = matDisplay;
           embed.footer($t("responses.crafting.crafted", P));
@@ -187,10 +196,10 @@ const init = async (message) => {
         return;
       });
     }
-    message.author.crafting = false;
+    msg.author.crafting = false;
     //return message.reply("Invalid Craft Code");
   } catch (e) {
-    message.author.crafting = false;
+    msg.author.crafting = false;
     return console.error(e);
   }
 };
