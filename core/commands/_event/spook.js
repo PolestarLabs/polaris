@@ -138,7 +138,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
   let noise = randomize(-10, +10);
   let candyDrop = totalSpook + noise;
   candyDrop = candyDrop < 0 ? 1 : candyDrop;
-  candyDrop = ~~(candyDrop*0.8)
+  candyDrop = ~~(candyDrop*1.1)
 
   if (totalSpook < 5) {
     return msg.reply($t("events:halloween18.spook.advisor", P));
@@ -150,7 +150,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
   let spookText2 = $t("events:halloween18.spook.followup", P);
   embed.description = spookText;
 
-  let rfc = { C: 0.185, U: 0.25, R: 0.5, SR: 0.75, UR: 1, XR: 0.8 };
+  let rfc = { C: 0.185, U: 0.25, R: 0.7, SR: 0.85, UR: 1.2, XR: 0.8 };
   let rfac = [rfc[equipH.rarity], rfc[equipB.rarity], rfc[equipF.rarity]];
 
   await DB.users.set(Author.id, {
