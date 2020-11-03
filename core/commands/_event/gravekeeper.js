@@ -131,7 +131,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
 
     const covenant = await avicheck.init(rea.author,true);
-    let covBonus = (covenant=='umbral'?5:covenant=='dusk'?-5:0);
+    let covBonus = (covenant=='umbral'?5:covenant=='dusk'?-5:0) *10;
 
     if(rea.emoji.name === 'CANDY'){
         if (eventData.candy >= priceC) {
