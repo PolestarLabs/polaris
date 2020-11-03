@@ -10,7 +10,7 @@ const ECO = require("../../archetypes/Economy");
 
 const _ASSETS = paths.CDN + "/build/daily/";
 
-const constantAssets = Promise.all([
+let constantAssets = [
   Picto.getCanvas(_ASSETS + "boost.png"),
   Picto.getCanvas(_ASSETS + "exptag.png"),
   Picto.getCanvas(_ASSETS + "exptag-insu.png"),
@@ -33,8 +33,7 @@ const constantAssets = Promise.all([
   Picto.getCanvas(_ASSETS + "soft3.png"),
   Picto.getCanvas(_ASSETS + "soft2.png"),
   Picto.getCanvas(_ASSETS + "soft1.png"),
-]);
-
+]
 
 
 
@@ -54,14 +53,11 @@ function awardPrizes(userData, myDaily, actions) {
 }
 
 
-const init = async (msg, args) => {
-  const [boost, expTag, expTagInsu, expTagWARNING, expTagLOST, donoTag, super10, prev100, prev30, prev10, soft100, soft30, soft10, soft9, soft8, soft7, soft6, soft5, soft4, soft3, soft2, soft1] = await constantAssets;
-
+const init = async (msg, args) => { 
+  
   const moment = require("moment");
   moment.locale(msg.lang[0] || "en");
-
-  const Author = msg.author;
-  const now = Date.now();
+  
   const P = { lngs: msg.lang, prefix: msg.prefix };
   const v = {
     last: $t("interface.daily.lastdly", P),
@@ -69,14 +65,19 @@ const init = async (msg, args) => {
     streakcurr: $t("interface.daily.streakcurr", P),
     expirestr: $t("interface.daily.expirestr", P),
   };
-
+  
   if (msg.args[0] === "info") {
     msg.args[0] = "status";
     msg.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
   }
-  const userData = await DB.users.getFull(msg.author.id);
-  const dailyPLXMember = await PLX.getRESTGuildMember("277391723322408960", msg.author.id);
 
+  const [userData,dailyPLXMember] = await Promise.all([
+    DB.users.getFull(msg.author.id),
+    PLX.getRESTGuildMember("277391723322408960", msg.author.id)
+  ]);
+
+
+  let [boost, expTag, expTagInsu, expTagWARNING, expTagLOST, donoTag, super10, prev100, prev30, prev10, soft100, soft30, soft10, soft9, soft8, soft7, soft6, soft5, soft4, soft3, soft2, soft1] = constantAssets;
 
   const success = async (msg, DAILY) => {
 
@@ -116,10 +117,12 @@ const init = async (msg, args) => {
     let isRoadTo50 = (streak % 50) > 40;
     let isRoadTo100 = (streak % 100) > 90;
 
-    ctx.drawImage(eval("soft" + softStreak), 0, 0);
-    //if(isRoadTo30 && !is(30)) ctx.drawImage(prev30,0,0);
-    if (isRoadTo50 && !is(50)) ctx.drawImage(prev30, 0, 0);
-    if (isRoadTo100 && !is(100)) ctx.drawImage(prev100, 0, 0);
+  
+    let softBoilerplate = eval("soft" + softStreak);
+    ctx.drawImage(await softBoilerplate, 0, 0);
+
+    if (isRoadTo50 && !is(50)) ctx.drawImage(await prev30, 0, 0);
+    if (isRoadTo100 && !is(100)) ctx.drawImage(await prev100, 0, 0);
 
     if (softStreak == 1) myDaily.RBN += 150;
     if (softStreak == 2) myDaily.RBN += 150;
@@ -148,14 +151,14 @@ const init = async (msg, args) => {
       myDaily.EXP += 10;
       myDaily.SPH += 1;
       ctx.clearRect(0, 0, 800, 600);
-      ctx.drawImage(soft30, 0, 0);
+      ctx.drawImage(await soft30, 0, 0);
       if (!is(100)) myDaily.lootbox_SR += 1;
     }
     if (is(100)) {
       myDaily.EXP += 25;
       myDaily.SPH += 5;
       ctx.clearRect(0, 0, 800, 600);
-      ctx.drawImage(soft100, 0, 0);
+      ctx.drawImage(await soft100, 0, 0);
       myDaily.lootbox_UR += 1;
     }
     if (is(1000)) {
@@ -164,14 +167,17 @@ const init = async (msg, args) => {
     }
     if (dailyPLXMember?.premiumSince) {
       myDaily.PSM = ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10);
-      ctx.drawImage(boost, 0 - 50, 0);
+      ctx.drawImage(await boost, 0 - 50, 0);
     }
     if (userData.donator) {
       let donoBoost = Premium.DAILY[userData.donator];
-      let donoEmblem = await Picto.getCanvas(paths.CDN + "/images/donate/icony/" + userData.donator + "-small.png");
+      let donoEmblem = Picto.getCanvas(paths.CDN + "/images/donate/icony/" + userData.donator + "-small.png");
       myDaily.RBN += donoBoost;
       let number_DONOBOOST = Picto.tag(ctx, "+ " + donoBoost, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
       let text_DONOBOOST = Picto.tag(ctx, (userData.donator?.toUpperCase() || "UNKNOWN"), "italic 900 15px 'Panton Black'", "#FFF");
+      
+      [donoTag,donoEmblem] = await Promise.all([donoTag,donoEmblem]);
+      
       ctx.drawImage(donoTag, 0, 0);
       ctx.drawImage(number_DONOBOOST.item, 683 - number_DONOBOOST.width, 11);
       ctx.drawImage(text_DONOBOOST.item, 668 - text_DONOBOOST.width, 53);
@@ -196,9 +202,9 @@ const init = async (msg, args) => {
     if (myDaily.PSM) ctx.drawImage(number_BOOST_PRIZE.item, 660 - 35, 540);
 
 
-    if (DAILY.userDaily.insured) ctx.drawImage(expTagInsu, 0, 0);
+    if (DAILY.userDaily.insured) ctx.drawImage(await expTagInsu, 0, 0);
     else if (DAILY.streakStatus === 'recovered') {
-      ctx.drawImage(expTagWARNING, 0, 0);
+      ctx.drawImage( await expTagWARNING, 0, 0);
       Picto.popOutTxt(ctx,
         $t("Streak insurance activated!", P),
         360, 540,
@@ -207,7 +213,7 @@ const init = async (msg, args) => {
       );
     }
     else if (DAILY.streakStatus === 'lost') {
-      ctx.drawImage(expTagLOST, 0, 0);
+      ctx.drawImage(await expTagLOST, 0, 0);
       Picto.popOutTxt(ctx,
         $t("Streak Lost!", P),
         22, 506,
@@ -215,7 +221,7 @@ const init = async (msg, args) => {
         { line: 8, style: "#F23" },
       );
     }
-    else ctx.drawImage(expTag, 0, 0);
+    else ctx.drawImage( await expTag, 0, 0);
 
 
 
@@ -401,7 +407,8 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
 
   const reject = (message, D, REM) => {
-    return message.channel.send("big phat no " + REM);
+    P.remaining =  moment.utc(REM).fromNow();
+    return message.channel.send( _emoji('nope') + $t('responses.daily.dailyNope',P) );
   };
 
   Timed.init(
