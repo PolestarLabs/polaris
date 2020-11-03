@@ -433,9 +433,9 @@
             "dailyBonus": [
                 "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:"
             ],
-            "dailyGet": "{{emoji}} You've received 100 Rubines as your daily bonus!",
-            "dailyNope": "{{emoji}} Hmm? Seems you already claimed your Rubines, you can get more in: **{{remaining}}**",
-            "dailyStreak": "{{emoji}} **+500 Rubines** for 10 days of Dailies in a row!"
+            
+            "dailyNope": "Hmm? Seems you already claimed your Bonuses today. You can get more in **{{remaining}}**"
+            
         },
         "toggle": {
             "disabledSer": "The **{{module}}** module has been disabled **Globally**.",
