@@ -52,9 +52,9 @@ const PERMS_CALC = function CommandPermission(msg) {
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
-    if (permchk !== "ok") return false;
+    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction), false;
   }
-  if (msg.commandDenyChn || msg.commandDenySer) return false;
+  if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
   return (!uIDs.length || uIDs.includes(msg.author.id));
 };
 
@@ -84,10 +84,14 @@ const DEFAULT_CMD_OPTS = {
   cooldownMessage: (msg) => `⏱ ${rand$t([`responses.cooldown.${msg.command.cmd}`, "responses.cooldown.generic"], { lngs: msg.lang })}`,
   cooldownReturns: 2,
   requirements: { custom: PERMS_CALC },
-  permissionMessage: (msg) => (msg.commandDenyChn
-    ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
-    : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
-      : msg.addReaction(_emoji("nope").reaction)),
+  permissionMessage: (msg) => (
+    msg.guild.disaReply ? 
+      msg.commandDenyChn
+      ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
+      : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
+        : msg.addReaction(_emoji("nope").reaction)
+    : null
+  ),
   hooks: {
     preCommand: (m, a) => {
       m.args = a;
