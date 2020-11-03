@@ -1,5 +1,5 @@
 const DAY = 22 * 60 * 60e3;
-const EXPIRE = DAY + DAY / 2;
+const EXPIRE = DAY * 2.1;
 
 
 const Timed = require(`../../structures/TimedUsage`);
