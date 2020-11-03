@@ -75,7 +75,7 @@ const init = async function (msg) {
   //if (Author.dailing === true) return message.channel.send("There's already a dig request going on!");
 
   //const STREAK_EXPIRE = 1.296e+8*2embed
-  const DAY = 6 * 60 * 60000;
+  const DAY = 5 * 60 * 60000;
   const now = Date.now();
 
   const userDaily = USERDATA.eventDaily || 1;
@@ -138,7 +138,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
         { id: Author.id },
         {
           $inc: {
-            eventDaily: +((DAY / 6) * 4),
+            eventDaily: +((DAY / 5) * 4),
             "eventData.halloween20.caskets": 2,
           },
         }
