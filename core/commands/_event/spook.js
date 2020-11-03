@@ -71,7 +71,7 @@ const init = async function (msg) {
   if (Author.dailing === true) return msg.channel.send("Spooky.");
 
   //const STREAK_EXPIRE = 1.296e+8*2
-  const DAY = 6 * 60 * 60000;
+  const DAY = 5 * 60 * 60000;
   const now = Date.now();
 
   const userDaily =
