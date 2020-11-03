@@ -390,11 +390,11 @@ let me_queryStringIn  = {$push:{"eventData.halloween20.inventory":item}}
             mes.removeReactions();
             mes.edit( {content: _emoji('yep')+confirmSave2,embed});
             
-        if(memento.length == 13){
+        if(memento.length == 6*3){
           await DB.users.set(Author.id, {$inc:{'eventGoodie':1000}});   
           mes.channel.send("You got 1000 bonus Event Tokens for completing 50% of your Memento Collection!")
         }
-        else if(memento.length == 27){
+        else if(memento.length == 12*3){
           await DB.users.set(Author.id, {$addToSet:{'modules.achievements':"memento_completionist"},$inc:{'eventGoodie':2000}});   
           await DB.users.set(Author.id, {$addToSet:{'modules.flairsInventory':"memento_completionist_2020"}});
           mes.channel.send("You got 2000 bonus Event Tokens for completing 100% of your Memento Collection!")
