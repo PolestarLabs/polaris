@@ -223,14 +223,14 @@ async function flairForCostume(msg,uID,FLAIR,COSTUME){
     let secondChoice = eventData.gender === 'girl' ? FLAIR2 : FLAIR1;
 
     if (userData.modules.flairsInventory.includes(firstChoice)){
-        await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':firstChoice}});
+        await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':secondChoice}});
     }else if (userData.modules.flairsInventory.includes(secondChoice)){
         resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
         resEmbed.color = 0xCC2233;
         resEmbed.footer.text= "❌";
         return {embed:resEmbed};
     }else{
-        await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':secondChoice}});
+        await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':firstChoice}});
     }
     const newCostumeInv = eventData.inventory.filter(it=> !costumeFiltered.includes(it.id));
     await DB.users.set(uID,{$set:{'eventData.halloween20.inventory':newCostumeInv}});
@@ -258,7 +258,7 @@ async function candyForSticker(msg,uID,STICKERS){
     }
 
 
-    if (userData.modules.stickerInventory.includes(STICKER1)){
+    if (!userData.modules.stickerInventory.includes(STICKER1)){
         await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER1}});
     }else if (userData.modules.flairsInventory.includes(STICKER2)){
         resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
