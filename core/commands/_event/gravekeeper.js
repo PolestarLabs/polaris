@@ -125,7 +125,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     
     if(what === 'events:halloween18.noctix.acCask'){
         if(eventData.caskets >= 5){
-            return "you can't hold more than 5 caskets at a time!";
+            return msg.channel.send("you can't hold more than 5 caskets at a time!");
         }        
     }
 

@@ -94,7 +94,6 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
     const P = {lngs:[msg.channel.LANG||msg.guild.LANG,'dev']}
 
-    console.log(userID)
     const embed = msg.embeds[0];
    
     //embed.description = "Waiting...";
@@ -114,17 +113,21 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     prompt.addReaction(':CANDY:769023260050325535');
     prompt.addReaction(_emoji('RBN').reaction);
 
-    const reas = await prompt.awaitReactions(rea=> rea.userID === userID,{maxMatches:1,time:15e3}).catch(err=>null);
 
+    const reas = await prompt.awaitReactions(rea=> rea.userID === userID,{maxMatches:1,time:15e3}).catch(err=>console.log(err));
+    
     let rea = reas[0];
+
+
     if(!rea) return prompt.edit({embed:{description: $t('events:halloween20.arsenika.timeout',P) }});
+    
     
     const eventData = await EV.userData(userID);
     const userData = await DB.users.getFull(userID);
 
     if(what === 'events:halloween20.arsenika.acCask'){
         if(eventData.caskets >= 5){
-            return "you can't hold more than 5 caskets at a time!";
+            return msg.channel.send("you can't hold more than 5 caskets at a time!");
         }        
     }
 
