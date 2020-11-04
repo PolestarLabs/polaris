@@ -44,7 +44,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
     embed.description = `
  • Your Lootboxes will be capped to **10 of each type**, any exceeding boxes will be **destroyed**.
- • Your **Rubines** will be reset. You'll get to keep your current Daily Streak × 15.
+ • Your **Rubines** will be reset. You'll get to keep 5% of what you have now, + your current Daily Streak × 15.
  • Your **Jades** will be halved.
  • Your **Sapphires** will be increased by **20%** *(if you have an active supporter tier you get +10% per tier level. Max +80%)*.
  • Your **Marriages** will be transferred unless they're with yourself or with a repeated person, if someone you're married to already did the transfer, they will be skipped.
@@ -114,7 +114,7 @@ ${_emoji('loading')} • Converting inventory
         const currItem = newInventory.find((sub) => sub.id === item);
 
         if (currItem){
-            if(currItem.id.includes('lootbox') && currItem.count <= 10) currItem.count++;
+            if(currItem.id.includes('lootbox') && currItem.count < 10) currItem.count++;
         } 
         else newInventory.push({ id: item, count: 1 });
     });
@@ -150,7 +150,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('loading')} • Recalculating Gemstones
-${_emoji('loading')} • Awarding Bonus Sapphires
+${_emoji('loading')} • Transferring Daily Streak
 
 `
     embed.color = 0x2b2b3F;
@@ -158,13 +158,15 @@ ${_emoji('loading')} • Awarding Bonus Sapphires
     await wait(1);
     await prompt.edit({embed});
     
-    let newRubines = Math.min( userData.modules.rubines, userData.modules.dyStreakHard * 15);
+    let newRubines = Math.min( userData.modules.rubines *.05 + userData.modules.dyStreakHard * 10,50000);
     let oldRubines = userData.modules.rubines;
     let jades      = ~~(userData.modules.jades / 2);
     let saph       = ~~(userData.modules.sapphires * (SAPPHIREFACTOR(userData.donator,userData.formerDonator)) / 10 + 1 );
     
     await DB.users.set(msg.author.id, {$set: 
         {
+            'counters.daily.streak' : userData.modules.dyStreakHard,
+            'counters.daily.last' : userData.modules.daily,
             'modules.rubines' : newRubines,
             'modules.rubinesOld' : oldRubines,
             'modules.jades' : jades,
@@ -183,7 +185,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('loading')} • Baking a Cake`
     embed.color = 0x2b2b3F;
     embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛⬛`}
@@ -202,7 +204,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
 
@@ -226,7 +228,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
 ${_emoji('loading')} • Declaring Rubines Income Tax 
@@ -245,7 +247,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
 ${_emoji('yep')} • Declaring Rubines Income Tax 
@@ -272,7 +274,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('loading')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
 ${_emoji('yep')} • Declaring Rubines Income Tax 
@@ -293,7 +295,7 @@ ${_emoji('yep')} • Transferring Marriages
 ${_emoji('yep')} • Converting Inventory
 ${_emoji('yep')} • Capping Lootboxes
 ${_emoji('yep')} • Recalculating Gemstones
-${_emoji('yep')} • Awarding Bonus Sapphires
+${_emoji('yep')} • Transferring Daily Streak (${userData.modules.dyStreakHard})
 ${_emoji('yep')} • Baking a Cake
 ${_emoji('yep')} • Awarding **Touhou Classic** Deck Skin
 ${_emoji('yep')} • Declaring Rubines Income Tax 
@@ -328,7 +330,7 @@ Try using \`${msg.prefix}food info\` to learn more!*`
 module.exports={
     init
     ,pub:true
-    ,cmd:'transfer'
+    ,cmd:'migrate'
     ,cat:'infra'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:[]
