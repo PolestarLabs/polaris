@@ -42,7 +42,7 @@
     "tunnel-ssh": "^4.1.4",
     "uws": "^99.0.0",
     "xml2js": "^0.4.23",
-    "ytdl-core": "^3.2.2",
+    "ytdl-core": "^4.0.0",
     "zlib-sync": "^0.1.6"
   },
   "devDependencies": {
