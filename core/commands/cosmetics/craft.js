@@ -2,6 +2,14 @@ const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
 const ECO = require("../../archetypes/Economy.js");
+const baselineBonus = {
+  C:1,
+  U:2,
+  R:5,
+  SR:10,
+  UR:25,
+  XR:50,
+}
 
 const init = async (msg,args) => {
   try {
@@ -11,33 +19,43 @@ const init = async (msg,args) => {
     if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return null;
     //------------
 
-    if (msg.author.crafting) return null; // ignore if already crafting
-    msg.author.crafting = true;
-
+    if (msg.author.crafting) return setTimeout(()=>msg.author.crafting = false, 10000); // ignore if already crafting
+    
     let [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
-    DB.items.find({}).lean().exec()]);
+      DB.items.find({}).lean().exec()]);
 
-    const embed = new Embed();
+      const embed = new Embed();
     embed.description = "";
     embed.setColor("#71dbfa");
-      
-    let amount = ~~(Math.abs(Number(args[0])))
-
-    console.log({amount})
+    
+    let pos;
+    let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
+    
+    
+    console.log({amount,pos})
     if ( isNaN(amount) || amount <= 0 ) amount = 1;
-    else args.shift();
-
+    else pos ? args.pop() : args.shift();
+    
     let toBeCrafted = args.join(" ").toLowerCase();
-
+    
     console.log(toBeCrafted,amount)
-
+    
     if (!args) return null;
-    let craftedItem = ITEMS.find((itm) => itm.id === toBeCrafted || itm.code === toBeCrafted);
+ 
+    let craftedItem = await DB.items.get({ $or: [{id: toBeCrafted},{code: toBeCrafted}]});
+    //let craftedItem = ITEMS.find((itm) => itm.id === toBeCrafted || itm.code === toBeCrafted);
 
     if (!craftedItem) { // try finding the item the user meant
       msg.author.crafting = false;
 
-      ITEMS = ITEMS.map((itm) => {
+      let userDiscoveries = Object.keys((await DB.control.get(msg.author.id,)).data?.craftingBook || {});
+
+      let allItems = await DB.items.find({
+        crafted: true,
+        $or: [ {display: true},{id: {$in: userDiscoveries}} ]
+      }).lean();
+
+      ITEMS = allItems.map((itm) => {
         itm.diff = diff(toBeCrafted, itm.name.toLowerCase());
         itm.diffs = {};
         itm.diffs.E = itm.diff.filter((x) => x[0] === 0).length;
@@ -77,6 +95,13 @@ const init = async (msg,args) => {
       return msg.reply($t("responses.crafting.noitem", P));
     }
 
+    if (amount > craftedItem.maxBulkCraft){
+      return msg.channel.send( _emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
+    }
+
+    msg.author.crafting = true;
+
+    console.log(craftedItem)
     P.item_name = craftedItem.name;
     embed.title((craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount);
 
@@ -183,8 +208,12 @@ const init = async (msg,args) => {
             }
           });
 
-          await DB.items.receive(msg.author.id, craftedItem.id*amount);
-
+          await Promise.all([
+            DB.items.receive(msg.author.id, craftedItem.id*amount),
+            DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
+            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
+          ]);
+          
           msg.author.crafting = false;
           embed.setColor("#78eb87");
           embed.description = matDisplay;
