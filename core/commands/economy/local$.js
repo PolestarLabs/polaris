@@ -53,6 +53,14 @@ const init = async (msg) => {
     if (!responses) return msg.reply("timeout");
     const pPool = parseInt(responses[0].content) || 0;
 
+
+    msg.channel.send(`Your Initial balance (${pCode})`);
+    responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
+            && !Number.isNaN(parseInt(msg2.content)),
+    { maxMatches: 1, time: 30e3 });
+    if (!responses) return msg.reply("timeout");
+    const pVolume = parseInt(responses[0].content) || 0;
+
     msg.reply(`
         Name: **${pName}**
         Code: \`${pCode}\`
