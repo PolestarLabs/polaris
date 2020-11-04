@@ -83,7 +83,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`).join("")}
      finalMessage += "-5 "+_emoji('SPH')
     }
     await DB.users.set(msg.author.id, { $pull: { married: { id: newMARRIAGES[index].users.find((x) => x != msg.author.id) } } });
-    const newM = await DB.relationships.create("marriage", newMARRIAGES[index].users, newMARRIAGES[index].initiative, newMARRIAGES[index].ring);
+    const newM = await DB.relationships.create("marriage", newMARRIAGES[index].users, newMARRIAGES[index].initiative, newMARRIAGES[index].ring, newMARRIAGES[index].since);
     //
     //msg.channel.send(`${_emoji("yep")} created. ${newM._id}`);
     finalMessage += (`\n${_emoji("yep")} created. \`${newMARRIAGES[index].users}\``);
