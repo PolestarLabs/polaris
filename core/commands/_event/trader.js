@@ -259,6 +259,7 @@ async function candyForSticker(msg,uID,STICKERS){
 
 
     if (!userData.modules.stickerInventory.includes(STICKER1)){
+        resEmbed.image = {url:paths.CDN+"/stickers/"+STICKER1+".png"};
         await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER1}});
     }else if (userData.modules.flairsInventory.includes(STICKER2)){
         resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
@@ -266,6 +267,7 @@ async function candyForSticker(msg,uID,STICKERS){
         resEmbed.footer.text= "❌";
         return {embed:resEmbed};
     }else{
+        resEmbed.image = {url:paths.CDN+"/stickers/"+STICKER2+".png"};
         await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER2}});
     }
   
