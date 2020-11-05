@@ -1,3 +1,6 @@
+const { dbGetter } = require('../../../dashboard/structures/PrimitiveGearbox.js');
+const Picto = require('../utilities/Picto.js');
+
 /* eslint max-classes-per-file: ["error", 2] */
 const VENTURE_EVENTS = [
   {
@@ -135,13 +138,14 @@ function eventProcessor(event, Venture) {
   return { res, payQuery, text };
 }
 
+
 // {id,timemin,timemax,odds,event,landscape, condition, cosmo, rubines,sapphires,jades,lootbox,special}
 
 const TIME_SLICE = 30;
 
 module.exports = {
   Venture: class Venture {
-    constructor(player, time, landscape) {
+    constructor(player, time, landscape,playersHere =[]) {
       Object.assign(this, { player: player.id, time, landscape });
       this.start = Date.now();
       this.end = Date.now() + time * 60 * 60 * 1000;
@@ -169,7 +173,16 @@ module.exports = {
         const IX = weightedRand(odds);
         const thisEvent = eligibleEvents[IX];
         eventProcessor(thisEvent, this);
-        this.journey.push(thisEvent.id);
+        
+        let noise = randomize(0,5);
+        let time = i*TIME_SLICE+5;
+
+        this.journey.push({
+          id: thisEvent.id,
+          time:  time-noise,
+          trueTime:  time,
+          interactions: shuffle(playersHere)[0]
+        });
       }
     }
   },
@@ -178,8 +191,8 @@ module.exports = {
     constructor(Venture) {
       Venture = { ...Venture };
 
-      this.events = VENTURE_EVENTS.filter((VE) => Venture.journey.includes(VE.id));
-      this.log = Venture.journey.map((ev) => this.events.map((e) => e.id).indexOf(ev));
+      this.events = VENTURE_EVENTS.filter((VE) => Venture.journey.map(e=>e.id).includes(VE.id));
+      this.log = Venture.journey.map((ev) => this.events.map((e) => e.id).indexOf(ev.id));
 
       this.journal = this.log.map((idx, i) => {
         const EVT = this.events[idx];
@@ -206,4 +219,93 @@ module.exports = {
       });
     }
   },
+  renderMap: async function(location,msg){
+    const canvas = Picto.new(400,250);
+    const ctx = canvas.getContext('2d');
+
+    const LOC = await DB.advLocations.findOne({id:location}).lean();
+    console.log(LOC)
+    const NEI = await DB.advLocations.traceRoutes(location, 0);
+    const LOCS = await DB.advLocations.find({id: {$in: NEI.map(x=>x._id)}}).lean();
+
+    const coords = LOC.coordinates
+ console.log(LOCS)
+
+
+    const bigMap = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/773752670418501652/unknown.png');
+    const overlay = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/773797780347027456/frame.png');
+
+    ctx.drawImage(bigMap, -coords.x+125,-coords.y+125);
+    LOCS.forEach(loc=>{
+      let thisCoords = loc.coordinates;
+      
+      ctx.beginPath();
+      ctx.lineWidth = "5";
+      ctx.strokeStyle = "white";  
+      ctx.lineCap='round'; 
+      ctx.fillStyle = "red";  
+      ctx.moveTo(125, 125);
+      ctx.lineTo(
+        -coords.x + thisCoords.x + 125,
+        -coords.y + thisCoords.y + 125
+        );
+        ctx.stroke();  
+        
+        
+      })
+
+      let playerCount = await DB.advJourneys.countDocuments({location, end: {$gt: Date.now()} });
+  
+    ctx.fillStyle = playerCount?'green':'red'
+    ctx.fillRect(265,46,30,30)
+    ctx.fillStyle = 'yellow'
+    ctx.fillRect(0,0,153,32)
+    
+    ctx.drawImage(overlay, 0,0);
+    
+    ctx.drawImage( Picto.tag(ctx,"Players Here",'12px Quicksand').item ,270,25)
+    ctx.drawImage( Picto.tag(ctx,playerCount,'12px Quicksand').item ,292,50)
+
+    
+    
+
+
+    msg.channel.send({embed:{
+
+     title: `**${LOC.name}**`,
+     description:`
+     **Connects to:**
+      ${LOCS.map(x=> `\`${x.id}\`${x.name}: (${cardinalDirection(coords,x.coordinates)}) `).join('\n')}
+      `, 
+      image:{url:"attachment://map.png"}
+    
+    }}
+      ,{file: await canvas.toBuffer(), name: 'map.png'})
+
+
+
+  }
 };
+
+
+
+
+function cardinalDirection(LocationA,LocationB){
+  console.log(LocationA)
+  const dy = LocationB.y - LocationA.y,
+        dx = LocationB.x - LocationA.x;
+  let   θ  = Math.atan2(dy,dx) * 180/Math.PI; // no radians pls
+
+  console.log({LocationA,LocationB,dy,dx,θ})
+
+  if (θ < 0) θ = 360 + θ;
+
+  if(θ <  23) return "E";
+  if(θ >= 23  && θ < 68) return "SE";
+  if(θ >= 68  && θ < 113) return "S";
+  if(θ >= 113 && θ < 158) return "SW";
+  if(θ >= 158 && θ < 203) return "W";
+  if(θ >= 203 && θ < 248) return "NW";
+  if(θ >= 248 && θ < 303) return "N";
+  if(θ >= 248 ) return "NE";
+}
