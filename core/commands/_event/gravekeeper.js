@@ -73,7 +73,7 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween18.noctix.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,.5)
+                buySomething(msg,uID,'events:halloween18.noctix.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,.3*amt)
             },
             
         },{
@@ -165,6 +165,29 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
         }else{
             promptEmbed.description = (_emoji('nope')+$t('events:halloween18.noctix.noCashR',P) )
             return prompt.edit({embed:promptEmbed});
+        }
+    }
+
+    if(eventData.affinityNox >= 2500){
+        
+        if (!userData.modules.stickerInventory.includes("nox-c1")){
+            promptEmbed.image = {url:paths.CDN+"/stickers/nox-c1.png"};
+            promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.noctix.completeR',P) ) + `\n
+            Since you appear around here a lot, here, take this sticker so you can show to everyone we're big friends.`
+            await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':"nox-c1"}});
+            prompt.edit({embed:promptEmbed})
+            
+        }
+    
+        if(eventData.affinityNox >= 5000){  
+            if (!userData.modules.flairsInventory.includes("umbral")){
+                promptEmbed.thumbnail = {url:paths.CDN+"/flairs/umbral.png"};
+                promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.noctix.completeR',P) ) + `\n
+                You're really a loyal friend. Here, I'll give you something special: it is an **Umbral Flair**, use it in your profile to demonstrate your dedication to our covenant.`
+                await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':"umbral"}});
+                prompt.edit({embed:promptEmbed})
+
+            }
         }
     }
 

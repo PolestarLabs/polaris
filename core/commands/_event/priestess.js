@@ -172,5 +172,28 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
         }
     }
 
+    if(eventData.affinityArs >= 2500){
+        
+        if (!userData.modules.stickerInventory.includes("ars-c1")){
+            promptEmbed.image = {url:paths.CDN+"/stickers/ars-c1.png"};
+            promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.arsenika.completeR',P) ) + `\n
+            Since you appear around here a lot, here, take this sticker so you can show to everyone we're big friends.`
+            await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':"ars-c1"}});
+            prompt.edit({embed:promptEmbed})
+            
+        }
+    
+        if(eventData.affinityArs >= 5000){  
+            if (!userData.modules.flairsInventory.includes("dusk")){
+                promptEmbed.thumbnail = {url:paths.CDN+"/flairs/dusk.png"};
+                promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.arsenika.completeR',P) ) + `\n
+                Hey you're such a dedicated visitor. I'll give you something really cool: this is a **Dusk Flair**, use it in your profile to demonstrate your dedication to our covenant.`
+                await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':"dusk"}});
+                prompt.edit({embed:promptEmbed})
+
+            }
+        }
+    }
+
 }
 
