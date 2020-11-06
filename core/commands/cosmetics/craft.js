@@ -29,10 +29,9 @@ const init = async (msg,args) => {
     embed.setColor("#71dbfa");
     
     let pos;
+    console.log(args)
     let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
     
-    
-    console.log({amount,pos})
     if ( isNaN(amount) || amount <= 0 ) amount = 1;
     else pos ? args.pop() : args.shift();
     
@@ -209,9 +208,11 @@ const init = async (msg,args) => {
           });
 
           await Promise.all([
-            DB.items.receive(msg.author.id, craftedItem.id*amount),
+            userData.addItem(craftedItem.id,amount),
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
-            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
+            DB.control.updateOne({id:msg.author.id, 'data.craftingBook.id':craftedItem.id }, {$inc: {[`data.craftingBook.$.count`]: amount} }).catch(err=>{
+              return DB.control.updateOne({id:msg.author.id}, {$set: {"data.craftingBook": {[craftedItem.id]:amount}} })
+            }),
           ]);
           
           msg.author.crafting = false;
