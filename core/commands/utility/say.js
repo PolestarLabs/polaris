@@ -4,6 +4,12 @@ const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
+  try{
+    msg.delete().catch(err=>null)
+  }catch(e){
+    // prevent breaking with saytochannel
+  }
+
   if (msg.args[0] === "embed") {
     if (["?", "help", $t("helpkey", P)].includes(msg.args[1]) || !msg.args[1]) {
       return msg.channel.send({
@@ -25,11 +31,6 @@ const init = async function (msg, args) {
       userEmbed = JSON.parse(embedstr);
     } catch (e) {
       return msg.channel.send({ embed: { description: $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }) } });
-    }
-    try{
-      msg.delete().catch(err=>null)
-    }catch(e){
-      // prevent breaking with saytochannel
     }
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
   } else {
