@@ -66,7 +66,7 @@ module.exports={
                 msg.removeReactions();                
 
                 let prompt = await msg.channel.send( "**"+$t('events:halloween18.noctix.howMany')+"**");
-                let res = await msg.channel.awaitMessages(m=>m.author.id === uID && (Number(m.content) > 0),{maxMatches:1,time:15e3});
+                let res = await msg.channel.awaitMessages(m=>m.author.id === uID && (Number(m.content) > 0),{maxMatches:1,time:15e3}).catch(err=>null);
                 if (!res[0]) return msg.channel.send("Are you gonna just look at me like that?");
                 prompt.delete().catch(err=>null);
                 res[0].delete().catch(err=>null);
