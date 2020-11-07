@@ -29,15 +29,14 @@ const init = async (msg,args) => {
     embed.setColor("#71dbfa");
     
     let pos;
-    console.log(args)
     let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
+    
     
     if ( isNaN(amount) || amount <= 0 ) amount = 1;
     else pos ? args.pop() : args.shift();
     
     let toBeCrafted = args.join(" ").toLowerCase();
     
-    console.log(toBeCrafted,amount)
     
     if (!args) return null;
  
@@ -100,7 +99,6 @@ const init = async (msg,args) => {
 
     msg.author.crafting = true;
 
-    console.log(craftedItem)
     P.item_name = craftedItem.name;
     embed.title((craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount);
 
@@ -142,7 +140,7 @@ const init = async (msg,args) => {
         icona = "nope";
         fails += 1;
       }
-      console.log(materialName)
+
       matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName)?.emoji || '📦'}`
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
     });
@@ -199,7 +197,6 @@ const init = async (msg,args) => {
           );
 
           MAT.forEach(async (itm) => {
-            console.log(itm);
             if (itm.count) {
               await userData.removeItem(itm.id, itm.count * amount);
             } else {
@@ -210,9 +207,7 @@ const init = async (msg,args) => {
           await Promise.all([
             userData.addItem(craftedItem.id,amount),
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
-            DB.control.updateOne({id:msg.author.id, 'data.craftingBook.id':craftedItem.id }, {$inc: {[`data.craftingBook.$.count`]: amount} }).catch(err=>{
-              return DB.control.updateOne({id:msg.author.id}, {$set: {"data.craftingBook": {[craftedItem.id]:amount}} })
-            }),
+            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
           ]);
           
           msg.author.crafting = false;
