@@ -26,12 +26,9 @@ const init = async (message) => {
     "https://youtu.be/kna7Lgu_Ljk",
     "https://youtu.be/Go23N3rEW2w",
     "https://youtu.be/hCzR_arZdK4",
+    "https://youtu.be/dXZMH2CiSQk",
+    "https://youtu.be/nRRRtpOnBgA",
   ];
-
-  const removedStuff = [
-    "",
-    "",
-  ]
 
   const stuff2 = [
     "You want some eurobeat? You get some eurobeat!",
@@ -60,14 +57,12 @@ const init = async (message) => {
     "Listen to this every time you want to *remember me*.",
     "Did you know my favorite WW2 plane was the Supermarine *Spitfire*? ",
     "I feel like i'm gonna be *forever young*~",
-    "Play this and turn the volume to *the top*!",
+    "You can listen this every day, but it is *never enough*",
     "Welcome to the *House of Fire*, please don't get yourself burnt.",
+    "Wao wao~",
+    "Play this and turn the volume to *the top*!",
   ];
 
-  const removedStuff3 = [
-    "Wao wao~",
-    "You can listen this every day, but it is *never enough*",
-  ]
 
   const rand = randomize(0, stuff.length - 1);
   const rand2 = randomize(0, stuff2.length - 1);
