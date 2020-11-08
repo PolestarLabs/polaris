@@ -20,17 +20,17 @@ const init = async (message) => {
     "https://youtu.be/atuFSv2bLa8",
     "https://youtu.be/dv13gl0a-FA",
     "https://youtu.be/SRbhLtjOiRc",
+    "https://youtu.be/jPl_1RpBK_4",
+    "https://youtu.be/bT1ZJ3-EVqU",
+    "https://youtu.be/jkAIUvd2eF8",
+    "https://youtu.be/kna7Lgu_Ljk",
+    "https://youtu.beGo23N3rEW2w",
+    "https://youtu.behCzR_arZdK4",
   ];
 
   const removedStuff = [
-    "https://youtu.be/hF7QX0hfv8o",
-    "https://youtu.be/Wz4dENwCN3E",
-    "https://youtu.be/SivLaZ2GyrU",
-    "https://youtu.be/WDvW1r85DcY",
-    "https://youtu.be/_vTwDqsqvj4",
-    "https://youtu.be/sk1Q-BFgnPM",
-    "https://youtu.be/w_4RDmaO15E",
-    "https://youtu.be/fS0fU0r_yvo",
+    "",
+    "",
   ]
 
   const stuff2 = [
@@ -56,17 +56,17 @@ const init = async (message) => {
     "*Do you like.... my car**",
     "*I've just been in this place before*.",
     "Let's set this *night on fire*",
-  ];
-
-  const removedStuff3 = [
     "Are you a *speedy boy* or not?",
     "Listen to this every time you want to *remember me*.",
     "Did you know my favorite WW2 plane was the Supermarine *Spitfire*? ",
     "I feel like i'm gonna be *forever young*~",
-    "Wao wao~",
     "Play this and turn the volume to *the top*!",
-    "You can listen this every day, but it is *never enough*",
     "Welcome to the *House of Fire*, please don't get yourself burnt.",
+  ];
+
+  const removedStuff3 = [
+    "Wao wao~",
+    "You can listen this every day, but it is *never enough*",
   ]
 
   const rand = randomize(0, stuff.length - 1);
