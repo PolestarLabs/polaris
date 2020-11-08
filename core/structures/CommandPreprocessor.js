@@ -25,6 +25,10 @@ const PERMS_CALC = function CommandPermission(msg) {
     msg.addReaction(":BLACKLISTED_USER:406192511070240780");
     return false;
   }
+  if ([msg.command.cat, msg.command.module].includes("nsfw") && !msg.channel.nsfw) {
+    msg.channel.send($t("responses.errors.not-a-NSFW-channel", { lngs: msg.lang }));
+    return false;
+  };
 
   let uIDs;
   switch (msg.command.module) {
