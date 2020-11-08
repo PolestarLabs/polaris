@@ -6,9 +6,6 @@ const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
 
-  const Target = await PLX.resolveMember( msg.guild, msg.args[0]);
-  if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
-
   const serverData = await DB.servers.get(msg.guild.id);
   P.imsorry = rand$t("responses.verbose.interjections.gomenasai");
   if (!PLX.modPass(msg.member, "kickMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));
@@ -16,9 +13,14 @@ const init = async function (msg) {
   if (!msg.args[0]) {
     return msg.channel.send($t("responses.errors.kinNone", P));
   }
-  if (!Target) {
-    return msg.channel.send($t("responses.errors.kin404", P));
+
+  let Target;
+  try {
+    Target = await PLX.resolveMember( msg.guild, msg.args[0]);
+  } catch (e) {
+      return msg.channel.send($t("responses.errors.kin404", P));
   }
+
   if (Target.id === msg.author.id) {
     return msg.channel.send($t("responses.errors.cantKickSelf", P));
   }
