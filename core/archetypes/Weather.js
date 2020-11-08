@@ -11,6 +11,7 @@ class Weather extends EventEmitter {
 
     _apiResponse;
     locationstr;
+    found;
 
     /**
      * Creates a weather report based on input location
@@ -98,7 +99,7 @@ class Weather extends EventEmitter {
             day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date(date * 1000).getDay()],
             date: new Date(date * 1000),
             low: low ? this.unit == "F" ? this._convert(low) : low : null,
-            curr: curr ? this.unit == "f" ? this._convert(curr) : curr : null,
+            curr: curr ? this.unit == "F" ? this._convert(curr) : curr : null,
             high: high ? this.unit == "F" ? this._convert(high) : high : null,
         }
     }
@@ -114,7 +115,7 @@ class Weather extends EventEmitter {
      * Private method to initiate data to _apiResponse
      */
     _initiate() {
-        const query = { location: this.locationstr, format: "json" };
+        const query = { location: this.locationstr, format: "json", u: "c" };
         const oauth = {
             "oauth_consumer_key": key,
             "oauth_nonce": Date.now().toString(36),
@@ -139,7 +140,12 @@ class Weather extends EventEmitter {
                 res.setEncoding("utf-8");
                 let data = "";
                 res.on("data", chunk => data += chunk);
-                res.on("end", () => { this._apiResponse = JSON.parse(data); this.emit("done", this); });
+                res.on("end", () => { 
+                    this._apiResponse = JSON.parse(data);
+                    if (Object.keys(this._apiResponse["location"]).length == 0 || this._apiResponse["forecasts"].length == 0) this.found = false;
+                    else this.found = true;
+                    this.emit("done", this); 
+                });
             });
     }
 }
