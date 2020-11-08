@@ -220,7 +220,8 @@ module.exports = {
     }
   },
   renderMap: async function(location,msg){
-    const canvas = Picto.new(400,250);
+    let H = 500
+    const canvas = Picto.new(800,H);
     const ctx = canvas.getContext('2d');
 
     const LOC = await DB.advLocations.findOne({id:location}).lean();
@@ -233,21 +234,22 @@ module.exports = {
 
 
     const bigMap = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/773752670418501652/unknown.png');
-    const overlay = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/773797780347027456/frame.png');
+    const overlay = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/774058122729488384/frame.png');
 
-    ctx.drawImage(bigMap, -coords.x+125,-coords.y+125);
+    ctx.drawImage(bigMap, -coords.x+H/2,-coords.y+H/2);
     LOCS.forEach(loc=>{
       let thisCoords = loc.coordinates;
       
       ctx.beginPath();
       ctx.lineWidth = "5";
-      ctx.strokeStyle = "white";  
+      ctx.strokeStyle = "#FFFA";  
+      ctx.setLineDash([5, 15]);
       ctx.lineCap='round'; 
       ctx.fillStyle = "red";  
-      ctx.moveTo(125, 125);
+      ctx.moveTo(H/2, H/2);
       ctx.lineTo(
-        -coords.x + thisCoords.x + 125,
-        -coords.y + thisCoords.y + 125
+        -coords.x + thisCoords.x + H/2,
+        -coords.y + thisCoords.y + H/2
         );
         ctx.stroke();  
         
@@ -256,6 +258,8 @@ module.exports = {
 
       let playerCount = await DB.advJourneys.countDocuments({location, end: {$gt: Date.now()} });
   
+    
+ 
     ctx.fillStyle = playerCount?'green':'red'
     ctx.fillRect(265,46,30,30)
     ctx.fillStyle = 'yellow'
@@ -266,7 +270,7 @@ module.exports = {
     ctx.drawImage( Picto.tag(ctx,"Players Here",'12px Quicksand').item ,270,25)
     ctx.drawImage( Picto.tag(ctx,playerCount,'12px Quicksand').item ,292,50)
 
-    
+    Picto.popOutTxt(ctx,LOC.name,89,413,"900 italic 43px 'Panton Black'",'white', 770)
     
 
 
