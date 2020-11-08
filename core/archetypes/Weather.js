@@ -103,7 +103,7 @@ class Weather extends EventEmitter {
             low: low ? this.unit == "F" ? this._convert(low) : low : null,
             high: high ? this.unit == "F" ? this._convert(high) : high : null,
         }
-        if (curr) toRet[curr] = this.unit == "F" ? this._convert(curr) : curr;
+        if (curr) toRet["curr"] = this.unit == "F" ? this._convert(curr) : curr;
         return toRet;
     }
 
