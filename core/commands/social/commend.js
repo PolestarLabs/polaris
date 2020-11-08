@@ -85,7 +85,7 @@ const info = async (msg, args) => {
   ]);
 
   const metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
-  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id).meta.tag, amt: u.count })).sort((c1, c2) => c1.amt - c2.amt);
+  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id).meta.tag, amt: u.count })).sort((c1, c2) => c2.amt - c1.amt);
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(
