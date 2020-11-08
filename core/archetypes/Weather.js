@@ -2,7 +2,7 @@ const https = require("https");
 const crypto = require("crypto");
 const EventEmitter = require("events");
 const { appID, key, secret } = require(`${appRoot}/config.json`).weather;
-const countries = JSON.parse(require("fs").readFileSync(`${appRoot}/resources/lists/countries.json`).toString());
+const countries = JSON.parse(require("fs").readFileSync(`${appRoot}/resources/lists/worldISO.json`).toString());
 
 class Weather extends EventEmitter {
     _baseURL = "https://weather-ydn-yql.media.yahoo.com/forecastrss";
