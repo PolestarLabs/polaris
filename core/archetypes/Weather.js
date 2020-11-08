@@ -73,17 +73,7 @@ class Weather extends EventEmitter {
      * @returns {string} iso
      */
     _findISO(name) {
-        const possibilities = [];
-        for (const country of countries) {
-            if (country["name"].includes(name)) {
-                const charArr1 = country["name"].split("");
-                const charArr2 = name.split("");
-                let diff = 0;
-                for (let i = 0; i < charArr1.length; i++) if (!charArr2[i] || charArr1[i] != charArr2[i]) diff += 1;
-                possibilities.push({ name: country["name"], toRet: country["alpha-2"], diff });
-            };
-        }
-        if (possibilities.length) return possibilities.sort((p1, p2) => p1.diff - p2.diff)[0]["toRet"];
+        for (const country of countries) if (country["country"] == name) return country["iso"];
         return null;
     }
 
