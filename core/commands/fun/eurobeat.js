@@ -5,20 +5,14 @@ const init = async (message) => {
     "https://youtu.be/dK36vthr32M",
     "https://youtu.be/_8Q0qRu7CSE",
     "https://youtu.be/sFODclG8mBY",
-    "https://youtu.be/hF7QX0hfv8o",
-    "https://youtu.be/Wz4dENwCN3E",
-    "https://youtu.be/SivLaZ2GyrU",
-    "https://youtu.be/WDvW1r85DcY",
-    "https://youtu.be/_vTwDqsqvj4",
     "https://youtu.be/ItjjWECjD_M",
     "https://youtu.be/BJ0xBCwkg3E",
-    "https://www.youtube.com/watch?v=atuFSv2bLa8",
-    "https://www.youtube.com/watch?v=dv13gl0a-FA",
-    "https://www.youtube.com/watch?v=SRbhLtjOiRc",
-    "https://www.youtube.com/watch?v=sk1Q-BFgnPM",
-    "https://www.youtube.com/watch?v=w_4RDmaO15E",
-    "https://www.youtube.com/watch?v=fS0fU0r_yvo",
+    "https://youtu.be/atuFSv2bLa8",
+    "https://youtu.be/dv13gl0a-FA",
+    "https://youtu.be/SRbhLtjOiRc",
   ];
+
+  message.channel.send(stuff.join("\n"));
 
   const stuff2 = [
     "You want some eurobeat? You get some eurobeat!",
