@@ -3,8 +3,9 @@ const Weather = require("../../archetypes/Weather");
 const init = async (msg, args) => {
     if (!args.length) msg.reply("Where though?");
     const weather = new Weather(args.join(" "));
-    weather.on("error", code => msg.reply("Something went wrong..."));
-    weather.on("done", () => {
+    weather.on("error", code => msg.reply("Something went wrong...")); // return code != 200
+    weather.on("done", () => { // got API response
+      // WEATHER SHOWCASE
       const inspect = require("util").inspect;
       const now = inspect(weather.now);
       const week = inspect([weather.week[0], weather.week[2], "and more..."], {depth: 1});
