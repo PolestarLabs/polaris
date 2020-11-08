@@ -91,9 +91,9 @@ const info = async (msg, args) => {
     .description(
       `__**Commend Info for ${Target.mention}**__\
       \n\u2003 Total Commends Received: **${targetData.modules.commend || 0}**\
-      \n\u2003 Total Commends Given: **${targetData.modules.commended || 0}**
+      \n\u2003 Total Commends Given: **${targetData.modules.commended || 0}**\
     ${commendT3.length == 0 ? "" :
-      `__**Top Commenders**__\
+      `\n\n__**Top Commenders**__\
       \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
       \n\u2003 ${commendT3[1] ? `**${commendT3[1].name}** > ${commendT3[1].amt}` : ""}\
       \n\u2003 ${commendT3[2] ? `**${commendT3[2].name}** > ${commendT3[2].amt}` : ""}`
