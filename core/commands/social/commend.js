@@ -5,13 +5,12 @@ const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
-  if (!Target) {
-    Target = msg.author
-  }
+  if (!Target) Target = msg.author;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
   const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
   const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
+
 
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
@@ -32,7 +31,6 @@ const init = async function (msg) {
       userData.incrementAttr("commended", 1),
       targetData.incrementAttr("commend", 1),
       targetData.upCommend(msg.author),
-
     ]);
 
     P.target = Target.nick || (Target.user || Target).username;
@@ -65,14 +63,13 @@ const init = async function (msg) {
     const userDaily = await Daily.userData(msg.author);
     const dailyAvailable = await Daily.dailyAvailable(msg.author);
     P.remaining = moment.utc(userDaily.last).add(Daily.day, "milliseconds").fromNow(true);
-    const embe2 = new Embed();
-    embe2.setColor("#3b9ea5");
-    embe2.description(`
-    ${_emoji("future")} ${dailyAvailable ? _emoji("online") + $t("responses.commend.check_yes", P) : _emoji("dnd") + $t("responses.commend.check_no", P)} 
-       
-    :reminder_ribbon: × **${userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**
-         `);
-    return msg.channel.send({ embed: embe2 });
+    const embed = new Embed();
+    embed.setColor("#3b9ea5");
+    embed.description(
+      `${_emoji("future")} ${dailyAvailable ? _emoji("online") + $t("responses.commend.check_yes", P) : _emoji("dnd") + $t("responses.commend.check_no", P)}\   
+      \n\n:reminder_ribbon: × **${userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**`
+    );
+    return msg.channel.send({ embed: embed });
   };
 
   Timed.init(msg, "commend", { day: 3.6e+6 }, after, reject, status, preafter);
@@ -92,18 +89,15 @@ const info = async (msg, args) => {
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(
-      `__**Commend Info for ${Target.mention}**__
-\u2003        Total Commends Received: **${targetData.modules.commend || 0}**
-\u2003        Total Commends Given: **${targetData.modules.commended || 0}**
-    ${
-  commendT3.length > 0 ? `
-            __**Top Commenders**__
-\u2003        ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}  
-\u2003        ${commendT3[1] ? `**${commendT3[1].name}** > ${commendT3[1].amt}` : ""}  
-\u2003        ${commendT3[2] ? `**${commendT3[2].name}** > ${commendT3[2].amt}` : ""}  
-
-` : ""}`,
-    );
+      `__**Commend Info for ${Target.mention}**__\
+      \n\u2003 Total Commends Received: **${targetData.modules.commend || 0}**\
+      \n\u2003 Total Commends Given: **${targetData.modules.commended || 0}**
+    ${commendT3.length == 0 ? "" :
+      `__**Top Commenders**__\
+      \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
+      \n\u2003 ${commendT3[1] ? `**${commendT3[1].name}** > ${commendT3[1].amt}` : ""}\
+      \n\u2003 ${commendT3[2] ? `**${commendT3[2].name}** > ${commendT3[2].amt}` : ""}`
+    }`);
 
   return { embed };
 };
