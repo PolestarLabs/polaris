@@ -24,8 +24,8 @@ const init = async (message) => {
     "https://youtu.be/bT1ZJ3-EVqU",
     "https://youtu.be/jkAIUvd2eF8",
     "https://youtu.be/kna7Lgu_Ljk",
-    "https://youtu.beGo23N3rEW2w",
-    "https://youtu.behCzR_arZdK4",
+    "https://youtu.be/Go23N3rEW2w",
+    "https://youtu.be/hCzR_arZdK4",
   ];
 
   const removedStuff = [
