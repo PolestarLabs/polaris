@@ -30,11 +30,13 @@ class Weather extends EventEmitter {
      * @readonly
      */
     get now() {
-        const { condition, pubDate: date } = this._apiResponse["current_observation"];
+        const { condition, pubDate: date, wind, atmosphere, astronomy } = this._apiResponse["current_observation"];
         const { text, code, temperature: curr } = condition;
         const { low, high } = this._apiResponse["forecasts"][0];
-        const forecast = { date, low, curr, high, text, code };
-        return this._parseForecast(forecast);
+        const obj = { date, low, curr, high, text, code };
+        let forecast = this._parseForecast(obj);
+        forecast = Object.assign(forecast, wind, atmosphere, astronomy);
+        return forecast;
     }
 
     /**
@@ -73,7 +75,17 @@ class Weather extends EventEmitter {
      * @returns {string} iso
      */
     _findISO(name) {
-        for (const country of countries) if (country["country"] == name) return country["iso"];
+        const possibilities = [];
+        for (const country of countries) {
+            if (country["country"] == name) return country["iso"];
+            if (country["country"].includes(name)) {
+                const charArr1 = country["country"].split("");
+                const charArr2 = name.split("");
+                let diff = 0;
+                for (let i = 0; i < charArr1.length; i++) if (!charArr2[i] || charArr1[i] != charArr2[i]) diff += 1;
+                possibilities.push({ name: country["country"], toRet: country["iso"], diff });
+            };
+        }
         return null;
     }
 
@@ -84,14 +96,15 @@ class Weather extends EventEmitter {
      */
     _parseForecast(forecast) {
         const { date, low, curr, high, text, code } = forecast;
-        return {
+        const toRet = {
             text, code,
             day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date(date * 1000).getDay()],
             date: new Date(date * 1000),
             low: low ? this.unit == "F" ? this._convert(low) : low : null,
-            curr: curr ? this.unit == "F" ? this._convert(curr) : curr : null,
             high: high ? this.unit == "F" ? this._convert(high) : high : null,
         }
+        if (curr) toRet[curr] = this.unit == "F" ? this._convert(curr) : curr;
+        return toRet;
     }
 
     /**
