@@ -255,7 +255,7 @@ function calcAutoCost(item, inventory, itemCost = {}) {
   // add material/material's cost
   for (let material of item.materials) {
     material = ALLITEMS.find(itm => itm.id === material.id);
-    if (!item) throw new Error("materialID did not match any itemID");
+    if (!material) throw new Error("materialID did not match any itemID");
     // enough items? add item to cost, else add costs of item to costs.
     if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
       toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
