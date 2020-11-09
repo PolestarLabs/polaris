@@ -139,10 +139,12 @@ const init = async (msg,args) => {
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
     });
 
+    let craftExplan;
+
     // Not enough gems; fatal to crafting.
     if (gemFails > 0) { 
       embed.setColor("#ed3a19");
-      const craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
+      craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
       embed.description = gemDisplay + matDisplay + craftExplan;
       msg.author.crafting = false;
       return msg.channel.send({ embed });
@@ -153,13 +155,13 @@ const init = async (msg,args) => {
       const autoCost = calcAutoCost(ALLITEMS, craftedItem, inventory);
 
       embed.setColor(); // todo: flicky
-      const craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
+      craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
     }
     
     /**------------------------------/
     |* EVERYTHING AVAILABLE → CRAFT *
     \**-----------------------------*/
-    const craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
+    craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
     embed.description = matDisplay + craftExplan;
     // Show craft cost & info
     msg.channel.send({ embed }).then(async (m) => {
