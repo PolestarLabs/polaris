@@ -243,7 +243,7 @@ const init = async (msg,args) => {
  */
 function calcAutoCost(item, inventory, itemCost = {}) {
   let toRet = { items: itemCost, gems: {} };
-  item = ALLITEMS.find(itm => itm.id === material.id);
+  item = ALLITEMS.find(itm => itm.id === item.id);
   if (!item) throw new Error("itemID did not match any itemID");
 
   // add gem cost
