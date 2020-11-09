@@ -243,6 +243,8 @@ const init = async (msg,args) => {
  */
 function calcAutoCost(item, inventory, itemCost = {}) {
   let toRet = { items: itemCost, gems: {} };
+  item = ALLITEMS.find(itm => itm.id === material.id);
+  if (!item) throw new Error("itemID did not match any itemID");
 
   // add gem cost
   for (const gem of Object.keys(item.gemcraft)) { 
@@ -252,12 +254,12 @@ function calcAutoCost(item, inventory, itemCost = {}) {
 
   // add material/material's cost
   for (let material of item.materials) {
-    // enough items? add item to cost, else add costs of item to costs.
     material = ALLITEMS.find(itm => itm.id === material.id);
+    if (!item) throw new Error("materialID did not match any itemID");
+    // enough items? add item to cost, else add costs of item to costs.
     if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
       toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
     } else {
-      if (!material) throw new Error("MaterialID did not match any itemID");
       Object.assign(toRet, calcAutoCost(material, inventory, toRet.items));
     }
   }
