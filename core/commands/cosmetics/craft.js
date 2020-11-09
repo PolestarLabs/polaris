@@ -251,16 +251,17 @@ function calcAutoCost(item, inventory, itemCost = {}) {
     if (!toRet.gems[gem]) toRet.gems[gem] = item.gemcraft[gem];
     else toRet.gems[gem] += item.gemcraft[gem]; 
   }
-
-  // add material/material's cost
-  for (let material of item.materials) {
-    material = ALLITEMS.find(itm => itm.id === material.id);
-    if (!material) throw new Error("materialID did not match any itemID");
-    // enough items? add item to cost, else add costs of item to costs.
-    if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
-      toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
-    } else {
-      Object.assign(toRet, calcAutoCost(material, inventory, toRet.items));
+  if (item.materials.length) {
+    // add material/material's cost
+    for (let material of item.materials) {
+      material = ALLITEMS.find(itm => itm.id === material.id);
+      if (!material) throw new Error("materialID did not match any itemID");
+      // enough items? add item to cost, else add costs of item to costs.
+      if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
+        toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
+      } else {
+        Object.assign(toRet, calcAutoCost(material, inventory, toRet.items));
+      }
     }
   }
 
