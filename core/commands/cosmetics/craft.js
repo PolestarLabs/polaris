@@ -245,6 +245,7 @@ function calcAutoCost(item, inventory, itemCost = {}) {
   let toRet = { items: itemCost, gems: {} };
   item = ALLITEMS.find(itm => itm.id === item.id);
   if (!item) throw new Error("itemID did not match any itemID");
+  msg.channel.send(`\`\`\`js\n${require("util").inspect(item)}\`\`\``);
 
   // add gem cost
   for (const gem of Object.keys(item.gemcraft)) { 
