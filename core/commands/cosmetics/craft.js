@@ -139,8 +139,6 @@ const init = async (msg,args) => {
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
     });
 
-    let craftExplan;
-
     // Not enough gems; fatal to crafting.
     if (gemFails > 0) { 
       embed.setColor("#ed3a19");
