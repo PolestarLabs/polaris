@@ -11,41 +11,36 @@ const baselineBonus = {
   XR:50,
 }
 
+const [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
+  DB.items.find({}).lean().exec()]);
+
 const init = async (msg,args) => {
   try {
     setTimeout(() => (msg.author.crafting = false), 25000);
     // HELP TRIGGER
     const P = { lngs: msg.lang };
-    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return null;
+    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return;
     //------------
 
-    if (msg.author.crafting) return setTimeout(()=>msg.author.crafting = false, 10000); // ignore if already crafting
+    if (msg.author.crafting) return; // ignore if already crafting
     
-    let [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
-      DB.items.find({}).lean().exec()]);
 
-      const embed = new Embed();
+    const embed = new Embed();
     embed.description = "";
     embed.setColor("#71dbfa");
     
     let pos;
     let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
-    
-    
-    if ( isNaN(amount) || amount <= 0 ) amount = 1;
+    if (isNaN(amount) || amount <= 0) amount = 1;
     else pos ? args.pop() : args.shift();
     
-    let toBeCrafted = args.join(" ").toLowerCase();
-    
-    
-    if (!args) return null;
+    if (!args) return;
+    let toBeCrafted = args.join(" ").toLowerCase(); 
  
     let craftedItem = await DB.items.get({ $or: [{id: toBeCrafted},{code: toBeCrafted}]});
     //let craftedItem = ITEMS.find((itm) => itm.id === toBeCrafted || itm.code === toBeCrafted);
 
     if (!craftedItem) { // try finding the item the user meant
-      msg.author.crafting = false;
-
       let userDiscoveries = Object.keys((await DB.control.get(msg.author.id,)).data?.craftingBook || {});
 
       let allItems = await DB.items.find({
@@ -88,14 +83,8 @@ const init = async (msg,args) => {
       }
     }
 
-    if (!craftedItem) {
-      msg.author.crafting = false;
-      return msg.reply($t("responses.crafting.noitem", P));
-    }
-
-    if (amount > craftedItem.maxBulkCraft){
-      return msg.channel.send( _emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
-    }
+    if (!craftedItem) return msg.reply($t("responses.crafting.noitem", P));
+    if (amount > craftedItem.maxBulkCraft) return msg.channel.send( _emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
 
     msg.author.crafting = true;
 
@@ -112,7 +101,9 @@ const init = async (msg,args) => {
 
     const MAT = craftedItem.materials || [];
     const GC = craftedItem.gemcraft;
-    let fails = 0;
+    let gemFails = 0;
+    let matFails = 0;
+    let gemDisplay = "";
     let matDisplay = "";
     let craftExplan = "";
 
@@ -123,9 +114,9 @@ const init = async (msg,args) => {
       let icona = "yep";
       if (!afford) {
         icona = "nope";
-        fails += 1;
+        gemFails += 1;
       }
-      matDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}`, P)}`;
+      gemDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}`, P)}`;
     });
 
     // check against all necessary materials whether the user has enough; 
@@ -138,88 +129,100 @@ const init = async (msg,args) => {
 
       if (amtInPosession < amtRequired) {
         icona = "nope";
-        fails += 1;
+        matFails += 1;
       }
 
       matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName)?.emoji || '📦'}`
         + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
     });
 
-    if (fails > 0) { // If not enough gems/materials
+    // Not enough gems; fatal to crafting.
+    if (gemFails > 0) { 
       embed.setColor("#ed3a19");
-      const craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
-      embed.description = matDisplay + craftExplan;
+      const craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
+      embed.description = gemDisplay + matDisplay + craftExplan;
       msg.author.crafting = false;
-      msg.channel.send({ embed });
-    } else { // If all gems and materials available
-      const craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
-      embed.description = matDisplay + craftExplan;
-      // Show craft cost & info
-      msg.channel.send({ embed }).then(async (m) => {
-        const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
-        const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
+      return msg.channel.send({ embed });
+    }
 
-        await m.addReaction(YA.r);
-        m.addReaction(NA.r);
+    // Not enough materials, try autocraft.
+    if (matFails > 0) {
+      const autoCost = calcAutoCost(ALLITEMS, craftedItem, inventory);
 
-        // Confirmation of craft through reactions
-        const reas = await m.awaitReactions({
-          maxMatches: 1,
-          time: 10000,
-          authorOnly: msg.author.id,
-        }).catch(() => {
-          embed.setColor("#ffd900");
-          embed.description = matDisplay;
-          embed.footer($t("responses.crafting.timeout", P));
-          m.edit({ embed });
-          m.removeReactions().catch();
-          return (msg.author.crafting = false);
+      embed.setColor(); // todo: flicky
+      const craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
+    }
+    
+    /**------------------------------/
+    |* EVERYTHING AVAILABLE → CRAFT *
+    \**-----------------------------*/
+    const craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
+    embed.description = matDisplay + craftExplan;
+    // Show craft cost & info
+    msg.channel.send({ embed }).then(async (m) => {
+      const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
+      const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
+
+      await m.addReaction(YA.r);
+      m.addReaction(NA.r);
+
+      // Confirmation of craft through reactions
+      const reas = await m.awaitReactions({
+        maxMatches: 1,
+        time: 10000,
+        authorOnly: msg.author.id,
+      }).catch(() => {
+        embed.setColor("#ffd900");
+        embed.description = matDisplay;
+        embed.footer($t("responses.crafting.timeout", P));
+        m.edit({ embed });
+        m.removeReactions().catch();
+        return (msg.author.crafting = false);
+      });
+
+      if (reas.length === 0) return;
+
+      // craft is cancelled
+      if (reas.length === 1 && reas[0].emoji.id === NA.id) {
+        embed.setColor("#db4448");
+        embed.footer($t("responses.crafting.cancel", P));
+        embed.description = matDisplay;
+        m.edit({ embed });
+        m.removeReactions().catch();
+        return (msg.author.crafting = false);
+      }
+
+      // craft is confirmed
+      if (reas.length === 1 && reas[0].emoji.id === YA.id) {
+        await Promise.all(
+          [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
+          ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
+          ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
+        );
+
+        MAT.forEach(async (itm) => {
+          if (itm.count) {
+            await userData.removeItem(itm.id, itm.count * amount);
+          } else {
+            await userData.removeItem(itm);
+          }
         });
 
-        if (reas.length === 0) return;
-
-        // craft is cancelled
-        if (reas.length === 1 && reas[0].emoji.id === NA.id) {
-          embed.setColor("#db4448");
-          embed.footer($t("responses.crafting.cancel", P));
-          embed.description = matDisplay;
-          m.edit({ embed });
-          m.removeReactions().catch();
-          return (msg.author.crafting = false);
-        }
-
-        // craft is confirmed
-        if (reas.length === 1 && reas[0].emoji.id === YA.id) {
-          await Promise.all(
-            [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
-            ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
-            ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
-          );
-
-          MAT.forEach(async (itm) => {
-            if (itm.count) {
-              await userData.removeItem(itm.id, itm.count * amount);
-            } else {
-              await userData.removeItem(itm);
-            }
-          });
-
-          await Promise.all([
-            userData.addItem(craftedItem.id,amount),
-            DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
-            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
-          ]);
-          
-          msg.author.crafting = false;
-          embed.setColor("#78eb87");
-          embed.description = matDisplay;
-          embed.footer($t("responses.crafting.crafted", P));
-          m.removeReactions().catch();
-          return m.edit({ embed });
-        }
-        return;
-      });
-    }
+        await Promise.all([
+          userData.addItem(craftedItem.id,amount),
+          DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
+          DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
+        ]);
+        
+        msg.author.crafting = false;
+        embed.setColor("#78eb87");
+        embed.description = matDisplay;
+        embed.footer($t("responses.crafting.crafted", P));
+        m.removeReactions().catch();
+        return m.edit({ embed });
+      }
+      return;
+    });
     msg.author.crafting = false;
     //return message.reply("Invalid Craft Code");
   } catch (e) {
@@ -228,7 +231,39 @@ const init = async (msg,args) => {
   }
 };
 
+/**
+ * Function to calculate cost of auto crafting.
+ * 
+ * @param {object} item item to be autocrafted
+ * @param {object} inventory user's inventory (to calc mat cost)
+ * @return {object} object structured like: { items: { $mat: amt }, gems: { $gem: amt } }
+ */
+function calcAutoCost(item, inventory, itemCost = {}) {
+  let toRet = { items: itemCost, gems: {} };
+
+  // add gem cost
+  for (const gem of Object.keys(item.gemcraft)) { 
+    if (!toRet.gems[gem]) toRet.gems[gem] = item.gemcraft[gem];
+    else toRet.gems[gem] += item.gemcraft[gem]; 
+  }
+
+  // add material/material's cost
+  for (let material of item.materials) {
+    // enough items? add item to cost, else add costs of item to costs.
+    material = ALLITEMS.find(itm => itm.id === material.id);
+    if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
+      toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
+    } else {
+      if (!material) throw new Error("MaterialID did not match any itemID");
+      Object.assign(toRet, calcAutoCost(material, inventory, toRet.items));
+    }
+  }
+
+  return toRet;
+}
+
 module.exports = {
+  calcAutoCost,
   pub: true,
   cmd,
   perms: 3,
