@@ -11,8 +11,11 @@ const baselineBonus = {
   XR:50,
 }
 
-const [ITEMS, ALLITEMS] = await Promise.all([DB.items.find({ crafted: true }).lean().exec(),
-  DB.items.find({}).lean().exec()]);
+let ITEMS, ALLITEMS;
+Promise.all([DB.items.find({ crafted: true }).lean().exec(),
+  DB.items.find({}).lean().exec()]).then((IT, ALLIT) => {
+    ITEMS = IT; ALLITEMS = ALLIT;
+  });
 
 const init = async (msg,args) => {
   try {
