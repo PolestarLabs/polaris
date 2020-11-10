@@ -166,7 +166,7 @@ ${_emoji("time")} **${v.last}** ${moment.utc(userDaily).fromNow()}
 
   async function shovelocalypse() {
     if (USERDATA.modules.inventory.includes("excavator")) {
-      if (randomize(0, 100) == 13) {
+      if (randomize(0, 200) == 13) {
         await DB.users
           .updateOne(
             { id: Author.id, "modules.inventory": "excavator" },
