@@ -1,3 +1,5 @@
+// @ts-check
+
 const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
@@ -10,6 +12,8 @@ const baselineBonus = {
   UR:25,
   XR:50,
 }
+const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
+const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
 
 let ITEMS, ALLITEMS;
 Promise.all([DB.items.find({ crafted: true }).lean().exec(),
@@ -122,21 +126,24 @@ const init = async (msg,args) => {
       gemDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}`, P)}`;
     });
 
-    // check against all necessary materials whether the user has enough; 
-    MAT.forEach((material) => {
+    // check against all necessary materials whether the user has enough;
+    const goodMAT = {};
+    MAT.forEach(mat => {
+      if (typeof mat === "string") goodMAT[mat] = (goodMAT[mat]++ || 1);
+      else goodMAT[mat.id] = (goodMAT[mat.id] + (mat.count || 1)) || (mat.count || 1);
+    });
+    Object.keys(goodMAT).forEach((material) => {
       let icona = "yep";
 
-      const materialName = material.id || material;
-      const amtInPosession = userData.modules.inventory.find((itm) => itm.id === materialName)?.count || 0;
-      const amtRequired = (material.count || objCount(MAT, materialName)) * amount;
+      const amtInPosession = userData.modules.inventory.find((itm) => itm.id === material)?.count || 0;
 
-      if (amtInPosession < amtRequired) {
+      if (amtInPosession < goodMAT[material]) {
         icona = "nope";
         matFails += 1;
       }
 
-      matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === materialName)?.emoji || '📦'}`
-        + `${ALLITEMS.find((x) => x.id === materialName).name} (${amtInPosession}/${amtRequired})`;
+      matDisplay += `\n${_emoji(icona)} | ${ALLITEMS.find((x) => x.id === material)?.emoji || '📦'}`
+        + `${ALLITEMS.find((x) => x.id === material).name} (${amtInPosession}/${goodMAT[material]})`;
     });
 
     // Not enough gems; fatal to crafting.
@@ -147,130 +154,345 @@ const init = async (msg,args) => {
       msg.author.crafting = false;
       return msg.channel.send({ embed });
     }
-
-    // Not enough materials, try autocraft.
-    if (matFails > 0) {
-      const autoCost = calcAutoCost(ALLITEMS, craftedItem, inventory);
-
-      embed.setColor(); // todo: flicky
-      craftExplan = `\n\n${$t("responses.crafting.materialMissing", P)}`;
-    }
     
-    /**------------------------------/
-    |* EVERYTHING AVAILABLE → CRAFT *
-    \**-----------------------------*/
-    craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
-    embed.description = matDisplay + craftExplan;
-    // Show craft cost & info
-    msg.channel.send({ embed }).then(async (m) => {
-      const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
-      const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
+    let embedmsg;
 
-      await m.addReaction(YA.r);
-      m.addReaction(NA.r);
+    // Not enough materials, possibly allow autocrafting.
+    if (matFails > 0) {
+      const hasCrafted = userData.modules.inventory.find(itm => itm.id === craftedItem.id)?.crafted;
+      // if (!hasCrafted) endMissingMaterials(); // UNCOMMENT THIS
 
-      // Confirmation of craft through reactions
-      const reas = await m.awaitReactions({
-        maxMatches: 1,
-        time: 10000,
-        authorOnly: msg.author.id,
-      }).catch(() => {
-        embed.setColor("#ffd900");
-        embed.description = matDisplay;
-        embed.footer($t("responses.crafting.timeout", P));
-        m.edit({ embed });
-        m.removeReactions().catch();
-        return (msg.author.crafting = false);
-      });
+      craftExplan = `\n\n${$t("responses.crafting.materialAutocraft", P)}`;
+      embed.description = gemDisplay + matDisplay + craftExplan;
+      msg.channel.send({ embed }).then(async(m) => {
+        embedmsg = m;
+        getYesNo(m).then(() => {
+          const autoReport = genAutoReport(craftedItem, userData, amount);
+          autoReport.P = P;
+          const visualize = genAutoVisual(autoReport);
+         
+          if (!autoReport.enoughGems || !autoReport.enoughItems) return endMissingMaterials(m, visualize);
 
-      if (reas.length === 0) return;
+          craftExplan = `${visualize}\n\n${$t("responses.crafting.materialPresent", P)}`;
+          embed.description = craftExplan;
+          embed.color = 0xccff33;
+          m.edit({ embed });
 
-      // craft is cancelled
-      if (reas.length === 1 && reas[0].emoji.id === NA.id) {
-        embed.setColor("#db4448");
-        embed.footer($t("responses.crafting.cancel", P));
-        embed.description = matDisplay;
-        m.edit({ embed });
-        m.removeReactions().catch();
-        return (msg.author.crafting = false);
-      }
+          getYesNo(m, 30000).then(async() => {
+            const xp = Object.keys(autoReport.itemsCrafting)
+              .map(toCraft => baselineBonus[ALLITEMS.find(itm => itm.id === toCraft).rarity] * autoReport.itemsCrafting[toCraft])
+              .reduce((a,b) => a + b, 0);
 
-      // craft is confirmed
-      if (reas.length === 1 && reas[0].emoji.id === YA.id) {
-        await Promise.all(
-          [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
-          ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
-          ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
-        );
+            const gemTranslation = { sapphires: "SPH", jades: "JDE", rubines: "RBN" }
+            await Promise.all([
+              ...Object.keys(autoReport.totalGems).map(gem => ECO.pay(msg.author.id, autoReport.totalGems[gem], "crafting", gemTranslation[gem])),
+              ...Object.keys(autoReport.totalItems).map(item => userData.removeItem(item, autoReport.totalItems[item])),
+              userData.addItem(autoReport.id, autoReport.count, true),
+              DB.users.set(msg.author.id, { $inc: { 'progression.craftingExp': xp } }),
+              ...Object.keys(autoReport.itemsCrafting)
+                .map(item => DB.users.collection.update(
+                  { id: msg.author.id }, 
+                  { $inc: { "modules.inventory.$[i].crafting": autoReport.itemsCrafting[item] } },
+                  { arrayFilters: [{ "i.id": item }] }
+                )),
+            ]);
 
-        MAT.forEach(async (itm) => {
-          if (itm.count) {
-            await userData.removeItem(itm.id, itm.count * amount);
-          } else {
-            await userData.removeItem(itm);
-          }
+            embed.description = "";
+          }).catch(e => {
+            return endNo(e, m);
+          });
+        }).catch(e => {
+          // craft is cancelled
+          return endNo(e, m);
         });
+      });
+    } else {
+      /**------------------------------/
+      |* EVERYTHING AVAILABLE → CRAFT *
+      \**-----------------------------*/
+      craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
+      embed.description = gemDisplay + matDisplay + craftExplan;
+      // Show craft cost & info
+      msg.channel.send({ embed }).then(async (m) => {
+        embedmsg = m;
+        getYesNo(m).then(async() => {
+          // craft is confirmed
+          await Promise.all(
+            [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
+            ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
+            ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
+          );
 
-        await Promise.all([
-          userData.addItem(craftedItem.id,amount),
-          DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
-          DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
-        ]);
-        
-        msg.author.crafting = false;
-        embed.setColor("#78eb87");
-        embed.description = matDisplay;
-        embed.footer($t("responses.crafting.crafted", P));
-        m.removeReactions().catch();
-        return m.edit({ embed });
-      }
-      return;
-    });
+          MAT.forEach(async (itm) => {
+            if (itm.count) {
+              await userData.removeItem(itm.id, itm.count * amount);
+            } else {
+              await userData.removeItem(itm);
+            }
+          });
+
+          await Promise.all([
+            userData.addItem(craftedItem.id, amount, true),
+            DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
+            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
+          ]);
+
+          embed.description = gemDisplay + matDisplay;          
+        }).catch(e => {
+          // craft is cancelled
+          return endNo(e, m);
+        });
+      });
+    }
+
     msg.author.crafting = false;
-    //return message.reply("Invalid Craft Code");
+    embed.setColor("#78eb87");
+    embed.footer($t("responses.crafting.crafted", P));
+    if (embedmsg) return embedmsg.edit({ embed });
+
+    function endNo(e, m) {
+      msg.author.crafting = false;
+      embed.description = gemDisplay + matDisplay;
+      if (e === "timeout") {
+        return endTimeout(m);
+      } else if (e === "no") {
+        return endCancel(m);
+      } else {
+        console.error(e.stack);
+        msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } });
+        throw new Error("shouldn't happen");
+      }
+    }
+
+    function endMissingMaterials(m, v) {
+      msg.author.crafting = false;
+      embed.setColor("#ed3a19");
+      embed.description = (v ? v : gemDisplay + matDisplay) + `\n${$t("responses.crafting.materialMissing", P)}`;
+      if (m) m.edit({ embed });
+      else msg.channel.send({ embed });
+      return;
+    }
+
+    function endTimeout(m) {
+      embed.setColor("#ffd900");
+      embed.footer($t("responses.crafting.timeout", P));
+      m.edit({ embed });
+      return;
+    }
+
+    function endCancel(m) {
+      embed.setColor("#db4448");
+      embed.footer($t("responses.crafting.cancel", P));
+      m.edit({ embed });
+      return;
+    }
+
+    function getYesNo(m, l = 10000) {
+      return new Promise(async(resolve, reject) => {
+        await m.addReaction(YA.r);
+        m.addReaction(NA.r);
+    
+        // Confirmation of craft through reactions
+        const reas = await m.awaitReactions({
+          maxMatches: 1,
+          time: l,
+          authorOnly: msg.author.id,
+        }).catch(() => reject("timeout"));
+    
+        await m.removeReactions().catch();
+        if (!reas || reas.length === 0) reject("timeout");
+        if (reas.length === 1 && reas[0].emoji.id === NA.id) reject("no");
+        if (reas.length === 1 && reas[0].emoji.id === YA.id) resolve();
+        reject();
+      });
+    }
   } catch (e) {
     msg.author.crafting = false;
     return console.error(e);
   }
 };
 
+function test(i, u, c, v = false) {
+  let time = process.hrtime();
+  const report = genAutoReport(i, u, c);
+  if (v) genAutoVisual(report);
+  return process.hrtime(time)[1];
+}
+
 /**
  * Function to calculate cost of auto crafting.
  * 
  * @param {object} item item to be autocrafted
- * @param {object} inventory user's inventory (to calc mat cost)
- * @return {object} object structured like: { items: { $mat: amt }, gems: { $gem: amt } }
+ * @param {object} userData user's userData
+ * @return {object} object structured like: { items: { $mat: amt }, gems: { $gem: amt }, allitems: [ itemID ] }
  */
-function calcAutoCost(item, inventory, itemCost = {}) {
-  let toRet = { items: itemCost, gems: {} };
+function genAutoReport(item, userData, count = 1, itemCost = {}) {
   item = ALLITEMS.find(itm => itm.id === item.id);
   if (!item) throw new Error("itemID did not match any itemID");
-  msg.channel.send(`\`\`\`js\n${require("util").inspect(item)}\`\`\``);
+  if (!item.crafted) throw new Error("Item not craftable");
+  let toRet = { craft: true, itemsCrafting: {}, itemsMissing: {}, gemsMissing: {}, totalGems: {}, totalItems: {}, id: item.id, count: count, gems: {}, items: [] };
+  toRet.itemsCrafting[item.id] = count;
+  const inventory = userData.modules.inventory;
+  
 
   // add gem cost
-  for (const gem of Object.keys(item.gemcraft)) { 
-    if (!toRet.gems[gem]) toRet.gems[gem] = item.gemcraft[gem];
-    else toRet.gems[gem] += item.gemcraft[gem]; 
+  for (const gem of Object.keys(item.gemcraft)) {
+    if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] || 0) + (item.gemcraft[gem] * count);
+    if (toRet.gems[gem]) toRet.totalGems[gem] = (toRet.totalGems[gem] || 0) + toRet.gems[gem];
   }
+
+
   if (item.materials.length) {
     // add material/material's cost
+
+    // First merge all duplicate material entries
+    const countList = {};
     for (let material of item.materials) {
-      material = ALLITEMS.find(itm => itm.id === material.id);
-      if (!material) throw new Error("materialID did not match any itemID");
-      // enough items? add item to cost, else add costs of item to costs.
-      if (!material.crafted || (toRet[material.id] || 0) + itemCost[material.id] + 1 <= (inventory.find(itms => itms.id === material.id)?.count || 0)) {
-        toRet.items[material.id] ? toRet.items[material.id]++ : toRet.items[material.id] = 1;
-      } else {
-        Object.assign(toRet, calcAutoCost(material, inventory, toRet.items));
+      let n = (material.count * count) || count;
+      if (countList[material.id]) countList[material.id] += n;
+      else countList[material.id] = n;
+    }
+
+    // Loop through all materials
+    for (let materialID of Object.keys(countList)) {
+      const material = ALLITEMS.find(itm => itm.id === materialID);
+      if (!material) throw new Error(`materialID [${material}] did not match any itemID`);
+
+      const need = countList[material.id];
+      const inInventory = inventory.find(itms => itms.id === material.id)?.count || 0;
+      const amountLeft = (inInventory - (itemCost[material.id] || 0)) || 0;
+      const haveEnough = amountLeft >= countList[material.id];
+
+      const debug = { id: materialID, count: countList[materialID], need, inInventory, amountLeft, haveEnough }; // DEBUG
+
+      if (!material.crafted || amountLeft) {
+        // The item can't be crafted, or we have enough
+        itemCost[material.id] = (itemCost[material.id] || 0) + amountLeft;
+        toRet.items.push({ id: material.id, count: material.crafted ? amountLeft : need });
+        if (amountLeft) toRet.totalItems[material.id] = (toRet.totalItems[material.id] || 0) + amountLeft;
+        if (!material.crafted) toRet.itemsMissing[material.id] = (toRet.itemsMissing[material.id] || 0) + (need - amountLeft);
       }
+      if (material.crafted && !haveEnough) {
+        let toAdd = need - amountLeft;
+        debug["toCraft"] = toAdd; // DEBUG
+        toRet.craft = true;
+
+        // Not enough items... time to craft
+        // Generate auto report for the material and add it to itemCost * count
+        const materialReport = genAutoReport(material, userData, toAdd, itemCost);
+        for (const MCgem of Object.keys(materialReport.totalGems)) {
+          toRet.totalGems[MCgem] = (toRet.totalGems[MCgem] || 0)
+            + materialReport.totalGems[MCgem];
+        }
+        for (const MCitem of Object.keys(materialReport.items)) {
+          itemCost[MCitem] = (itemCost[MCitem] || 0)
+            + materialReport.items[MCitem];
+        }
+        for (const crafted of Object.keys(materialReport.itemsCrafting)) {
+          toRet.itemsCrafting[crafted] = (toRet.itemsCrafting[crafted] || 0)
+            + materialReport.itemsCrafting[crafted];
+        }
+        for (const uncraftable of Object.keys(materialReport.totalItems)) {
+          toRet.totalItems[uncraftable] = (toRet.totalItems[uncraftable] || 0)
+            + materialReport.totalItems[uncraftable];
+        }
+        for (const necessary of Object.keys(materialReport.itemsMissing)) {
+          toRet.itemsMissing[necessary] = (toRet.itemsMissing[necessary] || 0)
+            + materialReport.itemsMissing[necessary];
+        }
+        // We only want this on the final report.
+        delete materialReport.itemsMissing;
+        delete materialReport.gemsMissing;
+        delete materialReport.totalItems;
+        delete materialReport.enoughGems;
+        delete materialReport.enoughItems;
+        delete materialReport.totalGems;
+        delete materialReport.itemsCrafting;
+        toRet.items.push({ ...materialReport, count: toAdd });
+      }
+
+      console.table(debug) // DEBUG
     }
   }
+
+  toRet.enoughGems = !Object.keys(toRet.totalGems).filter(gem => {
+    if (toRet.totalGems[gem] > userData.modules[gem]) {
+      toRet.gemsMissing[gem] = toRet.totalGems[gem] - userData.modules[gem];
+      return true;
+    } else return false;
+  }).length;
+  toRet.enoughItems = !Object.keys(toRet.itemsMissing).length;
+
 
   return toRet;
 }
 
+
+const emotes = { "rubines": "<:rubine:367128893372760064>", sapphires: "<:sapphire:367128894307827712>", jades: "<:jade:367128893716430848>"}
+function genAutoVisual(report) {
+  let toret = "";
+  if (!(report.enoughGems && report.enoughItems)) toret = genFail(report);
+  else toret = genSuccess(report);
+  return toret + "\n\n" + recVisual(report);
+}
+
+function genFail(report) {
+  let toret = "";
+  const nope = _emoji("nope");
+
+  for (const gem of Object.keys(report.gemsMissing)) {
+    toret += `\n${nope} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(report.gemsMissing[gem])}** ${report.gemsMissing[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
+  }
+
+  for (const item of Object.keys(report.itemsMissing)) {
+    toret += `\n${nope} | ${ALLITEMS.find((x) => x.id === item)?.emoji || '📦'}`
+    + `${ALLITEMS.find((x) => x.id === item).name} ${miliarize(report.itemsMissing[item])}${report.itemsMissing[item]>=10000?"":"x"}`;
+  }
+
+  return toret;
+}
+
+function genSuccess(report) {
+  let toret = "Total cost:";
+  const yep = _emoji("yep");
+
+  for (const gem of Object.keys(report.totalGems)) {
+    toret += `\n${yep} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(report.totalGems[gem], true)}** ${report.totalGems[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
+  }
+
+  for (const item of Object.keys(report.totalItems)) {
+    toret += `\n${yep} | ${ALLITEMS.find((x) => x.id === item)?.emoji || '📦'}`
+    + `${ALLITEMS.find((x) => x.id === item).name} ${miliarize(report.totalItems[item])}${report.totalItems[item]>=10000?"":"x"}`;
+  }
+
+  return toret;
+}
+
+function recVisual(report, depth = 0, static = {}) {
+  let str = "";
+
+  if (report.itemsMissing) {
+    static = Object.keys(report.itemsMissing);
+  }
+
+  let depthstr = "";
+  for (let i = 0; i < depth; i++) depthstr += "---";
+
+  let items = report.items;
+  const emote = report.craft ? "🛠️" : static.find(s => s === report.id) ? _emoji("nope") :_emoji("yep");
+  str += `${depthstr} ${emote} **${report.id}** ${miliarize(report.count) || 1}${report.count>=10000?"":"x"}`
+  if (report.craft) str += ` :: ${Object.keys(report.gems).map(gem => `${emotes[gem]}${miliarize(report.gems[gem])}${report.gems[gem]>=10000?"":"x"}`).join(" ")}\n`;
+  else str += "\n";
+
+  if (report.craft && items?.length) for (const item of items) str += recVisual(item, depth + 1, static);
+
+  return str;
+}
+
 module.exports = {
-  calcAutoCost,
+  test,
+  genAutoReport,
+  genAutoVisual,
   pub: true,
   cmd,
   perms: 3,
