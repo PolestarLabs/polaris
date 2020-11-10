@@ -47,7 +47,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID,'events:halloween20.acAmulet' ,'ancient_amulet',350,2500,5)
+                buySomething(msg,uID,'events:halloween20.acAmulet' ,'ancient_amulet',350,2500,50)
             }, 
         },{
             emoji: 'casket:504412718753644555',
@@ -55,7 +55,7 @@ module.exports={
             type: "edit",
             response: (msg,args,uID) => {
                 msg.removeReactions();                
-                buySomething(msg,uID, 'events:halloween20.arsenika.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},500,5000,25)
+                buySomething(msg,uID, 'events:halloween20.arsenika.acCask' ,{$inc:{'eventData.halloween20.caskets':1}},500,5000,100)
             },
             
         },{
@@ -73,7 +73,7 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*2,amt*50,.5)
+                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*2,amt*50,.6*amt)
             },
             
         },{
@@ -135,7 +135,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     prompt.removeReactions()
 
     const covenant = await avicheck.init(rea.author,true);
-    let covBonus = (covenant=='dusk'?5:covenant=='umbral'?-5:0) * 10;
+    let covBonus = (covenant=='dusk'?5:covenant=='umbral'?-2:0) * 85;
 
     if(rea.emoji.name === 'CANDY'){
         if (eventData.candy >= priceC) {
