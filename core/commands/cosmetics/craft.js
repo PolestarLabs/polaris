@@ -164,9 +164,9 @@ const init = async (msg,args) => {
 
       craftExplan = `\n\n${$t("responses.crafting.materialAutocraft", P)}`;
       embed.description = gemDisplay + matDisplay + craftExplan;
-      msg.channel.send({ embed }).then(async(m) => {
+      await msg.channel.send({ embed }).then(async(m) => {
         embedmsg = m;
-        getYesNo(m).then(() => {
+        await getYesNo(m).then(async () => {
           // see what is needed for autocrafting
           const autoReport = genAutoReport(craftedItem, userData, amount);
           autoReport.P = P;
@@ -181,7 +181,7 @@ const init = async (msg,args) => {
           embed.color = 0xccff33;
           m.edit({ embed });
 
-          getYesNo(m, 30000).then(async() => {
+          return getYesNo(m, 30000).then(async() => {
             const xp = Object.keys(autoReport.itemsCrafting)
               .map(toCraft => baselineBonus[ALLITEMS.find(itm => itm.id === toCraft).rarity] * autoReport.itemsCrafting[toCraft])
               .reduce((a,b) => a + b, 0);
@@ -231,7 +231,7 @@ const init = async (msg,args) => {
       // Show craft cost & info
       msg.channel.send({ embed }).then(async (m) => {
         embedmsg = m;
-        getYesNo(m).then(async() => {
+        await getYesNo(m).then(async() => {
           // craft is confirmed
           await Promise.all(
             [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
@@ -262,7 +262,7 @@ const init = async (msg,args) => {
     msg.author.crafting = false;
     embed.setColor("#78eb87");
     embed.description = "";
-    embed.footer($t("responses.crafting.crafted", P));
+    embed.footer.text = $t("responses.crafting.crafted", P);
     // @ts-ignore
     return embedmsg.edit({ embed });
 
@@ -274,7 +274,6 @@ const init = async (msg,args) => {
       } else if (e === "no") {
         return endCancel(m);
       } else {
-        msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } });
         if (e && e.stack) console.error(e.stack);
         throw new Error("shouldn't happen");
       }
@@ -291,14 +290,14 @@ const init = async (msg,args) => {
 
     function endTimeout(m) {
       embed.setColor("#ffd900");
-      embed.footer($t("responses.crafting.timeout", P));
+      embed.footer.text = $t("responses.crafting.timeout", P);
       m.edit({ embed });
       return;
     }
 
     function endCancel(m) {
       embed.setColor("#db4448");
-      embed.footer($t("responses.crafting.cancel", P));
+      embed.footer.text = $t("responses.crafting.cancel", P);
       m.edit({ embed });
       return;
     }
@@ -360,7 +359,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
   }
 
 
-  if (item.materials.length) {
+  if (item.materials && item.materials.length) {
     // add material/material's cost
 
     // First merge all duplicate material entries
