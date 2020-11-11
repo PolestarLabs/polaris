@@ -183,17 +183,32 @@ const init = async (msg,args) => {
               .map(toCraft => baselineBonus[ALLITEMS.find(itm => itm.id === toCraft).rarity] * autoReport.itemsCrafting[toCraft])
               .reduce((a,b) => a + b, 0);
 
+            /**
+             * Handling all the DB stuff:
+             * 1. User pays all the gem(s).
+             * 2. User pays all the item(s).
+             * 3. User gets crafted item(s) added.
+             * 4. User receives XP for ALL the (intermediate) crafted item(s).
+             * 5. Amount crafted is updated for ALL (intermediate) crafted item(s).
+             */
             const gemTranslation = { sapphires: "SPH", jades: "JDE", rubines: "RBN" }
+            const arrayFilters = [];
+            const toInc = {};
+            const itemArr = Object.keys(autoReport.itemsCrafting);
+            for (let i = 0; i < itemArr.length; i++) {
+              arrayFilters.push({ [`i${i}`]: itemArr[i] });
+              toInc[`modules.inventory.$[i${i}].crafted`] = autoReport.itemsCrafting[itemArr[i]];
+            }
             await Promise.all([
               ...Object.keys(autoReport.totalGems).map(gem => ECO.pay(msg.author.id, autoReport.totalGems[gem], "crafting", gemTranslation[gem])),
               ...Object.keys(autoReport.totalItems).map(item => userData.removeItem(item, autoReport.totalItems[item])),
               userData.addItem(autoReport.id, autoReport.count, true),
               DB.users.set(msg.author.id, { $inc: { 'progression.craftingExp': xp } }),
               ...Object.keys(autoReport.itemsCrafting)
-                .map(item => DB.users.collection.update(
+                .map(item => DB.users.collection.updateOne(
                   { id: msg.author.id }, 
-                  { $inc: { "modules.inventory.$[i].crafting": autoReport.itemsCrafting[item] } },
-                  { arrayFilters: [{ "i.id": item }] }
+                  { $inc: toInc },
+                  { arrayFilters: arrayFilters }
                 )),
             ]);
 
