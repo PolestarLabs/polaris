@@ -4,6 +4,7 @@ const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
 const ECO = require("../../archetypes/Economy.js");
+const { CURRENCIES } = require("../../archetypes/Economy.js");
 const baselineBonus = {
   C:1,
   U:2,
@@ -187,7 +188,7 @@ const init = async (msg,args) => {
               .reduce((a,b) => a + b, 0);
 
             /**
-             * Handling all the DB stuff:
+             * Handling all the DB stuff in one query:
              * 1. User pays all the gem(s).
              * 2. User pays all the item(s).
              * 3. User gets crafted item(s) added.
@@ -224,23 +225,9 @@ const init = async (msg,args) => {
                 { id: msg.author.id },
                 { $inc: toInc },
                 { arrayFilters: arrayFilters }).then(() => {
-                  const payloads = [];
-                  Object.keys(autoReport.totalGems).forEach(gem => {
-                    const now = Date.now();
-                    const payload = {
-                      subtype: "PAYMENT",
-                      type: "crafting",
-                      currency: gemTranslation[gem],
-                      transaction: "-",
-                      from: msg.author.id,
-                      to: "271394014358405121",
-                      timestamp: now,
-                      transactionId: `${gemTranslation[gem]}${now.toString(32).toUpperCase()}`,
-                      amt: autoReport.totalGems[gem],
-                    };
-                    payloads.push(payload);
-                  });
-                  DB.audits.collection.insert(payloads);
+                  const toInsert = Object.keys(autoReport.totalGems)
+                    .map(gem => ECO.generatePayload(msg.author.id, -autoReport.totalGems[gem], "crafting", gemTranslation[gem], "PAYMENT", "-"));
+                  DB.audits.collection.insert(toInsert);
                 });
             console.table((await DB.users.get(msg.author.id)).modules.inventory);
             done();
@@ -263,26 +250,15 @@ const init = async (msg,args) => {
         embedmsg = m;
         await getYesNo(m).then(async() => {
           // craft is confirmed
-          await Promise.all(
-            [ECO.pay(msg.author.id, GC.rubines * amount, "crafting", "RBN"),
-            ECO.pay(msg.author.id, GC.jades * amount, "crafting", "JDE"),
-            ECO.pay(msg.author.id, GC.sapphires * amount, "crafting", "SPH")],
-          );
-
-          MAT.forEach(async (itm) => {
-            if (itm.count) {
-              await userData.removeItem(itm.id, itm.count * amount);
-            } else {
-              await userData.removeItem(itm);
-            }
-          });
+          const payArr = ["rubines", "jades", "sapphires"].map(gem => ({ amt: GC[gem], currency: CURRENCIES[gem] }));
 
           await Promise.all([
+            ECO.pay(msg.author.id, payArr, "crafting"),
+            ...Object.keys(MAT).map(itm => userData.removeItem(MAT[itm].id, (MAT[itm].count || 1) * amount)),
             userData.addItem(craftedItem.id, amount, true),
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
             DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
           ]);
-
           done();
         }).catch(e => {
           // craft is cancelled
