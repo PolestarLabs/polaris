@@ -1,3 +1,4 @@
+//@ts-check
 // const DB = require('../database/db_ops');
 
 const CURRENCIES = {
@@ -24,25 +25,50 @@ function checkFunds(user, amt, currency = "RBN") {
   });
 }
 
+/**
+ * Generates a PayLoad
+ * Depending on amt's value (pos, neg) directs the type of payment (receive, pay, respectively)
+ *
+ * @param {string} uID user ID
+ * @param {number} amt if pos/zero: receive, if neg: pay
+ * @param {string} type description of payment
+ * @param {string} curr the current in 3 letter descriptor
+ * @param {string} transaction weird symbol
+ * @param {object} [userTo] userTo for tranfer etc
+ * @return {object} the payload generated 
+ */
+function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
+  const now = Date.now();
+  const payload = {
+    subtype: subtype,
+    type: type,
+    currency: curr,
+    transaction: transaction,
+    from: amt < 0 ? uID : "271394014358405121",
+    to: userTo ? userTo : amt < 0 ? "271394014358405121" : uID,
+    timestamp: now,
+    transactionId: `${curr}${now.toString(32).toUpperCase()}`,
+    amt: amt < 0 ? -amt : amt,
+  };
+  return payload;
+}
+
+/**
+ * Method for a user to pay x gems.
+ *
+ * @param {object|string} user
+ * @param {number} amt
+ * @param {string} [type="OTHER"]
+ * @param {string} [currency="RBN"]
+ * @return {object} the payload or null if no amt 
+ */
 function pay(user, amt, type = "OTHER", currency = "RBN") {
-  if (amt === 0) return null;
+  if (!amt || typeof amt !== "number") return null;
   const uID = user.id || user;
-  if (typeof amt !== "number") return "Amount informed is not a Number";
   amt = parseInt(amt);
 
   return checkFunds(user, amt, currency).then(async () => {
-    const now = Date.now();
-    const payload = {
-      subtype: "PAYMENT",
-      type,
-      currency,
-      transaction: "-",
-      from: uID,
-      to: "271394014358405121",
-      timestamp: now,
-      transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-      amt,
-    };
+    const payload = generatePayload(user, -amt, type, currency, "PAYMENT", "-");
     await Promise.all([
       DB.users.set(uID, { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
       DB.users.set("271394014358405121", { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
@@ -61,18 +87,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
   }
   amt = parseInt(amt);
 
-  const now = Date.now();
-  const payload = {
-    subtype: "INCOME",
-    type,
-    currency,
-    transaction: "+",
-    from: "271394014358405121",
-    to: uID,
-    timestamp: now,
-    transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-    amt,
-  };
+  const payload = generatePayload(user, amt, type, currency, "INCOME", "+");
   return Promise.all([
     DB.users.set("271394014358405121", { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
     DB.users.set(uID, { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
@@ -88,18 +103,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
   amt = Math.abs(parseInt(amt));
 
   return checkFunds(userFrom, amt, currency).then(async () => {
-    const now = Date.now();
-    const payload = {
-      subtype: "TRANSFER",
-      type,
-      currency,
-      transaction: ">",
-      from: fromID,
-      to: toID,
-      timestamp: now,
-      transactionId: `${currency}${now.toString(32).toUpperCase()}`,
-      amt,
-    };
+    const payload = generatePayload(userFrom, amt, type, currency, "TRANSFER", ">", userTo);
     return Promise.all([
       DB.users.set(fromID, { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } }),
       DB.users.set(toID, { $inc: { [`modules.${CURRENCIES[currency]}`]: +amt } }),
@@ -110,17 +114,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
 
 async function arbitraryAudit(from, to, type, tag = "OTH", trans, amt = 1) {
   const now = Date.now();
-  const payload = {
-    subtype: "ARBITRARY",
-    type,
-    currency: tag,
-    transaction: trans || "!!",
-    from: from.id || from,
-    to: to.id || to,
-    timestamp: now,
-    transactionId: `${tag}${now.toString(32).toUpperCase()}`,
-    amt,
-  };
+  const payload = generatePayload(from, amt, type, tag, "ARBITRARY", trans || "!!", to);
   await DB.audits.new(payload);
   return payload;
 }
