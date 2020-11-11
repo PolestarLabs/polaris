@@ -172,7 +172,7 @@ const init = async (msg,args) => {
           autoReport.P = P;
           // make a visual of the report
           let visualize = genAutoVisual(autoReport, 2);
-          if (visualize.length > Math.pow(2, 10)) visualize = visualize.substring(Math.pow(2, 10));
+          if (visualize.length > Math.pow(2, 10)) visualize = visualize.substring(Math.pow(2, 10)) + "\nOops... there was too much to show so I cut it off.";
          
           if (!autoReport.enoughGems || !autoReport.enoughItems) return endMissingMaterials(m, visualize);
 
@@ -262,7 +262,7 @@ const init = async (msg,args) => {
     msg.author.crafting = false;
     embed.setColor("#78eb87");
     embed.description = "";
-    embed.footer.text = $t("responses.crafting.crafted", P);
+    embed.footer = { text: $t("responses.crafting.crafted", P) };
     // @ts-ignore
     return embedmsg.edit({ embed });
 
@@ -501,8 +501,8 @@ function recVisual(report, maxDepth, depth = 0, static = {}) {
   }
 
   let depthstr = "";
-  for (let i = 0; i < depth; i++) depthstr += "---";
-  if (depth == maxDepth) return depthstr = "[and more...]";
+  let it = "---"
+  for (let i = 0; i < depth; i++) depthstr += it;
 
   let items = report.items;
   const emote = report.craft ? "🛠️" : static.find(s => s === report.id) ? _emoji("nope") :_emoji("yep");
@@ -510,7 +510,10 @@ function recVisual(report, maxDepth, depth = 0, static = {}) {
   if (report.craft) str += ` :: ${Object.keys(report.gems).map(gem => `${emotes[gem]}${miliarize(report.gems[gem])}${report.gems[gem]>=10000?"":"x"}`).join(" ")}\n`;
   else str += "\n";
 
-  if (report.craft && items?.length) for (const item of items) str += recVisual(item, maxDepth, depth + 1, static);
+  if (report.craft && items?.length) {
+    if (depth == maxDepth) str += `${depthstr}${it} and more...`;
+    else for (const item of items) str += recVisual(item, maxDepth, depth + 1, static);
+  }
 
   return str;
 }
