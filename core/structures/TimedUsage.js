@@ -1,10 +1,17 @@
-// const gear = require("../utilities/Gearbox");
-// const DB   = require("../database/db_ops");
 const moment = require("moment");
-// const locale = require(appRoot+'/utils/i18node');
-// const $t = locale.getT();
 
 class DailyCmd {
+  /**
+   * 
+   * @param {string} command The name of the command/item to be timed. This string is how it is gonna be called in database, must be unique.
+   * @param {object} options opts
+   * @param {number|7.2e+7} options.day Cooldown time in milliseconds
+   * @param {boolean|false} [options.streak]
+   * @param {number|null} [options.expiration] If there is a streak tracking, the timeout of said streak
+   * 
+   * @returns {void}
+   */
+  
   constructor(command, options) {
     this.command = command;
     this.day = options.day || 7.2e+7;
@@ -127,3 +134,5 @@ ${_emoji("future")} ${dailyAvailable
   Author.dailing = false;
   return null;
 };
+
+

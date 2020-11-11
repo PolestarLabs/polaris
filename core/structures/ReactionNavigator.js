@@ -1,3 +1,20 @@
+/**
+ * 
+ * @param {object} m Message that will receive the reactions
+ * @param {object} msg Original command messages
+ * @param {function} pagefun Pagination function
+ * @param {object} options 
+ * @param {number|10e3} options.time Timeout timer
+ * @param {string} options.content ???
+ * @param {object} options.embed Message embed or embed template
+ * @param {boolean|false} options.avoidEdit Avoid automatic edit
+ * @param {object} options.strings 
+ * @param {string} options.strings.timeout Timeout text
+ * @param {number|1} options.page Starting Page
+ * @param {number|1} options.tot_pages  Total pages
+ * @param {number|30} rec Maximum recursion, never larger than 30
+ */
+
 module.exports = async function ReactionNavigator(m, msg, pagefun, options = {}, rec) {
   if (rec > 30) return msg.reply("`Navigation Limit Reached`");
 

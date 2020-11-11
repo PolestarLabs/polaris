@@ -1,4 +1,27 @@
-// const gear = require("../utilities/Gearbox/global");
+
+/**
+ * 
+ * @param {Object} promptMessage Message that will receive Yes/No reactions
+ * @param {Object} commandMessage Command Message send by the user
+ * @param {function(<Cancel>,Message)|string} [yesFunction] Function to execute when YES is clicked
+ * @param {function(Message)} [noFunction] Function to execute when NO is clicked
+ * @param {function(Message)} [timeoutFunction] Function to execute when TIMEOUT
+ * @param {Object} [options] Additional Options
+ * 
+ * @param {Object<Embed>} options.embed Premade embed to be sent as response, defaults to whatever embed [promptMessage] already has
+ * @param {boolean|false} [options.avoidEdit] Whether or not prevent editing of [promptMessage] by this method
+ * @param {boolean|true} [options.clearReacts] Whether or not clear Yes/No reactions from [promptMessage]
+ * @param {boolean|false} [options.deleteFields] Whether or not delete all Fields from the Embed.
+ * @param {number|15000} [options.time] Timeout in milliseconds.
+ * @param {Object} options.strings Footer Strings when yes/no/timeout
+ * @param {string|"✔️"} [options.strings.confirm]
+ * @param {string|"❌"} [options.strings.cancel]
+ * @param {string|"🕑"} [options.strings.timeout]
+ * 
+ * @returns {Promise<(boolean|null)>}  TRUE if YES | FALSE if NO | NULL if TIMEOUT
+ * 
+ */
+
 module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
   options = options || {};
   const embed = options.embed || promptMessage.embeds?.[0] || false;
@@ -8,8 +31,8 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
-  strings.timeout = `🕑${strings.timeout || ""}`;
   strings.cancel = `❌${strings.cancel || ""}`;
+  strings.timeout = `🕑${strings.timeout || ""}`;
 
   const YA = {
     r: _emoji('yep').reaction,
@@ -74,5 +97,5 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (yesFunction) return yesFunction;
     if (!yesFunction) return true;
   }
-  return undefined;
+  return null;
 };
