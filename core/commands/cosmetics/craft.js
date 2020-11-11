@@ -197,23 +197,53 @@ const init = async (msg,args) => {
             const gemTranslation = { sapphires: "SPH", jades: "JDE", rubines: "RBN" }
             const arrayFilters = [];
             const toInc = {};
-            const itemArr = Object.keys(autoReport.itemsCrafting);
-            for (let i = 0; i < itemArr.length; i++) {
-              arrayFilters.push({ [`i${i}`]: itemArr[i] });
-              toInc[`modules.inventory.$[i${i}].crafted`] = autoReport.itemsCrafting[itemArr[i]];
+            const itemCraftingArr = Object.keys(autoReport.itemsCrafting);
+            let i = 0;
+            for(;i < itemCraftingArr.length; i++) {
+              arrayFilters.push({ [`i${i}.id`]: itemCraftingArr[i] });
+              toInc[`modules.inventory.$[i${i}].crafted`] = autoReport.itemsCrafting[itemCraftingArr[i]];
+              if (itemCraftingArr[i] === craftedItem.id) toInc[`modules.inventory.$[i${i}].count`] = autoReport.itemsCrafting[itemCraftingArr[i]];
             }
-            await Promise.all([
-              ...Object.keys(autoReport.totalGems).map(gem => ECO.pay(msg.author.id, autoReport.totalGems[gem], "crafting", gemTranslation[gem])),
-              ...Object.keys(autoReport.totalItems).map(item => userData.removeItem(item, autoReport.totalItems[item])),
-              userData.addItem(autoReport.id, autoReport.count, false), // set to not crafted, since it's already included in rep.itemsCrafting
-              DB.users.set(msg.author.id, { $inc: { 'progression.craftingExp': xp } }),
-              ...Object.keys(autoReport.itemsCrafting)
-                .map(item => DB.users.collection.updateOne(
-                  { id: msg.author.id }, 
-                  { $inc: toInc },
-                  { arrayFilters: arrayFilters }
-                )),
-            ]);
+            const itemHaveArr = Object.keys(autoReport.totalItems);
+            for(let j = 0; j < itemHaveArr.length; j++) {
+              arrayFilters.push({ [`i${i}.id`]: itemHaveArr[j] });
+              toInc[`modules.inventory.$[i${i}].count`] = -autoReport.totalItems[itemHaveArr[j]];
+              i++;
+            }
+            const gemArr = Object.keys(autoReport.totalGems);
+            for (let k = 0; k < gemArr.length; k++) {
+              toInc[`modules.${gemArr[k]}`] = -autoReport.totalGems[gemArr[k]];
+              i++;
+            }
+            toInc["progression.craftingXP"] = xp;
+            console.table((await DB.users.get(msg.author.id)).modules.inventory);
+            console.table(toInc);
+            console.table(arrayFilters.reduce((old, nobj) => Object.assign(old, nobj), {}));
+              
+            DB.users.collection.updateOne(
+                { id: msg.author.id },
+                { $inc: toInc },
+                { arrayFilters: arrayFilters }).then(() => {
+                  const payloads = [];
+                  Object.keys(autoReport.totalGems).forEach(gem => {
+                    const now = Date.now();
+                    const payload = {
+                      subtype: "PAYMENT",
+                      type: "crafting",
+                      currency: gemTranslation[gem],
+                      transaction: "-",
+                      from: msg.author.id,
+                      to: "271394014358405121",
+                      timestamp: now,
+                      transactionId: `${gemTranslation[gem]}${now.toString(32).toUpperCase()}`,
+                      amt: autoReport.totalGems[gem],
+                    };
+                    payloads.push(payload);
+                  });
+                  DB.audits.collection.insert(payloads);
+                });
+            console.table((await DB.users.get(msg.author.id)).modules.inventory);
+            done();
           }).catch(e => {
             return endNo(e, m);
           });
@@ -229,7 +259,7 @@ const init = async (msg,args) => {
       craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
       embed.description = gemDisplay + matDisplay + craftExplan;
       // Show craft cost & info
-      msg.channel.send({ embed }).then(async (m) => {
+      await msg.channel.send({ embed }).then(async (m) => {
         embedmsg = m;
         await getYesNo(m).then(async() => {
           // craft is confirmed
@@ -252,6 +282,8 @@ const init = async (msg,args) => {
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
             DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
           ]);
+
+          done();
         }).catch(e => {
           // craft is cancelled
           return endNo(e, m);
@@ -259,12 +291,14 @@ const init = async (msg,args) => {
       });
     }
 
-    msg.author.crafting = false;
-    embed.setColor("#78eb87");
-    embed.description = "";
-    embed.footer = { text: $t("responses.crafting.crafted", P) };
-    // @ts-ignore
-    return embedmsg.edit({ embed });
+    function done() {
+      msg.author.crafting = false;
+      embed.setColor("#78eb87");
+      embed.description = "";
+      embed.footer = { text: $t("responses.crafting.crafted", P) };
+      // @ts-ignore
+      return embedmsg.edit({ embed });
+    }
 
     function endNo(e, m) {
       msg.author.crafting = false;
@@ -380,7 +414,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
       const amountLeft = (inInventory - (itemCost[material.id] || 0)) || 0;
       const haveEnough = amountLeft >= countList[material.id];
 
-      const debug = { id: materialID, count: countList[materialID], need, inInventory, amountLeft, haveEnough }; // DEBUG
+      // const debug = { id: materialID, count: countList[materialID], need, inInventory, amountLeft, haveEnough }; // DEBUG
 
       if (!material.crafted || amountLeft) {
         // The item can't be crafted, or we have enough
@@ -391,7 +425,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
       }
       if (material.crafted && !haveEnough) {
         let toAdd = need - amountLeft;
-        debug["toCraft"] = toAdd; // DEBUG
+        // debug["toCraft"] = toAdd; // DEBUG
         toRet.craft = true;
 
         // Not enough items... time to craft
@@ -428,7 +462,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
         toRet.items.push({ ...materialReport, count: toAdd });
       }
 
-      console.table(debug) // DEBUG
+      // console.table(debug) // DEBUG
     }
   }
 
@@ -462,7 +496,7 @@ function genAutoVisual(report, maxDepth) {
 }
 
 function genFail(report) {
-  let toret = "I cannot craft the following requirements:\n";
+  let toret = "I cannot craft the following requirements:";
   const nope = _emoji("nope");
 
   for (const gem of Object.keys(report.gemsMissing)) {
