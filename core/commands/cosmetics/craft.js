@@ -167,9 +167,12 @@ const init = async (msg,args) => {
       msg.channel.send({ embed }).then(async(m) => {
         embedmsg = m;
         getYesNo(m).then(() => {
+          // see what is needed for autocrafting
           const autoReport = genAutoReport(craftedItem, userData, amount);
           autoReport.P = P;
-          const visualize = genAutoVisual(autoReport);
+          // make a visual of the report
+          let visualize = genAutoVisual(autoReport, 2);
+          if (visualize.length > Math.pow(2, 10)) visualize = visualize.substring(Math.pow(2, 10));
          
           if (!autoReport.enoughGems || !autoReport.enoughItems) return endMissingMaterials(m, visualize);
 
@@ -202,7 +205,7 @@ const init = async (msg,args) => {
             await Promise.all([
               ...Object.keys(autoReport.totalGems).map(gem => ECO.pay(msg.author.id, autoReport.totalGems[gem], "crafting", gemTranslation[gem])),
               ...Object.keys(autoReport.totalItems).map(item => userData.removeItem(item, autoReport.totalItems[item])),
-              userData.addItem(autoReport.id, autoReport.count, true),
+              userData.addItem(autoReport.id, autoReport.count, false), // set to not crafted, since it's already included in rep.itemsCrafting
               DB.users.set(msg.author.id, { $inc: { 'progression.craftingExp': xp } }),
               ...Object.keys(autoReport.itemsCrafting)
                 .map(item => DB.users.collection.updateOne(
@@ -211,8 +214,6 @@ const init = async (msg,args) => {
                   { arrayFilters: arrayFilters }
                 )),
             ]);
-
-            embed.description = "";
           }).catch(e => {
             return endNo(e, m);
           });
@@ -251,8 +252,6 @@ const init = async (msg,args) => {
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
             DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
           ]);
-
-          embed.description = gemDisplay + matDisplay;          
         }).catch(e => {
           // craft is cancelled
           return endNo(e, m);
@@ -262,8 +261,10 @@ const init = async (msg,args) => {
 
     msg.author.crafting = false;
     embed.setColor("#78eb87");
+    embed.description = "";
     embed.footer($t("responses.crafting.crafted", P));
-    if (embedmsg) return embedmsg.edit({ embed });
+    // @ts-ignore
+    return embedmsg.edit({ embed });
 
     function endNo(e, m) {
       msg.author.crafting = false;
@@ -273,8 +274,8 @@ const init = async (msg,args) => {
       } else if (e === "no") {
         return endCancel(m);
       } else {
-        console.error(e.stack);
         msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } });
+        if (e && e.stack) console.error(e.stack);
         throw new Error("shouldn't happen");
       }
     }
@@ -323,6 +324,7 @@ const init = async (msg,args) => {
     }
   } catch (e) {
     msg.author.crafting = false;
+    msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } })
     return console.error(e);
   }
 };
@@ -339,6 +341,7 @@ function test(i, u, c, v = false) {
  * 
  * @param {object} item item to be autocrafted
  * @param {object} userData user's userData
+ * @param {number|1} count the amount to be crafted
  * @return {object} object structured like: { items: { $mat: amt }, gems: { $gem: amt }, allitems: [ itemID ] }
  */
 function genAutoReport(item, userData, count = 1, itemCost = {}) {
@@ -444,15 +447,23 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
 
 
 const emotes = { "rubines": "<:rubine:367128893372760064>", sapphires: "<:sapphire:367128894307827712>", jades: "<:jade:367128893716430848>"}
-function genAutoVisual(report) {
+/**
+ * Generates the description...
+ * Should really be replaced with gfx/fields
+ *
+ * @param {object} report the report
+ * @param {number} maxDepth the max depth to visualize
+ * @return {string} description for embed 
+ */
+function genAutoVisual(report, maxDepth) {
   let toret = "";
   if (!(report.enoughGems && report.enoughItems)) toret = genFail(report);
   else toret = genSuccess(report);
-  return toret + "\n\n" + recVisual(report);
+  return toret + "\n\n" + recVisual(report, maxDepth);
 }
 
 function genFail(report) {
-  let toret = "";
+  let toret = "I cannot craft the following requirements:\n";
   const nope = _emoji("nope");
 
   for (const gem of Object.keys(report.gemsMissing)) {
@@ -483,7 +494,7 @@ function genSuccess(report) {
   return toret;
 }
 
-function recVisual(report, depth = 0, static = {}) {
+function recVisual(report, maxDepth, depth = 0, static = {}) {
   let str = "";
 
   if (report.itemsMissing) {
@@ -492,6 +503,7 @@ function recVisual(report, depth = 0, static = {}) {
 
   let depthstr = "";
   for (let i = 0; i < depth; i++) depthstr += "---";
+  if (depth == maxDepth) return depthstr = "[and more...]";
 
   let items = report.items;
   const emote = report.craft ? "🛠️" : static.find(s => s === report.id) ? _emoji("nope") :_emoji("yep");
@@ -499,7 +511,7 @@ function recVisual(report, depth = 0, static = {}) {
   if (report.craft) str += ` :: ${Object.keys(report.gems).map(gem => `${emotes[gem]}${miliarize(report.gems[gem])}${report.gems[gem]>=10000?"":"x"}`).join(" ")}\n`;
   else str += "\n";
 
-  if (report.craft && items?.length) for (const item of items) str += recVisual(item, depth + 1, static);
+  if (report.craft && items?.length) for (const item of items) str += recVisual(item, maxDepth, depth + 1, static);
 
   return str;
 }
