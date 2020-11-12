@@ -64,9 +64,9 @@ const init = async (msg) => {
 
     
     emb.field("\u200bClassic Gems",`\u200b`
-    + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.rubines, true)}**`
-    + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.sapphires, true)}**`
-    + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.jades, true)}**`,
+    + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.RBN, true)}**`
+    + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.SPH, true)}**`
+    + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.JDE, true)}**`,
     true)
     
     emb.field("\u200bPolaris Gems",`\u200b`

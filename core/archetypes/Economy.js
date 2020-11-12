@@ -13,8 +13,8 @@
 // };
 
 const toCurrencies = {
-  rubines: "RBN", jades: "JDE", sapphies: "SPH",
-  amethysts: "AMY", emeralds: "EMD", topazes: "TPZ", prisms: "PSM",
+  rubine: "RBN", jade: "JDE", sapphire: "SPH",
+  amethyst: "AMY", emerald: "EMD", topaze: "TPZ", prism: "PSM",
 }
 const currencies = [
   "RBN", "JDE", "SPH",
@@ -28,8 +28,11 @@ const currencies = [
  * @return {string|string[]} returns the correct formats
  * @throws {Error} Unknown currency
  */
-function checkCurrencies(curr) {
-  if (typeof curr === "string") curr = [curr];
+function parseCurrencies(curr) {
+  // Argument parsing
+  if (typeof curr === "string") curr = [curr.toUpperCase()];
+  else curr = curr.map(c => c.toUpperCase());
+
   if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
   if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
   return curr;
@@ -56,7 +59,7 @@ function checkFunds(user, amount, currency = "RBN") {
   } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
 
   const uID = user["id"] || user;
-  const curr = checkCurrencies(currency);
+  const curr = parseCurrencies(currency);
 
   return DB.users.get(uID).then((userData) => {
     if (!userData) return false;
@@ -151,13 +154,14 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
 function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">") {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
   if (amt === 0) return Promise.resolve(null);
+  if (!amt || (typeof amt !== "number" && !amt.length)) return Promise.resolve(null);
 
   // Argument parsing
   if (userFrom["id"]) userFrom = userFrom["id"];
   if (userTo["id"]) userTo = userTo["id"];
 
   // Checks
-  curr = checkCurrencies(curr);
+  curr = parseCurrencies(curr);
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
     if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
 
@@ -173,6 +177,9 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     const toUpdate = {};
     const payloads = [];
 
+    console.table(amt)
+    console.table(curr);
+
     // Fill DB calls
     for (let i in curr) {
       let absAmount = Math.abs(amt[i]);
@@ -183,7 +190,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     }
 
     // If every amt was zero
-    if (payloads.length) return null;
+    if (!payloads.length) return null;
 
     // Setup v2.0
     const toWrite = [
@@ -191,8 +198,10 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       { updateOne: { filter: { id: userTo }, update: toUpdate } },
     ];
 
+    console.log(require("util").inspect(toWrite));
+    console.table(payloads);
     // Finish with DB updates & inserts.
-    return DB.bulkWrite(toWrite)
+    return DB.users.bulkWrite(toWrite)
       .then(() => DB.audits.collection.insertMany(payloads))
       .then(() => payloads.length === 1 ? payloads[0] : payloads);
   });
@@ -221,8 +230,8 @@ module.exports = {
   currencies,
   arbitraryAudit,
   checkFunds,
-  checkCurrencies,
   generatePayload,
+  parseCurrencies,
   pay,
   receive,
   transfer,

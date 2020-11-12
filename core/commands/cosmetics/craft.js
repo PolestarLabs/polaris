@@ -99,7 +99,7 @@ const init = async (msg,args) => {
     embed.title((craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount);
 
     const userData = await DB.users.getFull({ id: msg.author.id }, {
-      id: 1, "modules.sapphires": 1, "modules.jades": 1, "modules.rubines": 1, "modules.inventory": 1,
+      id: 1, "modules.SPH": 1, "modules.JDE": 1, "modules.RBN": 1, "modules.inventory": 1,
     });
 
     // message.reply("`console res`")
@@ -114,7 +114,7 @@ const init = async (msg,args) => {
     let matDisplay = "";
     let craftExplan = "";
 
-    // check against the gems whether the user has enough (if necessary); 
+    // check against the gems whether the user has enough (if necessary);
     Object.keys(GC).forEach(gem => {
       if (!GC[gem]) return;
       const afford = userData.modules[gem] >= GC[gem] * amount;
@@ -123,7 +123,7 @@ const init = async (msg,args) => {
         icona = "nope";
         gemFails += 1;
       }
-      gemDisplay += `\n${_emoji(icona)} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}`, P)}`;
+      gemDisplay += `\n${_emoji(icona)} | ${_emoji(gem)}**${miliarize(GC[gem]*amount, true)}** x ${$t(`keywords.${gem}_plural`, P)}`;
     });
 
     // check against all necessary materials whether the user has enough;
@@ -224,7 +224,7 @@ const init = async (msg,args) => {
                 { $inc: toInc },
                 { arrayFilters: arrayFilters }).then(() => {
                   const toInsert = Object.keys(autoReport.totalGems)
-                    .map(gem => ECO.generatePayload(msg.author.id,, PLX.user.id, -autoReport.totalGems[gem], "crafting", gem, "PAYMENT", "-"));
+                    .map(gem => ECO.generatePayload(msg.author.id, PLX.user.id, -autoReport.totalGems[gem], "crafting", gem, "PAYMENT", "-"));
                   DB.audits.collection.insertMany(toInsert);
                 });
             // console.table((await DB.users.get(msg.author.id)).modules.inventory); DEBUG
@@ -472,7 +472,7 @@ function genFail(report) {
   const nope = _emoji("nope");
 
   for (const gem of Object.keys(report.gemsMissing)) {
-    toret += `\n${nope} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(report.gemsMissing[gem])}** ${report.gemsMissing[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
+    toret += `\n${nope} | ${_emoji(gem)}**${miliarize(report.gemsMissing[gem])}** ${report.gemsMissing[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
   }
 
   for (const item of Object.keys(report.itemsMissing)) {
@@ -488,7 +488,7 @@ function genSuccess(report) {
   const yep = _emoji("yep");
 
   for (const gem of Object.keys(report.totalGems)) {
-    toret += `\n${yep} | ${_emoji(gem.slice(0, gem.length - 1))}**${miliarize(report.totalGems[gem], true)}** ${report.totalGems[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
+    toret += `\n${yep} | ${_emoji(gem)}**${miliarize(report.totalGems[gem], true)}** ${report.totalGems[gem]>=10000?"":"x"} ${$t(`keywords.${gem}`, report.P)}`;
   }
 
   for (const item of Object.keys(report.totalItems)) {
