@@ -38,7 +38,6 @@ global._emoji = (E,F) => new (require("./resources/lists/emoji.js")).PolluxEmoji
 
 DBSchema(dbConnectionData).then(Connection => {
     global.DB = Connection;
-    console.log("Discord connection start...");
     PLX.connect().then(_=>hook.info("Sidecar instance running")).catch(console.error);    
 })
 
@@ -113,11 +112,12 @@ DBSchema(dbConnectionData).then(Connection => {
     /* Manage Reminders */ //= ===============================
     DB.feed.find({ expires: { $lte: Date.now() } }).lean().exec()
       .then((reminders) => {
+          console.log({reminders})
         reminders.forEach(async (rem) => {
             console.log(rem)
           try {
             // url = userID
-            const destChannel = await PLX.getRESTChannel(rem.channel) || (await PLX.getDMChannel(rem.url));
+            const destChannel = (await PLX.getRESTChannel(rem.channel).catch(e=>null) ) || (await PLX.getDMChannel(rem.url));
             await DB.feed.deleteOne({ _id: rem._id });
             await destChannel.createMessage({
               content: (rem.channel === "dm" ? "" : `<@${rem.url}>`),
