@@ -52,6 +52,7 @@ function checkFunds(user, amount, currency = "RBN") {
   if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
 
   // Argument validation
+  console.log(`AMT: ${amount} typeof ${typeof amount}\nCURR: ${currency} typeof ${typeof currency}`)
   if (typeof amount === "number" || typeof currency === "string") {
     if (!(typeof amount === "number" && typeof currency === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
     amount = [amount];
@@ -113,7 +114,7 @@ function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
  * @param {{id: string}|string} user user(ID)
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string|Array<string>} [currency="RBN"] currency in 3 letter format :: default RBN
+ * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
  * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
@@ -128,7 +129,7 @@ function pay(user, amt, type = "OTHER", currency = "RBN",) {
  * @param {{id: string}|string} user user object or ID
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string|Array<string>} [currency="RBN"] currency in 3 letter format :: default RBN
+ * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
  * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
@@ -161,15 +162,16 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (userTo["id"]) userTo = userTo["id"];
 
   // Checks
-  curr = parseCurrencies(curr);
+  let tempcurr = parseCurrencies(curr); // temp var so curr and amt stay same type for validation
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
+  if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
 
     // Argument validation
     if (typeof amt === "number" || typeof curr === "string") {
+      console.log(`AMT: ${amt} typeof ${typeof amt}\nCURR: ${curr} typeof ${typeof curr}`)
       if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
       amt = [amt];
-      curr = [curr];
+      curr = tempcurr;
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
 
     // Setup v1.0
