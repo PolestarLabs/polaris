@@ -38,11 +38,9 @@ let constantAssets = [
 
 
 function awardPrizes(userData, myDaily, actions) {
+  const currencies = ["RBN", "JDE", "SPH", "PSM"];
   return Promise.all(actions, Promise.all([
-    myDaily.RBN ? ECO.receive(userData.id, myDaily.RBN, "Daily Rewards", "RBN") : 0,
-    myDaily.JDE ? ECO.receive(userData.id, myDaily.JDE, "Daily Rewards", "JDE") : 0,
-    myDaily.SPH ? ECO.receive(userData.id, myDaily.SPH, "Daily Rewards", "SPH") : 0,
-    myDaily.PSM ? ECO.receive(userData.id, myDaily.PSM, "Daily Rewards", "PSM") : 0,
+    ECO.receive(userData.id, currencies.map(curr => myDaily[curr]), "Daily Rewards", currencies),
     DB.users.set(userData.id, {
       $inc: {
         'modules.exp': myDaily.EXP || 0,

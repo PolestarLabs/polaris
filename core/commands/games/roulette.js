@@ -1,3 +1,4 @@
+//@ts-check
 const config = require("../../../../dashboard/config");
 const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
@@ -51,11 +52,10 @@ async function allowedToBet(Game, userID, bet) {
 async function creditUsers(results) {
   for (const result of results) {
     const { userID } = result;
-    ECO.checkFunds(userID, result.cost).then(() => {
-      if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
+    ECO.checkFunds(userID, result.cost).then(hasEnough => {
+      if (!hasEnough) result.invalid = true;
+      else if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
       else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(() => "Shouldn't happen");
-    }).catch(() => {
-      result.invalid = true;
     });
   }
   return results;

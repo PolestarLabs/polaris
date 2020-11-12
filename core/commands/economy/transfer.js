@@ -59,9 +59,7 @@ const init = async (msg) => {
   };
 
   const precheck = async (message) => {
-    if (await ECO.checkFunds(message.author.id, AMOUNT)) {
-      return true;
-    }
+    if (await ECO.checkFunds(message.author.id, AMOUNT)) return true;
     P.number = USERDATA.modules.rubines;
     message.channel.send($t("responses.generic.noFundsBalance", P));
     return false;

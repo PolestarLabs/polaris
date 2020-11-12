@@ -11,6 +11,11 @@
 //   TPZ: "topazes",
 //   PSM: "prisms"
 // };
+
+const toCurrencies = {
+  rubines: "RBN", jades: "JDE", sapphies: "SPH",
+  amethysts: "AMY", emeralds: "EMD", topazes: "TPZ", prisms: "PSM",
+}
 const currencies = [
   "RBN", "JDE", "SPH",
   "AMY", "EMD", "TPZ", "PSM"
@@ -19,32 +24,51 @@ const currencies = [
 /**
  * Checks if currency or currencies are valid, otherwise throws error.
  *
- * @param {*} curr
- * @return {*} 
+ * @param {string|Array<string>} curr the currency or currency array to parse
+ * @return {string|string[]} returns the correct formats
+ * @throws {Error} Unknown currency
  */
 function checkCurrencies(curr) {
   if (typeof curr === "string") curr = [curr];
-  if (!curr || curr.every(curr => currencies.includes(curr))) throw new Error(`Invalid currency/ies: ${curr}`);
-  return true;
+  if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
+  if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
+  return curr;
 }
 
 /**
  * Checks whether the user's funds are equal to or exceed amt.
  *
  * @param {string|{id: string}} user user(ID)
- * @param {number|string} amt The amount necessary.
- * @param {string} [currency="RBN"] Currency to check against :: default "RBN".
- * @return {Promise<boolean>|boolean} 
+ * @param {number|Array<number>} amount The amount necessary.
+ * @param {string|Array<string>} [currency="RBN"] Currency to check against :: default "RBN".
+ * @return {Promise<boolean>} True iff enough funds.
+ * @throws {Error} Invalid arguments.
  */
-function checkFunds(user, amt, currency = "RBN") {
+function checkFunds(user, amount, currency = "RBN") {
+  if (amount === 0) return Promise.resolve(true);
+  if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
+
+  // Argument validation
+  if (typeof amount === "number" || typeof currency === "string") {
+    if (!(typeof amount === "number" && typeof currency === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
+    amount = [amount];
+    currency = [currency];
+  } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
+
   const uID = user["id"] || user;
+  const curr = checkCurrencies(currency);
 
-  amt = parseInt(amt.toString());
-  if (typeof amt !== "number") return false;
-
-  return DB.users.get(uID, { [`modules.${currency}`]: 1 }).then((userData) => {
-    if (userData.modules.currency < amt) return false;
-    return true;
+  return DB.users.get(uID).then((userData) => {
+    if (!userData) return false;
+    if (typeof curr === "string") {
+      return (userData.modules.currency >= amount);
+    } else {
+      return curr.every((c, i) => {
+        if (amount[i] === 0) return true;
+        if (!userData.modules[c]) return false;
+        return (userData.modules[c] >= amount[i]);
+      });
+    }
   });
 }
 
@@ -52,25 +76,27 @@ function checkFunds(user, amt, currency = "RBN") {
  * Generates a PayLoad
  * Depending on amt's value (pos, neg) directs the type of payment (receive, pay, respectively)
  *
- * @param {string|{id: string}} uID user(ID) (from)
- * @param {number} amt If pos/zero: receive, if neg: pay | or an array of currencies with their amt
+ * @param {string|{id: string}} userFrom user(ID) (from)
+ * @param {string|{id: string}} userTo userTo(ID) for tranfer etc :: default "271394014358405121" (pollux).
  * @param {string} type Description of the payment.
+ * @param {number} amt If pos/zero: receive, if neg: pay | or an array of currencies with their amt
  * @param {string} curr The currency in 3 letter descriptor.
- * @param {string} transaction Transaction symbol.
- * @param {string|{id: string}} [userTo=271394014358405121] userTo(ID) for tranfer etc :: default "271394014358405121" (pollux).
+ * @param {string} subtype Subtype of this transaction.
+ * @param {string} symbol Transaction symbol.
  * @return {object} The payload generated .
  */
-function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
-  uID = uID["id"] || uID;
-  if (userTo) userTo = userTo["id"] || userTo;
+function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
+  if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
+  if (userFrom["id"]) userFrom = userFrom["id"];
+  if (userTo["id"]) userTo = userTo["id"];
   const now = Date.now();
   const payload = {
     subtype: subtype,
     type: type,
     currency: curr,
-    transaction: transaction,
-    from: amt < 0 ? uID : "271394014358405121",
-    to: userTo ? userTo : amt < 0 ? "271394014358405121" : uID,
+    transaction: symbol,
+    from: userFrom,
+    to: userTo,
     timestamp: now,
     transactionId: `${curr}${now.toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
@@ -82,111 +108,94 @@ function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
  * Method for a user to pay x gems.
  *
  * @param {{id: string}|string} user user(ID)
- * @param {number|string|Array.<{ amt: number, currency: string }>} amt The amount to pay, or an array of currencies with their amt.
- * @param {string} [type="OTHER"] The transaction type :: default OTHER
- * @param {string} [currency="RBN"] The currency in 3 letter format :: default RBN
- * @return {object|object[]|null} The payload(s) or null if no amt.
+ * @param {number|Array<number>} amt amt user will receive
+ * @param {string} [type="OTHER"] transaction type :: default OTHER
+ * @param {string|Array<string>} [currency="RBN"] currency in 3 letter format :: default RBN
+ * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @throws {Error} Invalid arguments.
+ * @throws {Error} Not enough funds.
  */
-function pay(user, amt, type = "OTHER", currency = "RBN") {
-  let uID = user["id"] || user;
-  if (!amt || !uID) return null;
-
-  if (typeof amt !== "number" && amt.length) {    
-    return Promise.all([
-      ...amt.map(obj => {
-        return checkFunds(user, obj.amt, obj.currency).then(() => {
-          const amount = parseInt(obj.amt.toString());
-          if (amount === 0 || !obj.currency) return;
-          const toret = [];
-          toret.push(generatePayload(uID, -obj.amt, type, obj.currency, amt < 0 ? "INCOME" : "PAYMENT", amt < 0 ? "+" : "-"));
-          toret.push({ [`modules.${obj.currency}`]: -amount });
-          toret.push({ [`modules.${obj.currency}`]: amount });
-          return toret;
-        }).catch(() => new Error("No Funds"));
-      }),
-    ]).then(info => {
-        const userInc = {};
-        const plxInc = {};
-        const payloads = [];
-        let fromID = "271394014358405121";
-        info.forEach(infoarr => {
-          if (!infoarr || !infoarr.length) return;
-          payloads.push(infoarr[0]);
-          Object.keys(infoarr[1]).map(key => {
-            userInc[key] = infoarr[1][key];
-            if (infoarr[1][key] > 0) { fromID = uID; uID = "271394014358405121" }
-          });
-          Object.keys(infoarr[2]).map(key => plxInc[key] = infoarr[2][key]);
-        });
-        return DB.users.bulkWrite([
-          { updateOne: { filter: { id: uID }, update: { $inc: userInc } } },
-          { updateOne: { filter: { id: fromID }, update: { $inc: plxInc } } },
-        ]).then(() => DB.audits.collection.insertMany(payloads).then(() => payloads));
-    });    
-  } else if (typeof amt === "number") {
-    // @ts-ignore
-    amt = parseInt(amt);
-    if (amt === 0) return null;
-
-    let fromID;
-    if (amt < 0) {
-      let fromID = uID;
-      uID = "271394014358405121";
-    } else fromID = "271394014358405121";
-    
-    return checkFunds(user, amt, currency).then(() => {
-      // @ts-ignore
-      const payload = generatePayload(uID, -amt, type, currency, amt < 0 ? "INCOME" : "PAYMENT", amt < 0 ? "+" : "-");
-      return DB.users.bulkWrite([
-        { updateOne: { filter: { id: uID }, update: { $inc: { [`modules.${currency}`]: -amt } } } },
-        { updateOne: { filter: { id: fromID }, update: { $inc: { [`modules.${currency}`]: amt } } } },
-      ]).then(() => DB.audits.new(payload).then(() => payload));
-    }).catch(() => new Error("No Funds"));
-  } else return null;
+function pay(user, amt, type = "OTHER", currency = "RBN",) {
+  return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-");
 }
 
 /**
- * Method for a user to pay x gems.
+ * Method for a user to receive x gems.
  *
  * @param {{id: string}|string} user user object or ID
- * @param {number|string|Array.<{ amt: number, currency: string }>} amt amt user will receive
+ * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string} [currency="RBN"] currency in 3 letter format :: default RBN
- * @return {object|object[]|null} the payload or null if no amt 
+ * @param {string|Array<string>} [currency="RBN"] currency in 3 letter format :: default RBN
+ * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @throws {Error} Invalid arguments.
+ * @throws {Error} Not enough funds.
  */
 function receive(user, amt, type = "OTHER", currency = "RBN") {
-  if (!user || !amt) return null;
-  amt = parseInt(amt.toString());
-  if (typeof amt === typeof Array && amt.length) {
-    for (let i in amt) amt[i].amt = -amt[i].amt;
-  } else amt = -amt;
-  return pay(user, amt, type, currency);
+  return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+");
 }
 
 /**
  * A money transfer between users.
  * 
- * @param {number|{id: string}} userFrom user(ID) from
- * @param {number|{id: string}} userTo user(ID) to
- * @param {number} amt The amount to transfer.
+ * @param {string|{id: string}} userFrom user(ID) from
+ * @param {string|{id: string}} userTo user(ID) to
+ * @param {number|Array.<number>} amt The amounts to transfer, or an array of.
  * @param {string} [type="SEND"] The type of transaction :: default "SEND"
- * @param {string} [currency="RBN"] The currency to transfer :: default "RBN"
- * @return {object|null} The payload or null if !amt/!user(s).
+ * @param {string|Array.<string>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
+ * @param {string} [subtype="TRANSFER"] The sub-type of the transaction :: default "TRANSFER"
+ * @param {string} [symbol=">"] The transaction symbol :: default ">"
+ * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @throws {Error} Invalid arguments.
+ * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
-  if (!amt || !userFrom || !userTo) return null; 
-  const fromID = userFrom["id"] || userFrom; 
-  const toID = userTo["id"] || userTo; 
-  if (typeof amt !== "number") throw new Error("Amount informed is not a Number");
-  amt = Math.abs(parseInt(amt.toString()));
+function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">") {
+  if (!(userFrom && userTo)) throw new Error("Missing arguments");
+  if (amt === 0) return Promise.resolve(null);
 
-  return checkFunds(userFrom, amt, currency).then(async () => {
-    const payload = generatePayload(fromID, amt, type, currency, "TRANSFER", ">", toID);
-    return DB.users.bulkWrite([
-      { updateOne: { filter: { id: fromID }, update: { $inc: { [`modules.${currency}`]: -amt } } } },
-      { updateOne: { filter: { id: toID }, update: { $inc: { [`modules.${currency}`]: amt } } } },
-    ]).then(() => DB.audits.new(payload).then(() => payload));
-  }).catch(() => new Error("No Funds"));
+  // Argument parsing
+  if (userFrom["id"]) userFrom = userFrom["id"];
+  if (userTo["id"]) userTo = userTo["id"];
+
+  // Checks
+  curr = checkCurrencies(curr);
+  return checkFunds(userFrom, amt, curr).then(hasFunds => {
+    if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
+
+    // Argument validation
+    if (typeof amt === "number" || typeof curr === "string") {
+      if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
+      amt = [amt];
+      curr = [curr];
+    } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
+
+    // Setup v1.0
+    const fromUpdate = {};
+    const toUpdate = {};
+    const payloads = [];
+
+    // Fill DB calls
+    for (let i in curr) {
+      let absAmount = Math.abs(amt[i]);
+      if (absAmount === 0) continue;
+      fromUpdate[`modules.${curr[i]}`] = -absAmount;
+      toUpdate[`modules.${curr[i]}`] = absAmount;
+      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
+    }
+
+    // If every amt was zero
+    if (payloads.length) return null;
+
+    // Setup v2.0
+    const toWrite = [
+      { updateOne: { filter: { id: userFrom }, update: fromUpdate } },
+      { updateOne: { filter: { id: userTo }, update: toUpdate } },
+    ];
+
+    // Finish with DB updates & inserts.
+    return DB.bulkWrite(toWrite)
+      .then(() => DB.audits.collection.insertMany(payloads))
+      .then(() => payloads.length === 1 ? payloads[0] : payloads);
+  });
 }
 
 /**
@@ -195,25 +204,26 @@ function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
  *
  * @param {string|{id: string}} from user(ID) from
  * @param {string|{id: string}} to user(ID) to
- * @param {string} type The type of audit.
- * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
- * @param {string} [trans="!!"] The transaction symbol :: default "!!"
  * @param {number} [amt=1] The amount :: default 1
+ * @param {string} type The type of audit :: default "ARBITRARY"
+ * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
+ * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
  * @return {Promise<object>|null} The payload or null if missing args.
  */
-async function arbitraryAudit(from, to, type, tag = "OTH", trans = "!!", amt = 1) {
-  if (!from || !to || !type) return null;
-  const payload = generatePayload(from, amt, type, tag, "ARBITRARY", trans, to);
+async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!") {
+  if (!from || !to) return null;
+  const payload = generatePayload(from, to, amt, type, tag, type, symbol);
   await DB.audits.new(payload);
   return payload;
 }
 
 module.exports = {
+  currencies,
+  arbitraryAudit,
   checkFunds,
+  checkCurrencies,
+  generatePayload,
   pay,
   receive,
   transfer,
-  arbitraryAudit,
-  generatePayload,
-  CURRENCIES,
 };

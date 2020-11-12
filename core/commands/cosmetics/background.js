@@ -63,7 +63,7 @@ const init = async (msg, args) => {
   msg.channel.send({ embed }).then(async (m) => {
     async function positive(cancellation) {
       if (!hasIt && affordsIt) {
-        await ECO.pay(msg.author.id, _price, "bgshop_bot", "RBN");
+        await ECO.pay(msg.author.id, _price, "bgshop_bot");
       }
       if (!affordsIt) return cancellation();
       return DB.users.set(

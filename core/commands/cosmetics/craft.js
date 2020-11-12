@@ -4,7 +4,6 @@ const cmd = "craft";
 const diff = require("fast-diff");
 const YesNo = require("../../structures/YesNo");
 const ECO = require("../../archetypes/Economy.js");
-const { CURRENCIES } = require("../../archetypes/Economy.js");
 const baselineBonus = {
   C:1,
   U:2,
@@ -116,7 +115,7 @@ const init = async (msg,args) => {
     let craftExplan = "";
 
     // check against the gems whether the user has enough (if necessary); 
-    ["jades", "rubines", "sapphires"].forEach(gem => {
+    Object.keys(GC).forEach(gem => {
       if (!GC[gem]) return;
       const afford = userData.modules[gem] >= GC[gem] * amount;
       let icona = "yep";
@@ -195,7 +194,6 @@ const init = async (msg,args) => {
              * 4. User receives XP for ALL the (intermediate) crafted item(s).
              * 5. Amount crafted is updated for ALL (intermediate) crafted item(s).
              */
-            const gemTranslation = { sapphires: "SPH", jades: "JDE", rubines: "RBN" }
             const arrayFilters = [];
             const toInc = {};
             const itemCraftingArr = Object.keys(autoReport.itemsCrafting);
@@ -226,7 +224,7 @@ const init = async (msg,args) => {
                 { $inc: toInc },
                 { arrayFilters: arrayFilters }).then(() => {
                   const toInsert = Object.keys(autoReport.totalGems)
-                    .map(gem => ECO.generatePayload(msg.author.id, -autoReport.totalGems[gem], "crafting", gemTranslation[gem], "PAYMENT", "-"));
+                    .map(gem => ECO.generatePayload(msg.author.id,, PLX.user.id, -autoReport.totalGems[gem], "crafting", gem, "PAYMENT", "-"));
                   DB.audits.collection.insertMany(toInsert);
                 });
             // console.table((await DB.users.get(msg.author.id)).modules.inventory); DEBUG
@@ -249,13 +247,10 @@ const init = async (msg,args) => {
       await msg.channel.send({ embed }).then(async (m) => {
         embedmsg = m;
         await getYesNo(m).then(async() => {
-          // craft is confirmed
-          const payArr = ["rubines", "jades", "sapphires"].map(gem => ({ amt: GC[gem], currency: gem }));
-
           await Promise.all([
-            ECO.pay(msg.author.id, payArr, "crafting"),
+            ECO.pay(msg.author.id, Object.keys(GC).map(i => GC[i]), "crafting", Object.keys(GC)),
             ...Object.keys(MAT).map(itm => userData.removeItem(MAT[itm].id, (MAT[itm].count || 1) * amount)),
-            userData.addItem(craftedItem.id, amount, true),
+              .addItem(craftedItem.id, amount, true),
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
             DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
           ]);
@@ -382,7 +377,6 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
     }
 
     // Loop through all materials
-    console.log(countList);
     for (let materialID of Object.keys(countList)) {
       const material = ALLITEMS.find(itm => itm.id === materialID);
       if (!material) throw new Error(`materialID [${materialID}] of item [${item.id}] did not match any itemID`);

@@ -1,3 +1,4 @@
+//@ts-check
 // const gear = require('../../utilities/Gearbox');
 // const DB = require('../../database/db_ops');
 const ECO = require("../../archetypes/Economy");
@@ -8,7 +9,7 @@ const B = `${paths.CDN}/build/coins/befli_tails.gif`;
 const B1 = `${paths.CDN}/build/coins/befli_t_s.png`;
 
 const init = async (msg) => {
-  const userData = DB.users.get(msg.author.id);
+  const userData = await DB.users.get(msg.author.id);
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
@@ -27,13 +28,9 @@ const init = async (msg) => {
 
   call = ["HEADS", $t("terms.coinHeads", P).toUpperCase()].includes(call) ? "HEADS" : "TAILS";
 
-  if (currency && currency !== "RBN") {
-    if ((await userData).donator) {
-      // ok
-    } else {
-      msg.channel.send("Betting different currencies is a donators-only feature. Type `+donate` for info.");
-      currency = "RBN";
-    }
+  if (currency && currency !== "RBN" && !(await userData).donator) {
+    msg.channel.send("Betting different currencies is a donators-only feature. Type `+donate` for info.");
+    currency = "RBN";
   }
 
   const rand = randomize(1, 99);
@@ -56,11 +53,7 @@ const init = async (msg) => {
     ECO.pay(msg.author, bet, "Gambling : Betflip", currency);
     if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
   } else {
-    return msg.channel.send(`Cannot afford. ${await userData.modules[(currency
-      ? currency === "RBN"
-        ? "rubines" : currency === "JDE"
-          ? "jades" : currency === "SPH"
-            ? "sapphires" : "rubines" : "rubines")]}/${bet}`);
+    return msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`);
   }
 
   const res = R === "HEADS" ? A : B;

@@ -1,3 +1,4 @@
+// @ts-check
 /* eslint-disable no-await-in-loop */
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 
