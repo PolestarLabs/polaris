@@ -250,9 +250,9 @@ const init = async (msg,args) => {
           await Promise.all([
             ECO.pay(msg.author.id, Object.keys(GC).map(i => GC[i]), "crafting", Object.keys(GC)),
             ...Object.keys(MAT).map(itm => userData.removeItem(MAT[itm].id, (MAT[itm].count || 1) * amount)),
-              .addItem(craftedItem.id, amount, true),
+            userData.addItem(craftedItem.id, amount, true),
             DB.users.set(msg.author.id, {$inc: {'progression.craftingExp':baselineBonus[craftedItem.rarity] * amount} }),
-            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} }),
+            DB.control.set(msg.author.id, {$inc: {[`data.craftingBook.${craftedItem.id}`]: amount} })
           ]);
           done();
         }).catch(e => {
@@ -457,10 +457,10 @@ const emotes = { "rubines": "<:rubine:367128893372760064>", sapphires: "<:sapphi
  * Should really be replaced with gfx/fields
  *
  * @param {object} report the report
- * @param {number} maxDepth the max depth to visualize
+ * @param {number} [maxDepth] the max depth to visualize
  * @return {string} description for embed 
  */
-function genAutoVisual(report, maxDepth) {
+function genAutoVisual(report, maxDepth = Math.pow(2, 4)) {
   let toret = "";
   if (!(report.enoughGems && report.enoughItems)) toret = genFail(report);
   else toret = genSuccess(report);
