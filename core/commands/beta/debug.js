@@ -3,19 +3,19 @@ const init = async (msg, args) => {
 
   if (args[0] === "rbn") {
     const AMT = Number(args[1]) || 0;
-    DB.users.set(msg.author.id, { $inc: { "modules.rubines": AMT } }).then(() => {
+    DB.users.set(msg.author.id, { $inc: { "modules.RBN": AMT } }).then(() => {
       msg.channel.send(`OK[${AMT} RBN]`);
     });
   }
   if (args[0] === "sph") {
     const AMT = Number(args[1]) || 0;
-    DB.users.set(msg.author.id, { $inc: { "modules.sapphires": AMT } }).then(() => {
+    DB.users.set(msg.author.id, { $inc: { "modules.SPH": AMT } }).then(() => {
       msg.channel.send(`OK[${AMT} SPH]`);
     });
   }
   if (args[0] === "jde") {
     const AMT = Number(args[1]) || 0;
-    DB.users.set(msg.author.id, { $inc: { "modules.jades": AMT } }).then(() => {
+    DB.users.set(msg.author.id, { $inc: { "modules.JDE": AMT } }).then(() => {
       msg.channel.send(`OK[${AMT} JDE]`);
     });
   }

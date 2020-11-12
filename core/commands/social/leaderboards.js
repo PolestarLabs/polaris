@@ -55,7 +55,7 @@ const init = async (msg, args) => {
       level: usr.modules.level,
       tagline: usr.modules.tagline,
       color: usr.modules.favcolor,
-      rubines: usr.modules.rubines,
+      rubines: usr.modules.RBN,
       bg: Picto.getCanvas(`${paths.CDN}/backdrops/${usr.modules?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`),
       ACV: (usr?.modules.achievements || []).length,
       DLY: usr.modules?.counters?.daily.streak || 0,
