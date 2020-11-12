@@ -171,8 +171,8 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       console.log(`AMT: ${amt} typeof ${typeof amt}\nCURR: ${curr} typeof ${typeof curr}`)
       if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
       amt = [amt];
-      curr = tempcurr;
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
+    curr = tempcurr;
 
     // Setup v1.0
     const fromUpdate = {};
