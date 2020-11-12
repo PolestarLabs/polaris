@@ -18,7 +18,7 @@ const CURRENCIES = {
  * @param {string|{id: string}} user user(ID)
  * @param {number} amt The amount necessary.
  * @param {string} [currency="RBN"] Currency to check against :: default "RBN".
- * @return {boolean} 
+ * @return {Promise<boolean>|boolean} 
  */
 function checkFunds(user, amt, currency = "RBN") {
   const uID = user.id || user;
@@ -47,7 +47,7 @@ function checkFunds(user, amt, currency = "RBN") {
  */
 function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
   uID = uID["id"] || uID;
-  userTo = userTo["id"] || userTo;
+  if (userTo) userTo = userTo["id"] || userTo;
   const now = Date.now();
   const payload = {
     subtype: subtype,
@@ -73,37 +73,58 @@ function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
  * @return {object|object[]|null} The payload(s) or null if no amt.
  */
 function pay(user, amt, type = "OTHER", currency = "RBN") {
-  const uID = user["id"] || user;
+  let uID = user["id"] || user;
   if (!amt || !uID) return null;
 
-  if (typeof amt !== "number" && amt.length) {
-    const payloads = [];
-    const userInc = {};
-    const plxInc = {};
-    
+  if (typeof amt !== "number" && amt.length) {    
     return Promise.all([
       ...amt.map(obj => {
         return checkFunds(user, obj.amt, obj.currency).then(() => {
-          payloads.push(generatePayload(uID, -obj.amt, type, obj.currency, amt < 0 ? "INCOME" : "PAYMENT", amt < 0 ? "+" : "-"));
-          userInc[`modules.${CURRENCIES[currency]}`] = -obj.amt;
-          plxInc[`modules.${CURRENCIES[currency]}`] = obj.amt;
+          const amount = parseInt(obj.amt.toString());
+          if (amount === 0 || !obj.currency) return;
+          const toret = [];
+          toret.push(generatePayload(uID, -obj.amt, type, obj.currency, amt < 0 ? "INCOME" : "PAYMENT", amt < 0 ? "+" : "-"));
+          toret.push({ [`modules.${obj.currency}`]: -amount });
+          toret.push({ [`modules.${obj.currency}`]: amount });
+          return toret;
         }).catch(() => new Error("No Funds"));
       }),
-    ]).then(() => {
+    ]).then(info => {
+        const userInc = {};
+        const plxInc = {};
+        const payloads = [];
+        let fromID = "271394014358405121";
+        info.forEach(infoarr => {
+          if (!infoarr || !infoarr.length) return;
+          payloads.push(infoarr[0]);
+          Object.keys(infoarr[1]).map(key => {
+            userInc[key] = infoarr[1][key];
+            if (infoarr[1][key] > 0) { fromID = uID; uID = "271394014358405121" }
+          });
+          Object.keys(infoarr[2]).map(key => plxInc[key] = infoarr[2][key]);
+        });
         return DB.users.bulkWrite([
           { updateOne: { filter: { id: uID }, update: { $inc: userInc } } },
-          { updateOne: { filter: { id: "271394014358405121" }, update: { $inc: plxInc } } },
+          { updateOne: { filter: { id: fromID }, update: { $inc: plxInc } } },
         ]).then(() => DB.audits.collection.insertMany(payloads).then(() => payloads));
     });    
   } else if (typeof amt === "number") {
     // @ts-ignore
     amt = parseInt(amt);
+    if (amt === 0) return null;
+
+    let fromID;
+    if (amt < 0) {
+      let fromID = uID;
+      uID = "271394014358405121";
+    } else fromID = "271394014358405121";
+    
     return checkFunds(user, amt, currency).then(() => {
       // @ts-ignore
       const payload = generatePayload(uID, -amt, type, currency, amt < 0 ? "INCOME" : "PAYMENT", amt < 0 ? "+" : "-");
       return DB.users.bulkWrite([
         { updateOne: { filter: { id: uID }, update: { $inc: { [`modules.${CURRENCIES[currency]}`]: -amt } } } },
-        { updateOne: { filter: { id: "271394014358405121" }, update: { $inc: { [`modules.${CURRENCIES[currency]}`]: amt } } } },
+        { updateOne: { filter: { id: fromID }, update: { $inc: { [`modules.${CURRENCIES[currency]}`]: amt } } } },
       ]).then(() => DB.audits.new(payload).then(() => payload));
     }).catch(() => new Error("No Funds"));
   } else return null;

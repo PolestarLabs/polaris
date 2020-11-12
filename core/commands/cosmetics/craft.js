@@ -217,9 +217,9 @@ const init = async (msg,args) => {
               i++;
             }
             toInc["progression.craftingXP"] = xp;
-            console.table((await DB.users.get(msg.author.id)).modules.inventory);
-            console.table(toInc);
-            console.table(arrayFilters.reduce((old, nobj) => Object.assign(old, nobj), {}));
+            // console.table((await DB.users.get(msg.author.id)).modules.inventory); // DEBUG
+            // console.table(toInc); // DEBUG
+            // console.table(arrayFilters.reduce((old, nobj) => Object.assign(old, nobj), {})); // DEBUG
               
             DB.users.collection.updateOne(
                 { id: msg.author.id },
@@ -227,9 +227,9 @@ const init = async (msg,args) => {
                 { arrayFilters: arrayFilters }).then(() => {
                   const toInsert = Object.keys(autoReport.totalGems)
                     .map(gem => ECO.generatePayload(msg.author.id, -autoReport.totalGems[gem], "crafting", gemTranslation[gem], "PAYMENT", "-"));
-                  DB.audits.collection.insert(toInsert);
+                  DB.audits.collection.insertMany(toInsert);
                 });
-            console.table((await DB.users.get(msg.author.id)).modules.inventory);
+            // console.table((await DB.users.get(msg.author.id)).modules.inventory); DEBUG
             done();
           }).catch(e => {
             return endNo(e, m);
@@ -250,7 +250,7 @@ const init = async (msg,args) => {
         embedmsg = m;
         await getYesNo(m).then(async() => {
           // craft is confirmed
-          const payArr = ["rubines", "jades", "sapphires"].map(gem => ({ amt: GC[gem], currency: CURRENCIES[gem] }));
+          const payArr = ["rubines", "jades", "sapphires"].map(gem => ({ amt: GC[gem], currency: gem }));
 
           await Promise.all([
             ECO.pay(msg.author.id, payArr, "crafting"),
