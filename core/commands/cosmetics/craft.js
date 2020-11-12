@@ -383,7 +383,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
     // Loop through all materials
     for (let materialID of Object.keys(countList)) {
       const material = ALLITEMS.find(itm => itm.id === materialID);
-      if (!material) throw new Error(`materialID [${materialID}] of item ${item} did not match any itemID`);
+      if (!material) throw new Error(`materialID [${materialID}] of item ${item.id} did not match any itemID`);
 
       const need = countList[material.id];
       const inInventory = inventory.find(itms => itms.id === material.id)?.count || 0;
