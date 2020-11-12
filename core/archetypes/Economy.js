@@ -12,6 +12,14 @@ const CURRENCIES = {
   PSM: "prisms"
 };
 
+/**
+ * Checks whether the user's funds are equal to or exceed amt.
+ *
+ * @param {string|{id: string}} user user(ID)
+ * @param {number} amt The amount necessary.
+ * @param {string} [currency="RBN"] Currency to check against :: default "RBN".
+ * @return {boolean} 
+ */
 function checkFunds(user, amt, currency = "RBN") {
   const uID = user.id || user;
 
@@ -29,13 +37,13 @@ function checkFunds(user, amt, currency = "RBN") {
  * Generates a PayLoad
  * Depending on amt's value (pos, neg) directs the type of payment (receive, pay, respectively)
  *
- * @param {string|{id: string}} uID user ID (from)
- * @param {number} amt if pos/zero: receive, if neg: pay
- * @param {string} type description of payment
- * @param {string} curr the current in 3 letter descriptor
- * @param {string} transaction weird symbol
- * @param {string|{id: string}} [userTo] userTo for tranfer etc
- * @return {object} the payload generated 
+ * @param {string|{id: string}} uID user(ID) (from)
+ * @param {number} amt If pos/zero: receive, if neg: pay | or an array of currencies with their amt
+ * @param {string} type Description of the payment.
+ * @param {string} curr The currency in 3 letter descriptor.
+ * @param {string} transaction Transaction symbol.
+ * @param {string|{id: string}} [userTo=271394014358405121] userTo(ID) for tranfer etc :: default "271394014358405121" (pollux).
+ * @return {object} The payload generated .
  */
 function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
   uID = uID["id"] || uID;
@@ -58,11 +66,11 @@ function generatePayload(uID, amt, type, curr, subtype, transaction, userTo) {
 /**
  * Method for a user to pay x gems.
  *
- * @param {{id: string}|string} user user object or ID
- * @param {number|Array.<{ amt: number, currency: string }>} amt amt user has to pay
- * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string} [currency="RBN"] currency in 3 letter format :: default RBN
- * @return {object|object[]|null} the payload or null if no amt 
+ * @param {{id: string}|string} user user(ID)
+ * @param {number|Array.<{ amt: number, currency: string }>} amt The amount to pay, or an array of currencies with their amt.
+ * @param {string} [type="OTHER"] The transaction type :: default OTHER
+ * @param {string} [currency="RBN"] The currency in 3 letter format :: default RBN
+ * @return {object|object[]|null} The payload(s) or null if no amt.
  */
 function pay(user, amt, type = "OTHER", currency = "RBN") {
   const uID = user["id"] || user;
@@ -121,12 +129,12 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
 /**
  * A money transfer between users.
  * 
- * @param {number|{id: string}} userFrom user from (ID)
- * @param {number|{id: string}} userTo user to (ID)
- * @param {number} amt the amount transfered
- * @param {string} [type="SEND"] type of transaction :: default "SEND"
- * @param {string} [currency="RBN"] currency :: default "RBN"
- * @return {object|null} payload object or null if !amt/!user(s)
+ * @param {number|{id: string}} userFrom user(ID) from
+ * @param {number|{id: string}} userTo user(ID) to
+ * @param {number} amt The amount to transfer.
+ * @param {string} [type="SEND"] The type of transaction :: default "SEND"
+ * @param {string} [currency="RBN"] The currency to transfer :: default "RBN"
+ * @return {object|null} The payload or null if !amt/!user(s).
  */
 function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
   if (!amt || !userFrom || !userTo) return null; // @ts-ignore
@@ -148,15 +156,16 @@ function transfer(userFrom, userTo, amt, type = "SEND", currency = "RBN") {
  * Creates a new audit. 
  * NOTE: this will immediately end up in DB.
  *
- * @param {string|{id: string}} from
- * @param {string|{id: string}} to
- * @param {string} type
- * @param {string} [tag="OTH"]
- * @param {string} [trans="!!"]
- * @param {number} [amt=1]
- * @return {Promise<object>} the payload 
+ * @param {string|{id: string}} from user(ID) from
+ * @param {string|{id: string}} to user(ID) to
+ * @param {string} type The type of audit.
+ * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
+ * @param {string} [trans="!!"] The transaction symbol :: default "!!"
+ * @param {number} [amt=1] The amount :: default 1
+ * @return {Promise<object>|null} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, type, tag = "OTH", trans = "!!", amt = 1) {
+  if (!from || !to || !type) return null;
   const payload = generatePayload(from, amt, type, tag, "ARBITRARY", trans, to);
   await DB.audits.new(payload);
   return payload;
