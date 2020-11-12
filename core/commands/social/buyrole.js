@@ -21,7 +21,7 @@ const init = async (msg, args) => {
   if (!pRole) return "Role not found!";
   if (msg.member.hasRole(pRole.role)) return "Role already assigned!";
 
-  if (userData.modules.rubines < pRole.price) return "Insufficient funds!";
+  if (userData.modules.RBN < pRole.price) return "Insufficient funds!";
 
   if (pRole.temp) {
     DB.temproles.add({
