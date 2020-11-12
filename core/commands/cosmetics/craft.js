@@ -376,14 +376,16 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
     const countList = {};
     for (let material of item.materials) {
       let n = (material.count * count) || count;
-      if (countList[material.id]) countList[material.id] += n;
-      else countList[material.id] = n;
+      let materialID = material.id || material;
+      if (countList[materialID]) countList[materialID] += n;
+      else countList[materialID] = n;
     }
 
     // Loop through all materials
+    console.log(countList);
     for (let materialID of Object.keys(countList)) {
       const material = ALLITEMS.find(itm => itm.id === materialID);
-      if (!material) throw new Error(`materialID [${materialID}] of item ${item.id} did not match any itemID`);
+      if (!material) throw new Error(`materialID [${materialID}] of item [${item.id}] did not match any itemID`);
 
       const need = countList[material.id];
       const inInventory = inventory.find(itms => itms.id === material.id)?.count || 0;
