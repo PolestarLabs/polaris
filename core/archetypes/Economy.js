@@ -196,8 +196,8 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 
     // Setup v2.0
     const toWrite = [
-      { updateOne: { filter: { id: userFrom }, update: fromUpdate } },
-      { updateOne: { filter: { id: userTo }, update: toUpdate } },
+      { updateOne: { filter: { id: userFrom }, update: { $inc: fromUpdate } } },
+      { updateOne: { filter: { id: userTo }, update: { $inc: toUpdate } } },
     ];
 
     console.log(require("util").inspect(toWrite));
