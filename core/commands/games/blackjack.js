@@ -324,7 +324,7 @@ const init       = async (msg,args) => {
 			v.bet = $t("dict.bet", P)
 
 			v.insu = $t("$.insuBet", { lngs: msg.lang, number: 25 })
-			v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.RBN })
+			v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.rubines })
 			v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 })
 			v.ceiling = $t("games.ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"))
 
@@ -335,8 +335,8 @@ const init       = async (msg,args) => {
 			return msg.reply(v.ONGOING);
 		}
 
-		if (USERDATA.modules.RBN < 25) {
-			P.number = USERDATA.modules.RBN;
+		if (USERDATA.modules.rubines < 25) {
+			P.number = USERDATA.modules.rubines;
 			return msg.reply(v.insuFloor);
 		}
 		const bet = Math.abs(parseInt(arg));
@@ -348,7 +348,7 @@ const init       = async (msg,args) => {
 			return msg.reply(v.insu);
 		}
 
-		if (USERDATA.modules.RBN < bet) return msg.reply(v.nofunds);
+		if (USERDATA.modules.rubines < bet) return msg.reply(v.nofunds);
 		if (bet > 2500) {
 			P.number = 2500
 			return msg.reply(v.ceiling);
@@ -357,7 +357,7 @@ const init       = async (msg,args) => {
 		const blackjack  = new Blackjack(msg);
     const playerHand = blackjack.getHand(powerups);
     const dealerHand = blackjack.getHand().map(card=> card.startsWith("JOKER") ? randomize(1,10)+"H" : card );
-    const balance 	 = USERDATA.modules.RBN;    
+    const balance 	 = USERDATA.modules.rubines;    
 
     const canInsurance  = testInsurance(balance,bet,playerHand,dealerHand);
     const canDoubleDown = testDoubleDown(balance,bet,playerHand);

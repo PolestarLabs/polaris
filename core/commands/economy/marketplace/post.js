@@ -83,9 +83,9 @@ const init = async (msg, args) => {
     const checkSales = (uD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < 300) forRBN = false;
+      if (uD.modules.rubines < 300) forRBN = false;
       if (uD.amtItem("sph-license") < 1) forSPH = false;
-      if (uD.modules.SPH < 2) forSPH = false;
+      if (uD.modules.sapphires < 2) forSPH = false;
 
       return { forRBN, forSPH };
     };
