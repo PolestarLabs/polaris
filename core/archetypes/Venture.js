@@ -156,9 +156,9 @@ module.exports = {
       this.supply = {
         item: { ...player.modules.inventory },
         rubines: this.insurance,
-        jades: player.modules.JDE,
-        rubines_bank: player.modules.RBN,
-        sapphires: player.modules.SPH,
+        jades: player.modules.jades,
+        rubines_bank: player.modules.rubines,
+        sapphires: player.modules.sapphires,
       };
 
       const eventCount = Math.round((time * 60) / TIME_SLICE);

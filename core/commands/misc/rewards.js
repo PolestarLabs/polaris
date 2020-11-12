@@ -272,8 +272,8 @@ const queryGen = function queryGen(T, pushmo) {
     },
     // ,$push:    { "modules.inventory": {$each:T.boxes} }
     $inc: {
-      // "modules.SPH": T.SPH
-      // ,"modules.JDE":    T.JDE
+      // "modules.sapphires": T.SPH
+      // ,"modules.jades":    T.JDE
       "counters.donateStreak.total": 1,
       [`counters.donateStreak.${T.title}`]: 1,
     },
@@ -392,13 +392,13 @@ ${stickernames.map((f) => f.name).join(" • ")}
 
   if (!userData.counters?.donateStreak.total) {
     // await userDB.set(message.author.id,{
-    //   $inc:{"modules.SPH":T.immediate}
+    //   $inc:{"modules.sapphires":T.immediate}
     // });
   }
 
   if (!(userData.counters?.donateStreak[T.title])) {
   // await DB.users.set(message.author.id,{
-  //  $inc:{"modules.SPH":T.immediate}
+  //  $inc:{"modules.sapphires":T.immediate}
   // });
     ECO.receive(message.author, T.immediate, "Donator's Rewards: Immediate", "SPH");
 

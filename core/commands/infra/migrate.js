@@ -158,19 +158,19 @@ ${_emoji('loading')} • Transferring Daily Streak
     await wait(1);
     await prompt.edit({embed});
     
-    let newRubines = Math.min( userData.modules.RBN *.05 + userData.modules.dyStreakHard * 10,50000);
-    let oldRubines = userData.modules.RBN;
-    let jades      = ~~(userData.modules.JDE / 2);
-    let saph       = ~~(userData.modules.SPH * (SAPPHIREFACTOR(userData.donator,userData.formerDonator)) / 10 + 1 );
+    let newRubines = Math.min( userData.modules.rubines *.05 + userData.modules.dyStreakHard * 10,50000);
+    let oldRubines = userData.modules.rubines;
+    let jades      = ~~(userData.modules.jades / 2);
+    let saph       = ~~(userData.modules.sapphires * (SAPPHIREFACTOR(userData.donator,userData.formerDonator)) / 10 + 1 );
     
     await DB.users.set(msg.author.id, {$set: 
         {
             'counters.daily.streak' : userData.modules.dyStreakHard,
             'counters.daily.last' : userData.modules.daily,
-            'modules.RBN' : newRubines,
+            'modules.rubines' : newRubines,
             'modules.rubinesOld' : oldRubines,
-            'modules.JDE' : jades,
-            'modules.SPH' :saph,
+            'modules.jades' : jades,
+            'modules.sapphires' :saph,
         } 
     })
     
@@ -196,7 +196,7 @@ ${_emoji('loading')} • Baking a Cake`
     embed.footer = {icon_url: msg.author.avatarURL,text: `Progress: 🟦🟦🟦🟦🟦🟦🟦🟦⬛⬛⬛⬛⬛`}
     await wait(2);
 
-    await DB.users.set(msg.author.id,{$inc:{'modules.SPH': -1 * marriage_transfer_res.cost || 0}})
+    await DB.users.set(msg.author.id,{$inc:{'modules.sapphires': -1 * marriage_transfer_res.cost || 0}})
 
            
     embed.description = `
