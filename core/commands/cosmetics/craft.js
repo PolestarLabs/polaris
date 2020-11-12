@@ -355,8 +355,8 @@ function test(i, u, c, v = false) {
  */
 function genAutoReport(item, userData, count = 1, itemCost = {}) {
   item = ALLITEMS.find(itm => itm.id === item.id);
-  if (!item) throw new Error("itemID did not match any itemID");
-  if (!item.crafted) throw new Error("Item not craftable");
+  if (!item) throw new Error(`itemID ${item} did not match any itemID`);
+  if (!item.crafted) throw new Error(`Item ${item} not craftable`);
   let toRet = { craft: true, itemsCrafting: {}, itemsMissing: {}, gemsMissing: {}, totalGems: {}, totalItems: {}, id: item.id, count: count, gems: {}, items: [] };
   toRet.itemsCrafting[item.id] = count;
   const inventory = userData.modules.inventory;
@@ -383,7 +383,7 @@ function genAutoReport(item, userData, count = 1, itemCost = {}) {
     // Loop through all materials
     for (let materialID of Object.keys(countList)) {
       const material = ALLITEMS.find(itm => itm.id === materialID);
-      if (!material) throw new Error(`materialID [${material}] did not match any itemID`);
+      if (!material) throw new Error(`materialID [${materialID}] of item ${item} did not match any itemID`);
 
       const need = countList[material.id];
       const inInventory = inventory.find(itms => itms.id === material.id)?.count || 0;
