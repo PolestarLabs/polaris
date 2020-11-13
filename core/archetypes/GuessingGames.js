@@ -89,7 +89,7 @@ class GuessingGame{
             let activity = setInterval(() => {
                 if (!active) return Collector.stop('time');
 		        active = false;
-            }, this.time); 
+            }, 15e3);
             let points = 0;
 
             Collector.on('message', async(m)=> {
