@@ -1,6 +1,6 @@
 //guessingGame('name' , 'type(text/image)' ,'thumb', options)
 const axios = require('axios');
-const { resolveFile, wait } = require('../../../event-instance/core/utilities/Gearbox/global');
+const { resolveFile, wait, capitalize } = require('../../../event-instance/core/utilities/Gearbox/global');
 
 
 class GuessingGame{
@@ -69,7 +69,12 @@ class GuessingGame{
                 grade: $t(["keywords.grade","Grade"],{lngs:msg.lang}),
                 score: $t(["keywords.score","Score"],{lngs:msg.lang}),
                 flags: $t(["response.games.guess.Flags","Flags"],{lngs:msg.lang}),
-                timeAttackResults: $t(["response.games.guess.timeAttackResults","Time Attack Mode Results"],{lngs:msg.lang})
+                timeAttackResults: $t(["response.games.guess.timeAttackResults","Time Attack Mode Results"],{lngs:msg.lang}),
+                endlessModeResults: $t(["response.games.guess.endlessModeResults","Endless Mode Results"],{lngs:msg.lang}),
+                next: $t(["response.games.guess.next","Next Round..."],{lngs:msg.lang}),
+                rounds: $t(["keywords.round_plural","Rounds"],{lngs:msg.lang}),
+                time: $t(["keywords.time","Time"],{lngs:msg.lang}),
+                seconds: $t(["keywords.seconds","seconds"],{lngs:msg.lang}),
 
             }
 
@@ -114,7 +119,7 @@ class GuessingGame{
                         
                         await wait(1);
                         this.round++
-                        msg.channel.send("Next Round...");
+                        msg.channel.send(v.next);
                         await wait(1);
 
                         names = (await this.generate()).names;
@@ -122,8 +127,8 @@ class GuessingGame{
                         points +=  Math.pow(this.round * res.length ,2)  / (totalTime/1000 );
 
                         this.embed.fields[0] = {
-                            name: "Score",
-                            value: `${~~points} points`,
+                            name: capitalize(v.score),
+                            value: `${~~points} ${v.points}`,
                             inline: !0
                         }
 
@@ -142,12 +147,12 @@ class GuessingGame{
                     
                     
                     msg.channel.send({content: this.timeout, embed:{
-                        title: "Endless Mode Results",
+                        title: v.endlessModeResults,
                         description:`
-                        Rounds: ${this.round}
-                        Time: ${ ~~totalTime } seconds
-                        Score: ${ ~~points } points
-                        Grade: **${grade}**
+                        ${v.rounds}: ${this.round}
+                        ${v.time}: ${ ~~totalTime } ${v.seconds}
+                        ${v.score}: ${ ~~points } ${v.points}
+                        ${v.grade}: **${grade}**
                         
                         `
                     }});
