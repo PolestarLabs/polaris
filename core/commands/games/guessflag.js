@@ -1,8 +1,10 @@
+const { dbGetter } = require('../../../../dashboard/structures/PrimitiveGearbox');
 const GG = require('../../archetypes/GuessingGames');
 const init = async function (msg,args){
 
 
     let gamemode =  "normal";
+    let solo     =  false;
     let guessed  =  "{{user}} got it! This is the flag of **{{answer}}**";
     let timeout  =  "Time's up! Seems like nobody guessed it. :("
 
@@ -26,7 +28,20 @@ const init = async function (msg,args){
         gamemode,guessed,timeout
     });
 
-    Flags.play(msg);
+    Flags.play(msg).then( async results=>{
+
+        if (results.score){
+            let data;
+            if(solo){
+                data = {id: `${msg.author.id}`, type: 'guessflag-solo', points: results.score, timestamp: Date.now(), data: results };
+            }else{
+                data = {id: `${msg.guild.id}`, type: 'guessflag-server', points: results.score, timestamp: Date.now(), data: results };
+            }
+            
+            await DB.rankings.collection.insert(data);
+        }
+
+    });
 
 }
 
