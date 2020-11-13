@@ -97,7 +97,7 @@ class GuessingGame{
                         Collector.stop();
                     }
                 })
-                Collector.on('end', async(col,reason)=>  reason === 'time' ? msg.channel.send(this.timeout) : console.log({reason}));
+                Collector.on('end', async(col,reason)=>  reason === 'time' ? msg.channel.send(this.timeout) && resolve(true) : console.log({reason}));
             }
             
             if (this.gamemode === 'endless'){
@@ -141,7 +141,7 @@ class GuessingGame{
                 Collector.on('end', async(col,reason)=> {
                     //if (reason === 'time') 
 
-                    let totalTime = ~~(Date.now() - this.start) / 1000;
+                    let totalTime = ~~((Date.now() - this.start)  / 1000) ;
                     let gradeCalc = Math.max(totalTime-14,1) / 15 / this.round
                     let grade = parseGrade(gradeCalc)
                     
@@ -150,7 +150,7 @@ class GuessingGame{
                         title: v.endlessModeResults,
                         description:`
                         ${v.rounds}: ${this.round}
-                        ${v.time}: ${ ~~totalTime } ${v.seconds}
+                        ${v.time}: ${ totalTime } ${v.seconds}
                         ${v.score}: ${ ~~points } ${v.points}
                         ${v.grade}: **${grade}**
                         
@@ -158,6 +158,12 @@ class GuessingGame{
                     }});
                     
                     clearInterval(activity)
+                    resolve({
+                        rounds: this.round,
+                        time: totalTime,
+                        score: ~~points,
+                        grade
+                    })
                 })
             }
 
@@ -202,9 +208,15 @@ class GuessingGame{
                         ${ v.flags }: ${this.round}
                         ${ v.score }: ${ ~~points } ${v.points}
                         ${ v.grade }: **${grade}**
-                        
+                    
                         `
-                    }});
+                        
+                        }});
+                    resolve({
+                        flags: this.round,
+                        score: ~~points,
+                        grade
+                    })
                 });
             }
         })
