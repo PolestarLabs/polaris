@@ -61,187 +61,181 @@ class GuessingGame{
     }
 
     async play(msg){
+        return new Promise(async resolve => {
 
-        let {names} = await this.generate();
-        await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
-        this.start = Date.now();
-        console.log(this.gamemode)
-        let Collector = msg.channel.createMessageCollector(m=>m.content.length, {time: this.time});
+            
+            const v = {
+                points: $t(["keywords.points","points"],{lngs:msg.lang}),
+                grade: $t(["keywords.grade","Grade"],{lngs:msg.lang}),
+                score: $t(["keywords.score","Score"],{lngs:msg.lang}),
+                flags: $t(["response.games.guess.Flags","Flags"],{lngs:msg.lang}),
+                timeAttackResults: $t(["response.games.guess.timeAttackResults","Time Attack Mode Results"],{lngs:msg.lang})
 
-        const isValid = (m,n) => n.includes(m.content.normalize().toLowerCase());
-        const _capitalize = (s)=> s.replace( /\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase() );
+            }
 
-        if (this.gamemode === 'normal'){
-            Collector.on('message', async(m)=> {
-                if (isValid(m,names)){
-                    let res = capitalize(names[0]);
-                    msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
-                    Collector.stop();
-                }
-            })
-            Collector.on('end', async(col,reason)=>  reason === 'time' ? msg.channel.send(this.timeout) : console.log({reason}));
-        }
-        
-        if (this.gamemode === 'endless'){
+            
+            
+            let {names} = await this.generate();
+            await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
+            this.start = Date.now();
+            console.log(this.gamemode)
+            let Collector = msg.channel.createMessageCollector(m=>m.content.length, {time: this.time});
 
-            this.round = 1;
-            let active = true; 
-            let activity = setInterval(() => {
-                if (!active) return Collector.stop('time');
-		        active = false;
-            }, 15e3);
-            let points = 0;
+            const isValid = (m,n) => n.includes(m.content.normalize().toLowerCase());
+            const _capitalize = (s)=> s.replace( /\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase() );
 
-            Collector.on('message', async(m)=> {
-                if (isValid(m,names)){
-                    let res = _capitalize(names[0]);
-                    active = true;
-                    msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
-                    let totalTime = ~~(Date.now() - this.start) ;
-                    
-                    await wait(1);
-                    this.round++
-                    msg.channel.send("Next Round...");
-                    await wait(1);
-
-                    names = (await this.generate()).names;
-
-                    points +=  Math.pow(this.round * res.length ,2)  / (totalTime/1000 );
-
-                    this.embed.fields[0] = {
-                        name: "Score",
-                        value: `${~~points} points`,
-                        inline: !0
+            if (this.gamemode === 'normal'){
+                Collector.on('message', async(m)=> {
+                    if (isValid(m,names)){
+                        let res = capitalize(names[0]);
+                        msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
+                        Collector.stop();
                     }
+                })
+                Collector.on('end', async(col,reason)=>  reason === 'time' ? msg.channel.send(this.timeout) : console.log({reason}));
+            }
+            
+            if (this.gamemode === 'endless'){
 
-                    
-                    await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
-                }else if( this.solo && m.content?.toLowerCase() === 'quit' ){
-                    Collector.end('retire')
-                }
-            })
-            Collector.on('end', async(col,reason)=> {
-                //if (reason === 'time') 
+                this.round = 1;
+                let active = true; 
+                let activity = setInterval(() => {
+                    if (!active) return Collector.stop('time');
+                    active = false;
+                }, 15e3);
+                let points = 0;
 
-                let totalTime = ~~(Date.now() - this.start) / 1000;
-                let gradeCalc = (totalTime-14) / 15 / this.round
-                let grade;
-                switch (true){
-                    case gradeCalc < .02:
-                        grade = "SSS"
-                        break;
-                    case gradeCalc < .05:
-                        grade = "SS"
-                        break;
-                    case gradeCalc < .1:
-                        grade = "S"
-                        break;
-                    case gradeCalc < .25:
-                        grade = "A"
-                        break;
-                    case gradeCalc < .5:
-                        grade = "B"
-                        break;
-                    case gradeCalc < .8:
-                        grade = "C"
-                        break;
-                    case gradeCalc < .1:
-                        grade = "D"
-                        break;
-                    default:
-                        grade = "F"
+                Collector.on('message', async(m)=> {
+                    if (isValid(m,names)){
+                        let res = _capitalize(names[0]);
+                        active = true;
+                        msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
+                        let totalTime = ~~(Date.now() - this.start) ;
+                        
+                        await wait(1);
+                        this.round++
+                        msg.channel.send("Next Round...");
+                        await wait(1);
 
-                }
-                
-                
-                msg.channel.send({content: this.timeout, embed:{
-                    title: "Endless Mode Results",
-                    description:`
-                    Rounds: ${this.round}
-                    Time: ${ ~~totalTime } seconds
-                    Score: ${ ~~points } points
-                    Grade: **${grade}**
-                    
-                    `
-                }});
-                
-                clearInterval(activity)
-            })
-        }
+                        names = (await this.generate()).names;
 
+                        points +=  Math.pow(this.round * res.length ,2)  / (totalTime/1000 );
 
-        if (this.gamemode === 'time'){
-            this.round = 1;
-            let points = 0;
+                        this.embed.fields[0] = {
+                            name: "Score",
+                            value: `${~~points} points`,
+                            inline: !0
+                        }
 
-            Collector.on('message', async(m)=> {
-                if (isValid(m,names)){
-                    let res = _capitalize(names[0]);
-                    msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
-                    let totalTime = ~~(Date.now() - this.start) ;                    
-                    this.round++
-
-                    names = (await this.generate()).names;
-                    points +=  Math.pow(this.round * res.length ,2)  / (totalTime/1000 );
-
-                    this.embed.fields[0] = {
-                        name: "Score",
-                        value: `${~~points} points`,
-                        inline: !0
+                        
+                        await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
+                    }else if( this.solo && m.content?.toLowerCase() === 'quit' ){
+                        Collector.end('retire')
                     }
-                    
-                    await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
-                
-                }else if(  m.content?.toLowerCase() === 'skip' ){
-                    names = (await this.generate()).names;
-                    await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
-                }
-            })
-            Collector.on('end', async(col,reason)=> {
-                //if (reason === 'time') 
+                })
+                Collector.on('end', async(col,reason)=> {
+                    //if (reason === 'time') 
 
-                let totalTime = ~~(Date.now() - this.start) / 1000;
-                let gradeCalc = (totalTime) / 15 / this.round
-                let grade;
-                switch (true){
-                    case gradeCalc < .02:
-                        grade = "SSS"
-                        break;
-                    case gradeCalc < .05:
-                        grade = "SS"
-                        break;
-                    case gradeCalc < .1:
-                        grade = "S"
-                        break;
-                    case gradeCalc < .25:
-                        grade = "A"
-                        break;
-                    case gradeCalc < .5:
-                        grade = "B"
-                        break;
-                    case gradeCalc < .8:
-                        grade = "C"
-                        break;
-                    case gradeCalc < .1:
-                        grade = "D"
-                        break;
-                    default:
-                        grade = "F"
-
-                }
-                
-                msg.channel.send({content: this.timeout, embed:{
-                    title: "Time Attack Mode Results",
-                    description:`
-                    Flags: ${this.round}
-                    Score: ${ ~~points } points
-                    Grade: **${grade}**
+                    let totalTime = ~~(Date.now() - this.start) / 1000;
+                    let gradeCalc = Math.max(totalTime-14,1) / 15 / this.round
+                    let grade = parseGrade(gradeCalc)
                     
-                    `
-                }});
-            });
-        }
+                    
+                    msg.channel.send({content: this.timeout, embed:{
+                        title: "Endless Mode Results",
+                        description:`
+                        Rounds: ${this.round}
+                        Time: ${ ~~totalTime } seconds
+                        Score: ${ ~~points } points
+                        Grade: **${grade}**
+                        
+                        `
+                    }});
+                    
+                    clearInterval(activity)
+                })
+            }
+
+
+            if (this.gamemode === 'time'){
+                this.round = 1;
+                let points = 0;
+
+                Collector.on('message', async(m)=> {
+                    if (isValid(m,names)){
+                        let res = _capitalize(names[0]);
+                        msg.channel.send( $t(this.guessed,{user: `<@${m.author.id}>`, answer: `**${res}**` }) );
+                        let totalTime = ~~(Date.now() - this.start) ;                    
+                        this.round++
+
+                        names = (await this.generate()).names;
+                        points +=  Math.pow(this.round * res.length ,2)  / (totalTime/1000 );
+
+                        this.embed.fields[0] = {
+                            name: v.score,
+                            value: `${~~points} ${v.points}`,
+                            inline: !0
+                        }
+                        
+                        await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
+                    
+                    }else if(  m.content?.toLowerCase() === 'skip' ){
+                        names = (await this.generate()).names;
+                        await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
+                    }
+                })
+                Collector.on('end', async(col,reason)=> {
+                    //if (reason === 'time') 
+
+                    let totalTime = ~~(Date.now() - this.start) / 1000;
+                    let gradeCalc = Math.max(totalTime-14,1) / 15 / this.round
+                    let grade = parseGrade(gradeCalc);                    
+                    
+                    msg.channel.send({content: this.timeout, embed:{
+                        title: v.timeAttackResults,
+                        description:`
+                        ${ v.flags }: ${this.round}
+                        ${ v.score }: ${ ~~points } ${v.points}
+                        ${ v.grade }: **${grade}**
+                        
+                        `
+                    }});
+                });
+            }
+        })
     }
 }
 
+
 module.exports = GuessingGame
+
+
+function parseGrade(g){
+    switch (true){
+        case g < .02:
+            grade = "SSS"
+            break;
+        case g < .05:
+            grade = "SS"
+            break;
+        case g < .1:
+            grade = "S"
+            break;
+        case g < .25:
+            grade = "A"
+            break;
+        case g < .5:
+            grade = "B"
+            break;
+        case g < .8:
+            grade = "C"
+            break;
+        case g < .1:
+            grade = "D"
+            break;
+        default:
+            grade = "F"
+    }
+
+    return grade;
+}
