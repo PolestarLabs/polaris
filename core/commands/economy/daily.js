@@ -345,7 +345,8 @@ const init = async (msg, args) => {
 
     const actions = [lootAction, boosterAction, itemAction, fragAction, tokenAction];
     await awardPrizes(userData, myDaily, actions);
-
+    P.username = msg.author.username;
+    
     msg.channel.send({
       embed: {
         description: `
@@ -411,7 +412,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
 
   const reject = (message, D, REM) => {
-    P.remaining =  moment.utc(REM).fromNow();
+    P.remaining =  moment.utc(REM).fromNow(true);
     return message.channel.send( _emoji('nope') + $t('responses.daily.dailyNope',P) );
   };
 

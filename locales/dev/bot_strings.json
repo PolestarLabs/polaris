@@ -431,7 +431,16 @@
             "noRestorerInfo": "You can craft a restorer with `{{prefix}}craft streakfix`",
             "yesRestorerInfo": "You have a restorer in your inventory! Try `{{prefix}}use streakfix` to use it!",
             "dailyBonus": [
-                "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:"
+                "Good morning! Let's have a lot of fun today shall we? These are your rewards for today:",
+                "You're here! Welcome back, these were waiting for you:",
+                "Did someone sleep through their alarm again? Well, take these:",
+                "Finally! I've been so lonely. Here's some incentive to make sure you come back tomorrow:",
+                "Good morning~ Did you sleep well? I didn't! I've been waiting to give you these all night:",
+                "Hello, hello, hello! Maid Pollux here! Delivery for {{username}}:",
+                "I wish someone gave me daily prizes for waking up. I guess I can live vicariously through you, so please enjoy these for me:",
+                "Hey, here's your free stuff for today! No, they're not from the bargain bin, stop asking:",
+                "Your balance is looking a little sad - let's spruce it up together! Maybe these will help:",
+                "Wow, is this what you look like in the morning? Don't answer. Take these and brush your hair:"
             ],
             
             "dailyNope": "Hmm? Seems you already claimed your Bonuses today. You can get more in **{{remaining}}**"
