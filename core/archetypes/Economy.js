@@ -189,7 +189,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       if (absAmount === 0) continue;
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
-      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
+      if(amt[i]) payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
     }
 
     // If every amt was zero
