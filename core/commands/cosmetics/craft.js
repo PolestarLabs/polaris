@@ -16,7 +16,7 @@ const init = async (msg,args) => {
     //------------
 
     // ignore if already crafting 
-    if (msg.author.crafting) return;   
+    if (msg.author.crafting) return;
 
     // Check arguments
     let pos;
@@ -69,7 +69,7 @@ const init = async (msg,args) => {
     embed.thumbnail = { url : `${paths.CDN}/build/items/${ICON}.png` };
     let craftExplan = "";
 
-    return crafter.once("ready", () => {
+    crafter.once("ready", () => {
       // Create gem display.
       let gemDisplay = "";
       const gemsTotal = crafter.gemsTotal;
@@ -89,6 +89,7 @@ const init = async (msg,args) => {
       }
       // Not enough gems; fatal to crafting.
       if (crafter.isMissingGems) { 
+        console.log('this is some point 1')
         embed.color = 0xed3a19;
         craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
         embed.description = gemDisplay + matDisplay;
@@ -103,7 +104,7 @@ const init = async (msg,args) => {
       // Not enough materials. =<
       if (crafter.isMissingItems) {
         // If user hasn't crafted the item before, don't allow autocrafting.
-        if (!crafter.hasCrafted) endMissingMaterials();
+        if (!crafter.hasCrafted) return endMissingMaterials();
 
         craftExplan = `\n\n${$t("responses.crafting.materialAutocraft", P)}`;
         embed.description = gemDisplay + matDisplay;
@@ -148,6 +149,7 @@ const init = async (msg,args) => {
         embed.description = gemDisplay + matDisplay + craftExplan;
         
         // Show craft cost & info
+
         return msg.channel.send({ embed }).then(m => {
           embedmsg = m;
           // Ask for confirmation
@@ -226,6 +228,7 @@ const init = async (msg,args) => {
         });
       }
     });
+
   } catch (e) {
     msg.author.crafting = false;
     msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } })
