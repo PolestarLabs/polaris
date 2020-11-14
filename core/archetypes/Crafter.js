@@ -46,8 +46,8 @@ const autoPenalties = {
 }
 
 /***********\
- * *  END  * *
- \***********/
+* *  END  * *
+\***********/
 
 class Crafter extends EventEmitter {
     _count = 1;
@@ -192,7 +192,7 @@ class Crafter extends EventEmitter {
         * 5. Amount crafted is updated for ALL (intermediate) crafted item(s).
         * THEN payloads get inserted & returned.=
         */
-        const user = {}, plx = {}, arrayFilters = [];
+        const user = {}, plx = {}, arrayFilters = [], toAdd = [];
 
         let i = 0;
         const itemsCrafted = this.itemsCrafted;
@@ -202,6 +202,8 @@ class Crafter extends EventEmitter {
             arrayFilters.push({ [`i${i}.id`]: itemID });
             user[`modules.inventory.$[i${i}].crafted`] = amount;
             if (itemID === this._item.id) user[`modules.inventory.$[i${i}].count`] = amount;
+            const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
+            if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
         }
         const itemsInventory = this.itemsInventory;
         for(let j = 0; j < itemsInventory.length; j++) {
@@ -216,8 +218,11 @@ class Crafter extends EventEmitter {
         }
         if (this.xp) user["progression.craftingXP"] = this.xp;
 
-        const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters  } }]; 
-        if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
+        const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters  } }]; // @ts-ignore
+        if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } }); // @ts-ignore
+        if (Object.keys(toAdd).length) toWrite.splice(0, 0, { updateOne: { filter: { id: this._userID }, update: { $addToSet: { "modules.inventory": toAdd } } } });
+
+        console.log(inspect(toWrite, { depth: 5 }));console.log("USER");console.table(user);console.log(inspect(arrayFilters));console.log("PLX");console.table(plx);
 
         return DB.users.bulkWrite(toWrite).then(() => {
             const payloads = this.gemsTotal
