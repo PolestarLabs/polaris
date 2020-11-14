@@ -51,7 +51,7 @@ const init = async (msg,args) => {
     }
 
     // Don't allow too much bulk crafting...
-    if (amount > craftedItem.maxBulkCraft) return msg.channel.send( _emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
+    if (amount > craftedItem.maxBulkCraft) return msg.channel.send(_emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
 
     // Item found → start the crafting process
     msg.author.crafting = true;
@@ -69,7 +69,7 @@ const init = async (msg,args) => {
     embed.thumbnail = { url : `${paths.CDN}/build/items/${ICON}.png` };
     let craftExplan = "";
 
-    crafter.once("ready", () => {
+    return crafter.once("ready", () => {
       // Create gem display.
       let gemDisplay = "";
       const gemsTotal = crafter.gemsTotal;
@@ -84,8 +84,8 @@ const init = async (msg,args) => {
       for (let itemArr of itemsTotal) {
         const icona = itemArr[2] < itemArr[1] ? "nope" : "yep";
         const itemDetails = Crafter.getItem(itemArr[0]);
-        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji || '📦'}`
-          + `${itemDetails.name} (${itemArr[2]}/${itemArr[1]})`;
+        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji.trim() || '📦'}`
+          + ` ${itemDetails.name} (${itemArr[2]}/${itemArr[1]})`;
       }
       // Not enough gems; fatal to crafting.
       if (crafter.isMissingGems) { 
@@ -99,8 +99,6 @@ const init = async (msg,args) => {
       }
 
       let embedmsg;
-
-      console.log(`MISSING ITEMS: ${crafter.isMissingItems}`)
 
       // Not enough materials. =<
       if (crafter.isMissingItems) {
@@ -164,6 +162,7 @@ const init = async (msg,args) => {
 
       function done() {
         msg.author.crafting = false;
+        embed.title = (craftedItem?.emoji|| '📦') + $t("responses.crafting.craftedItem", P) + " x " + amount;
         embed.color = 0x78eb87;
         embed.description = "";
         embed.footer = { text: $t("responses.crafting.crafted", P) };

@@ -94,8 +94,8 @@ class Crafter extends EventEmitter {
     get _inventory() { return this._modules.inventory }
 
     /**
-     * Returns an array with 3 sub arrays: name, amount needed, amount available.
-     * @returns {[string, number, number][]}
+     * Returns an array of arrays with: name, amount needed (+penalty), amount available, penalty amount.
+     * @returns {[string, number, number, number][]}
      */
     get gemsTotal() {
         const toret = [];
@@ -104,20 +104,21 @@ class Crafter extends EventEmitter {
             toret.push([
                 gem,
                 gemsTotal[gem] + (this._penalty_gems[gem] || 0),
-                this._modules[gem]
+                this._modules[gem],
+                (this._penalty_gems[gem] || 0),
             ]);
         } // @ts-ignore
         return toret;
     }
     /**
-     * Returns an array of arrays as [gem, missing].
-     * @returns {[string, number][]}
+     * Returns an array of arrays as [gem, missing, penalty (included in missing)].
+     * @returns {[string, number, number][]}
      */
     get gemsMissing() { 
         const toret = [];
         for (const a of this.gemsTotal) {
             const missing = -(a[2] - a[1]);
-            if (missing > 0) toret.push([a[0], missing]);
+            if (missing > 0) toret.push([a[0], missing, a[3]]);
         } // @ts-ignore
         return toret;
      }
@@ -448,13 +449,13 @@ class Visualizer {
     }
 
     _genFail() {
-        let toret = "I cannot craft the following requirements:";
+        let toret = "";
       
         const gemsMissing = this.crafter.gemsMissing;
         const itemsMissing = this.crafter.itemsMissing;
-      
+
         for (const gemArr of gemsMissing)
-          toret += `\n${nope} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1])}** ${$t(`keywords.${gemArr[0]}_plural`, this.P)}`;
+          toret += `\n${nope} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[2] ? ` (+${miliarize(gemArr[2])})` : ""}`;
         for (const itemArr of itemsMissing) {
           const item = Crafter.getItem(itemArr[0]);
           toret += `\n${nope} | ${item.emoji || '📦'} ${item.name} ${miliarize(itemArr[1])}${itemArr[1]>=10000?"":"x"}`;
@@ -471,7 +472,7 @@ class Visualizer {
         const itemsInventory = this.crafter.itemsInventory;
 
         for (const gemArr of gemsTotal)
-            toret += `\n${yep} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${gemArr[1]>=10000?"":"x"} ${$t(`keywords.${gemArr[0]}`, this.P)}`;
+            toret += `\n${yep} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[3] ? ` (+${miliarize(gemArr[3])})` : ""}`;
         for (const itemArr of itemsInventory) {
             const item = Crafter.getItem(itemArr[0]);
             toret += `\n${yep} | ${item.emoji || '📦'} ${item.name} ${miliarize(itemArr[1])}${itemArr[1]>=10000?"":"x"}`;
