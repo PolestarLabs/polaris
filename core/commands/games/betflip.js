@@ -50,8 +50,9 @@ const init = async (msg) => {
   const win = R === call;
 
   if (await ECO.checkFunds(msg.author, bet, currency)) {
-    ECO.pay(msg.author, bet, "Gambling : Betflip", currency);
-    if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
+    ECO.pay(msg.author, bet, "Gambling : Betflip", currency).then(() => {
+      if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
+    });
   } else {
     return msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`);
   }
