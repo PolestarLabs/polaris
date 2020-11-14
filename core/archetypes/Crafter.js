@@ -157,8 +157,7 @@ class Crafter extends EventEmitter {
     _xp() {
         return Object.keys(this._itemsCrafting)
               .map(toCraft => baselineBonus[Crafter.getItem(toCraft).rarity] * this._itemsCrafting[toCraft])
-              .reduce((a,b) => a + b, 0)
-              + this.mode === 2 ? 0 : (baselineBonus[this._item.rarity] * this._count);
+              .reduce((a,b) => a + b, 0);
     }
 
 
@@ -182,6 +181,11 @@ class Crafter extends EventEmitter {
         if (int === 2) this.autoGen(true);
     }
 
+    /**
+     * Confirm the craft
+     * @return {object[]} the audits 
+     * @memberof Crafter
+     */
     confirm() {
         /**
         * Handling all the DB stuff in one query:
@@ -196,11 +200,12 @@ class Crafter extends EventEmitter {
 
         let i = 0;
         const itemsCrafted = this.itemsCrafted;
-        itemsCrafted.push([this._item.id, this._count]);
         for(;i < itemsCrafted.length; i++) {
             const [itemID, amount] = itemsCrafted[i];
             arrayFilters.push({ [`i${i}.id`]: itemID });
             user[`modules.inventory.$[i${i}].crafted`] = amount;
+            if (this._mode === 2) user[`modules.inventory.$[i${i}].count`] = amount;
+
             if (itemID === this._item.id) user[`modules.inventory.$[i${i}].count`] = amount;
             const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
             if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
@@ -280,6 +285,7 @@ class Crafter extends EventEmitter {
     _autoGenHelper(item, count = 1, ignore = false) {
         if (!item) throw new Error(`autoGen did not receive an item: ${item}`);
         if (!item.crafted) throw new Error(`Item ${item} not craftable`);
+        if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] || 0) + count;
 
         // Some initialization
         let toRet = { craft: !ignore, id: item.id, count: count, gems: {}, items: [] };
@@ -319,7 +325,6 @@ class Crafter extends EventEmitter {
                 // Not enough items and it's craftable... generate auto report for the material and add it.
                 if (material.crafted && !haveEnough) {
                     const toCraft = need - amountLeft;
-                    this._itemsCrafting[materialID] = (this._itemsCrafting[materialID] || 0) + count;
                     const materialReport = this._autoGenHelper(material, toCraft);
                     toRet.items.push({ ...materialReport, count: toCraft });
                 }

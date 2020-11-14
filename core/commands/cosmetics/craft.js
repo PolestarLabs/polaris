@@ -20,6 +20,10 @@ const init = async (msg,args) => {
 
     // Check arguments
     let pos;
+    console.log(`args: ${args}`);
+    let depsOnly = args.some((arg, i) => (arg.toLowerCase() === "-deps" || arg.toLowerCase() === "-d") && args.splice(i, 1));
+    console.log(`only: ${depsOnly}, args: ${args}`);
+
     let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
     if (isNaN(amount) || amount <= 0) amount = 1;
     else pos ? args.pop() : args.shift();
@@ -115,7 +119,7 @@ const init = async (msg,args) => {
 
           return getYesNo(m).then(async () => {
             // set crafter to autocraft
-            crafter.setMode(1);
+            crafter.setMode(depsOnly ? 2 : 1);
 
             // make a visual of current crafter
             const visualizer = new Visualizer(crafter, P, {depth: 3});
