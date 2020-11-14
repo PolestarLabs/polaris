@@ -48,7 +48,9 @@ class DailyCmd {
       } 
       return "pass";
     }else{
-      if(this.userDaily.insured){
+      if(!this.userDaily.streak || this.userDaily.streak === 1){
+        return 'pass'
+      }else if(this.userDaily.insured){
         await DB.users.set(user.id,{ [`counters.${this.command}.insured`]: false});
         this.userDaily.insured = false;
         return "recovered";
