@@ -219,8 +219,8 @@ async function flairForCostume(msg,uID,FLAIR,COSTUME){
     const [FLAIR1,FLAIR2] = FLAIR;
 
 
-    let firstChoice = eventData.gender === 'girl' ? FLAIR1 : FLAIR2; 
-    let secondChoice = eventData.gender === 'girl' ? FLAIR2 : FLAIR1;
+    let firstChoice =   !eventData.gender || eventData.gender === 'girl' ? FLAIR1 : FLAIR2; 
+    let secondChoice =  !eventData.gender || eventData.gender === 'girl' ? FLAIR2 : FLAIR1;
 
     if (userData.modules.flairsInventory.includes(firstChoice)){
         await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':secondChoice}});
@@ -261,7 +261,7 @@ async function candyForSticker(msg,uID,STICKERS){
     if (!userData.modules.stickerInventory.includes(STICKER1)){
         resEmbed.image = {url:paths.CDN+"/stickers/"+STICKER1+".png"};
         await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':STICKER1}});
-    }else if (userData.modules.flairsInventory.includes(STICKER2)){
+    }else if (userData.modules.stickerInventory.includes(STICKER2)){
         resEmbed.description = $t('events:halloween20.australis.alreadyOwn',P);
         resEmbed.color = 0xCC2233;
         resEmbed.footer.text= "❌";

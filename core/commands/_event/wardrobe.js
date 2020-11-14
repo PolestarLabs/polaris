@@ -143,7 +143,7 @@ function checkEquip(it){
       x_embed.description = itemPresent;
       x_embed.color = 0xffb62c
       
-      if( msg.author.trading ==true)return msg.addReaction(NOPE.reaction);
+      if( msg.author.trading ==true) return msg.addReaction(NOPE.reaction).then(e=> msg.author.trading = false), null;
       msg.author.trading = true;
       msg.channel.send( {content: confirmDestroy, embed:x_embed}).then(async mes=>{
           await mes.addReaction(YEP.reaction);

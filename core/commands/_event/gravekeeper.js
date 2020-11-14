@@ -131,7 +131,9 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
 
     const covenant = await avicheck.init(rea.author,true);
-    let covBonus = (covenant=='umbral'?5:covenant=='dusk'?-2:0) *83;
+    let covBonus = (1+(covenant=='umbral'?5:covenant=='dusk'?-2:0)) *3;
+
+    console.log({covBonus})
 
     if(rea.emoji.name === 'CANDY'){
         if (eventData.candy >= priceC) {
@@ -168,14 +170,16 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
         }
     }
 
+    
+
     if(eventData.affinityNox >= 2500){
         
         if (!userData.modules.stickerInventory.includes("nox-c1")){
             promptEmbed.image = {url:paths.CDN+"/stickers/nox-c1.png"};
             promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.noctix.completeR',P) ) + `\n
             Since you appear around here a lot, here, take this sticker so you can show to everyone we're big friends.`
-            await DB.users.set(uID,{$addToSet:{'modules.stickerInventory':"nox-c1"}});
-            prompt.edit({embed:promptEmbed})
+            await DB.users.set(userID,{$addToSet:{'modules.stickerInventory':"nox-c1"}});
+            await prompt.edit({embed:promptEmbed});
             
         }
     
@@ -184,12 +188,15 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
                 promptEmbed.thumbnail = {url:paths.CDN+"/flairs/umbral.png"};
                 promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.noctix.completeR',P) ) + `\n
                 You're really a loyal friend. Here, I'll give you something special: it is an **Umbral Flair**, use it in your profile to demonstrate your dedication to our covenant.`
-                await DB.users.set(uID,{$addToSet:{'modules.flairsInventory':"umbral"}});
-                prompt.edit({embed:promptEmbed})
+                await DB.users.set(userID,{$addToSet:{'modules.flairsInventory':"umbral"}});
+                await prompt.edit({embed:promptEmbed});
 
             }
         }
     }
+
+
+
 
 }
 

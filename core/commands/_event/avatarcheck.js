@@ -44,13 +44,13 @@ const init= async function run(msg,args) {
       PROPIC_BUFFER,
       DUSK_BUFFER,
       console.log, dimensions[0],dimensions[1],
-      {includeAA:false,threshold:.4}
+      {includeAA:false,threshold:.1}
     );
     const checkUMBRA = PXL(
       PROPIC_BUFFER,
       UMBRAL_BUFFER,
       null, dimensions[0],dimensions[1],
-      {includeAA:false,threshold:.4}
+      {includeAA:false,threshold:.1}
     );
     
     if(args !== true){
