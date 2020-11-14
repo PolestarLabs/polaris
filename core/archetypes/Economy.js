@@ -52,8 +52,6 @@ function checkFunds(user, amount, currency = "RBN") {
   if (amount === 0) return Promise.resolve(true);
   if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
 
-  const uID = user["id"] || user;
-  if (uID === PLX.user.id) return Promise.resolve(true);
   let curr = parseCurrencies(currency);
 
   // Argument validation
@@ -62,7 +60,10 @@ function checkFunds(user, amount, currency = "RBN") {
     if (!(typeof amount === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
     amount = [amount];
     curr = [curr];
-  } else if (amount.length !== curr.length) throw new Error("amount & curr arrays need to be equal length");
+  } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
+
+  const uID = user["id"] || user;
+  if (uID === PLX.user.id) return Promise.resolve(true);
 
   return DB.users.get(uID).then((userData) => {
     if (!userData) return false;
@@ -179,7 +180,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     // Fill DB calls
     for (let i in curr) {
       let absAmount = Math.abs(amt[i]);
-      if (!absAmount) continue;
+      if (!absAmount) continue; // stop if AMT = 0 or not present
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
       payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));

@@ -319,6 +319,10 @@ const init = async (msg, args) => {
     
         */
     let postmortem;
+    if (DAILY.streakStatus === 'first') {
+      P.insuCount = userData.modules.inventory.find(i => i.id === 'keepstreak')?.count || 0;
+      postmortem = $t('responses.daily.firstDaily', P);
+    }
     if (DAILY.streakStatus === 'recovered') {
       P.insuCount = userData.modules.inventory.find(i => i.id === 'keepstreak')?.count || 0;
       postmortem = $t('responses.daily.insuranceConsumed', P);

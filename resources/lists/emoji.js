@@ -37,6 +37,17 @@ const POLARIS_UI = {
  rank8: '<:rank8:767906710219915295>',
  rank9: '<:rank9:767906710849060864>',
  rank10: '<:rank10:767906710626107442>',
+
+ //GRADES
+ gradeSSS: "<:gradeSSS:777037978127695872>",
+ gradeSS: "<:gradeSS:777037978211057664>",
+ gradeS: "<:gradeS:777037977976832080>",
+ gradeA: "<:gradeA:777037977796870145>",
+ gradeB: "<:gradeB:777037977989414939>",
+ gradeC: "<:gradeC:777037977913524234>",
+ gradeD: "<:gradeD:777037978085359636>", 
+ gradeF: "<:gradeF:777037977921781770>",
+ 
   // NAMED COPIES
 
   swon: "<:swon:763615045024088104>",
