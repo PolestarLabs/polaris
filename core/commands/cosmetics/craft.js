@@ -68,10 +68,11 @@ const init = async (msg,args) => {
     embed.title = (craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount;
     embed.thumbnail = { url : `${paths.CDN}/build/items/${ICON}.png` };
     let craftExplan = "";
+    let gemDisplay = "";
+    let matDisplay = "";
 
     crafter.once("ready", () => {
       // Create gem display.
-      let gemDisplay = "";
       const gemsTotal = crafter.gemsTotal;
       for (const gemArr of gemsTotal) {
         const icona = gemArr[2] < gemArr[1] ? "nope" : "yep";
@@ -79,7 +80,6 @@ const init = async (msg,args) => {
       }
 
       // Create material display
-      let matDisplay = "";
       const itemsTotal = crafter.itemsTotal;
       for (let itemArr of itemsTotal) {
         const icona = itemArr[2] < itemArr[1] ? "nope" : "yep";
