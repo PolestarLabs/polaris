@@ -46,9 +46,11 @@ class DailyCmd {
       if(this.userDaily.streak > (this.userDaily.highest||1)){
         await DB.users.set(user.id,{ [`counters.${this.command}.highest`]: this.userDaily.streak});
       } 
+      if (this.userDaily.streak == 1) return "first";
       return "pass";
+      
     }else{
-      if(!this.userDaily.streak || this.userDaily.streak === 1){
+      if(this.userDaily.streak <= 1){
         return 'pass'
       }else if(this.userDaily.insured){
         await DB.users.set(user.id,{ [`counters.${this.command}.insured`]: false});
