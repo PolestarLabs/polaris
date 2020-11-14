@@ -409,7 +409,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
 
   const reject = (message, D, REM) => {
-    P.remaining =  moment.utc(REM).fromNow();
+    P.remaining =  moment.utc(REM).fromNow(true);
     return message.channel.send( _emoji('nope') + $t('responses.daily.dailyNope',P) );
   };
 
