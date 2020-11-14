@@ -25,7 +25,7 @@ const currencies = [
  * Checks if currency or currencies are valid, otherwise throws error.
  *
  * @param {string|Array<string>} curr the currency or currency array to parse
- * @return {string|string[]} returns the correct formats
+ * @return {string|string[]} returns the correct formats ; string/array dependent on input
  * @throws {Error} Unknown currency
  */
 function parseCurrencies(curr) {
@@ -35,7 +35,8 @@ function parseCurrencies(curr) {
 
   if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
   if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
-  return curr;
+  // NOTE: changing the way this returns has implications down the line.
+  return (curr.length === 1 ? curr[0] : curr);
 }
 
 /**
@@ -51,28 +52,25 @@ function checkFunds(user, amount, currency = "RBN") {
   if (amount === 0) return Promise.resolve(true);
   if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
 
-  // Argument validation
-  console.log(`AMT: ${amount} typeof ${typeof amount}\nCURR: ${currency} typeof ${typeof currency}`)
-  if (typeof amount === "number" || typeof currency === "string") {
-    if (!(typeof amount === "number" && typeof currency === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
-    amount = [amount];
-    currency = [currency];
-  } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
-
   const uID = user["id"] || user;
-  const curr = parseCurrencies(currency);
+  if (uID === PLX.user.id) return Promise.resolve(true);
+  let curr = parseCurrencies(currency);
+
+  // Argument validation
+  // NOTE: comparing currency first and then curr might result in error if parseCurrencies doesn't return a string/array as it should.
+  if (typeof amount === "number" || typeof currency === "string") {
+    if (!(typeof amount === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
+    amount = [amount];
+    curr = [curr];
+  } else if (amount.length !== curr.length) throw new Error("amount & curr arrays need to be equal length");
 
   return DB.users.get(uID).then((userData) => {
     if (!userData) return false;
-    if (typeof curr === "string") {
-      return (userData.modules.currency >= amount);
-    } else {
-      return curr.every((c, i) => {
-        if (amount[i] === 0) return true;
-        if (!userData.modules[c]) return false;
-        return (userData.modules[c] >= amount[i]);
-      });
-    }
+    return curr.every((c, i) => {
+      if (amount[i] === 0) return true;
+      if (!userData.modules[c]) return false;
+      return (userData.modules[c] >= amount[i]);
+    });
   });
 }
 
@@ -162,30 +160,26 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (userTo["id"]) userTo = userTo["id"];
 
   // Checks
-  let tempcurr = parseCurrencies(curr); // temp var so curr and amt stay same type for validation
+  curr = parseCurrencies(curr);
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
-  if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
+    if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
 
     // Argument validation
     if (typeof amt === "number" || typeof curr === "string") {
-      console.log(`AMT: ${amt} typeof ${typeof amt}\nCURR: ${curr} typeof ${typeof curr}`)
       if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
       amt = [amt];
+      curr = [curr];
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
-    curr = tempcurr;
 
     // Setup v1.0
     const fromUpdate = {};
     const toUpdate = {};
     const payloads = [];
 
-    console.table(amt)
-    console.table(curr);
-
     // Fill DB calls
     for (let i in curr) {
       let absAmount = Math.abs(amt[i]);
-      if (absAmount === 0) continue;
+      if (!absAmount) continue;
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
       payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
@@ -200,7 +194,6 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       { updateOne: { filter: { id: userTo }, update: { $inc: toUpdate } } },
     ];
 
-    console.log(require("util").inspect(toWrite));
     console.table(payloads);
     // Finish with DB updates & inserts.
     return DB.users.bulkWrite(toWrite)
