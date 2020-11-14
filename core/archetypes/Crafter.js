@@ -86,9 +86,6 @@ class Crafter extends EventEmitter {
             Object.assign(this._modules, dataFull);
             this._init();
         });
-        DB.users.getFull({ id: userid }).then(data => {
-            
-        });
     }
 
     get _inventory() { return this._modules.inventory }
