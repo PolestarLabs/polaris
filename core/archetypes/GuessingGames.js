@@ -56,6 +56,7 @@ class GuessingGame{
             this.imageFile = await resolveFile(response.url);
             if(this.gamemode === 'endless') this.embed.footer.text = `Endless Mode | Round ${this.round || 1}`;
             if(this.gamemode === 'time') this.embed.footer.text = `Time Attack Mode | Remaining: ${  ~~((this.time - ~~(Date.now() - (this.start||Date.now() ))) / 1000 )}s`;
+            if(this.solo) this.embed.footer.text += " | SOLO"
             return response;
         }
     }
@@ -84,7 +85,8 @@ class GuessingGame{
             await msg.channel.send({embed: this.embed},{file: this.imageFile, name: `${this.name}.png` });
             this.start = Date.now();
             console.log(this.gamemode)
-            let Collector = msg.channel.createMessageCollector(m=>m.content.length, {time: this.time});
+
+            let Collector = msg.channel.createMessageCollector(m=> this.solo ? m.author.id === msg.author.id : true, {time: this.time});
 
             const isValid = (m,n) => n.includes(m.content.normalize().toLowerCase());
             const _capitalize = (s)=> s.replace( /\w\S*/g, t => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase() );
