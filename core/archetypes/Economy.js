@@ -33,9 +33,11 @@ function parseCurrencies(curr) {
   if (typeof curr === "string") curr = [curr.toUpperCase()];
   else curr = curr.map(c => c.toUpperCase());
 
+  // convert currencies to XXX format. eg. rubines/rubine → RBN.
   if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
-  if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
+  
   // NOTE: changing the way this returns has implications down the line.
+  if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
   return (curr.length === 1 ? curr[0] : curr);
 }
 
@@ -86,7 +88,7 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
- * @return {object} The payload generated .
+ * @return {object} The payload generated.
  */
 function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
@@ -187,7 +189,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     }
 
     // If every amt was zero
-    if (!payloads.length) return null;
+    if (!payloads.length) return Promise.resolve(null);
 
     // Setup v2.0
     const toWrite = [
@@ -195,11 +197,13 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       { updateOne: { filter: { id: userTo }, update: { $inc: toUpdate } } },
     ];
 
-    console.table(payloads);
     // Finish with DB updates & inserts.
     return DB.users.bulkWrite(toWrite)
       .then(() => DB.audits.collection.insertMany(payloads))
-      .then(() => payloads.length === 1 ? payloads[0] : payloads);
+      .then(() => {
+        console.table(payloads); // log transactions
+        return payloads.length === 1 ? payloads[0] : payloads;
+      });
   });
 }
 
