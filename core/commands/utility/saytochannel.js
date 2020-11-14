@@ -15,7 +15,7 @@ const init = async function (msg) {
     if (!nex_msg.channel) return msg.channel.send(`${_emoji("nope")} \`ERROR :: Channel not set\``);
     nex_msg.args = msg.args.slice(1);
     nex_msg.delete = () => null;
-    require("./say").init(nex_msg);
+    require("./say").init(nex_msg,nex_msg.args);
   } else {
     msg.reply($t("responses.errors.cantFindChannel", P));
   }
