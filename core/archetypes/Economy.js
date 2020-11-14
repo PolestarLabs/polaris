@@ -60,6 +60,7 @@ function checkFunds(user, amount, currency = "RBN") {
   } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
 
   const uID = user["id"] || user;
+  if (uID === PLX.user.id) return Promise.resolve(true);
   const curr = parseCurrencies(currency);
 
   return DB.users.get(uID).then((userData) => {
