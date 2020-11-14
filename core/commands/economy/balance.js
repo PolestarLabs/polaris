@@ -38,7 +38,7 @@ const init = async (msg) => {
   async function lastTransBuild(x) {
     if (!x) return "\u200b";
 
-    const POLid = "271394014358405121";
+    const POLid = PLX.user.id;
 
     const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
     if (x.type === "SEND") x.type = "TRANSFER";
