@@ -185,11 +185,12 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 
     // Fill DB calls
     for (let i in curr) {
+      if(!amt[i]) continue; // stop if AMT = 0 or not present
       let absAmount = Math.abs(amt[i]);
       if (absAmount === 0) continue;
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
-      if(amt[i]) payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
+      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
     }
 
     // If every amt was zero
