@@ -529,11 +529,12 @@
         "crafting": {
             "craftingItem": "Crafting `{{item_name}}`",
             "noitem": "I couldn't find this item",
-            "noitemu": "Could not find this Item or anything like it",
+            "noitemlike": "Could not find this Item or anything like it",
             "gemsMissing": "Crafting ain't free, I cannot craft this without the right gems.",
             "materialMissing": "There are missing materials in your inventory, I cannot craft these.",
             "materialAutocraft": "You are missing a few materials... want me to try and craft these for you?",
             "materialPresent": "All materials are available in your inventory, proceed with the crafting?",
+            "materialPresentAuto": "All materials for auto crafting are available, proceed with the crafting?",
             "didyoumean": "I couldn't find this item. By any chance do you mean one of these?",
             "didyoumeanOne": "Something is not right there... Is this what you're looking for, m'dear?",
             "timeout": "Timeout! You took too much to decide, the crafting furnace now is cold.",
