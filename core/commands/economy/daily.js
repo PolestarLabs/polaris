@@ -343,7 +343,8 @@ const init = async (msg, args) => {
 
     const actions = [lootAction, boosterAction, itemAction, fragAction, tokenAction];
     await awardPrizes(userData, myDaily, actions);
-
+    P.username = msg.author.username;
+    
     msg.channel.send({
       embed: {
         description: `
