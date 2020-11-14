@@ -9,6 +9,9 @@ const init = async function (msg,args){
     let timeout  =  "Time's up! Seems like nobody guessed it. :("
 
 
+    if (args.includes('solo')){
+        solo = true
+    }
     if (args.includes('endless')){
         gamemode = "endless";
         timeout  =  "Time's up! Looks like this one was a tough one..."
@@ -23,9 +26,8 @@ const init = async function (msg,args){
 
     let Flags = new GG('guessflags','image',{
         title: "Guess the Flag",
-        prompt: "What country does this flag belong to?",
-        solo: args.includes('solo'),
-        gamemode,guessed,timeout
+        prompt: "What country does this flag belong to?",      
+        gamemode,guessed,timeout,solo
     });
 
     Flags.play(msg).then( async results=>{
@@ -52,4 +54,5 @@ module.exports={
     ,cat:'games'
     ,botPerms:['attachFiles','embedLinks']
     ,aliases:['gtf']
+    ,teleSubs: [  {label: 'top',  path:'games/highscores', pass:"flags"}  ]
 }
