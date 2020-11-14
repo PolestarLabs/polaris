@@ -1,3 +1,4 @@
+// @ts-check
 const DAY = 22 * 60 * 60e3;
 const EXPIRE = DAY * 2.1;
 
@@ -38,8 +39,9 @@ let constantAssets = [
 
 
 function awardPrizes(userData, myDaily, actions) {
-  const currencies = ["RBN", "JDE", "SPH", "PSM"];
-  return Promise.all(actions, Promise.all([
+  let currencies = ["RBN", "JDE", "SPH", "PSM"];
+  currencies = currencies.filter(curr => myDaily[curr]);
+  return Promise.all([actions,
     ECO.receive(userData.id, currencies.map(curr => myDaily[curr]), "Daily Rewards", currencies),
     DB.users.set(userData.id, {
       $inc: {
@@ -47,7 +49,7 @@ function awardPrizes(userData, myDaily, actions) {
         'eventTokens': myDaily.evToken || 0,
       }
     })
-  ]));
+  ]);
 }
 
 
@@ -168,7 +170,7 @@ const init = async (msg, args) => {
       ctx.drawImage(await boost, 0 - 50, 0);
     }
     if (userData.donator) {
-      let donoBoost = Premium.DAILY[userData.donator];
+      let donoBoost = Premium.DAILY[userData.donator] || 0;
       let donoEmblem = Picto.getCanvas(paths.CDN + "/images/donate/icony/" + userData.donator + "-small.png");
       myDaily.RBN += donoBoost;
       let number_DONOBOOST = Picto.tag(ctx, "+ " + donoBoost, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
