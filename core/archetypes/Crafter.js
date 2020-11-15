@@ -452,7 +452,7 @@ class Visualizer {
         let toret = "";
         if (this.crafter.isMissingGems || this.crafter.isMissingItems) toret = this._genFail();
         else toret = this._genSuccess();
-        return toret + "\n\n" + this._genRecursive(this.report, JSON.parse(JSON.stringify(this.crafter._itemsInventory)));
+        return toret + "\n\n" + this._genRecursive(this.report, JSON.parse(JSON.stringify(this.crafter._itemsInventory)), /* 0, this.report?.items?.length */ );
     }
 
     _genFail() {
@@ -488,25 +488,32 @@ class Visualizer {
         return toret;
     }
 
-    _genRecursive(item, inventory, depth = 0) {
+    _genRecursive(item, inventory, depth = 0,length=1,index=1, parentIndex=1, maxdepth=1) {
         let str = "";
         let depthstr = "";
-        let it = "---"
-        for (let i = 0; i < depth; i++) depthstr += it;
+        let it = "\u2003\u2002"
+        let pipe= "║"
+        let _T  = "╠═"
+        let _L  = "╚═"
+        console.log(` ${item.id} `.bgRed);
+        for (let i = 0; i < depth; i++) 
+            depthstr +=  ((parentIndex < maxdepth && (maxdepth - (i+1) ==depth||parentIndex + i == maxdepth||depth == i+1)) ? pipe : '\u200b ') + it;
+
+        if(length===index) depthstr += _L;
+        else depthstr += _T;
       
         const items = item.items;
-        const emote = item.craft ? "🛠️" : 
-            (inventory[item.id] >= item.count && ((inventory[item.id] -= item.count) || true)) ? _emoji("yep") :
-            _emoji("nope");
-
+        const emote = item.craft ? "🛠️" : item.id === this.crafter._item.id ? " <:gooselike:678164792103534594>" :
+        (inventory[item.id] >= item.count && ((inventory[item.id] -= item.count) || true)) ? _emoji("yep") :
+        _emoji("nope");
 
         str += `${depthstr} ${emote} **${item.id}** ${miliarize(item.count) || 1}${item.count>=10000?"":"x"}`
-        if (item.craft) str += Object.keys(item.gems).map((gem, i) => `${i === 0 ? " ::":""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`).join(" ");
+        if (item.craft) str += Object.keys(item.gems).map((gem, i) => `${i === 0 ? " :: ":""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`).join(" ");
         str += "\n";
       
-        if (item.craft && items?.length) {
+        if ((item.craft || item.id === this.crafter._item.id) && items?.length) {
           if (depth == this.depth) str += `${depthstr}${it} and more...\n`;
-          else for (const itm of items) str += this._genRecursive(itm, inventory, depth+1);
+          else items.forEach( (itm,i,arr) => str += this._genRecursive(itm, inventory, depth+1,arr.length, i+1, index, length ) );
         }
       
         return str;

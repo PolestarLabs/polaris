@@ -88,7 +88,7 @@ const init = async (msg,args) => {
       for (let itemArr of itemsTotal) {
         const icona = itemArr[2] < itemArr[1] ? "nope" : "yep";
         const itemDetails = Crafter.getItem(itemArr[0]);
-        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji.trim() || '📦'}`
+        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji?.trim() || '📦'}`
           + ` ${itemDetails.name} (${itemArr[2]}/${itemArr[1]})`;
       }
       // Not enough gems; fatal to crafting.
@@ -184,6 +184,7 @@ const init = async (msg,args) => {
         } else if (e === "no") {
           return endCancel(m);
         } else {
+          console.error(" CRAFT ERROR ".bgRed)
           if (e && e.stack) console.error(e.stack);
           throw new Error("shouldn't happen");
         }
@@ -193,6 +194,9 @@ const init = async (msg,args) => {
         msg.author.crafting = false;
         embed.color = 0xed3a19;
         embed.description = (v ? v : gemDisplay + matDisplay) + `\n${$t("responses.crafting.materialMissing", P)}`;
+        embed.description = embed.description.slice(0,2047).split("\n")
+        embed.description.pop()
+        embed.description = embed.description.join('\n')
         if (m) m.edit({ embed });
         else msg.channel.send({ embed });
         return;
