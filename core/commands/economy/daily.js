@@ -1,6 +1,6 @@
 // @ts-check
-const DAY = 22 * 60 * 60e3;
-const EXPIRE = DAY * 2.1;
+const DAY = 1// 22 * 60 * 60e3;
+const EXPIRE = 10000000000000000*DAY * 2.1;
 
 
 const Timed = require(`../../structures/TimedUsage`);
@@ -40,7 +40,6 @@ let constantAssets = [
 
 function awardPrizes(userData, myDaily, actions) {
   let currencies = ["RBN", "JDE", "SPH", "PSM"];
-  currencies = currencies.filter(curr => myDaily[curr]);
   return Promise.all([actions,
     ECO.receive(userData.id, currencies.map(curr => myDaily[curr]), "Daily Rewards", currencies),
     DB.users.set(userData.id, {
