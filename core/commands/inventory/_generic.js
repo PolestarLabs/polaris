@@ -29,7 +29,8 @@ class GenericItemInventory {
     this.color = color || 0xEBBEFF;
     this.pub = pub || true;
 
-    this.init = async (msg, args, userID) => {
+    this.init = async (msg, args, {id:userID}) => {
+      console.log({userID}, 'generic')
       if (userID && args[10]?.id != userID) return "Only the owner can see inside";
       msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
@@ -42,13 +43,13 @@ class GenericItemInventory {
         response.embed = { description: `*${rand$t("responses.inventory.emptyJokes", P)}*`, color: this.color };
         return response;
       }
-
+      const itemsPerPage = 10
       const Pagination = async (page, mss, recursion = 0) => {
-        const tot_pages = Math.ceil(Inventory.length / 5);
+        const tot_pages = Math.ceil(Inventory.length / itemsPerPage);
         page = page > tot_pages ? tot_pages : page < 1 ? 1 : page;
 
-        const pace = (5 * ((page || 1) - 1));
-        const pagecontent = Inventory.slice(pace, pace + 5);
+        const pace = (itemsPerPage * ((page || 1) - 1));
+        const pagecontent = Inventory.slice(pace, pace + itemsPerPage);
         const procedure = function (...args) {
           if (mss) return mss.edit(...args);
           return msg.channel.send(...args);
@@ -69,7 +70,7 @@ class GenericItemInventory {
         }
         let i = 0;
         embed.fields = [];
-        while (i++ < 5) {
+        while (i++ < itemsPerPage) {
           const invItm = pagecontent[i - 1];
           if (!invItm) {
             embed.field("\u200b", "\u200b", true);
@@ -88,7 +89,7 @@ class GenericItemInventory {
         mss = null;
       };
 
-      return Pagination(1);
+      return Pagination(1,msg);
     };
 
     this.cat = "inventory";
