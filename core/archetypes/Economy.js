@@ -13,8 +13,8 @@
 // };
 
 const toCurrencies = {
-  rubine: "RBN", jade: "JDE", sapphire: "SPH",
-  amethyst: "AMY", emerald: "EMD", topaze: "TPZ", prism: "PSM",
+  RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
+  AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
 }
 const currencies = [
   "RBN", "JDE", "SPH",
