@@ -47,7 +47,7 @@ const init = async function (msg, programatic) {
     }];
   }
 
-  const embed = new Embed();
+  const embed = {};
   const Canvas = Picto.new(140, 140);
   const ctx = Canvas.getContext("2d");
 
@@ -56,15 +56,14 @@ const init = async function (msg, programatic) {
     const CMYK = result.data.cmyk;
     const RGB = result.data.rgb;
 
-    embed
-      .author(result.title, "https://img.icons8.com/dusk/250/paint-brush.png")
-      .color(result.hex)
-      .thumbnail("attachment://color.png")
-      .description(`
-      HEX \`${result.hex}\`
+    embed.author = {name: result.title, icon_url: "https://img.icons8.com/dusk/250/paint-brush.png"} 
+    embed.color =  parseInt(result.hex,16)
+    embed.thumbnail = {url: "attachment://color.png"}  
+    embed.description = `      
+      HEX \`#${result.hex}\`
       RGB \`${RGB.r}\` \`${RGB.g}\` \`${RGB.b}\`  
       CMYK \`${CMYK.c}\` \`${CMYK.m}\` \`${CMYK.y}\` \`${CMYK.k}\`
-      `);
+      `;
 
     Picto.roundRect(ctx, 10, 10, 120, 120, 20, `#${hexColor}`);
 
@@ -78,7 +77,7 @@ const init = async function (msg, programatic) {
       };
     }
 
-    msg.channel.send({ embed }, file(Canvas.toBuffer(), "color.png"));
+    msg.channel.send({ embed }, {file: Canvas.toBuffer(), name: "color.png"});
   } else {
     if (programatic === true) {
       Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");
