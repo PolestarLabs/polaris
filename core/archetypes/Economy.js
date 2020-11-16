@@ -30,6 +30,7 @@ const currencies = [
  */
 function parseCurrencies(curr) {
   // Argument parsing
+  const type = typeof curr;
   if (typeof curr === "string") curr = [curr.toUpperCase()];
   else curr = curr.map(c => c.toUpperCase());
 
@@ -38,7 +39,7 @@ function parseCurrencies(curr) {
   
   // NOTE: changing the way this returns has implications down the line.
   if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
-  return (curr.length === 1 ? curr[0] : curr);
+  return (type === "string" ? curr[0] : curr);
 }
 
 /**
