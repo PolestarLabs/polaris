@@ -65,7 +65,6 @@
         "colorChange": "Deine Lieblingsfarbe wurde gespeichert!"
     },
     "CMD": {
-        "denied": "Sorry, aber dir ist es nicht gestattet, diesen Command zu benutzen. Du brauchst mindestens die {{rankNeed}} Rolle.\nDu bist aktuell nur ein {{rankMe}}.\nKomm zurück wenn du ein {{rankNeed}} bist!",
         "incorrectUsage": "Halt, Halt, Halt. So benutzt du diesen Command leider falsch. Es wird eigentlich für {{usage}} genutzt. Beispielsweise: {{example}}",
         "disabledModule": ":no_entry_sign: Unser Lord und Meister hat {{module}} für verboten erklärt. Echt schade...",
         "genericInvalid": "Schade, Falsches Kommando ;~;",
@@ -116,7 +115,7 @@
         "useThis": "Verwenden Sie `{{Präfix}}` als Präfix dafür.",
         "acceptDec": "Klicken Sie auf {{icon}}, um diese zu akzeptieren. Sie können nur 5 Transaktionen pro tag akzeptieren.",
         "declinedTrans": "{{user}} scheint deine rubines nicht zu wollen.",
-        "ongoingTrade": ""
+        "ongoingTrade": "Du kannst keinen Handel starten, während ein anderer weitergeht!"
     },
     "dict": {
         "coinHeads": "Kopf",
@@ -415,9 +414,9 @@
         "decontaminate": "`{{prefix}}decontaminate [@user (optional)]`",
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nDu kannst auch auswählen von welchem Kurator du Beiträge sehen willst! Schreibe einfach ihren Namen nach dem Befehl, zum Beispiel `{{prefix}}lewd pollyanna` um nur die Auswahl von **Pollyanna** zu sehen.\n\nUnsere momentane Kurator Squad ist:\n {{squad}}",
-        "marry": "",
-        "craft": "",
-        "divorce": ""
+        "marry": "Die Ehe stützt sich direkt auf `{{prefix}}craft`, da du einen Ring brauchst, bevor du Vorschläge machen kannst.\n\nUm deine Lieben zu heiraten, mache `{{prefix}}heiraten @user [ring]`. Es gibt 4 Ebenen von Hochzeitsringen, jede aus einem anderen Edelstein, um zu zeigen, wie schön Ihre Ehe ist. In Zukunft werden höhere Rankings dem Paar mehr Love Points geben, die sie zusammen ausgeben können.\n\nBeispielnutzung: `{{prefix}}heiraten @someone rubine`, um mit einem Rubinring vorzuschlagen.\n\nBenötigt Einbetten, Verwalten von Nachrichten und Reaktionsberechtigungen",
+        "craft": "`{{prefix}}craft [Item code]`\n Du findest den Artikelcode und alle Informationen unter http://pollux.fun/crafting.\n\nUm ein Item herzustellen, musst du alle benötigten Materialien besitzen einige Materialien müssen hergestellt werden, um verfügbar zu sein, diese werden nicht automatisch hergestellt, wenn du einen höherstufigen Gegenstand machst.",
+        "divorce": "`{{prefix}}divorce` um jeden zu zeigen, mit dem du verheiratet bist. ob das eine Person oder ein ganzer Harem ist!\n`{{prefix}}Scheidung [@user || Discord ID]` Um diese Person zu scheiden"
     },
     "logs": {
         "success": "Fertig! Ich habe {{channel}} als den Kanal für {{CHNTYPE}} gesetzt!",
@@ -589,22 +588,22 @@
         "gSets": "Servereinstellungen wurden aktualisiert"
     },
     "modules": {
-        "nsfw": "",
+        "nsfw": "NSFW",
         "mod": "Moderieren",
         "$": "Wirtschaft",
         "game": "Spiel",
         "rubine": "Rubine",
         "cosmetics": "Kosmetic",
-        "social": "",
+        "social": "Soziale",
         "img": "Bild",
         "dev": "Entwickler",
         "own": "Besitzer",
-        "easteregg": "",
+        "easteregg": "Ostereier",
         "language": "Lokal",
-        "forfun": "",
-        "memes": "",
+        "forfun": "4Fun",
+        "memes": "Memes",
         "gambling": "Glücksspiele",
-        "infra": "",
+        "infra": "Infra",
         "misc": "Sonstiges",
         "util": "Werkzeuge",
         "music": "Musik"
@@ -619,11 +618,11 @@
             "ongoing": "Das geht so nicht. Wir spielen momentan schon ein Spiel!",
             "newgame": "Yeah, eine weitere Runde BlackJack. Du kennst garantiert die Regeln, also lass uns beginnen.",
             "result": "Ergebniss:",
-            "bust": "",
+            "bust": "Büste",
             "youwin": "Herzlichen Glückwunsch! Du hast dieses mal gewonnen!",
             "youlose": "Ha! Ichhab gewonnen!",
             "hit": "Antworte mit ´hit´ um eine weitere Karte zu ziehen.",
-            "stand": "",
+            "stand": "Stand",
             "split": "Benutze ´split´, um deine Hand aufzuteilen.",
             "doubledown": "",
             "double": "´double down´, um deinen Einsatz zu verdoppeln und um eine letze Karte zu ziehen.",
@@ -810,8 +809,8 @@
         "saidnope": "",
         "saidnothing": "",
         "saidyep": "",
-        "forced_rej": "",
+        "forced_rej": "Okay, ich rief einen Rechtsanwalt auf, um mit der Situation umzugehen, du bist nicht mehr verheiratet!",
         "info": "",
-        "divorce_title": ""
+        "divorce_title": "Scheidung"
     }
 }

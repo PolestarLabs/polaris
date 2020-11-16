@@ -19,11 +19,11 @@
     },
     "complete_ring_sapphire": {
         "name": "Anel Luxuoso de Safira",
-        "description": ""
+        "description": "O primeiro passo em direção a um relacionamento é abrir mão de uma joia rara pelo seu amado - parabéns! "
     },
     "complete_ring_stardust": {
         "name": "Anel Opulento de Poeira Estelar",
-        "description": ""
+        "description": "\"Todo amante é, em seu coração, um louco, e, em sua cabeça, um poeta.\" \n- Neil Gaiman, O Mistério da Estrela (Stardust)"
     },
     "cosmo_fragment": {
         "name": "Fragmento Cósmico",
@@ -47,15 +47,15 @@
     },
     "cosmo_gem_UR": {
         "name": "Gema Cósmica Ultra Rara",
-        "description": ""
+        "description": "Deseje à uma estrela... E você finalmente conseguiu uma."
     },
     "daianwatch_booster": {
         "name": "Overwatch por Daianpan",
-        "description": ""
+        "description": "Boosterpack oficial do \"Por favor, não pickem 4 DPS no time\""
     },
     "doki_booster": {
         "name": "Doki Doki Literature Club",
-        "description": ""
+        "description": "Apenas Monika"
     },
     "doublehook": {
         "name": "Gancho Duplo",
@@ -75,11 +75,11 @@
     },
     "iwd1_booster": {
         "name": "IWD - 1ª Temporada",
-        "description": ""
+        "description": "Adesivos exclusivos para assinamtes do Internet Wrestling Discord 2018"
     },
     "iwd2_booster": {
         "name": "IWD - 2ª Temporada",
-        "description": ""
+        "description": "Adesivos exclusivos para assinamtes do Internet Wrestling Discord 2019"
     },
     "lootbox_C_C": {
         "name": "Caixa Chibi Comum"
@@ -265,14 +265,14 @@
     },
     "nierauto_booster": {
         "name": "NieR: Automata",
-        "description": ""
+        "description": "O booster que você precisa para ser feliz"
     },
     "p5_booster": {
         "name": "Persona 5",
-        "description": ""
+        "description": "Você nunca o vê chegar."
     },
     "padoru_booster": {
-        "name": "",
+        "name": "Coleção Ultimate Padoru",
         "description": "Hashire sore yo e me dê seus Rubines"
     },
     "partial_ring": {
@@ -326,5 +326,20 @@
     "fork": {
         "name": "Garfo",
         "description": "Com o quádruplo do potencial perfurante de uma faca, mas com apenas metade do impacto e o dobro do custo!"
+    },
+    "lootbox_C_D": {
+        "name": "Caixa Diária Comum"
+    },
+    "lootbox_U_D": {
+        "name": "Caixa Diária Incomum"
+    },
+    "lootbox_R_D": {
+        "name": "Caixa Diária Rara"
+    },
+    "lootbox_SR_D": {
+        "name": "Caixa Diária Super Rara"
+    },
+    "lootbox_UR_D": {
+        "name": "Caixa Diária Ultra Rara"
     }
 }

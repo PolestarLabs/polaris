@@ -12,6 +12,8 @@
         "synthGems": "Synthese-Juwelen",
         "cosmoFragment": "Kosmo Fragment",
         "cosmoFragment_plural": "Kosmo-Fragmente",
+        "COS": "Kosmo Fragment",
+        "COS_plural": "Kosmo-Fragmente",
         "C": "Gewöhnlich",
         "U": "Ungewöhnlich ",
         "R": "Selten",
@@ -36,7 +38,10 @@
         "sticker": "Aufkleber",
         "sticker_plural": "Sticker",
         "background": "Hintergrund",
-        "background_plural": "Hintergründe"
+        "background_plural": "Hintergründe",
+        "EXP": "Fortschritt EXP",
+        "PSM": "Prisma erhöhen",
+        "PSM_plural": "Prismen erhöhen"
     },
     "terms": {
         "transferDenied": "Übertragung verweigert",
@@ -119,7 +124,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "Es fehlen die folgenden Berechtigungen um Erfolgreich fortzufahren:{{PERMSLIST}}",
-            "denied": "Sorry, aber dir ist es nicht gestattet, diesen Command zu benutzen. Du brauchst mindestens die {{rankNeed}} Rolle.\nDu bist aktuell nur ein {{rankMe}}.\nKomm zurück wenn du ein {{rankNeed}} bist!",
+            "denied": "Nein! Du bist nicht berechtigt, dies zu verwenden.",
             "disabledModule": ":no_entry_sign: Unser Lord und Meister hat {{module}} für verboten erklärt. Echt schade...",
             "genericInvalid": "Schade, Falsches Kommando ;~;",
             "prefixChng": "Na gut, jetzt habe ich den Präfix {{prefix}}, versuch mal `{{prefix}}stats`.␣",
@@ -127,6 +132,7 @@
             "chooseAmod": "Wähle ein Modul, was du willst.",
             "kinNone": "Erst die Arbeit, dann das Vergnügen. Nenn mir sofort den Namen der Person, die ich kicken soll. Sonst kicke ich **dich**.",
             "kin404": "Ups,I denke ich kann diese Person nicht finden :< Ist er nicht gegangen? Existiert der überhaupt. Halluzinierst du nicht nur?",
+            "target404": "Dieses Ziel scheint nicht erreichbar zu sein. Überprüfe doppelt, ob das was du senden möchtest~",
             "unmutable": "Ganz egal, was du sagst, ich werde diese Person nicht stumm machen.",
             "unperm": "Aus irgendeinem Grund habe ich keine Berechtigungen dafür. VERDAMMT",
             "noRoleHere": "Diese Rolle steht nicht auf der Liste. Bitte überprüfe; welche Rollen überhaupt verfügbar sind...",
@@ -144,7 +150,8 @@
             "noChannelGiven": "Ok, und wo soll ich diese Aktivitäten aufzeichnen? Auf deinem Gesicht? Nenne mir ein Kanal zum protokollieren!",
             "emojiError": "Ich konnte diesen Emoji nicht hinzufügen. Überprüfe die Reaktionsberechtigungen oder ob der Emoji gültig ist...",
             "insuperms": "{{imsorry}} Ich kann dies nicht für dich tun, wenn du nicht die Berechtigung selbst hast.",
-            "not-a-NSFW-channel": "Stelle diesen Channel zu erst zu einen NSFW-Channel um. Hier sind Kinder."
+            "not-a-NSFW-channel": "Stelle diesen Channel zu erst zu einen NSFW-Channel um. Hier sind Kinder.",
+            "unparsable": "Dies ist kein gültiges Einbetten, vielleicht könntest du es {{link}} ausprobieren?"
         },
         "cooldown": {
             "generic": [
@@ -273,19 +280,23 @@
             "isEmpty": "Hier ist nichts zum entfernen!"
         },
         "discoin": {
-            "desc": "Deine Transaktion wird bearbeitet. Eine Antwort vom %BOT% wird kommen, sobald sie bestätigt wurde!",
-            "intake": "Pollux **Rubin** (RBN) Umwandler:",
-            "outtake": "%BOTNAME%´s **%CURRNAME%** ({{$}}) bekommt:",
-            "remainder": "Verbleibendes Limit für  {{$}}",
-            "receiptCode": "Transaktionsempfangscode",
-            "amNaN": "Ungültige Menge",
-            "invalidCurr": "Diese Währung existiert nicht!",
-            "invalidAmt": "Du kannst diese Menge nicht umwandeln.",
-            "unverified": "Die ist es nicht gestattet, umzutauschen.\nBitte verifiziere dich auf \n[http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Dein Umwandlungslimit ist für Heute erreicht.",
-            "globalLimit": "Die heutigen Operationen wurden geschlossen, Danke!",
-            "takedis": "Behalte diesen Code, falls ~Scheiße passiert~",
-            "ex-succ": "Austausch erfolgreich!"
+            "links": "Relevante Links:",
+            "list": "Währungsliste",
+            "graphs": "Live-Grafiken",
+            "guide": "Benutzerhandbuch",
+            "tax": "Steuerinformationen",
+            "tax_desc": "Umtauschsteuer: **{{exchange}}%**\nEinkommenssteuer: **{{income}}%**\nÜberweisungssteuer: **{{transfer}}%**",
+            "discoin_desc": "Deine Rubine werden gesendet, eine Antwort von {{bot}} kommt sobald sie kommt.",
+            "receipt": "Hier ist Ihre Transaktionsquittierung:",
+            "receiptnoDM": "Ich konnte es nicht in dms liefern, also hier ist deine Quittung:",
+            "takedis": "Halten Sie diese Quittung für den Fall, dass Ihre Rubine ihr Ziel nicht erreichen.",
+            "invalidCurr": "Diese Währung existiert nicht! Benutze `{{prefix}}Exchange` um alle verfügbaren Währungen zu sehen.",
+            "debt": "Du kannst Schulden nicht umtauschen, mindestens 1 Ruine tauschen!",
+            "zero": "Tausche mindestens 1 Rubin.",
+            "perMin": "Das Minimum ist {{perMin}} Rubine pro Transaktion.",
+            "perMax": "Das Maximum pro Trankation ist {{perMax}} Rubinen.",
+            "dailyMax": "Du hast das tägliche Maximum von {{dailyMax}} Rubinen erreicht.",
+            "unreachable": "Discoin konnte nicht erreicht werden, versuche es später erneut."
         },
         "langIntro": {
             "global": "Okay, von nun an werde ich {{LANGUAGE}} auf diesem Server sprechen. {{LANGJOKE}}",
@@ -381,6 +392,10 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "{{userA}} hat *\"Dankeschön\"* an **{{userB}}**!\n{{userB}} wurde **{{totalTHX}}** mal gedankt.",
+            "wipe": "Dadurch werden **alle** {{THX}} Punkte von {{user}}entfernt. **Bist du sicher, dass du das tun möchtest?**"
+        },
         "divorce": {
             "confirmdiag": "Sind Sie damit einverstanden, eine Scheidung von {{user}}zu bekommen? Eine Gebühr von %EMJ% **5000 Rubinen** wird von **beide** von dir berechnet. Beide LovePoints werden ebenfalls **halbiert** sein!",
             "saidnope": "{{userB}} will keine Scheidung. Du kannst es erzwingen, indem du %EMJ%**10000 Rubine** bezahlst, damit ich einen Anwalt anrufen kann, um dies zu beheben aber beide verlieren **all deine LovePoints** !",
@@ -400,6 +415,7 @@
         },
         "generic": {
             "inviteText": "Lade mich zu dienen Server ein. Du musst bloß [HERE] klicken",
+            "selectIndex": "Bitte antworten Sie mit der **Nummer** der Option, die Sie wünschen.",
             "cancel": "Deine Meinung geändert? Ok, siehst du später~",
             "noFundsBalance": "Anscheinend kannst du es dir nicht leisten, da dein Kontostand nur {{number}} Rubine beträgt. Du müsstest dafür noch etwas sparen.",
             "noFunds": "Nicht genügend Rubine.",
@@ -407,6 +423,13 @@
             "minus_rubines": "Ich nehme %R $t(Keywords.RBN_plural) aus deinem Konto okay~?"
         },
         "daily": {
+            "insuranceConsumed": "Du hast dein tägliches Timing verpasst... aber keine Sorge!\n**Deine Versicherung wurde verbraucht und deine Streifen geht noch weiter**.\nVersicherung verbleibend: **{{insuCount}}**\n*Stellen Sie sicher, dass Sie es täglich mit `{{prefix}}verwenden keepstreak täglich`*",
+            "streakLost": "Oh noooo, dein tägliches Timing ist verloren gegangen! Aber keine Sorge. Du kannst immer noch einen **Streak Wiederhersteller** verwenden, um wieder dorthin zu gelangen, wo du vorher warst ({{oldStreak}})!",
+            "noRestorerInfo": "Du kannst einen Restaurierer mit `{{prefix}}Crash-Streakfix` herstellen",
+            "yesRestorerInfo": "Du hast einen Restaurierer in deinem Inventar! Versuche `{{prefix}}streakfix` um es zu verwenden!",
+            "dailyBonus": [
+                "Guten Morgen! Lass uns heute viel Spaß haben, werden wir? Das sind deine Belohnungen für heute:"
+            ],
             "dailyGet": "{{emoji}} Durch deinen Tagesbonus hast du 100 Rubine bekommen.\n",
             "dailyNope": "{{result}}! Hey! Du hast deinen Preis heute schon erhalten!\nDu musst noch **{{remaining}}** warten, bevor du erneut einen Preis erhälst!",
             "dailyStreak": "{{emoji}} **+500 Rubine** für 10 Tage Dailies in einer Reihe!"
@@ -443,7 +466,8 @@
             "cash1000": "Du bist fast annähernd mittelreich",
             "cash5000": "ALTER DU BIST SCHEIßE REICH JUNGE!",
             "cash10000": "Hast du eine Bank beraubt?",
-            "cashInfinite": "Du hast dir also Geld gecheated...\nIch hoffe, du bist jetzt stolz auf dich!\n...VERDAMMTER CHEATER!"
+            "cashInfinite": "Du hast dir also Geld gecheated...\nIch hoffe, du bist jetzt stolz auf dich!\n...VERDAMMTER CHEATER!",
+            "balance": "Bilanz"
         },
         "greet": {
             "byeOFF": "Bye Nachricht abgestellt! Schreibe bye um dich zu verabschieden. Verstanden?\nBye...\nto **bye**\nHahahah... haha.. oh man, naja, es ist weg. Danke!",
@@ -493,6 +517,12 @@
             "noItem": "Du brauchst ein Lobby-Token und du hast keines. Du brauchst es, um Menschen zu loben.",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "Halte m'liebe m! Du kannst das in {{remaining}} wieder tun",
+            "check_no": "Du wartest immer noch über {{remaining}} , um `{{command}}` erneut zu benutzen~",
+            "check_yes": "Gute Neuigkeiten! Du kannst `{{command}}` jederzeit verwenden!",
+            "noSelf": "Du weißt, dass du das nicht für dich selbst tun kannst, oder?"
+        },
         "crafting": {
             "craftingItem": "Herstellung `{{item_name}}`",
             "noitem": "Dieses Element konnte nicht gefunden werden",
@@ -520,7 +550,8 @@
             "success": "**{{boxname}}** an {{userB}} übertragen"
         },
         "give": {
-            "cooldown": "Halten Sie sich! Sie können in {{remaining}} wieder transferieren!"
+            "cooldown": "Halten Sie sich! Sie können in {{remaining}} wieder transferieren!",
+            "not2self": "Halte, du kannst dir nichts geben!"
         },
         "inventory": {
             "noSuchBox": "Schau, ich kann diese Box dort nicht sehen, und ich bin sicher, dass du auch nicht sehen kannst.",
@@ -779,6 +810,63 @@
             "zero_1": "Verdammt! :( Du hast nicht mal einen Rubin wiederbekommen...",
             "zero_2": "Oh...das ist traurig......hier ist nichts.",
             "zero_3": "Viel Glück beim nächsten mal, ich glaub an dich! ;)"
+        },
+        "roulette": {
+            "boardTitle": "Pollux Roulette Fantastique",
+            "boardDescription": "Meine Damen und Herren, Weinen und Otome. Du kannst jetzt deine Wetten platzieren!\n**Du hast __45 Sekunden__ bis das Roulette dreht ist! *\n\n Platzieren Sie Ihre Wetten mit `Wette [AMOUNT] [BET TYPE]`\nBenutzen Sie `bet help` oder `{{prefix}}roulette help` für eine detaillierte Anleitung.",
+            "helpTitle": "Roulette Wetten 101",
+            "helpDescription": "Du kannst weitere Informationen zum [Pollux wiki](https://wiki.pollux.gg) finden!",
+            "resultsTitle": "Roulette-Ergebnisse",
+            "resultsDescription": "Die Gewinnerzahl war {{number}}.",
+            "resultsPlayer": "Spielerergebnis ",
+            "resultsWin": [
+                "Woah! Du hast gegen alle Chancen **{{count}}**{{e}} $t(Keywords.RBN)!",
+                "Hmph. Ich füge **{{count}}**{{e}} $t(Keywords.RBN) zu deinem Account hinzu und schaue dir diese Chancen zu ändern.",
+                "Ich kann nicht glauben, dass du mich geschlagen hast! Ich glaube es wirklich nicht. Hier ist dein Preis von **{{count}}**{{e}} $t(Keywords.RBN).",
+                "Wie habe ich **{{count}}**{{e}} $t(Keywords.RBN) verloren?!",
+                "Herzlichen Glückwunsch! Du hast **{{count}}**{{e}} $t(Keywords.RBN) von meinen Einsparungen erschöpft. Ich hoffe, du bist glücklich.",
+                "Okay, du hast etwas Glück als der Durchschnittsspieler. Nimm deine **{{count}}**{{e}} $t(Keywords.RBN).",
+                "Bitte geben Sie nicht all Ihre neuen **{{count}}**{{e}} $t(Keywords.RBN) im Club nebenan aus. Bitte.",
+                "Oh, interessant. Du hast **{{count}}** **{{e}} $t(Keywords.RBN) von mir gewonnen. Kannst du dein Glück aufrecht erhalten?",
+                "Glückwunsch! Sie haben **{{count}}** **{{e}} $t(Keywords.RBN) gewonnen."
+            ],
+            "resultsLoss": [
+                "Das Haus gewinnt immer, Honig, und heute gewinne ich **{{count}}**{{e}} $t(Keywords.RBN).",
+                "Du bist **{{count}}**{{e}} $t(Keywords.RBN) ärmer als wenn du begonnen hast. Ich bin mir sicher, dass sich dein Glück drehen wird, wenn du nur ein weiteres Spiel spielst.",
+                "Was für eine interessante Strategie. Es hat dich **{{count}}**{{e}} $t(Keywords.RBN) kostet.",
+                "Ouch! Bist du sogar versucht? Ich frage meine neuen **{{count}}**{{e}} $t(Keywords.RBN), ich schätze.",
+                "Ich weiß nicht, warum ich besorgt war. Das wird **{{count}}**{{e}} $t(Keywords.RBN) sein.",
+                "Vielen Dank für Ihren Beitrag von **{{count}}**{{e}} $t(Keywords.RBN) zum Pollux Event Fund.",
+                "Oh gut! Das ist ein weiterer **{{count}}**{{e}} $t(Keywords.RBN) sind abwärts.",
+                "Ich werde **{{count}}**{{e}} $t(Keywords.RBN) von dir nehmen."
+            ],
+            "resultsDraw": [
+                "Du hast nicht gewonnen, aber zumindest hast du nicht verloren.",
+                "Du hast sogar kaputt. So langweilig! Rematch!",
+                "Nun, du hast nichts. Du hast Spaß gehabt, oder? Das ist wichtig!",
+                "Zeichnen... hmph. Komm wieder und bringe beim nächsten Mal mehr Geld.",
+                "Was?! Ein Zeichnung?! Nicht akzeptabel, benutze diesen verdammten Befehl!",
+                "Huh. Wir verlieren und dennoch gewinnen wir. Meinst du, dass Philosophie auch auf das Leben angewendet werden kann?",
+                "Oh, das war Spaß. Lass mich nicht zu lange auf die nächste Runde warten.",
+                "Die Zimmer sind sehr klein, aber sehr sauber.",
+                "Es ist eine Krawatte! Du hältst was dir gehört, und ich bleibe, was ich meine. Deal?"
+            ],
+            "resultsInvalid": "Sie haben Ihr Geld verloren, so dass Ihre Wetten entlassen wurden.",
+            "resultsNoBet": "Leider hat niemand eine Wette platziert... Ich bin *verwüstet* 💔",
+            "wheelDescription": "Noch {{seconds}} Sekunden, um Ihre Wetten zu platzieren! Treten Sie auf! Fügen Sie nur noch einen einen!!! Was ist, wenn heute Ihr Glückstag ist~?",
+            "wheelEnd": "**Zeit ist da, Jungen und Mädchen!**\nDas Rad entscheidet jetzt über dein Schicksal... Es gibt jetzt kein Zurück mehr.",
+            "notSoFast": "Sie platzieren Wetten zu schnell.",
+            "invalidBet": "Leider kann ich diese Wette nicht verstehen.",
+            "missingAll": "Ihre Wette konnte nicht gefunden werden.",
+            "missingAmount": "Entschuldigung, Honig. Sie können nicht ohne Geld wetten.",
+            "missingBet": "Äh, wo ist deine Wette?",
+            "zeroAmount": "Wetten Sie mindestens 1 $t(Keywords.RBN)!",
+            "notAllowed": "Du kannst diese Wette jetzt nicht platzieren. Shoo!",
+            "noMoney": "Du hast nicht genug Geld, m'dear...",
+            "minperBet": "Wachsen Sie einige Kugeln, Mindestwette hier ist **{{count}} $t(Schlüsselwörter.RBN)**, Kid.",
+            "maxPerBet": "Woah da, reiche Kinder! Wetten können nicht höher sein als {{count}} $t(Keywords.RBN).",
+            "maxBets": "Beruhigt sich, du hast bereits {{count}} Wetten platziert.",
+            "maxtotal": "Ok, ok, warten! Sie können insgesamt nicht mehr als {{count}} $t(Keywords.RBN) wetten!"
         },
         "ceilingBet": "Du kannst nicht mehr als **{{number}}** ** $t(Keyword.RBN_plural) in diesem Spiel setzen.",
         "tryAgain": "Erneut versuchen?",

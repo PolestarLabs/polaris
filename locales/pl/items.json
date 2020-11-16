@@ -326,5 +326,20 @@
     "fork": {
         "name": "Widelec",
         "description": "Licząc jego czterokrotną możliwość dźgania noża, ale tylko połowę jego efektu, to wychodzi podwójna wartość!"
+    },
+    "lootbox_C_D": {
+        "name": "Pospolita Dzienna Skrzynia"
+    },
+    "lootbox_U_D": {
+        "name": "Niepospolita Dzienna Skrzynia"
+    },
+    "lootbox_R_D": {
+        "name": "Rzadka Dzienna Skrzynia"
+    },
+    "lootbox_SR_D": {
+        "name": "Super Rzadka Dzienna Skrzynia"
+    },
+    "lootbox_UR_D": {
+        "name": "Ultra Rzadka Dzienna Skrzynia"
     }
 }

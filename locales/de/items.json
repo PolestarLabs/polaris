@@ -326,5 +326,20 @@
     "fork": {
         "name": "Gabel",
         "description": "Mit viermal die Robbenfähigkeit eines Messers, aber die Hälfte des Aufpralls, ist es doppelt so viel Wert!"
+    },
+    "lootbox_C_D": {
+        "name": "Gewöhnliche tägliche Lootbox"
+    },
+    "lootbox_U_D": {
+        "name": "Ungewöhnliche tägliche Lootbox"
+    },
+    "lootbox_R_D": {
+        "name": "Seltene tägliche Lootbox"
+    },
+    "lootbox_SR_D": {
+        "name": "Superseltene tägliche Lootbox"
+    },
+    "lootbox_UR_D": {
+        "name": "Ultra Rare Daily Lootbox"
     }
 }
