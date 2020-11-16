@@ -270,7 +270,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "roulette",
-  cooldown: 0e3,
+  cooldown: 6e4,
   perms: 3,
   cat: "gambling",
   botPerms: ["attachFiles", "embedLinks"],
