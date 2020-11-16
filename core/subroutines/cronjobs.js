@@ -31,9 +31,7 @@ exports.run = async function run() {
   }, null, true);
 
   const ONEhour = new CronJob("* */1 * * *", async () => {
-    try {
-      PLX.microserver.microtasks.updateServerCache("all");
-    } catch(e) { PLX.guilds.get("277391723322408960").channels.get("599352130486403079").send("<@124989722668957700> bug at cronjobs.js:124 still exists") }
+    PLX.microserver.microtasks.updateServerCache("all");
   });
 
   const FIFTEENminute = new CronJob("*/15 * * * *", async () => {
