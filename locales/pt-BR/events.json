@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "A Aliança do Crepúsculo",
+      "umbral": "A Aliança do Umbral",
+      "plsupdate": "Por favor, atualize seu avatar e o verifique com `{{prefix}}avatarcheck`",
+      "joinDusk": "Você se juntou à **Aliança do Crepúsculo**.",
+      "joinDuskAffinity": "Isso aumenta sua afinidade com **Arsenika** a Sacerdotisa do Crepúsculo.",
+      "joinUmbral": "Você se juntou à **Aliança do Umbral**.",
+      "joinUmbralAffinity": "Isso aumenta sua afinidade com **Noctix** a Coveira do Submundo."
+    },
+    "avatar": {
+      "clickHere": "Clique aqui e baixe essa imagem para usá-la como avatar.",
+      "preview": "Esta é uma prévia do seu avatar. Confirme para receber uma versão maior.",
+      "dusk": "Seu avatar indica que você pertence à **Aliança do Crepúsculo**",
+      "night": "Seu avatar indica que você pertence à **Aliança do Umbral**",
+      "inad": "Não parece estar alinhado com nenhuma das alianças. Tente usar `{{prefix}}eventavatar [umbral|dusk]` para escolher uma aliança!",
+      "fine": "Ficou ótimo!",
+      "opos": "Parece ser exatamente o oposto do que você queria.",
+      "diff": "Não parece pertencer à nenhuma das alianças."
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Hehehe. Depois do primeiro, você não consegue mais parar, em? E então, o que você quer me dar em troca por esse **Caixão**?",

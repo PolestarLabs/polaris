@@ -57,7 +57,7 @@
         "decon": "{{user}} sam się dezynfekuje.",
         "decon2": "{{user}} dezynfekuje {{user2}}.",
         "cancer": "{{user}} sprawdza poziom raka na tym kanale.",
-        "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%* z **{{radiation}}μSv/h**"
+        "geiger": ":radioactive: według licznika Geigera procent raka na tym kanale wynosi \n**{{percentage}}%** z **{{radiation}}μSv/h** "
     },
     "misc": {
         "memberSince": "{{target}}: jest сzłonkiem od {{joinedstamp}}",
@@ -65,11 +65,10 @@
         "colorChange": "Twój ulubiony kolor został zapisany!"
     },
     "CMD": {
-        "denied": "Nie masz uprawnień do korzystania z tego. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
         "incorrectUsage": "Błędnie używasz tej komendy. Spróbuj {{usage}}. Np.: {{example}}",
-        "disabledModule": "no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo.",
-        "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawdłowa ;~;",
-        "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając \n'{{prefix}}stats'",
+        "disabledModule": ":no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo z jego strony.",
+        "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawidłowa ;~;",
+        "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając '{{prefix}}stats' ",
         "moderationNeeded": "Nie możesz użyć tego polecenia, potrzebujesz uprawnień **Zarządzaj serwerem** lub możesz ustawić rolę Moderatora. Ustaw rolę Moderatora za pomocą `{{prefix}}modrole [Role]`",
         "noDM": "Ups, przepraszam, nie mogę odpowiadać na tę komendę przez prywatne wiadomości.",
         "chooseAmod": "Wybierz moduł.",
@@ -105,7 +104,7 @@
         "unpermB": "Wydaje mi się, że nie mam wystarczających uprawnień, aby to przetworzyć.",
         "cantFindChannel": "Nie mogę znaleźć tego kanału. Spróbuj użyć #kanał, aby się upewnić, że istnieje.",
         "noChannelGiven": "Musisz mi powiedzieć, na którym kanale rejestrować aktywności.",
-        "noReason": "Powód nie określony",
+        "noReason": "Powód nieokreślony",
         "insuperms": "Przepraszam, nie mogę tego zrobić dla ciebie, chyba że otrzymasz pozwolenie.",
         "not-a-NSFW-channel": "Ten kanał nie jest ustawiony na NSFW. Nie zostawiaj swoich \"prac\" wszędzie.",
         "timesOutIn": "To zajmie {{s}} sekund",
@@ -166,8 +165,8 @@
         "enable": "Włącza moduły lub komendy",
         "flip": "Reszka lub Orzeł, i to wszystko. Tylko nie zbankrutuj, nie udzielam pożyczek.",
         "give": "Podaruj X Rubinów do @osoba",
-        "joined": "Podaje datę dołączenia użytkownika lub @ktos do serwera",
-        "kick": "Wykopuje @ktos, oczywiście...",
+        "joined": "Podaje twoją datę lub datę dołączenia @osoby do Serwera",
+        "kick": "Wykopuje @osobę, oczywiste...",
         "level": "Podaje twój poziom lub @kogos poziom",
         "personalTxt": "Ustaw osobisty tekst dla swojej karty profilowej",
         "pick": "Zbierz wszystkie błyskotki z tego kanału",
@@ -220,7 +219,7 @@
         "otaco": "[BRAZILIJSKA EKSKLUZYWNA WERSJA] Invoque o Esqueleto seboso",
         "pasquale": "[BRAZILIJSKA EKSKLUZYWNA WERSJA] Demonstre desprezo gramatical",
         "ascii": "[ZEPSUTA] Ascii Art Thing",
-        "cat": "Mrał ",
+        "cat": "Mrał",
         "morse": "*\"OTRZYMALIŚMY SYGNAŁ\"* Zakoduj wiadomość w alfabecie Morse i wyślij ją za pośrednictwem kanału głosowego",
         "say": "Pozwól mi coś powiedzieć. Naprawdę",
         "modrole": "Dodaję Rolę Moderatora do tego Serwera",
@@ -349,7 +348,7 @@
         "cashrank": "`{{prefix}}cashrank` lub `{{prefix}}Rubinerank` = Globalny\n`{{prefix}}cashrank server` lub `{{prefix}}Rubinerank server` = Tylko serwerowy",
         "rule34": "`{{prefix}}rule34 [znaczniki]`\nW przypadku odstępów użyj _:`{{prefix}}rule34 blue_hair`\nW przypadku wielu tagów użyj +:`{{prefix}}rule34 blue_hair+pointy_ears`\nAby przefiltrować określony tag, użyj - przed nim: `{{prefix}}rule34 blue_hair+pointy_ears+-furry`",
         "safe": "`{{prefix}}safe [znaczniki]`\nW przypadku odstępów użyj _:`{{prefix}}safe blue_hair`\nW przypadku wielu tagów użyj +:`{{prefix}}safe blue_hair+pointy_ears`\nAby przefiltrować określony tag, użyj - przed nim: `{{prefix}}safe blue_hair+pointy_ears+-furry`",
-        "ping": "Nie zdawałem sobie sprawy, że jesteś taki nieudolny. To jest {{prefix}} ping ",
+        "ping": "Nie zdawałam sobie sprawy, że jesteś taki nieudolny. To jest {{prefix}} ping",
         "lang": "`{{prefix}}lang [language]` lub `{{prefix}}speak [language]`",
         "betflip": "`{{prefix}}betflip X [heads | tails]`\nPrzykład: `{{prefix}}betflip 5 heads`\nMinimalny zakład to 3 Rubiny",
         "ban": "`{{prefix}} ban @someguy [powód]`\nZbanuj @ktos z serwera, możesz również dodać przyczynę.",
@@ -364,7 +363,7 @@
         "equip": "`{{prefix}}equip`\nA następnie kliknij reakcje, aby nawigować, pamiętaj, aby załadować je przed kliknięciem",
         "fausto": "{{prefix}}faustão`\nWymaga uprawnień do ZARZĄDZANIA WEBHOOKAMI do działania.",
         "favcolor": "{{prefix}}favcolor #FF0000`",
-        "feats": "",
+        "feats": "`{{prefix}}feats`",
         "shop": "`{{prefix}}shop`",
         "fortunecookie": "{{prefix}} fortunecookie` (to polecenie ma pewne problemy)",
         "menu": "[Przerwano]",
@@ -377,7 +376,7 @@
         "otaco": "Dostępne tylko w następujących językach: [PT-BR]",
         "pasquale": "Dostępne tylko w następujących językach: [PT-BR]",
         "ascii": "`{{prefix}}ascii [tekst]`",
-        "cat": "Mrał ",
+        "cat": "Mrał",
         "morse": "`{{prefix}}morse [tekst]` Powinieneś być na kanale głosowym",
         "say": "`{{prefix}}say [Wiadomość]`",
         "modrole": "`{{prefix}}modrole set [@rola|Nazwa Roli]`",
@@ -420,7 +419,7 @@
         "divorce": "`{{prefix}}divorce` Aby pokazać innym że jesteś w małżeństwie niezależnie od tego czy jest to jedna osoba czy cały harem!\n`{{prefix}}divorce [@osoba || ID osoby na Discordzie]` Aby rozwieść się z tą osobą"
     },
     "logs": {
-        "success": "Gotowe! Ustawiłem {{channel}} jako kanał dla {{CHNTYPE}}!",
+        "success": "Gotowe! Ustawiłam {{channel}} jako kanał dla {{CHNTYPE}}!",
         "successDelete": "W porządku. {{channel}} nie jest już kanałem dla {{CHNTYPE}}.",
         "failure": "O nie, wydaje się, że coś poszło nie tak. Przepraszam.",
         "modLogs": "LOGI MODERACYJNE",
@@ -604,7 +603,7 @@
         "forfun": "4Fun",
         "memes": "Memy",
         "gambling": "Hazard",
-        "infra": "",
+        "infra": "Infra",
         "misc": "Różne",
         "util": "Użyteczność",
         "music": "Muzyka"
@@ -658,9 +657,9 @@
             "2": "Co? Czy to jest Pudełeczko?",
             "3": "Ktoś chyba upuścił tutaj Pudełeczko.",
             "4": "Nie przeszkadzam? Widział ktoś tutaj leżące Pudełeczko?",
-            "5": "Niesamowite! Zobacz, co znalazłem!"
+            "5": "Niesamowite! Zobacz, co znalazłam!"
         },
-        "lootPick": "Macie **__20 sekund__**, aby się po niego zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
+        "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
         "goesTo": "Koniec czasu! Zobaczmy, kto otrzyma to Pudełko.\n**Ten Loot Box zostanie rozlosowany pomiędzy:**",
         "congrats": "Dobra robota! Pudełko zostało dodane do twojego ekwipunku. Możesz je otworzyć za pomocą polecenia `{{prefix}}lootbox`.",
         "opening": "{{user}} otworzył Pudełko...",
@@ -686,7 +685,7 @@
     },
     "discord": {
         "role": "Rola",
-        "server": "Serwer\n",
+        "server": "Serwer",
         "member": "Członek",
         "user": "Użytkownik",
         "user_plural": "Użytkownicy",
@@ -702,7 +701,7 @@
         "upnext": "Następne na tej playliście."
     },
     "eastereggs": {
-        "konodioda": "Myślałeś, że to Pollux, **ale to było ME, DIO**!",
+        "konodioda": "Myślałeś, że to Pollux, **ale to byłem JA, ZIOM**!",
         "vacuum": "**{{user}}** podał **+1 Rep** do Odkurzacza. {{amount}} powtórzenia zostały odrzucone do tej pory."
     },
     "discoin": {
@@ -717,7 +716,7 @@
         "unverified": "Nie jesteś zweryfikowany, aby dokonywać wymian.\nZweryfikuj się na stronie [http://discoin.sidetrip.xyz/verify]",
         "userLimit": "Twój limit wymian na dziś został osiągnięty!",
         "globalLimit": "Osiągnąłeś limit Discoin, spróbuj ponownie jutro.",
-        "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie spełniły swojego Przeznaczenia.",
+        "takedis": "Zachowaj ten kod na wypadek, gdyby Twoje Rubiny nie dotarły do celu.",
         "ex-succ": "Wymiana powiodła się!"
     },
     "event": {
@@ -781,7 +780,7 @@
         "egghuntfail": "*Lecz niczego nie znalazł*",
         "egghuntsuccess": "Super! Mamy jajko! Spójrzmy...",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} znalazł **{{rarity}} Jajko**!",
-        "egghuntsuccess3": "Masz **{{X}}** jajek.\n**{{Y}}** jest unikatowych.\nWięc informacji na: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+        "egghuntsuccess3": "",
         "delaytrade": "Prr! Możesz dopiero wymienić się za: {{remaining}",
         "wanttrade": "{{user}} chce się wymienić się z tobą swoim **{{tradingEgg}}**.",
         "wanttrade2": "Aby akceptować napisz  `accept` a następnie identyfikator wysłanego jaja.*\n\nNp.: `accept C1`, aby dać Jajko [**C1**] w zamian za Jajko [**{{eggcode}}**]",
@@ -799,8 +798,8 @@
         "reactThis": "Zareaguj na tę wiadomość, aby automatycznie otrzymywać role"
     },
     "rarity_tiers": {
-        "C": "Zwyczajne",
-        "U": "Niezwykłe",
+        "C": "Pospolity",
+        "U": "Niepospolity",
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki"
