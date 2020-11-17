@@ -22,7 +22,7 @@ const init = async (msg, args) => {
   const P = { lngs: msg.lang };
 
 
-  if ((msg.content.split(" ")[0].contains("reminders") || args[0] === "list") && args.length === 1) {
+  if ((msg.content.split(" ")[0].includes("reminders") || args[0] === "list") && args.length === 1) {
     return {
       content: $t("interface.reminders.currentActive", P),
       embed: {
@@ -39,6 +39,8 @@ const init = async (msg, args) => {
       },
     };
   }
+
+  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return;
 
   if ((args[0] === "delete" || args[0] === "remove") && args.length < 3) {
     if (userReminders.length < 1) return { embed: { description: ` ${_emoji("nope")} **${$t("interface.reminders.noneToDelete", P)}**`, color: 0xcc2233 } };
@@ -118,7 +120,6 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   pub: true,
-  argsRequired: true,
   cmd: "reminder",
   perms: 3,
   cat: "utility",
