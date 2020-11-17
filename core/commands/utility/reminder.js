@@ -40,7 +40,7 @@ const init = async (msg, args) => {
     };
   }
 
-  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return;
+  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat})) return;
 
   if ((args[0] === "delete" || args[0] === "remove") && args.length < 3) {
     if (userReminders.length < 1) return { embed: { description: ` ${_emoji("nope")} **${$t("interface.reminders.noneToDelete", P)}**`, color: 0xcc2233 } };
