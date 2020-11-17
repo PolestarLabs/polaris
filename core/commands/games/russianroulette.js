@@ -23,9 +23,10 @@ const startGameCollector = async (game, msg, cb) => {
 
   if (result.stopped) {
     await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette STOP");
-    return msg.channel.send(better
-      ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`
-      : "You're a quitter!\nI haven't changed anything because you didn't even played.");
+    return msg.channel.send(`You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`);
+    // return msg.channel.send(result.better
+    //   ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`
+    //   : "You're a quitter!\nI haven't changed anything because you didn't even played.");
   }
 
   const message = await msg.channel.send("Let's see if you're going to die now...");
