@@ -22,7 +22,7 @@ const init = async (msg, args) => {
   const P = { lngs: msg.lang };
 
 
-  if (args[0] === "list" && args.length === 1) {
+  if ((msg.content.split(" ")[0].contains("reminders") || args[0] === "list") && args.length === 1) {
     return {
       content: $t("interface.reminders.currentActive", P),
       embed: {
@@ -123,5 +123,5 @@ module.exports = {
   perms: 3,
   cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["remind", "rmd"],
+  aliases: ["remind", "rmd", "reminders", "remindme"],
 };
