@@ -90,7 +90,7 @@ if(!args || (args[0] != 'dusk' && args[0] !='umbral')){
         embed.image = {url:"attachment://event-"+msg.author.id+"2.png"};
         embed.thumbnail = null;
         aviPrompt.delete();
-        let xxx = await msg.channel.send({embed},{file: await canvas.toBuffer("image/png", { compressionLevel: 0, filters: canvas.PNG_FILTER_NONE }), name: "event-"+msg.author.id+"2.png" }).then(x=>{
+        let xxx = await msg.channel.send({embed},{file: await canvas.toBuffer(), name: "event-"+msg.author.id+"2.png" }).then(x=>{
             embed.description += "\n["+$t('events:halloween20.avatar.clickHere',P)+"]("+x.embeds[0].image.url+")\n\n"
             + $t('events:halloween20.covenants.plsupdate',P);
             return x.edit({embed})

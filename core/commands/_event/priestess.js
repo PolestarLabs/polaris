@@ -22,7 +22,7 @@ const init = async function (msg){
     
     embed.description = $t('events:halloween20.arsenika.greet',P)
     embed.fields = [
-        {name: "Affinity with Arsenika",value: (eventData.affinityArs || 0) + "/5000", inline:true},
+        {name: "Affinity with Arsenika",value: ~~(eventData.affinityArs || 0) + "/5000", inline:true},
         {name: "Affinity Bonus",value: (covenant === 'dusk' ? 25 : covenant === 'umbral' ? -25 : 0) + "%", inline:true},
     ]
     
@@ -73,7 +73,7 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*2,amt*50,.6*amt)
+                buySomething(msg,uID,'events:halloween20.arsenika.acToken',{$inc:{eventGoodie:amt}},amt*2,amt*50,amt)
             },
             
         },{
@@ -133,9 +133,9 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
 
     prompt.removeReactions()
-
-    const covenant = await avicheck.init(rea.author,true);
-    let covBonus = (.5+(covenant=='umbral'?5:covenant=='dusk'?-2:0)) *3;
+    const user =  await PLX.getRESTUser(userID);
+const covenant  = await avicheck.init( {author:user}, true );
+    let covBonus = ((covenant=='umbral'?0.75:covenant=='dusk'?1.25:1));
 
     if(rea.emoji.name === 'CANDY'){
         if (eventData.candy >= priceC) {
@@ -147,7 +147,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             await DB.users.set(userID,{$inc:{'eventData.halloween20.candy': -priceC }});
             promptEmbed.description = (_emoji('yep')+ $t('events:halloween20.arsenika.completeC',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityArs': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityArs': weight * covBonus }})
         }else{
             prompt.removeReactions()
             promptEmbed.description = (_emoji('nope')+$t('events:halloween20.arsenika.noCashC',P) )
@@ -171,7 +171,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             return prompt.edit({embed:promptEmbed});
         }
     }
-
+console.log(eventData)
     if(eventData.affinityArs >= 2500){
         
         if (!userData.modules.stickerInventory.includes("ars-c1")){
@@ -179,7 +179,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.arsenika.completeR',P) ) + `\n
             Since you appear around here a lot, here, take this sticker so you can show to everyone we're big friends.`
             await DB.users.set(userID,{$addToSet:{'modules.stickerInventory':"ars-c1"}});
-            prompt.edit({embed:promptEmbed})
+           await prompt.edit({embed:promptEmbed});
             
         }
     
@@ -189,7 +189,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
                 promptEmbed.description =  (_emoji('yep')+$t('events:halloween18.arsenika.completeR',P) ) + `\n
                 Hey you're such a dedicated visitor. I'll give you something really cool: this is a **Dusk Flair**, use it in your profile to demonstrate your dedication to our covenant.`
                 await DB.users.set(userID,{$addToSet:{'modules.flairsInventory':"dusk"}});
-                prompt.edit({embed:promptEmbed})
+             await   prompt.edit({embed:promptEmbed});
 
             }
         }

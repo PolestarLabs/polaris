@@ -36,7 +36,7 @@
     "morse": "^0.1.0",
     "node-fetch": "^2.6.1",
     "open-graph-scraper": "^4.6.0",
-    "pixelmatch": "^4.0.2",
+    "pixelmatch": "^4.0.0",
     "request": "^2.88.2",
     "rss-parser": "^3.7.2",
     "tunnel-ssh": "^4.1.4",

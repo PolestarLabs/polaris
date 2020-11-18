@@ -21,7 +21,7 @@ const init= async function run(msg,args) {
     ]);
 
 
-    const dimensions = [5,5]
+    const dimensions = [15,15]
 
     let PROPIC= Picto.new(...dimensions);
     let ca=PROPIC.getContext("2d");
@@ -44,15 +44,31 @@ const init= async function run(msg,args) {
       PROPIC_BUFFER,
       DUSK_BUFFER,
       console.log, dimensions[0],dimensions[1],
-      {includeAA:false,threshold:.1}
+      {includeAA:false,threshold:.25}
     );
     const checkUMBRA = PXL(
       PROPIC_BUFFER,
       UMBRAL_BUFFER,
       null, dimensions[0],dimensions[1],
-      {includeAA:false,threshold:.1}
+      {includeAA:false,threshold:.25}
     );
     
+      if (msg.channel.id === "599352130486403079"){
+        msg.channel.send(` ${"```c"}
+        MATCH UMBRA: ${checkUMBRA}
+        MATCH DUSK: ${checkDUSK}
+        Threshold: 10%
+        AA: false
+
+        ${"```"}`);
+        msg.channel.send("PFP BUFFER",{file: PROPIC_BUFFER, name:'test.png'});
+        msg.channel.send("DUSK BUFFER",{file: DUSK_BUFFER, name:'test.png'});
+        msg.channel.send("UMBRA BUFFER",{file: UMBRAL_BUFFER, name:'test.png'});
+
+      }
+
+
+
     if(args !== true){
 
       console.log({checkDUSK,checkUMBRA})
@@ -63,12 +79,14 @@ const init= async function run(msg,args) {
     }
  
     if(args === true){
-        return checkUMBRA === 0 ? 'umbral' : checkDUSK === 0 ? 'dusk' : 'none';
+        if( checkUMBRA === 0) return  'umbral';
+        if (checkDUSK === 0) return 'dusk'
+        return 'none';
     }
 
  
   }catch(e){
-    
+    console.error(e)
   }
 
 }

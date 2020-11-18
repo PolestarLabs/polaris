@@ -22,7 +22,7 @@ const init = async function (msg){
     
     embed.description = $t('events:halloween18.noctix.greet',P)
     embed.fields = [
-        {name: "Affinity with Noctix",value: (eventData.affinityNox || 0) + "/5000", inline:true},
+        {name: "Affinity with Noctix",value: ~~(eventData.affinityNox || 0) + "/5000", inline:true},
         {name: "Affinity Bonus",value: (covenant === 'umbral' ? 25 : covenant === 'dusk' ? -25 : 0) + "%", inline:true},
     ]
     
@@ -73,7 +73,7 @@ module.exports={
                 let amt = Math.abs( ~~( Number(res[0]?.content) ) );
                 if (amt < 1) return msg.channel.send("Are you trying to fool me?");
 
-                buySomething(msg,uID,'events:halloween18.noctix.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,.6*amt)
+                buySomething(msg,uID,'events:halloween18.noctix.acToken',{$inc:{eventGoodie:amt}},amt*1,amt*100,amt)
             },
             
         },{
@@ -95,6 +95,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
     console.log(userID)
     const embed = msg.embeds[0];
+    const user =  await PLX.getRESTUser(userID);
    
     //embed.description = "Waiting...";
     //msg.edit({embed});
@@ -115,8 +116,8 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
 
     const reas = await prompt.awaitReactions(rea=> rea.userID === userID,{maxMatches:1,time:15e3}).catch(err=>null);
 
-    let rea = reas[0];
-    if(!rea) return prompt.edit({embed:{description: $t('events:halloween18.noctix.timeout',P) }});
+    let R = reas[0];
+    if(!R) return prompt.edit({embed:{description: $t('events:halloween18.noctix.timeout',P) }});
     
     const eventData = await EV.userData(userID);
     const userData = await DB.users.getFull(userID);
@@ -130,12 +131,16 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
     }
 
 
-    const covenant = await avicheck.init(rea.author,true);
-    let covBonus = (1+(covenant=='umbral'?5:covenant=='dusk'?-2:0)) *3;
+    const covenant  = await avicheck.init( {author:user}, true );
+    console.log({covenant})
+    const covBonus  = covenant === 'umbral' ? 1.25 : covenant === 'dusk' ? 0.75 : 1;
+    console.log({covBonus,weight})
+    const fullBonus = weight * covBonus 
+    console.log({fullBonus})
 
     console.log({covBonus})
 
-    if(rea.emoji.name === 'CANDY'){
+    if(R.emoji.name === 'CANDY'){
         if (eventData.candy >= priceC) {
             if(typeof DBquery === 'string'){
                 await userData.addItem(DBquery, 1);
@@ -145,7 +150,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
             await DB.users.set(userID,{$inc:{'eventData.halloween20.candy': -priceC }});
             promptEmbed.description = (_emoji('yep')+ $t('events:halloween18.noctix.completeC',P) )
             prompt.edit({embed:promptEmbed})
-            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': weight + covBonus }})
+            DB.users.set(userID,{$inc:{'eventData.halloween20.affinityNox': fullBonus }})
         }else{
             prompt.removeReactions()
             promptEmbed.description = (_emoji('nope')+$t('events:halloween18.noctix.noCashC',P) )
@@ -153,7 +158,7 @@ async function buySomething(msg,userID,what,DBquery,priceC=1000,priceR=1000,weig
         }
     }
 
-    if(rea.emoji.id === _emoji('RBN').id){
+    if(R.emoji.id === _emoji('RBN').id){
         if (userData.modules.rubines >= priceR) {
             if(typeof DBquery === 'string'){
                 await userData.addItem(DBquery, 1);
