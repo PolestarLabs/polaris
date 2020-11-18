@@ -231,16 +231,16 @@ module.exports = GuessingGame
 
 function parseGrade(g){
     switch (true){
-        case g < .02:
+        case g < .1:
             grade = "SSS"
             break;
-        case g < .05:
+        case g < .15:
             grade = "SS"
             break;
-        case g < .1:
+        case g < .25:
             grade = "S"
             break;
-        case g < .25:
+        case g < .35:
             grade = "A"
             break;
         case g < .5:
@@ -249,7 +249,7 @@ function parseGrade(g){
         case g < .8:
             grade = "C"
             break;
-        case g < .1:
+        case g < 1:
             grade = "D"
             break;
         default:
