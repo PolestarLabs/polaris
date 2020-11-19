@@ -154,7 +154,7 @@ module.exports = async (msg) => {
     Promise.all([
       levelChecks(msg),
       Drops(msg),
-    ]).catch(() => null),
+    ]).timeout(15000).catch(() => null),
   );
 };
 
