@@ -122,7 +122,8 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
     //if (game.vc) game.vc.stopPlaying();
   
  
-    await Promise.all([msg.edit(gameFrame), wait(1)]);
+    if (vc) vc.stopPlaying();
+    await msg.edit(gameFrame);
     if (died){
       if (vc) vc.play(awp);
     }else{
