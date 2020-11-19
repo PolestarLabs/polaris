@@ -32,7 +32,7 @@ class UserProfileModel {
     this.percent = XPercent(this.exp, this.level) || 0;
     this.sticker = userDBData.modules.sticker || null;
     this.flair = userDBData.modules.flairTop || "default";
-    this.RBN = userDBData.modules.RBN || 0;
+    this.rubines = userDBData.modules.RBN || 0;
     this.sapphires = userDBData.modules.SPH || 0;
     this.medals = userDBData.modules.medals || [];
     this.marriage = userDBData.featuredMarriage || null;
