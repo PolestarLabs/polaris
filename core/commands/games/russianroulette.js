@@ -73,7 +73,6 @@ const startPlayerCollector = async (msg) => {
 
   await msg.channel.awaitMessages(filter, {
     time: 20e3,
-    maxMatches: 5,
   });
 
   return verifiedPlayers;
