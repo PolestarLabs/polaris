@@ -4,8 +4,9 @@ const { global } = require("../../../../internal_modules/database_schema/schemas
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 const BOARD = require('../../archetypes/Soundboard.js')
 const gunRoll = appRoot+"/../assets/sound/gunroll.mp3";
-const clickBoom = appRoot+"/../assets/sound/clickboom.mp3";
-const clickClick = appRoot+"/../assets/sound/clickclick.mp3";
+const awp = appRoot+"/../assets/sound/awp.mp3";
+const click = appRoot+"/../assets/sound/click.mp3";
+const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
 
 
     
@@ -95,15 +96,12 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
     // No one is dead so far
     gameFrame.embed.description += `${player.name}'s turn.... `;
+    if (vc) vc.play(click);
     // gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
     await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
     const died = await playerRoulette(player, game);
-    if (died){
-      if (vc) vc.play(clickBoom);
-    }else{
-      if (vc) vc.play(clickClick);
-    }
-    await wait(1);
+   
+    await wait(4);
 
     // Fire. Check if they're dead
     
@@ -124,7 +122,13 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
     //if (game.vc) game.vc.stopPlaying();
   
  
-    await Promise.all([msg.edit(gameFrame), wait(1)]);
+    if (vc) vc.stopPlaying();
+    await msg.edit(gameFrame);
+    if (died){
+      if (vc) vc.play(awp);
+    }else{
+      if (vc) vc.play(clickNoAmmo);
+    }
   
 
     if (died) break;
@@ -137,6 +141,7 @@ const newRound = async (msg, players, round = 0) => {
   // Initialise game
   let vc = await PLX.joinVoiceChannel(msg.member.voiceState.channelID).catch((err) => null);
   if(vc) vc.play(gunRoll);
+  await wait(2);
   
   const value = players.map((a) => a.money).reduce((a, b) => a + b);
   const game = new RussianRoulette(null, 0);

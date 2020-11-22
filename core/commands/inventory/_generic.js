@@ -29,7 +29,8 @@ class GenericItemInventory {
     this.color = color || 0xEBBEFF;
     this.pub = pub || true;
 
-    this.init = async (msg, args, {id:userID}) => {
+    this.init = async (msg, args, userObj ) => {
+      const userID = userObj?.id;
       console.log({userID}, 'generic')
       if (userID && args[10]?.id != userID) return "Only the owner can see inside";
       msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
