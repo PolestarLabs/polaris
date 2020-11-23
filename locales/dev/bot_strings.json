@@ -312,6 +312,15 @@
         "profile": {
             "persotexUpdate": "I've changed your personal text to: {{pstext}}\nUse `{{prefix}}profile` to see the new line on your ProfileCard. I'm sure someone will enjoy it."
         },
+        "gift": {
+            "noTarget": "You need to mention who should receive this!",
+            "noSelf": "It would be way nicer if you gave that gift to someone else!",
+            "invEmpty": "It's looking empty in here...",
+            "invEmptyGive": "You don't have any gifts yet, why not wrap some?",
+            "inv>1": "You have {{count}} gifts, you need to specify which to give!",
+            "inv<amt": "${count} is more than the gifts you own... try again.",
+            "sent": "🎁 <@{{sender}}> sent **a gift** to <@{{target}}>"
+        },
         "trade": {
             "exchangeWhat": "What you want to give in exchange?",
             "tradeStert": "**{{user.tag}}** started a Trade",
