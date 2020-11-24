@@ -199,17 +199,7 @@ PLX.once("ready", async () => {
     PLX.microserver.microtasks.updateChannels("all");
   } catch (e) {
     console.error(e);
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
-    console.error("ERROR MTASK");
+    for (let i in new Int8Array(10)) console.error("ERROR MTASK");
   }
 
   hook.info(`**INFO:** Cluster connected and all shards reported online!
