@@ -54,7 +54,7 @@ const switches = new Map();
 // Embed during time it takes to save changes
 const savingEmbed = {
 	embed: {
-		color: 0xff5050, // TODO: change
+		color: 0xff5050, // TODO[epic=flicky] change color
 		title: "Standby, saving changes...",
 		description: "Both server and channel changes will be saved.",
 	},
@@ -120,9 +120,6 @@ async function sendHelpEmbed(msg) {
 }
 
 async function init(msg) {
-	// for testing purposes
-	if (msg.content.split(" ")[1]?.toLowerCase() === "-r") switches.delete(msg.guild.id); // TODO: delete
-
 	// Standard PLX things
 	const P = { lngs: msg.lang, prefix: msg.prefix };
 	if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
@@ -221,9 +218,7 @@ async function init(msg) {
 				omsg.edit(savingEmbed);
 				Switch.save().then(() => {
 					omsg.edit(genSwitchEmbed(Switch));
-				}).catch(() => {
-					omsg.edit({ embed: { title: "Something went wrong...", description: "Could not save the changes" } }); // TODO: find normal error embed / just create an error
-				});
+				}); // don't catch
 				break;
 
 			case "undo":
@@ -357,7 +352,7 @@ function genSwitchEmbed(Switch, options) {
 		cecmds = modules["ce"]; // channel enabled
 
 	const embed = {
-		color: disable ? 0x666699 : Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO: change
+		color: disable ? 0x666699 : Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO[epic=flicky]: change colors
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches : ${cmode ? "**Channel**" : "**Server**"} mode`,
 		fields: [],
 	};

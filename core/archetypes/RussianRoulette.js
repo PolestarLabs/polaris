@@ -12,7 +12,7 @@ module.exports = class RussianRoulette {
     return this.currentPayout + this.increment;
   }
 
-  // TODO
+  // NOTE: finish russian roulette arch
   async renderCard() {} // eslint-disable-line no-empty-function
 
   willSurvive() {

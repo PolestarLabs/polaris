@@ -8,7 +8,7 @@ const awp = appRoot+"/../assets/sound/awp.mp3";
 const click = appRoot+"/../assets/sound/click.mp3";
 const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
 
-
+// TODO add easter egg with `=say` cmd
     
 
 
@@ -59,7 +59,7 @@ const startPlayerCollector = async (msg) => {
   const verifiedPlayers = [];
 
   const filter = async (m) => m.content.toLowerCase().startsWith("join ")
-      && !m.author.bot // TODO: could be turned into a feature though
+      && !m.author.bot // NOTE: could be turned into a feature though
       && !verifiedPlayers.filter((a) => a.id === m.author.id)[0]
       && !Number.isNaN(m.content.split(" ")[1])
       && parseInt(m.content.split(" ")[1]) > 0

@@ -4,6 +4,7 @@ const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
 // const Picto = require("../../utilities/Picto");
 
+// TODO[epic=flicky] flicky has to look at the amounts.
 const settings = {
   collectTime: 45e3,
   sendWheelTime: 30e3,

@@ -60,7 +60,7 @@ const init = async function (msg) {
 
     return msg.guild.channels.find((chn) => chn.id === channel).send({ content: LastVideoLink }).then((m) => m.channel.send({ embed }));
   }
-  // +RSS remove (LINK || index)
+  // +RSS remove (link || index)
   if (msg.args[0] === "remove" || msg.args[0] === "delete") {
     if (!feedData?.length) return msg.channel.send($t("interface.feed.noTube", P));
     const target = msg.args[1];
