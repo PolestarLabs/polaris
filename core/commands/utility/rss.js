@@ -41,7 +41,7 @@ const init = async function (msg) {
     return PLX.getChannel(channel).send({ embed });
   }
 
-  // +RSS remove (LINK || index)
+  // +RSS remove (link || index)
   if (msg.args[0] === "remove" || msg.args[0] === "delete") {
     if (!feedData || feedData.length === 0) return msg.channel.send($t("interface.feed.noFeed", P));
     const target = msg.args[1];

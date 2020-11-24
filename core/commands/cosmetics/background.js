@@ -43,7 +43,7 @@ const init = async (msg, args) => {
   );
   embed.field(
     $t("terms.droppable", P),
-    selectedBG.droppable ? _emoji("yep") : `${_emoji("nope")}x`,
+    selectedBG.droppable ? _emoji("yep") : `${_emoji("nope")}`,
     true,
   );
   if (isEventBG(selectedBG)) embed.field($t("terms.event", P), `\`${selectedBG.event}\``, true);

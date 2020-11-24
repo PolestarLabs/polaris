@@ -1,12 +1,12 @@
 const Picto = require("../../utilities/Picto");
 
 const init = async (msg) => {
-  let LINK = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
+  let link = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
 
   try {
-    if (!LINK) LINK = msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg) || msg.author.displayAvatarURL;
+    link ??= msg.mentions[0]?.displayAvatarURL ?? await PLX.getChannelImg(msg) ?? msg.author.displayAvatarURL;
   } catch (e) {
-    if (!LINK) LINK = (msg.mentions[0] || msg.author).displayAvatarURL;
+    linl ??= (msg.mentions[0] || msg.author).displayAvatarURL;
   }
 
   const [subject, hand] = await Promise.all([

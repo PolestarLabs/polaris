@@ -1,3 +1,4 @@
+// @ts-check
 // const gear = require('../../utilities/Gearbox');
 // const DB = require('../../database/db_ops');
 const Picto = require("../../utilities/Picto");
@@ -15,16 +16,14 @@ const init = async (msg) => {
     const headbl = Picto.new(470, 90);
     const ctx2 = headbl.getContext("2d");
 
-    const LINK      = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
+    let imgLink      = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
     // const MENTION   = (msg.args.join(" ").match(/(<@[0-9]+>)/gm) || [""])[0];
     let HEADLINE  = msg.args.join(" ").replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, "");
 
-    let imgLink = LINK;
-
     try {
-      if (!LINK) imgLink = msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
+      imgLink ??= msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
-      if (!LINK) imgLink = (msg.mentions[0] || msg.author).displayAvatarURL;
+      imgLink ??= (msg.mentions[0] || msg.author).displayAvatarURL;
     }
 
     const lnOptions = {

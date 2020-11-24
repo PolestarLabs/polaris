@@ -1,4 +1,4 @@
-
+//@ts-check
 /* eslint-disable no-await-in-loop */
 const { global } = require("../../../../internal_modules/database_schema/schemas/_misc.js");
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
@@ -8,7 +8,7 @@ const awp = appRoot+"/../assets/sound/awp.mp3";
 const click = appRoot+"/../assets/sound/click.mp3";
 const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
 
-
+// TODO add easter egg with `=say` cmd
     
 
 
@@ -59,6 +59,7 @@ const startPlayerCollector = async (msg) => {
   const verifiedPlayers = [];
 
   const filter = async (m) => m.content.toLowerCase().startsWith("join ")
+      && !m.author.bot // NOTE: could be turned into a feature though
       && !verifiedPlayers.filter((a) => a.id === m.author.id)[0]
       && !Number.isNaN(m.content.split(" ")[1])
       && parseInt(m.content.split(" ")[1]) > 0
@@ -87,16 +88,17 @@ const playerRoulette = async (player, game) => {
 };
 
 const handlePlayers = async (msg, players, game, gameFrame) => {
-  let vc =  voiceChannel = await PLX.joinVoiceChannel(msg.member.voiceState.channelID).catch((err) => null);
+  let voiceChannel = msg.member.voiceState.channelID
+  voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
   let dead = null;
   for (const index in players) { // eslint-disable-line guard-for-in
     await wait(1);
-    if (vc) vc.stopPlaying();
+    if (voiceChannel) voiceChannel.stopPlaying();
     const player = players[index];
 
     // No one is dead so far
     gameFrame.embed.description += `${player.name}'s turn.... `;
-    if (vc) vc.play(click);
+    if (voiceChannel) voiceChannel.play(click);
     // gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
     await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
     const died = await playerRoulette(player, game);
@@ -119,15 +121,15 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
     // Tell players the status of that player
     //await wait(1);
-    //if (game.vc) game.vc.stopPlaying();
+    //if (game.voiceChannel) game.voiceChannel.stopPlaying();
   
  
-    if (vc) vc.stopPlaying();
+    if (voiceChannel) voiceChannel.stopPlaying();
     await msg.edit(gameFrame);
     if (died){
-      if (vc) vc.play(awp);
+      if (voiceChannel) voiceChannel.play(awp);
     }else{
-      if (vc) vc.play(clickNoAmmo);
+      if (voiceChannel) voiceChannel.play(clickNoAmmo);
     }
   
 
@@ -139,8 +141,9 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 const newRound = async (msg, players, round = 0) => {
   // Initialise game
-  let vc = await PLX.joinVoiceChannel(msg.member.voiceState.channelID).catch((err) => null);
-  if(vc) vc.play(gunRoll);
+  let voiceChannel = msg.member.voiceState.channelID
+  voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+  if(voiceChannel) voiceChannel.play(gunRoll);
   await wait(2);
   
   const value = players.map((a) => a.money).reduce((a, b) => a + b);
@@ -169,7 +172,7 @@ const newRound = async (msg, players, round = 0) => {
     gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
 
     let plxMessage = await msg.channel.send(gameFrame);
-    if(vc) vc.once("end", ()=> PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID) );
+    if(voiceChannel) voiceChannel.once("end", ()=> PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID) );
     return;
   }
   // There are more people in the game

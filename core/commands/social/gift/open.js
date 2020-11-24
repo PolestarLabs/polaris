@@ -54,6 +54,7 @@ const init = async (msg, args) => {
 
       return {
         embed: {
+          color: 0x7dffff,
           description: `Opened ${gift._id}
                     Contents: ${gift.type}
                     **${giftMetadata.rarity}** ${giftMetadata.name}
@@ -73,5 +74,5 @@ ${gift.message || "- - -"}
 module.exports = {
   init,
   argsRequired: false,
-  aliases: ["op"],
+  aliases: ["op", "unwrap"],
 };
