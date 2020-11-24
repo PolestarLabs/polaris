@@ -4,11 +4,13 @@ const GENERATOR = require("../cosmetics/lootbox_generator.js");
 const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
-const init = async function (msg, args, {id:userID}) {
+const init = async function (msg, args, memberObj) {
+
+  const userID = memberObj.id || memberObj
 
   console.log({args})
 
-  console.log({userID, args10: args[10].id }, "init")
+  console.log({userID, args10: args[10]?.id }, "init")
   
   if (userID && args[10]?.id != userID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
@@ -39,10 +41,11 @@ const init = async function (msg, args, {id:userID}) {
   return res;
 };
 
-const open = async function (msg, args, {id:userID}) {
+const open = async function (msg, args, memberObj) {
+  const userID = memberObj?.id || memberObj
   args = args.map((a) => (typeof a === "string" ? a.toUpperCase() : a));
 
-  console.log({userID, args10: args[10].id }, "open")
+  console.log({userID, args10: args[10]?.id }, "open")
 
   INVOKERS.delete(userID || msg.author.id);
   INV_STATUS.delete(userID || msg.author.id);
