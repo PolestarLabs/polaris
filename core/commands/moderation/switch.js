@@ -54,7 +54,7 @@ const switches = new Map();
 // Embed during time it takes to save changes
 const savingEmbed = {
 	embed: {
-		color: 0xff5050, // TODO[epic=flicky] change color
+		color: 0xFC5065, // NOTE replaced with branded red
 		title: "Standby, saving changes...",
 		description: "Both server and channel changes will be saved.",
 	},
@@ -352,7 +352,7 @@ function genSwitchEmbed(Switch, options) {
 		cecmds = modules["ce"]; // channel enabled
 
 	const embed = {
-		color: disable ? 0x666699 : Switch.mode === "category" ? 0x7289da : 0xea6a3d, // TODO[epic=flicky]: change colors
+		color: disable ? 0x5B5B6B : Switch.mode === "category" ? 0x50CCFF : 0xF8B95F, // NOTE change colors // -- colors changed according to branding, idk if colors here convey any meaning [flicky]
 		title: `${!cat ? "Category" : cat.slice(0, 1).toUpperCase() + cat.slice(1)} switches : ${cmode ? "**Channel**" : "**Server**"} mode`,
 		fields: [],
 	};
