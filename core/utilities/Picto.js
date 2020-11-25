@@ -66,7 +66,7 @@ module.exports = {
   },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
-    ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
     const H = ctx.measureText(text).emHeightAscent;
@@ -98,7 +98,7 @@ module.exports = {
 
   tagMoji: async function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     
-    ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
     const H = ctx.measureText(text).emHeightAscent;
@@ -127,7 +127,7 @@ module.exports = {
   },
 
   block: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
-    ctx.font = `${font}, "Product Sans", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     const item = Canvas.createCanvas(W, H);
     const c = item.getContext("2d");
