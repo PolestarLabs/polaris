@@ -1,6 +1,6 @@
 // const DB = require (appRoot + "/core/database/db_ops")
 
-module.exports = async (msg, emoji, userID) => {
+module.exports = async (msg, emoji, {id:userID}) => {
   if (userID === PLX.user.id) return;
   DB.reactRoles.findOne({ channel: msg.channel.id, message: msg.id }).then((RCT) => {
     if (RCT?.server !== msg.channel.guild.id) return;
