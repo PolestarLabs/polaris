@@ -15,6 +15,7 @@ const init = async function (msg, args) {
   const modPass = PLX.modPass(msg.member, null, ServerDATA);
 
   let content = args.join(" ");
+  // Replace links
   if (!modPass) content = content.replace(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gmi, "[Redacted link]");
 
   if (args[0] === "embed") {
