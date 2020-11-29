@@ -6,6 +6,7 @@ module.exports = class Hangmaid {
     this.chances = 5;
     this.wordBoard = (new Array(this.word.length)).fill('_');
     this.usedLetters = [];
+    this.originalMessage = undefined
   }
 
   async start () {
@@ -15,9 +16,21 @@ module.exports = class Hangmaid {
     };
   }
 
+  registerMessage(message) {
+    return this.originalMessage = message
+  }
+
   async renderCard () {} // todo
 
   handleInput (message) { // handleInput () => Object
+    if (message.length > 1) {
+      if (message === this.word) return { won: true} 
+      else {
+        this.chances--
+        if (this.chances === 0) return { lost: false }
+        return { originalMessage: this.originalMessage ,correct: false, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters }
+      }
+    }
     const idx = this.word.split('').map((a, i) => {
       return { is: (a === message.toLowerCase()), i }
     }).filter(a => a.is)
@@ -29,13 +42,13 @@ module.exports = class Hangmaid {
       if (this.word === message.toLowerCase()) return { won: true }
       else {
         this.chances--;
-        if (this.chances === 0) return { lost: true };
-        return { correct: false, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
+        if (this.chances === 0) return { lost: true ,correct: true, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
+        return { originalMessage: this.originalMessage ,correct: false, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
       }
     } else {
       idx.forEach((_) => (this.wordBoard[_.i] = message.toUpperCase()));
       if (!this.wordBoard.includes('_')) return { won: true }
-      return { correct: true, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
+      return { originalMessage: this.originalMessage ,correct: true, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
     }
   }
 };
