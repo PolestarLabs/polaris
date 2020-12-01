@@ -30,7 +30,13 @@
         "material": "Malzeme",
         "material_plural": "Malzemeler",
         "boosterpack": "Hızlandırıcı",
-        "boosterpack_plural": "Hızlandırıcılar"
+        "boosterpack_plural": "Hızlandırıcılar",
+        "medal": "",
+        "medal_plural": "Madalyalar",
+        "sticker": "",
+        "sticker_plural": "Çıkartmalar",
+        "background": "",
+        "background_plural": "Arka plan"
     },
     "terms": {
         "transferDenied": "Transfer Reddedildi",
@@ -139,6 +145,21 @@
             "emojiError": "Bu Emoji'yi ekleyemedim. Tepki izinlerini ya da Emojilerin açık olup olmadığını kontrol et...",
             "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
             "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hop! Çeviri metni __1000 Karakteri__ geçemez\nAma dert etme. Senin için metni ayırdım~",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** modülü **Globally** devre dışı bırakıldı.",
-            "disabledChn": "{{module}} modülü #{{channel}} kanalında devre dışı bırakıldı.",
+            "disabledChn": "{{module}} modülü <#{{channel}}> kanalında devre dışı bırakıldı.",
             "disabledComSer": "**{{command}}** komutu **Globally** devre dışı bırakıldı.",
-            "disabledComChn": "**{{command}}** komutu #{{channel}} kanalında devre dışı bırakıldı.",
+            "disabledComChn": "**{{command}}** komutu <#{{channel}}> kanalında devre dışı bırakıldı.",
             "enabledSer": "**{{module}}** modülü **Globally** aktifleştirildi.",
-            "enabledChn": "**{{module}}** modülü #{{channel}} kanalında aktifleştirildi.",
+            "enabledChn": "**{{module}}** modülü <#{{channel}}> kanalında aktifleştirildi.",
             "enabledComSer": "**{{command}}** komutu **Globally** aktifleştirildi.",
-            "enabledComChn": "**{{command}}** komutu #{{channel}} kanalında aktifleştirildi."
+            "enabledComChn": "**{{command}}** komutu <#{{channel}}> kanalında aktifleştirildi."
         },
         "reput": {
             "noSelf": "Yoo, kendini replemene izin vermiyorum.",
@@ -440,6 +461,7 @@
             "inChan": "Pekâlâ! Hoş geldin mesajları **{{channel}}** kanalında yayımlanacak "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}} kişisinin sinir seviyesi **{{amount}}%** kadar {{emoji}}",
             "booru404": "Üzgünüm, belirttiğin etiketlerle ilgili hiçbir şey bulamadım. Etiketlerin doğruluğundan emin ol.",
             "nsfw404": "Kusura bakma ama aradığın porno baya bi' değişik; hiçbir yerde bulamadım. Senin gibi birinden beklendiği gibi.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "İptal Edildi!",
             "timeout": "Süre Doldu!",
             "cantAfford": "Yaa, buna paran yetmiyor... :(",
@@ -550,6 +573,16 @@
             "confirmDelete": "Silmeyi onaylıyor musun?",
             "alotWentOn": "Bugün çok şeyler döndü...",
             "alreadyOwnThis": "Hey, zaten sende bundan var!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Roundrobin için maks limit: 16",
@@ -564,7 +597,8 @@
             "bracketX": "Çizelge {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "Bu {{rarity_emoji}} arkaplanı **{{count}} $t(keywords.cosmoFragment)** için parçala?",
+            "magifrag": "",
+            "disenchant": "",
             "cosmeticSynth": "Kozmetik Eşya Sentezi",
             "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
             "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
@@ -704,13 +738,25 @@
             "newgame": "Yirmibir demek? Kuralları zaten biliyor olman gerek, haydi, başlayalım. ",
             "result": "Sonuç:",
             "bust": "İflâs",
-            "youwin": "Tebrikler! Bu sefer kazandın.",
-            "youlose": "Hah! Benim zaferim!",
+            "youwin": "",
+            "youlose": "",
             "hit": "Bir tane daha kart çekmek için `hit` diye cevap ver,",
             "stand": "Pas",
             "split": "Elini ayırmak için, `split`",
             "double": "Son bir kart çekip bahsini iki katına çıkarmak için, `double`",
             "pass": "Ya da elini geçirmek için, `stand`",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "Bölüşüm Dağılımı:",
             "switchdeck": "Şimdi **{{deckname}}** destesini kullanarak yirmibir oynayacağız!",
             "switchdeckEgg": "Şimdi elimizle oynayacağız (hayır o anlamda değil.) {{deckname}} **destesiyle** yani. Ne fesat adamsın.",
@@ -750,18 +796,17 @@
             "Harika! Bak, ne bulduk!",
             "Bak, eminim bu define sandığına bir göz atmak istersiniz."
         ],
+        "duplicate": "",
         "lootPick": "Sandığı kapmak için hepinizin **__20 Saniyesi__** var!\n`{{prefix}}pick` yaz ve alma şansını yakala!",
         "goesTo": "Süre doldu! Bakalım kutu kimin olacak.\n**Define sandığı bu kişilerin arasından seçilecek:**",
         "congrats": "Tebrikler! Sandık **Envanterine** eklendi. `{{prefix}}lootbox` komutunu kullanarak açabilirsin.",
         "opening": "{{user}} Define sandığını açtı...",
         "contains": "Bu {{adjective}} Define sandığı içeriği",
-        "options": "İstersen direkt alabilir istersen {{amt}} karşılığında tekrardan açabilirsin",
         "keep": "Direkt al",
         "reroll": "Tekrar aç",
         "rerolled": "Hadi bakalım, sandığı tekrardan açıyoruz...",
         "noMoreRolls": "Tekrardan açma haklarını bitirdin, bu sonuca razı gelmek zorundasın.",
         "noFunds": "Tekrardan açmak için daha fazla Rubin'e ihtiyacın var, belki daha sonra.",
-        "rerollRemain": "Kalan Tekrar denemeler:",
         "addedRubines": "{{X}} Rubin hesabına eklendi",
         "addedJades": "{{X}} Jade ",
         "addedMedal": "**{{itm}}** Madalyon, Madalyon Paketine eklendi",
@@ -771,7 +816,12 @@
         "morons": "Define sandığının kayıp gitmesine izin mi verdin? Ne diyorum ki ben, tabii ki öyle yaptın.",
         "contesting": "Bu sandık için girişimciler:",
         "eventDrop": "Ve daha fazlası! bu bir **ETKİNLİK KUTUSU** yani **'içinde güzel şeyler var'!**",
-        "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak."
+        "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Pollux zannettin değil mi, **AMA BEN DİOYDUM**!",

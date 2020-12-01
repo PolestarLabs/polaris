@@ -1,76 +1,101 @@
-// const gear = require("../utilities/Gearbox/global");
-module.exports =  async function yesNo(m,message,yes=false,no=false,timeout=false,options){
-    options = options || {}
-    let embed = options.embed|| (m.embeds||[])[0] || false;
-    let avoidEdit = options.avoidEdit || !embed  || false;
-    let clearReacts = typeof options.clearReacts == 'undefined' || options.clearReacts;
-    let time = options.time || 15000;
-    let deleteFields = typeof options.deleteFields ? options.deleteFields : true;
-    let strings = options.strings || {}
-        strings.confirm   = "✔️" + (strings.confirm|| "")
-        strings.timeout   = "🕑" + (strings.timeout|| "")
-        strings.cancel    = "❌" + (strings.cancel || "")
 
-        
-    let YA = {
-      r: ":yep:339398829050953728",
-      id: '339398829050953728'
+/**
+ * 
+ * @param {Object} promptMessage Message that will receive Yes/No reactions
+ * @param {Object} commandMessage Command Message send by the user
+ * @param {function(<Cancel>,Message)|string} [yesFunction] Function to execute when YES is clicked
+ * @param {function(Message)} [noFunction] Function to execute when NO is clicked
+ * @param {function(Message)} [timeoutFunction] Function to execute when TIMEOUT
+ * @param {Object} [options] Additional Options
+ * 
+ * @param {Object<Embed>} options.embed Premade embed to be sent as response, defaults to whatever embed [promptMessage] already has
+ * @param {boolean|false} [options.avoidEdit] Whether or not prevent editing of [promptMessage] by this method
+ * @param {boolean|true} [options.clearReacts] Whether or not clear Yes/No reactions from [promptMessage]
+ * @param {boolean|false} [options.deleteFields] Whether or not delete all Fields from the Embed.
+ * @param {number|15000} [options.time] Timeout in milliseconds.
+ * @param {Object} options.strings Footer Strings when yes/no/timeout
+ * @param {string|"✔️"} [options.strings.confirm]
+ * @param {string|"❌"} [options.strings.cancel]
+ * @param {string|"🕑"} [options.strings.timeout]
+ * 
+ * @returns {Promise<(boolean|null)>}  TRUE if YES | FALSE if NO | NULL if TIMEOUT
+ * 
+ */
+
+module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
+  options = options || {};
+  const embed = options.embed || promptMessage.embeds?.[0] || false;
+  const avoidEdit = options.avoidEdit || !embed || false;
+  const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
+  const time = options.time || 15000;
+  const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
+  const strings = options.strings || {};
+  strings.confirm = `✔️${strings.confirm || ""}`;
+  strings.cancel = `❌${strings.cancel || ""}`;
+  strings.timeout = `🕑${strings.timeout || ""}`;
+
+  const YA = {
+    r: _emoji('yep').reaction,
+    id: _emoji('yep').id
+  };
+  const NA = {
+    r: _emoji('nope').reaction,
+    id: _emoji('nope').id
+  };
+
+  await promptMessage.addReaction(YA.r);
+  promptMessage.addReaction(NA.r);
+
+  const reas = await promptMessage.awaitReactions({
+    maxMatches: 1,
+    authorOnly: options.approver || commandMessage.author.id,
+    time,
+  }).catch((err) => {
+    console.error(err)
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
+      embed.color = 16499716;
+      if (deleteFields === true) embed.fields = [];
+      embed.footer = { text: strings.timeout };
+
+      promptMessage.edit({ embed });
     }
-    let NA = {
-      r: ":nope:339398829088571402",
-      id: '339398829088571402'
-    }
-  
-    await m.addReaction(YA.r);
-          m.addReaction(NA.r);
-    const reas = await m.awaitReactions( {
-        maxMatches: 1,
-        authorOnly: options.approver || message.author.id,
-        time
-      }  
-    ).catch(e => {
-      if(clearReacts)
-        m.removeReactions().catch(e=>null);
-    if(embed && !avoidEdit){
-      embed.color =16499716;
-      if(deleteFields===true) embed.fields = [];
-      embed.footer ={text: strings.timeout};
-      
-      m.edit({embed});
-    }
-    if (timeout && typeof timeout == 'function')  return timeout(m);
-    else if (timeout)  return timeout;
+    if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
+    if (timeoutFunction) return timeoutFunction;
+    return null;
   });
-  if (!reas || reas.length === 0 ) return;
+   
+  if (!reas?.length) return null;
+ 
+  function cancellation() {
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
+      embed.color = 16268605;
+      if (deleteFields === true) embed.fields = [];
+      embed.footer = { text: strings.cancel };
 
-  function cancellation(){
-    if(clearReacts)
-      m.removeReactions().catch(e=>null);
-    if(embed && !avoidEdit){
-      embed.color = 16268605
-      if(deleteFields===true) embed.fields = [];
-      embed.footer ={text: strings.cancel};
-      
-      m.edit({embed}) 
+      promptMessage.edit({ embed });
     }
-    if (no && typeof no == 'function')  return no(m);
-    else if (no)  return no;
+    if (typeof noFunction === "function") return noFunction(promptMessage);
+    if (noFunction) return noFunction;
+    if (!noFunction) return false;    
   }
-  
-  if (reas.length === 1 && reas[0].emoji.id == NA.id) {
+
+  if (reas.length === 1 && reas[0].emoji.id === NA.id) {
     return cancellation();
   }
-  
-  if (reas.length === 1 && reas[0].emoji.id == YA.id) {
-    if(clearReacts)
-      m.removeReactions().catch(e=>null);
-    if(embed && !avoidEdit){
+
+  if (reas.length === 1 && reas[0].emoji.id === YA.id) {
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
       embed.color = 1234499;
-      if(deleteFields===true) embed.fields = [];
-      embed.footer ={text: strings.confirm};
-      m.edit({embed});
+      if (deleteFields === true) embed.fields = [];
+      embed.footer = { text: strings.confirm };
+      promptMessage.edit({ embed });
     }
-      if (yes && typeof yes == 'function')  return yes(cancellation,m);
-      else if (yes)  return yes;
-  } 
+    if (yesFunction && typeof yesFunction === "function") return yesFunction(cancellation, promptMessage);
+    if (yesFunction) return yesFunction;
+    if (!yesFunction) return true;
   }
+  return null;
+};

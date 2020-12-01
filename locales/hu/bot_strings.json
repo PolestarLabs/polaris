@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Érmek",
+        "sticker": "",
+        "sticker_plural": "Matricák",
+        "background": "",
+        "background_plural": "Hátterek"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "Ez a channel nem NSFW. Nem szórhatod szét csak úgy ezeket a \"művészi\" képeket!"
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "",
-            "disabledChn": "A {{module}} modult már nem lehet a #{{channel}} channelen használni.",
+            "disabledChn": "A {{module}} modult már nem lehet a <#{{channel}}> channelen használni.",
             "disabledComSer": "",
-            "disabledComChn": "A **{{command}}** parancsot most már nem lehet a #{{channel}} channelen használni",
+            "disabledComChn": "A **{{command}}** parancsot most már nem lehet a <#{{channel}}> channelen használni",
             "enabledSer": "",
-            "enabledChn": "A **{{module}}** modul most már használható a #{{channel}} channelen",
+            "enabledChn": "A **{{module}}** modul most már használható a <#{{channel}}> channelen",
             "enabledComSer": "",
-            "enabledComChn": "A **{{command}}** parancs most már használható a #{{channel}} channelen"
+            "enabledComChn": "A **{{command}}** parancs most már használható a <#{{channel}}> channelen"
         },
         "reput": {
             "noSelf": "Nem, nem engedem, hogy fényezd magad.",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}-nak **{{amount}}%**-ban sós a p*csája {{emoji}}",
             "booru404": "Hoppika, semmit sem találtam ezekkel a tagekkel. Ellenőrizd, hogy mindent helyesen írtál-e.",
             "nsfw404": "Már megbocsáss, de a kérésed annyira bizarr, hogy ennek megfelelőt sehol se találtam. De tőled nem is vártam mást.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "",
             "result": "Eredmény:",
             "bust": "",
-            "youwin": "Gratulálok! Most te nyertél!",
+            "youwin": "",
             "youlose": "",
             "hit": "Válaszolj `hit`, hogy még egy kártyát húzhass,",
             "stand": "",
             "split": "",
             "double": "",
             "pass": "",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Azta! Nézd milt találtam!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "**__20 másodpercetek__** van, hogy megküzdjetek érte! Írjátok, hogy `{{prefix}}pick` , hogy indulhassatok érte!",
         "goesTo": "Lejárt az idő! Nézzük, hogy ki kapja ezt a Boxot.\n**Ezt a Lootboxot nem más kapja, mint:**",
         "congrats": "",
         "opening": "{{user}} kinyitotta a Lootboxát...",
         "contains": "",
-        "options": "Megtarthatod, vagy újranyithatod, aminek az ára {{amt}}",
         "keep": "Megtartom",
         "reroll": "Újranyitom",
         "rerolled": "Próbáljuk meg megint, nyissuk újra a boxot...",
         "noMoreRolls": "Nincs több újranyitási lehetőséged, el kell fogadnod ezt az eredményt.",
         "noFunds": "Több Rubinra lesz szükséged ahhoz, hogy újranyisd a lootboxod, majd legközelebb.",
-        "rerollRemain": "Újranyitási lehetőségek száma:",
         "addedRubines": "{{X}} rubint írtam neked jóvá",
         "addedJades": "",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "Hagytátok elúszni a Lootboxot? Nem is tudom, hogy miért vártam tőletek többet.",
         "contesting": "Indulók ezért a Boxért:",
         "eventDrop": "",
-        "notThisbox": "Nem tudsz ilyen boxot kinyitni, írd, hogy `{{prefix}}lootbox`, hogy lásd, milyen boxaid vannak~"
+        "notThisbox": "Nem tudsz ilyen boxot kinyitni, írd, hogy `{{prefix}}lootbox`, hogy lásd, milyen boxaid vannak~",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Azt hitted, hogy Pollux az, **DE ÉN VOLTAM AZ, DIO**!",

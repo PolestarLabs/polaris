@@ -30,7 +30,13 @@
         "material": "材料",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "メダル",
+        "sticker": "",
+        "sticker_plural": "ステッカー",
+        "background": "",
+        "background_plural": "背景"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "このチャンネルはNSFW設定になっていません。子供がいたらどうするんですか？？？"
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}**モジュールは無効になっています **グローバル**",
-            "disabledChn": "{{module}}モジュールは、チャネル #{{channel}}で無効にされています",
+            "disabledChn": "{{module}}モジュールは、チャネル <#{{channel}}>で無効にされています",
             "disabledComSer": "**{{command}}** 명령이 비활성화되었습니다 **グローバル**",
-            "disabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용 중지되었습니다.",
+            "disabledComChn": "**{{command}}** 명령은 채널 <#{{channel}}>에서 사용 중지되었습니다.",
             "enabledSer": "**{{module}}** 모듈이 활성화되었습니다. **グローバル**",
-            "enabledChn": "채널 #{{channel}}에서 **{{module}}** 모듈을 사용하도록 설정했습니다.",
+            "enabledChn": "채널 <#{{channel}}>에서 **{{module}}** 모듈을 사용하도록 설정했습니다.",
             "enabledComSer": "**{{command}}** 명령이 활성화되었습니다 **グローバル**",
-            "enabledComChn": "**{{command}}** 명령은 채널 #{{channel}}에서 사용하도록 설정되었습니다."
+            "enabledComChn": "**{{command}}** 명령은 채널 <#{{channel}}>에서 사용하도록 설정되었습니다."
         },
         "reput": {
             "noSelf": "ねえ、スマートなお尻！ あなたは自分自身にそれをすることはできません！",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' は **{{amount}}%** {{emoji}} のバカなように振る舞います",
             "booru404": "おっと、私はそれらのタグを使用して何を見つけることができませんでした。 すべてが正しいかどうかチェックしてください。",
             "nsfw404": "少年、あなたのポルノはとても奇妙なのでどこにも見つけられませんでした。何か他のものを試してみてください。",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "キャンセル！",
             "timeout": "タイムアウト！",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "削除を確認？",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "いくつかのブラックジャックをプレイする時間、私はあなたがルールを知っていると思うので、始めましょう。",
             "result": "結果：",
             "bust": "",
-            "youwin": "おめでとう！ あなたはこの時間に勝った！",
-            "youlose": "残念、私の勝ち！",
+            "youwin": "",
+            "youlose": "",
             "hit": "カードをもう1枚引くために「hit」に応答し、",
             "stand": "スタンド",
             "split": "`split` あなたの手を分割するには、",
             "double": "",
             "pass": "或るいは  `stand` 合格する。",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "スゴイ！ 私が見つけたこの ルーツボックス を見てください！",
             ""
         ],
+        "duplicate": "",
         "lootPick": "あなたはそれをすべて争うために、**__ 20 Seconds __** を持っています！ `{{prefix}}pick` を入力してリクエストしてください！",
         "goesTo": "時間切れ！ 誰がこの箱を入手しているのか見てみましょう。\n**このルーツボックスは、以下の間で抽選されます:**",
         "congrats": "",
         "opening": "{{user}} 彼/彼女の ルーツボックス を開いた...",
         "contains": "",
-        "options": "あなたはそれを維持するか、{{amt}} を支払ってそれを再登録することができます",
         "keep": "それを保つ",
         "reroll": "もう一度転がす",
         "rerolled": "ボックスコンテンツを再読み込みしてみましょう...",
         "noMoreRolls": "あなたはリロールを使い果たしました。この結果で我慢してください。",
         "noFunds": "あなたはリロールを買う余裕がない、次回は運が良い。",
-        "rerollRemain": "残りのリロール：",
         "addedRubines": "あなたの天びんに{{X}}ルビンを追加しました",
         "addedJades": "{{X}} の翡翠があなたのポーチに追加さました",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "あなたは **バカの束です** ！ あなたはLootboxをスリップさせます。 ]:U",
         "contesting": "このボックスのエントリー：",
         "eventDrop": "",
-        "notThisbox": "このようなボックスはありません。 `{{prefix}}lootbox`をもう一度試してみてください。利用可能なオプションは〜"
+        "notThisbox": "このようなボックスはありません。 `{{prefix}}lootbox`をもう一度試してみてください。利用可能なオプションは〜",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "あなたはそれがポルックスだったと思っていましたが **私はDIO **でした！",

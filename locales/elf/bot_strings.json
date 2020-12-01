@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "",
+        "sticker": "",
+        "sticker_plural": "",
+        "background": "",
+        "background_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": ""
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "",
             "booru404": "",
             "nsfw404": "",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -711,6 +745,18 @@
             "split": "",
             "double": "",
             "pass": "",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "",
             ""
         ],
+        "duplicate": "",
         "lootPick": "",
         "goesTo": "",
         "congrats": "",
         "opening": "",
         "contains": "",
-        "options": "",
         "keep": "",
         "reroll": "",
         "rerolled": "",
         "noMoreRolls": "",
         "noFunds": "",
-        "rerollRemain": "",
         "addedRubines": "",
         "addedJades": "",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "",
         "contesting": "",
         "eventDrop": "",
-        "notThisbox": ""
+        "notThisbox": "",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "",

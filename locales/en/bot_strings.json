@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Medals",
+        "sticker": "",
+        "sticker_plural": "Stickers",
+        "background": "",
+        "background_plural": "Backgrounds"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "{{imsorry}} I can't do that for you unless you have the permission to do so yourself.",
             "not-a-NSFW-channel": "This channel isn't set as NSFW. Don't go leaving your \"artwork\" everywhere."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hey! Translation text cannot exceed __1000 Characters__**\nBut don't worry, I've trimmed the text for you~",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "The **{{module}}** module has been disabled **Globally**.",
-            "disabledChn": "The {{module}} module has been disabled in the channel #{{channel}}",
+            "disabledChn": "The {{module}} module has been disabled in the channel <#{{channel}}>",
             "disabledComSer": "The **{{command}}** command has been disabled **Globally**",
-            "disabledComChn": "The **{{command}}** command has been disabled in #{{channel}}",
+            "disabledComChn": "The **{{command}}** command has been disabled in <#{{channel}}>",
             "enabledSer": "The **{{module}}** module has been enabled **Globally**",
-            "enabledChn": "The **{{module}}** module has been enabled in #{{channel}}",
+            "enabledChn": "The **{{module}}** module has been enabled in <#{{channel}}>",
             "enabledComSer": "The **{{command}}** command has been enabled **Globally**",
-            "enabledComChn": "The **{{command}}** command has been enabled in the channel #{{channel}}"
+            "enabledComChn": "The **{{command}}** command has been enabled in the channel <#{{channel}}>"
         },
         "reput": {
             "noSelf": "No, I refuse to let you rep yourself.",
@@ -440,6 +461,7 @@
             "inChan": "Alright! Welcome Messages will be posted at **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Salt Level is **{{amount}}%** {{emoji}}",
             "booru404": "I'm sorry, But I couldn't find anything with those tags. You should check to make sure those are correct.",
             "nsfw404": "Excuse me, but your porn is so bizarre I couldn't find it anywhere. As expected of someone like you.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "Blackjack huh? You should already know the rules, so let's get started.",
             "result": "Result:",
             "bust": "Bust",
-            "youwin": "Congratulations! You won, this time.",
-            "youlose": "Oh? I've won, too bad for you.",
+            "youwin": "",
+            "youlose": "",
             "hit": "Respond with `hit` to draw one more card,",
             "stand": "Stand",
             "split": "`split` to Split your hand,",
             "double": "`double` to double your bet and draw one last card,",
             "pass": "or `stand` to pass.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Amazing! Look at what I've found!",
             "Hey, I'm pretty sure you want to see this Lootbox here."
         ],
+        "duplicate": "",
         "lootPick": "You all have **__20 Seconds__** to dispute it! Type `{{prefix}}pick` for a chance to claim it!",
         "goesTo": "Time's up! Let's see who's getting this Box.\n**This Loot Box will be raffled between:**",
         "congrats": "Well done! The box has been added to your **Inventory**. You can open it using the `{{prefix}}lootbox` command.",
         "opening": "{{user}} opened their Lootbox...",
         "contains": "This {{adjective}} Lootbox contains",
-        "options": "You can either keep it, or reroll it by paying {{amt}}",
         "keep": "Keep it",
         "reroll": "Reroll it",
         "rerolled": "Let's try again, rerolling the box content...",
         "noMoreRolls": "You've ran out of rerolls, you'll have to stick with this result.",
         "noFunds": "You need more Rubines to reroll, perhaps next time.",
-        "rerollRemain": "Rerolls remaining:",
         "addedRubines": "{{X}} Rubines have been added to your Balance",
         "addedJades": "{{X}} Jades have been added to your Pouch",
         "addedMedal": "**{{itm}}** Medal has been added to your Medals Pocket",
@@ -771,7 +816,12 @@
         "morons": "You let a Lootbox slip by? What am I saying, of course you did.",
         "contesting": "Entries for this Box:",
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
-        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own."
+        "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "You thought that it was Pollux, **but it was ME, DIO**!",

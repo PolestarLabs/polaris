@@ -1,54 +1,66 @@
-module.exports = async function ReactionNavigator(m,msg,pagefun,options={},rec){
-   
+/**
+ * 
+ * @param {object} m Message that will receive the reactions
+ * @param {object} msg Original command messages
+ * @param {function} pagefun Pagination function
+ * @param {object} options 
+ * @param {number|10e3} options.time Timeout timer
+ * @param {string} options.content ???
+ * @param {object} options.embed Message embed or embed template
+ * @param {boolean|false} options.avoidEdit Avoid automatic edit
+ * @param {object} options.strings 
+ * @param {string} options.strings.timeout Timeout text
+ * @param {number|1} options.page Starting Page
+ * @param {number|1} options.tot_pages  Total pages
+ * @param {number|30} rec Maximum recursion, never larger than 30
+ */
 
-if(rec>30) return msg.reply("`Navigation Limit Reached`");
+module.exports = async function ReactionNavigator(m, msg, pagefun, options = {}, rec) {
+  if (rec > 30) return msg.reply("`Navigation Limit Reached`");
 
-    let time = options.time || 10000
-    let content = options.content|| (m.content||[])[0] || "";
-    let embed = options.embed|| (m.embeds||[])[0] || false;
-    let avoidEdit = options.avoidEdit || true;
-    let strings = options.strings || {}
-        strings.timeout   =strings.timeout|| "TIMEOUT"
+  const time = options.time || 10000;
+  const content = options.content || m.content?.[0] || "";
+  const embed = options.embed || m.embeds?.[0] || false;
+  const avoidEdit = options.avoidEdit || true;
+  const strings = options.strings || {};
+  strings.timeout = strings.timeout || "TIMEOUT";
 
-    let page = options.page || 1
-    let tot_pages = options.tot_pages || 1
+  const page = options.page || 1;
+  const totPages = options.tot_pages || 1;
 
-    let isFirst = page == 1
-    let isLast  = page == tot_pages 
+  const isFirst = page === 1;
+  const isLast = page === totPages;
 
-    if(!isFirst) m.addReaction("◀")
-    if(!isLast)  m.addReaction("▶")
-   
-    
-    
-    const reas = await m.awaitReactions( {
-        maxMatches: 1,
-        authorOnly:msg.author.id,
-        time
-    }).catch(e=>{
-        m.removeReactions().catch(e=>null);
-        if(embed && !avoidEdit){
-            embed.color =16499716;        
-            embed.footer ={text: strings.timeout};      
-            m.edit({content,embed});
-        }
-    });
+  if (!isFirst) m.addReaction("◀");
+  if (!isLast) m.addReaction("▶");
 
-    if (!reas || reas.length === 0 ) return;
-    m.removeReactions().catch(e=>null);
-
-    if (!isFirst && reas.length === 1 && reas[0].emoji.name == "◀") {
-        options=null;
-        pagefun(page-1,m,rec++);
-        m = null;
-        msg = null;
+  const reas = await m.awaitReactions({
+    maxMatches: 1,
+    authorOnly: msg.author.id,
+    time,
+  }).catch(() => {
+    m.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
+      embed.color = 16499716;
+      embed.footer = { text: strings.timeout };
+      m.edit({ content, embed });
     }
+  });
 
-    if (!isLast && reas.length === 1 && reas[0].emoji.name == "▶") {
-        pagefun(page+1,m,rec++);
-        options=null;
-        m = null;
-        msg = null;
-    }
+  if (!reas || reas.length === 0) return null;
+  m.removeReactions().catch(console.error);
 
-}
+  if (!isFirst && reas.length === 1 && reas[0].emoji.name === "◀") {
+    options = null;
+    pagefun(page - 1, m, rec += 1);
+    m = null;
+    msg = null;
+  }
+
+  if (!isLast && reas.length === 1 && reas[0].emoji.name === "▶") {
+    pagefun(page + 1, m, rec += 1);
+    options = null;
+    m = null;
+    msg = null;
+  }
+};

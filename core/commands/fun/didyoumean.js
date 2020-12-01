@@ -1,82 +1,75 @@
 // const gear = require('../../utilities/Gearbox');
-const Picto = require('../../utilities/Picto');
-//const locale = require('../../../utils/i18node');
-//const $t = locale.getT();
+const Picto = require("../../utilities/Picto");
+// const locale = require('../../../utils/i18node');
+// const $t = locale.getT();
 
+const init = async (msg) => {
+  const P = { lngs: msg.lang, prefix: msg.prefix };
+  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat })) return;
+  Target = msg.mentions[0] || {};
+  let onepart = true;
+  let textop;
+  let textbot = msg.args.join(" ").replace(/<@[0-9]*>/g, "");
 
-const init = async function (msg){
-
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P),'noargs'],{cmd:this.cmd,msg,opt:this.cat}))return;
-    Target = msg.mentions[0] || {}
-    let onepart = true;
-    let textop;
-    let textbot =  msg.args.join(' ').replace(/<@[0-9]*>/g,"");
-
-
-
-    if(Target.id !== msg.author.id){
-        let ch_messages  = await msg.channel.getMessages(10, msg.id);
-        textop = (ch_messages.find(m=>m.author.id === Target.id)||{}).cleanContent || false;
-        if (textop) {
-            onepart = false;
-        }
-
-        textbot = msg.args.join(' ').replace(/<@[0-9]*>/g,"")
+  if (Target.id !== msg.author.id) {
+    const chMessages = await msg.channel.getMessages(10, msg.id);
+    textop = chMessages.find((m) => m.author.id === Target.id)?.cleanContent || false;
+    if (textop) {
+      onepart = false;
     }
 
-    if(msg.args[0] ==="^") {
-        let messageGrab = await PLX.getPreviousMessage(msg);
-        if(messageGrab) textop = messageGrab.cleanContent;
-        textbot = msg.args.slice(1).join(' ') 
-        onepart = false;
-    }
+    textbot = msg.args.join(" ").replace(/<@[0-9]*>/g, "");
+  }
 
-    let messagebyID = [msg.args[0]].filter(arg=> arg&&!isNaN(arg)&&arg.length>10);
-    if(messagebyID.length>0){
-        let newmes = await PLX.getPreviousMessage(msg,messagebyID[0]);
-        if(newmes) textop = newmes.cleanContent;        
-        textbot = msg.args.slice(1).join(' ').replace(/[0-9]{10,}/g,"")
-        onepart = false;
-    }
+  if (msg.args.includes("^")) {
+    const messageGrab = await PLX.getPreviousMessage(msg);
+    if (messageGrab) textop = messageGrab.cleanContent;
+    textbot = msg.args.filter((a) => a !== "^").join(" ");
+    onepart = false;
+  }
 
-    if(msg.quoteArgs){
-        textop =  msg.quoteArgs
-        textbot = msg.args.join(' ').replace(`"${textop}"`,"")
-        onepart = false;
-    }
+  const messagebyID = [msg.args[0]].filter((arg) => arg && !Number.isNaN(arg) && arg.length > 10);
+  if (messagebyID.length > 0) {
+    const newmes = await PLX.getPreviousMessage(msg, messagebyID[0]);
+    if (newmes) textop = newmes.cleanContent;
+    textbot = msg.args.slice(1).join(" ").replace(/[0-9]{10,}/g, "");
+    onepart = false;
+  }
 
+  if (msg.quoteArgs) {
+    textop = msg.quoteArgs;
+    textbot = msg.args.join(" ").replace(`"${textop}"`, "");
+    onepart = false;
+  }
 
-    if(textop && textop.length > 50){
-        console.log(textop)
-        textop = textop.slice(0,50) + "..."
-    }
+  if (textop && textop.length > 50) {
+    console.log(textop);
+    textop = `${textop.slice(0, 50)}...`;
+  }
 
-    let canvas = Picto.new(500,onepart?150:250);
-    let partwo_origin = onepart ? 0 : 100
-    let ctx = canvas.getContext('2d')
+  const canvas = Picto.new(500, onepart ? 150 : 250);
+  const partwoOrigin = onepart ? 0 : 100;
+  const ctx = canvas.getContext("2d");
 
-    let part1 = Picto.getCanvas(paths.CDN+"/build/dym/part1.png");
-    let part2 = Picto.getCanvas(paths.CDN+"/build/dym/part2.png");
-    
-    ctx.drawImage(await part2,0,partwo_origin);
-    Picto.setAndDraw(ctx,Picto.tag(ctx,"Did you mean:","300 16px Arial","#CC0000"),150,100+partwo_origin,150,"right")
-    Picto.setAndDraw(ctx,Picto.tag(ctx,textbot,"600 italic 16px Arial","#1223BB"),155,100+partwo_origin,320,"left")
-    
-    if(!onepart){
-        ctx.drawImage(await part1,0,0);
-        Picto.setAndDraw(ctx,Picto.tag(ctx,textop,null,"#000"),142,52,240)
-    }
-    await msg.channel.send( '',file( await canvas.toBuffer(),'didyoumean.png'))
+  const part1 = Picto.getCanvas(`${paths.CDN}/build/dym/part1.png`);
+  const part2 = Picto.getCanvas(`${paths.CDN}/build/dym/part2.png`);
 
+  ctx.drawImage(await part2, 0, partwoOrigin);
+  Picto.setAndDraw(ctx, Picto.tag(ctx, "Did you mean:", "300 16px Arial", "#CC0000"), 150, 100 + partwoOrigin, 150, "right");
+  Picto.setAndDraw(ctx, Picto.tag(ctx, textbot, "600 italic 16px Arial", "#1223BB"), 155, 100 + partwoOrigin, 320, "left");
 
-}
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'didyoumean'
-    ,perms:3
-    ,cat:'fun'
-    ,botPerms:['attachFiles']
-    ,aliases:['dym']
-}
+  if (!onepart) {
+    ctx.drawImage(await part1, 0, 0);
+    Picto.setAndDraw(ctx, Picto.tag(ctx, textop, undefined, "#000"), 142, 52, 240);
+  }
+  await msg.channel.send("", file(await canvas.toBuffer(), "didyoumean.png"));
+};
+module.exports = {
+  init,
+  pub: true,
+  cmd: "didyoumean",
+  perms: 3,
+  cat: "fun",
+  botPerms: ["attachFiles"],
+  aliases: ["dym"],
+};

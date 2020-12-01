@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Medaile",
+        "sticker": "",
+        "sticker_plural": "Samolepky",
+        "background": "",
+        "background_plural": "Pozadí"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "Nejdřív nastav tenhle kanál jako NSFW. Jsou tady děti."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Modul **{{module}}** byl **globálně** vypnut.",
-            "disabledChn": "Modul **{{module}}* byl vypnut v kanálu #{{channel}}.",
+            "disabledChn": "Modul **{{module}}* byl vypnut v kanálu <#{{channel}}>.",
             "disabledComSer": "Příkaz **{{command}}** byl **globálně** vypnut.",
-            "disabledComChn": "Příkaz **{{command}}** byl vypnut v kanálu #{{channel}}.",
+            "disabledComChn": "Příkaz **{{command}}** byl vypnut v kanálu <#{{channel}}>.",
             "enabledSer": "Modul **{{module}}** byl **globálně** zapnut.",
-            "enabledChn": "Modul **{{module}}* byl zapnut v kanálu #{{channel}}.",
+            "enabledChn": "Modul **{{module}}* byl zapnut v kanálu <#{{channel}}>.",
             "enabledComSer": "Příkaz **{{command}}** byl **globálně** zapnut.",
-            "enabledComChn": "Příkaz **{{command}}** byl zapnut v kanálu #{{channel}}."
+            "enabledComChn": "Příkaz **{{command}}** byl zapnut v kanálu <#{{channel}}>."
         },
         "reput": {
             "noSelf": "Hej, chytrolíne! Nemůžeš si dát rep!",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Level naštvanosti {{target}} je **{{amount}}%** {{emoji}}.",
             "booru404": "Ups, nemůžu najít nic s takovými tagy. Koukni se jestli máš všechno správně!",
             "nsfw404": "Kámo, tvoje porno je tak sakra bizární, že jsem ho nikde nemohla najít. Zkus něco méně výstředního.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "Čas si zahrát Blackjack, předpokládám že už pravidla znáš, tak začněme.",
             "result": "Výsledek:",
             "bust": "",
-            "youwin": "Gratuluju! Tentokrát jsi vyhrál!",
+            "youwin": "",
             "youlose": "",
             "hit": "Aby jsi líznul ještě jednu kartu, napiš `hit`,",
             "stand": "",
             "split": "`split` aby jsi splitnul svoje karty",
             "double": "",
             "pass": "nebo `stand` pro vynechání.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Sugoi! Koukni se na ten Lootbox který jsem našla!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "Všichni máte **__20 sekund__** na připojení do tomboly! Napiš `{{prefix}}pick` pro šanci sebrání!",
         "goesTo": "Čas vypršel! Uvidíme kdo vyhraje tenhle Lootbox.\n**Tento Lootbox bude v tombole mezi:**",
         "congrats": "",
         "opening": "{{user}} otevřel jeho Lootbox.",
         "contains": "",
-        "options": "Můžeš si ho buď nechat, nebo znovu vytočit zaplacením {{amt}}",
         "keep": "Nechat si",
         "reroll": "Vytočit znovu",
         "rerolled": "Zkusíme to znova, vytáčení obsahu Lootboxu...",
         "noMoreRolls": "Došly ti rerolly, musíš zůstat u tohoto výsledku.",
         "noFunds": "Ani si nemůžeš dovolit reroll, příště se ti to určitě povede.",
-        "rerollRemain": "Protočení zbývá:",
         "addedRubines": "Bylo ti přidáno {{X}} rubínů",
         "addedJades": "Do vaku ti bylo přídáno {{X}} jadeitů",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "Vy bando **kreténů**! Nechali jste proklouznout Lootbox. >:U",
         "contesting": "Zápisy pro tenhle box:",
         "eventDrop": "",
-        "notThisbox": "Takovej lootbox neexistuje, zkus `{{prefix}}lootbox` znova a mrkni se jaký máš na výběr možnosti~"
+        "notThisbox": "Takovej lootbox neexistuje, zkus `{{prefix}}lootbox` znova a mrkni se jaký máš na výběr možnosti~",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Myslel sis že to byla Pollux, **ale jsem to JÁ, DIO**!",

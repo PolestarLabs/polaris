@@ -247,13 +247,13 @@
 		},
 		"toggle": {
 			"disabledSer": "O módulo **{{module}}** foi desabilitado **Globalmente** ",
-			"disabledChn": "O módulo **{{module}}** foi desabilitado no canal #{{channel}}",
+			"disabledChn": "O módulo **{{module}}** foi desabilitado no canal <#{{channel}}>",
 			"disabledComSer": "O comando **{{command}}** foi desabilitado **Globalmente**",
-			"disabledComChn": "O comando **{{command}}** foi desabilitado no canal #{{channel}}",
+			"disabledComChn": "O comando **{{command}}** foi desabilitado no canal <#{{channel}}>",
 			"enabledSer": "O módulo **{{module}}** foi habilitado **Globalmente** ",
-			"enabledChn": "O módulo **{{module}}** foi habilitado no canal #{{channel}}",
+			"enabledChn": "O módulo **{{module}}** foi habilitado no canal <#{{channel}}>",
 			"enabledComSer": "O comando **{{command}}** foi habilitado **Globalmente**",
-			"enabledComChn": "O comando **{{command}}** foi habilitado no canal #{{channel}}"
+			"enabledComChn": "O comando **{{command}}** foi habilitado no canal <#{{channel}}>"
 		},
 		"reput": {
 			"noSelf": "Ô xiru! Não te fresqueia. Fica de Rep pra ti mesmo que te passo o relho.",
@@ -335,9 +335,7 @@
 			"timeout": "Tempo de nuke esgotado!",
 			"completed": "As informações do servidor foram completamente limpas e resetadas. Tenta usar **+serverinfo** para ver se tudo foi resetado bem. Eu não sou responsável por alguma contaminação de Fallout Nuclear."
 		},
-		"pleasewait": {
-
-		}
+		"pleasewait": {}
 	},
 	"games": {
 		"coinflip": {

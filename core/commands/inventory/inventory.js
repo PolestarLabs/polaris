@@ -4,7 +4,7 @@ const Picto = require('../../utilities/Picto');
 
 const INVOKERS   = new Map();
 
-const init = async function (msg,args){
+const init = async (msg, args) => {
 
     let P={lngs:msg.lang,prefix:msg.prefix}
     if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
@@ -17,9 +17,9 @@ const init = async function (msg,args){
             //majors
                 LBX:   {y: 160, x: 710, w: 140, h:37 }  
                 ,BPK:  {y: 244, x: 710, w: 140, h:0  }  
-                ,CSM:  {y: 323, x: 710, w: 140, h:0  }  
+                ,KEY:  {y: 323, x: 710, w: 140, h:0  }  
                 ,MTL:  {y: 322, x: 180, w: 140, h:37 }  
-                ,KEY:  {y: 405, x: 180, w: 140, h:0  }  
+                ,CSM:  {y: 405, x: 180, w: 140, h:0  }  
                 ,JNK:  {y: 482, x: 180, w: 140, h:0  }  
             //minis
                 ,mBG:    {y: 255, x: 390 }  
@@ -66,15 +66,23 @@ const init = async function (msg,args){
 
     Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.lootbox'     ,P), "400 22pt 'Panton'","#FFF"),XYZ.LBX.x,XYZ.LBX.y,XYZ.LBX.w,'right')
     Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.boosterpack' ,P), "400 22pt 'Panton'","#FFF"),XYZ.BPK.x,XYZ.BPK.y,XYZ.BPK.w,'right')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.consumable'  ,P), "400 22pt 'Panton'","#FFF"),XYZ.CSM.x,XYZ.CSM.y,XYZ.CSM.w,'right')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.consumable'  ,P), "400 22pt 'Panton'","#FFF"),XYZ.CSM.x,XYZ.CSM.y,XYZ.CSM.w,'left')
 
     Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.material'    ,P), "400 22pt 'Panton'","#FFF"),XYZ.MTL.x,XYZ.MTL.y,XYZ.MTL.w,'left')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.key'                ,P), "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.key'         ,P), "400 22pt 'Panton'","#FFF"),XYZ.KEY.x,XYZ.KEY.y,XYZ.KEY.w,'right')
     Picto.setAndDraw(ctx,Picto.tag(ctx,$t('keywords.junk'        ,P), "400 22pt 'Panton'","#FFF"),XYZ.JNK.x,XYZ.JNK.y,XYZ.JNK.w,'left')
     
     types = {}
     userData.modules.inventory.forEach(itm=>{
-        let itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        let itemType;
+        try{
+            itemType = itemData.find(i=>(itm.id||itm)==i.id).type||"other"
+        }catch(err){
+     
+            console.error(` BAD INVENTORY ITEM `.bgRed +` ${itm} - `+ (err.message.red) + (" inventory.js :80".yellow)  )
+            
+            itemType = 'other'
+        }
         if(!types[itemType]) types[itemType] = 0;
         types[itemType] += (itm.count || 0);
     });
@@ -87,7 +95,7 @@ const init = async function (msg,args){
         ,a_lbx = xlr99(types.box || 0 ,"L");
 
     function xlr99(x,LR="R"){
-        x= LR == "R" ? x>99?"+99":x
+        x= LR === "R" ? x>99?"+99":x
                      : x>99?"99+":x;
         return x;
     }
@@ -105,9 +113,9 @@ const init = async function (msg,args){
     ctx.globalAlpha = 1    
     
     Picto.setAndDraw(ctx,Picto.tag(ctx,  a_jnk ,  "100 20pt 'Panton Light'","#FFF"),XYZ.JNK.x+180, XYZ.JNK.y,XYZ.JNK.w,'right')
-    Picto.setAndDraw(ctx,Picto.tag(ctx,  a_key ,  "100 20pt 'Panton Light'","#FFF"),XYZ.KEY.x+180, XYZ.KEY.y,XYZ.KEY.w,'right')
     Picto.setAndDraw(ctx,Picto.tag(ctx,  a_mtl ,  "100 20pt 'Panton Light'","#FFF"),XYZ.MTL.x+180, XYZ.MTL.y,XYZ.MTL.w,'right')
-    Picto.setAndDraw(ctx,Picto.tag(ctx, a_csm,    "100 24pt 'Panton Light'","#FFF"),XYZ.CSM.x-200, XYZ.CSM.y,XYZ.CSM.w,'left')
+    Picto.setAndDraw(ctx,Picto.tag(ctx, a_csm,    "100 20pt 'Panton Light'","#FFF"),XYZ.CSM.x+180, XYZ.CSM.y,XYZ.CSM.w,'right')
+    Picto.setAndDraw(ctx,Picto.tag(ctx,  a_key ,  "100 24pt 'Panton Light'","#FFF"),XYZ.KEY.x-200, XYZ.KEY.y,XYZ.KEY.w,'left')
     Picto.setAndDraw(ctx,Picto.tag(ctx, a_bpk,    "100 24pt 'Panton Light'","#FFF"),XYZ.BPK.x-200, XYZ.BPK.y,XYZ.BPK.w,'left')
     Picto.setAndDraw(ctx,Picto.tag(ctx, a_lbx,    "100 24pt 'Panton Light'","#FFF"),XYZ.LBX.x-200, XYZ.LBX.y,XYZ.LBX.w,'left')
 
@@ -141,42 +149,42 @@ module.exports={
             emoji: _emoji("LOOTBOX").reaction,
             type: "edit",
             response: require("./lootbox.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,{id:uid})=>  INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
             
         },{
             emoji: _emoji("BOOSTER").reaction,
             type: "edit",
             response: require("./boosterpack.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
-            
-        },{
-            emoji: _emoji("CONSUMABLE").reaction,
-            type: "edit",
-            response: require("./consumable.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
-            
-        },{
-            emoji: _emoji("MATERIAL").reaction,
-            type: "edit",
-            response: require("./material.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
             
         },{
             emoji: _emoji("KEY").reaction,
             type: "edit",
             response: require("./key.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
+            
+        },{
+            emoji: _emoji("MATERIAL").reaction,
+            type: "edit",
+            response: require("./material.js").init,
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
+            
+        },{
+            emoji: _emoji("CONSUMABLE").reaction,
+            type: "edit",
+            response: require("./consumable.js").init,
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
             
         },{
             emoji: _emoji("JUNK").reaction,
             type: "edit",
             response: require("./junk.js").init,
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
             
         },{
             emoji: "❌",
             type: "cancel",
-            filter:(msg,emj,uid)=> INVOKERS.get(uid) == msg.id
+            filter:(msg,emj,{id:uid})=> INVOKERS.get(uid) === msg.id && msg.removeReaction(emj,uid)
             
         }
     ],

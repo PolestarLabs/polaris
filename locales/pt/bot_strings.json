@@ -15,7 +15,7 @@
         "C": "Comum",
         "U": "Incomum",
         "R": "Raro",
-        "SR": "Tri Bagual",
+        "SR": "Super Raro",
         "UR": "Ultra Raro",
         "thevoid": "vazio",
         "evToken": "",
@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Medalhas",
+        "sticker": "",
+        "sticker_plural": "Autocolantes",
+        "background": "",
+        "background_plural": "Papeis de parede"
     },
     "terms": {
         "transferDenied": "",
@@ -140,6 +146,21 @@
             "insuperms": "",
             "not-a-NSFW-channel": ""
         },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
+        },
         "warnings": {
             "translationTexTooLong": "",
             "open1": "",
@@ -211,7 +232,7 @@
                 "ohmy_negative": [
                     "",
                     "",
-                    "Mas que barbaridade...",
+                    "",
                     "",
                     "",
                     ""
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "O módulo **{{module}}** foi desativado **globalmente**.",
-            "disabledChn": "O módulo {{module}} foi desativado no canal #{{channel}}",
+            "disabledChn": "O módulo {{module}} foi desativado no canal <#{{channel}}>",
             "disabledComSer": "O comando **{{command}}** foi desligado **globalmente**.",
-            "disabledComChn": "O comando **{{command}}** foi desligado no canal #{{channel}}",
+            "disabledComChn": "O comando **{{command}}** foi desligado no canal <#{{channel}}>",
             "enabledSer": "O módulo **{{module}}** foi ativado **globalmente**.",
-            "enabledChn": "O módulo {{module}} foi ativado no canal #{{channel}}",
+            "enabledChn": "O módulo {{module}} foi ativado no canal <#{{channel}}>",
             "enabledComSer": "O comando **{{command}}** foi ativado **globalmente**.",
-            "enabledComChn": "O comando **{{command}}** foi ativado no canal #{{channel}}"
+            "enabledComChn": "O comando **{{command}}** foi ativado no canal <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Hey, puto! Não podes dar rep a ti próprio!",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "O nível de sal de {{target}} é **{{amount}}%** {{emoji}}",
             "booru404": "Oops, não encontrei nada com essas tags. Vê se tu tens tudo certo, querido!",
             "nsfw404": "Puto, o teu porno é tão bizarro que eu não encontrei isso em lado nenhum. Tenta algo menos estranho",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -663,7 +697,7 @@
             "quick_useful": "",
             "quick_enjoy": "",
             "quick_didntask": "",
-            "avail_cmd": "Comandos Disponíves ",
+            "avail_cmd": "Comandos Disponíveis",
             "avail_cmdlist": "",
             "notenough": "",
             "trythese": "",
@@ -711,6 +745,18 @@
             "split": "",
             "double": "",
             "pass": "",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "",
             ""
         ],
+        "duplicate": "",
         "lootPick": "",
         "goesTo": "",
         "congrats": "",
         "opening": "",
         "contains": "",
-        "options": "",
         "keep": "",
         "reroll": "",
         "rerolled": "",
         "noMoreRolls": "",
         "noFunds": "",
-        "rerollRemain": "",
         "addedRubines": "",
         "addedJades": "",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "",
         "contesting": "",
         "eventDrop": "",
-        "notThisbox": ""
+        "notThisbox": "",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "",

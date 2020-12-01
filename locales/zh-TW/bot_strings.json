@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "徽章",
+        "sticker": "",
+        "sticker_plural": "貼紙",
+        "background": "",
+        "background_plural": "背景"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "{{imsorry}}如果你本身沒有權限，那我只能幫你QQ",
             "not-a-NSFW-channel": "騷年，先把這個頻道設成NSFW。"
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}的爆氣指數達到了**{{amount}}%** {{emoji}}",
             "booru404": "糟糕！看來我找不到跟這些標籤有關的東西。你應該在確認一下",
             "nsfw404": "騷年，看來你的喜好有點特殊，特殊到我找不到這方面的本本，不過我不怎麼意外就是了",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "該來玩21點了，我想你知道規則，我們就直接開始吧",
             "result": "結果：",
             "bust": "爆了",
-            "youwin": "恭喜！你贏了！",
+            "youwin": "",
             "youlose": "",
             "hit": "輸入`hit`來要牌",
             "stand": "過",
             "split": "輸入`split`來分牌",
             "double": "",
             "pass": "或是輸入`stand`來跳過",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "斯勾以～！看看我找到的箱子！",
             ""
         ],
+        "duplicate": "",
         "lootPick": "你們有**__20秒__**的時間可以搶！輸入`{{prefix}}pick`來加入戰局！",
         "goesTo": "時間到！我們來看誰會拿到這個箱子\n**這些人都有機會拿到這個箱子：**",
         "congrats": "",
         "opening": "{{user}}開啟了他的箱子...",
         "contains": "",
-        "options": "你可以把它留著，或是付{{amt}}來重骰",
         "keep": "留著",
         "reroll": "重骰",
         "rerolled": "在試一次吧，正在重骰內容物...",
         "noMoreRolls": "你不能在重骰了，就這樣了",
         "noFunds": "孩子，你窮到不能重骰，下次吧",
-        "rerollRemain": "剩餘重骰次數：",
         "addedRubines": "{{X}}個紅寶石已加入你的餘額",
         "addedJades": "{{X}}個玉已加入你的餘額",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "你居然錯過了一個寶箱？等等，我在說什麼呢，你當然錯過了",
         "contesting": "這個箱子的競爭者：",
         "eventDrop": "",
-        "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子"
+        "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "跟你玩21點不是Pollux，**而是我，迪奧！**",

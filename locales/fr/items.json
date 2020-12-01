@@ -1,14 +1,330 @@
 {
-    "partial_ring": {
-        "name": "Bague partielle",
-        "description": "Une bande de métal utilisée pour créer une belle bague de mariage"
+    "anime_booster": {
+        "name": "Anime Générique VOL.1"
     },
-    "lootbox_C_O": {
-        "name": "Coffre commun",
-        "description": ""
+    "broken_excavator": {
+        "name": "Rétrocaveuse brisée"
+    },
+    "commendtoken": {
+        "name": "Jeton de louage",
+        "description": "Qu'est-ce? L'altruisme?"
+    },
+    "complete_ring_jade": {
+        "name": "Bague de Jade Splendide",
+        "description": "Aussi vert que votre détermination d'amour."
+    },
+    "complete_ring_rubine": {
+        "name": "Bague de Rubine Magnifique",
+        "description": "Les roses sont rouges, les violettes sont bleues, ce bague est aussi rouge et beau que vous!"
+    },
+    "complete_ring_sapphire": {
+        "name": "Bague de Saphir Luxueux",
+        "description": "La première étape vers l'engagement est d'offrir un bijou rare pour votre amour - félicitations! "
+    },
+    "complete_ring_stardust": {
+        "name": "Bague de Poudre d'étoile Opulente",
+        "description": "« Tout amant est, dans son cœur, un fou et, dans sa tête, un ménestrel.» \n— Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
         "name": "Fragment des cosmos",
         "description": "Gravier scintillant utilisé pour concocter les éclats des cosmos"
+    },
+    "cosmo_gem_C": {
+        "name": "",
+        "description": "Eh bien, au moins que ça brille."
+    },
+    "cosmo_gem_R": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_SR": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_U": {
+        "name": "",
+        "description": ""
+    },
+    "cosmo_gem_UR": {
+        "name": "",
+        "description": ""
+    },
+    "daianwatch_booster": {
+        "name": "",
+        "description": ""
+    },
+    "doki_booster": {
+        "name": "",
+        "description": ""
+    },
+    "doublehook": {
+        "name": "",
+        "description": ""
+    },
+    "excavator": {
+        "name": "",
+        "description": ""
+    },
+    "hook": {
+        "name": "",
+        "description": ""
+    },
+    "initd_booster": {
+        "name": "",
+        "description": ""
+    },
+    "iwd1_booster": {
+        "name": "",
+        "description": ""
+    },
+    "iwd2_booster": {
+        "name": "",
+        "description": ""
+    },
+    "lootbox_C_C": {
+        "name": "Coffre commun chibi"
+    },
+    "lootbox_C_E": {
+        "name": "Coffre commun épique"
+    },
+    "lootbox_C_event_1": {
+        "name": "Coffre commun d'Halloween"
+    },
+    "lootbox_C_event_2": {
+        "name": "Coffre de Noël commun"
+    },
+    "lootbox_C_event_3": {
+        "name": "Coffre de Pâques commun"
+    },
+    "lootbox_C_event_s1": {
+        "name": "Coffre d'été commun"
+    },
+    "lootbox_C_event_s2": {
+        "name": "Coffre d'hiver commun"
+    },
+    "lootbox_C_event_s3": {
+        "name": "Coffre du solstice commun"
+    },
+    "lootbox_C_O": {
+        "name": "Coffre commun"
+    },
+    "lootbox_C_s1": {
+        "name": "Coffre d'été commun"
+    },
+    "lootbox_C_s2": {
+        "name": "Coffre d'hiver commun"
+    },
+    "lootbox_dev": {
+        "name": "Boîte Cadeau du développeur",
+        "description": "Coffre des débutants, un cadeau du développeur pour les débutants. Garantie de contenir au moins un article Ultra-Rare!"
+    },
+    "lootbox_EL": {
+        "name": "\"Coffrel\"",
+        "description": "Si tu ouvres cette boîte, ton inventaire va exploser"
+    },
+    "lootbox_R_C": {
+        "name": ""
+    },
+    "lootbox_R_E": {
+        "name": ""
+    },
+    "lootbox_R_event_1": {
+        "name": ""
+    },
+    "lootbox_R_event_2": {
+        "name": ""
+    },
+    "lootbox_R_event_3": {
+        "name": ""
+    },
+    "lootbox_R_event_s1": {
+        "name": ""
+    },
+    "lootbox_R_event_s2": {
+        "name": ""
+    },
+    "lootbox_R_event_s3": {
+        "name": ""
+    },
+    "lootbox_R_O": {
+        "name": ""
+    },
+    "lootbox_R_s1": {
+        "name": ""
+    },
+    "lootbox_R_s2": {
+        "name": ""
+    },
+    "lootbox_R_s3": {
+        "name": ""
+    },
+    "lootbox_SR_C": {
+        "name": ""
+    },
+    "lootbox_SR_E": {
+        "name": ""
+    },
+    "lootbox_SR_event_1": {
+        "name": ""
+    },
+    "lootbox_SR_event_2": {
+        "name": ""
+    },
+    "lootbox_SR_event_3": {
+        "name": ""
+    },
+    "lootbox_SR_event_s1": {
+        "name": ""
+    },
+    "lootbox_SR_event_s2": {
+        "name": ""
+    },
+    "lootbox_SR_event_s3": {
+        "name": ""
+    },
+    "lootbox_SR_O": {
+        "name": ""
+    },
+    "lootbox_SR_s1": {
+        "name": ""
+    },
+    "lootbox_SR_s2": {
+        "name": ""
+    },
+    "lootbox_SR_s3": {
+        "name": ""
+    },
+    "lootbox_U_C": {
+        "name": ""
+    },
+    "lootbox_U_E": {
+        "name": ""
+    },
+    "lootbox_U_event_1": {
+        "name": ""
+    },
+    "lootbox_U_event_2": {
+        "name": ""
+    },
+    "lootbox_U_event_3": {
+        "name": ""
+    },
+    "lootbox_U_event_s1": {
+        "name": ""
+    },
+    "lootbox_U_event_s2": {
+        "name": ""
+    },
+    "lootbox_U_event_s3": {
+        "name": "Coffre du solstice peu commun"
+    },
+    "lootbox_U_O": {
+        "name": "Coffre peu commun"
+    },
+    "lootbox_U_s1": {
+        "name": ""
+    },
+    "lootbox_U_s2": {
+        "name": ""
+    },
+    "lootbox_U_s3": {
+        "name": "Coffre du solstice peu commun"
+    },
+    "lootbox_UR_C": {
+        "name": "Coffre Chibi Ultra-Rare"
+    },
+    "lootbox_UR_E": {
+        "name": "Coffre épique ultra-rare"
+    },
+    "lootbox_UR_event_1": {
+        "name": "Coffre d'Halloween Ultra-Rare"
+    },
+    "lootbox_UR_event_2": {
+        "name": "Coffre de Noël Ultra-Rare"
+    },
+    "lootbox_UR_event_s1": {
+        "name": "Coffre d'été Ultra-Rare"
+    },
+    "lootbox_UR_event_s2": {
+        "name": "Coffre d'hiver Ultra-Rare"
+    },
+    "lootbox_UR_event_s3": {
+        "name": "Coffre du solstice Ultra-Rare"
+    },
+    "lootbox_UR_O": {
+        "name": "Coffre Ultra-Rare"
+    },
+    "lootbox_UR_s1": {
+        "name": "Coffre d'été Ultra-Rare"
+    },
+    "lootbox_UR_s2": {
+        "name": "Coffre d'hiver Ultra-Rare"
+    },
+    "lootbox_UR_s3": {
+        "name": "Coffre du solstice Ultra-Rare"
+    },
+    "nierauto_booster": {
+        "name": "NieR: Automata",
+        "description": ""
+    },
+    "p5_booster": {
+        "name": "Persona 5",
+        "description": ""
+    },
+    "padoru_booster": {
+        "name": "",
+        "description": "Hashire sore yo and donne-moi tes Rubines"
+    },
+    "partial_ring": {
+        "name": "Bague partielle",
+        "description": "Une bande de métal utilisée pour créer une belle bague de mariage"
+    },
+    "reel": {
+        "name": "Moulinet de pêche",
+        "description": ""
+    },
+    "rod_c": {
+        "name": "",
+        "description": ""
+    },
+    "rod_r": {
+        "name": "",
+        "description": ""
+    },
+    "rod_sr": {
+        "name": "",
+        "description": ""
+    },
+    "rod_u": {
+        "name": "",
+        "description": ""
+    },
+    "rod_ur": {
+        "name": "",
+        "description": "Ne. Le. Brise. Pas."
+    },
+    "rope": {
+        "name": "Corde",
+        "description": ""
+    },
+    "shovel": {
+        "name": "Pelle",
+        "description": ""
+    },
+    "spoon": {
+        "name": "Cuillère",
+        "description": "C'est une cuillère très sexy, veuillez l'utiliser de manière responsable."
+    },
+    "spork": {
+        "name": "",
+        "description": ""
+    },
+    "stick": {
+        "name": "",
+        "description": ""
+    },
+    "fork": {
+        "name": "Fourchette",
+        "description": ""
     }
 }

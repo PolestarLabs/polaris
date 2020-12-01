@@ -1,15 +1,15 @@
 const Gal = require("../../structures/Galleries");
 
-const init = async function(msg) {
+const init = async function (msg) {
   const embed = new Embed();
 
-  let img = await Gal.randomOne("akerfeldt", true);
-  let avgcolor = await require("../../utilities/Picto").avgColor(img);
+  const img = await Gal.randomOne("akerfeldt", true);
+  const avgcolor = await require("../../utilities/Picto").avgColor(img);
 
   embed.image(img);
   embed.color(avgcolor);
 
-  msg.channel.send({ embed }).then(m => aker(m));
+  msg.channel.send({ embed }).then((m) => aker(m));
 };
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
   perms: 3,
   cat: "donators",
   botPerms: ["embedLinks"],
-  aliases: []
+  aliases: [],
 };
 
 async function aker(m) {
@@ -36,6 +36,5 @@ async function aker(m) {
       m.addReaction("🇷");
       m.addReaction("🅾");
       m.addReaction("🇼");
-      return;
   }
 }
