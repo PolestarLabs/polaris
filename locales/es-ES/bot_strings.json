@@ -30,7 +30,13 @@
         "material": "Material",
         "material_plural": "Materiales",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacks"
+        "boosterpack_plural": "Boosterpacks",
+        "medal": "",
+        "medal_plural": "Medallas",
+        "sticker": "",
+        "sticker_plural": "Stickers",
+        "background": "",
+        "background_plural": "Fondos"
     },
     "terms": {
         "transferDenied": "Transferencia Denegada",
@@ -139,6 +145,21 @@
             "emojiError": "No pude añadir ese Emoji. Por favor, revisa los permisos y comprueba si es válido...",
             "insuperms": "{{imsorry}} Lo siento, no puedo hacer eso por ti si ni siquiera tienes permiso.",
             "not-a-NSFW-channel": "Este canal no está configurado para NSFW. No vayas dejando tu \"obra de arte\" por todas partes."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **¡Ey! El texto traducido no puede superar los __1000 Caracteres__**\n Pero no te preocupes, ya te lo he recortado~",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "El módulo **{{module}}** ha sido deshabilitado **Globalmente**.",
-            "disabledChn": "El módulo {{module}} ha sido deshabilitado en el canal #{{channel}}",
+            "disabledChn": "El módulo {{module}} ha sido deshabilitado en el canal <#{{channel}}>",
             "disabledComSer": "El comando **{{command}}** ha sido deshabilitado **Globalmente**",
-            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal #{{channel}}",
+            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal <#{{channel}}>",
             "enabledSer": "El módulo **{{module}}** ha sido deshabilitado **Globalmente**",
-            "enabledChn": "El módulo **{{module}}** ha sido habilitado en el canal #{{channel}}",
+            "enabledChn": "El módulo **{{module}}** ha sido habilitado en el canal <#{{channel}}>",
             "enabledComSer": "El comando **{{command}}** ha sido habilitado **Globalmente**",
-            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal #{{channel}}"
+            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal <#{{channel}}>"
         },
         "reput": {
             "noSelf": "No, me niego a que te subas la reputación tú mismo.",
@@ -440,6 +461,7 @@
             "inChan": "¡Muy bien! El mensaje de bienvenida se publicará en **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' tiene un Nivel de Sal de **{{amount}}%** {{emoji}}",
             "booru404": "Lo siento, no pude encontrar nada con esas etiquetas. Confirma que está todo bien.",
             "nsfw404": "Perdona, pero tu porno es tan rarito que no pude encontrarlo en ninguna parte. Intenta algo menos depravado.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "¡Cancelado!",
             "timeout": "¡Se acabó el tiempo!",
             "cantAfford": "Ah, esto no es algo que te puedas permitir... :(",
@@ -550,6 +573,16 @@
             "confirmDelete": "¿Confirmas la eliminación?",
             "alotWentOn": "Han pasado muchas cosas hoy...",
             "alreadyOwnThis": "¡Eh, esto ya lo tienes!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Límite máximo para Roundrobin: 16",
@@ -564,7 +597,8 @@
             "bracketX": "Bracket {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "¿Quieres desencantar este fondo {{rarity_emoji}} para conseguir **{{count}} $t(keywords.cosmoFragment)** ?",
+            "magifrag": "",
+            "disenchant": "¿Te gustaría desencantar esto?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n en **{{count}} $t(keywords.s3.amazonaws.com/Fragment)** ?",
             "cosmeticSynth": "Síntesis de cosméticos",
             "confirmSynth": "¿Quieres que sintetice esto?",
             "nogemsforThis": "Parece que no tienes suficientes Gemas para llevar a cabo esta Síntesis..."
@@ -704,13 +738,25 @@
             "newgame": "Blackjack, ¿eh? Ya deberías conocer las reglas, así que comencemos.",
             "result": "Resultado:",
             "bust": "Fracaso",
-            "youwin": "¡Felicidades! Has ganado esta vez.",
-            "youlose": "¿Oh? ¿Gané? Peor para ti.",
+            "youwin": "",
+            "youlose": "",
             "hit": "Responde con `hit` para robar otra carta,",
             "stand": "Plantarse",
             "split": "Utiliza `split` para Dividir tu mano,␣",
             "double": "Utiliza `double` para duplicar tu apuesta y robar una última carta,",
             "pass": " o `stand` para plantarte.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "Desglose de splits:",
             "switchdeck": "¡Vamos a jugar una partida de BlackJack utilizando el mazo **{{deckname}}**!",
             "switchdeckEgg": "¡Vamos a jugar una partida de BlackJack utilizando el macho-- digo, mazo **{{deckname}}**!\n¡Ay, perdóname!",
@@ -750,18 +796,17 @@
             "¡Increíble! ¡Miren lo que he encontrado!",
             "Ey, estoy muy segura de que querrán ver esta Caja que tengo."
         ],
+        "duplicate": "",
         "lootPick": " ¡Todos tienen **__20 Segundos__** para intentar ganarla! ¡Escribe `{{prefix}}pick` para participar en esta oportunidad!",
         "goesTo": "¡Se acabó el tiempo! Veamos quién se queda con esta Caja.\n**Este Botín se sorteará entre:**",
         "congrats": "¡Muy bien! La Caja ha sido agregada a tu **Inventario**; puedes abrirla usando el comando `{{prefix}}lootbox`.",
         "opening": "{{user}} abrió su Caja...",
         "contains": "Esta Caja {{adjective}} contiene",
-        "options": "Puedes quedártelo, o volver a abrir la Caja si pagas {{amt}}",
         "keep": "Quedárselo",
         "reroll": "Volver a abrir",
         "rerolled": "Voy a intentarlo de nuevo. Mezclando el contenido de la caja...",
         "noMoreRolls": "Te has quedado sin oportunidades para repetir, tendrás que quedarte con el resultado.",
         "noFunds": "Necesitas mas Rubines para volverlo a intentar; quizá la próxima vez.",
-        "rerollRemain": "Reaperturas restantes:",
         "addedRubines": "{{X}} Rubines han sido agregados a tu Saldo",
         "addedJades": "{{X}} Jades se han agregado a tu bolsa",
         "addedMedal": "La Medalla **{{itm}}** ha sido agregada a tu bolsillo",
@@ -771,7 +816,12 @@
         "morons": "¿Dejaron pasar una Caja? No hay duda, lo han hecho. Ains...",
         "contesting": "Participantes para esta Caja:",
         "eventDrop": "¡Y aún hay más! Esta Caja es una **CAJA DE EVENTO**, lo que significa que hay **'Artículos especiales dentro'!**",
-        "notThisbox": "Parece que no tienes esa Caja. Intenta `{{prefix}} lootbox` de nuevo para ver las que posees."
+        "notThisbox": "Parece que no tienes esa Caja. Intenta `{{prefix}} lootbox` de nuevo para ver las que posees.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Pensaron que era Pollux, **¡pero era YO, DIO!**",

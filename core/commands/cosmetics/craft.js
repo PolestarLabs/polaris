@@ -1,249 +1,253 @@
-const cmd = 'craft';
-const YesNo = require('../../structures/YesNo');
-const ECO = require("../../archetypes/Economy.js")
-const diff = require('fast-diff');
+// @ts-check
 
-const init = async function (message) {
-  try{
-    
-  setTimeout(f=>  message.author.crafting = false, 25000)
-  //HELP TRIGGER
-    let P={lngs:message.lang,}
-    if(PLX.autoHelper([$t("helpkey",P),'noargs'],{cmd,message,opt:this.cat}))return;
-  //------------
-    
-if(message.author.crafting)return;
-message.author.crafting = true;
-function noteno(item,extra){
-  message.reply("")
-}
+const cmd = "craft";
+const YesNo = require("../../structures/YesNo");
+const { Crafter, Visualizer } = require("../../archetypes/Crafter");
+const { inspect } = require("util");
+const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
+const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
 
-  let [ITEMS,ALLITEMS] = await Promise.all([ DB.items.find({crafted:true}).lean().exec(), 
-      DB.items.find({}).lean().exec()]);
-  
-  let embed = new Embed
-  embed.description=""
-  embed.setColor('#71dbfa') 
-  
-  let arg = message.content.split(/ +/).slice(1)[0];
-  if (!arg)return;
-  let crafted_item = ITEMS.find(itm=>itm.id==arg||itm.code==arg);
+const init = async (msg,args) => {
+  try {
+    setTimeout(() => (msg.author.crafting = false), 25000);
+    // HELP TRIGGER
+    const P = { lngs: msg.lang };
+    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return;
+    //------------
 
-  if(!crafted_item){   
-    message.author.crafting = false;
-    arg = message.args.join(' ').toLowerCase();
-    
-    ITEMS=ITEMS.map(itm=> {
-      itm.diff = diff(arg,itm.name.toLowerCase());
-      itm.diffs ={};
-      itm.diffs.E = itm.diff.filter(x=>x[0]===0).length
-      itm.diffs.I = itm.diff.filter(x=>x[0]===1).length
-      itm.diffs.D = itm.diff.filter(x=>x[0]===-1).length
-      itm.diffScore = 
-          itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]!==0).length 
-          + itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===-1).length*4
-          + itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===1).length*0.8
-          + itm.diff.length * 1.35
-          + itm.diffs.D*1.6
-          + itm.diffs.I*1.2
-          - itm.diffs.E*3 
-          - itm.diff.filter(x=> x[1].length>arg.length/2 && x[0]===0).length*2.6
-      return itm
-    });
+    // ignore if already crafting 
+    if (msg.author.crafting) return;
 
-    ITEMS.sort( (a,b)=>a.diffScore-b.diffScore);
+    // Check arguments
+    let pos;
+    console.log(`args: ${args}`);
+    let depsOnly = args.some((arg, i) => (arg.toLowerCase() === "-deps" || arg.toLowerCase() === "-d") && args.splice(i, 1));
+    console.log(`only: ${depsOnly}, args: ${args}`);
 
-      let DYM = ITEMS.slice(0,5).filter(y=>y.diffScore<5).map(x=>x.name+` (\`${x.code}\`)`)
-      let sorry = rand$t('responses.verbose.interjections.gomenasai',P)
-      let res = DYM.length===1?$t('responses.crafting.didyoumeanOne',P):$t('responses.crafting.didyoumeanOne',P);
-      if(DYM.length>0){
-        let step_message = await message.channel.send(sorry+" "+res+"\n> • "+DYM.join('\n> • '));
-        if(DYM.length>1) return;
-        if ( (await YesNo(step_message,message,true,false,null)) === true){
-          crafted_item=ITEMS[0]
-        }else{
+    let amount = ~~(Math.abs(Number(args[0]))) ||  (pos=1) && ~~(Math.abs(Number(args[1])));
+    if (isNaN(amount) || amount <= 0) amount = 1;
+    else pos ? args.pop() : args.shift();
+    if (!args) return;
+    const toBeCrafted = args.join(" ").toLowerCase(); 
+
+    // If args === item.id
+    let craftedItem = Crafter.getItem(toBeCrafted);
+    // Else find a partial match
+    if (!craftedItem) {
+      let userDiscoveries = (await DB.users.get(msg.author.id))?.modules.inventory.filter(itm => itm.crafted).map(itm => itm.id) || [];
+      const searchResults = Crafter.searchItems(toBeCrafted);
+      const DYM = searchResults.filter(x => userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
+      const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
+
+      if (DYM.length > 0) {
+        const stepMessage = await msg.channel.send(`${rand$t("responses.verbose.interjections.gomenasai", P)} ${res}\n> • ${DYM.join("\n> • ")}`);
+        if (DYM.length > 1) return;
+        if ((await YesNo(stepMessage, msg, true, false, null)) === true) {
+          [craftedItem] = searchResults;
+          console.log(`cr: ${inspect(craftedItem)} :: sr: ${inspect(searchResults)}`)
+        } else {
           return;
         }
-      }else{
-        return message.channel.send($t('responses.crafting.noitemu',P));
+      } else {
+        return msg.channel.send($t("responses.crafting.noitemlike", P));
       }
-    
-}
-
-  
-
-  if(!crafted_item){
-    message.author.crafting = false;
-    return message.reply($t('responses.crafting.noitem',P));
-  }
-  
-  P.item_name = crafted_item.name;
-  embed.title((crafted_item||{emoji:0}).emoji+$t('responses.crafting.craftingItem',P) )
-    
-
-  const userData = await DB.users.getFull({id:message.author.id},{id:1,"modules.sapphires":1,"modules.jades":1,"modules.rubines":1,"modules.inventory":1});
-  
-  //message.reply("`console res`")
-  if(crafted_item){
-    let ID = crafted_item.id
-    let NAME = crafted_item.name
-    
-    let ICON = crafted_item.icon || '';
-    embed.thumbnail(paths.CDN+"/build/items/"+ICON+".png")
-    
-    let CODE = crafted_item.code
-    let MAT = crafted_item.materials || []
-    let GC = crafted_item.gemcraft
-    let fails = 0
-    let matDisplay = ""
-    let craftExplan = ""
-    
-    
-    if(GC.jades){
-      let afford = userData.modules.jades >= GC.jades;
-      let icona='yep';
-      if(!afford){
-        icona='nope'
-        fails+=1
-      }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('jade')+"**"+miliarize(GC.jades,true)+'** x '+ $t('keywords.JDE',P);
+      if (!craftedItem) return msg.reply($t("responses.crafting.noitem", P));
     }
-      
-      
-    
-    if(GC.rubines){
-      let afford = userData.modules.rubines >= GC.rubines;
-      let icona='yep';
-      if(!afford){
-        icona='nope'
-        fails+=1
+
+    // Don't allow too much bulk crafting...
+    if (amount > craftedItem.maxBulkCraft) return msg.channel.send(_emoji('nope') + $t("responses.crafting.maxBulkAllowed", P));
+
+    // Item found → start the crafting process
+    msg.author.crafting = true;
+    const crafter = new Crafter(msg.author.id, craftedItem, amount);
+
+    // Set up embed base & response translation.
+    const embed = {};
+    embed.description = "";
+    embed.color = 0x71dbfa;
+    P.item_name = craftedItem.name;
+
+    // set up embed for if no failed checks
+    const ICON = craftedItem.icon || "";
+    embed.title = (craftedItem?.emoji|| '📦') + $t("responses.crafting.craftingItem", P) + " x " + amount;
+    embed.thumbnail = { url : `${paths.CDN}/build/items/${ICON}.png` };
+    let craftExplan = "";
+    let gemDisplay = "";
+    let matDisplay = "";
+
+    crafter.once("ready", () => {
+      // Create gem display.
+      const gemsTotal = crafter.gemsTotal;
+      for (const gemArr of gemsTotal) {
+        const icona = gemArr[2] < gemArr[1] ? "nope" : "yep";
+        gemDisplay += `\n${_emoji(icona)} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${$t(`keywords.${gemArr[0]}_plural`, P)}`;
       }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('rubine')+"**"+miliarize(GC.rubines,true)+'** x '+ $t('keywords.RBN',P);
-    }
-      
-      
-    
-    if(GC.sapphires){
-      console
-      let afford = userData.modules.sapphires >= GC.sapphires;
-      let icona='yep';
-      if(!afford){
-        icona='nope'
-        fails+=1
+
+      // Create material display
+      const itemsTotal = crafter.itemsTotal;
+      for (let itemArr of itemsTotal) {
+        const icona = itemArr[2] < itemArr[1] ? "nope" : "yep";
+        const itemDetails = Crafter.getItem(itemArr[0]);
+        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji?.trim() || '📦'}`
+          + ` ${itemDetails.name} (${itemArr[2]}/${itemArr[1]})`;
       }
-      matDisplay+="\n"+_emoji(icona)+" | "+_emoji('sapphire')+"**"+miliarize(GC.sapphires,true)+'** x '+ $t('keywords.SPH',P);
-    }
-      
-      
-    
-    MAT.forEach(material=>{
-      let icona='yep';
-
-
-        materialName = material.id || material;
-
-        amtInPosession = (userData.modules.inventory.find(itm=>itm.id == materialName)||{}).count || 0;
-        amtRequired = (material.amt || objCount(MAT,materialName))
-
-      if (amtInPosession >= amtRequired){
-        //message.reply('ok')
-        
-      }else{
-        icona='nope';
-        fails+=1
+      // Not enough gems; fatal to crafting.
+      if (crafter.isMissingGems) { 
+        console.log('this is some point 1')
+        embed.color = 0xed3a19;
+        craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
+        embed.description = gemDisplay + matDisplay;
+        if (embed.description.length > 0x77f) embed.description = embed.description.substring(0, 0x77f) + "\nOops... there was too much to show so I cut it off."
+        embed.description += craftExplan;
+        msg.author.crafting = false;
+        return msg.channel.send({ embed });
       }
-        matDisplay+="\n"+_emoji(icona)+" | "+ALLITEMS.find(x=>x.id==materialName).emoji+ALLITEMS.find(x=>x.id==materialName).name + ` (${amtInPosession}/${amtRequired})`;               
-    })
-    if (fails > 0 ) {
-      embed.setColor('#ed3a19');
-      craftExplan = "\n\n" + $t('responses.crafting.materialMissing',P)
-      embed.description= matDisplay +  craftExplan
-      message.author.crafting = false;
-      message.channel.send({embed})
-    }else{
-      craftExplan = "\n\n"+$t('responses.crafting.materialPresent',P)
-      embed.description=matDisplay+ craftExplan
-      message.channel.send({embed}).then(async m=>{
 
-          let YA = {r:":yep:339398829050953728",id:'339398829050953728'}
-          let NA = {r:":nope:339398829088571402",id:'339398829088571402'}
+      let embedmsg;
 
-          await m.addReaction(YA.r);
-            m.addReaction(NA.r);
+      // Not enough materials. =<
+      if (crafter.isMissingItems) {
+        // If user hasn't crafted the item before, don't allow autocrafting.
+        if (!crafter.hasCrafted) return endMissingMaterials();
 
-          const reas = await m.awaitReactions({
-              maxMatches: 1,
-              time: 10000,
-              authorOnly:message.author.id
-            }
-          ).catch(e => {
-              embed.setColor("#ffd900")
-              embed.description = matDisplay
-              embed.footer($t('responses.crafting.timeout',P))
-              m.edit({embed})
-              m.removeReactions().catch()
-              return message.author.crafting = false;
+        craftExplan = `\n\n${$t("responses.crafting.materialAutocraft", P)}`;
+        embed.description = gemDisplay + matDisplay;
+        if (embed.description.length > 0x77f) embed.description = embed.description.substring(0, 0x77f) + "\nOops... there was too much to show so I cut it off."
+        embed.description += craftExplan;
+        return msg.channel.send({ embed }).then(m => {
+          embedmsg = m;
+
+          return getYesNo(m).then(async () => {
+            // set crafter to autocraft
+            crafter.setMode(depsOnly ? 2 : 1);
+
+            // make a visual of current crafter
+            const visualizer = new Visualizer(crafter, P, {depth: 3});
+            let visualize = visualizer.visualize();
+            if (visualize.length > 0x77f) visualize = visualize.substring(0, 0x77f) + "\nOops... there was too much to show so I cut it off.";
+
+            // Return if we don't have enough gems or items
+            if (crafter.isMissingGems || crafter.isMissingItems) return endMissingMaterials(m, visualize);
+
+            // Change embed to ask whether user wants to autocraft
+            craftExplan = `${visualize}\n\n${$t("responses.crafting.materialPresentAuto", P)}`;
+            embed.description = craftExplan;
+            embed.color = 0xccff33;
+            m.edit({ embed });
+
+            // Ask for confirmation
+            return getYesNo(m, 30000).then(async() => {
+              crafter.confirm().then(() => done());
+            }).catch(e => {
+              return endNo(e, m);
+            });
+          }).catch(e => {
+            return endNo(e, m);
           });
+        });
+      } else {
+        /**------------------------------/
+        |* EVERYTHING AVAILABLE → CRAFT *
+        \**-----------------------------*/
+        craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
+        embed.description = gemDisplay + matDisplay + craftExplan;
+        
+        // Show craft cost & info
 
-          if(reas.length === 0 )return;
+        return msg.channel.send({ embed }).then(m => {
+          embedmsg = m;
+          // Ask for confirmation
+          return getYesNo(m).then(async() => {
+            crafter.confirm();
+            done();
+          }).catch(e => {
+            return endNo(e, m);
+          });
+        });
+      }
 
-          if (reas.length === 1&&reas[0].emoji.id==NA.id) {
-            embed.setColor("#db4448")
-            embed.footer($t('responses.crafting.cancel',P))
-            embed.description = matDisplay
-            m.edit({embed})
-            m.removeReactions().catch()
-            return message.author.crafting = false;
-           }
-          if (reas.length === 1&&reas[0].emoji.id==YA.id) {
-              
-            await Promise.all(
-          [ECO.pay(message.author.id,GC.rubines,"crafting","RBN"),
-             ECO.pay(message.author.id,GC.jades,"crafting","JDE"),
-             ECO.pay(message.author.id,GC.sapphires,"crafting","SPH")]
-            );
-
-            
-            MAT.forEach(async itm=>{
-              console.log(itm)
-              if(itm.amt){
-                await userData.removeItem(itm.id,itm.amt);
-              }else{
-                await userData.removeItem(itm);
-              }
-            })            
-
-            await DB.items.receive(message.author.id, crafted_item.id);
-            
-            message.author.crafting = false;
-            embed.setColor("#78eb87")
-            embed.description = matDisplay
-            embed.footer($t('responses.crafting.crafted',P))
-            m.removeReactions().catch()
-            return m.edit({embed});
-          }
-
+      function done() {
+        msg.author.crafting = false;
+        embed.title = (craftedItem?.emoji|| '📦') + $t("responses.crafting.craftedItem", P) + " x " + amount;
+        embed.color = 0x78eb87;
+        embed.description = "";
+        embed.footer = { text: $t("responses.crafting.crafted", P) };
+        // @ts-ignore
+        return embedmsg.edit({ embed });
+      }
+  
+      function endNo(e, m) {
+        msg.author.crafting = false;
+        embed.description = gemDisplay + matDisplay;
+        if (e === "timeout") {
+          return endTimeout(m);
+        } else if (e === "no") {
+          return endCancel(m);
+        } else {
+          console.error(" CRAFT ERROR ".bgRed)
+          if (e && e.stack) console.error(e.stack);
+          throw new Error("shouldn't happen");
+        }
+      }
+  
+      function endMissingMaterials(m, v) {
+        msg.author.crafting = false;
+        embed.color = 0xed3a19;
+        embed.description = (v ? v : gemDisplay + matDisplay) + `\n${$t("responses.crafting.materialMissing", P)}`;
+        embed.description = embed.description.slice(0,2047).split("\n")
+        embed.description.pop()
+        embed.description = embed.description.join('\n')
+        if (m) m.edit({ embed });
+        else msg.channel.send({ embed });
+        return;
+      }
+  
+      function endTimeout(m) {
+        embed.color = 0xffd900;
+        embed.footer = { text: $t("responses.crafting.timeout", P) };
+        m.edit({ embed });
+        return;
+      }
+  
+      function endCancel(m) {
+        embed.color = 0xdb4448;
+        embed.footer = { text: $t("responses.crafting.cancel", P) };
+        m.edit({ embed });
+        return;
+      }
+  
+      function getYesNo(m, l = 10000) {
+        return new Promise(async(resolve, reject) => {
+          await m.addReaction(YA.r);
+          m.addReaction(NA.r);
       
-      })
+          // Confirmation of craft through reactions
+          const reas = await m.awaitReactions({
+            maxMatches: 1,
+            time: l,
+            authorOnly: msg.author.id,
+          }).catch(() => reject("timeout"));
+      
+          await m.removeReactions().catch();
+          if (!reas || reas.length === 0) reject("timeout");
+          if (reas.length === 1 && reas[0].emoji.id === NA.id) reject("no");
+          if (reas.length === 1 && reas[0].emoji.id === YA.id) resolve();
+          reject();
+        });
+      }
+    });
 
-    }
-    
-  }else{
-    message.author.crafting = false;
-    message.reply("Invalid Craft Code")
+  } catch (e) {
+    msg.author.crafting = false;
+    msg.channel.send({ embed: { color: 0x000, description: "Something went wrong..." } })
+    return console.error(e);
   }
-
-
-  }catch(e){
-    message.author.crafting = false;
-    console.error(e)
-  }
-}
+};
 
 module.exports = {
   pub: true,
-  cmd: cmd,
+  cmd,
   perms: 3,
-  init: init,
-  cat: 'cosmetics'
+  init,
+  cat: "cosmetics",
 };

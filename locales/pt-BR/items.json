@@ -1,14 +1,345 @@
 {
-    "partial_ring": {
-        "name": "Anel Incompleto",
-        "description": "Uma tira de metal abaulado usado para criar um belo anel de casamento"
+    "anime_booster": {
+        "name": "Anime Genérico VOL.1"
     },
-    "lootbox_C_O": {
-        "name": "Lootbox Comum",
-        "description": ""
+    "broken_excavator": {
+        "name": "Retroescavadeira Quebrada"
+    },
+    "commendtoken": {
+        "name": "Insígnia de Condecoração",
+        "description": "O que é isso? Altruísmo?"
+    },
+    "complete_ring_jade": {
+        "name": "Anel Esplendoroso de Jade",
+        "description": "Tão verde quanto seu compromisso com o amor."
+    },
+    "complete_ring_rubine": {
+        "name": "Anel Magnífico de Rubine",
+        "description": "Rosas são vermelhas, violetas são azuis, esse anel também é vermelho e lindo como tu!"
+    },
+    "complete_ring_sapphire": {
+        "name": "Anel Luxuoso de Safira",
+        "description": "O primeiro passo em direção a um relacionamento é abrir mão de uma joia rara pelo seu amado - parabéns! "
+    },
+    "complete_ring_stardust": {
+        "name": "Anel Opulento de Poeira Estelar",
+        "description": "\"Todo amante é, em seu coração, um louco, e, em sua cabeça, um poeta.\" \n- Neil Gaiman, O Mistério da Estrela (Stardust)"
     },
     "cosmo_fragment": {
         "name": "Fragmento Cósmico",
         "description": "Poeira brilhante usada para formar Fragmentos Cósmicos"
+    },
+    "cosmo_gem_C": {
+        "name": "Gema Cósmica Comum",
+        "description": "Bom, pelo menos é brilhante."
+    },
+    "cosmo_gem_R": {
+        "name": "Gema Cósmica Rara",
+        "description": "Ah? Não achou o preço um pouquinho salgado?"
+    },
+    "cosmo_gem_SR": {
+        "name": "Gema Cósmica Super Rara",
+        "description": "Uau, essa joia que você tem aí parece ser muito especial. Quanto você quer por ela? Seis rubines? Oito?"
+    },
+    "cosmo_gem_U": {
+        "name": "Gema Cósmica Incomum",
+        "description": "Quer dizer, ao menos é melhor que uma comum."
+    },
+    "cosmo_gem_UR": {
+        "name": "Gema Cósmica Ultra Rara",
+        "description": "Deseje à uma estrela... E você finalmente conseguiu uma."
+    },
+    "daianwatch_booster": {
+        "name": "Overwatch por Daianpan",
+        "description": "Boosterpack oficial do \"Por favor, não pickem 4 DPS no time\""
+    },
+    "doki_booster": {
+        "name": "Doki Doki Literature Club",
+        "description": "Apenas Monika"
+    },
+    "doublehook": {
+        "name": "Gancho Duplo",
+        "description": "Um gancho gancho, ou se preferir um gancho²"
+    },
+    "excavator": {
+        "name": "Escavadeira do Cemitério",
+        "description": "Para pessoas que não querem sujar as próprias mãos."
+    },
+    "hook": {
+        "name": "Gancho",
+        "description": "Foi visto pela última vez perseguindo um garotinho voador."
+    },
+    "initd_booster": {
+        "name": "Initial D",
+        "description": "Dejà vu. Eu já abri esse pacote antes."
+    },
+    "iwd1_booster": {
+        "name": "IWD - 1ª Temporada",
+        "description": "Adesivos exclusivos para assinamtes do Internet Wrestling Discord 2018"
+    },
+    "iwd2_booster": {
+        "name": "IWD - 2ª Temporada",
+        "description": "Adesivos exclusivos para assinamtes do Internet Wrestling Discord 2019"
+    },
+    "lootbox_C_C": {
+        "name": "Caixa Chibi Comum"
+    },
+    "lootbox_C_E": {
+        "name": "Caixa Épica Comum"
+    },
+    "lootbox_C_event_1": {
+        "name": "Caixa de Halloween Comum"
+    },
+    "lootbox_C_event_2": {
+        "name": "Caixa de Natal Comum"
+    },
+    "lootbox_C_event_3": {
+        "name": "Caixa de Páscoa Comum"
+    },
+    "lootbox_C_event_s1": {
+        "name": "Caixa de Verão Comum"
+    },
+    "lootbox_C_event_s2": {
+        "name": "Caixa de Inverno Comum"
+    },
+    "lootbox_C_event_s3": {
+        "name": "Caixa de Solstício Comum"
+    },
+    "lootbox_C_O": {
+        "name": "Lootbox Comum"
+    },
+    "lootbox_C_s1": {
+        "name": "Caixa de Verão Comum"
+    },
+    "lootbox_C_s2": {
+        "name": "Caixa de Inverno Comum"
+    },
+    "lootbox_dev": {
+        "name": "Caixa de Presente do Desenvolvedor",
+        "description": "Caixa de Iniciante, um presente do Desenvolvedor da Pollux para novatos. É garantido conter ao menos um item Ultra Raro!"
+    },
+    "lootbox_EL": {
+        "name": "laCaixa",
+        "description": "Se você abrir essa caixa seu inventário irá explodir"
+    },
+    "lootbox_R_C": {
+        "name": "Caixa Chibi Rara"
+    },
+    "lootbox_R_E": {
+        "name": "Caixa Épica Rara"
+    },
+    "lootbox_R_event_1": {
+        "name": "Caixa de Halloween Rara"
+    },
+    "lootbox_R_event_2": {
+        "name": "Caixa de Natal Rara"
+    },
+    "lootbox_R_event_3": {
+        "name": "Caixa de Páscoa Rara"
+    },
+    "lootbox_R_event_s1": {
+        "name": "Caixa de Verão Rara"
+    },
+    "lootbox_R_event_s2": {
+        "name": "Caixa de Inverno Rara"
+    },
+    "lootbox_R_event_s3": {
+        "name": "Caixa de Solstício Rara"
+    },
+    "lootbox_R_O": {
+        "name": "Caixa Rara"
+    },
+    "lootbox_R_s1": {
+        "name": "Caixa de Verão Rara"
+    },
+    "lootbox_R_s2": {
+        "name": "Caixa de Inverno Rara"
+    },
+    "lootbox_R_s3": {
+        "name": "Caixa de Solstício Rara"
+    },
+    "lootbox_SR_C": {
+        "name": "Caixa Chibi Super Rara"
+    },
+    "lootbox_SR_E": {
+        "name": "Caixa Épica Super Rara"
+    },
+    "lootbox_SR_event_1": {
+        "name": "Caixa de Halloween Super Rara"
+    },
+    "lootbox_SR_event_2": {
+        "name": "Caixa de Natal Super Rara"
+    },
+    "lootbox_SR_event_3": {
+        "name": "Caixa de Páscoa Super Rara"
+    },
+    "lootbox_SR_event_s1": {
+        "name": "Caixa de Verão Super Rara"
+    },
+    "lootbox_SR_event_s2": {
+        "name": "Caixa de Inverno Super Rara"
+    },
+    "lootbox_SR_event_s3": {
+        "name": "Caixa de Solstício Super Rara"
+    },
+    "lootbox_SR_O": {
+        "name": "Caixa Super Rara"
+    },
+    "lootbox_SR_s1": {
+        "name": "Caixa de Verão Super Rara"
+    },
+    "lootbox_SR_s2": {
+        "name": "Caixa de Inverno Super Rara"
+    },
+    "lootbox_SR_s3": {
+        "name": "Caixa de Solstício Super Rara"
+    },
+    "lootbox_U_C": {
+        "name": "Caixa Chibi Incomum"
+    },
+    "lootbox_U_E": {
+        "name": "Caixa Épica Incomum"
+    },
+    "lootbox_U_event_1": {
+        "name": "Caixa de Halloween Incomum"
+    },
+    "lootbox_U_event_2": {
+        "name": "Caixa de Natal Incomum"
+    },
+    "lootbox_U_event_3": {
+        "name": "Caixa de Páscoa Incomum"
+    },
+    "lootbox_U_event_s1": {
+        "name": "Caixa de Verão Incomum"
+    },
+    "lootbox_U_event_s2": {
+        "name": "Caixa de Inverno Incomum"
+    },
+    "lootbox_U_event_s3": {
+        "name": "Caixa de Solstício Incomum"
+    },
+    "lootbox_U_O": {
+        "name": "Caixa Incomum"
+    },
+    "lootbox_U_s1": {
+        "name": "Caixa de Verão Incomum"
+    },
+    "lootbox_U_s2": {
+        "name": "Caixa de Inverno Incomum"
+    },
+    "lootbox_U_s3": {
+        "name": "Caixa de Solstício Incomum"
+    },
+    "lootbox_UR_C": {
+        "name": "Caixa Chibi Ultra Rara"
+    },
+    "lootbox_UR_E": {
+        "name": "Caixa Épica Ultra Rara"
+    },
+    "lootbox_UR_event_1": {
+        "name": "Caixa de Halloween Ultra Rara"
+    },
+    "lootbox_UR_event_2": {
+        "name": "Caixa de Natal Ultra Rara"
+    },
+    "lootbox_UR_event_s1": {
+        "name": "Caixa de Verão Ultra Rara"
+    },
+    "lootbox_UR_event_s2": {
+        "name": "Caixa de Inverno Ultra Rara"
+    },
+    "lootbox_UR_event_s3": {
+        "name": "Caixa de Solstício Ultra Rara"
+    },
+    "lootbox_UR_O": {
+        "name": "Caixa Ultra Rara"
+    },
+    "lootbox_UR_s1": {
+        "name": "Caixa de Verão Ultra Rara"
+    },
+    "lootbox_UR_s2": {
+        "name": "Caixa de Inverno Ultra Rara"
+    },
+    "lootbox_UR_s3": {
+        "name": "Caixa de Solstício Ultra Rara"
+    },
+    "nierauto_booster": {
+        "name": "NieR: Automata",
+        "description": "O booster que você precisa para ser feliz"
+    },
+    "p5_booster": {
+        "name": "Persona 5",
+        "description": "Você nunca o vê chegar."
+    },
+    "padoru_booster": {
+        "name": "Coleção Ultimate Padoru",
+        "description": "Hashire sore yo e me dê seus Rubines"
+    },
+    "partial_ring": {
+        "name": "Anel Incompleto",
+        "description": "Uma tira de metal abaulado usado para criar um belo anel de casamento"
+    },
+    "reel": {
+        "name": "Molinete de Pesca",
+        "description": "Gira como um pião, mas não o da casa própria. Aparentemente precisa ser acoplado em algo."
+    },
+    "rod_c": {
+        "name": "Vara de Pesca Improvisada",
+        "description": "Apenas fisga peixes, não elogios."
+    },
+    "rod_r": {
+        "name": "Vara de Pesca Decente",
+        "description": "Tecnicamente não é ruim, mas também não é grande coisa."
+    },
+    "rod_sr": {
+        "name": "Vara de Pesca Formidável",
+        "description": "~Dizem que essa vara de pesca foi feita pelo próprio Bob Ross~"
+    },
+    "rod_u": {
+        "name": "Vara de Pesca de Bambu",
+        "description": "Essa vara de bambu foi tirada do jardim de um sábio monge chinês."
+    },
+    "rod_ur": {
+        "name": "Vara de Pesca Profissional",
+        "description": "Não. Quebre. Essa. Daqui."
+    },
+    "rope": {
+        "name": "Corda",
+        "description": "Não, isso não é para o que você está pensando."
+    },
+    "shovel": {
+        "name": "Pá",
+        "description": "Usada para cavar buracos, sejam eles físicos ou metafóricos."
+    },
+    "spoon": {
+        "name": "Colher",
+        "description": "Uma colher bem sensual, use-a com responsabilidade."
+    },
+    "spork": {
+        "name": "Garfolher",
+        "description": "Uma colher que também é um garfo. É um Colharfo!"
+    },
+    "stick": {
+        "name": "Graveto Praticamente Inútil",
+        "description": "O preço não é importante, mas sim a sensação do quanto esse graveto pode ser incrível"
+    },
+    "fork": {
+        "name": "Garfo",
+        "description": "Com o quádruplo do potencial perfurante de uma faca, mas com apenas metade do impacto e o dobro do custo!"
+    },
+    "lootbox_C_D": {
+        "name": "Caixa Diária Comum"
+    },
+    "lootbox_U_D": {
+        "name": "Caixa Diária Incomum"
+    },
+    "lootbox_R_D": {
+        "name": "Caixa Diária Rara"
+    },
+    "lootbox_SR_D": {
+        "name": "Caixa Diária Super Rara"
+    },
+    "lootbox_UR_D": {
+        "name": "Caixa Diária Ultra Rara"
     }
 }

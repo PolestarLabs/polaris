@@ -1,16 +1,17 @@
-var reroute;
+let reroute;
 module.exports = {
-    getT: function getT(){
-        return reroute;
-    },
-    setT: function setT(t){
-        reroute = t;
-    },
+  getT: function getT() {
+    return reroute;
+  },
+  setT: function setT(t) {
+    reroute = t;
+  },
 
-    rand: function rand(string,params){
-        let loc = reroute
-        let rand = Math.floor(Math.random() * (loc(string,{returnObjects:true}).length));    
-        console.log({string,rand,params})   
-        return loc(string+"."+rand,params);
-    },
+  rand: function rand(string, params) {
+    const loc = reroute;
+    const options = loc(string, Object.assign({ returnObjects: true },params), params);
+    const ran = Math.floor(Math.random() * (options.length));
+
+    return options[ran];
+  },
 };

@@ -1,64 +1,78 @@
-let baseline = 125
+const baseline = 125;
 // const DB = require(appRoot+"/core/database/db_ops");
 
 module.exports = {
 
-    getTier: function getTier(user){
-        return new Promise(async resolve=>{
-            DB.users.get(user.id).then(usr=>{
-                let tier = usr.donator
-                //if((usr.premium||{}).active)
-                resolve(tier || false);
-                //else resolve (false);
-            })
-        })
-    },
-    getDaily: function getDaily(user){
-        return new Promise(async resolve=>{
-            const Tier = await this.getTier(user);
-            if (!Tier) return resolve(baseline);
+  DAILY:{
+    antimatter: 500,
+    astatine: 100,
+    uranium: 75,
+    zircon: 50,
+    palladium: 25,
+    lithium: 15,
+    carbon: 10,
+    iridium: 10,
+    aluminium: 5,
+    plastic: 1,
+  },
 
-            switch (Tier.toLowerCase()){
-                case "antimatter": // 250
-                extra = 1000
-                break;
+  getTier: function getTier(user) {
+    return new Promise((resolve) => {
+      DB.users.get(user.id).then((usr) => {
+        const tier = usr.donator;
+        // if((usr.premium||{}).active)
+        resolve(tier || null);
+        // else resolve (false);
+      });
+    });
+  },
+  getDaily: function getDaily(user) {
+    return new Promise((resolve) => {
+      this.getTier(user).then((Tier) => {
+        if (!Tier) return resolve(baseline);
 
-                case "astatine": // 100
-                extra = 800
-                break;
-                
-                case "uranium": // 50
-                extra = 500
-                break;
+        switch (Tier.toLowerCase()) {
+          case "antimatter": // 250
+            extra = 1000;
+            break;
 
-                case "zirconium": // 25
-                extra = 300
-                break;
+          case "astatine": // 100
+            extra = 800;
+            break;
 
-                case "palladium": // 15
-                extra = 200
-                break;
+          case "uranium": // 50
+            extra = 500;
+            break;
 
-                case "lithium": //  10
-                case "carbon": //  10
-                extra = 150
-                break;
+          case "zirconium": // 25
+            extra = 300;
+            break;
 
-                case "iridium": // 5
-                extra = 100
-                break;
+          case "palladium": // 15
+            extra = 200;
+            break;
 
-                case  "aluminium": // 5
-                extra = 50
-                break;
+          case "lithium": //  10
+          case "carbon": //  10
+            extra = 150;
+            break;
 
-                default:
-                extra = 10
-                break;
-            }
+          case "iridium": // 5
+            extra = 100;
+            break;
 
-            return resolve(baseline + extra)
-        })
-    },
+          case "aluminium": // 5
+            extra = 50;
+            break;
 
-}
+          default:
+            extra = 10;
+            break;
+        }
+
+        return resolve(baseline + extra);
+      });
+    });
+  },
+
+};

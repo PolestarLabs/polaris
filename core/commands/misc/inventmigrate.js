@@ -1,26 +1,25 @@
-const init = async function (msg){
+const init = async function (msg,args,silent) {
+  const userData = await DB.users.get(msg.author.id);
+  
+  const oldInventory = userData.modules.inventory;
+  const newInventory = [];
 
-    const userData = await DB.users.get(msg.author.id);
-    const oldInventory = userData.modules.inventory;
+  oldInventory.forEach((item) => {
+    const currItem = newInventory.find((sub) => sub.id === item);
+    if (currItem) currItem.count++;
+    else newInventory.push({ id: item, count: 1 });
+  });
 
-    const newInventory = []
-    
-    oldInventory.forEach(item=>{
-        let currItem = newInventory.find(sub => sub.id == item)
-        if( currItem ) currItem.count++;
-        else newInventory.push( { id: item, count: 1 } );
-    })
-
-    console.log(newInventory)
-
-
-}
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'inventmigrate'
-    ,perms:3
-    ,cat:'misc'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
-}
+  if(!silent) return;
+  return newInventory;
+};
+ 
+module.exports = {
+  init,
+  pub: false,
+  cmd: "inventmigrate",
+  perms: 3,
+  cat: "misc",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: [],
+};

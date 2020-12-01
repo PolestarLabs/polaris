@@ -3,7 +3,7 @@
         "RBN": "Rubin",
         "RBN_fullname": "Klejnoty Rubinów",
         "RBN_plural": "Rubiny",
-        "JDE": "Żad",
+        "JDE": "Żady",
         "JDE_fullname": "Żadowy pył",
         "JDE_plural": "Żady",
         "SPH": "Szafir",
@@ -12,8 +12,8 @@
         "synthGems": "Kryształy Syntezy",
         "cosmoFragment": "Kosmiczny Fragment",
         "cosmoFragment_plural": "Kosmiczne Fragmenty",
-        "C": "Zwyczajny",
-        "U": "Niezwykły",
+        "C": "Pospolity",
+        "U": "Niepospolity",
         "R": "Rzadki",
         "SR": "Super Rzadki",
         "UR": "Ultra Rzadki",
@@ -30,7 +30,13 @@
         "material": "Materiał",
         "material_plural": "Materiały",
         "boosterpack": "Boosterpack",
-        "boosterpack_plural": "Boosterpacki"
+        "boosterpack_plural": "Boosterpacki",
+        "medal": "Medal",
+        "medal_plural": "Medale",
+        "sticker": "Naklejka",
+        "sticker_plural": "Naklejki",
+        "background": "Tło",
+        "background_plural": "Tła"
     },
     "terms": {
         "transferDenied": "Transfer Odrzucony",
@@ -58,7 +64,7 @@
         "reason": "Powód",
         "banned": "Zbanowany",
         "kicked": "Wyrzucony",
-        "usage": "Zatosowanie",
+        "usage": "Zastosowanie",
         "module": "Moduł",
         "inst": "Instrukcje",
         "bet": "Obstawiać",
@@ -114,14 +120,14 @@
         "errors": {
             "iNeedThesePerms": "Następujące uprawnienia nie są już obecne, aby kontynuować poprawnie:\n{{PERMSLIST}}",
             "denied": "Nie masz uprawnień, aby z tego korzystać. To polecenie wymaga rangi {{rankNeed}}, twoja ranga to {{rankMe}}. Skontaktuj się z Właścicielem Serwera lub jego Moderatorem.",
-            "disabledModule": "no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo.",
-            "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawdłowa ;~;",
-            "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając \n'{{prefix}}stats'",
+            "disabledModule": ":no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo z jego strony.",
+            "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawidłowa ;~;",
+            "prefixChng": "W porządku, mój przedrostek od teraz to {{prefix}}, wypróbuj go używając '{{prefix}}stats' ",
             "moderationNeeded": "Przepraszam, ale nie możesz użyć tej komendy. Potrzebujesz uprawnienia **Zarządzanie Serwerem**, lub musisz być przypisany do roli z uprawnieniami Moderatora/Administratora (Ustaw ją używając: `{{prefix}}modrole [@Rola])'",
             "chooseAmod": "Wybierz moduł.",
             "kinNone": "Musisz mi powiedzieć, kogo mam wykopać. Oczywiście, zawsze mogę wykopać również ciebie.",
             "kin404": "Nie mogę znaleźć tej osoby. Czy ona już odeszła? Być może była tylko częścią twojej wyobraźni.",
-            "unmutable": "Nieważne co mówisz, wyciszę ta osobę.",
+            "unmutable": "Nieważne co mówisz, nie wyciszę tej osoby.",
             "unperm": "Nie mam uprawnień, aby to zrobić. Być może powinieneś dać mi uprawnienia, zanim polecisz mi coś zrobić.",
             "noRoleHere": "Wydaje się, że tej Roli nie ma na liście. Upewnij się, że podajesz ją prawidłowo.",
             "noRolesGiven": "Nie wspomniano o żadnej roli, czy robisz to prawidłowo?",
@@ -139,6 +145,21 @@
             "emojiError": "Nie mogłam dodać tego Emoji. Sprawdź uprawnienia do reakcji albo czy Emoji jest poprawne...",
             "insuperms": "{{imsorry}}, ale nie mogę tego dla ciebie zrobić, jeżeli nie masz odpowiednich uprawnień.",
             "not-a-NSFW-channel": "Ten kanał nie jest ustawiony na NSFW. Nie zostawiaj swoich \"prac\" wszędzie."
+        },
+        "cooldown": {
+            "generic": [
+                "Zaczekaj, potrzebuję chwili!",
+                "Nie jestem drukarką, zwolnij!",
+                "Spróbuj za parę sekund, proszę.",
+                "Proszę o wstrzymanie.",
+                "Za dużo komend!",
+                "Aaah! Zwolnij!",
+                "Mam tylko tyle palców, żeby wcisnąć tyle przycisków! Odpocznij!",
+                "Co to za pośpiech?!",
+                "Potrzebuję chwili na odetchnięcie!",
+                "Słoneczko, proszę, pojedynczo.",
+                "*Jesteś zbyt szybki senpai uwu nie daję rady uwu*"
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Hej! Przetłumaczony tekst nie może przekraczać __1000 Znaków__**\n Lecz nie martw się, przycięłam tekst dla ciebie~",
@@ -228,7 +249,7 @@
             "didban": "*Grzecznie* poprosiłam {{target}} aby wyszedł(-ła). **Powód:** *{{reason}}* Daj mi chwilkę, a posprzątam ten syf."
         },
         "logs": {
-            "success": "Gotowe! Ustawiłem {{channel}} jako kanał dla {{CHNTYPE}}!",
+            "success": "Gotowe! Ustawiłam {{channel}} jako kanał dla {{CHNTYPE}}!",
             "successDelete": "W porządku. {{channel}} nie jest już kanałem dla {{CHNTYPE}}.",
             "failure": "Ojej! Wydaje się, że coś poszło nie tak. Przepraszam."
         },
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Moduł **{{module}}** został wyłączony **Globalnie**",
-            "disabledChn": "Moduł {{module}} został wyłączony na kanale #{{channel}}",
+            "disabledChn": "Moduł {{module}} został wyłączony na kanale <#{{channel}}>",
             "disabledComSer": "Komenda **{{command}}** została wyłączona **Globalnie**",
-            "disabledComChn": "Komenda **{{command}}** została wyłączona na #{{channel}}",
+            "disabledComChn": "Komenda **{{command}}** została wyłączona na <#{{channel}}>",
             "enabledSer": "Moduł **{{module}}** został włączony **Globalnie**",
-            "enabledChn": "Moduł **{{module}}** został włączony na #{{channel}}",
+            "enabledChn": "Moduł **{{module}}** został włączony na <#{{channel}}>",
             "enabledComSer": "Komenda **{{command}}** została włączona **Globalnie**",
-            "enabledComChn": "Komenda **{{command}}** została włączona na kanale #{{channel}}"
+            "enabledComChn": "Komenda **{{command}}** została włączona na kanale <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Nie, nie pozwolę ci na dawanie reputacji sobie.",
@@ -440,6 +461,7 @@
             "inChan": "Okej! Wiadomości z przywitaniami będą wrzucane na kanał **{{chanell}}** "
         },
         "forFun": {
+            "thisShit": "Czy patrzyłbyś na **ten syf**...",
             "saltLVL": "{{target}}' jest toksyczny w **{{amount}}%** {{emoji}}",
             "booru404": "Przykro mi, ale nie mogłam znaleźć nic z tymi tagami. Powinieneś upewnić się, że są poprawne.",
             "nsfw404": "Przepraszam, ale twoje porno jest takie dziwaczne, że nigdzie nie mogę go znaleźć. Spodziewałam się tego po tobie.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "Usunięte:",
             "cancel": "Anulowano!",
             "timeout": "Koniec czasu!",
             "cantAfford": "Ah, nie stać cię na to... :(",
@@ -550,6 +573,16 @@
             "confirmDelete": "Potwierdzasz usunięcie?",
             "alotWentOn": "Wiele się stało tego dnia...",
             "alreadyOwnThis": "Hej, już to posiadasz!"
+        },
+        "reminders": {
+            "currentActive": "To są twoje aktywne przypomnienia:",
+            "noneToDelete": "Brak przypomnień do usunięcia!",
+            "maxActive": "Może mieć tylko **{{count}}** aktywnych przypomnień na raz!",
+            "errorWhen": "Przepraszam, to trochę poplątane. Nie zrozumiałam *kiedy* mam ci to przypomnieć.",
+            "errorTARDIS": "Wybacz podróżniku czasu, nie mogę wrócić do przeszłości, aby przypomnieć ci o tym, o czym już zapomniałeś.",
+            "reminderOk": "Ok, przypomnę ci o {{appointment}} o godzinie **{{time}}(UTC)** {{location}}",
+            "reminderChannel": "na {{channel}}",
+            "reminderDMs": "w twoich DMach"
         },
         "brackets": {
             "maxRR": "Maksymalny limit dla systemu kołowego: 16",
@@ -564,7 +597,8 @@
             "bracketX": "Tabelka {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "Użyć magii by rozbić te tło {{rarity_emoji}} na **{{count}}$t(keywords.cosmoFragment)** ?",
+            "magifrag": "Fragmenty Kosmetyków",
+            "disenchant": "Czy chcesz to odczarować?\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n na **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Synteza Przedmiotów Upiększających",
             "confirmSynth": "Chcesz abym to zsyntetyzowała?",
             "nogemsforThis": "Wygląda na to że nie masz wystarczającej liczby kryształów potrzebnych do tej syntezy..."
@@ -704,16 +738,28 @@
             "newgame": "Blackjack, huh? Powinieneś już znać zasady, więc zacznijmy.",
             "result": "Wynik:",
             "bust": "Fura",
-            "youwin": "Gratulacje! Wygrałeś, tym razem.",
-            "youlose": "Oh? Wygrałam, biedaczysko.",
+            "youwin": "",
+            "youlose": "",
             "hit": "Odpowiedz \"hit\", aby wyciągnąć jeszcze jedną kartę,",
             "stand": "Nie dobierać kart",
             "split": "`split`, aby podzielić rękę",
             "double": "`double`, aby podwoić swoją stawkę i dobrać ostatnią kartę,",
             "pass": "lub \"stand\", aby go przekazać.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "Podział Splitów:",
             "switchdeck": "Teraz zagramy w BlackJack'a przy użyciu talii **{{deckname}}**!",
-            "switchdeckEgg": "",
+            "switchdeckEgg": "Teraz zagramy w BlackJacja przy użyciu **talii** {{deckname}}. Na stole ląduje twoja dup- TWOJE RUBINY! MIAŁAM NA MYŚLI **TWOJE RUBINY**! Naprawdę przepraszam...",
             "even": "Wygląda na to, że się tutaj zepsuliśmy, trzymaj swoje Rubiny z powrotem."
         },
         "slots": {
@@ -747,21 +793,20 @@
             "Co? Czy to jest Pudełeczko?",
             "Ktoś chyba upuścił tutaj Pudełeczko.",
             "Nie przeszkadzam? Widział ktoś tutaj leżące Pudełeczko?",
-            "Niesamowite! Zobacz, co znalazłem!",
+            "Niesamowite! Zobacz, co znalazłam!",
             "Hej, jestem pewna, że chcesz tu widzieć Lootbox'a."
         ],
+        "duplicate": "",
         "lootPick": "Macie **__20 sekund__**, aby się po nie zgłosić! Wpisz `{{prefix}}pick`, aby mieć szansę, aby go odebrać!",
         "goesTo": "Koniec czasu! Zobaczmy, kto otrzyma to Pudełko.\n**Ten Loot Box zostanie rozlosowany pomiędzy:**",
         "congrats": "Dobra robota! Skrzynka została dodana do twojego **Ekwipunku**. Możesz ją otworzyć używając komendy `{{prefix}}lootbox`.",
         "opening": "{{user}} otworzył Pudełko...",
         "contains": "Ta {{adjective}} skrzynka zawiera",
-        "options": "Możesz go zachować lub rerollnąć, płacąc {{amt}}",
         "keep": "Zatrzymaj to",
         "reroll": "Rerollnij to",
         "rerolled": "Spróbujmy jeszcze raz, rerollnąć zawartość pudełka ...",
         "noMoreRolls": "Zabrakło Ci rerollnięć, będziesz musiał zachować ten wynik.",
         "noFunds": "Potrzebujesz więcej rubinów, aby ponownie zakręcić, być może następnym razem.",
-        "rerollRemain": "Pozostałe rerolle:",
         "addedRubines": "{{X}} Rubiny zostały dodane do twojego salda",
         "addedJades": "{{X}} Żady zostały dodane do twojej torby",
         "addedMedal": "**{{itm}}** Medal został dodany do twojej Kieszeni na Medale",
@@ -771,7 +816,12 @@
         "morons": "Pozwoliłeś, by Pudełko Ciebie minęło? Co ja gadam.. jasne że tak.",
         "contesting": "Wpisy dotyczące tego Pudełka:",
         "eventDrop": "Tego jest więcej! Te pudełko to **EVENTOWE PUDEŁKO** co znaczy że **w środku są specjalne przedmioty'!**",
-        "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz."
+        "notThisbox": "Wydaje się, że nie masz tego pudełka, spróbuj ponownie {{prefix}}lootbox` i zobacz jakie posiadasz.",
+        "options_new": "{{k_emoji}}Zachowaj | {{r_emoji}}Losuj ponownie {{amt}}",
+        "rerollRemain_new": "Możesz losować ponownie jeszcze **jeden** raz!",
+        "rerollRemain_new_plural": "Możesz losować ponownie jeszcze **{{count}}** razy!",
+        "hasDupes": "{{x_frags}} zduplikowanych przedmiotów!",
+        "allItemsAdded": "Wszystkie przedmioty zostały dodane do twojego ekwipunku!"
     },
     "eastereggs": {
         "konodioda": "Myślałeś, że to Pollux, **ale to byłem JA, ZIOM**!",

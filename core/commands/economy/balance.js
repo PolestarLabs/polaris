@@ -1,21 +1,13 @@
-// const gear = require("../../utilities/Gearbox");
-// const DB = require("../../database/db_ops");
+const moment = require("moment");
 
-const cmd = 'balance';
+const init = async (msg) => {
+  const Target = msg.author;
+  const emb = new Embed();
 
-//const locale = require(appRoot+'/utils/i18node');
-//const $t = locale.getT();
+  const P = { lngs: msg.lang };
 
-const init = async function (message) {
-
-    const Target = (await PLX.getTarget(message))||message.author;
-    const emb = new Embed();
-
-    let P={lngs:message.lang}
-    if(PLX.autoHelper([$t("helpkey",P)],{cmd,message,opt:this.cat}))return;
-
-    const bal =  $t('$.balance',P);
-    /*
+  const bal = $t("responses.$.balance", P);
+  /*
     const put =  $t('$.lewdery',P);
     const jog =  $t('$.gambling',P);
     const dro =  $t('$.drops',P);
@@ -29,79 +21,80 @@ const init = async function (message) {
     const nope = $t('CMD.noDM',P);
     */
 
-    const moment = require ('moment');
-    moment.locale(message.lang[0])
+  moment.locale(msg.lang[0]);
 
-    const TARGERDATA= await DB.users.get({id:Target.id});
-    emb.color('#ffd156')
-    emb.title(bal)
+  const TARGETDATA = await DB.users.get({ id: Target.id });
+  emb.color("#ffc156");
+  emb.title(bal);
 
-  if(TARGERDATA){
+  async function lastTransBuild(x) {
+    if (!x) return "\u200b";
 
-    emb.description =
-`${invisibar}
-${_emoji('RBN')} ${$t('keywords.RBN_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.rubines ,true)}**
-${_emoji('JDE')} ${$t('keywords.JDE_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.jades ,true)}**
-${_emoji('SPH')} ${$t('keywords.SPH_plural',{lngs:message.lang})}: **${miliarize(TARGERDATA.modules.sapphires ,true)}**
-${_emoji('EVT')} ${"Event Tokens"}: **${miliarize(TARGERDATA.eventGoodie || 0 , true)}**`
+    const POLid = PLX.user.id;
 
+    const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
+    if (x.type === "SEND") x.type = "TRANSFER";
+    if (x.to === TARGETDATA.id && x.from !== POLid) {
+      othPart = (await PLX.getTarget(x.from, null, true)) || { tag: "Unknown#0000" };
+      if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
+      return `↔ \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+        + `*\`${x.type}\`* from [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+    }
+    if (x.from === TARGETDATA.id && x.to !== POLid) {
+      othPart = (await PLX.getTarget(x.to, null, true)) || { tag: "Unknown#0000" };
+      if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
+      return `↔  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+        + `*\`${x.type}\`* to [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+    }
+    if (x.to === POLid) return `📤  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
+    if (x.from === POLid) return `📥  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
 
-lastTrans = await DB.audits.find({$or:[{from:TARGERDATA.id},{to:TARGERDATA.id}]}).sort({timestamp:-1}).limit(3);
-async function lastTransBuild(x){
-if(!x)return "\u200b";
-
-let POLid = '271394014358405121'
-
-let ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16,'\u200b '); 
- if(x.type == "SEND") x.type = "TRANSFER";
-  if(x.to == TARGERDATA.id && x.from !==POLid){
-    othPart = await DB.users.get(x.from);
-    return `↔ \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* from [${othPart.meta.tag}](http://pollux.fun/p/${othPart.id}) \`${othPart.id}\` `
+    return "\u200b";
   }
-  if(x.from == TARGERDATA.id && x.to !==POLid){
-    othPart = await DB.users.get(x.to);
-    return `↔  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *\`${x.type}\`* to [${othPart.meta.tag}](http://pollux.fun/p/${othPart.id}) \`${othPart.id}\` `
-  }
-  if(x.to==POLid){
-    return `📤  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *${x.type}*`
-  }
-  if(x.from==POLid){
-    return `📥  \`${ts}\` **${x.amt}** ${x.currency}
-\u200b\u2003\u2003|   *${x.type}*`
-  }
-  
-  return '\u200b'
 
-}
+  if (TARGETDATA) {
 
-emb.field("Last Transactions", 
-`${await lastTransBuild(lastTrans[0])}
+    
+    emb.field("\u200bClassic Gems",`\u200b`
+    + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.RBN, true)}**`
+    + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.SPH, true)}**`
+    + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.JDE, true)}**`,
+    true)
+    
+    emb.field("\u200bPolaris Gems",`\u200b`
+    + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find(i=>i.id==='cosmo_fragment')?.count||0, true)}**`
+    + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.prisms, true)}**`
+    + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
+    + `\n${invisibar}`,
+    true)
+
+    lastTrans = await DB.audits.find({ $or: [{ from: TARGETDATA.id }, { to: TARGETDATA.id }] }).sort({ timestamp: -1 }).limit(5);
+    emb.field("Last Transactions",
+      `${await lastTransBuild(lastTrans[0])}
 ${await lastTransBuild(lastTrans[1])}
 ${await lastTransBuild(lastTrans[2])}
-` , false );
-
-  }else{
-    emb.description("User `"+Target.id+"` not found in Pollux Database")
+${await lastTransBuild(lastTrans[3])}
+${await lastTransBuild(lastTrans[4])}
+`, false);
+  } else {
+    emb.description(`User \`${Target.id}\` not found in Pollux Database`);
   }
-if(Target){
-  emb.footer(Target.tag,Target.avatarURL);
-}else{
-  emb.description = "User `"+Target.id+"` not found anywhere"
-  emb.fields = []
-  emb.fields = []
-}
-  message.channel.send({embed:emb})
-
-}
- module.exports = {
-    pub:true,
-    botPerms: ["embedLinks"],
-    aliases: ["bal","sapphires","jades"],
-    cmd: cmd,
-    perms: 3,
-    init: init,
-    cat: 'cash'
+  if (Target) {
+    emb.footer(Target.tag, Target.avatarURL);
+  } else {
+    emb.description = `User \`${Target.id}\` not found anywhere`;
+    emb.fields = [];
+    emb.fields = [];
+  }
+  emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`)
+  msg.channel.send({ embed: emb });
+};
+module.exports = {
+  pub: true,
+  botPerms: ["embedLinks"],
+  aliases: ["bal", "sapphires", "jades"],
+  cmd: "balance",
+  perms: 3,
+  init,
+  cat: "cash",
 };

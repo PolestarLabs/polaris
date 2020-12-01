@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "메달",
+        "sticker": "",
+        "sticker_plural": "스티커",
+        "background": "",
+        "background_plural": "배경"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "{{imsorry}} 당신에게 권한이 없다면 당신을 위해 그걸 할 수 없습니다.",
             "not-a-NSFW-channel": "이 채널은 NSFW로 설정되어 있지 않습니다. 어디에서나 \"작품\"을 떠나지 마십시오."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -392,11 +413,11 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** 모듈이 **세계적으로** 비활성화되었습니다.",
-            "disabledChn": "모듈 {{module}} 이 #{{channel}} 채널에서 비활성화되었습니다",
+            "disabledChn": "모듈 {{module}} 이 <#{{channel}}> 채널에서 비활성화되었습니다",
             "disabledComSer": "**{{command}}** 코멘드가 **세계적으로** 비활성화되었습니다",
-            "disabledComChn": "**{{command}}** 코멘드가 #{{channel}} 에서 비활성화되었습니다.",
+            "disabledComChn": "**{{command}}** 코멘드가 <#{{channel}}> 에서 비활성화되었습니다.",
             "enabledSer": "**{{module}}** 모듈이 **세계적으로** 활성화되었습니다.",
-            "enabledChn": "모듈 {{module}} 이 #{{channel}} 채널에서 활성화되었습니다",
+            "enabledChn": "모듈 {{module}} 이 <#{{channel}}> 채널에서 활성화되었습니다",
             "enabledComSer": "**{{command}}** 코멘드가 **세계적으로** 활성화되었습니다",
             "enabledComChn": "** {{command}} ** 명령이 채널에서 사용 설정되었습니다."
         },
@@ -440,6 +461,7 @@
             "inChan": "알겠습니다! 환영 메세지들은 **{{channel}}**에 올리도록 하겠습니다. "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}} 의 소금 농도는 **{{amount}}%** {{emoji}}",
             "booru404": "미안하지만, 그 꼬리표로 아무것도 못 찾았 어. 정확한지 확인해야합니다.",
             "nsfw404": "실례지만 포르노가 너무 기괴해서 어디서나 찾을 수 없습니다. 귀하를 좋아하는 사람이 기대하는대로.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "블랙 잭? 너는 규칙을 안다. 그래서 시작하자.",
             "result": "결과:",
             "bust": "",
-            "youwin": "치하! 당신이 이겼어!",
-            "youlose": "어? 제가 이겼네요.",
+            "youwin": "",
+            "youlose": "",
             "hit": "",
             "stand": "",
             "split": " `split` 너의 손을 나눠 라,",
             "double": "",
             "pass": "또는 `stand` 통과.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "놀랄 만한! 내가 뭘 찾았는지 봐!",
             "저기, 당신이 이 전리품 상자를 보고 싶었다는 걸 전 확신해요."
         ],
+        "duplicate": "",
         "lootPick": "␣당신은 모두 분쟁을하기 위해 ** __ 20 초 __ **를 가지고 있습니다! `{{prefix}}pick '을 써서 그것을 요구할 기회를 얻으십시오!",
         "goesTo": "시간의 최대! 누가이 박스를 가져 왔는지 보자.\n**이 전리품 상자는 다음 사이에 추첨됩니다 **",
         "congrats": "축하드려요! 상자는 당신의 **인벤토리**에 추가되었습니다. `{{prefix}}lootbox` 코멘드를 사용하여 열 수 있어요.",
         "opening": "{{user}}이 전리품 상자를 열었습니다 ...",
         "contains": "이 {{adjective}} 전리품 상자 안에는:",
-        "options": "계속 유지하거나 {{amt}}을 지불하여 변경할 수 있습니다.",
         "keep": "보관해라",
         "reroll": "그것을 바꾼다.",
         "rerolled": "상자 내용을 바꾸어 다시 시도해 봅시다 ...",
         "noMoreRolls": "변경 사항이 모두 소진되었으므로이 결과를 계속 사용해야합니다",
         "noFunds": "당신은 충분한 루빈이 없습니다. 아마도 다음 번에",
-        "rerollRemain": "남은 변경 사항 :",
         "addedRubines": "{{X}} 잔액에 루빈이 추가되었습니다.",
         "addedJades": "{{X}} 비취가 파우치에 추가되었습니다.",
         "addedMedal": "**{{itm}}** 메달이 당신의 메달 포켓에 추가되었습니다",
@@ -771,7 +816,12 @@
         "morons": "전리품 상자가 미끄러지도록 내버려 두시겠습니까? 내가 너에게서 기대했던대로.",
         "contesting": "이 상자에 이의를 제기하십시오:",
         "eventDrop": "",
-        "notThisbox": "그 상자가없는 것 같아. `{{prefix}} lootbox` 를 다시 시도하고 소유하고있는 상자를보십시오."
+        "notThisbox": "그 상자가없는 것 같아. `{{prefix}} lootbox` 를 다시 시도하고 소유하고있는 상자를보십시오.",
+        "options_new": "",
+        "rerollRemain_new": "이제 **마지막 한 번** 남았습니다!",
+        "rerollRemain_new_plural": "**{{count}}**번 남았습니다!",
+        "hasDupes": "",
+        "allItemsAdded": "모든 아이템이 인벤토리에 추가되었습니다!"
     },
     "eastereggs": {
         "konodioda": "폴룩스라고 생각했는데 **하지만 그건 나, DIO**!",

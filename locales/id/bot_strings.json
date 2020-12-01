@@ -30,12 +30,18 @@
         "material": "Material",
         "material_plural": "Material",
         "boosterpack": "Bungkusan Kartu",
-        "boosterpack_plural": "Bungkusan Kartu"
+        "boosterpack_plural": "Bungkusan Kartu",
+        "medal": "Medali",
+        "medal_plural": "Medali",
+        "sticker": "Stiker",
+        "sticker_plural": "Stiker",
+        "background": "Latar Belakang",
+        "background_plural": "Latar Belakang"
     },
     "terms": {
-        "transferDenied": "",
-        "TransactionFee": "",
-        "TransactionID": "",
+        "transferDenied": "Transfer Ditolak",
+        "TransactionFee": "Biaya Transaksi",
+        "TransactionID": "ID Transaksi",
         "thanks": "terimakasih",
         "thanks_short": "ty",
         "thx": "",
@@ -139,6 +145,21 @@
             "emojiError": "Aku tidak dapat menambahkan emoji ini. Cek izin reaction atau jika emojinya valid...",
             "insuperms": "{{imsorry}} Aku tidak dapat melakukannya untukmu jika kamu sendiri tidak memiliki izin.",
             "not-a-NSFW-channel": "Channel ini tidak tersiapkan untuk NSFW. Jangan tinggalkan \"karya seni\"mu dimana-mana."
+        },
+        "cooldown": {
+            "generic": [
+                "Tunggu sebentar!",
+                "Aku bukan mesin printer, jadi sabar dong!",
+                "Mohon coba beberapa detik lagi.",
+                "Tunggu.",
+                "Terlalu banyak perintah!",
+                "Aaah! pelan-pelan!",
+                "Aku hanya punya beberapa jari untuk beberapa tombol! Sabar dong!",
+                "Kenapa buru-buru?!",
+                "Aku butuh waktu sejenak untuk bernafas!",
+                "Sayang, satu-satu dong.",
+                "*Kamu terlalu cepat senpai uwu aku tuh ngga bisa diginiin uwu*"
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hei! teks terjemahan tidak bisa melebihi __1000 karakter__** \nTetapi jangan khawatir, aku telah memangkas teksnya untukmu~",
@@ -312,7 +333,7 @@
         },
         "ship": {
             "needTupipo": "Kalkulator Cinta ini tidak dapat bekerja hanya pada satu orang, sayang.",
-            "need2diffpipo": "",
+            "need2diffpipo": "Kecuali dia mampu melakukan mitosis, tetap terhitung sebagai satu orang, Aku butuh **dua** orang!",
             "quotes": [
                 [
                     "Oh. __Oh tidak.__",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "_Module_ **{{module}}** telah dimatikan secara **Global**.",
-            "disabledChn": "_Module_ {{module}} telah dimatikan pada #{{channel}}",
+            "disabledChn": "_Module_ {{module}} telah dimatikan pada <#{{channel}}>",
             "disabledComSer": "Perintah {{command}} telah dimatikan secara **Global**.",
-            "disabledComChn": "Perintah {{command}} telah dimatikan pada #{{channel}}",
+            "disabledComChn": "Perintah {{command}} telah dimatikan pada <#{{channel}}>",
             "enabledSer": "_Module_ **{{module}}** telah diperbolehkan secara **Global**.",
-            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada #{{channel}}",
+            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada <#{{channel}}>",
             "enabledComSer": "Perintah **{{command}}** telah diperbolehkan secara **Global**",
-            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada #{{channel}}"
+            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Enggak, aku tidak bisa memberi _rep_ ke dirimu sendiri.",
@@ -440,6 +461,7 @@
             "inChan": "Siap! pesan penyambutan akan di post di **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Tingkat kadar Garam-nya adalah **{{amount}}%** {{emoji}}",
             "booru404": "Maaf ya, aku tidak menemukan apa pun dengan label itu. Cek lagi deh sudah benar atau tidak.",
             "nsfw404": "Maaf, itu terlalu sadis sampai-sampai aku tidak menemukannya di mana pun. Kamu ini betul-betul deh.",
@@ -489,7 +511,7 @@
             "colorChange": "Warna favoritmu telah tersimpan!"
         },
         "transfer": {
-            "lastdly": "",
+            "lastdly": "Transfer Kotak Terakhir:",
             "next": "",
             "transferboxto": "",
             "transferthisboxto": "",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "Dibatalkan!",
             "timeout": "Waktu habis!",
             "cantAfford": "Ah, kamu tidak sanggup membeli ini... :(",
@@ -550,6 +573,16 @@
             "confirmDelete": "Konfirmasi penghapusan?",
             "alotWentOn": "Banyak yang terlewati hari ini...",
             "alreadyOwnThis": "Hei, kamu sudah memiliki ini!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Batas untuk usul: 16",
@@ -564,6 +597,7 @@
             "bracketX": "Kurung {{AB}}"
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "Melepaskan latar belakang {{rarity_emoji}} ini menjadi **{{count}} $t(keywords.cosmoFragment)** ?",
             "cosmeticSynth": "Kosmetik paduan",
             "confirmSynth": "Apakah kamu mau menggabungkan ini?",
@@ -704,13 +738,25 @@
             "newgame": "Blackjack hm? seharusnya kamu sudah mengerti aturannya, jadi ayo mulai.",
             "result": "Hasil:",
             "bust": "Ledakan",
-            "youwin": "Selamat! kamu menang, kali ini.",
-            "youlose": "Oh? aku menang, sayang sekali.",
+            "youwin": "",
+            "youlose": "",
             "hit": "Respon dengan `hit` untuk menarik satu kartu lagi,",
             "stand": "Berdiri",
             "split": "`split` untuk memisahkan tanganmu,",
             "double": "`double` untuk menggandakan taruhanmu dan tarik satu kartu terakhir,",
             "pass": "atau `stand` untuk melewati.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "Perincian Pembagian:",
             "switchdeck": "Sekarang kita akan memainkan BlackJack menggunakan dek **{{deckname}}**!",
             "switchdeckEgg": "Sekarang kita akan memainkan BlackJack menggunakan dog-- maksudku **dek** {{deckname}}!\nOMG maafkan aku!",
@@ -750,18 +796,17 @@
             "Hebat! lihat apa yang telah aku temukan!",
             "Hei, aku sangat yakin kamu ingin melihat Lootbox ini disini."
         ],
+        "duplicate": "",
         "lootPick": "Kalian semua punya **__20 detik__** untuk memperselisihkannya! Ketik `{{prefix}}pick` untuk kesempatan mengklaimnya!",
         "goesTo": "Waktu habis! ayo lihat siapa yang akan mendapatkan Lootbox ini.\n**Lootbox ini akan diundi diantara:**",
         "congrats": "Mantap Djiwa! kotaknya telah di tambahkan ke **Inventori**. Kamu sekarang bisa membukanya menggunakan perintah `{{prefix}}lootbox`.",
         "opening": "{{user}} membuka Lootboxnya...",
         "contains": "{{adjective}} Lootbox ini berisi",
-        "options": "Kamu bisa menyimpannya, atau menggulirkannya kembali dengan membayar {{amt}}",
         "keep": "Simpan",
         "reroll": "Gulirkan",
         "rerolled": "Ayo coba lagi, menggulirkan isi kotak...",
         "noMoreRolls": "Kamu sudah kehabisan reroll, kamu akan mendapatkan hasil yang ini.",
         "noFunds": "Kamu membutuhkan Rubi lebih banyak lagi untuk reroll, mungkin lain kali.",
-        "rerollRemain": "Reroll yang tersisa:",
         "addedRubines": "{{X}} Rubi telah di tambahkan ke saldomu",
         "addedJades": "{{X}} Giok telah di tambahkan ke kantungmu",
         "addedMedal": "**{{itm}}** Medali telah di tambahkan ke Saku Medali",
@@ -771,7 +816,12 @@
         "morons": "Kamu membiarkan Lootbox terlewati begitu saja? Apa yang aku katakan, tentu saja kamu melakukannya.",
         "contesting": "Peserta untuk kotak ini:",
         "eventDrop": "Dan masih ada lagi! Kotak ini adalah sebuah **KOTAK ACARA** yang artinya: **'berisi barang-barang spesial'!**",
-        "notThisbox": "Kamu sepertinya tidak mempunyai kotak itu. Coba `{{prefix}}lootbox` lagi dan lihat kotak apa yang kamu miliki."
+        "notThisbox": "Kamu sepertinya tidak mempunyai kotak itu. Coba `{{prefix}}lootbox` lagi dan lihat kotak apa yang kamu miliki.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Kamu pikir barusan itu Pollux, **tapi itu adalah AKU, DI0**!",

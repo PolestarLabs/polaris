@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Медалі",
+        "sticker": "",
+        "sticker_plural": "Стыкеры",
+        "background": "",
+        "background_plural": "Фоны"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "",
             "not-a-NSFW-channel": "Гэты канал не з'яўляецца NSFW. Не пакідайце свае \"малюначкі\" усюды."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": "",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "**{{module}}** модуль выключаны. **Глабальна**",
-            "disabledChn": "{{Module}} модуль выключаны на канале #{{channel}}",
+            "disabledChn": "{{Module}} модуль выключаны на канале <#{{channel}}>",
             "disabledComSer": "**{{command}}** каманда выключана **Глабальна**",
-            "disabledComChn": "Каманда **{{command}}** выключаная на канале #{{channel}}",
+            "disabledComChn": "Каманда **{{command}}** выключаная на канале <#{{channel}}>",
             "enabledSer": "**{{module}}** модуль уключаны **Глабальна**",
-            "enabledChn": "**{{module}}** модуль уключаны на канале #{{channel}}",
+            "enabledChn": "**{{module}}** модуль уключаны на канале <#{{channel}}>",
             "enabledComSer": "**{{command}}** каманда была ўключана **Глабальна**",
-            "enabledComChn": "**{{command}}** каманда была ўключаная на канале #{{channel}}"
+            "enabledComChn": "**{{command}}** каманда была ўключаная на канале <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Не, я не дазваляю вам даваць + да рэпутацыі самому сабе.",
@@ -440,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{Target}}' паводзіць сябе як прыдурак на **{{amount}}%** {{emoji}}",
             "booru404": "Выбачайце, але я не змагла нічога знайсці з гэтымі тэгамі. Вам варта праверыць іх на наяўнасць памылак.",
             "nsfw404": "Выбачайце, але ваша парнуха настолькі адбітая, што я не змагла яе знайсці. Што і варта было чакаць ад такога чалавека, як вы.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "Хм, блэкджек? Вы ўжо ведаеце правілы, так што, давайце пачнем.",
             "result": "Вынік:",
             "bust": "",
-            "youwin": "Віншую! У гэты раз, вы выйгралі.",
+            "youwin": "",
             "youlose": "",
             "hit": "Адкажыце `hit`, каб узяць яшчэ адну карту,",
             "stand": "",
             "split": "`Split` каб падзяліць ваш hand,",
             "double": "",
             "pass": "або `stand`, каб прапусціць.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Вау! Паглядзіце, што я знайшла!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "␣У ўсіх вас ёсць **__ 20 Секунд__** каб атрымаць лутбокс! Напішыце `{{prefix}}pick`, каб паспрабаваць поспех у атрыманні яго!",
         "goesTo": "Час выйшаў! Давайце паглядзім, хто атрымае лутбокс.\n**Гэты лутбокс будзе разыграны паміж:**",
         "congrats": "",
         "opening": "{{User}} адкрыў Лутбокс...",
         "contains": "",
-        "options": "Вы можаце пакінуць яго, альбо зрабіць реролл, заплаціўшы {{amt}}",
         "keep": "Пакінуць",
         "reroll": "Зрабіць реролл",
         "rerolled": "Паспрабуем яшчэ раз, робячы реролл за ўсё, што знаходзіцца ў боксе...",
         "noMoreRolls": "У вас больш няма рероллов, прыйдзецца застацца з тым, што ёсць.",
         "noFunds": "Вам трэба больш Рубінаў для реролла, можа, у наступны раз.",
-        "rerollRemain": "Засталося рероллов:",
         "addedRubines": "{{X}} Рубінаў было дададзена на ваш баланс",
         "addedJades": "{{X}} Нефрыту было дададзена на ваш баланс",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "Вы дапусцілі, каб лутбокс прапаў? Гэта як раз тое, што я чакала ад вас.",
         "contesting": "Спіс удзельнікаў гэтага бокса:",
         "eventDrop": "",
-        "notThisbox": "Здаецца, у вас няма гэтага бокса. Паспрабуйце `{{prefix}}lootbox` зноў і паглядзіце, якія боксы ў вас ёсць."
+        "notThisbox": "Здаецца, у вас няма гэтага бокса. Паспрабуйце `{{prefix}}lootbox` зноў і паглядзіце, якія боксы ў вас ёсць.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Вы думалі, што гэта Поллюкс, **але гэта Я, ДЗІА**!",

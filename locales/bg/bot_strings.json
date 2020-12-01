@@ -30,7 +30,13 @@
         "material": "",
         "material_plural": "",
         "boosterpack": "",
-        "boosterpack_plural": ""
+        "boosterpack_plural": "",
+        "medal": "",
+        "medal_plural": "Медали",
+        "sticker": "",
+        "sticker_plural": "Стикери",
+        "background": "",
+        "background_plural": "Тапети"
     },
     "terms": {
         "transferDenied": "",
@@ -139,6 +145,21 @@
             "emojiError": "",
             "insuperms": "{{imsorry}} Не мога да направя това за теб, ако нямаш нужните права.",
             "not-a-NSFW-channel": "Задай каналът за пълонолетни! Има деца в този сървър!"
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning:**Хей! превода не може да надминава __1000 знака__**, но не се притеснчвай, нагласих го за теб",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Този модул:**{{module}}** е с отказан достъп **\"В световен мащаб\"**",
-            "disabledChn": "Този модул:**{{module}}** e с отказан достъп за този канал #{{channel}}",
+            "disabledChn": "Този модул:**{{module}}** e с отказан достъп за този канал <#{{channel}}>",
             "disabledComSer": "Този модул:**{{module}}** е с отказан достъп **\"В световен мащаб\"**",
-            "disabledComChn": "Този модул:**{{module}}** e с отказан достъп за този канал #{{channel}}",
+            "disabledComChn": "Този модул:**{{module}}** e с отказан достъп за този канал <#{{channel}}>",
             "enabledSer": "Този модул:**{{module}}** е с отказан достъп **\"В световен мащаб\"**",
-            "enabledChn": "Този модул:**{{module}}** e с отказан достъп за този канал #{{channel}}",
+            "enabledChn": "Този модул:**{{module}}** e с отказан достъп за този канал <#{{channel}}>",
             "enabledComSer": "Този модул:**{{module}}** е активиран **\"В световен мащаб\"**",
-            "enabledComChn": "Този модул:**{{module}}** e активиран за този канал #{{channel}}"
+            "enabledComChn": "Този модул:**{{module}}** e активиран за този канал <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Хей ти умник такъв! Какво току що каза!",
@@ -440,6 +461,7 @@
             "inChan": "Разбрах! Ще приветствам потребителите в **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' се държи като глупак **{{amount}}%** {{emoji}}",
             "booru404": "Съжалявам, но не намерих нищо с тези маркери. Трябва да ги проверите за грешки.",
             "nsfw404": "Съжалявам, но вашето порно е толкова странно, че не можах да го намеря. Опитай нещо по-малко налудничево.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "Хм, блекджек? Опасявам се, че знаете правилата, така че нека започнем.",
             "result": "Резултат:",
             "bust": "Бюджет",
-            "youwin": "Честито! Този път спечелихте.",
+            "youwin": "",
             "youlose": "",
             "hit": "Отговор с `hit`, за да получите друга карта,",
             "stand": "Стоя",
             "split": "`split`, за да разделите ръката си,",
             "double": "",
             "pass": "или \"stand\", за да пропуснете.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Уау! Виж какво намерих!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "ВНИМАНИЕ всики имат **20 секунди**за да грабнат този Lootbox. Напиши `{{prefix}}pick` и има шанс да го вземеш.",
         "goesTo": "Времето изтече! Нека видим кой получава тази кутия.\n**Тази Lootbox ще се играе между:**",
         "congrats": "",
         "opening": "{{user}} отвори Лутбокс...",
         "contains": "",
-        "options": "Можете да го оставите или да направите ребар, като платите {{amt}}",
         "keep": "Запази",
         "reroll": "Направи рерол",
         "rerolled": "Нека се опитаме отново, като повторно отвирим всичко, което е в кутията...",
         "noMoreRolls": "Вече нямате реролли, ще трябва да останете с това, което е там.",
         "noFunds": "Нуждаете се от повече Рубини за реролл, може би следващия път.",
-        "rerollRemain": "Оставащи реролове:",
         "addedRubines": "{{X}} Рубини е добавен към баланса ви",
         "addedJades": "{{X}} Нефрит бяха добавен към баланса ви",
         "addedMedal": "",
@@ -771,7 +816,12 @@
         "morons": "Всики сте **ИДИОТИ**! Позволихте Lootbox-a да се изплъзне от ръцете ви! :grinning:",
         "contesting": "Списъкът на участниците в този бокс:",
         "eventDrop": "",
-        "notThisbox": "Изглежда, че този Lootbox не съществува. Опитайте отново `{{prefix}}lootbox` и вижте кои кутии имате~"
+        "notThisbox": "Изглежда, че този Lootbox не съществува. Опитайте отново `{{prefix}}lootbox` и вижте кои кутии имате~",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Мислехте, че това е Поллюкс, **но това бях аз, DIO **!",

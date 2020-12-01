@@ -1,68 +1,51 @@
 const request = require("request");
-const rescodes = [200, 400, 401, 403];
+
+const rescodes = [200, 201, 400, 401, 403];
+const ROOT = "https://discoin.zws.im";
 
 module.exports = class Discoin {
-	constructor (token){
-		this.token = token;
-	}
-	request (user, amount, exchangeTo) {
-		return new Promise((resolve, reject) => {
-			request.post({url: "http://discoin.sidetrip.xyz/transaction", headers: {"Authorization": this.token}, json: {"user": user, "amount": amount, "exchangeTo": exchangeTo}}, function (error, response, body) {
-				if (error || rescodes.indexOf(response.statusCode) === -1) {
-					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
-				}
-				if (response.statusCode !== 200) {
-					return reject(body);
-				}
-				return resolve(body);
-			});
-		});
-	}
+  constructor(token) {
+    this.token = token;
+    this.rest = (METHOD, route, payload, query) => {
+      if (typeof payload === "string") {
+        query = payload; payload = null;
+      }
+      return new Promise((resolve, reject) => {
+        (request[METHOD])({
+          url: `${ROOT}/${route}${query ? `?s=${encodeURIComponent(query)}` : ""}`,
+          headers: { Authorization: `Bearer ${this.token}` },
+          json: payload,
+        }, (err, res, body) => {
+          if (err || rescodes.indexOf(res.statusCode) === -1) return reject(new Error(`[${res.statusCode}] :: API failure`));
+          if (![200, 201].includes(res.statusCode)) {
+            return reject(new Error(JSON.stringify({ body, request: `${METHOD.toUpperCase()}: /${route}`, payload })));
+          }
+          return resolve(body);
+        });
+      });
+    };
 
-	fetch () {
-		return new Promise((resolve, reject) => {
-			request({url: "http://discoin.sidetrip.xyz/transactions", headers: {"Authorization": this.token}}, function (error, response, body) {
-				if (error || response.statusCode !== 200) {
-					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
-				}
-				return resolve(body);
-			});
-		});
-	}
+    this.currencies = () => new Promise((resolve, reject) => {
+      request.get({ url: "https://pollux.gg/api/discoin/currencies" }, (err, res, body) => {
+        if (res.statusCode === 200) resolve(JSON.parse(body));
+        else reject(res.statusCode);
+      });
+    });
+  }
 
-	reverse (receipt) {
-		return new Promise((resolve, reject) => {
-			request.post({url: "http://discoin.sidetrip.xyz/transaction/reverse", headers: {"Authorization": this.token}, json: {"receipt": receipt}}, function (error, response, body) {
-				if (error || response.statusCode !== 200) {
-					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
-				}
-				return resolve(body);
-			});
-		});
-	}
+  rates() { return this.rest("get", "currencies"); }
 
-	info (receipt) {
-		return new Promise((resolve, reject) => {
-			request({url: "http://discoin.sidetrip.xyz/transaction/" + receipt, headers: {"Authorization": this.token}}, function (error, response, body) {
-				if (error || response.statusCode !== 200) {
-					return reject(`[${response.statusCode}] :: API failure - Contact MacDue`);
-				}
-				if (response.statusCode !== 200) {
-					return reject(body);
-				}
-				return resolve(body);
-			});
-		});
-	}
+  fetch(filter) { return this.rest("get", "transactions", filter || "{\"to.id\": \"RBN\", \"handled\": false}"); }
 
-	rates () {
-		return new Promise((resolve, reject) => {
-			request({url: "http://discoin.sidetrip.xyz/rates.json"}, function (error, response, body) {
-				if (error || response.statusCode !== 200) {
-					return reject("API failure - Contact MacDue");
-				}
-				return resolve(body);
-			});
-		});
-	}
-}
+  create(user, amt, toId) { return this.rest("post", "transactions", { user, amount: Number(amt), toId }); }
+
+  process(receipt) { return this.rest("patch", `transactions/${receipt}`, { handled: true }); }
+
+  info(receipt) { return this.rest("get", `transactions/${receipt}`); }
+
+  reject(receipt) {
+    return this.rest("patch", `transactions/${receipt}`, { handled: true }).then(
+      (res) => this.rest("post", "transactions", { user: res.user, amount: Number(res.amount), toId: res.from.id }),
+    );
+  }
+};

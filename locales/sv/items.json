@@ -1,14 +1,330 @@
 {
-    "partial_ring": {
-        "name": "",
-        "description": ""
+    "anime_booster": {
+        "name": "Anime Generisk VOL.1"
     },
-    "lootbox_C_O": {
-        "name": "",
-        "description": ""
+    "broken_excavator": {
+        "name": "Trasig grävmaskin"
+    },
+    "commendtoken": {
+        "name": "Kommendationstoken",
+        "description": "Vad är detta? Altruism?"
+    },
+    "complete_ring_jade": {
+        "name": "Splendorous Jade Ring",
+        "description": "Så grönt som din komposition med kärlek."
+    },
+    "complete_ring_rubine": {
+        "name": "Magnifik Rubin Ring",
+        "description": "Rosor är röda, violer är blå, denna ring är också röd och vacker som du!"
+    },
+    "complete_ring_sapphire": {
+        "name": "Lyxig Safir Ring",
+        "description": "Det första steget mot engagemang är att ge upp en sällsynt pärla för din älskade - grattis! "
+    },
+    "complete_ring_stardust": {
+        "name": "Opulent Stardust Ring",
+        "description": "\"Varje älskare är i sitt hjärta en galning och i sitt huvud en minstrel.\" \n– Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Cosmo fragment",
+        "description": "Glänsande grus används för att concot Cosmo skärvor"
+    },
+    "cosmo_gem_C": {
+        "name": "Gemensam Cosmo pärla",
+        "description": "Åh ja, det är åtminstone glänsande."
+    },
+    "cosmo_gem_R": {
+        "name": "Sällsynt Cosmo pärla",
+        "description": "Åh? Lite dyrt, eller hur?"
+    },
+    "cosmo_gem_SR": {
+        "name": "Super sällsynta Cosmo pärla",
+        "description": "Woah, det är en speciell liten pärla du kom dit. Hur mycket vill du ha för det? Sex rubiner? Åtta?"
+    },
+    "cosmo_gem_U": {
+        "name": "Ovanlig Cosmo-pärla",
+        "description": "Jag menar, jag antar att det är bättre än en vanlig."
+    },
+    "cosmo_gem_UR": {
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "Önskar en stjärna... Och du fick till slut en."
+    },
+    "daianwatch_booster": {
+        "name": "Overwatch av Daianpan",
+        "description": "Vänligen inte 4 DPS i ett team boosterpack"
+    },
+    "doki_booster": {
+        "name": "Doki Doki Litteraturklubb",
+        "description": "Bara Monika"
+    },
+    "doublehook": {
+        "name": "Dubbel krok",
+        "description": "En krok krok, eller om du föredrar en krok 2"
+    },
+    "excavator": {
+        "name": "Gravedigging grävmaskin",
+        "description": "För människor som inte vill få händerna smutsiga."
+    },
+    "hook": {
+        "name": "Krok",
+        "description": "Senast sett jagar runt en liten flygande pojke."
+    },
+    "initd_booster": {
+        "name": "Inledande D",
+        "description": "Deja<unk> vu. Jag har just öppnat denna booster innan."
+    },
+    "iwd1_booster": {
+        "name": "IWD - Säsong 1",
+        "description": "Internet Wrestling Discord Exklusivt medlemskap klistermärken. 2018"
+    },
+    "iwd2_booster": {
+        "name": "IWD - Säsong 2",
+        "description": "Internet Wrestling Discord Exklusivt medlemskap klistermärken. 2019"
+    },
+    "lootbox_C_C": {
+        "name": "Chibi Vanlig Lootbox"
+    },
+    "lootbox_C_E": {
+        "name": "Episk vanlig Lootbox"
+    },
+    "lootbox_C_event_1": {
+        "name": "Vanlig Halloween Lootbox"
+    },
+    "lootbox_C_event_2": {
+        "name": "Vanlig Christmas Lootbox"
+    },
+    "lootbox_C_event_3": {
+        "name": "Vanlig påsklootbox"
+    },
+    "lootbox_C_event_s1": {
+        "name": "Vanlig sommarlootbox"
+    },
+    "lootbox_C_event_s2": {
+        "name": "Vanlig Vinterlootbox"
+    },
+    "lootbox_C_event_s3": {
+        "name": "Vanlig Solstice Lootbox"
+    },
+    "lootbox_C_O": {
+        "name": "Vanlig Lootbox"
+    },
+    "lootbox_C_s1": {
+        "name": "Vanlig sommarlootbox"
+    },
+    "lootbox_C_s2": {
+        "name": "Vanlig Vinterlootbox"
+    },
+    "lootbox_dev": {
+        "name": "Dev Gåva Låda",
+        "description": "Starter Lootbox, en gåva från Pollux dev för nybörjare. Det är garanterat att ha minst ett UR objekt!"
+    },
+    "lootbox_EL": {
+        "name": "elBox",
+        "description": "Om du öppnar den här rutan kommer ditt förråd explodera"
+    },
+    "lootbox_R_C": {
+        "name": "Chibi Rare Lootbox"
+    },
+    "lootbox_R_E": {
+        "name": "Episk Sällsynt Lootbox"
+    },
+    "lootbox_R_event_1": {
+        "name": "Rare Halloween Lootbox"
+    },
+    "lootbox_R_event_2": {
+        "name": "Sällsynt Christmas Lootbox"
+    },
+    "lootbox_R_event_3": {
+        "name": "Sällsynt påsk Lootbox"
+    },
+    "lootbox_R_event_s1": {
+        "name": "Sällsynt sommarlootbox"
+    },
+    "lootbox_R_event_s2": {
+        "name": "Sällsynt Vinterlootbox"
+    },
+    "lootbox_R_event_s3": {
+        "name": "Rare Solstice Lootbox"
+    },
+    "lootbox_R_O": {
+        "name": "Rare Lootbox"
+    },
+    "lootbox_R_s1": {
+        "name": "Sällsynt sommarlootbox"
+    },
+    "lootbox_R_s2": {
+        "name": "Sällsynt Vinterlootbox"
+    },
+    "lootbox_R_s3": {
+        "name": "Rare Solstice Lootbox"
+    },
+    "lootbox_SR_C": {
+        "name": "Chibi Super sällsynta Lootbox"
+    },
+    "lootbox_SR_E": {
+        "name": "Episk Super Sällsynt Lootbox"
+    },
+    "lootbox_SR_event_1": {
+        "name": "Super sällsynta Halloween Lootbox"
+    },
+    "lootbox_SR_event_2": {
+        "name": "Super sällsynta jul Lootbox"
+    },
+    "lootbox_SR_event_3": {
+        "name": "Super sällsynta påsk Lootbox"
+    },
+    "lootbox_SR_event_s1": {
+        "name": "Super sällsynta sommarlootbox"
+    },
+    "lootbox_SR_event_s2": {
+        "name": "Super sällsynta Winter Lootbox"
+    },
+    "lootbox_SR_event_s3": {
+        "name": "Super Sällsynt Solstice Lootbox"
+    },
+    "lootbox_SR_O": {
+        "name": "Super sällsynta Lootbox"
+    },
+    "lootbox_SR_s1": {
+        "name": "Super sällsynta sommarlootbox"
+    },
+    "lootbox_SR_s2": {
+        "name": "Super sällsynta Winter Lootbox"
+    },
+    "lootbox_SR_s3": {
+        "name": "Super Sällsynt Solstice Lootbox"
+    },
+    "lootbox_U_C": {
+        "name": "Chibi Uncommon Lootbox"
+    },
+    "lootbox_U_E": {
+        "name": "Episk ovanlig Lootbox"
+    },
+    "lootbox_U_event_1": {
+        "name": "Uncommon Halloween Lootbox"
+    },
+    "lootbox_U_event_2": {
+        "name": "Ovanlig jullåda"
+    },
+    "lootbox_U_event_3": {
+        "name": "Ovanligt påsklootbox"
+    },
+    "lootbox_U_event_s1": {
+        "name": "Ovanligt sommarlootbox"
+    },
+    "lootbox_U_event_s2": {
+        "name": "Ovanligt Vinterlootbox"
+    },
+    "lootbox_U_event_s3": {
+        "name": "Ovanlig Solstice Lootbox"
+    },
+    "lootbox_U_O": {
+        "name": "Ovanlig Lootbox"
+    },
+    "lootbox_U_s1": {
+        "name": "Ovanligt sommarlootbox"
+    },
+    "lootbox_U_s2": {
+        "name": "Ovanligt Vinterlootbox"
+    },
+    "lootbox_U_s3": {
+        "name": "Ovanlig Solstice Lootbox"
+    },
+    "lootbox_UR_C": {
+        "name": "Chibi Ultra Rare Lootbox"
+    },
+    "lootbox_UR_E": {
+        "name": "Epic Ultra Rare Lootbox"
+    },
+    "lootbox_UR_event_1": {
+        "name": "Ultra Sällsynt Halloween Lootbox"
+    },
+    "lootbox_UR_event_2": {
+        "name": "Ultra sällsynta jul Lootbox"
+    },
+    "lootbox_UR_event_s1": {
+        "name": "Ultra sällsynta sommarlootbox"
+    },
+    "lootbox_UR_event_s2": {
+        "name": "Ultra Sällsynt Vinterlootbox"
+    },
+    "lootbox_UR_event_s3": {
+        "name": "Ultra Rare Solstice Lootbox"
+    },
+    "lootbox_UR_O": {
+        "name": "Ultra Rare Lootbox"
+    },
+    "lootbox_UR_s1": {
+        "name": "Ultra sällsynta sommarlootbox"
+    },
+    "lootbox_UR_s2": {
+        "name": "Ultra Sällsynt Vinterlootbox"
+    },
+    "lootbox_UR_s3": {
+        "name": "Ultra Rare Solstice Lootbox"
+    },
+    "nierauto_booster": {
+        "name": "NieR: Automata",
+        "description": "Den booster du behöver 2B glad"
+    },
+    "p5_booster": {
+        "name": "Persona 5",
+        "description": "Du ser aldrig att det kommer"
+    },
+    "padoru_booster": {
+        "name": "Padoru Ultimate Collection",
+        "description": "Hashire ont yo och gimme dina ruiner"
+    },
+    "partial_ring": {
+        "name": "Delvis ring",
+        "description": "Ett runt band av metall som används för att skapa en vacker bröllopsring"
+    },
+    "reel": {
+        "name": "Fiske rulle",
+        "description": "Du snurrar det rätt men inte som en skiva. Ser ut som om det måste fästas någonstans."
+    },
+    "rod_c": {
+        "name": "Makeshift fiskespö",
+        "description": "Dra bara upp fisk, inte komplimanger."
+    },
+    "rod_r": {
+        "name": "Anständigt fiskespö",
+        "description": "Det är inte tekniskt dåligt, men det är inte tekniskt bra."
+    },
+    "rod_sr": {
+        "name": "Formidable Fishing Rod",
+        "description": "~De säger att detta fiskespö gjordes av Bob Ross~"
+    },
+    "rod_u": {
+        "name": "Bambu fiskespö",
+        "description": "Denna bambukäpp togs från en klok kinesisk munks trädgård."
+    },
+    "rod_ur": {
+        "name": "Professionell fiskespö",
+        "description": "Do. Ing. Break. Detta. En."
+    },
+    "rope": {
+        "name": "Rep",
+        "description": "Nej, detta är inte vad du tror att det är för."
+    },
+    "shovel": {
+        "name": "Spade",
+        "description": "Används för att gräva hål, både fysiska och metaforiska."
+    },
+    "spoon": {
+        "name": "Sked",
+        "description": "Detta är en väldigt sexig sked, använd den på ett ansvarsfullt sätt."
+    },
+    "spork": {
+        "name": "Spork",
+        "description": "En sked, plus en gaffel. Det är en Fooon!"
+    },
+    "stick": {
+        "name": "Semi-värdelös pinne",
+        "description": "Priset är inte vad som spelar någon roll, men känslan engagerad tråg hur fantastisk denna pinne kan vara"
+    },
+    "fork": {
+        "name": "Fork",
+        "description": "Med fyra gånger knivhuggen förmåga, men hälften av stöten, är det dubbelt värdet!"
     }
 }

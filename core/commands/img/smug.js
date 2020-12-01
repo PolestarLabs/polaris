@@ -1,35 +1,32 @@
+const Gal = require("../../structures/Galleries");
 
-const Gal = require('../../structures/Galleries')
+const init = async function (msg) {
+  const embed = new Embed();
+  let img = {};
 
-const init = async function (msg){
+  if (msg.args[0] && !!parseInt(msg.args[0])) {
+    const index = parseInt(msg.args[0]);
+    img.file = `${paths.DASH}/random/smug/${index}`;
+    img.index = index;
+  } else {
+    img = await Gal.randomOneIndexed("smug", true);
+  }
 
-    const embed = new Embed();
-    let img = {};
+  const avgcolor = await require("../../utilities/Picto").avgColor(img.file);
 
-    if(msg.args[0] && !!parseInt(msg.args[0])){
-        let index = parseInt(msg.args[0]);
-        img.file =  paths.CDN+"/random/smug/"+index;
-        img.index = index
-    }else{
-        img = await Gal.randomOneIndexed('smug',true);
-    }
+  embed.image(img.file + ".png");
+  embed.color(avgcolor);
+  embed.footer(`Smug Anime Girl #${img.index}`);
 
-    let avgcolor = await require('../../utilities/Picto').avgColor(img.file);
+  msg.channel.send({ embed });
+};
 
-    embed.image(img.file);
-    embed.color(avgcolor);
-    embed.footer("Smug Anime Girl #"+img.index);
-
-    msg.channel.send({embed});
-
-}
-
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'smug'
-    ,perms:3
-    ,cat:'img'
-    ,botPerms:['embedLinks']
-    ,aliases:[]
-}
+module.exports = {
+  init,
+  pub: true,
+  cmd: "smug",
+  perms: 3,
+  cat: "img",
+  botPerms: ["embedLinks"],
+  aliases: [],
+};

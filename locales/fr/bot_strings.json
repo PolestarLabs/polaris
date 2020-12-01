@@ -30,7 +30,13 @@
         "material": "Matériel",
         "material_plural": "Matériaux",
         "boosterpack": "Booster",
-        "boosterpack_plural": "Boosters"
+        "boosterpack_plural": "Boosters",
+        "medal": "Médaille",
+        "medal_plural": "Médailles",
+        "sticker": "Collant",
+        "sticker_plural": "Collants",
+        "background": "Fond d'écran",
+        "background_plural": "Bannières"
     },
     "terms": {
         "transferDenied": "Transfert refusé",
@@ -139,6 +145,21 @@
             "emojiError": "Je n'ai pas pu ajouter cet Emoji. Vérifie les permissions d'ajoutement des réactions ou si l'Emoji est valide...",
             "insuperms": "{{Imsorry}} Je ne peux pas faire ça pour toi si tu n'as pas le permission non plus.",
             "not-a-NSFW-channel": "Eh oh! Rends ce salon NSFW d'abord, il y a des enfants par ici..."
+        },
+        "cooldown": {
+            "generic": [
+                "Attendez, j'ai besoin d'une minute!",
+                "Je ne suis pas une imprimante, ralentez svp!",
+                "Veuillez réessayer dans quelques secondes.",
+                "Veuillez patienter.",
+                "Trop d'ordres!",
+                "Aaah! Ralentis!",
+                "Je n'ai pas tellement de doigts pour appuyer sur autant de boutons! Détends-toi!",
+                "Qu'est-ce qui presse?!",
+                "J'ai besoin d'un moment de repos!",
+                "Une à la fois svp, mon chou.",
+                "*Vous allez trop vite senpai uwu je ne peux pas le prendre uwu*"
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hé! Texte de traduction ne doit pas dépasser __1000 caractères__**\nN'inquiète pas, j'ai taillé la texte pour toi~",
@@ -311,20 +332,20 @@
             "cantMarryPollux": "Pas du tout! Shoo!"
         },
         "ship": {
-            "needTupipo": "",
-            "need2diffpipo": "",
+            "needTupipo": "La calculatrice d'amour ne marche pas seulement une personne, mon chou.",
+            "need2diffpipo": "À moins que cette personne ne soit capable de mitose, elle compte toujours comme une seule personne, j'ai besoin de **deux** personnes!",
             "quotes": [
                 [
                     "Oh. _Oh non._",
                     ""
                 ],
                 [
-                    "",
-                    ""
+                    "Il n'y avait qu'une légère hésitation avant ce glissement vers la gauche.",
+                    "Bien que vous soyez familier l'un avec l'autre, vous ne voulez pas vous familiariser _de ce genre_."
                 ],
                 [
                     "",
-                    ""
+                    "Hé! Vous ne vous détestez pas l'un l'autre! On se débrouille, n'est-ce pas?"
                 ],
                 [
                     "",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Le module **{{module}}** a été **globalement** désactivé.␣ ",
-            "disabledChn": "Le module {{module}} a été désactivé dans le salon #{{channel}}",
+            "disabledChn": "Le module {{module}} a été désactivé dans le salon <#{{channel}}>",
             "disabledComSer": "La commande **{{command}}** a été **globalement** désactivée.",
-            "disabledComChn": "La commande **{{command}}** a été désactivée dans le salon #{{channel}}",
+            "disabledComChn": "La commande **{{command}}** a été désactivée dans le salon <#{{channel}}>",
             "enabledSer": "Le module **{{module}}** a été **globalement** activé.",
-            "enabledChn": "Le **{{module}}** a été activé pour le salon #{{channel}} ",
+            "enabledChn": "Le **{{module}}** a été activé pour le salon <#{{channel}}> ",
             "enabledComSer": "La commande **{{command}}** a été **globalement** activée. ",
-            "enabledComChn": "La commande **{{command}}** a été activée pour le salon #{{channel}} "
+            "enabledComChn": "La commande **{{command}}** a été activée pour le salon <#{{channel}}> "
         },
         "reput": {
             "noSelf": "Hey hey gros malin! Tu peux pas te rep tout seul!",
@@ -440,6 +461,7 @@
             "inChan": "D'acc! Messages de bienvenue seront plantés dans **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Le niveau de sel à {{target}} est de **{{amount}}%** {{emoji}} ",
             "booru404": "Oups, je n'ai rien pu trouver avec ces mots-clés. Essayes-en d'autres, mon chou!",
             "nsfw404": "Mec, ton porno est tellement bizarre que je l'ai trouvé nulle part. Essaye un truc moins chelou.",
@@ -472,10 +494,10 @@
             "commendationLimit": ""
         },
         "crafting": {
-            "craftingItem": "",
+            "craftingItem": "Fabrication d'`{{item_name}}`",
             "noitem": "Je n'ai pas pu trouver cet article",
-            "noitemu": "",
-            "materialMissing": "",
+            "noitemu": "Impossible de trouver cet article ni quoi que ce soit de ce genre",
+            "materialMissing": "Il t'en manque des matériaux, je ne peux pas fabriquer le produit.",
             "materialPresent": "",
             "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
             "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "",
             "timeout": "",
             "cantAfford": "",
@@ -550,6 +573,16 @@
             "confirmDelete": "Affirmer la suppression?",
             "alotWentOn": "",
             "alreadyOwnThis": ""
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "",
@@ -564,6 +597,7 @@
             "bracketX": ""
         },
         "synthfrag": {
+            "magifrag": "",
             "disenchant": "",
             "cosmeticSynth": "",
             "confirmSynth": "",
@@ -704,13 +738,25 @@
             "newgame": "C'est le moment de jouer au blackjack~ ! Je pense que tu connais les règles, c'est parti!",
             "result": "Résultat:",
             "bust": "",
-            "youwin": "D'accord, d'accord, tu gagnes pour cette fois...",
+            "youwin": "",
             "youlose": "",
             "hit": "Réponds `hit` pour tirer une autre carte,␣",
             "stand": "",
             "split": "`split` pour partager ta main,␣",
             "double": "",
             "pass": "ou `stand` pour passer.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -750,18 +796,17 @@
             "Sugoi! Regardez cette Lootbox que j'ai trouvée!",
             ""
         ],
+        "duplicate": "",
         "lootPick": "␣Vous avez tous **__20 Secondes__** pour la prendre! Ecrivez `{{prefix}}pick` pour avoir une chance de l'avoir!",
         "goesTo": "Le temps est écoulé! Voyons qui a gagné cette Lootbox...\n**Cette Lootbox va être mis en jeu entre:**",
         "congrats": "Félicitations! Ce coffre a été ajouté à votre **inventaire**. Tu peux l'ouvrir par la commande `{{prefix}}lootbox`.",
         "opening": "{{user}} a ouvert sa Lootbox...",
         "contains": "",
-        "options": "Tu peux soit garder ton butin, ou, retenter ta chancer en payant {{amt}} Rubines!",
         "keep": "Garder",
         "reroll": "Relancer",
         "rerolled": "On relance! Voyons voir...",
         "noMoreRolls": "Tu n'as plus de relances, tu vas devoir garder ce butin!",
         "noFunds": "Tu ne peux pas te payer une relance le prolo, on verra la prochaine fois.",
-        "rerollRemain": "Relances restantes:",
         "addedRubines": "{{X}} Rubines ajoutées à votre porte-feuille!",
         "addedJades": "{{X}} Jades ajoutées à votre bourse!",
         "addedMedal": "**{{itm}}** Médaille a été ajouté a ta pochette de médailles",
@@ -771,7 +816,12 @@
         "morons": "Bande **d'abrutis**! Vous avez laissé un lootbox filer!! >:U",
         "contesting": "Participants pour cette lootbox:",
         "eventDrop": "Et il en a plus! Ce coffre est un **COFFRE D'ÉVÉNEMENT** qui signifie: **'des trucs spéciaux dedans'!**",
-        "notThisbox": "Tu ne possèdes pas ce genre de lootbox, retente `{{prefix}}lootbox` et regarde ce que tu as~"
+        "notThisbox": "Tu ne possèdes pas ce genre de lootbox, retente `{{prefix}}lootbox` et regarde ce que tu as~",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Tu pensais que c'était Pollux, **mais c'était moi, DIO**!",

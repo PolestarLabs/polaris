@@ -1,14 +1,330 @@
 {
-    "partial_ring": {
-        "name": "",
-        "description": ""
+    "anime_booster": {
+        "name": "Anime Generisk VOL.1"
     },
-    "lootbox_C_O": {
-        "name": "",
-        "description": ""
+    "broken_excavator": {
+        "name": "Ødelagt Backhoe"
+    },
+    "commendtoken": {
+        "name": "Kommando Token",
+        "description": "Hva er dette? Altruism?"
+    },
+    "complete_ring_jade": {
+        "name": "Splendorous Jade ring",
+        "description": "Så grønne som din komité med kjærlighet."
+    },
+    "complete_ring_rubine": {
+        "name": "Forstørret gummi-ring",
+        "description": "Roser er røde, fioletter er blå, denne ringen er også rød og vakker som deg!"
+    },
+    "complete_ring_sapphire": {
+        "name": "Luksuriøs apphire ring",
+        "description": "Det første skrittet mot engasjement gir en sjelden edeltaker for dine kjære en - gratulerer! "
+    },
+    "complete_ring_stardust": {
+        "name": "Søk etter opulent stift",
+        "description": "«Hver elsker er i sitt hjerte, en galler og i sitt hode, en minstrel.» \n― Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Kosmo Fragment",
+        "description": "Skinnende grus benyttet til å koste Kosmo Skår"
+    },
+    "cosmo_gem_C": {
+        "name": "Vanlige Kosmo Perem",
+        "description": "Å være bra, i det minste er skinnende."
+    },
+    "cosmo_gem_R": {
+        "name": "Sjelden Kosmo Perem",
+        "description": "Åh? Det er litt dyrt, ikke sant?"
+    },
+    "cosmo_gem_SR": {
+        "name": "Super Sjelden Kosmo Perem",
+        "description": "Woah, det er en spesiell liten gem du har på deg. Hvor mye vil du ha for det? Six Twitter? Gåte?"
+    },
+    "cosmo_gem_U": {
+        "name": "Mindre vanlige Kosmo Perem",
+        "description": "Jeg mener, jeg gjetter at det er bedre enn et vanlig."
+    },
+    "cosmo_gem_UR": {
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "Ønsker på en stjerne... Og du fikk en endelig vei."
+    },
+    "daianwatch_booster": {
+        "name": "Overklokke av Daianpan",
+        "description": "Du må ikke 4 DPS i en team boosterpakning"
+    },
+    "doki_booster": {
+        "name": "Doki Doki Litteraturklubb",
+        "description": "Bare Monika"
+    },
+    "doublehook": {
+        "name": "Dobbel krok",
+        "description": "En krokkrok, eller hvis du foretrekker en krok2"
+    },
+    "excavator": {
+        "name": "Gravering Backhoe",
+        "description": "For folk som ikke vil få sine hender skitne."
+    },
+    "hook": {
+        "name": "Knagg",
+        "description": "Sist sett jakter rundt en liten flygutt."
+    },
+    "initd_booster": {
+        "name": "Innledende D",
+        "description": "Dejaby vu. Jeg har akkurat åpnet denne boosteren."
+    },
+    "iwd1_booster": {
+        "name": "IWD - Sesong 1",
+        "description": "Internet Wrestling Discord Eksklusiv medlemskap Stickers. 2018"
+    },
+    "iwd2_booster": {
+        "name": "IWD - Sesong 2",
+        "description": "Internet Wrestling Discord Eksklusiv medlemskap Stickers. 2019"
+    },
+    "lootbox_C_C": {
+        "name": "Chibi Common Lootbox"
+    },
+    "lootbox_C_E": {
+        "name": "Episk vanlig lootbox"
+    },
+    "lootbox_C_event_1": {
+        "name": "Vanlig Halloween lootbox"
+    },
+    "lootbox_C_event_2": {
+        "name": "Vanlig jule Lootbox"
+    },
+    "lootbox_C_event_3": {
+        "name": "Vanlige Påske Plyndre"
+    },
+    "lootbox_C_event_s1": {
+        "name": "Vanlig Sommer Lootbox"
+    },
+    "lootbox_C_event_s2": {
+        "name": "Vanlig vinterutveksling"
+    },
+    "lootbox_C_event_s3": {
+        "name": "Vanlig solssistus tyr"
+    },
+    "lootbox_C_O": {
+        "name": "Vanlig Plynkasse"
+    },
+    "lootbox_C_s1": {
+        "name": "Vanlig Sommer Lootbox"
+    },
+    "lootbox_C_s2": {
+        "name": "Vanlig vinterutveksling"
+    },
+    "lootbox_dev": {
+        "name": "Utvikling Gaveboks",
+        "description": "Starter Lootbox, en gave fra Polluks's dev for nybegynnere. Det er garantert å ha minst en UR-vare!"
+    },
+    "lootbox_EL": {
+        "name": "elBoks",
+        "description": "Hvis du åpner denne boksen, kommer inventaret ditt til å eksploder"
+    },
+    "lootbox_R_C": {
+        "name": "Chibi Rare Lootbox"
+    },
+    "lootbox_R_E": {
+        "name": "Episk sjelden kartong"
+    },
+    "lootbox_R_event_1": {
+        "name": "Rare Halloween Lootbox"
+    },
+    "lootbox_R_event_2": {
+        "name": "Sjelden jule Lootbox"
+    },
+    "lootbox_R_event_3": {
+        "name": "Sjeldne Påskeplager"
+    },
+    "lootbox_R_event_s1": {
+        "name": "Sjeldne Sommer Lootbox"
+    },
+    "lootbox_R_event_s2": {
+        "name": "Sjelden Vinter Potbox"
+    },
+    "lootbox_R_event_s3": {
+        "name": "Rare Solstice Lootbox"
+    },
+    "lootbox_R_O": {
+        "name": "Rare Lootbox"
+    },
+    "lootbox_R_s1": {
+        "name": "Sjeldne Sommer Lootbox"
+    },
+    "lootbox_R_s2": {
+        "name": "Sjelden Vinter Potbox"
+    },
+    "lootbox_R_s3": {
+        "name": "Rare Solstice Lootbox"
+    },
+    "lootbox_SR_C": {
+        "name": "Chibi Super Sjelden Lootbox"
+    },
+    "lootbox_SR_E": {
+        "name": "Episk Super Sjelden Lootbox"
+    },
+    "lootbox_SR_event_1": {
+        "name": "Super Sjelden Halloween Lootbox"
+    },
+    "lootbox_SR_event_2": {
+        "name": "Super sjeldent julepotbox"
+    },
+    "lootbox_SR_event_3": {
+        "name": "Super sjeldent pÃ¥ske Plyndre"
+    },
+    "lootbox_SR_event_s1": {
+        "name": "Super sjeldent Sommer Lootbox"
+    },
+    "lootbox_SR_event_s2": {
+        "name": "Super Sjelden Vinterpapir"
+    },
+    "lootbox_SR_event_s3": {
+        "name": "Super Sjelden Lootbox"
+    },
+    "lootbox_SR_O": {
+        "name": "Super Sjelden Utseende"
+    },
+    "lootbox_SR_s1": {
+        "name": "Super sjeldent Sommer Lootbox"
+    },
+    "lootbox_SR_s2": {
+        "name": "Super Sjelden Vinterpapir"
+    },
+    "lootbox_SR_s3": {
+        "name": "Super Sjelden Lootbox"
+    },
+    "lootbox_U_C": {
+        "name": "Chibi Uncommon Lootbox"
+    },
+    "lootbox_U_E": {
+        "name": "Episk Mindre vanlige Lootbox"
+    },
+    "lootbox_U_event_1": {
+        "name": "Uncommon Halloween Lootbox"
+    },
+    "lootbox_U_event_2": {
+        "name": "Mindre vanlige Julepotbox"
+    },
+    "lootbox_U_event_3": {
+        "name": "Mindre vanlige Påskeplager"
+    },
+    "lootbox_U_event_s1": {
+        "name": "Mindre vanlige Sommer Lootbox"
+    },
+    "lootbox_U_event_s2": {
+        "name": "Mindre vanlige Vinterstativ"
+    },
+    "lootbox_U_event_s3": {
+        "name": "Mindre vanlige Lootbox-en"
+    },
+    "lootbox_U_O": {
+        "name": "Mindre vanlige Plyndring"
+    },
+    "lootbox_U_s1": {
+        "name": "Mindre vanlige Sommer Lootbox"
+    },
+    "lootbox_U_s2": {
+        "name": "Mindre vanlige Vinterstativ"
+    },
+    "lootbox_U_s3": {
+        "name": "Mindre vanlige Lootbox-en"
+    },
+    "lootbox_UR_C": {
+        "name": "Chibi Ultra Rare Lootbox"
+    },
+    "lootbox_UR_E": {
+        "name": "Epic Ultra Rare Lootbox"
+    },
+    "lootbox_UR_event_1": {
+        "name": "Ultra sjelden halloween Lootbox"
+    },
+    "lootbox_UR_event_2": {
+        "name": "Ultra sjelden jul Lootbox"
+    },
+    "lootbox_UR_event_s1": {
+        "name": "Ultra sjelden Sommer Lootbox"
+    },
+    "lootbox_UR_event_s2": {
+        "name": "Ultra sjeldent Vinterpapir"
+    },
+    "lootbox_UR_event_s3": {
+        "name": "Ultra Rare Solstice Lootbox"
+    },
+    "lootbox_UR_O": {
+        "name": "Ultra Rare Lootbox"
+    },
+    "lootbox_UR_s1": {
+        "name": "Ultra sjelden Sommer Lootbox"
+    },
+    "lootbox_UR_s2": {
+        "name": "Ultra sjeldent Vinterpapir"
+    },
+    "lootbox_UR_s3": {
+        "name": "Ultra Rare Solstice Lootbox"
+    },
+    "nierauto_booster": {
+        "name": "NieR: Automata",
+        "description": "Boosten du trenger 2B glad"
+    },
+    "p5_booster": {
+        "name": "Persona 5",
+        "description": "Du ser aldri det kommer"
+    },
+    "padoru_booster": {
+        "name": "Padoru Ultimate kolleksjon",
+        "description": "Hashire såre yo og smim rubinene dine"
+    },
+    "partial_ring": {
+        "name": "Delvis ring",
+        "description": "En runde gruppe av metall som brukes til å lage en nydelig bryllring"
+    },
+    "reel": {
+        "name": "Fiskeromell",
+        "description": "Du spinner den mot høyre rund, men ikke som en rekord. Ser ut som den må festes et sted."
+    },
+    "rod_c": {
+        "name": "Makeshift Fiskestang",
+        "description": "Kun for å trekke opp fisken, ikke etterlevelse."
+    },
+    "rod_r": {
+        "name": "Bestemme Fiskestang",
+        "description": "Det er ikke teknisk dårlig, men det er ikke teknisk fantastisk."
+    },
+    "rod_sr": {
+        "name": "Flyttbare fiskestang",
+        "description": "~de sier at denne fiskestangen ble laget av Bob Ross~"
+    },
+    "rod_u": {
+        "name": "Bamboo fiskestang",
+        "description": "Denne bambussen ble tatt fra en vis hage i Kina."
+    },
+    "rod_ur": {
+        "name": "Profesjonell fiskeinnsats",
+        "description": "Do. Not. Break. Det én."
+    },
+    "rope": {
+        "name": "Tau",
+        "description": "Nei, dette er ikke det du mener det er for."
+    },
+    "shovel": {
+        "name": "Spade",
+        "description": "Brukes til graving av hull, både fysiske og metaforiske."
+    },
+    "spoon": {
+        "name": "Skje",
+        "description": "Dette er en veldig sexy skje, bruk den på en ansvarlig måte."
+    },
+    "spork": {
+        "name": "Spork",
+        "description": "En skje og et gaffel. Det er en fot!"
+    },
+    "stick": {
+        "name": "Halvløs pinne",
+        "description": "Prisen er ikke slik viktig, men følelsen var konvolert med hvor fantastisk denne pinne kan være"
+    },
+    "fork": {
+        "name": "Fork",
+        "description": "Med fire ganger den stabiliserende evnen til en kniv men halvparten påvirkningen, er det dobbelt så verdi!"
     }
 }

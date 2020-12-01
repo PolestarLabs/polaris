@@ -30,7 +30,13 @@
         "material": "Materiaali",
         "material_plural": "Materiaalit",
         "boosterpack": "Boosteripaketti",
-        "boosterpack_plural": "Boosteripaketit"
+        "boosterpack_plural": "Boosteripaketit",
+        "medal": "",
+        "medal_plural": "Mitalit",
+        "sticker": "",
+        "sticker_plural": "Tarrat",
+        "background": "",
+        "background_plural": "Taustakuvat"
     },
     "terms": {
         "transferDenied": "Siirto kumottu",
@@ -139,6 +145,21 @@
             "emojiError": "En voinut lisätä tätä emojia. Tarkista reaktio-oikeudet tai se, onko emoji validi...",
             "insuperms": "{{imsorry}} en voi tehdä tuota sinulle, jos sinulla itselläsi ei ole siihen oikeutta.",
             "not-a-NSFW-channel": "Tätä kanavaa ei ole asettu NSFW-kanavaksi. Älä jättele \"taidetöitäsi\" kaikkialle."
+        },
+        "cooldown": {
+            "generic": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ]
         },
         "warnings": {
             "translationTexTooLong": ":warning: **Hei! Käännösteksti ei voi ylittää __1000 merkkiä__**\n Mutta älä huoli, olen karsinut tekstiä puolestasi~",
@@ -392,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Moduuli **{{module}}** on kytketty pois päältä **Globaalisti**.",
-            "disabledChn": "Moduuli {{module}} on kytketty pois päältä kanavalla #{{channel}}",
+            "disabledChn": "Moduuli {{module}} on kytketty pois päältä kanavalla <#{{channel}}>",
             "disabledComSer": "Käsky **{{command}}** on kytketty pois päältä **Globaalisti**",
-            "disabledComChn": "Käsky **{{command}}** on kytketty pois päältä kanavalla #{{channel}}",
+            "disabledComChn": "Käsky **{{command}}** on kytketty pois päältä kanavalla <#{{channel}}>",
             "enabledSer": "Moduuli **{{module}}** on kytketty päälle **Globaalisti**",
-            "enabledChn": "Moduuli **{{module}}** on kytketty päälle kanavalla #{{channel}}",
+            "enabledChn": "Moduuli **{{module}}** on kytketty päälle kanavalla <#{{channel}}>",
             "enabledComSer": "Käsky **{{command}}** on kytketty päälle **Globaalisti**",
-            "enabledComChn": "Käsky **{{command}}** on kytketty päälle kanavalla #{{channel}}"
+            "enabledComChn": "Käsky **{{command}}** on kytketty päälle kanavalla <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Ei, kieltäydyn antamasta sinun antaa mainetta itsellesi.",
@@ -440,6 +461,7 @@
             "inChan": "Selvä! Tervetulo-viestit lähetetään kanavalla **{{channel}}** "
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "Käyttäjän {{target}}' Suolaisuuden määrä on **{{amount}}%** {{emoji}}",
             "booru404": "Anteeksi, mutta en löytänyt noilla tageilla mitään. Varmista, että ne ovat oikein.",
             "nsfw404": "Anteeksi, mutta pornosi on niin kummallista, etten löytänyt sitä mistään. Kuten odotettu joltakulta kaltaiseltasi.",
@@ -543,6 +565,7 @@
     },
     "interface": {
         "generic": {
+            "deleted": "",
             "cancel": "Peruutettu!",
             "timeout": "Aikakatkaisu!",
             "cantAfford": "Ah, sinulla ei ole varaa tähän... :(",
@@ -550,6 +573,16 @@
             "confirmDelete": "Vahvista poisto?",
             "alotWentOn": "Tänä päivänä tapahtui paljon...",
             "alreadyOwnThis": "Hei, sinä omistat tämän jo!"
+        },
+        "reminders": {
+            "currentActive": "",
+            "noneToDelete": "",
+            "maxActive": "",
+            "errorWhen": "",
+            "errorTARDIS": "",
+            "reminderOk": "",
+            "reminderChannel": "",
+            "reminderDMs": ""
         },
         "brackets": {
             "maxRR": "Roundrobin-turnauksen maksimiraja: 16",
@@ -564,7 +597,8 @@
             "bracketX": "Otteluohjelma {{AB}}"
         },
         "synthfrag": {
-            "disenchant": "Muuta tämä {{rarity_emoji}} tausta **{{count}} $t(keywords.cosmoFragment)** ?",
+            "magifrag": "",
+            "disenchant": "",
             "cosmeticSynth": "Kosmeettinen esinesynteesi",
             "confirmSynth": "Haluatko syntetisoida tämän?",
             "nogemsforThis": "Näyttää siltä, että sinulla ei ole tarpeeksi jalokiviä tähän synteesiin..."
@@ -704,13 +738,25 @@
             "newgame": "Blackjackia, vai? Sinun pitäisi jo tuntea säännöt, joten aloitetaan.",
             "result": "Tulos:",
             "bust": "Bust",
-            "youwin": "Onnittelut! Sinä voitit, tämän kerran.",
-            "youlose": "Oho? Minä voitin, harmi sinulle.",
+            "youwin": "",
+            "youlose": "",
             "hit": "Vastaa kirjoittamalla `hit` vetääksesi yhden uuden kortin,",
             "stand": "Jää",
             "split": "`split` jakaaksesi kätesi",
             "double": "`double` tuplataksesi panoksesi ja vetääksesi vielä yhden kortin,",
             "pass": "tai `stand` ohittaaksesi.",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "Jakojen erittely:",
             "switchdeck": "Nyt me pelaamma BlackJackia käyttäen **{{deckname}}** -pakkaa!",
             "switchdeckEgg": "Nyt pelaamme BlackJackia käyttäen paskaa- Tai siis **pakkaa** {{deckname}}!\nOMG olen niin pahoillani!",
@@ -750,18 +796,17 @@
             "Upeaa! Katsokaa, mitä minä olen löytänyt!",
             "Hei, olen aika varma, että haluat nähdä tämän Yllätyslaatikon täällä."
         ],
+        "duplicate": "",
         "lootPick": "Teillä kaikilla on **__20 sekuntia__** aikaa kiistellä siitä! Kirjoita `{{prefix}}pick` saadaksesi mahdollisuuden voittaa se!",
         "goesTo": "Aika loppui! Katsotaan, kuka saa tämän laatikon.\n**Tämä Yllätyslaatikko arvotaan heidän välillään:**",
         "congrats": "Hyvin tehty! Laatikko on lisätty **Tavaraluetteloosi**. Voit avata sen käyttämällä `{{prefix}}lootbox` -käskyä.",
         "opening": "{{user}} avasi Yllätyslaatikkonsa...",
         "contains": "Tämä {{adjective}} Yllätyslaatikko sisältää",
-        "options": "Voit joko pitää sen tai arpoa sen uudelleen maksamalla {{amt}}",
         "keep": "Pidä se",
         "reroll": "Arvo se uudelleen",
         "rerolled": "Uusi yritys, arvotaan laatikon sisältöä uudelleen...",
         "noMoreRolls": "Et voi enää arpoa laatikkoa uudelleen, joudut tyytymään tähän tulokseen.",
         "noFunds": "Tarvitset enemmän Rubiineja arpoaksesi uudelleen, ehkä seuraavalla kerralla.",
-        "rerollRemain": "Uudelleenarvontoja jäljellä:",
         "addedRubines": "{{X}} Rubiinia on lisätty saldoosi",
         "addedJades": "{{X}} Jadea on lisätty pussiisi",
         "addedMedal": "**{{itm}}** Mitali on lisätty mitalitaskuusi",
@@ -771,7 +816,12 @@
         "morons": "Annat yllätyslaatikon mennä sivusuun? Mitä oikein puhun, tietenkin annoit.",
         "contesting": "Tätä laatikkoa tavoittelevat:",
         "eventDrop": "Ja lisää tulee! Tämä laatikko on **TAPAHTUMALAATIKKO**, mikä tarkoittaa: *'erityisiä hienouksia sisällä'!**",
-        "notThisbox": "Sinulla ei näytä olevan tuota laatikkoa. Kokeile `{{prefix}}lootbox` uudestaan nähdäksesi omistamasi laatikot."
+        "notThisbox": "Sinulla ei näytä olevan tuota laatikkoa. Kokeile `{{prefix}}lootbox` uudestaan nähdäksesi omistamasi laatikot.",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "Luulit sen olevan Pollux, **mutta se olin MINÄ, DIO**!",
