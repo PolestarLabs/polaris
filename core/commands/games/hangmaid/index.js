@@ -31,5 +31,5 @@ module.exports = {
   perms: 3,
   cat: 'games',
   botPerms: ['attachFiles'],
-  aliases: ['hangman', 'forca']
+  aliases: ['hangman', 'forca','hm']
 };
