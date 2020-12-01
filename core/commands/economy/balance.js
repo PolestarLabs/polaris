@@ -1,18 +1,10 @@
-// const gear = require("../../utilities/Gearbox");
-// const DB = require("../../database/db_ops");
 const moment = require("moment");
-
-const cmd = "balance";
-
-// const locale = require(appRoot+'/utils/i18node');
-// const $t = locale.getT();
 
 const init = async (msg) => {
   const Target = msg.author;
   const emb = new Embed();
 
   const P = { lngs: msg.lang };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd, msg, opt: this.cat })) return;
 
   const bal = $t("responses.$.balance", P);
   /*
@@ -101,7 +93,7 @@ module.exports = {
   pub: true,
   botPerms: ["embedLinks"],
   aliases: ["bal", "sapphires", "jades"],
-  cmd,
+  cmd: "balance",
   perms: 3,
   init,
   cat: "cash",

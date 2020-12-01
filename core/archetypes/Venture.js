@@ -298,7 +298,7 @@ function cardinalDirection(LocationA,LocationB){
   console.log(LocationA)
   const dy = LocationB.y - LocationA.y,
         dx = LocationB.x - LocationA.x;
-  let   θ  = Math.atan2(dy,dx) * 180/Math.PI; // no radians pls
+  let   θ  = Math.atan2(dy,dx) * 180/Math.PI; 
 
   console.log({LocationA,LocationB,dy,dx,θ})
 

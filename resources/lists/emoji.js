@@ -1,3 +1,4 @@
+//_PLX[epic=Utilities] Emojis File
 const POLARIS_UI = {
  
 
@@ -7,6 +8,7 @@ const POLARIS_UI = {
   
   save :"<:SAVE:763615045182554172>",
   undo :"<:UNDO:763615045032083476>",
+  redo :"<:REDO:768519564517834762>",
   channel :"<:CHANNEL:763615045099323392>",
   override: "<:override:763615044520509502>",
 
