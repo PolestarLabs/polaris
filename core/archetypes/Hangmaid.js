@@ -1,54 +1,64 @@
 module.exports = class Hangmaid {
-  constructor (message, words) {
-    const word = shuffle(words)[0];
-    this.word = word.word;
-    this.theme = word.theme;
-    this.chances = 5;
-    this.wordBoard = (new Array(this.word.length)).fill('_');
-    this.usedLetters = [];
+  constructor(message, words) {
+    const word = shuffle(words)[0]
+    this.word = word.word
+    this.theme = word.theme
+    this.level = word.level === 1 ? 'Easy' : word.level === 2 ? 'Medium' : 'Hard'
+    this.chances = 5
+    this.wordBoard = (new Array(this.word.length)).fill('%20')
+    this.incorrectLetters = []
+    this.ended = false
     this.originalMessage = undefined
   }
 
-  async start () {
+  async start() {
     return {
       word: this.word,
-      theme: this.theme
-    };
+      theme: this.theme,
+      difficulty: this.level,
+      wordSpaced: this.wordBoard.join('')
+    }
   }
 
   registerMessage(message) {
     return this.originalMessage = message
   }
 
-  async renderCard () {} // todo
+  async renderCard() {
+  } // todo
 
-  handleInput (message) { // handleInput () => Object
+  handleInput(message) { // handleInput () => Object
+    const params = {}
+    params.d = this.level
+    params.h = this.theme
     if (message.length > 1) {
-      if (message === this.word) return { won: true} 
+      if (message.content.toUpperCase() === this.word.toUpperCase()) {
+        params.e = 'win'
+        params.g = this.wordBoard.join('')
+        params.a = this.incorrectLetters.join('')
+        this.ended = true
+      }
       else {
-        this.chances--
-        if (this.chances === 0) return { lost: false }
-        return { originalMessage: this.originalMessage ,correct: false, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters }
+        params.e = 'lose'
+        params.g = this.wordBoard.join('')
+        params.a = this.incorrectLetters.join('')
+        this.ended = true
       }
     }
-    const idx = this.word.split('').map((a, i) => {
-      return { is: (a === message.toLowerCase()), i }
-    }).filter(a => a.is)
+    if (this.ended) return { message: this.originalMessage, params }
 
-    this.usedLetters.push(message.toLowerCase());
-    if (!idx[0]) {
-      console.log(this.word)
-      console.log(message)
-      if (this.word === message.toLowerCase()) return { won: true }
-      else {
-        this.chances--;
-        if (this.chances === 0) return { lost: true ,correct: true, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
-        return { originalMessage: this.originalMessage ,correct: false, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
-      }
-    } else {
-      idx.forEach((_) => (this.wordBoard[_.i] = message.toUpperCase()));
-      if (!this.wordBoard.includes('_')) return { won: true }
-      return { originalMessage: this.originalMessage ,correct: true, wordBoard: this.wordBoard, chances: this.chances, usedLetters: this.usedLetters };
+    const wordArray = this.word.toUpperCase().split('')
+    if (!wordArray.includes(message.content.toUpperCase())) {
+      this.incorrectLetters.push(message.content)
+      params.g = this.wordBoard.join('')
+      params.a = this.incorrectLetters.join('')
+      return { message: this.originalMessage, params }
     }
+    for (let i = 0; i <= wordArray.length; i++) {
+      if (wordArray[i] === message.content.toUpperCase()) this.wordBoard[i] = message.content
+    }
+    params.g = this.wordBoard.join('')
+    params.a = this.incorrectLetters.join('')
+    return { message: this.originalMessage, params }
   }
-};
+}
