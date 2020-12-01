@@ -5,29 +5,17 @@ let cats,
 	catsArr;
 
 const
-	N_NOPE = _emoji("nope").name,
-	N_YEP = _emoji("yep").name,
-	N_CHANNEL = _emoji("channel").name,
-	N_SAVE = _emoji("save").name,
-	N_UNDO = _emoji("undo").name,
-	N_REDO = _emoji("redo").name,
-	N_WG = _emoji("switchpartialON").name,
-	N_WO = _emoji("switchpartialPARTIAL").name,
-	N_WR = _emoji("switchpartialOFF").name,
-	OVERRIDE = _emoji("override"),
-
-	R_NOPE = _emoji("nope").reaction,
-	R_YEP = _emoji("yep").reaction,
-	R_CHANNEL = _emoji("channel").reaction,
-	R_SAVE = _emoji("save").reaction,
-	R_UNDO = _emoji("undo").reaction,
-	R_REDO = _emoji("redo").reaction,
-	R_WG = `<:${_emoji("switchpartialON").reaction}>`,
-	R_WO = `<:${_emoji("switchpartialPARTIAL").reaction}>`,
-	R_WR = `<:${_emoji("switchpartialOFF").reaction}>`,
-
-	MINI_ON = _emoji("swon"),
-	MINI_OFF = _emoji("swoff");
+	{ name: N_NOPE, reaction: R_NOPE } = _emoji`nope`,
+	{ name: N_YEP, reaction: R_YEP } = _emoji`yep`,
+	{ name: N_CHANNEL, reaction: R_CHANNEL } = _emoji`channel`,
+	{ name: N_SAVE, reaction: R_SAVE } = _emoji`save`,
+	{ name: N_UNDO, reaction: R_UNDO } = _emoji`undo`,
+	{ name: N_REDO, reaction: R_REDO } = _emoji`redo`,
+	{ name: N_WG, reaction: R_WG } = _emoji`switchpartialON`,
+	{ name: N_WO, reaction: R_WO } = _emoji`switchpartialPARTIAL`,
+	{ name: N_WR, reaction: R_WR } = _emoji`switchpartialOFF`,
+	MINI_ON = _emoji`swon`,
+	MINI_OFF = _emoji`swoff`,
 
 // Menu emojis
 const menuEmoijis = [
