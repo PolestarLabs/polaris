@@ -65,6 +65,7 @@ const init = async (msg) => {
     return false;
   };
   const after = (message) => {
+    ECO.pay(message.author.id, AMOUNT * 0.05, "Rubine Transfer Fee", "RBN");
     ECO.transfer(message.author.id, TARGET.id, Math.ceil(AMOUNT * 0.95), "Rubine Transfer", "RBN").then((payload) => {
       embed = new Embed();
       embed.thumbnail(TARGET.avatarURL);
