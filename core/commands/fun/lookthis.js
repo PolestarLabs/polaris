@@ -6,11 +6,11 @@ const init = async (msg) => {
   try {
     link ??= msg.mentions[0]?.displayAvatarURL ?? await PLX.getChannelImg(msg) ?? msg.author.displayAvatarURL;
   } catch (e) {
-    linl ??= (msg.mentions[0] || msg.author).displayAvatarURL;
+    link ??= (msg.mentions[0] || msg.author).displayAvatarURL;
   }
 
   const [subject, hand] = await Promise.all([
-    Picto.getCanvas(LINK),
+    Picto.getCanvas(link),
     Picto.getCanvas(`${paths.CDN}/build/assorted/estamerda.png`),
   ]);
   const canvas = Picto.new(subject.width, subject.height);
