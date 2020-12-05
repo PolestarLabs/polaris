@@ -15,7 +15,7 @@ const
 	{ name: N_WO, reaction: R_WO } = _emoji`switchpartialPARTIAL`,
 	{ name: N_WR, reaction: R_WR } = _emoji`switchpartialOFF`,
 	MINI_ON = _emoji`swon`,
-	MINI_OFF = _emoji`swoff`,
+	MINI_OFF = _emoji`swoff`
 
 // Menu emojis
 const menuEmoijis = [
