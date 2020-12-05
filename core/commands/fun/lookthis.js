@@ -4,9 +4,11 @@ const init = async (msg) => {
   let link = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
 
   try {
-    link ??= msg.mentions[0]?.displayAvatarURL ?? await PLX.getChannelImg(msg) ?? msg.author.displayAvatarURL;
+    // link ??= msg.mentions[0]?.displayAvatarURL ?? await PLX.getChannelImg(msg) ?? msg.author.displayAvatarURL;
+    if (!link) link = msg.mentions[0]?.displayAvatarURL ?? await PLX.getChannelImg(msg) ?? msg.author.displayAvatarURL;
   } catch (e) {
-    link ??= (msg.mentions[0] || msg.author).displayAvatarURL;
+    // link ??= (msg.mentions[0] || msg.author).displayAvatarURL;
+    if (!link) link = (msg.mentions[0] || msg.author).displayAvatarURL;
   }
 
   const [subject, hand] = await Promise.all([

@@ -21,9 +21,11 @@ const init = async (msg) => {
     let HEADLINE  = msg.args.join(" ").replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, "");
 
     try {
-      imgLink ??= msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
+      // imgLink ??= msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
+      if (!imgLink) imgLink = msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
     } catch (e) {
-      imgLink ??= (msg.mentions[0] || msg.author).displayAvatarURL;
+      // imgLink ??= (msg.mentions[0] || msg.author).displayAvatarURL;
+      if (!imgLink) imgLink = (msg.mentions[0] || msg.author).displayAvatarURL;
     }
 
     const lnOptions = {
