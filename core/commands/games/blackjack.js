@@ -808,7 +808,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
  
 
   //introMessage.delete().catch(e=>null);
-  tableMessageRound.delete().catch(e=>null);
+//   if (tableMessageRound) tableMessageRound.delete().catch(e=>null); TODO[epic=flicky] enable and fix
 	return hands;	
 }
 
