@@ -23,12 +23,12 @@ const startCollector = async (game, msg) => {
     else me.delete();
 
     if (game.wordBoard.includes(me.content.toUpperCase())) return msg.channel.send("You already said that, honey~").then(mee => setTimeout(mee.delete(), 1500));
-    const result = await game.handleInput(me)
-    if (!result) return
-    if (result.params.e) collector.stop()
-    await result.message.delete()
-    const newMsg = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
-    await game.registerMessage(newMsg)
+    const result = await game.handleInput(me);
+    if (!result) return;
+    if (result.params.e) collector.stop();
+    await result.message.delete();
+    const newMsg = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`);
+    await game.registerMessage(newMsg);
   })
 }
 
