@@ -22,13 +22,19 @@ const startCollector = async (game, msg) => {
     }, 30e3);
   
   collector.on('message', async (me) => {
-    if (me.content.length > 1) {
+    const guess = me.content.toUpperCase();
+    let isFullGuess = false;
+
+    if (guess.length > 1) {
       // either player is talking or trying to guess
-      return null;
+
+      if ( guess === game.word.toUpperCase() ) isFullGuess = true;
+      else return null;
     }
     else me.delete();
 
-    if (game.wordBoard.includes(me.content.toUpperCase())) return msg.channel.send("You already said that, honey~").then(mee => setTimeout(mee.delete(), 1500));
+
+    if (!isFullGuess && game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess)) return msg.channel.send("You already said that, honey~").then(mee => setTimeout(mee.delete(), 1500));
     const result = await game.handleInput(me);
     if (!result) return;
     if (result.params.e) collector.stop();
