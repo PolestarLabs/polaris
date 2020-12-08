@@ -27,7 +27,7 @@ const startCollector = async (game, msg) => {
     if (!result) return;
     if (result.params.e) collector.stop();
     await result.message.delete();
-    const newMsg = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`);
+    const newMsg = await msg.channel.send(`${paths.DASH}/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`);
     await game.registerMessage(newMsg);
   })
 }
