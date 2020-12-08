@@ -20,7 +20,7 @@ module.exports = class Hangmaid {
     };
   }
 
-  isFullGuess(word){    
+  isFullGuess(word) {
     return word.length > 1 && this.word.toUpperCase() === word.toUpperCase();
   }
 
@@ -35,29 +35,41 @@ module.exports = class Hangmaid {
     params.d = this.level;
     params.h = this.theme;
 
-    if ( this.isFullGuess(guess) ){
+    if (this.isFullGuess(guess)) {
       params.e = "win";
       params.g = this.word;
       params.a = this.incorrectLetters.join("");
       this.ended = true;
-    } else  {
+    } else {
       // TODO: Try to detect a failed attempt of full guess;
     }
-    
-    if (this.ended) return { message: this.originalMessage, params };
 
-    const wordArray = this.word.toUpperCase().split("");
+    if (this.ended) {
+      return {
+        message: this.originalMessage,
+        params
+      };
+    }
+
+    const wordArray = this.word.toUpperCase()
+      .split("");
     if (!wordArray.includes(guess)) {
       this.incorrectLetters.push(guess);
       params.g = this.wordBoard.join("");
       params.a = this.incorrectLetters.join("");
-      return { message: this.originalMessage, params };
+      return {
+        message: this.originalMessage,
+        params
+      };
     }
-    
-    wordArray.forEach((wl,i)=> wl===guess ? this.wordBoard[i]  = guess : null);
+
+    wordArray.forEach((wl, i) => wl === guess ? this.wordBoard[i] = guess : null);
 
     params.g = this.wordBoard.join("");
     params.a = this.incorrectLetters.join("");
-    return { message: this.originalMessage, params };
+    return {
+      message: this.originalMessage,
+      params
+    };
   }
 };
