@@ -24,17 +24,15 @@ module.exports = class Hangmaid {
     return this.originalMessage = message
   }
 
-  async renderCard() {
-  } // todo
-
-  handleInput(message) { // handleInput () => Object
+  handleInput(message) {// handleInput () => Object
+    if (message.content.split(' ').length >= 3) return
     const params = {}
     params.d = this.level
     params.h = this.theme
-    if (message.length > 1) {
+    if (message.content.split(' ').length === 2 || message.content.length > 2) {
       if (message.content.toUpperCase() === this.word.toUpperCase()) {
         params.e = 'win'
-        params.g = this.wordBoard.join('')
+        params.g = this.word.join('')
         params.a = this.incorrectLetters.join('')
         this.ended = true
       }

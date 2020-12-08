@@ -2,7 +2,7 @@ const cmd = 'hangmaid'
 const words = require('./words.json')
 const Hangmaid = require(appRoot + '/core/archetypes/Hangmaid.js')
 
-const init = async function (msg, args) {
+const init = async function (msg) {
   const game = new Hangmaid(msg, words)
   game.start().then(async (data) => {
     // await msg.channel.sendMessage(`\`${'_ '.repeat(data.word.length)}\`\nYour word is a type of **${data.theme}**.\nYou have 5 chances remaining.\nUsed letters: \`\`\`none\`\`\``)
@@ -13,13 +13,21 @@ const init = async function (msg, args) {
 }
 
 const startCollector = async (game, msg) => {
-  const collector = msg.channel.createMessageCollector(m => m.author.id === msg.author.id, { time: 50000 })
+  const collector = msg.channel.createMessageCollector(m => m.author.id !== "445054385135812629", { time: 50000 })
 
   collector.on('message', async (me) => {
-    await me.delete()
+    if (me.content.split(' ').length >= 3) {
+
+    }
+    else await me.delete()
+
     if (game.wordBoard.includes(me.content.toUpperCase())) msg.channel.send("You already said that, honey~").then(mee => setTimeout(mee.delete(), 1500))
     const result = await game.handleInput(me)
-    await result.message.edit(`https://beta.pollux.gg/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
+    if (!result) return
+    if (result.params.e) collector.stop()
+    await result.message.delete()
+    const newMsg = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
+    await game.registerMessage(newMsg)
   })
 }
 
