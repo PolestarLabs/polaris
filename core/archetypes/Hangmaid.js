@@ -20,7 +20,7 @@ module.exports = class Hangmaid {
     };
   }
 
-  static isFullGuess(word){    
+  isFullGuess(word){    
     return word.length > 1 && this.word.toUpperCase() === word.toUpperCase();
   }
 
@@ -35,7 +35,7 @@ module.exports = class Hangmaid {
     params.d = this.level;
     params.h = this.theme;
 
-    if ( isFullGuess(guess) ){
+    if ( this.isFullGuess(guess) ){
       params.e = "win";
       params.g = this.word;
       params.a = this.incorrectLetters.join("");
