@@ -1,14 +1,15 @@
-const cmd = 'hangmaid'
-const words = require('./words.json')
-const Hangmaid = require(appRoot + '/core/archetypes/Hangmaid.js')
+//@ts-check
+const cmd = "hangmaid";
+const words = require("./words.json");
+const Hangmaid = require(appRoot + "/core/archetypes/Hangmaid.js");
 
 const init = async function (msg) {
-  const game = new Hangmaid(msg, words)
+  const game = new Hangmaid(msg, words);
   game.start().then(async (data) => {
-    // await msg.channel.sendMessage(`\`${'_ '.repeat(data.word.length)}\`\nYour word is a type of **${data.theme}**.\nYou have 5 chances remaining.\nUsed letters: \`\`\`none\`\`\``)
-    const mainMessage = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?g=${data.wordSpaced}&refresh=${Date.now()}&d=${data.difficulty}&h=${data.theme}`)
-    game.registerMessage(mainMessage)
-    await startCollector(game, msg)
+    // await msg.channel.sendMessage(`\`${'_ '.repeat(data.word.length)}\`\nYour word is a type of **${data.theme}**.\nYou have 5 chances remaining.\nUsed letters: \`\`\`none\`\`\``);
+    const mainMessage = await msg.channel.send(`https://beta.pollux.gg/generators/hangmaid?g=${data.wordSpaced}&refresh=${Date.now()}&d=${data.difficulty}&h=${data.theme}`);
+    game.registerMessage(mainMessage);
+    await startCollector(game, msg);
   })
 }
 
@@ -21,7 +22,7 @@ const startCollector = async (game, msg) => {
         active = false;
     }, 30e3);
   
-  collector.on('message', async (me) => {
+  collector.on("message", async (me) => {
     const guess = me.content.toUpperCase();
     let isFullGuess = false;
 
@@ -52,7 +53,7 @@ module.exports = {
   init,
   cmd,
   perms: 3,
-  cat: 'games',
-  botPerms: ['attachFiles'],
-  aliases: ['hangman', 'forca']
+  cat: "games",
+  botPerms: ["attachFiles"],
+  aliases: ["hangman", "forca"]
 }
