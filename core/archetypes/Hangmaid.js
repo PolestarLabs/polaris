@@ -47,7 +47,7 @@ module.exports = class Hangmaid {
 
     const wordArray = this.word.toUpperCase().split('')
     if (!wordArray.includes(message.content.toUpperCase())) {
-      this.incorrectLetters.push(message.content)
+      this.incorrectLetters.push(message.content.toUpperCase())
       params.g = this.wordBoard.join('')
       params.a = this.incorrectLetters.join('')
       return { message: this.originalMessage, params }
