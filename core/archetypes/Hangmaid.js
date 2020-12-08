@@ -1,11 +1,11 @@
 module.exports = class Hangmaid {
   constructor(message, words) {
-    const word = shuffle(words)[0]
-    this.word = word.word
-    this.theme = word.theme
-    this.level = word.level === 1 ? 'Easy' : word.level === 2 ? 'Medium' : 'Hard'
+    const selectedWord = shuffle(words)[0]
+    this.word = selectedWord.word
+    this.theme = selectedWord.theme
+    this.level = selectedWord.level === 1 ? 'Easy' : selectedWord.level === 2 ? 'Medium' : 'Hard'
     this.chances = 5
-    this.wordBoard = (new Array(this.word.length)).fill('%20')
+    this.wordBoard = (new Array(this.word.length)).fill(' ')
     this.incorrectLetters = []
     this.ended = false
     this.originalMessage = undefined
