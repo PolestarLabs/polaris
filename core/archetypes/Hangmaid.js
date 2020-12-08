@@ -54,7 +54,7 @@ module.exports = class Hangmaid {
       return { message: this.originalMessage, params };
     }
     
-    this.wordBoard = wordArray.map(wl=> wl===guess ? guess : " ");
+    wordArray.forEach((wl,i)=> wl===guess ? this.wordBoard[i]  = guess : null);
 
     params.g = this.wordBoard.join("");
     params.a = this.incorrectLetters.join("");
