@@ -13,7 +13,7 @@ const init = async function (msg) {
 }
 
 const startCollector = async (game, msg) => {
-  const collector = msg.channel.createMessageCollector(m => m.author.id !== "445054385135812629", { time: 50000 })
+  const collector = msg.channel.createMessageCollector(m => m.author.id !== PLX.user.id, { time: 50000 })
 
   collector.on('message', async (me) => {
     if (me.content.split(' ').length >= 3) {
