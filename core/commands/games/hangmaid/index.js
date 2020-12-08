@@ -17,7 +17,7 @@ const startCollector = async (game, msg) => {
 
   let active = true; 
   let activity = setInterval(() => {
-        if (!active) return Collector.stop('time');
+        if (!active) return collector.stop('time');
         active = false;
     }, 30e3);
   
