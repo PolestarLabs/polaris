@@ -34,7 +34,7 @@ const startCollector = async (game, msg) => {
     else me.delete();
 
 
-    if (!isFullGuess && game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess)) return msg.channel.send("You already said that, honey~").then(mee => setTimeout(mee.delete(), 1500));
+    if (!isFullGuess && game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess)) return msg.channel.send("You already said that, honey~").then(mee => setTimeout(()=> mee.delete(), 1500));
     const result = await game.handleInput(me);
     if (!result) return;
     if (result.params.e) collector.stop();
