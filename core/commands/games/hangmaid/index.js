@@ -13,12 +13,18 @@ const init = async function (msg) {
 }
 
 const startCollector = async (game, msg) => {
-  const collector = msg.channel.createMessageCollector(m => m.author.id !== PLX.user.id, { time: 50e3 });
+  const collector = msg.channel.createMessageCollector(m => m.author.id !== PLX.user.id);
 
+  let active = true; 
+  let activity = setInterval(() => {
+        if (!active) return Collector.stop('time');
+        active = false;
+    }, 30e3);
+  
   collector.on('message', async (me) => {
     if (me.content.length > 1) {
       // either player is talking or trying to guess
-
+      return null;
     }
     else me.delete();
 
@@ -29,7 +35,11 @@ const startCollector = async (game, msg) => {
     await result.message.delete();
     const newMsg = await msg.channel.send(`${paths.DASH}/generators/hangmaid?a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ''}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`);
     await game.registerMessage(newMsg);
-  })
+  });
+
+  collector.on('end', (coll, reason)=> {
+    clearInterval(activity);
+  });
 }
 
 module.exports = {
