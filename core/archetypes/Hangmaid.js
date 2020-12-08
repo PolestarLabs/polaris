@@ -20,40 +20,42 @@ module.exports = class Hangmaid {
     };
   }
 
+  static isFullGuess(word){    
+    return word.length > 1 && this.word.toUpperCase() === word.toUpperCase();
+  }
+
   registerMessage(message) {
     return this.originalMessage = message;
   }
 
-  handleInput(message) { // handleInput () => Object
-    if (message.content.split(" ").length >= 3) return;
+  handleInput(guess) { // handleInput () => Object
+    guess = guess.toUpperCase();
+
     const params = {};
     params.d = this.level;
     params.h = this.theme;
-    if (message.content.split(" ").length === 2 || message.content.length > 2) {
-      if (message.content.toUpperCase() === this.word.toUpperCase()) {
-        params.e = "win";
-        params.g = this.word;
-        params.a = this.incorrectLetters.join("");
-        this.ended = true;
-      } else {
-        params.e = "lose";
-        params.g = this.wordBoard.join("");
-        params.a = this.incorrectLetters.join("");
-        this.ended = true;
-      }
+
+    if ( isFullGuess(guess) ){
+      params.e = "win";
+      params.g = this.word;
+      params.a = this.incorrectLetters.join("");
+      this.ended = true;
+    } else  {
+      // TODO: Try to detect a failed attempt of full guess;
     }
+    
     if (this.ended) return { message: this.originalMessage, params };
 
     const wordArray = this.word.toUpperCase().split("");
-    if (!wordArray.includes(message.content.toUpperCase())) {
-      this.incorrectLetters.push(message.content.toUpperCase());
+    if (!wordArray.includes(guess)) {
+      this.incorrectLetters.push(guess);
       params.g = this.wordBoard.join("");
       params.a = this.incorrectLetters.join("");
       return { message: this.originalMessage, params };
     }
-    for (let i = 0; i <= wordArray.length; i++) {
-      if (wordArray[i] === message.content.toUpperCase()) this.wordBoard[i] = message.content;
-    }
+    
+    this.wordBoard = wordArray.map(wl=> wl===guess ? guess : " ");
+
     params.g = this.wordBoard.join("");
     params.a = this.incorrectLetters.join("");
     return { message: this.originalMessage, params };
