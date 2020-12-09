@@ -36,7 +36,7 @@ const init = async function (msg) {
     sendArgs(m1.array, 1, m1.msg).then((m2) => {
       sendArgs(m2.array, 2, m2.msg).then(async (m3) => {
         await wait(2);
-        pick = shuffle(m3.array).slice(0, target).join(", ");
+        pick = shuffle(m3.array).slice(0, target).map((itm, ind, arr) => ind === arr.length-1 ? itm : `${itm}, `);
         P.list_item = pick;
         embed.fields = [];
         embed.field("\u200b", $t("interface.shuffle.ichoose", P), true);
