@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] ping
+
 const Gal = require("../../structures/Galleries");
 
 const init = async (msg) => {

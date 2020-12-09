@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] rewards
+
 const MONTHNAME = "March";
 const MONTHCHECK = 2;
 const STICKERS = [
@@ -14,8 +16,6 @@ const STICKERS = [
   "jojollux",
 ];
 
-// const DB = require('../../database/db_ops');
-// const gear = require('../../utilities/Gearbox');
 const ECO = require("../../archetypes/Economy");
 
 const last = STICKERS[STICKERS.length - 1];
@@ -381,6 +381,11 @@ ${stickernames.map((f) => f.name).join(" • ")}
   // embed.setImage('https://pollux.fun/stickers/'+STICKERS[STICKERS.length-1]+'.png')
 
   const querystring = queryGen(T);
+
+  // FIXME[epic=anyone] wtf is this indenting
+  // this is super old vanilla copypaste, must be revised head-to-toe -Flicky
+
+  // TODO[epic=anyone] use bulk economy feature
 
   await Promise.all([
     DB.users.set(message.author.id, querystring),

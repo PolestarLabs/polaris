@@ -4,7 +4,7 @@ const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
 // const Picto = require("../../utilities/Picto");
 
-// TODO[epic=flicky] flicky has to look at the amounts.
+// REVIEW[epic=flicky] check and alter the amounts
 const settings = {
   collectTime: 45e3,
   sendWheelTime: 30e3,
@@ -54,7 +54,7 @@ async function creditUsers(results) {
   for (const result of results) {
     const { userID } = result;
     ECO.checkFunds(userID, result.cost).then(hasEnough => {
-      if (!hasEnough) result.invalid = true;
+      if (!hasEnough) result.invalid = true; // REVIEW[epic=mitchell] check if we can use transfer instead
       else if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
       else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(() => "Shouldn't happen");
     });

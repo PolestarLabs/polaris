@@ -1,5 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
+// TRANSLATE[epic=translations] flip
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };

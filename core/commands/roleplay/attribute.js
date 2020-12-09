@@ -1,7 +1,4 @@
-// const gear = require("../../utilities/Gearbox");
-// const locale = require(appRoot+'/utils/i18node');
-// const DB = require('../../database/db_ops');
-// const $t = locale.getT();
+// TRANSLATE[epic=translations] attribute
 const cmd = "attribute";
 
 const init = async function (message) {

@@ -1,7 +1,7 @@
-// const gear = require('../../utilities/Gearbox');
+// TRANSLATE[epic=translations] status
+
 const { inspect } = require("util");
 const os = require("os");
-/// / const DB = require('../../database/db_ops');
 
 const init = async function (msg) {
   const moment = require("moment");

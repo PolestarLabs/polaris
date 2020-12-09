@@ -19,7 +19,6 @@ const COLORS = {
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 
 const itmPILE = [];
-console.log(itmODDS);
 Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
 const rarPILE = [];
 Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
@@ -58,7 +57,7 @@ class LootboxItem {
     collection = collection || this.collection || "cosmetics";
     this.loaded = new Promise((resolve) => {
       const query = { rarity: this.rarity };
-      query.event = this.event;
+      query.event = this.event || "none";
       query.filter = this.#filter;
 
       query.droppable = !this.#bypass.includes("droppable");
@@ -72,10 +71,12 @@ class LootboxItem {
       }
 
       query.type = this.type;
-      const queries = [query];
-      if (this.exclusive) queries.push({ exclusive: this.exclusive });
+      Object.keys(query).forEach(ky=> query[ky] ?? delete query[ky] );
+
+      if (this.exclusive) query = [query,{ exclusive: this.exclusive }];
+
       DB[collection].aggregate([
-        { $match: { $or: queries } },
+        { $match: query },
         { $sample: { size: 1 } },
       ]).then((res) => {
         [res] = res;
@@ -103,7 +104,7 @@ class LootboxItem {
 
   calculateGems(gem) {
     const noise = randomize(-30, 100);
-    this.amount = gem === "SPH" ? 1 : Math.floor((gemRATES[this.rarity] + noise) * (gem === "JDE" ? 5 : 1));
+    this.amount = gem === "SPH" ?  Math.ceil((gemRATES[this.rarity]) / 100 ) : Math.floor((gemRATES[this.rarity] + noise) * (gem === "JDE" ? 5 : 1));
     this.currency = gem;
     return this.amount;
   }
@@ -126,7 +127,7 @@ class Lootbox {
     this.id = options.id || "unknown";
     this.event = options.event || false;
     this.#size = options.size || 3;
-    this.#filter = options.filter || false;
+    this.#filter = options.filter;
 
     const rarArray = Lootbox._shuffle(rarPILE).slice(0, this.#size - 1).concat(rar);
     const eveArray = Lootbox._shuffle(([...new Array(this.#size - 1)]).concat(this.event));
@@ -135,7 +136,7 @@ class Lootbox {
 
     let contentBlueprint = [];
     for (let i = 0; i < this.#size; i++) {
-      const itemTypeArray = Lootbox._shuffle(["junk", "junk", "junk", "material", "material", "junk"]);
+      const itemTypeArray = Lootbox._shuffle(["junk", "junk", "junk", "material", "material", "junk","key","key"]);
       contentBlueprint.push({
         rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[0], filter: fltArray[i],
       });

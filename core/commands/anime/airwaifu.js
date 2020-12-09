@@ -1,4 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
+// TRANSLATE[epic=translations] airwaifu
 const init = async (msg, args) => {
   args = ["airplane", "1girl"];
 

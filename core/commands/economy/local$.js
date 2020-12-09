@@ -1,8 +1,6 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
+// TRANSLATE[epic=translations] local$
+
 const ECO = require("../../archetypes/Economy");
-// const locale = require('../../../utils/i18node');
-// const $t = locale.getT();
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
@@ -118,7 +116,7 @@ const init = async (msg) => {
     eco.incVol = (amt * eco.rateIn);
     eco.incTrea = (amt * 0.65);
     await ECO.pay(msg.author, amt, "Local$>", "RBN");
-    await DB.audits.new(msg.author, amt, "Local$>", eco.code);
+    await DB.audits.new(msg.author, amt, "Local$>", eco.code); // NOTE audit is automatically made -- double auditing?
     msg.author.customCurr[msg.guild.id] += amt * eco.rateIn;
 
     msg.reply(`OK (${amt * eco.rateIn})`);

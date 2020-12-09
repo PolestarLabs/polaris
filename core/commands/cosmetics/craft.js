@@ -1,5 +1,8 @@
 // @ts-check
 
+// LINK Trello https://trello.com/c/KLEVWE10
+// TRANSLATE[epic=translations] craft
+
 const cmd = "craft";
 const YesNo = require("../../structures/YesNo");
 const { Crafter, Visualizer } = require("../../archetypes/Crafter");

@@ -6,11 +6,13 @@ const INV_STATUS = new Map();
 
 const init = async function (msg, args, memberObj) {
 
-  const userID = memberObj.id || memberObj
+  const userID = memberObj?.id || memberObj;
 
   console.log({args})
 
-  console.log({userID, args10: args[10]?.id }, "init")
+  console.log({userID, args10: args[10]?.id||args[10] }, "init")
+
+
   
   if (userID && args[10]?.id != userID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
@@ -20,7 +22,7 @@ const init = async function (msg, args, memberObj) {
 
   const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
   embed.description = Inventory.length > 0
-    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open box ${i.icon}\``).join("\n")
+    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open box ${i.rarity}\``).join("\n")
     : `*${rand$t("responses.inventory.emptyJokes", { lngs: msg.lang })}*`;
 
   args[0] = msg;
@@ -65,7 +67,7 @@ const reactionOption = (rar) => ({
   emoji: _emoji(rar).reaction,
   type: "cancel",
   response: (msg, args, uid) => open(args[0], [rar, args[1]], uid),
-  filter: (msg, emj, uid) =>  INVOKERS.get(uid) === msg.id && INV_STATUS.get(uid).includes( rar ) //&& !LOOTING.get(uid)
+  filter: (msg, emj, uid) =>  INVOKERS.get(uid.id||uid) === msg.id && INV_STATUS.get(uid.id||uid).includes( rar ) //&& !LOOTING.get(uid)
 });
 
 module.exports = {

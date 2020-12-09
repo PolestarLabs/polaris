@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] color
+
 const axios = require("axios");
 const Picto = require("../../utilities/Picto");
 

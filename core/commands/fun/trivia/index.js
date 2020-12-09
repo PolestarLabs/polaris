@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] trivia
+
 const init = async (msg, args) => {
   let rounds = args[0] || 10;
   if (rounds > 30) rounds = 30;

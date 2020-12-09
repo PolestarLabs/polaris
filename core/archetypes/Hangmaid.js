@@ -52,15 +52,16 @@ module.exports = class Hangmaid {
       params.e = "win";
       params.g = this.word;
       params.a = this.incorrectLetters.join("");
-      return this.terminate("win");
+      this.ended = true;
     } else {
-      if (guess.length > 1 && guess.split(" ").length <= 2) {
-        //check if it's not a letter and if it's a guess (2 words or less, full sentence 3+)
-        params.e = "lose";
-        params.g = this.wordBoard.join("");
-        params.a = this.incorrectLetters.join("");
-        return this.terminate("lose");
-      }
+      // TODO: Try to detect a failed attempt of full guess;
+    }
+
+    if (this.ended) {
+      return {
+        message: this.originalMessage,
+        params
+      };
     }
 
     const wordArray = this.word.toUpperCase()

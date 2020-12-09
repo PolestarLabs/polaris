@@ -30,8 +30,9 @@ class GenericItemInventory {
     this.pub = pub || true;
 
     this.init = async (msg, args, userObj ) => {
-      const userID = userObj?.id;
+      const userID = userObj?.id || userObj;
       console.log({userID}, 'generic')
+      
       if (userID && args[10]?.id != userID) return "Only the owner can see inside";
       msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 

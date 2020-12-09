@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] use
+
 const init = async function (msg,args){
 
     const userData = await DB.users.getFull(msg.author.id);

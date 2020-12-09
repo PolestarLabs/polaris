@@ -35,7 +35,7 @@ const init = async (msg, args) => {
 
     DB.users.findOne({ id: msg.author.id }).then((x) => {
       x.addItem(ITM, AMT || 0).then(() => {
-        msg.channel.send(`OK[${AMT} Box ${TYP}]`);
+        msg.channel.send(`OK[${AMT} ${ITM}]`);
       });
     });
   }

@@ -1,5 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
-
+// TRANSLATE[epic=translations] donate
 const init = function (message, userDB, DB) {
   const embed = new Embed();
   embed.description = `:heart: **Buy Pollux a cup of tea!**

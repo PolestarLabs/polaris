@@ -1,3 +1,4 @@
+// TRANSLATE[epic=translations] medalinfo
 const cmd = "medalinfo";
 
 const init = async (msg, args) => {

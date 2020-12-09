@@ -1,5 +1,4 @@
-// const locale = require(appRoot+'/utils/i18node');
-// const $t = locale.getT();
+
 
 const init = async (msg) => {
   const P = {

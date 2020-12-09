@@ -1,3 +1,5 @@
+// TRANSLATE[epic=translations] ?? transaction lookup
+
 const init = async (msg, args) => {
   const { Embed } = require("eris");
   const embed = new Embed();
