@@ -1,3 +1,6 @@
+// TODO[epic=flicky] add role ID support
+// TODO[epic=flicky] remove comma from last item (and fix where 3 commas appear due to my change :)
+
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
