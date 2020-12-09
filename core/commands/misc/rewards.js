@@ -383,6 +383,8 @@ ${stickernames.map((f) => f.name).join(" • ")}
   const querystring = queryGen(T);
 
   // FIXME[epic=anyone] wtf is this indenting
+  // this is super old vanilla copypaste, must be revised head-to-toe -Flicky
+
   // TODO[epic=anyone] use bulk economy feature
 
   await Promise.all([
