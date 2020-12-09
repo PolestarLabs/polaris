@@ -80,7 +80,7 @@ const init = async (msg, args) => {
   LootingUsers.set(msg.author.id, msg.guild.id);
 
   const P = { lngs: msg.lang, cosmos: 0, user: msg.author.username };
-  console.log(args);
+  
   const boxparams = await DB.items.findOne({ id: args?.boxID || "lootbox_C_O" });
   boxparams.size = ~~args[0];
 
@@ -89,6 +89,7 @@ const init = async (msg, args) => {
   async function process() {
     const lootbox = new Lootbox(boxparams.rarity, boxparams);
     await lootbox.compileVisuals;
+
 
     let preRoll;
     if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
@@ -136,11 +137,12 @@ const init = async (msg, args) => {
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
       LootingUsers.delete(msg.author.id);
+      
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
 >>> ${lootbox.content.map((x) => {
     let label = x.name
-      ? `${_emoji(x.type)} **${$t(`keywords.${x.type}`)}:** ${x.name}`
+      ? `${ x.emoji  || _emoji(x.type , _emoji(getEmoji(x)) )} **${$t(`keywords.${x.type}`)}:** ${x.name}`
       : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
     if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
     return label;
@@ -264,7 +266,8 @@ function renderDupeTag(rarity, P) {
   return canvas;
 }
 function getPrize(loot, USERDATA) {
-  if (["boosterpack", "item"].includes(loot.type)) return USERDATA.addItem(loot.id);
+  console.log({loot})
+  if ( loot.collection === 'items') return USERDATA.addItem(loot.id);
 
   if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
 
@@ -377,7 +380,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   P.r_emoji = "`🔁`";
   P.amt = `${_emoji("RBN")}** ${miliarize(rerollCost, true, "\u202F")}**`;
   P.count = totalRerolls - currentRoll;
-  P.x_frags = `${_emoji("cosmo")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
+  P.x_frags = `${_emoji("COS")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
   return [{
     embed: {
       title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
@@ -431,3 +434,11 @@ module.exports = {
     };
   },
 };
+
+function getEmoji(it){
+  if (it.type === 'material') return "MATERIAL";
+  if (it.type === 'junk') return "JUNK";
+  if (it.type === 'boosterpack') return "BOOSTER";
+  if (it.type === 'background') return "BOOSTER";
+  if (it.type === 'medal') return "BOOSTER";
+}
