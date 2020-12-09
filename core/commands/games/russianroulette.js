@@ -1,4 +1,5 @@
 //@ts-check
+// TODO[epic=translations] russian roulette
 /* eslint-disable no-await-in-loop */
 const { global } = require("../../../../internal_modules/database_schema/schemas/_misc.js");
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
@@ -8,7 +9,7 @@ const awp = appRoot+"/../assets/sound/awp.mp3";
 const click = appRoot+"/../assets/sound/click.mp3";
 const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
 
-// TODO add easter egg with `=say` cmd
+// TODO[epic=anyone] add easter egg with `=say` cmd
     
 
 

@@ -1,3 +1,5 @@
+// TODO[epic=translations] lootbox
+
 const Canvas = require("canvas");
 const { Lootbox, rates } = require("../../archetypes/Lootbox.js");
 const Picto = require("../../utilities/Picto.js");

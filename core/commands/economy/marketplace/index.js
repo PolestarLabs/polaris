@@ -9,3 +9,5 @@ module.exports = {
   argsRequired: true,
   subs: ["list", "post", "delete"],
 };
+
+// LINK[seq=999] Trello = marketplace https://trello.com/c/jp0IIj2S

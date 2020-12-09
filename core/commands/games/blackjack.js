@@ -1,7 +1,6 @@
 // @ts-check
-// const DB = require('../../database/db_ops.js')
+// TODO[epic=translations] blackjack
 const Picto = require('../../utilities/Picto')
-// const gear = require('../../utilities/Gearbox.js')
 const deckManager = require("../inventory/decks.js")
 const Blackjack = require('../../archetypes/Blackjack.js');
 const _ASSETS = paths.BUILD + "games/blackjack/"

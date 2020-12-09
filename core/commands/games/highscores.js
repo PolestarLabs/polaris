@@ -1,3 +1,5 @@
+// TODO [epic=translations] highscores
+
 const { dbGetter } = require("../../../../dashboard/structures/PrimitiveGearbox")
 
 

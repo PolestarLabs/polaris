@@ -1,5 +1,5 @@
-// Create cat map with commands and other useful information
-const Switch = require("../../archetypes/Switch");
+// TODO[epic=translations] switch
+
 const SwitchArch = require("../../archetypes/Switch");
 let cats,
 	catsArr;

@@ -1,3 +1,5 @@
+// TODO[epic=translations] rewards
+
 const MONTHNAME = "March";
 const MONTHCHECK = 2;
 const STICKERS = [
@@ -14,8 +16,6 @@ const STICKERS = [
   "jojollux",
 ];
 
-// const DB = require('../../database/db_ops');
-// const gear = require('../../utilities/Gearbox');
 const ECO = require("../../archetypes/Economy");
 
 const last = STICKERS[STICKERS.length - 1];

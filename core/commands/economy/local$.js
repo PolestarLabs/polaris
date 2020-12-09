@@ -1,8 +1,6 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
+// TODO[epic=translations] local$
+
 const ECO = require("../../archetypes/Economy");
-// const locale = require('../../../utils/i18node');
-// const $t = locale.getT();
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };

@@ -1,5 +1,6 @@
+// TODO[epic=translations] read
+
 const i2b = require("imageurl-base64");
-// const gear = require("../../utilities/Gearbox");
 const Vision = require("@google-cloud/vision/");
 
 const cmd = "read";

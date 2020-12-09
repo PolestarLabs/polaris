@@ -1,7 +1,4 @@
-// const gear = require("../../utilities/Gearbox");
-// const DB = require("../../database/db_ops");
-// const locale = require(appRoot + '/utils/i18node');
-// const $t = locale.getT();
+// TODO[epic=translations] mute
 
 const cmd = "mute";
 

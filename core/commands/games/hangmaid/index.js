@@ -1,4 +1,6 @@
 // @ts-check
+// TODO[epic=translations] hangmaid
+
 const cmd = "hangmaid";
 const words = require("./words.json");
 const Hangmaid = require("../../../archetypes/Hangmaid.js");

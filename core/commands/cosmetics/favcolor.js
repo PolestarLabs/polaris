@@ -1,7 +1,4 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-// const locale = require('../../../utils/i18node');
-// const $t = locale.getT();
+// TODO[epic=translations] favcolor
 
 const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
 

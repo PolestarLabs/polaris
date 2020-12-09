@@ -41,7 +41,7 @@ module.exports = class Hangmaid {
       params.a = this.incorrectLetters.join("");
       this.ended = true;
     } else {
-      // TODO: Try to detect a failed attempt of full guess;
+      // TODO[epic=anyone]: Try to detect a failed attempt of full guess;
     }
 
     if (this.ended) {

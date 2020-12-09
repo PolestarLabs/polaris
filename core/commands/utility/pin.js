@@ -1,3 +1,5 @@
+// TODO[epic=translations] pin
+
 const cmd = "pin";
 
 const init = async function (msg) {

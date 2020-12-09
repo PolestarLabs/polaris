@@ -1,3 +1,5 @@
+// TODO[epic=translations] decks
+
 const init = async function (msg, args, pollux) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 

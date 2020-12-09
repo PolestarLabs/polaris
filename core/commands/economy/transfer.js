@@ -1,5 +1,5 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
+// TODO[epic=translations] transfer
+
 const moment = require("moment");
 const ECO = require("../../archetypes/Economy");
 const Timed = require("../../structures/TimedUsage");

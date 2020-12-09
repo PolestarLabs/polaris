@@ -1,3 +1,5 @@
+// TODO[epic=translations] fragment
+
 const FragConvert = function FragConvert(item) {
   let multi = 1;
   if (item.type === "medal") multi = 1;
