@@ -21,8 +21,17 @@ module.exports = class Hangmaid {
     };
   }
 
+  sanitize(word){
+    return word
+      .toUpperCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace('>','')
+      .trim();
+  }
+
   isFullGuess(word) {
-    return word.length > 1 && this.word.toUpperCase() === word.toUpperCase();
+    return word.length > 1 && this.sanitize(this.word) === this.sanitize(word);
   }
 
   terminate(result) {
@@ -38,12 +47,9 @@ module.exports = class Hangmaid {
     };
   }
 
-  async handleFullGuess(guess, message, guessObject) {
-
+  async handleFullGuess(guess, message, guessMessage) {    
     const m = await message.channel.send(`You're about to guess \`${guess}\`. Is that right?`);
-    const result = await yesNo(m, guessObject);
-    m.delete();
-    return result;
+    return (await yesNo(m, guessMessage));
   }
 
   registerMessage(message) {
@@ -51,12 +57,7 @@ module.exports = class Hangmaid {
   }
 
   handleInput(guess) { // handleInput () => Object
-    guess = guess.toUpperCase();
-    if (guess.startsWith(">")) {
-      guess = guess.replace(">", "")
-        .trim();
-    }
-
+      
     const params = {};
     params.d = this.level;
     params.h = this.theme;
@@ -73,7 +74,6 @@ module.exports = class Hangmaid {
         params.a = this.incorrectLetters.join("");
         return this.terminate("lose");
       }
-
     }
 
     if (this.ended) {
@@ -83,8 +83,8 @@ module.exports = class Hangmaid {
       };
     }
 
-    const wordArray = this.word.toUpperCase()
-      .split("");
+    const wordArray = this.word.toUpperCase().split("");
+
     if (!wordArray.includes(guess)) {
       this.incorrectLetters.push(guess);
       params.g = this.wordBoard.join("");
@@ -94,10 +94,16 @@ module.exports = class Hangmaid {
         params
       };
     }
+    console.log( "End of HANDLE INPUT".yellow)
+    console.log({wordBoard:this.wordBoard})
+    console.log(  (this.sanitize(this.wordBoard.join('')) +" == "+ this.sanitize(this.word)) )
+    console.log( "------------------".yellow)
 
     wordArray.forEach((wl, i) => wl === guess ? this.wordBoard[i] = guess : null);
-    if (!this.wordBoard.includes(" ")) return this.terminate("win");
+    if (this.sanitize(this.wordBoard.join('')) === this.sanitize(this.word)) return this.terminate("win");
 
+
+    
     params.g = this.wordBoard.join("");
     params.a = this.incorrectLetters.join("");
     return {

@@ -27,7 +27,7 @@ const init = async function (msg, args) {
 */
 
 const startCollector = async (game, msg, mode) => {
-  let stopped = false;
+  let paused = false;
   const filter = mode === "group" ? (m) => m.author.id !== PLX.author.id : (m) => m.author.id === m.author.id;
   
   const Collector = msg.channel.createMessageCollector(filter);
@@ -40,47 +40,56 @@ const startCollector = async (game, msg, mode) => {
 
   active = true;
   Collector.on("message", async (me) => {
-    if (!stopped) return;
-    if (!new RegExp(/[A-Za-z]/).test(me.content)) return me.addReaction("NOPE:763616715036033084");
-    let guess = me.content.toUpperCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+    active = true;
+    if (paused) return;
+    let guessClean = me.content.toUpperCase();
+    let guess = game.sanitize(me.content);
+
+    const RegexCyrilic = /[а-яё]/gi;
+    const RegexLatin = /[A-Z]/gi;
+
+    if (!RegexLatin.test(guess)) return me.addReaction(_emoji('nope').reaction);
 
     // HANDLING THE GUESS ---------
-    if (me.content.startsWith(">")) {
-      stopped = true
-      const handler = await game.handleFullGuess(guess, msg, me);
-      if (!handler) {
-        stopped = false;
-        return activity = setInterval(() => {
-          if (!active) return Collector.stop("time");
-          active = false;
-        }, 30e3);
+    let attemptFullWord = false;
+    if (guessClean.startsWith(">")) {
+      paused = true;
+      attemptFullWord = await game.handleFullGuess(guessClean, msg, me);
+      if (!attemptFullWord) {
+        paused = false;
+        return active = true;
       } else {
-        stopped = false;
+        paused = false;
+        console.log( "Attempt Full!".yellow)
       }
-    }
 
-    if (guess.length > 1 && !guess.startsWith(">")) {
+    }
+    
+    if (guess.length > 1 && !guessClean.startsWith('>') && !game.isFullGuess(guess)) {
       // player is talking
       return null;
     } else {
-      me.delete();
+      me.delete().catch(e=>console.log('tried to delete message'.red));
     }
+
     // TRANSLATE[epic=translations] Translation strings
+
     if (!game.isFullGuess(guess) && (game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess))) {
       return msg.channel.send("You already said that, honey~")
         .then((warn) => setTimeout(() => warn.delete(), 1500));
     }
 
-    if (guess.startsWith(">")) guess = guess.replace(">", "");
+    //if (guess.startsWith(">")) guess = guess.replace(">", "");
     const result = await game.handleInput(guess);
     if (!result) return;
+
     if (result.params.e) Collector.stop();
     await result.message.delete();
+
     const newMsg = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${
       encodeURI(`a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ""}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
     }`);
+
     if (result.params.e && result.params.e === "win") return msg.channel.send("Congratulations! You guessed it!");
     if (result.params.e && result.params.e === "lose") return msg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
     await game.registerMessage(newMsg);
