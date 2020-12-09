@@ -132,7 +132,7 @@ const init = async (msg, args) => {
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
-        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
+        ECO.pay(USERDATA, rerollCost, "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
