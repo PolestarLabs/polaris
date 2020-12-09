@@ -1,8 +1,4 @@
-// TRANSLATE[epic=translations] say 
-// TODO[epic=flicky] add tracking
-
 const init = async function (msg, args) {
-  console.log(args)
   const P = { lngs: msg.lang, prefix: msg.prefix };
   
   try{
@@ -16,17 +12,18 @@ const init = async function (msg, args) {
 
   let content = args.join(" ");
   // Replace links
-  if (!modPass) content = content.replace(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gmi, "[Redacted link]");
+  if (!modPass) content = content.replace(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gmi, `\`[${$t(['interface.generic.redactedLink',"REDACTED LINK"],P)}]\``);
 
   if (args[0] === "embed") {
     if (["?", "help", $t("helpkey", P)].includes(args[1]) || !args[1]) {
       return msg.channel.send({
         embed: {
-          description: "Check [this link](https://leovoel.github.io/embed-visualizer/) to create embeds. Then paste it in `+say embed <JSON CODE>`",
+          description:  $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }),
         },
       });
     }
     let embedstr = msg.content.substr(msg.content.indexOf("embed") + 5).trim();
+
 
     // Check for hex colour representation
     const match = embedstr.match(/"color":\s*((0[xX]|#)([0-9a-f]{3}(?=[\s}])|[0-9a-f]{6}))/i);
@@ -48,12 +45,28 @@ const init = async function (msg, args) {
       delete userEmbed.thumbnail;
       delete userEmbed.author;
     }
+
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
+
   } else {
-    if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, "[Redacted ping]");
+    if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, `\`[${$t(['interface.generic.redactedMention',"REDACTED MENTION"],P)}]\``);
 
     msg.channel.send(content);
   }
+
+  await DB.control.collection.insert({
+    type:"say-tracking",
+    user:msg.author.id,
+    channel:msg.channel.id,
+    server:msg.guild.id,
+    id: msg.id,
+    timestamp: msg.timestamp,
+    date: new Date(msg.timestamp),
+    content: msg.content,
+    attachments: msg.attachments,
+    embed: msg.embeds,
+  });
+
 };
 
 module.exports = {

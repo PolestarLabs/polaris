@@ -631,7 +631,10 @@
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "Confirm Delete?",
             "alotWentOn": "A lot went on in this day...",
-            "alreadyOwnThis": "Hey, you already own this one!"
+            "alreadyOwnThis": "Hey, you already own this one!",
+            "redactedLink" : "REDACTED LINK",
+            "redactedMention" : "REDACTED @MENTION",
+            "redacted" : "REDACTED"
         },
         "reminders": {
             "currentActive": "These are your current active reminders:",
