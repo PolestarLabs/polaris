@@ -1,11 +1,11 @@
 // STARTUP FLAIR
 //process.stdout.write("\x1Bc");
-console.log(require("./asciiPollux.js").ascii());
+console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
-global.clusterNames = require("./clusters.json");
-global.GNums = require("./GlobalNumbers.js");
+global.clusterNames = require("./resources/lists/clusters.json");
+global.GNums = require("./resources/lists/GlobalNumbers.js");
 
 const Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
@@ -16,7 +16,7 @@ const Eris            = require("eris-additions")(ERIS);
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const cfg             = require("./config.json");
-const WebhookDigester = require("./WebhookDigester.js");
+const WebhookDigester = require("./util/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 

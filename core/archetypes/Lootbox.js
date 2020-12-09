@@ -2,7 +2,7 @@
 /** *********************** */
 //          ODDS          //
 /** *********************** */
-const { LootRates: RATES } = require("../../GlobalNumbers.js");
+const { LootRates: RATES } = require(`${appRoot}/resources/lists/GlobalNumbers`);
 
 const itmODDS = RATES.itemType;
 const rarODDS = RATES.rarity;

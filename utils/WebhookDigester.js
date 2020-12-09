@@ -1,4 +1,4 @@
-const cfg = require("./config.json");
+const cfg = require("../config.json");
 
 class WebhookDigester {
   constructor(client) {
