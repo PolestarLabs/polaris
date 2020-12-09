@@ -39,10 +39,7 @@ module.exports = class Hangmaid {
   }
 
   async handleFullGuess(guess, message, guessObject) {
-    guess = guess.replace(">", "")
-      .trim()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+
     const m = await message.channel.send(`You're about to guess \`${guess}\`. Is that right?`);
     const result = await yesNo(m, guessObject);
     m.delete();
