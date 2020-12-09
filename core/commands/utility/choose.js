@@ -1,13 +1,11 @@
-// TODO[epic=flicky] add role ID support
-// TODO[epic=flicky] remove comma from last item (and fix where 3 commas appear due to my change :)
 
-const init = async function (msg) {
+const init = async function (msg,args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const target = Number.isNaN(Number(msg.args[0])) ? 1 : parseInt(msg.args.shift());
-  let trueArgs = msg.args.length < 2 ? msg.args.join(" ").split(/, ?/g) : msg.args;
+  let trueArgs = msg.args.length < 2 ? args.join(" ").split(/, ?/g) : msg.content.split(/, ?/g);
 
-  const rolefind = (x) => msg.guild.roles.find((rl) => msg.args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase());
+  const rolefind = (x) => msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase() || rl.id == args[x]);
   if (
     msg.args[0] === "role" && msg.args[1] && (msg.roleMentions.length > 0 || rolefind(1))
         || msg.args[1] === "role" && msg.args[2] && (msg.roleMentions.length > 0 || rolefind(2))
@@ -39,7 +37,8 @@ const init = async function (msg) {
     sendArgs(m1.array, 1, m1.msg).then((m2) => {
       sendArgs(m2.array, 2, m2.msg).then(async (m3) => {
         await wait(2);
-        pick = shuffle(m3.array).slice(0, target).map((itm, ind, arr) => ind === arr.length-1 ? itm : `${itm}, `);
+        let pick = shuffle(m3.array).slice(0, target).join(', ');
+        console.log({pick})
         P.list_item = pick;
         embed.fields = [];
         embed.field("\u200b", $t("interface.shuffle.ichoose", P), true);
@@ -61,6 +60,7 @@ const init = async function (msg) {
   }
 
   async function sendArgs(a, i, m) {
+    console.log({a})
     if (target === a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
     if (target > a.length) {
       a_len = target - a.length;
