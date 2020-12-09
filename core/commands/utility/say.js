@@ -1,5 +1,3 @@
-// TRANSLATE[epic=translations] say 
-
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
   
@@ -14,7 +12,7 @@ const init = async function (msg, args) {
 
   let content = args.join(" ");
   // Replace links
-  if (!modPass) content = content.replace(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gmi, "[Redacted link]");
+  if (!modPass) content = content.replace(/https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/gmi, `\`[${$t(['interface.generic.redactedLink',"REDACTED LINK"],P)}]\``);
 
   if (args[0] === "embed") {
     if (["?", "help", $t("helpkey", P)].includes(args[1]) || !args[1]) {
@@ -25,7 +23,6 @@ const init = async function (msg, args) {
       });
     }
     let embedstr = msg.content.substr(msg.content.indexOf("embed") + 5).trim();
-
 
 
     // Check for hex colour representation
@@ -52,7 +49,7 @@ const init = async function (msg, args) {
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
 
   } else {
-    if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, "[Redacted ping]");
+    if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, `\`[${$t(['interface.generic.redactedMention',"REDACTED MENTION"],P)}]\``);
 
     msg.channel.send(content);
   }
