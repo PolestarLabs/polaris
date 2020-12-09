@@ -1,7 +1,6 @@
 // TRANSLATE[epic=translations] say 
 
 const init = async function (msg, args) {
-  console.log(args)
   const P = { lngs: msg.lang, prefix: msg.prefix };
   
   try{
