@@ -1,5 +1,4 @@
 // TRANSLATE[epic=translations] say 
-// TODO[epic=flicky] add tracking
 
 const init = async function (msg, args) {
   console.log(args)
@@ -28,6 +27,8 @@ const init = async function (msg, args) {
     }
     let embedstr = msg.content.substr(msg.content.indexOf("embed") + 5).trim();
 
+
+
     // Check for hex colour representation
     const match = embedstr.match(/"color":\s*((0[xX]|#)([0-9a-f]{3}(?=[\s}])|[0-9a-f]{6}))/i);
     if (match) { // Parse the match to decimal
@@ -48,12 +49,28 @@ const init = async function (msg, args) {
       delete userEmbed.thumbnail;
       delete userEmbed.author;
     }
+
     msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
+
   } else {
     if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, "[Redacted ping]");
 
     msg.channel.send(content);
   }
+
+  await DB.control.collection.insert({
+    type:"say-tracking",
+    user:msg.author.id,
+    channel:msg.channel.id,
+    server:msg.guild.id,
+    id: msg.id,
+    timestamp: msg.timestamp,
+    date: new Date(msg.timestamp),
+    content: msg.content,
+    attachments: msg.attachments,
+    embed: msg.embeds,
+  });
+
 };
 
 module.exports = {
