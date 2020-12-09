@@ -9,7 +9,7 @@ const init = async function (msg,args){
     let emojiC = args.filter(a=>!a.includes(targetParent.id))[0];
     
     if(args[0] === 'clear'){
-        msg.guild.channels.filter(c=>c.parentID == targetParent.id)
+        msg.guild.channels.filter(c=>c.parentID == targetParent.id && c.type != 2 && checkPerms(c) )
             .forEach((chn,i,arr)=>{
                 let newName = chn.name+"";
                 newName = newName.replace(/╭₊꒰(.+)꒱・/g,'');
@@ -26,7 +26,7 @@ const init = async function (msg,args){
 
     let emoji = emojiC.match(emojiRegex) ? emojiC : `🧪`;
 
-    msg.guild.channels.filter(c=>c.parentID == targetParent.id)
+    msg.guild.channels.filter(c=>c.parentID == targetParent.id && c.type != 2 && checkPerms(c) )
         .sort((a,b)=>a.position-b.position)
         .forEach((chn,i,arr)=>{
             let newName = chn.name+"";
@@ -49,3 +49,5 @@ module.exports={
     ,aliases:['chdc']
 }
 
+
+function checkPerms(channel){  return channel.permissionsOf(PLX.user.id).has('readMessages') && channel.permissionsOf(PLX.user.id).has('manageChannels') };
