@@ -1,4 +1,4 @@
-// TODO[epic=translations] lootbox
+// TRANSLATE[epic=translations] lootbox
 
 const Canvas = require("canvas");
 const { Lootbox, rates } = require("../../archetypes/Lootbox.js");

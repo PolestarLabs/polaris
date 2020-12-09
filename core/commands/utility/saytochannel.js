@@ -1,4 +1,4 @@
-// TODO[epic=translations] STC
+// TRANSLATE[epic=translations] STC
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };

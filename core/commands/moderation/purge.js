@@ -1,4 +1,4 @@
-// TODO[epic=translations] purge
+// TRANSLATE[epic=translations] purge
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };

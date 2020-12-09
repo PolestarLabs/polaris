@@ -1,5 +1,5 @@
 //@ts-check
-// TODO[epic=translations] betflip
+// TRANSLATE[epic=translations] betflip
 const ECO = require("../../archetypes/Economy");
 
 const A = `${paths.CDN}/build/coins/befli_heads.gif`;
@@ -48,7 +48,7 @@ const init = async (msg) => {
 
   const win = R === call;
 
-  if (await ECO.checkFunds(msg.author, bet, currency)) {
+  if (await ECO.checkFunds(msg.author, bet, currency)) { // REVIEW[epic=flicky] should this not just be a single transaction?
     ECO.pay(msg.author, bet, "Gambling : Betflip", currency).then(() => {
       if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
     });

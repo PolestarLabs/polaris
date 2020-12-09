@@ -67,7 +67,7 @@ ${gift.message || "- - -"}
         },
       };
     }
-    return "You can't open this gift because you already own the contents!"; // TODO translate
+    return "You can't open this gift because you already own the contents!"; // TRANSLATE[epic=translations] open
   }
 };
 

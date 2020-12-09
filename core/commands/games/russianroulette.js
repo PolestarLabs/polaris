@@ -1,5 +1,4 @@
 //@ts-check
-// TODO[epic=translations] russian roulette
 /* eslint-disable no-await-in-loop */
 const { global } = require("../../../../internal_modules/database_schema/schemas/_misc.js");
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
@@ -9,8 +8,10 @@ const awp = appRoot+"/../assets/sound/awp.mp3";
 const click = appRoot+"/../assets/sound/click.mp3";
 const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
 
+// TRANSLATE[epic=translations] russian roulette
 // TODO[epic=anyone] add easter egg with `=say` cmd
-    
+// FIXME[epic=flicky] sound stopped working
+// NOTE could really some code cleanup
 
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
@@ -41,7 +42,7 @@ const startGameCollector = async (game, msg, cb) => {
   }
 
   const message = await msg.channel.send("Let's see if you're going to die now...");
-  if (result.lost) {
+  if (result.lost) { // REVIEW[epic=mitchell] check if we can use transfer instead
     await ECO.pay(msg.author.id, BET, "Russian Roulette FAILURE");
     return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
   } if (result.won) {

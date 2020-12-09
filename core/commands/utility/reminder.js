@@ -79,6 +79,7 @@ const init = async (msg, args) => {
   const options = { forwardDate: true, startOfDay: 9 };
   const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
   
+  // FIXME[epic=anyone] breaks with xhxx (implicit minutes) -- probably needs better custom parser
   const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(wk?s?)?/gm
   input = input.replace(regex,function(full, $1,$2,$3,$4,$5,$6){
     console.log($1,$2,$3)

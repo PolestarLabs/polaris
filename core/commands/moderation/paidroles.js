@@ -1,4 +1,4 @@
-// TODO[epic=translations] paidroles
+// TRANSLATE[epic=translations] paidroles
 
 const init = async (msg, args) => {
   const subcommand = args[0];

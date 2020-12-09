@@ -1,4 +1,4 @@
-// TODO[epic=translations] rpgen
+// TRANSLATE[epic=translations] rpgen
 
 const axios = require("axios");
 

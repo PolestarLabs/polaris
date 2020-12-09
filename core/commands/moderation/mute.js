@@ -1,4 +1,4 @@
-// TODO[epic=translations] mute
+// TRANSLATE[epic=translations] mute
 
 const cmd = "mute";
 

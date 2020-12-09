@@ -159,7 +159,7 @@ const init = async function (msg) {
   locationEmbed.embed.fields.push({name:"\u200b",value: "*You can also type the ID of the desired location. By default you will be sent to the highest level available.*"});
 
 
-  // TODO[epic=anyone] Assign emojis to options properly
+  // TODO[epic=flicky] Assign emojis to options properly
   const res_LOC = await Screen(locationEmbed, ["🥩","🍠","🥟","🥠","🥡"]);
   //-----------------------------------------------
   const selectedLocation = LOCATIONS_B[res_LOC.res.index];
@@ -168,7 +168,7 @@ const init = async function (msg) {
   embed.description = `${selectedLocation.emoji} **${selectedLocation.name}**`;
   tallyEmbed.fields.push({ name: "Location", value: embed.description, inline: true });
 
-   // TODO[epic=anyone] Create adventure and save to DB
+   // TODO[epic=flicky] Create adventure and save to DB
 
   
   let ventureImage = renderMap(selectedLocation._id);

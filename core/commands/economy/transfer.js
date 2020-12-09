@@ -1,4 +1,4 @@
-// TODO[epic=translations] transfer
+// TRANSLATE[epic=translations] transfer
 
 const moment = require("moment");
 const ECO = require("../../archetypes/Economy");

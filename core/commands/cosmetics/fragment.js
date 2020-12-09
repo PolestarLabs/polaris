@@ -1,4 +1,4 @@
-// TODO[epic=translations] fragment
+// TRANSLATE[epic=translations] fragment
 
 const FragConvert = function FragConvert(item) {
   let multi = 1;

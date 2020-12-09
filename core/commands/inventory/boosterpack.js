@@ -1,4 +1,4 @@
-// TODO[epic=translations] boosterpack
+// TRANSLATE[epic=translations] boosterpack
 
 const INVENTORY = require('../../archetypes/Inventory');
 

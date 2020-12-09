@@ -1,4 +1,4 @@
-// TODO[epic=translations] gotcha
+// TRANSLATE[epic=translations] gotcha
 
 const init = async function (msg) {
   try {

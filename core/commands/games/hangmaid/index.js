@@ -1,5 +1,5 @@
 // @ts-check
-// TODO[epic=translations] hangmaid
+// TRANSLATE[epic=translations] hangmaid
 
 const cmd = "hangmaid";
 const words = require("./words.json");
@@ -15,11 +15,11 @@ const init = async function (msg) {
     });
 };
 
-// TODO: Add language support
-// TODO: Ability to play solo /  group ( group default? )
-// TODO: Possibly add a specific keyword to prompt a full guess attempt
+// TODO[epic=mistery]: Add language support
+// TODO[epic=mistery]: Ability to play solo /  group ( group default? )
+// TODO[epic=mistery]: Possibly add a specific keyword to prompt a full guess attempt
 
-/* TODO: Optional: Add ranks just like Guessflag  (SEE LINKS)
+/* TODO[epic=mistery]: Optional: Add ranks just like Guessflag  (SEE LINKS)
     #  GAME MODES EXAMPLE -------------- LINK ../../../archetypes/GuessingGames.js:105
     #  POINTS CALCULATION EXAMPLE ------ LINK ../../../archetypes/GuessingGames.js:200
     #  RANKING REGISTER EXAMPLE -------  LINK ../../../commands/games/guessflag.js:46
@@ -44,7 +44,7 @@ const startCollector = async (game, msg) => {
     } else {
       me.delete();
     }
-    // TODO: Translation strings
+    // TRANSLATE[epic=translations] Translation strings
     if (!game.isFullGuess(guess) && (game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess))) {
       return msg.channel.send("You already said that, honey~")
         .then((mee) => setTimeout(() => mee.delete(), 1500));

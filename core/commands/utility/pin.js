@@ -1,4 +1,4 @@
-// TODO[epic=translations] pin
+// TRANSLATE[epic=translations] pin
 
 const cmd = "pin";
 

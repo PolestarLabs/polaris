@@ -1,4 +1,4 @@
-// TODO[epic=translations] favcolor
+// TRANSLATE[epic=translations] favcolor
 
 const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
 

@@ -1,4 +1,5 @@
-// TODO[epic=translations] say 
+// TRANSLATE[epic=translations] say 
+// TODO[epic=flicky] add tracking
 
 const init = async function (msg, args) {
   console.log(args)

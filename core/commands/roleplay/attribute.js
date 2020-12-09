@@ -1,4 +1,4 @@
-// TODO[epic=translations] attribute
+// TRANSLATE[epic=translations] attribute
 const cmd = "attribute";
 
 const init = async function (message) {

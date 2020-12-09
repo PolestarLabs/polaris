@@ -1,4 +1,4 @@
-// TODO[epic=translations] rewards
+// TRANSLATE[epic=translations] rewards
 
 const MONTHNAME = "March";
 const MONTHCHECK = 2;
@@ -381,6 +381,9 @@ ${stickernames.map((f) => f.name).join(" • ")}
   // embed.setImage('https://pollux.fun/stickers/'+STICKERS[STICKERS.length-1]+'.png')
 
   const querystring = queryGen(T);
+
+  // FIXME[epic=anyone] wtf is this indenting
+  // TODO[epic=anyone] use bulk economy feature
 
   await Promise.all([
     DB.users.set(message.author.id, querystring),

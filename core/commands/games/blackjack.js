@@ -1,5 +1,5 @@
 // @ts-check
-// TODO[epic=translations] blackjack
+// TRANSLATE[epic=translations] blackjack
 const Picto = require('../../utilities/Picto')
 const deckManager = require("../inventory/decks.js")
 const Blackjack = require('../../archetypes/Blackjack.js');
@@ -563,7 +563,7 @@ const init       = async (msg,args) => {
 			]);
 
 			if (winnings !== 0) {
-				if (winnings > 0) {
+				if (winnings > 0) { // REVIEW[epic=mitchell] change to one-line transfer if it defaults to receive/pay
 					await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
 				}
 				if (winnings < 0) {
@@ -807,7 +807,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
  
 
   //introMessage.delete().catch(e=>null);
-//   if (tableMessageRound) tableMessageRound.delete().catch(e=>null); TODO[epic=flicky] enable and fix
+//   if (tableMessageRound) tableMessageRound.delete().catch(e=>null); FIXME[epic=flicky] enable and fix
 	return hands;	
 }
 

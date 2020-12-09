@@ -1,4 +1,4 @@
-// TODO[epic=translations] status
+// TRANSLATE[epic=translations] status
 
 const { inspect } = require("util");
 const os = require("os");

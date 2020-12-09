@@ -35,7 +35,7 @@ const init = async function (msg, args) {
   let code = morse_txt.encode(string);
 
   let outputTX = code.replace(/\.\.\.\.\.\.\./g, " ");
-  const embed = { // TODO[epic=translations] ?? morse
+  const embed = { // TRANSLATE[epic=translations] ?? morse
     author: { name: "We get signal!" }
     , footer: { text: "Radio Operator | Zero Wing", icon_url: "http://i.imgur.com/tda07NK.png" }
     , color: 0x5745a3

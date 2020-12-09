@@ -1,4 +1,4 @@
-// TODO[epic=translations] read
+// TRANSLATE[epic=translations] read
 
 const i2b = require("imageurl-base64");
 const Vision = require("@google-cloud/vision/");

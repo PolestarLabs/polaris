@@ -1,4 +1,4 @@
-// TODO[epic=translations] ping
+// TRANSLATE[epic=translations] ping
 
 const Gal = require("../../structures/Galleries");
 

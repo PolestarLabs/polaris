@@ -1,4 +1,4 @@
-// TODO[epic=translations] clear
+// TRANSLATE[epic=translations] clear
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };

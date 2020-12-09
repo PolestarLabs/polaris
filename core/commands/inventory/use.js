@@ -1,4 +1,4 @@
-// TODO[epic=translations] use
+// TRANSLATE[epic=translations] use
 
 const init = async function (msg,args){
 

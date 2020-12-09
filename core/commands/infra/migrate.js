@@ -1,5 +1,5 @@
 const YesNo = require('../../structures/YesNo.js')
-// TODO[epic=translations,seq=1] ?? migrate
+// TRANSLATE[epic=translations] ?? migrate
  
 
 function SAPPHIREFACTOR(don, pastDon){

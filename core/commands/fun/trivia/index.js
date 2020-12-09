@@ -1,4 +1,4 @@
-// TODO[epic=translations] trivia
+// TRANSLATE[epic=translations] trivia
 
 const init = async (msg, args) => {
   let rounds = args[0] || 10;

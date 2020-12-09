@@ -1,4 +1,4 @@
-// TODO[epic=translations] flip
+// TRANSLATE[epic=translations] flip
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
