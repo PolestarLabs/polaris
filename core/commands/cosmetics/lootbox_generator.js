@@ -132,7 +132,7 @@ const init = async (msg, args) => {
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
-        ECO.pay(USERDATA, rerollCost, "lootbox_reroll"),
+        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll-1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
@@ -277,7 +277,6 @@ function getPrize(loot, USERDATA) {
 }
 // REVIEW[epic=flicky] whether this recursion is correct.
 function determineRerollCost(box, rollNum, USERDATA) {
-	if (rollNum === 0) return 0;
 	let stake = Math.round(
 		(USERDATA.modules.bgInventory.length || 100)
 		+ (USERDATA.modules.bgInventory.length || 100)
