@@ -102,7 +102,7 @@ const init = async (msg, args) => {
     const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
 
     const firstRoll = await compileBox(msg, lootbox, USERDATA, {
-      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
+      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,canReroll
     });
 
     await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
@@ -132,7 +132,7 @@ const init = async (msg, args) => {
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
-        ECO.pay(USERDATA, rerollCost, "lootbox_reroll"),
+        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll-1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
       ]);
@@ -277,7 +277,6 @@ function getPrize(loot, USERDATA) {
 }
 // REVIEW[epic=flicky] whether this recursion is correct.
 function determineRerollCost(box, rollNum, USERDATA) {
-	if (rollNum === 0) return 0;
 	let stake = Math.round(
 		(USERDATA.modules.bgInventory.length || 100)
 		+ (USERDATA.modules.bgInventory.length || 100)
@@ -308,7 +307,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   );
 
   const {
-    currentRoll, rerollCost, totalRerolls, canAffordReroll, P,
+    currentRoll, rerollCost, totalRerolls, canAffordReroll, P, canReroll,
   } = options;
   let hasDupes = false;
 
@@ -387,7 +386,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
     embed: {
       title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
       description: `
-${$t("loot.options_new", P)}
+${canReroll ? $t("loot.options_new", P) : $t("loot.options_nrr", P)}
 ${hasDupes ? $t("loot.hasDupes", P) : ""}
 ${totalRerolls - currentRoll > 0
 					? `> ${$t("loot.rerollRemain_new", P)} [${totalRerolls - currentRoll}/${totalRerolls}]` : ""
