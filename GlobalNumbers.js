@@ -27,9 +27,9 @@ module.exports = {
       // MEDALS
       MDL: 200,
       // BACKGROUNDS
-      BKG: 150,
+      BKG: 180,
       // ITEMS
-      ITM: 1000,
+      ITM: 120,
       // SAPPHIRE
       SPH: 5,
     },
