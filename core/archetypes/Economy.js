@@ -166,7 +166,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   // Checks
   curr = parseCurrencies(curr);
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds) throw new Error("User doesn't have the funds necessary.");
+    if (!hasFunds) return Promise.reject({reason: "NO FUNDS"}); //throw new Error("User doesn't have the funds necessary.");
 
     // Argument validation
     if (typeof amt === "number" || typeof curr === "string") {
