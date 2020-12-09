@@ -102,7 +102,7 @@ const init = async (msg, args) => {
     const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
 
     const firstRoll = await compileBox(msg, lootbox, USERDATA, {
-      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
+      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,canReroll
     });
 
     await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
@@ -308,7 +308,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   );
 
   const {
-    currentRoll, rerollCost, totalRerolls, canAffordReroll, P,
+    currentRoll, rerollCost, totalRerolls, canAffordReroll, P, canReroll,
   } = options;
   let hasDupes = false;
 
@@ -387,7 +387,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
     embed: {
       title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
       description: `
-${$t("loot.options_new", P)}
+${canReroll ? $t("loot.options_new", P) : $t("loot.options_nrr", P)}
 ${hasDupes ? $t("loot.hasDupes", P) : ""}
 ${totalRerolls - currentRoll > 0
 					? `> ${$t("loot.rerollRemain_new", P)} [${totalRerolls - currentRoll}/${totalRerolls}]` : ""
