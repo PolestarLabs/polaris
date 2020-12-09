@@ -48,13 +48,13 @@ const init = async (msg) => {
 
   const win = R === call;
 
-  if (await ECO.checkFunds(msg.author, bet, currency)) { // REVIEW[epic=flicky] should this not just be a single transaction?
-    ECO.pay(msg.author, bet, "Gambling : Betflip", currency).then(() => {
-      if (win) ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency);
-    });
-  } else {
-    return msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`);
-  }
+  let noFunds;
+  await ECO.pay(msg.author, bet, "Gambling : Betflip", currency)
+    .then(() => win ? ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency) : null)
+    .catch(async ({reason})=> reason === 'NO FUNDS' ? (noFunds = true) && msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`) : null);
+    // TRANSLATE: No funds text
+
+  if (noFunds) return;
 
   const res = R === "HEADS" ? A : B;
   const res2 = R === "HEADS" ? A1 : B1;
