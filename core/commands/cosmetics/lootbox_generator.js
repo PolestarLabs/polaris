@@ -286,7 +286,7 @@ function determineRerollCost(box, rollNum, USERDATA) {
 	stake = stake < 50 ? 50 : stake;
 
 	const factors = ["C", "U", "R", "SR", "UR"].indexOf(box.rarity) || 0;
-	return (((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50)) + determineRerollCost(box, rollNum-1, USERDATA);
+	return ((rollNum || 0) + 1) * Math.ceil(factors * 1.2 + 1) * (stake + 50)
 }
 function boxBonus(USERDATA, lootbox, options) {
 	// TO-DO: more options of small-prizes
