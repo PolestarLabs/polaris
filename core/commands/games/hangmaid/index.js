@@ -25,8 +25,8 @@ const startCollector = async (game, msg) => {
   Collector.on("message", async (me) => {
     const guess = me.content.toUpperCase();
 
-    if (guess.length > 1) {
-      // either player is talking or trying to guess
+    if (guess.split(" ").length >= 3) {
+      // player is talking - considering 3+ words a full sentence and 2- words a guess
       return null;
     } else {
       me.delete();
@@ -43,12 +43,13 @@ const startCollector = async (game, msg) => {
     const newMsg = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${
       encodeURI(`a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ""}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
     }`);
-    await game.registerMessage(newMsg);
-    if (result.params.e && result.params.e === "won") return msg.channel.send("Congratulations! You guessed it!");
+    if (result.params.e && result.params.e === "win") return msg.channel.send("Congratulations! You guessed it!");
     if (result.params.e && result.params.e === "lose") return msg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
+    await game.registerMessage(newMsg);
   });
 
-  Collector.on("end", (coll, reason) => {
+  Collector.on("end", (
+  ) => {
     clearInterval(activity);
   });
 };
