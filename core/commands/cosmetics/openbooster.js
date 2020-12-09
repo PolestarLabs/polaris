@@ -1,6 +1,5 @@
 const init = async (msg) => {
   const P = { lngs: msg.lang };
-  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat })) return null;
 
   const [userData, stickerData, boosterData] = await Promise.all([
     DB.users.getFull({ id: msg.author.id }),
@@ -49,6 +48,7 @@ const init = async (msg) => {
 module.exports = {
   init,
   pub: false,
+  argsRequired: true,
   cmd: "openbooster",
   perms: 3,
   cat: "cosmetics",

@@ -14,7 +14,7 @@ const parser = new RSS({
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+
 
   const feedData = await DB.feed.find({ server: msg.guild.id, type: "youtube" });
 
@@ -124,7 +124,7 @@ async function feedEmbed(item, data) {
 
 module.exports = {
   ytEmbedCreate: feedEmbed,
-
+  argsRequired: true,
   init,
   embedGenerator: feedEmbed,
   pub: true,

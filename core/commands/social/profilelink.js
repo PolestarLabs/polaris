@@ -2,9 +2,7 @@
 // const DB = require('../../database/db_ops');
 
 const init = async function (msg) {
-  const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+    
   const TARGET = msg.content.split(/ +/).length > 1 ? (await PLX.getTarget(msg.args[0])) : msg.author;
   const userdata = await DB.users.getFull({ id: TARGET.id });
   if (!userdata) return msg.channel.send("User not in DB");

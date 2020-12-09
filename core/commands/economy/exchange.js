@@ -50,8 +50,7 @@ const init = async (msg, args) => {
   const genURL = `${paths.GENERATORS}/discoin/exchange.png?id=`;
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   let Rates;
   try {
     Rates = JSON.parse(await DCN.rates());

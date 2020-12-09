@@ -3,8 +3,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const userData = await DB.userDB.findOne({ id: msg.author.id });
   const persotxt = msg.args.join(" ");
 
@@ -20,6 +19,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "personaltext",
+  argsRequired: true, // NOTE: Remove if default displays current
   perms: 3,
   cat: "social",
   botPerms: ["embedLinks"],

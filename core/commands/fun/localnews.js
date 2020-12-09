@@ -7,7 +7,7 @@ const Picto = require("../../utilities/Picto");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  
 
   try {
     const canvas = Picto.new(700, 520);

@@ -2,8 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const ServerDATA = await DB.servers.get(msg.guild.id);
   const modPass = PLX.modPass(msg.member, null, ServerDATA);
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch((e) => null);
@@ -23,6 +22,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "saytochannel",
+  argsRequired: true,
   perms: 2,
   cat: "util",
   botPerms: ["attachFiles", "embedLinks", "manageMessages"],

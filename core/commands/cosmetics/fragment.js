@@ -15,7 +15,7 @@ const init = async (msg, args) => {
   const P = { lngs: msg.lang };
 
   let itemType = args[0];
-  if (!["bg", "background", "medal", "sticker"].includes(itemType)) return PLX.autoHelper("force", { msg, opt: this.cat, ...this }) && undefined;
+  if (!["bg", "background", "medal", "sticker"].includes(itemType)) return msg.command.invalidUsageMessage(msg);
   itemType = itemType === "bg" ? "background" : itemType;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
@@ -113,6 +113,7 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "fragment",
   perms: 3,
   cat: "cosmetics",

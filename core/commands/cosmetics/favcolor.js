@@ -4,8 +4,7 @@ const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   const colorChanged = $t("misc.colorChange", P);
   const getColor = require("../utility/color");
 
@@ -46,6 +45,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "favcolor",
+  argsRequired: true,
   perms: 3,
   cat: "cosmetics",
   botPerms: ["attachFiles", "embedLinks"],

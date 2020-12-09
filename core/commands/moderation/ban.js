@@ -4,7 +4,7 @@ const Gal = require("../../structures/Galleries");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  
 
   let Target = await PLX.resolveMember(msg.guild, msg.args[0]);
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
@@ -143,6 +143,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "ban",
+  argsRequired: true,
   perms: 2,
   cat: "mod",
   botPerms: ["banMembers"],

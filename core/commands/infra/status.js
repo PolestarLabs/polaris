@@ -7,9 +7,7 @@ const init = async function (msg) {
   const moment = require("moment");
   moment.locale(msg.lang[0] || "en");
 
-  const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+   
   const emb = new Embed();
 
   emb.color("#e83774");

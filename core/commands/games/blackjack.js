@@ -340,7 +340,7 @@ const init       = async (msg,args) => {
 		}
 		const bet = Math.abs(parseInt(arg));
 
-		if(isNaN(bet)) {PLX.autoHelper('force',{cmd:'blackjack',msg,opt:'gambling'}); return};
+		if(isNaN(bet)) return msg.command.invalidUsageMessage(msg);
 
 		if (bet && bet < 25) {
 			P.number = 25
@@ -637,7 +637,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 	const hands = [playerHand];
 	let currentHand = hands[0];
 	let totalBet = bet;
-  let tableMessageRound;
+  	let tableMessageRound;
  
   
 	async function ProcessHand(currentHand) {
@@ -803,12 +803,10 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
   }
   
  
-  await ProcessHand(currentHand);
- 
+ 	 await ProcessHand(currentHand); 
 
-  //introMessage.delete().catch(e=>null);
-//   if (tableMessageRound) tableMessageRound.delete().catch(e=>null); FIXME[epic=flicky] enable and fix
-	return hands;	
+  	//introMessage.delete().catch(e=>null);
+  	if (tableMessageRound) tableMessageRound.delete().catch(e=>null);
 }
 
 

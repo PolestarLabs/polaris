@@ -141,8 +141,7 @@ const init = async (msg) => {
   };
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   if (Roulette.gameExists(msg.guild.id)) return $t("games.alreadyPlaying", P);
 
   const helpEmbed = {

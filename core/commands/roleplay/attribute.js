@@ -3,7 +3,7 @@ const cmd = "attribute";
 
 const init = async function (message) {
   const P = { user: message.member.displayName, lang: message.lngs };
-  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message, opt: this.cat })) return;
+  
 
   let requiredArgs = 2;
 
@@ -64,6 +64,7 @@ const init = async function (message) {
 
 module.exports = {
   pub: true,
+  argsRequired: true,
   cmd,
   perms: 3,
   init,

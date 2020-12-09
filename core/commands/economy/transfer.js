@@ -10,8 +10,7 @@ const init = async (msg) => {
   const AMOUNT = Math.abs(parseInt(msg.args[0])) || 0;
   const TARGET = await PLX.getTarget(msg.args[1], msg.guild);
   if (!TARGET) {
-    PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
-    return null;
+    return msg.command.invalidUsageMessage(msg);
   }
   if (msg.author.id === TARGET.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
   if (TARGET.id === PLX.user.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] BOT_USER");

@@ -5,7 +5,7 @@ const Picto = require("../../utilities/Picto");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd: this.cmd, msg, opt: this.cat })) return;
+  
   Target = msg.mentions[0] || {};
   let onepart = true;
   let textop;
@@ -68,6 +68,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "didyoumean",
+  argsRequired: true,
   perms: 3,
   cat: "fun",
   botPerms: ["attachFiles"],

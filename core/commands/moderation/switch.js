@@ -110,8 +110,7 @@ async function sendHelpEmbed(msg) {
 async function init(msg) {
 	// Standard PLX things
 	const P = { lngs: msg.lang, prefix: msg.prefix };
-	if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+	
 	// Only one switch per guild or things would get messed up.
 	if (switches.has(msg.guild.id)) {
 		const link = switches.get(msg.guild.id).messageLink;

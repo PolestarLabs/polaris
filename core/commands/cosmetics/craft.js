@@ -13,10 +13,8 @@ const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };
 const init = async (msg,args) => {
   try {
     setTimeout(() => (msg.author.crafting = false), 25000);
-    // HELP TRIGGER
     const P = { lngs: msg.lang };
-    if (PLX.autoHelper([$t("helpkey", P), "noargs"], { cmd, message: msg, opt: this.cat })) return;
-    //------------
+
 
     // ignore if already crafting 
     if (msg.author.crafting) return;
@@ -249,6 +247,7 @@ const init = async (msg,args) => {
 
 module.exports = {
   pub: true,
+  argsRequired: true,
   cmd,
   perms: 3,
   init,

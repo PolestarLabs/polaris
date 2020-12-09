@@ -4,8 +4,7 @@ const ECO = require("../../archetypes/Economy");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   msg.author.customCurr = msg.author.customCurr || {};
   msg.author.customCurr[msg.guild.id] = msg.author.customCurr[msg.guild.id] || 0;
 

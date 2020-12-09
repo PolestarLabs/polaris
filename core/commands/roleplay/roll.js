@@ -8,8 +8,7 @@ const init = async function (message) {
   const v = {};
 
   const P = { user: message.member.username, lngs: message.lang, prefix: message.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, message, opt: this.cat })) return;
-
+  
   const DICE_REGEX = /([0-9]* *d[0-9]+)/g;
   const DICE_EMOTES = {
     2: "<:exchange:446901834246782976>",
@@ -170,6 +169,7 @@ ${SINGLEROLL ? "" : `**${s_result}:** ${RESULT}`}
 module.exports = {
   pub: true,
   cmd,
+  argsRequired: true,
   perms: 3,
   init,
   cat: "roleplay",

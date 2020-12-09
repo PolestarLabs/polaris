@@ -1,9 +1,7 @@
 // const gear = require('../../utilities/Gearbox');
 
 const init = async function (msg) {
-  const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+   
   const embed = new Embed();
   embed.setDescription(`:love_letter: ${$t("CMD.inviteText", { lngs: msg.lang })}(${paths.DASH}/invite) !`);
   embed.setColor("#ea7d7d");

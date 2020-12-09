@@ -4,14 +4,6 @@ const axios = require("axios");
 const Picto = require("../../utilities/Picto");
 
 const init = async function (msg, programatic) {
-  const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (
-    PLX.autoHelper(["noargs", $t("helpkey", P)], {
-      cmd: this.cmd,
-      msg,
-      opt: this.cat,
-    })
-  ) return;
 
   const hexRegex = /^#?([a-fA-F0-9]{3}([a-fA-F0-9]{3})?)$/;
   const hexColor = (msg.args[0].match(hexRegex))?.[1];
@@ -97,6 +89,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "color",
+  argsRequired: true,
   perms: 3,
   cat: "util",
   botPerms: ["attachFiles", "embedLinks"],

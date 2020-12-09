@@ -2,8 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P),'noargs'], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   let purgeFilter = msg.args[0];
 
   const ServerDATA = await DB.servers.get(msg.guild.id);
@@ -95,6 +94,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "purge",
+  argsRequired: true,
   perms: 3,
   cat: "mod",
   botPerms: ["manageMessages"],

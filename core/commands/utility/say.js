@@ -4,8 +4,7 @@
 const init = async function (msg, args) {
   console.log(args)
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   try{
     msg.delete().catch(err=>null)
   }catch(e){

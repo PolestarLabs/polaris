@@ -4,8 +4,7 @@ const axios = require("axios");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const RPGen = require("../../../resources/rpgen");
 
   const hex = `#${(randomize(0, 1677720) * 10 + 2).toString(16).padStart(6, "A")}`;
@@ -93,11 +92,12 @@ const init = async function (msg) {
     return msg.channel.send({ embed });
   }
 
-  PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
+  
 };
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "rpgen",
   perms: 3,
   cat: "roleplay",

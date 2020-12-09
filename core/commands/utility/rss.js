@@ -6,8 +6,7 @@ const YesNo = require("../../structures/YesNo");
 const parser = new RSS();
 
 const init = async function (msg) {
-  const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
-  if (PLX.autoHelper(["noargs", $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
+  const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };  
 
   const feedData = await DB.feed.find({ server: msg.guild.id, type: "rss" }).lean().exec();
 
@@ -121,6 +120,7 @@ module.exports = {
   init,
   embedGenerator: feedEmbed,
   pub: true,
+  argsRequired: true,
   cmd: "rss",
   perms: 3,
   cat: "util",

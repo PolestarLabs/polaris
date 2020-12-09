@@ -16,11 +16,7 @@ const init = async (msg) => {
   let call = msg.args[1] ? msg.args[1].toUpperCase() : null;
   let currency = msg.args[2] ? msg.args[2].toUpperCase() : "RBN";
 
-  if (!bet || !call) {
-    PLX.autoHelper("force", { cmd: this.cmd, msg, opt: this.cat });
-    return null;
-  }
-
+ 
   if (!["HEADS", "TAILS", $t("terms.coinHeads", P).toUpperCase(), $t("terms.coinTails", P).toUpperCase()].includes(call)) {
     return msg.channel.send("invalid face called");
   }
@@ -83,6 +79,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "betflip",
+  argsRequired: true,
   perms: 3,
   cat: "gambling",
   botPerms: ["attachFiles", "embedLinks"],

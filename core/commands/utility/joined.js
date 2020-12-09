@@ -1,10 +1,6 @@
-// const gear = require('../../utilities/Gearbox/global');
-// const DB = require('../../database/db_ops');
-
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const moment = require("moment");
   moment.locale(msg.lang[0]);
 

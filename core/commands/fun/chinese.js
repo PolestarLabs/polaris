@@ -3,9 +3,7 @@
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper(["noargs",
-    $t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   const phrase = msg.args.join(" ");
   let decomp = phrase.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 
@@ -39,6 +37,7 @@ const init = async (msg) => {
 module.exports = {
   init,
   pub: true,
+  argsRequired: true,
   cmd: "chinese",
   perms: 3,
   cat: "fun",

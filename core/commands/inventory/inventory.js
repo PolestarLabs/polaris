@@ -7,9 +7,7 @@ const INVOKERS   = new Map();
 const init = async (msg, args) => {
 
     let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
-
-
+    
     const canvas = Picto.new(800,600);
     ctx = canvas.getContext('2d');
 

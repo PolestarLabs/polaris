@@ -4,8 +4,7 @@ const Gal = require("../../structures/Galleries");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const serverData = await DB.servers.get(msg.guild.id);
   P.imsorry = rand$t("responses.verbose.interjections.gomenasai");
   if (!PLX.modPass(msg.member, "kickMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));

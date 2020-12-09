@@ -2,9 +2,7 @@
 // const DB = require('../../database/db_ops');
 
 const init = async function (msg) {
-  const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   const subcommand = msg.args[0];
 
   if (subcommand === "personaltxt") {
@@ -136,6 +134,7 @@ module.exports = {
   init,
   pub: true,
   cmd: "editprofile",
+  argsRequired: true,
   perms: 3,
   cat: "social",
   botPerms: ["attachFiles", "embedLinks", "manageMessages"],

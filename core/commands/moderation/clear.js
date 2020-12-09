@@ -2,8 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return null;
-
+  
   const ServerDATA = await DB.servers.get(msg.guild.id);
   const modPass = PLX.modPass(msg.member, "manageMessages", ServerDATA, msg.channel);
   if (!modPass) {
@@ -22,6 +21,7 @@ const init = async function (msg) {
 module.exports = {
   init,
   deleteCommand: true,
+  argsRequired: true,
   pub: true,
   cmd: "clear",
   perms: 3,

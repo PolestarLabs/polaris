@@ -2,8 +2,7 @@ const BOMB = _emoji("swp_bomb").no_space;
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  if (PLX.autoHelper([$t("helpkey", P)], { cmd: this.cmd, msg, opt: this.cat })) return;
-
+  
   minesTot = parseInt(msg.args[1]) || 10;
   SQ = parseInt(msg.args[0]) || 8;
   const arrGrid = [...Array(SQ)].map(() => Array(SQ));
