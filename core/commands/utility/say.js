@@ -20,7 +20,7 @@ const init = async function (msg, args) {
     if (["?", "help", $t("helpkey", P)].includes(args[1]) || !args[1]) {
       return msg.channel.send({
         embed: {
-          description: "Check [this link](https://leovoel.github.io/embed-visualizer/) to create embeds. Then paste it in `+say embed <JSON CODE>`",
+          description:  $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }),
         },
       });
     }
