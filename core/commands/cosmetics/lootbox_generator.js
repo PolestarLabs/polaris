@@ -73,78 +73,80 @@ const init = async (msg, args) => {
 				description: `**You are already Looting in another server.** 
                 Bear in mind that exploiting loopholes can get you banned from using my services!
                 \`- This incident will be reported to the moderators -\``,
-				color: 0xFF9060,
-			},
-		};
-	}
-	LootingUsers.set(msg.author.id, msg.guild.id);
+        color: 0xFF9060,
+      },
+    };
+  }
+  LootingUsers.set(msg.author.id, msg.guild.id);
 
-	const P = { lngs: msg.lang, cosmos: 0, user: msg.author.username };
-	console.log(args);
-	const boxparams = await DB.items.findOne({ id: args?.boxID || "lootbox_C_O" });
-	boxparams.size = ~~args[0];
+  const P = { lngs: msg.lang, cosmos: 0, user: msg.author.username };
+  
+  const boxparams = await DB.items.findOne({ id: args?.boxID || "lootbox_C_O" });
+  boxparams.size = ~~args[0];
 
-	let currentRoll = 0;
+  let currentRoll = 0;
 
-	async function process() {
-		const lootbox = new Lootbox(boxparams.rarity, boxparams);
-		await lootbox.compileVisuals;
+  async function process() {
+    const lootbox = new Lootbox(boxparams.rarity, boxparams);
+    await lootbox.compileVisuals;
 
-		let preRoll;
-		if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
-		else preRoll = msg.channel.send(REROLL_MSG(P));
 
-		const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
-		const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
-		const canAffordReroll = await ECO.checkFunds(USERDATA, rerollCost);
+    let preRoll;
+    if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
+    else preRoll = msg.channel.send(REROLL_MSG(P));
 
-		const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
+    const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
+    const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
+    const canAffordReroll = await ECO.checkFunds(USERDATA, rerollCost);
 
-		const firstRoll = await compileBox(msg, lootbox, USERDATA, {
-			P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
-		});
+    const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
 
-		await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
-		const message = await msg.channel.send(...firstRoll);
+    const firstRoll = await compileBox(msg, lootbox, USERDATA, {
+      P, currentRoll, totalRerolls, rerollCost, canAffordReroll,
+    });
 
-		message.addReaction("⭐").catch((e) => null);
-		if (canReroll) message.addReaction("🔁").catch((e) => null);
+    await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
+    const message = await msg.channel.send(...firstRoll);
 
-		return message.awaitReactions((reaction) => {
-			if (reaction.author.id === PLX.user.id) return false;
-			if (reaction.emoji.name === "🔁") {
-				return canReroll;
-			} if (reaction.emoji.name === "⭐") return true;
-		}, { time: 15000, maxMatches: 1 }).catch((e) => {
-			console.error(e);
-			message.removeReaction("🔁");
-		}).then(async (reas) => {
-			const choice = reas?.[0];
+    message.addReaction("⭐").catch((e) => null);
+    if (canReroll) message.addReaction("🔁").catch((e) => null);
 
-			if (choice?.emoji.name === "🔁") {
-				message.delete();
-				currentRoll++;
-				return process();
-			}
+    return message.awaitReactions((reaction) => {
+      if (reaction.author.id === PLX.user.id) return false;
+      if (reaction.emoji.name === "🔁") {
+        return canReroll;
+      } if (reaction.emoji.name === "⭐") return true;
+    }, { time: 15000, maxMatches: 1 }).catch((e) => {
+      console.error(e);
+      message.removeReaction("🔁");
+    }).then(async (reas) => {
+      const choice = reas?.[0];
 
-			message.removeReactions().catch((e) => null);
-			await Promise.all([
-				USERDATA.removeItem(lootbox.id),
-				USERDATA.addItem("cosmo_fragment", P.cosmos),
-				ECO.pay(USERDATA, rerollCost, "lootbox_reroll"),
-				DB.users.set(USERDATA.id, lootbox.bonus.query),
-				Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
-			]);
-			LootingUsers.delete(msg.author.id);
-			firstRoll[0].embed.description = `
+      if (choice?.emoji.name === "🔁") {
+        message.delete();
+        currentRoll++;
+        return process();
+      }
+
+      message.removeReactions().catch((e) => null);
+      await Promise.all([
+        USERDATA.removeItem(lootbox.id),
+        USERDATA.addItem("cosmo_fragment", P.cosmos),
+        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
+        DB.users.set(USERDATA.id, lootbox.bonus.query),
+        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
+      ]);
+      LootingUsers.delete(msg.author.id);
+      
+      firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
 >>> ${lootbox.content.map((x) => {
-				let label = x.name
-					? `${_emoji(x.type)} **${$t(`keywords.${x.type}`)}:** ${x.name}`
-					: `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
-				if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
-				return label;
-			}).join("\n")}
+    let label = x.name
+      ? `${ x.emoji  || _emoji(x.type , _emoji(getEmoji(x)) )} **${$t(`keywords.${x.type}`)}:** ${x.name}`
+      : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
+    if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
+    return label;
+  }).join("\n")}
                 `;
 			message.edit(firstRoll[0]);
 		});
@@ -264,7 +266,8 @@ function renderDupeTag(rarity, P) {
 	return canvas;
 }
 function getPrize(loot, USERDATA) {
-	if (["boosterpack", "item"].includes(loot.type)) return USERDATA.addItem(loot.id);
+  
+  if ( loot.collection === 'items') return USERDATA.addItem(loot.id);
 
 	if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
 
@@ -300,90 +303,90 @@ function boxBonus(USERDATA, lootbox, options) {
 	};
 }
 async function compileBox(msg, lootbox, USERDATA, options) {
-	await Promise.all(
-		lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => new Canvas.Image())) && VisualsCache.get(vis)),
-	);
+  await Promise.all(
+    lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => new Canvas.Image())) && VisualsCache.get(vis)),
+  );
 
-	const {
-		currentRoll, rerollCost, totalRerolls, canAffordReroll, P,
-	} = options;
-	let hasDupes = false;
+  const {
+    currentRoll, rerollCost, totalRerolls, canAffordReroll, P,
+  } = options;
+  let hasDupes = false;
 
-	const canvas = Picto.new(800, 600);
-	const ctx = canvas.getContext("2d");
-	const back = staticAssets[`bg${lootbox.rarity}`];
+  const canvas = Picto.new(800, 600);
+  const ctx = canvas.getContext("2d");
+  const back = staticAssets[`bg${lootbox.rarity}`];
 
-	const itemCards = lootbox.content.map((item, i) => renderCard(item, lootbox.visuals[i], P));
+  const itemCards = lootbox.content.map((item, i) => renderCard(item, lootbox.visuals[i], P));
 
-	if (itemCards.length <= 3) {
-		if (itemCards.length === 3) ctx.drawImage(back, 0, 0, 800, 600);
-		ctx.translate(0, 10);
-		itemCards.forEach((card, i, a) => {
-			if (a.length === 1) i = 1;
-			const angle = -0.05 + (0.05 * i);
-			const moveY = Math.abs(i - 1) + (i || 15) - (i === 2 ? 25 : 0);
-			const moveX = i - 1 * 15 + i * 16;
+  if (itemCards.length <= 3) {
+    if (itemCards.length === 3) ctx.drawImage(back, 0, 0, 800, 600);
+    ctx.translate(0, 10);
+    itemCards.forEach((card, i, a) => {
+      if (a.length === 1) i = 1;
+      const angle = -0.05 + (0.05 * i);
+      const moveY = Math.abs(i - 1) + (i || 15) - (i === 2 ? 25 : 0);
+      const moveX = i - 1 * 15 + i * 16;
 
-			ctx.translate(moveX, moveY);
-			ctx.rotate(angle);
-			ctx.drawImage(card, 8 + i * (CARD_WIDTH - 15) + 2, 0);
-			ctx.rotate(-angle);
-			ctx.translate(-moveX, -moveY);
-		});
-		ctx.translate(0, -10);
-	} else {
-		ctx.save();
-		ctx.translate(0, 470);
-		ctx.rotate(-0.08 * Math.floor(itemCards.length / 2));
-		itemCards.forEach((card, i) => {
-			const angle = 0.08 * i;
-			const dx = 230;
-			const dy = 0;
-			ctx.save();
-			ctx.rotate(angle);
-			ctx.translate(0, -470);
-			ctx.drawImage(card, -(780 / (itemCards.length * 2)) + (1 + i) * (780 / itemCards.length - 40) + 2 - (10 * i), 120 + Math.pow(1 + i, 2) * -(10 - i));
-			ctx.restore();
-		});
-		ctx.restore();
-	}
+      ctx.translate(moveX, moveY);
+      ctx.rotate(angle);
+      ctx.drawImage(card, 8 + i * (CARD_WIDTH - 15) + 2, 0);
+      ctx.rotate(-angle);
+      ctx.translate(-moveX, -moveY);
+    });
+    ctx.translate(0, -10);
+  } else {
+    ctx.save();
+    ctx.translate(0, 470);
+    ctx.rotate(-0.08 * Math.floor(itemCards.length / 2));
+    itemCards.forEach((card, i) => {
+      const angle = 0.08 * i;
+      const dx = 230;
+      const dy = 0;
+      ctx.save();
+      ctx.rotate(angle);
+      ctx.translate(0, -470);
+      ctx.drawImage(card, -(780 / (itemCards.length * 2)) + (1 + i) * (780 / itemCards.length - 40) + 2 - (10 * i), 120 + Math.pow(1 + i, 2) * -(10 - i));
+      ctx.restore();
+    });
+    ctx.restore();
+  }
 
-	lootbox.content.forEach((loot, i, a) => {
-		let isDupe = false;
+  lootbox.content.forEach((loot, i, a) => {
+    let isDupe = false;
 
-		if (loot.type === "background") isDupe = USERDATA.modules.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
-		if (loot.type === "medal") isDupe = USERDATA.modules.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
+    if (loot.type === "background") isDupe = USERDATA.modules.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
+    if (loot.type === "medal") isDupe = USERDATA.modules.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
 
-		if (isDupe) {
-			hasDupes = true;
-			loot.isDupe = true;
-			const dupe = renderDupeTag(loot.rarity, P);
-			if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length === 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
-			else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
-		}
-	});
+    if (isDupe) {
+      hasDupes = true;
+      loot.isDupe = true;
+      const dupe = renderDupeTag(loot.rarity, P);
+      if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length === 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
+      else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
+    }
+  });
 
-	ctx.drawImage(staticAssets.bonusbar, 0, 0, 800, 600);
-	if (lootbox.content.length <= 3) {
-		lootbox.content.forEach((l, i, a) => (l.rarity.includes("R") ? ctx.drawImage(staticAssets[`sparkles_${a[1] ? i : 1}`], 0, 0) : null));
-	}
+  ctx.drawImage(staticAssets.bonusbar, 0, 0, 800, 600);
+  if (lootbox.content.length <= 3) {
+    lootbox.content.forEach((l, i, a) => (l.rarity.includes("R") ? ctx.drawImage(staticAssets[`sparkles_${a[1] ? i : 1}`], 0, 0) : null));
+  }
 
-	lootbox.bonus = boxBonus(USERDATA, lootbox, options);
+  lootbox.bonus = boxBonus(USERDATA, lootbox, options);
 
-	const bonusNum = Picto.tag(ctx, lootbox.bonus.label, "600 italic 42px 'Panton Black'", "#FFF");
-	const bonusName = Picto.tag(ctx, lootbox.bonus.unit, "600 italic 34px 'Panton'", "#FFF");
-	ctx.drawImage(bonusNum.item, 620 - bonusName.width - bonusNum.width - 10, 525);
-	ctx.drawImage(bonusName.item, 620 - bonusName.width, 535);
+  const bonusNum = Picto.tag(ctx, lootbox.bonus.label, "600 italic 42px 'Panton Black'", "#FFF");
+  const bonusName = Picto.tag(ctx, lootbox.bonus.unit, "600 italic 34px 'Panton'", "#FFF");
+  ctx.drawImage(bonusNum.item, 620 - bonusName.width - bonusNum.width - 10, 525);
+  ctx.drawImage(bonusName.item, 620 - bonusName.width, 535);
 
-	P.k_emoji = "`⭐`";
-	P.r_emoji = "`🔁`";
-	P.amt = `${_emoji("RBN")}** ${miliarize(rerollCost, true, "\u202F")}**`;
-	P.count = totalRerolls - currentRoll;
-	P.x_frags = `${_emoji("cosmo")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
-	return [{
-		embed: {
-			title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
-			description: `
+  P.k_emoji = "`⭐`";
+  P.r_emoji = "`🔁`";
+  P.amt = `${_emoji("RBN")}** ${miliarize(rerollCost, true, "\u202F")}**`;
+  P.count = totalRerolls - currentRoll;
+  P.x_frags = `${_emoji("COS")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
+  return [{
+    embed: {
+      title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
+      description: `
 ${$t("loot.options_new", P)}
 ${hasDupes ? $t("loot.hasDupes", P) : ""}
 ${totalRerolls - currentRoll > 0
@@ -431,3 +434,11 @@ module.exports = {
 		};
 	},
 };
+
+function getEmoji(it){
+  if (it.type === 'material') return "MATERIAL";
+  if (it.type === 'junk') return "JUNK";
+  if (it.type === 'boosterpack') return "BOOSTER";
+  if (it.type === 'background') return "BOOSTER";
+  if (it.type === 'medal') return "BOOSTER";
+}

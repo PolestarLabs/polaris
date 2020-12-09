@@ -159,15 +159,15 @@ ${_emoji('loading')} • Transferring Daily Streak
     await wait(1);
     await prompt.edit({embed});
     
-    let newRubines = Math.min( userData.modules.rubines *.05 + userData.modules.dyStreakHard * 10,50000);
-    let oldRubines = userData.modules.rubines;
+    let newRubines = Math.min( ~~((userData.modules.rubines||0) *.05) + (userData.modules.dyStreakHard||1) * 10,50000);
+    let oldRubines = userData.modules.rubines||0;
     let jades      = ~~(userData.modules.jades / 2);
     let saph       = ~~(userData.modules.sapphires * (SAPPHIREFACTOR(userData.donator,userData.formerDonator)) / 10 + 1 );
     
     await DB.users.set(msg.author.id, {$set: 
         {
-            'counters.daily.streak' : userData.modules.dyStreakHard,
-            'counters.daily.last' : userData.modules.daily,
+            'counters.daily.streak' : userData.modules.dyStreakHard||0,
+            'counters.daily.last' : userData.modules.daily||0,
             'modules.RBN' : newRubines,
             'modules.rubinesOld' : oldRubines,
             'modules.JDE' : jades,

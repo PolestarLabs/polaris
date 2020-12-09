@@ -22,16 +22,16 @@ module.exports = {
       JDE: 400,
       // RUBINES
       RBN: 250,
+      // BOOSTERS
+      BPK: 225,
       // MEDALS
       MDL: 200,
       // BACKGROUNDS
-      BKG: 1200,
-      // BOOSTERS
-      BPK: 120,
+      BKG: 180,
       // ITEMS
-      ITM: 0,
+      ITM: 120,
       // SAPPHIRE
-      SPH: 1,
+      SPH: 5,
     },
   },
 
