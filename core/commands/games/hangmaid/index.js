@@ -1,11 +1,12 @@
-// @ts-check
+// @ts-nocheck
 // TRANSLATE[epic=translations] hangmaid
 
-const cmd = "hangmaid";
-const words = require("./words.json");
+const WORDS = require("./words.json");
 const Hangmaid = require("../../../archetypes/Hangmaid.js");
+
+
 const init = async function (msg, args) {
-  const game = new Hangmaid(msg, words);
+  const game = new Hangmaid(msg, WORDS);
   const mode = args[0] === "group" ? "group" : "solo";
   game.start()
     .then(async (data) => {
@@ -27,12 +28,8 @@ const init = async function (msg, args) {
 
 const startCollector = async (game, msg, mode) => {
   let stopped = false;
-  let filter;
-  if (mode === "group") {
-    filter = (m) => m.author.id !== PLX.author.id;
-  } else {
-    filter = (m) => m.author.id === m.author.id;
-  }
+  const filter = mode === "group" ? (m) => m.author.id !== PLX.author.id : (m) => m.author.id === m.author.id;
+  
   const Collector = msg.channel.createMessageCollector(filter);
 
   let active = true;
@@ -43,7 +40,7 @@ const startCollector = async (game, msg, mode) => {
 
   active = true;
   Collector.on("message", async (me) => {
-    if (stopped) return;
+    if (!stopped) return;
     if (!new RegExp(/[A-Za-z]/).test(me.content)) return me.addReaction("NOPE:763616715036033084");
     let guess = me.content.toUpperCase()
       .normalize("NFD")
@@ -96,7 +93,7 @@ const startCollector = async (game, msg, mode) => {
 
 module.exports = {
   init,
-  cmd,
+  cmd: 'hangmaid',
   perms: 3,
   cat: "games",
   botPerms: ["attachFiles"],
