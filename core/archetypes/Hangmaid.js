@@ -1,3 +1,4 @@
+const yesNo = require("../structures/YesNo");
 module.exports = class Hangmaid {
   constructor(message, words) {
     const word = shuffle(words)[0];
@@ -37,12 +38,27 @@ module.exports = class Hangmaid {
     };
   }
 
+  async handleFullGuess(guess, message, guessObject) {
+    guess = guess.replace(">", "")
+      .trim()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+    const m = await message.channel.send(`You're about to guess \`${guess}\`. Is that right?`);
+    const result = await yesNo(m, guessObject);
+    m.delete();
+    return result;
+  }
+
   registerMessage(message) {
     return this.originalMessage = message;
   }
 
   handleInput(guess) { // handleInput () => Object
     guess = guess.toUpperCase();
+    if (guess.startsWith(">")) {
+      guess = guess.replace(">", "")
+        .trim();
+    }
 
     const params = {};
     params.d = this.level;
@@ -52,10 +68,9 @@ module.exports = class Hangmaid {
       params.e = "win";
       params.g = this.word;
       params.a = this.incorrectLetters.join("");
-      this.terminate('win')
+      return this.terminate("win");
     } else {
-      if (guess.length > 1 && guess.split(" ").length <= 2) {
-        //check if it's not a letter and if it's a guess (2 words or less, full sentence 3+)
+      if (guess.length > 1) {
         params.e = "lose";
         params.g = this.wordBoard.join("");
         params.a = this.incorrectLetters.join("");
