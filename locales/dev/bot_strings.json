@@ -934,7 +934,7 @@
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
         "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
         "options_new": "{{k_emoji}}Keep | {{r_emoji}}Reroll {{amt}}",
-        "options_nrr": "{{k_emoji}}Keep",
+        "options_nrr": "{{k_emoji}}Keep | {{r_emoji}}~~Reroll {{amt}}~~",
         "rerollRemain_new": "You can reroll **one** last time!",
         "rerollRemain_new_plural": "You can reroll **{{count}}** more times!",
         "hasDupes": "{{x_frags}} from duplicate items!",
