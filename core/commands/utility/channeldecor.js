@@ -1,6 +1,6 @@
 const init = async function (msg,args){
 
-    let targetParent = (PLX.getChannel(msg.channelMentions[0]|| msg.channel.id));
+    let targetParent = (PLX.getChannel(msg.channelMentions[0]?.parentID || msg.channel.parentID));
     
     if(!targetParent) return msg.addReaction(_emoji('nope').reaction);
     // FIXME[epic=flicky] Not a function https://discord.com/channels/277391723322408960/755894901308260422/786192561932861460
