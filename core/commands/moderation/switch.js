@@ -1,5 +1,4 @@
 // TRANSLATE[epic=translations] switch
-// REVIEW[epic=flicky] Colorscheme
 
 const SwitchArch = require("../../archetypes/Switch");
 let cats,
