@@ -1,6 +1,6 @@
 const cmd = "background";
 const ECO = require("../../archetypes/Economy.js");
-const GNums = require("../../../GlobalNumbers.js");
+const GNums = require(`${appRoot}/resources/lists/GlobalNumbers`);
 const Picto = require("../../utilities/Picto");
 const YesNo = require("../../structures/YesNo");
 const isEventBG = (bg) => (bg.event && bg.event !== 'none');
