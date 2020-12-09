@@ -275,7 +275,6 @@ function getPrize(loot, USERDATA) {
 
 	if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
 }
-// REVIEW[epic=flicky] whether this recursion is correct.
 function determineRerollCost(box, rollNum, USERDATA) {
 	let stake = Math.round(
 		(USERDATA.modules.bgInventory.length || 100)
