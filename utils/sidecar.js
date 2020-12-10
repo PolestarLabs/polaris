@@ -1,7 +1,7 @@
 //_PLX[epic=Utilities] Sidecar Instance / Cronjobs
 
 const {Client} = require('eris')
-const cfg = require('./config.json')
+const cfg = require('../config.json')
 const moment = require("moment")
 const {CronJob} = require('cron');
 require('colors')
@@ -30,12 +30,12 @@ const dbConnectionData = {
   },
 };
 
-Gearbox = require("./core/utilities/Gearbox");
+Gearbox = require("../core/utilities/Gearbox");
 
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
 
-global._emoji = (E,F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E,F);
+global._emoji = (E,F) => new (require("../resources/lists/emoji.js")).PolluxEmoji(E,F);
 
 DBSchema(dbConnectionData).then(Connection => {
     global.DB = Connection;
@@ -65,8 +65,8 @@ DBSchema(dbConnectionData).then(Connection => {
 
   
   const FIFTEENminute = new CronJob("*/1 * * * *", async () => {
-    delete require.cache[require.resolve('./core/subroutines/feeds')];
-    const feeds = require('./core/subroutines/feeds');
+    delete require.cache[require.resolve('../core/subroutines/feeds')];
+    const feeds = require('../core/subroutines/feeds');
     feeds.check();   
   });
 
