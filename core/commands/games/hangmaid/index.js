@@ -1,3 +1,6 @@
+const axios = require('axios');
+
+
 // @ts-nocheck
 // TRANSLATE[epic=translations] hangmaid
 
@@ -6,14 +9,18 @@ const Hangmaid = require("../../../archetypes/Hangmaid.js");
 
 
 const init = async function (msg, args) {
-  const game = new Hangmaid(msg, WORDS);
-  const mode = args[0] === "group" ? "group" : "solo";
-  game.start()
-    .then(async (data) => {
-      const mainMessage = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${encodeURI(`g=${data.wordSpaced}&refresh=${Date.now()}&d=${data.difficulty}&h=${data.theme}`)}`);
-      game.registerMessage(mainMessage);
-      await startCollector(game, msg, mode);
-    });
+  let oldGame =  Hangmaid.gameExists(msg.channel.id);
+  if (oldGame){
+      PLX.reply({id: oldGame, channel: msg.channel, guild: msg.guild}, "There's already a game going on here.");
+      return;
+  }
+  const GAME = new Hangmaid(msg, WORDS);
+  const MODE = args[0] === "group" ? "group" : "solo";
+  
+  const mainMessage = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`);
+  GAME.registerMessage(mainMessage);
+  await startCollector(GAME, msg, MODE);
+      
 };
 
 // TODO[epic=mistery]: Add language support
@@ -26,11 +33,12 @@ const init = async function (msg, args) {
     #  RANKING REGISTER EXAMPLE -------  LINK ../../../commands/games/guessflag.js:46
 */
 
-const startCollector = async (game, msg, mode) => {
+const startCollector = async (Game,mode) => {
   let paused = false;
   const filter = mode === "group" ? (m) => m.author.id !== PLX.author.id : (m) => m.author.id === m.author.id;
-  
-  const Collector = msg.channel.createMessageCollector(filter);
+  const commandMsg = Game.originalMessage;  
+
+  const Collector = commandMsg.channel.createMessageCollector(filter,{time: 5 * 60e3}); //5 Minutes
 
   let active = true;
   let activity = setInterval(() => {
@@ -38,65 +46,56 @@ const startCollector = async (game, msg, mode) => {
     active = false;
   }, 30e3);
 
-  active = true;
-  Collector.on("message", async (me) => {
+  Collector.on("message", async (attemptMsg) => {
     active = true;
     if (paused) return;
-    let guessClean = me.content.toUpperCase();
-    let guess = game.sanitize(me.content);
+    
+    let guessClean = attemptMsg.content.toUpperCase();
+    let guess = Game.sanitize(attemptMsg.content);
 
     const RegexCyrilic = /[а-яё]/gi;
     const RegexLatin = /[A-Z]/gi;
 
-    if (!RegexLatin.test(guess)) return me.addReaction(_emoji('nope').reaction);
-
-    // HANDLING THE GUESS ---------
+    if (Game.language === 'ru' && !RegexCyrilic.test(guess)) return attemptMsg.addReaction(_emoji('nope').reaction);    
+    else if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji('nope').reaction);
+    
     let attemptFullWord = false;
     if (guessClean.startsWith(">")) {
-      paused = true;
-      attemptFullWord = await game.handleFullGuess(guessClean, msg, me);
-      if (!attemptFullWord) {
-        paused = false;
-        return active = true;
-      } else {
-        paused = false;
-        console.log( "Attempt Full!".yellow)
-      }
-
+      attemptFullWord = await Game.handleFullGuess(guessClean, commandMsg, attemptMsg);
+      active = true;
+      paused = false;
+      if (!attemptFullWord) return;
     }
     
-    if (guess.length > 1 && !guessClean.startsWith('>') && !game.isFullGuess(guess)) {
-      // player is talking
-      return null;
-    } else {
-      me.delete().catch(e=>console.log('tried to delete message'.red));
-    }
+    if (guess.length === 1 || guessClean.startsWith('>') || Game.isFullGuess(guess)) {
+      attemptMsg.delete().catch(e=>0);
 
-    // TRANSLATE[epic=translations] Translation strings
+      // TRANSLATE[epic=translations] Translation strings
 
-    if (!game.isFullGuess(guess) && (game.wordBoard.includes(guess) || game.incorrectLetters.includes(guess))) {
-      return msg.channel.send("You already said that, honey~")
-        .then((warn) => setTimeout(() => warn.delete(), 1500));
-    }
+      if (!Game.isFullGuess(guess) && (Game.wordBoard.includes(guess) || Game.incorrectLetters.includes(guess))) {
+        return commandMsg.channel.send("You already said that, honey~")
+          .then((warn) => setTimeout(() => warn.delete(), 1500));
+      }
 
-    //if (guess.startsWith(">")) guess = guess.replace(">", "");
-    const result = await game.handleInput(guess);
-    if (!result) return;
+      const result = await Game.handleInput(guess);
 
-    if (result.params.e) Collector.stop();
-    await result.message.delete();
+      if (Game.ENDGAME) Collector.stop(Game.ENDGAME);
+      await Game.originalMessage.delete().catch(e=>0);
 
-    const newMsg = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${
-      encodeURI(`a=${result.params.a}&${result.params.e ? `e=${result.params.e}&` : ""}g=${result.params.g}&refresh=${Date.now()}&h=${result.params.h}`)
-    }`);
-
-    if (result.params.e && result.params.e === "win") return msg.channel.send("Congratulations! You guessed it!");
-    if (result.params.e && result.params.e === "lose") return msg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
-    await game.registerMessage(newMsg);
+      const newMsg = await commandMsg.channel.send(`${paths.DASH}/generators/hangmaid?${
+        encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
+      }`);      
+     
+      await Game.registerMessage(newMsg);
+   }
   });
 
-  Collector.on("end", (a, b) => {
+  Collector.on("end", (col, reason) => {
     clearInterval(activity);
+    Game.finish();
+    if(reason === "win") return commandMsg.channel.send("Congratulations! You guessed it!");
+    if(reason === "lose") return commandMsg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
+    if(reason === "time") return commandMsg.channel.send("Time's up");
   });
 };
 
