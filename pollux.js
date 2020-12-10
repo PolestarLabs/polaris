@@ -16,7 +16,7 @@ const Eris            = require("eris-additions")(ERIS);
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const cfg             = require("./config.json");
-const WebhookDigester = require("./util/WebhookDigester.js");
+const WebhookDigester = require("./utils/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 
