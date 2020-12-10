@@ -16,7 +16,7 @@ const Eris            = require("eris-additions")(ERIS);
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const cfg             = require("./config.json");
-const WebhookDigester = require("./util/WebhookDigester.js");
+const WebhookDigester = require("./utils/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 
@@ -271,7 +271,7 @@ PLX.reply = (msg,content) => {
   }
   if (typeof content === 'string') payload.content = content;
   else Object.assign(payload,content);
-  
+
   return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, {headers: { Authorization: PLX.token }});
 }
 

@@ -1,3 +1,4 @@
+// TODO[epic=Refactor] Plan this properly and rewrite the entire command.
 // TRANSLATE[epic=translations] rewards
 
 const MONTHNAME = "March";
