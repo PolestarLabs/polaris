@@ -261,6 +261,19 @@ PLX.bean = (guild,user,delete_message_days=0,reason="No reason specified") => {
 PLX.unbean = (guild,user,delete_message_days=0,reason="No reason specified") => {
   return axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days,reason }, {headers: { Authorization: PLX.token }})
 }
+PLX.reply = (msg,content) => {
+  let payload = {
+    message_reference:{ 
+      channel_id: msg.channel.id,
+      guild_id: msg.guild.id,
+      message_id: msg.id
+    }
+  }
+  if (typeof content === 'string') payload.content = content;
+  else Object.assign(payload,content);
+  
+  return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, {headers: { Authorization: PLX.token }});
+}
 
 function postConnect() {
   console.log("Discord Client Connected".cyan);
