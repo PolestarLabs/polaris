@@ -15,7 +15,7 @@ const settings = {
   wheelEmbedColor: 0x14ACB7,
   resultsEmbedColor: 0x14ACB7,
   helpURL: "https://cdn.pollux.gg/pollux101/roulette-cheatsheet.png",
-  minPerBet: 1,
+  minPerBet: 5,
   maxPerBet: 2500,
   maxBets: 10,
   maxTotal: 20000,
