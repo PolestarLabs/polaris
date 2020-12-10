@@ -1,7 +1,9 @@
 /* eslint max-classes-per-file: ["error", 2] */
+// @ts-check
 /** *********************** */
 //          ODDS          //
 /** *********************** */
+
 const { LootRates: RATES } = require(`${appRoot}/resources/lists/GlobalNumbers`);
 
 const itmODDS = RATES.itemType;
