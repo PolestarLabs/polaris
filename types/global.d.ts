@@ -8,7 +8,7 @@ declare global {
     export const PLX: CommandClient;
     export const paths: run;
 
-    // gearbox start
+    // gearbox
     export const nope: string;
     export const invisibar: string;
     export const Embed: Embed;
@@ -17,8 +17,6 @@ declare global {
     export {
       reload, weightedRand, randomize, wait, miliarize, shuffle, capitalize, objCount, resolveFile, file,
     } from "../core/utilities/Gearbox/global";
-
-    // gearbox end
 }
 
 interface run {
