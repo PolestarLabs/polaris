@@ -54,7 +54,7 @@ async function creditUsers(results) {
   for (const result of results) {
     const { userID } = result;
     ECO.checkFunds(userID, result.cost).then(hasEnough => {
-      if (!hasEnough) result.invalid = true; // REVIEW[epic=mitchell] check if we can use transfer instead
+      if (!hasEnough) result.invalid = true; // REVIEW[epic=mitchell] roulette - check if we can use transfer instead
       else if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
       else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(() => "Shouldn't happen");
     });

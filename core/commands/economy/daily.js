@@ -278,7 +278,7 @@ const init = async (msg, args) => {
         boosterAction = newBooster();
       }
 
-      if (itm === 'cosmo_fragment') {
+      if (itm === 'cosmo_fragment') { // FIXME[epic=anyone] daily -  cosmos don't actually get added to inventory.
         itemName = $t(`items:cosmo_fragment.name`, P);
         fragAction = userData.addItem('cosmo_fragment', myDaily[itm]);
         itemoji = _emoji('COS');

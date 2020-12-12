@@ -23,11 +23,11 @@ const init = async function (msg, args) {
       
 };
 
-// TODO[epic=mistery]: Add language support
-// TODO[epic=mistery]: Ability to play solo /  group ( group default? ) | in progress
-// TODO[epic=mistery]: Possibly add a specific keyword to prompt a full guess attempt
+// TODO[epic=mistery]: hm - Add language support
+// TODO[epic=mistery]: hm - Ability to play solo /  group ( group default? ) | in progress
+// TODO[epic=mistery]: hm - Possibly add a specific keyword to prompt a full guess attempt
 
-/* TODO[epic=mistery]: Optional: Add ranks just like Guessflag  (SEE LINKS)
+/* TODO[epic=mistery]: hm - Optional: Add ranks just like Guessflag  (SEE LINKS)
     #  GAME MODES EXAMPLE -------------- LINK ../../../archetypes/GuessingGames.js:105
     #  POINTS CALCULATION EXAMPLE ------ LINK ../../../archetypes/GuessingGames.js:200
     #  RANKING REGISTER EXAMPLE -------  LINK ../../../commands/games/guessflag.js:46

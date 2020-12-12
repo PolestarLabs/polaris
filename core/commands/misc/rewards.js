@@ -1,4 +1,4 @@
-// TODO[epic=Refactor] Plan this properly and rewrite the entire command.
+// TODO[epic=Refactor] rewards - Plan this properly and rewrite the entire command.
 // TRANSLATE[epic=translations] rewards
 
 const MONTHNAME = "March";
@@ -383,10 +383,7 @@ ${stickernames.map((f) => f.name).join(" • ")}
 
   const querystring = queryGen(T);
 
-  // FIXME[epic=anyone] wtf is this indenting
-  // this is super old vanilla copypaste, must be revised head-to-toe -Flicky
-
-  // TODO[epic=anyone] use bulk economy feature
+  // TODO[epic=anyone] rewards - use bulk economy feature
 
   await Promise.all([
     DB.users.set(message.author.id, querystring),

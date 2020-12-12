@@ -563,7 +563,7 @@ const init       = async (msg,args) => {
 			]);
 
 			if (winnings !== 0) {
-				if (winnings > 0) { // REVIEW[epic=mitchell] change to one-line transfer if it defaults to receive/pay
+				if (winnings > 0) { // REVIEW[epic=mitchell] bj - change to one-line transfer if it defaults to receive/pay
 					await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
 				}
 				if (winnings < 0) {

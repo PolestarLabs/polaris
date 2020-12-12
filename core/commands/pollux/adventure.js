@@ -168,7 +168,7 @@ const init = async function (msg) {
   embed.description = `${selectedLocation.emoji} **${selectedLocation.name}**`;
   tallyEmbed.fields.push({ name: "Location", value: embed.description, inline: true });
 
-   // TODO[epic=flicky] Create adventure and save to DB
+   // TODO[epic=flicky] adventure Create adventure and save to DB
 
   
   let ventureImage = renderMap(selectedLocation._id);
