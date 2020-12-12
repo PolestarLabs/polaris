@@ -42,10 +42,11 @@
         "piggyback": "readonly",
         "paths": "readonly"
     },
-    "parser": "babel-eslint",
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "ecmaVersion": 2018
     },
+    "plugins": ["@typescript-eslint"],
     "rules": {
         "quotes": ["error", "double"],
         "no-param-reassign": "off",
@@ -66,9 +67,15 @@
         "prefer-const": ["error", { "destructuring": "all" }],
         "no-continue": "off",
         "no-empty": ["error", { "allowEmptyCatch": true }],
-        "no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
-        "no-multi-assign": "off"
-
-        
+        "no-multi-assign": "off",
+        "@typescript-eslint/no-unused-vars": "error",
+        "@typescript-eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-use-before-define": "error",
+        // ts conflicts
+        "no-unused-vars": "off",
+        "no-unused-expressions": "off",
+        "no-shadow": "off",
+        "no-use-before-define": "off"
     }
 }

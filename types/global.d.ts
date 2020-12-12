@@ -1,33 +1,25 @@
 import { CommandClient, Embed } from "eris";
-import { miliarize, randomize, reload, wait, weightedRand, shuffle, capitalize, objCount, resolveFile, file } from "./core/utilities/Gearbox/global";
+
 declare global {
-    const DB: any; // wtf is this
+    export const DB: any; // wtf is this
 
     // pollux.js
-    const appRoot: string;
-    const PLX: CommandClient;
-    const paths: run;
+    export const appRoot: string;
+    export const PLX: CommandClient;
+    export const paths: run;
 
     // gearbox start
-    const nope: string;
-    const invisibar: string;
-    const Embed: Embed;
-    const RichEmbed: Embed;
+    export const nope: string;
+    export const invisibar: string;
+    export const Embed: Embed;
+    export const RichEmbed: Embed;
 
-    reload;
-    weightedRand;
-    randomize;
-    wait;
-    miliarize;
-    shuffle;
-    capitalize;
-    objCount;
-    resolveFile;
-    file;
+    export {
+      reload, weightedRand, randomize, wait, miliarize, shuffle, capitalize, objCount, resolveFile, file,
+    } from "../core/utilities/Gearbox/global";
+
     // gearbox end
 }
-
-
 
 interface run {
     CDN: string
