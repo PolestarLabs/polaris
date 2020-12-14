@@ -52,13 +52,13 @@ module.exports = class Hangmaid {
 
     if (!wordArray.includes(guess)) {
       this.incorrectLetters.push(guess);
-      if (this.incorrectLetters.length > this.chances) return this.terminate("lose");
+      if (this.incorrectLetters.length > this.chances) return this.terminate("attempts");
       return false;
     }
 
     wordArray.forEach((wl, i) => wl === guess ? this.wordBoard[i] = guess : null);
     if (this.sanitize(this.wordBoard.join('')) === this.sanitize(this.word)) return this.terminate("win");
-    
+
     return false;
   }
 
