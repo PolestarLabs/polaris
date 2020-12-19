@@ -322,58 +322,61 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
   const log = options.log.usr;
 
   const hands = [playerHand];
-  const currentHand = hands[0];
+  const firstHand = hands[0];
+  let currentHandIndex = 0;
   let totalBet = bet;
   /**
    * @type {import('eris').Message}
    */
   let tableMessageRound;
 
-  async function ProcessHand(cHand) {
+  async function ProcessHand(currentHand) {
     if (log.length === 0) {
       options.log.embed.description = "Game Started!";
     }
-    if (!cHand) return Promise.resolve(true);
-    const nextHand = () => (cHand = hands[hands.indexOf(cHand) + 1]);
+    if (!currentHand) return Promise.resolve(true);
+    const nextHand = () => (currentHand = hands[++currentHandIndex]);
 
-    if (cHand.length === 1) blackjack.hit(cHand, powerups);
-    if (Blackjack.handValue(cHand) === "Blackjack") {
+    if (currentHand.length === 1) {
+      blackjack.hit(currentHand, powerups);
+    }
+    if (Blackjack.handValue(currentHand) === "Blackjack") {
       nextHand();
-      return ProcessHand(cHand);
+      return ProcessHand(currentHand);
       // continue;
     }
-    const currentHandValue = Blackjack.handValue(cHand);
+    const currentHandValue = Blackjack.handValue(currentHand);
 
     if (typeof currentHandValue === "string" && currentHandValue.startsWith("JOKER")) {
       nextHand();
-      return ProcessHand(cHand);
+      return ProcessHand(currentHand);
       // continue;
     }
     if (currentHandValue >= 21) {
       nextHand();
-      return ProcessHand(cHand);
+      return ProcessHand(currentHand);
       // continue;
     }
-    if (cHand.doubled) {
-      blackjack.hit(cHand);
+    if (currentHand.doubled) {
+      blackjack.hit(currentHand);
       nextHand();
-      return ProcessHand(cHand);
+      return ProcessHand(currentHand);
       // continue;
     }
 
-    const canInsurance = testInsurance(balance, totalBet, cHand, dealerHand);
-    const canDoubleDown = testDoubleDown(balance, totalBet, cHand);
-    const canSplit = testSplit(balance, totalBet, cHand);
+    const canInsurance = testInsurance(balance, totalBet, currentHand, dealerHand);
+    const canDoubleDown = testDoubleDown(balance, totalBet, currentHand);
+    const canSplit = testSplit(balance, totalBet, currentHand);
 
     const hitstand = hitStandMessage(P, canDoubleDown, canSplit, canInsurance);
 
     const USR_HAND = {}; const
       POL_HAND = {};
 
-    USR_HAND.val = Blackjack.handValue(cHand);
+    USR_HAND.val = Blackjack.handValue(currentHand);
     POL_HAND.val = Blackjack.handValue([dealerHand[0]]);
 
-    USR_HAND.status = Blackjack.isSoft(cHand) ? "SOFT" : "";
+    USR_HAND.status = Blackjack.isSoft(currentHand) ? "SOFT" : "";
     POL_HAND.status = Blackjack.isSoft([dealerHand[0]]) ? "SOFT" : "";
 
     const visibleHand = [dealerHand[0], ["X"]];
@@ -381,14 +384,14 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     const bjkD = POL_HAND.val.toString().toLowerCase() === "blackjack";
     let errored;
     const [POLLUX_HAND_GFX, PLAYER_HAND_GFX] = await Promise.all([
-      renderHand(hands, deck, bjkD, cHand),
+      renderHand(hands, deck, bjkD, currentHand),
       renderHand([visibleHand], deck, bjkP),
     ]).timeout(2000).catch((e) => { errored = true; return [e, 0]; });
     if (errored) Promise.reject(new Error(`Error during checks => \n${POLLUX_HAND_GFX}`));
 
     options.b = totalBet;
     options.canInsurance = canInsurance;
-    options.ins = cHand.insurance;
+    options.ins = currentHand.insurance;
     options.actions = ["HIT", "STAND"];
     if (canDoubleDown) options.actions.push("DOUBLE");
     if (canSplit) options.actions.push("SPLIT");
@@ -397,7 +400,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 
     const scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, USR_HAND, POL_HAND, options).catch(() => Picto.new(1, 1));
 
-    if (cHand.insuredLastTurn) {
+    if (currentHand.insuredLastTurn) {
       msg.channel.send(`${_emoji("plxbjkinsu")} **Insurance has been placed for this match!**`, {
         file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
       }).then((mm) => {
@@ -406,7 +409,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
         tableMessageRound = mm;
         // mm.delete()
       });
-      currentHand.insuredLastTurn = false;
+      firstHand.insuredLastTurn = false;
     } else {
       let finalImage;
       try {
@@ -449,12 +452,12 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     if (responses[0]) responses[0].delete().catch(() => null);
 
     if (action === "insurance") {
-      currentHand.insurance = true;
-      currentHand.insuredLastTurn = true;
+      firstHand.insurance = true;
+      firstHand.insuredLastTurn = true;
       log.push(`> ${_emoji("plxbjkinsu")} \`INSURANCE\` (${Math.ceil(bet / 2)})`);
     }
     if (action === "surrender") {
-      currentHand.surrendered = true;
+      firstHand.surrendered = true;
       totalBet = Math.ceil(totalBet / 2);
       log.push(`> ${_emoji("plxbjksurr")} Player \`SURRENDER\` @ **${USR_HAND.val}**`);
       if (currentHand === hands[hands.length - 1]) return Promise.resolve("EndGame");
@@ -477,19 +480,21 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     if (action === "split" && canSplit) {
       // totalBet;
       log.push(`> ${_emoji("plxcards")} Player \`SPLIT\` **${USR_HAND.val / 2}s**`);
-      hands.push([currentHand.pop()]);
-      blackjack.hit(currentHand);
+      const newCurrent = [currentHand.shift()];
+      hands.unshift(newCurrent);
+      blackjack.hit(newCurrent);
+      return ProcessHand(newCurrent);
     }
     if ((action === "double down" || action === "double") && canDoubleDown) {
       log.push(`> ${_emoji("plxbjk2x")} Player \`DOUBLE\``);
       totalBet += bet;
-      currentHand.doubled = true;
+      firstHand.doubled = true;
     }
 
     return ProcessHand(currentHand);
   }
 
-  await ProcessHand(currentHand);
+  await ProcessHand(hands[currentHandIndex]);
 
   // introMessage.delete().catch(e=>null);
   if (tableMessageRound) tableMessageRound.delete().catch(() => null);
