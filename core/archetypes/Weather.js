@@ -2,7 +2,7 @@ const https = require("https");
 const crypto = require("crypto");
 const EventEmitter = require("events");
 
-const { appID, key, secret } = require(`${appRoot}/config.json`).weather;
+const { appId, client, secret } = require(`${appRoot}/config.json`).yahooAPI;
 const countries = JSON.parse(require("fs").readFileSync(`${appRoot}/resources/lists/worldISO.json`).toString());
 
 class Weather extends EventEmitter {
@@ -130,7 +130,7 @@ class Weather extends EventEmitter {
     _initiate() {
       const query = { location: this.locationstr, format: "json", u: "c" };
       const oauth = {
-        oauth_consumer_key: key,
+        oauth_consumer_key: client,
         oauth_nonce: Date.now().toString(36),
         oauth_signature_method: "HMAC-SHA1",
         oauth_timestamp: parseInt(Date.now() / 1000).toString(),
@@ -146,7 +146,7 @@ class Weather extends EventEmitter {
         {
           headers: {
             Authorization: auth,
-            "X-Yahoo-App-Id": appID,
+            "X-Yahoo-App-Id": appId,
           },
         }, (res) => {
           if (res.statusCode !== 200) return this.emit("error", res.statusCode);
