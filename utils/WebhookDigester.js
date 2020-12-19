@@ -66,6 +66,15 @@ class WebhookDigester {
     };
     this.execute(embed, options);
   }
+
+  raw(message, options) {     
+    const { hook } = options;
+    const destination = hook || cfg.mainWebhook;
+    this.client.executeWebhook(destination.id, destination.token, {
+      content:  `\`[${PLX.cluster.name||"N/A"} | #${PLX.cluster.id||0}]\` ::  ` + message.slice(0,2000),
+    });
+  }
+
 }
 
 module.exports = WebhookDigester;
