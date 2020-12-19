@@ -182,6 +182,13 @@ const registerOne = (folder, _cmd) => {
     return null;
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
+    hook.error( `
+    **Command Soft Error**
+    \`\`\`js
+${e.stack.slice(0,1900)}
+    \`\`\`
+    The command \`${_cmd}\` was **not** loaded!
+    `,{hook: errorsHook})
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
     // console.error("\r                                " + e.message.red)
     return null;
