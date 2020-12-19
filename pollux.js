@@ -280,9 +280,17 @@ function postConnect() {
   // POST STATS TO LISTS
 }
 
+global.errorsHook = cfg.errorsHook;
+
 process.on("uncaughtException", (err) => {
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
+  hook.error( `
+  **Uncaught Exception**
+  \`\`\`js
+${err.slice(0,1900)}
+  \`\`\`
+  `,{hook: cfg.errorsHook})
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
@@ -290,9 +298,24 @@ process.on("uncaughtException", (err) => {
 process.on("unhandledRejection", (err) => {
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
+  hook.warn( `
+  **Unhandled Rejection**
+  \`\`\`js
+${err.stack.slice(0,1900)}
+  \`\`\`
+  `,{hook: cfg.errorsHook})
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
 
+//TODO[epic=anyone]: Remember to delete this in production
 
-
+const dumpsterLogs = {id: '789784919202594836', token: "HkR_pSCRopvIbhEpFzGqSHSCe9mf3h_gusrSsgzxTbD8gqeLV79_Cv4i9kkQ3_VpTrhz"};
+const oldLog = console.log;
+console.log = function(...args){
+  hook.raw(`\`\`\`js
+${  [...args].join(' ').slice(0,1900) }
+    \`\`\``
+   ,{hook:dumpsterLogs});
+   oldLog(...args)
+}
