@@ -793,18 +793,19 @@ const init       = async (msg, args) => {
     blackjack.endGame();
 
     msg.channel.send(PLAY_RES, { file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
-      .then((m) => m.channel.send(rebalance).catch(() => null));
-    if (splitExplain.length) {
-      // msg.channel.send(`**${splitExplain.length>1?$t('games.blackjack.splitbreak',P):$t('games.blackjack.result',P)}**\n`+splitExplain.join('\n'))
-      log.embed.fields.push({
-        name: `**${splitExplain.length > 1 ? $t("games.blackjack.splitbreak", P) : $t("games.blackjack.result", P)}**`,
-        value: splitExplain.join("\n"),
-        inline: false,
+      .then((m) => {
+        if (splitExplain.length) {
+          log.embed.fields.push({
+            name: `**${splitExplain.length > 1 ? $t("games.blackjack.splitbreak", P) : $t("games.blackjack.result", P)}**`,
+            value: splitExplain.join("\n"),
+            inline: false,
+          });
+          log.embed.fields[1] = { name: "Pollux Turn", value: log.plx.join("\n"), inline: true };
+          log.embed.fields[0] = { name: "Player Turn", value: log.usr.join("\n"), inline: true };
+          wait(1).then(() => msg.channel.send({ embed: log.embed }));
+        }
+        m.channel.send({ content: rebalance, embed: splitExplain.length ? log.embed : {} }).catch(() => null);
       });
-      log.embed.fields[1] = { name: "Pollux Turn", value: log.plx.join("\n"), inline: true };
-      log.embed.fields[0] = { name: "Player Turn", value: log.usr.join("\n"), inline: true };
-      wait(1).then(() => msg.channel.send({ embed: log.embed }));
-    }
 
     // JOKER EFFECTS GO HERE
     if (hasJoker) {
