@@ -53,9 +53,9 @@ exports.run = function run(cmd, m, third, extras) {
       extras.related.map((ex) => `\n\u200b • \`${m.prefix}${ex}\``).join(""),
       false);
   }
-  //console.log({extras})
-  if(extras.helpImage){
-    emb.image= {url:extras.helpImage}
+  // console.log({extras})
+  if (extras.helpImage) {
+    emb.image = { url: extras.helpImage };
   }
 
   if (cmd === "exchange") {

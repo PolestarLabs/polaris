@@ -108,29 +108,29 @@ module.exports = class Roulette {
     if (bet === "snake" || bet === "snek") return { ...valid, ...bets.snake };
     if (bet === "manque" || bet === "low") return { ...valid, ...bets.manque };
     if (bet === "passe" || bet === "high") return { ...valid, ...bets.passe };
-    if (["even","odd","uneven","pair","impair"].includes(bet)) return { ...valid, ...bets.parity, offset: (bet === "even" || bet === "pair") ? 0 : 1 };
-    if (["red","rouge","noir","black"].includes(bet)) return { ...valid, ...bets.colour, offset: (bet === "black" || bet === "noir") ? 0 : 1 };
+    if (["even", "odd", "uneven", "pair", "impair"].includes(bet)) return { ...valid, ...bets.parity, offset: (bet === "even" || bet === "pair") ? 0 : 1 };
+    if (["red", "rouge", "noir", "black"].includes(bet)) return { ...valid, ...bets.colour, offset: (bet === "black" || bet === "noir") ? 0 : 1 };
 
     if (offset && offset >= 1 && offset <= 3) {
-      if (["column","col","c"].includes(bet)) return { ...valid, ...bets.column, offset };
-      if (["dozen","dzn","d","12"].includes(bet)) return { ...valid, ...bets.dozen, offset };
+      if (["column", "col", "c"].includes(bet)) return { ...valid, ...bets.column, offset };
+      if (["dozen", "dzn", "d", "12"].includes(bet)) return { ...valid, ...bets.dozen, offset };
     }
 
     if (bet === "square" && squareCheck(offset)) {
       return { ...valid, ...bets.square, numbers: [offset, (offset + 1), (offset + 3), (offset + 4)] };
     }
-    
+
     // split and street
-    if (bet === "split" && splitCheck(offset,offset+1)) {
-      return { ...valid, ...bets.split, numbers: [offset, (offset+1)]};
+    if (bet === "split" && splitCheck(offset, offset + 1)) {
+      return { ...valid, ...bets.split, numbers: [offset, (offset + 1)] };
     }
-    if (bet === "street" && streetCheck(offset,offset+2)) {
+    if (bet === "street" && streetCheck(offset, offset + 2)) {
       return { ...valid, ...bets.street, numbers: [offset, (offset + 1), (offset + 2)] };
     }
-    if (bet === "dstreet" && dstreetCheck(offset,offset+5)) {
+    if (bet === "dstreet" && dstreetCheck(offset, offset + 5)) {
       return { ...valid, ...bets.dstreet, numbers: [offset, (offset + 5)] };
     }
-    
+
     // smart detect
     let divider;
     for (divider of dividers) {

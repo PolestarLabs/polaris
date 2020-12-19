@@ -1,13 +1,12 @@
-
 /**
- * 
+ *
  * @param {Object} promptMessage Message that will receive Yes/No reactions
  * @param {Object} commandMessage Command Message send by the user
  * @param {function(<Cancel>,Message)|string} [yesFunction] Function to execute when YES is clicked
  * @param {function(Message)} [noFunction] Function to execute when NO is clicked
  * @param {function(Message)} [timeoutFunction] Function to execute when TIMEOUT
  * @param {Object} [options] Additional Options
- * 
+ *
  * @param {Object<Embed>} options.embed Premade embed to be sent as response, defaults to whatever embed [promptMessage] already has
  * @param {boolean|false} [options.avoidEdit] Whether or not prevent editing of [promptMessage] by this method
  * @param {boolean|true} [options.clearReacts] Whether or not clear Yes/No reactions from [promptMessage]
@@ -17,9 +16,9 @@
  * @param {string|"✔️"} [options.strings.confirm]
  * @param {string|"❌"} [options.strings.cancel]
  * @param {string|"🕑"} [options.strings.timeout]
- * 
+ *
  * @returns {Promise<(boolean|null)>}  TRUE if YES | FALSE if NO | NULL if TIMEOUT
- * 
+ *
  */
 
 module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
@@ -35,12 +34,12 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   strings.timeout = `🕑${strings.timeout || ""}`;
 
   const YA = {
-    r: _emoji('yep').reaction,
-    id: _emoji('yep').id
+    r: _emoji("yep").reaction,
+    id: _emoji("yep").id,
   };
   const NA = {
-    r: _emoji('nope').reaction,
-    id: _emoji('nope').id
+    r: _emoji("nope").reaction,
+    id: _emoji("nope").id,
   };
 
   await promptMessage.addReaction(YA.r);
@@ -51,7 +50,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     authorOnly: options.approver || commandMessage.author.id,
     time,
   }).catch((err) => {
-    console.error(err)
+    console.error(err);
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 16499716;
@@ -64,9 +63,9 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (timeoutFunction) return timeoutFunction;
     return null;
   });
-   
+
   if (!reas?.length) return null;
- 
+
   function cancellation() {
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
@@ -78,7 +77,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     }
     if (typeof noFunction === "function") return noFunction(promptMessage);
     if (noFunction) return noFunction;
-    if (!noFunction) return false;    
+    if (!noFunction) return false;
   }
 
   if (reas.length === 1 && reas[0].emoji.id === NA.id) {

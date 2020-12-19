@@ -28,7 +28,7 @@ const PERMS_CALC = function CommandPermission(msg) {
   if ([msg.command.cat, msg.command.module].includes("nsfw") && !msg.channel.nsfw) {
     msg.channel.send($t("responses.errors.not-a-NSFW-channel", { lngs: msg.lang }));
     return false;
-  };
+  }
 
   let uIDs;
   switch (msg.command.module) {
@@ -81,7 +81,7 @@ const DEFAULT_CMD_OPTS = {
       aliases: msg.command.aliases,
       scope: msg.command.scope,
       related: msg.command.related,
-      helpImage: msg.command.helpImage
+      helpImage: msg.command.helpImage,
     });
   },
   cooldown: 3456.777,
@@ -89,12 +89,12 @@ const DEFAULT_CMD_OPTS = {
   cooldownReturns: 2,
   requirements: { custom: PERMS_CALC },
   permissionMessage: (msg) => (
-    msg.guild.disaReply ? 
-      msg.commandDenyChn
-      ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
-      : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
-        : msg.addReaction(_emoji("nope").reaction)
-    : null
+    msg.guild.disaReply
+      ? msg.commandDenyChn
+        ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
+        : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
+          : msg.addReaction(_emoji("nope").reaction)
+      : null
   ),
   hooks: {
     preCommand: (m, a) => {
@@ -122,14 +122,14 @@ const DEFAULT_CMD_OPTS = {
     },
   },
   errorMessage: function errorMessage(msg, err) {
-    console.error(" COMMAND ERROR ".bgRed)
-    console.error(err)
+    console.error(" COMMAND ERROR ".bgRed);
+    console.error(err);
     return ({
       embed: {
         // description: "Oh **no**! Something went wrong...\n"
         // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
         description: "Oh **no**! Something went wrong...\n"
-          + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${PLX.beta || cfg.testChannels.includes(msg.channel.id) ? ` \`\`\`js\n${err?.stack || err?.message || 'UNKNOWN ERROR' }\`\`\`` : ""}`,
+          + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${PLX.beta || cfg.testChannels.includes(msg.channel.id) ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\`` : ""}`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
         color: 0xF05060,
       },
@@ -182,13 +182,13 @@ const registerOne = (folder, _cmd) => {
     return null;
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
-    hook.error( `
+    hook.error(`
     **Command Soft Error**
     \`\`\`js
-${e.stack.slice(0,1900)}
+${e.stack.slice(0, 1900)}
     \`\`\`
     The command \`${_cmd}\` was **not** loaded!
-    `,{hook: errorsHook})
+    `, { hook: errorsHook });
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
     // console.error("\r                                " + e.message.red)
     return null;

@@ -4,7 +4,6 @@ const Gal = require("../../structures/Galleries");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
 
   let Target = await PLX.resolveMember(msg.guild, msg.args[0]);
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
@@ -99,19 +98,18 @@ const init = async function (msg) {
     });
     return;
   }
- 
+
   if (!pre_msg) {
     pre_msg = await msg.channel.send({ embed });
   }
 
+  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`);
+  const sanitize = (x) => x.replace(/[\u{0080}-\u{FFFF}]/gu, "?");
 
-  const post_reason = (`${reason}\n  - MOD: ${msg.author.tag}`)
-  const sanitize = x=> x.replace(/[\u{0080}-\u{FFFF}]/gu,"?");
-
-  const postban = async (banned)=>{
-    console.log('postban')
+  const postban = async (banned) => {
+    console.log("postban");
     await wait(1);
-    console.log('wawa')
+    console.log("wawa");
     if (soft) {
       PLX.unbean(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
     }
@@ -125,18 +123,18 @@ const init = async function (msg) {
 
     userBanned = null;
     Target = null;
-  }
+  };
 
-  PLX.bean(msg.guild.id, Target.id, clear, post_reason).then( postban )
-  .catch((err) => {
-    console.log(err)
-    PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
-      .then(postban)
-      .catch(err=>{
-        msg.channel.send($t("interface.kickban.userKickError", P)); 
-        console.error(err);
-    })
-  });
+  PLX.bean(msg.guild.id, Target.id, clear, post_reason).then(postban)
+    .catch((err) => {
+      console.log(err);
+      PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
+        .then(postban)
+        .catch((err) => {
+          msg.channel.send($t("interface.kickban.userKickError", P));
+          console.error(err);
+        });
+    });
 };
 
 module.exports = {

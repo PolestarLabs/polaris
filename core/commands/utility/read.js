@@ -6,11 +6,11 @@ const Vision = require("@google-cloud/vision/");
 const cmd = "read";
 const init = async function (message, cmdPiece = false) {
   return new Promise(async (resolve) => {
-    let url = "https://proxy.pollux.workers.dev/?pollux_url="+encodeURIComponent(message.args[0]);
+    const url = `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(message.args[0])}`;
     i2b(url, async (err, img) => {
-      if (err) { 
+      if (err) {
         let nwurl = await PLX.getChannelImg(message);
-        if(nwurl.includes("cdn.discordapp")) nwurl = decodeURIComponent(nwurl.replace('https://proxy.pollux.workers.dev/?pollux_url=',''));
+        if (nwurl.includes("cdn.discordapp")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
         if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
         return i2b(nwurl, (err, b64) => resolve(vere(b64.base64, message, cmdPiece)));
       }

@@ -1,5 +1,6 @@
 const games = new Map();
 const yesNo = require("../structures/YesNo");
+
 module.exports = class Hangmaid {
   constructor(message, words) {
     const WORD = shuffle(words)[0];
@@ -11,16 +12,16 @@ module.exports = class Hangmaid {
     this.incorrectLetters = [];
     this.originalMessage = message;
     this.end = false;
-    this.channel = message.channel.id
+    this.channel = message.channel.id;
     games.set(message.channel.id, message.id);
   }
 
-  sanitize(word){
+  sanitize(word) {
     return word
       .toUpperCase()
       .normalize("NFD")
       .replace(/[\u0300-\u036f]/g, "")
-      .replace('>','')
+      .replace(">", "")
       .trim();
   }
 
@@ -44,9 +45,8 @@ module.exports = class Hangmaid {
   }
 
   handleInput(guess) { // handleInput () => Object
-
     if (this.isFullGuess(guess)) return this.terminate("win");
-    else if (guess.length > 1) return this.terminate("lose");
+    if (guess.length > 1) return this.terminate("lose");
 
     const wordArray = this.word.toUpperCase().split("");
 
@@ -56,26 +56,25 @@ module.exports = class Hangmaid {
       return false;
     }
 
-    wordArray.forEach((wl, i) => wl === guess ? this.wordBoard[i] = guess : null);
-    if (this.sanitize(this.wordBoard.join('')) === this.sanitize(this.word)) return this.terminate("win");
+    wordArray.forEach((wl, i) => (wl === guess ? this.wordBoard[i] = guess : null));
+    if (this.sanitize(this.wordBoard.join("")) === this.sanitize(this.word)) return this.terminate("win");
 
     return false;
   }
 
-  get GUESSES(){ return this.end === "win" ? this.word : this.wordBoard.join("") }
+  get GUESSES() { return this.end === "win" ? this.word : this.wordBoard.join(""); }
 
-  get ATTEMPTS(){ return this.incorrectLetters.join("") }
+  get ATTEMPTS() { return this.incorrectLetters.join(""); }
 
-  get HINT(){ return this.theme }
+  get HINT() { return this.theme; }
 
-  get ENDGAME(){ return this.end }
+  get ENDGAME() { return this.end; }
 
   static gameExists(channelID) {
     return games.get(channelID);
   }
 
-  finish(){
+  finish() {
     games.delete(this.channel);
   }
-
 };

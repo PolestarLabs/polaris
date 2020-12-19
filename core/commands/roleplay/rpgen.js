@@ -4,7 +4,7 @@ const axios = require("axios");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const RPGen = require("../../../resources/rpgen");
 
   const hex = `#${(randomize(0, 1677720) * 10 + 2).toString(16).padStart(6, "A")}`;
@@ -91,8 +91,6 @@ const init = async function (msg) {
     embed.description = flavor;
     return msg.channel.send({ embed });
   }
-
-  
 };
 module.exports = {
   init,

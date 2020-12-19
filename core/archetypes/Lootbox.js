@@ -73,9 +73,9 @@ class LootboxItem {
       }
 
       query.type = this.type;
-      Object.keys(query).forEach(ky=> query[ky] ?? delete query[ky] );
+      Object.keys(query).forEach((ky) => query[ky] ?? delete query[ky]);
 
-      if (this.exclusive) query = [query,{ exclusive: this.exclusive }];
+      if (this.exclusive) query = [query, { exclusive: this.exclusive }];
 
       DB[collection].aggregate([
         { $match: query },
@@ -106,7 +106,7 @@ class LootboxItem {
 
   calculateGems(gem) {
     const noise = randomize(-30, 100);
-    this.amount = gem === "SPH" ?  Math.ceil((gemRATES[this.rarity]) / 100 ) : Math.floor((gemRATES[this.rarity] + noise) * (gem === "JDE" ? 5 : 1));
+    this.amount = gem === "SPH" ? Math.ceil((gemRATES[this.rarity]) / 100) : Math.floor((gemRATES[this.rarity] + noise) * (gem === "JDE" ? 5 : 1));
     this.currency = gem;
     return this.amount;
   }
@@ -138,7 +138,7 @@ class Lootbox {
 
     let contentBlueprint = [];
     for (let i = 0; i < this.#size; i++) {
-      const itemTypeArray = Lootbox._shuffle(["junk", "junk", "junk", "material", "material", "junk","key","key"]);
+      const itemTypeArray = Lootbox._shuffle(["junk", "junk", "junk", "material", "material", "junk", "key", "key"]);
       contentBlueprint.push({
         rarity: rarArray[i], event: eveArray[i], item: itmArray[i], itemType: itemTypeArray[0], filter: fltArray[i],
       });

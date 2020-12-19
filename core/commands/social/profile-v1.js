@@ -165,15 +165,15 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
-  const Target = await PLX.getTarget(msg.args[0],msg.guild,false,true) || msg.member;
+  const Target = await PLX.getTarget(msg.args[0], msg.guild, false, true) || msg.member;
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   let Target_Database = await DB.users.get({ id: Target.id });
 
   if (Target_Database) Target_Database.type = "udata";
   const PFLD = Target_Database.switches?.profiled || false;
- 
+
   // Strictly accepts UDBData and DiscordUser/DiscordMember
-  const USERPROFILE = new UserProfileModel(Target_Database, Target); 
+  const USERPROFILE = new UserProfileModel(Target_Database, Target);
 
   console.log({ USERPROFILE });
 
@@ -188,14 +188,14 @@ init = async (msg) => {
     //= ========================================
 
     let img = {};
-    img.defaultAvi   = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
-    img.mainframe    = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex"}.png`);
-    img.background   = Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
-    img.flair        = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`).catch(err=> Picto.getCanvas(`${paths.CDN}/flairs/default.png`) );
-    img.sticker      = USERPROFILE.sticker && Picto.getCanvas(paths.CDN + "/stickers/"             + USERPROFILE.sticker      + ".png");
-    img.flag         = USERPROFILE.countryFlag && Picto.getCanvas(paths.CDN + "/build/flags/"          + USERPROFILE.countryFlag  + ".png");
-    img.aviFrame     = USERPROFILE.profileFrame && Picto.getCanvas(paths.CDN + "/build/profile/frames/" + USERPROFILE.profileFrame + ".png");
-    img.medals       = USERPROFILE.medals.map((mdl) => new Object({
+    img.defaultAvi = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
+    img.mainframe = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_botpart" : "mainframe_bot" : "mainframe-nex"}.png`);
+    img.background = Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
+    img.flair = Picto.getCanvas(`${paths.CDN}/flairs/${USERPROFILE.flair}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`));
+    img.sticker = USERPROFILE.sticker && Picto.getCanvas(`${paths.CDN}/stickers/${USERPROFILE.sticker}.png`);
+    img.flag = USERPROFILE.countryFlag && Picto.getCanvas(`${paths.CDN}/build/flags/${USERPROFILE.countryFlag}.png`);
+    img.aviFrame = USERPROFILE.profileFrame && Picto.getCanvas(`${paths.CDN}/build/profile/frames/${USERPROFILE.profileFrame}.png`);
+    img.medals = USERPROFILE.medals.map((mdl) => new Object({
       canvas: Picto.getCanvas(`${paths.CDN}/medals/${mdl}.png`),
       index: USERPROFILE.medals.indexOf(mdl),
     }));
@@ -205,10 +205,10 @@ init = async (msg) => {
     img.hex_frame = Picto.makeHex(250);
     img.hex_pic = Picto.makeHex(210, USERPROFILE.avatar);
 
-  if(!Target_Database){
-    USERPROFILE.tagline = "Not a Pollux user"
-    USERPROFILE.personalText = "This user does not play with Pollux :c"
-  }
+    if (!Target_Database) {
+      USERPROFILE.tagline = "Not a Pollux user";
+      USERPROFILE.personalText = "This user does not play with Pollux :c";
+    }
     //= =========================================
     //                      Gather Graphic Text
     //= =========================================
@@ -509,13 +509,13 @@ init = async (msg) => {
         ctx.drawImage(arr[2], 0, 0);
 
         try {
-          if(Target_Database){
+          if (Target_Database) {
             const cfg = require(`${appRoot}/config.json`);
             let bottomTag;
             if (Target_Database.switches?.hideProle) {
               bottomTag = Target_Database.switches.role;
             }
-            if (Target_Database.switches?.badges?.template == 'artist') bottomTag = "artist";
+            if (Target_Database.switches?.badges?.template == "artist") bottomTag = "artist";
             if (cfg.mods.includes(Target_Database.id)) bottomTag = "moderator";
             if (cfg.admins.includes(Target_Database.id)) bottomTag = "codes";
             if (cfg.owner.includes(Target_Database.id)) bottomTag = "owner";
@@ -588,7 +588,7 @@ module.exports = {
   perms: 3,
   init,
   cat: "social",
-  //aliases: ["ppc", "perfil"],
+  // aliases: ["ppc", "perfil"],
   cool: 800,
 };
 

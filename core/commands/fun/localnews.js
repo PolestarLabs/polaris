@@ -7,7 +7,6 @@ const Picto = require("../../utilities/Picto");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
 
   try {
     const canvas = Picto.new(700, 520);

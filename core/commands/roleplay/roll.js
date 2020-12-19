@@ -8,7 +8,7 @@ const init = async function (message) {
   const v = {};
 
   const P = { user: message.member.username, lngs: message.lang, prefix: message.prefix };
-  
+
   const DICE_REGEX = /([0-9]* *d[0-9]+)/g;
   const DICE_EMOTES = {
     2: "<:exchange:446901834246782976>",

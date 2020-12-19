@@ -11,7 +11,6 @@ const init = async function (msg) {
   const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
   const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
-
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
       if (Target.id === msg.author.id) {
@@ -67,17 +66,16 @@ const init = async function (msg) {
     embed.setColor("#3b9ea5");
     embed.description(
       `${_emoji("future")} ${dailyAvailable ? _emoji("online") + $t("responses.commend.check_yes", P) : _emoji("dnd") + $t("responses.commend.check_no", P)}\   
-      \n\n:reminder_ribbon: × **${userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**`
+      \n\n:reminder_ribbon: × **${userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**`,
     );
-    return msg.channel.send({ embed: embed });
+    return msg.channel.send({ embed });
   };
 
   Timed.init(msg, "commend", { day: 3.6e+6 }, after, reject, status, preafter);
 };
 
 const info = async (msg, args) => {
-
-  const Target = await PLX.getTarget(args[0]||msg.author, msg.guild) ;
+  const Target = await PLX.getTarget(args[0] || msg.author, msg.guild);
 
   const [targetData, targetDataC] = await Promise.all([
     (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
@@ -92,12 +90,13 @@ const info = async (msg, args) => {
       `__**Commend Info for ${Target.mention}**__\
       \n\u2003 Total Commends Received: **${targetData.modules.commend || 0}**\
       \n\u2003 Total Commends Given: **${targetData.modules.commended || 0}**\
-    ${commendT3.length == 0 ? "" :
-      `\n\n__**Top Commenders**__\
+    ${commendT3.length == 0 ? ""
+    : `\n\n__**Top Commenders**__\
       \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
       \n\u2003 ${commendT3[1] ? `**${commendT3[1].name}** > ${commendT3[1].amt}` : ""}\
       \n\u2003 ${commendT3[2] ? `**${commendT3[2].name}** > ${commendT3[2].amt}` : ""}`
-    }`);
+}`,
+    );
 
   return { embed };
 };

@@ -2,7 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   let purgeFilter = msg.args[0];
 
   const ServerDATA = await DB.servers.get(msg.guild.id);
@@ -15,7 +15,7 @@ const init = async function (msg) {
   if (purgeFilter === "reverse_filter" || purgeFilter === "!") {
     revFil = true;
     msg.args.shift();
-    purgeFilter = msg.args[0]
+    purgeFilter = msg.args[0];
   }
 
   if (purgeFilter.length < 5 && !isNaN(parseInt(purgeFilter, 10))) return `It looks like you meant to just clear messages. Use \`${msg.prefix}clear ${purgeFilter}\` instead.`;

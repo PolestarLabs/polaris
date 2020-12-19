@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 const config = require("../../../../dashboard/config");
 const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");
@@ -23,11 +23,11 @@ const settings = {
   noticeTimeout: 5e3,
 };
 
-const numSort = (a,b) => a-b;
+const numSort = (a, b) => a - b;
 function toHex(bet) {
   const betTypes = ["straight", "split", "street", "square", "basket", "dstreet", "dozen", "column", "snake", "manque", "passe", "colour", "parity"];
   const type = betTypes.indexOf(bet.type).toString(16);
-  
+
   const offset = bet.offset ?? (bet.number === "d"
     ? 2 : bet.number === 0
       ? 1 : bet.numbers?.sort(numSort)[1] - bet.numbers?.sort(numSort)[0] === 3
@@ -53,7 +53,7 @@ async function allowedToBet(Game, userID, bet) {
 async function creditUsers(results) {
   for (const result of results) {
     const { userID } = result;
-    ECO.checkFunds(userID, result.cost).then(hasEnough => {
+    ECO.checkFunds(userID, result.cost).then((hasEnough) => {
       if (!hasEnough) result.invalid = true; // REVIEW[epic=mitchell] roulette - check if we can use transfer instead
       else if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
       else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(() => "Shouldn't happen");
@@ -78,7 +78,7 @@ async function generateWheel() {
   return "https://cdn.discordapp.com/attachments/488142034776096772/719032519177273394/roulettebg.gif";
 }
 
-function getBoard(userData,highlight) {
+function getBoard(userData, highlight) {
   /*
     bet {
       amount: integer
@@ -90,7 +90,6 @@ function getBoard(userData,highlight) {
   */
   let data = "";
 
-  
   Object.keys(userData).forEach((k) => {
     data += `${k}_`;
     data += userData[k].hash += "_";
@@ -103,7 +102,7 @@ function getBoard(userData,highlight) {
 
   const imageURL = `${paths.DASH}/generators/roulette.png?data=${data}`;
 
-  return imageURL + (highlight?"&h="+highlight:"");
+  return imageURL + (highlight ? `&h=${highlight}` : "");
 }
 
 function e(number) {
@@ -111,22 +110,21 @@ function e(number) {
 }
 
 function translate(bet) {
-
-  const _b = "\u2002"//_emoji('__'); 
+  const _b = "\u2002";// _emoji('__');
 
   switch (bet.type) {
-    case "straight": return `${e(bet.number)}${_b}Straight **${(bet.number==="d"?"00":bet.number)}**` ;
+    case "straight": return `${e(bet.number)}${_b}Straight **${(bet.number === "d" ? "00" : bet.number)}**`;
     case "split": return `${_emoji("split")}${_b}${e(bet.numbers[0])} & ${e(bet.numbers[1])}`;
     case "street": return `${_emoji("street")}${_b}${e(bet.numbers[0])}- ${e(bet.numbers[1])}`;
     case "square": return `${_emoji("square")}${_b}${e(bet.numbers[0])} ${e(bet.numbers[1])} ${e(bet.numbers[2])} ${e(bet.numbers[3])}`;
     case "basket": return `${_emoji("basket")}${_b}Basket`; // basket
     case "dstreet": return `${_emoji("dstreet")}${_b}${e(bet.numbers[0])} > ${e(bet.numbers[1])}`;
-    case "dozen": return  `${_emoji("dozen"+bet.offset)}${_b}${e(1 + 12 * (bet.offset - 1))} ~ ${e(12 * bet.offset)}`;
-    case "column": return `${_emoji("column"+bet.offset)}${_b}Column ${bet.offset}`;
-    case "snake": return  `${_emoji("snake")}${_b}Snake`;      // snake
-    case "manque": return `${_emoji("manque")}${_b}Manque`;    // manque
-    case "passe": return  `${_emoji("passe")}${_b}Passe`;      // passe
-    case "colour": return !bet.offset ? `${_emoji("noir")}${_b}Noir` : `${_emoji("rouge")}${_b}Rouge` ;
+    case "dozen": return `${_emoji(`dozen${bet.offset}`)}${_b}${e(1 + 12 * (bet.offset - 1))} ~ ${e(12 * bet.offset)}`;
+    case "column": return `${_emoji(`column${bet.offset}`)}${_b}Column ${bet.offset}`;
+    case "snake": return `${_emoji("snake")}${_b}Snake`; // snake
+    case "manque": return `${_emoji("manque")}${_b}Manque`; // manque
+    case "passe": return `${_emoji("passe")}${_b}Passe`; // passe
+    case "colour": return !bet.offset ? `${_emoji("noir")}${_b}Noir` : `${_emoji("rouge")}${_b}Rouge`;
     case "parity": return !bet.offset ? `${_emoji("even")}${_b}Pair` : `${_emoji("odd")}${_b}Impair`;
     default: return bet.type;
   }
@@ -141,7 +139,7 @@ const init = async (msg) => {
   };
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   if (Roulette.gameExists(msg.guild.id)) return $t("games.alreadyPlaying", P);
 
   const helpEmbed = {
@@ -174,19 +172,19 @@ const init = async (msg) => {
   const boardmsg = await msg.channel.send({ embed: boardEmbed });
 
   const feed = [];
-  function updateFeed(userID,bet) {
+  function updateFeed(userID, bet) {
     if (feed.length === 5) feed.splice(0, 1);
     /*
     P.user = userName;
     P.amount = `**${miliarize(bet.amount)}** ${_emoji("RBN")}`;
     P.bet = translate(bet);
 
-    const commentary = rand$t("games.roulette.betPlaced", P);    
+    const commentary = rand$t("games.roulette.betPlaced", P);
     */
 
-    const betPlacedString = `<@${userID}>: **\`${ (bet.amount+"").padStart(4," ") }\`** ${_emoji("RBN")} \u2002→ \u2002${translate(bet)}`
+    const betPlacedString = `<@${userID}>: **\`${(`${bet.amount}`).padStart(4, " ")}\`** ${_emoji("RBN")} \u2002→ \u2002${translate(bet)}`;
     feed.push(`> ${betPlacedString}`);
-    
+
     boardEmbed.fields[0].value = feed.join("\n");
     boardmsg.edit({ embed: boardEmbed });
   }
@@ -215,7 +213,7 @@ const init = async (msg) => {
     Game.users[userID].hash = m.author.avatar || m.author.defaultAvatar;
     boardEmbed.image = { url: getBoard(Game.users) }; // readded for testing
     updateFeed(userID, bet);
-    //return m.addReaction(_emoji("chipOK").reaction);
+    // return m.addReaction(_emoji("chipOK").reaction);
     m.delete();
   });
 
@@ -231,9 +229,9 @@ const init = async (msg) => {
 
     const resultsEmbed = { color: settings.resultsEmbedColor, fields: [] };
     resultsEmbed.title = $t("games.roulette.resultsTitle", P);
-    resultsEmbed.description = $t("games.roulette.resultsDescription",{ P, number: _emoji(`roulette${displayNumber}`) });
+    resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: _emoji(`roulette${displayNumber}`) });
     resultsEmbed.image = { url: "attachment://roulette.png" };
-    //resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
+    // resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
 
     let value;
     if (validatedResults.length) {
@@ -242,9 +240,13 @@ const init = async (msg) => {
         if (result.invalid) {
           resultStrings = $t("games.roulette.resultsInvalid", P);
         } else if (result.payout > 0) {
-          resultStrings = $t("games.roulette.resultsWin", { P, e: _emoji('RBN') ,count: result.payout, returnObjects: true });
+          resultStrings = $t("games.roulette.resultsWin", {
+            P, e: _emoji("RBN"), count: result.payout, returnObjects: true,
+          });
         } else if (result.payout < 0) {
-          resultStrings = $t("games.roulette.resultsLoss", { P, e: _emoji('RBN') ,count: Math.abs(parseInt(result.payout)), returnObjects: true });
+          resultStrings = $t("games.roulette.resultsLoss", {
+            P, e: _emoji("RBN"), count: Math.abs(parseInt(result.payout)), returnObjects: true,
+          });
         } else {
           resultStrings = $t("games.roulette.resultsDraw", { P, returnObjects: true });
         }
@@ -256,11 +258,11 @@ const init = async (msg) => {
     }
     resultsEmbed.fields.push({ name: $t("games.roulette.resultsPlayer"), value });
 
-    setTimeout( async () => {
+    setTimeout(async () => {
       boardEmbed.image = {};
       boardmsg.edit({ embed: boardEmbed });
-      //wheelmsg.delete();
-      wheelmsg.channel.send({ embed: resultsEmbed },{name:"roulette.png", file: (await resolveFile(getBoard(Game.users,displayNumber))) });
+      // wheelmsg.delete();
+      wheelmsg.channel.send({ embed: resultsEmbed }, { name: "roulette.png", file: (await resolveFile(getBoard(Game.users, displayNumber))) });
     }, settings.sendWheelTime + settings.wheelSpinTime - settings.collectTime);
   });
   return null;
@@ -275,5 +277,5 @@ module.exports = {
   cat: "gambling",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
-  helpImage: settings.helpURL
+  helpImage: settings.helpURL,
 };

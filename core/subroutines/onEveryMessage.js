@@ -145,7 +145,7 @@ module.exports = async (msg) => {
   if (msg.guild.imagetracker && !msg.channel.nsfw) {
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
     if (msg.attachments?.[0] || hasImageURL) {
-      /*Do Stuff when there is image*/
+      /* Do Stuff when there is image */
     }
   }
 

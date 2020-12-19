@@ -4,7 +4,7 @@ const ECO = require("../../archetypes/Economy");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   msg.author.customCurr = msg.author.customCurr || {};
   msg.author.customCurr[msg.guild.id] = msg.author.customCurr[msg.guild.id] || 0;
 
@@ -49,7 +49,6 @@ const init = async (msg) => {
     { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     const pPool = parseInt(responses[0].content) || 0;
-
 
     msg.channel.send(`Your Initial balance (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id

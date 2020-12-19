@@ -1,5 +1,3 @@
-
-
 const init = async (msg) => {
   const P = {
     lngs: msg.lang,
@@ -17,16 +15,15 @@ const init = async (msg) => {
   const fs = require("fs");
   const files = fs.readdirSync(`${appRoot}/core/commands`);
   for (let i = 0; i < files.length; i++) {
-    try{
-
+    try {
       const filedir = `${appRoot}/core/commands/${files[i]}`;
       const morefiles = fs.readdirSync(filedir);
       morefiles.forEach((file) => {
         const cmdOptions = require(`${filedir}/${file}`);
         commands.push({ name: file.split(".")[0], group: files[i], ...cmdOptions });
       });
-    }catch(err){
-      
+    } catch (err) {
+
     }
   }
 

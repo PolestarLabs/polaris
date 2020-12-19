@@ -182,5 +182,5 @@ const init = async function (msg) {
 };
 
 module.exports = {
-  pub: true, cmd, perms: 3, init, cat: "misc", aliases: ["lv","lvl"],
+  pub: true, cmd, perms: 3, init, cat: "misc", aliases: ["lv", "lvl"],
 };

@@ -5,7 +5,7 @@ const Picto = require("../../utilities/Picto");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const Target = await PLX.getTarget(msg.args[0] || msg.author.id);
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
 

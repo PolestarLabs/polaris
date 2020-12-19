@@ -3,7 +3,7 @@ const baseline = 125;
 
 module.exports = {
 
-  DAILY:{
+  DAILY: {
     antimatter: 500,
     astatine: 100,
     uranium: 75,

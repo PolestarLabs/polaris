@@ -41,13 +41,13 @@ const ReactionMenu = function ReactionMenu(menu, msg, choices, options = {}) {
         }
       });
 
-      console.log(reas)
+      console.log(reas);
 
       if (!reas || reas?.length === 0) return resolve(null);
       m.removeReactions().catch(() => null);
       if (reas.length === 1 && choices.find((c) => reas[0].emoji.name === c.name)) {
         const res = choices.find((c) => reas[0].emoji.name === c.name);
-        console.log({choices,res})
+        console.log({ choices, res });
         return resolve(res);
       }
       return resolve(null);

@@ -1,7 +1,7 @@
 module.exports = async (guild, member) => {
   Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(1800).then(([svData, userData]) => {
-    console.log(svData.name,guild.id,guild.name)
-    if (!svData?.modules.GREET.enabled) return console.log({XXX:svData.modules},'GMA',svData?.modules.GREET.enabled);
+    console.log(svData.name, guild.id, guild.name);
+    if (!svData?.modules.GREET.enabled) return console.log({ XXX: svData.modules }, "GMA", svData?.modules.GREET.enabled);
 
     const welcomeTimer = svData.modules.GREET.timer;
     let welcomeText = svData.modules.GREET.text
@@ -37,12 +37,12 @@ module.exports = async (guild, member) => {
     const welcomeChannel = svData.modules.GREET.channel;
     const welcomeSkin = svData.modules.GREET.type;
     const welcomeImage = svData.modules.GREET.image;
-    if (embed){
+    if (embed) {
       embed.image = embed.image.url ? embed.image : welcomeImage && embed ? { url: "attachment://in.png" } : undefined;
       embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
-      console.log(embed,`${paths.CDN}/backdrops/${userData.modules.bgID}.png`)
+      console.log(embed, `${paths.CDN}/backdrops/${userData.modules.bgID}.png`);
     }
-      
+
     const P = { lngs: [svData.modules.LANGUAGE || "en", "dev"] };
     const txt = $t("logs.userJoin", P).replace(/\*/g, "");
 

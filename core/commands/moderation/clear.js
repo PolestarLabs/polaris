@@ -2,7 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const ServerDATA = await DB.servers.get(msg.guild.id);
   const modPass = PLX.modPass(msg.member, "manageMessages", ServerDATA, msg.channel);
   if (!modPass) {

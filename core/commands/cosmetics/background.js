@@ -1,9 +1,11 @@
 const cmd = "background";
 const ECO = require("../../archetypes/Economy.js");
+
 const GNums = require(`${appRoot}/resources/lists/GlobalNumbers`);
 const Picto = require("../../utilities/Picto");
 const YesNo = require("../../structures/YesNo");
-const isEventBG = (bg) => (bg.event && bg.event !== 'none');
+
+const isEventBG = (bg) => (bg.event && bg.event !== "none");
 
 const init = async (msg, args) => {
   let BGBASE = await DB.cosmetics.bgs();
@@ -32,7 +34,7 @@ const init = async (msg, args) => {
   \`${selectedBG.code}\`
   [${$t("responses.equip.getMoreBG", P)}](${paths.DASH}/bgshop)
   `;
-  let _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity];
+  const _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity];
 
   embed.field(
     $t("terms.price", P),
@@ -61,26 +63,24 @@ const init = async (msg, args) => {
   }
 
   const imageLink = `${paths.CDN}/backdrops/${selectedBG.code}.png`;
-  
+
   embed.setColor(await Picto.avgColor(imageLink));
   embed.image(imageLink);
-  
+
   return msg.channel.send({ embed }).then(async (m) => {
     async function positive(cancellation) {
-      if (hasIt){
-
-        return DB.users.set({ id: msg.author.id }, {$set: {"modules.bgID": selectedBG.code,}} );
+      if (hasIt) {
+        return DB.users.set({ id: msg.author.id }, { $set: { "modules.bgID": selectedBG.code } });
       }
       if (!hasIt && affordsIt) {
         await ECO.pay(msg.author.id, _price, "bgshop_bot");
       }
       if (!affordsIt) return cancellation();
       return DB.users.set({ id: msg.author.id },
-        {$set: {"modules.bgID": selectedBG.code,},$addToSet: {"modules.bgInventory": selectedBG.code,}},
-      ).then(() => {});
+        { $set: { "modules.bgID": selectedBG.code }, $addToSet: { "modules.bgInventory": selectedBG.code } }).then(() => {});
     }
 
-    if ( hasIt || (affordsIt && canBuy) ) {
+    if (hasIt || (affordsIt && canBuy)) {
       YesNo(m, msg, positive, null, null, {
         strings: {
           cancel: $t("interface.generic.cancel", P),
@@ -101,4 +101,3 @@ module.exports = {
   aliases: ["bg", "backdrop", "equip"],
   botPerms: ["attachFiles", "embedLinks"],
 };
-

@@ -71,21 +71,20 @@ const topCommend = async (m) => {
   return { embed };
 };
 
-const topThanks = async(msg)=>{
-  const rank = await DB.localranks.find({server:msg.guild.id, thx: {$gt:0} }).sort({thx:-1}).limit(10).lean();
-  let rankmap = rank.map((usr,i)=>
-    `${_emoji( "rank"+ (i+1))} - **\`${(usr.thx||0).toString().padStart(2,' ')}\`**×${_emoji('THX')}\u2002<@${usr.user}> `
-  ).join('\n')
+const topThanks = async (msg) => {
+  const rank = await DB.localranks.find({ server: msg.guild.id, thx: { $gt: 0 } }).sort({ thx: -1 }).limit(10).lean();
+  const rankmap = rank.map((usr, i) => `${_emoji(`rank${i + 1}`)} - **\`${(usr.thx || 0).toString().padStart(2, " ")}\`**×${_emoji("THX")}\u2002<@${usr.user}> `).join("\n");
 
-  return {embed:{
-    description:rankmap,
-    footer: {
-      icon_url: msg.guild.iconURL,
-      text: msg.guild.name
-    }
-  }}
-}
-
+  return {
+    embed: {
+      description: rankmap,
+      footer: {
+        icon_url: msg.guild.iconURL,
+        text: msg.guild.name,
+      },
+    },
+  };
+};
 
 module.exports = {
   init: topGlobal,

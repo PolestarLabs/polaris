@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 // const DB = require('../database/db_ops');
 
 // const CURRENCIES = {
@@ -13,13 +13,18 @@
 // };
 
 const toCurrencies = {
-  RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
-  AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
-}
+  RUBINE: "RBN",
+  JADE: "JDE",
+  SAPPHIRE: "SPH",
+  AMETHYST: "AMY",
+  EMERALD: "EMD",
+  TOPAZE: "TPZ",
+  PRISM: "PSM",
+};
 const currencies = [
   "RBN", "JDE", "SPH",
-  "AMY", "EMD", "TPZ", "PSM"
-]
+  "AMY", "EMD", "TPZ", "PSM",
+];
 
 /**
  * Checks if currency or currencies are valid, otherwise throws error.
@@ -32,13 +37,13 @@ function parseCurrencies(curr) {
   // Argument parsing
   const type = typeof curr;
   if (typeof curr === "string") curr = [curr.toUpperCase()];
-  else curr = curr.map(c => c.toUpperCase());
+  else curr = curr.map((c) => c.toUpperCase());
 
   // convert currencies to XXX format. eg. rubines/rubine → RBN.
-  if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
-  
+  if (curr) curr = curr.map((c) => (toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length - 1)] ? c.slice(0, c.length - 1) : c));
+
   // NOTE: changing the way this returns has implications down the line.
-  if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
+  if (!curr || curr.some((curr) => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
   return (type === "string" ? curr[0] : curr);
 }
 
@@ -65,7 +70,7 @@ function checkFunds(user, amount, currency = "RBN") {
     curr = [curr];
   } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
 
-  const uID = user["id"] || user;
+  const uID = user.id || user;
   if (uID === PLX.user.id) return Promise.resolve(true);
 
   return DB.users.get(uID).then((userData) => {
@@ -91,14 +96,14 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} symbol Transaction symbol.
  * @return {object} The payload generated.
  */
-function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
+function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
-  if (userFrom["id"]) userFrom = userFrom["id"];
-  if (userTo["id"]) userTo = userTo["id"];
+  if (userFrom.id) userFrom = userFrom.id;
+  if (userTo.id) userTo = userTo.id;
   const now = Date.now();
   const payload = {
-    subtype: subtype,
-    type: type,
+    subtype,
+    type,
     currency: curr,
     transaction: symbol,
     from: userFrom,
@@ -121,7 +126,7 @@ function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function pay(user, amt, type = "OTHER", currency = "RBN",) {
+function pay(user, amt, type = "OTHER", currency = "RBN") {
   return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-");
 }
 
@@ -142,7 +147,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
 
 /**
  * A money transfer between users.
- * 
+ *
  * @param {string|{id: string}} userFrom user(ID) from
  * @param {string|{id: string}} userTo user(ID) to
  * @param {number|Array.<number>} amt The amounts to transfer, or an array of.
@@ -160,13 +165,13 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (!amt || (typeof amt !== "number" && !amt.length)) return Promise.resolve(null);
 
   // Argument parsing
-  if (userFrom["id"]) userFrom = userFrom["id"];
-  if (userTo["id"]) userTo = userTo["id"];
+  if (userFrom.id) userFrom = userFrom.id;
+  if (userTo.id) userTo = userTo.id;
 
   // Checks
   curr = parseCurrencies(curr);
-  return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds) return Promise.reject({reason: "NO FUNDS"}); //throw new Error("User doesn't have the funds necessary.");
+  return checkFunds(userFrom, amt, curr).then((hasFunds) => {
+    if (!hasFunds) return Promise.reject({ reason: "NO FUNDS" }); // throw new Error("User doesn't have the funds necessary.");
 
     // Argument validation
     if (typeof amt === "number" || typeof curr === "string") {
@@ -181,8 +186,8 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     const payloads = [];
 
     // Fill DB calls
-    for (let i in curr) {
-      let absAmount = Math.abs(amt[i]);
+    for (const i in curr) {
+      const absAmount = Math.abs(amt[i]);
       if (!absAmount) continue; // stop if AMT = 0 or not present
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
@@ -209,7 +214,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 }
 
 /**
- * Creates a new audit. 
+ * Creates a new audit.
  * NOTE: this will immediately end up in DB.
  *
  * @param {string|{id: string}} from user(ID) from

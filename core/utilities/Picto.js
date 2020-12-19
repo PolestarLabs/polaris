@@ -1,8 +1,7 @@
 const π = Math.PI;
 const Canvas = require("canvas");
 const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
-const { fillTextWithTwemoji } = require('node-canvas-with-twemoji');
-
+const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
 
 function RGBstring(rgbColor) {
   rgbColor = (rgbColor || "#F55595").replace(/\s/g, "");
@@ -40,29 +39,29 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: function getCanvas(...args){    
-    return  Canvas.loadImage(...args).catch(err=>{
-      console.error(...args)
+  getCanvas: function getCanvas(...args) {
+    return Canvas.loadImage(...args).catch((err) => {
+      console.error(...args);
       const canvas = Canvas.createCanvas(250, 250);
       const c = canvas.getContext("2d");
       c.fillStyle = "#F0F";
-      c.fillRect(0,0,250,250);
+      c.fillRect(0, 0, 250, 250);
       c.fillStyle = "#000";
-      c.fillText("ERROR LOADING: "+[...args]+" !");
+      c.fillText(`ERROR LOADING: ${[...args]} !`);
       return canvas;
-    })
+    });
   },
 
-  getFullCanvas: function getCanvas(...args){
-    return Canvas.loadImage(...args).catch(err=>{
-      console.error(...args)
-      throw new Error(err)
-    }).then( img => {
-      let canvas = Canvas.createCanvas(img.width,img.height);
-      let c = canvas.getContext('2d');
-      c.drawImage(img,0,0);
+  getFullCanvas: function getCanvas(...args) {
+    return Canvas.loadImage(...args).catch((err) => {
+      console.error(...args);
+      throw new Error(err);
+    }).then((img) => {
+      const canvas = Canvas.createCanvas(img.width, img.height);
+      const c = canvas.getContext("2d");
+      c.drawImage(img, 0, 0);
       return canvas;
-    })      
+    });
   },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
@@ -73,12 +72,10 @@ module.exports = {
     const h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
 
-    
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
-    
+
     const item = Canvas.createCanvas(w, h + H);
     const c = item.getContext("2d");
- 
 
     c.font = ctx.font;
     if (stroke) {
@@ -97,7 +94,6 @@ module.exports = {
   },
 
   tagMoji: async function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
-    
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
@@ -107,10 +103,10 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
 
-    const item = Canvas.createCanvas(w, 1.1*(h + H) );
+    const item = Canvas.createCanvas(w, 1.1 * (h + H));
     const c = item.getContext("2d");
     c.font = ctx.font;
-    
+
     if (stroke) {
       c.strokeStyle = stroke.style;
       c.lineWidth = stroke.line;
@@ -120,8 +116,7 @@ module.exports = {
     await fillTextWithTwemoji(c,
       text,
       1 + (stroke ? stroke.line / 2 : 0),
-      H + (stroke ? stroke.line / 2 : 0)+((h+H)*.1), {maxWidth:w}
-    );
+      H + (stroke ? stroke.line / 2 : 0) + ((h + H) * 0.1), { maxWidth: w });
 
     return { item, height: h + H, width: w }; // legacy
   },
@@ -157,12 +152,12 @@ module.exports = {
   },
 
   avgColor: async function avgColor(link, blockSize = 5) {
-    let imgEl 
-    try{
+    let imgEl;
+    try {
       imgEl = await Canvas.loadImage(link);
-    }catch(err){
+    } catch (err) {
       console.error(err);
-      return "#000000"
+      return "#000000";
     }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 
@@ -262,7 +257,6 @@ module.exports = {
   },
 
   setAndDraw: function setAndDraw(ct, img, x, y, maxW = 300, align = "left") {
-
     let w = img.w || img.width;
     w = w > maxW ? maxW : w;
 
@@ -462,12 +456,12 @@ module.exports = {
     shadow = shadow || stroke.line / 2 - 1;
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
-    let FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
+    const FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
     let ctx_2 = this.tag(ctx, TXT, FONT, stroke.style, stroke);
     ctx.drawImage(
-      ctx_2.item,X,Y,
+      ctx_2.item, X, Y,
       maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
-      ctx_2.height
+      ctx_2.height,
     );
     ctx_2 = this.tag(ctx, TXT, FONT, color, stroke);
     ctx.drawImage(
@@ -475,7 +469,7 @@ module.exports = {
       X - shadow,
       Y - shadow,
       maxWidth && ctx_2.width > maxWidth ? maxWidth : ctx_2.width,
-      ctx_2.height
+      ctx_2.height,
     );
     return {
       w:

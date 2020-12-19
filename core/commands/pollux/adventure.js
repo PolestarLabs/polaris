@@ -3,7 +3,7 @@ const ReactionMenu = require("../../structures/ReactionMenu");
 
 const init = async function (msg) {
   0;
-  
+
   const LOCATIONS = [
     {
       name: "City 0",
@@ -13,7 +13,7 @@ const init = async function (msg) {
       emoji: "🏙",
       rank: 0,
       image: "https://cdn.discordapp.com/attachments/488142034776096772/689004836985110538/venture_field.gif",
-      //replaces: ["city0"],
+      // replaces: ["city0"],
     },
     {
       name: "Desert 1",
@@ -52,14 +52,9 @@ const init = async function (msg) {
       emoji: "🏞️",
       rank: 2,
       image: "https://cdn.discordapp.com/attachments/488142034776096772/689004836985110538/venture_field.gif",
-      replaces: ["field1","desert1"],
+      replaces: ["field1", "desert1"],
     },
   ].filter((loc, i, a) => !a.map((y) => (y.replaces || []).join(" ")).join(" ").includes(loc.id));
-
-
-
-
-
 
   // ----------------------------------------------------------
   const TIMES = ["<:TIME1:688827284077150267>", "<:TIME2:688827283624296615>", "<:TIME3:688827284609957945>"];
@@ -83,13 +78,11 @@ const init = async function (msg) {
                 Cost: ${_emoji("RBN")} **5000** Rubines`,
   ];
 
-  
   //----------------------------------------------------------
 
   const embed = {};
   const tallyEmbed = { fields: [] };
   const tally = await msg.channel.send({ embed: tallyEmbed });
-
 
   embed.title = "**Select insurance:**";
   embed.description = `*You never know what you're going to find on an adventure, this insurance is a spare cash you will use for all your travel expenses.*
@@ -110,7 +103,7 @@ const init = async function (msg) {
   embed.description = `How long will you slide?
     ${TIME_OPTS.join("\n")}`;
   const res_DUR = await Screen({ embed }, TIMES);
-  let durationChoice = res_DUR.res.index;
+  const durationChoice = res_DUR.res.index;
 
   //-----------------------------------------------
   const selectedTime = durationChoice === 0 ? 1
@@ -123,29 +116,11 @@ const init = async function (msg) {
   tallyEmbed.fields.push({ name: "Duration", value: embed.description, inline: true });
   tally.edit({ embed: tallyEmbed });
 
-  
-
   res_DUR.menuMessage.delete();
 
   if (!selectedTime) return "ERROR";
 
-
-
-
-
-
-
-
-
-
-
-
-
-  const LOCATIONS_B = await DB.advLocations.traceRoutes("LSGC",durationChoice);
-
-
-
-
+  const LOCATIONS_B = await DB.advLocations.traceRoutes("LSGC", durationChoice);
 
   const locationEmbed = {
     embed: {
@@ -156,11 +131,10 @@ const init = async function (msg) {
     },
   };
 
-  locationEmbed.embed.fields.push({name:"\u200b",value: "*You can also type the ID of the desired location. By default you will be sent to the highest level available.*"});
-
+  locationEmbed.embed.fields.push({ name: "\u200b", value: "*You can also type the ID of the desired location. By default you will be sent to the highest level available.*" });
 
   // TODO[epic=flicky] Assign emojis to options properly
-  const res_LOC = await Screen(locationEmbed, ["🥩","🍠","🥟","🥠","🥡"]);
+  const res_LOC = await Screen(locationEmbed, ["🥩", "🍠", "🥟", "🥠", "🥡"]);
   //-----------------------------------------------
   const selectedLocation = LOCATIONS_B[res_LOC.res.index];
   //-----------------------------------------------
@@ -168,44 +142,27 @@ const init = async function (msg) {
   embed.description = `${selectedLocation.emoji} **${selectedLocation.name}**`;
   tallyEmbed.fields.push({ name: "Location", value: embed.description, inline: true });
 
-   // TODO[epic=flicky] adventure Create adventure and save to DB
+  // TODO[epic=flicky] adventure Create adventure and save to DB
 
-  
-  let ventureImage = renderMap(selectedLocation._id);
+  const ventureImage = renderMap(selectedLocation._id);
 
-  tallyEmbed.image = { url: 'attachment://venture.png' };
+  tallyEmbed.image = { url: "attachment://venture.png" };
   tally.edit({ embed: tallyEmbed });
 
   res_LOC.menuMessage.delete();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const userData = await DB.users.get(msg.author.id);
   userData.supplied_rubines = selectedInsurance;
 
-  const playersHere = await DB.advJourneys.find({location: selectedLocation._id, end: {$gt: Date.now()} }).lean();
+  const playersHere = await DB.advJourneys.find({ location: selectedLocation._id, end: { $gt: Date.now() } }).lean();
   const Adventure = new Venture(userData, selectedTime, selectedLocation, playersHere);
   const journeyLog = new Journey(Adventure);
 
-  msg.channel.send(`\`\`\`json\n${JSON.stringify({ Adventure })}\`\`\``).catch(err=>null);
-  msg.channel.send(`\`\`\`json\n${JSON.stringify({ journeyLog })}\`\`\``).catch(err=>null);
+  msg.channel.send(`\`\`\`json\n${JSON.stringify({ Adventure })}\`\`\``).catch((err) => null);
+  msg.channel.send(`\`\`\`json\n${JSON.stringify({ journeyLog })}\`\`\``).catch((err) => null);
 
-  Adventure.location =selectedLocation._id
-  DB.advJourneys.new(msg.author.id,Adventure,Adventure.journey)
+  Adventure.location = selectedLocation._id;
+  DB.advJourneys.new(msg.author.id, Adventure, Adventure.journey);
 
   async function Screen(message, choices) {
     const menu = await msg.channel.send(message);
@@ -222,5 +179,5 @@ module.exports = {
   perms: 3,
   cat: "pollux",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["venture", "explore","adv"],
+  aliases: ["venture", "explore", "adv"],
 };

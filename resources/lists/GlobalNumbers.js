@@ -1,9 +1,9 @@
 module.exports = {
 
   DROPMAX: 1000, // Maximum dice face for Lootbox Drops
-  sapphireModifier: .000794912559618442,  // ÷1258
+  sapphireModifier: 0.000794912559618442, // ÷1258
   jadeModifier: 2250, // (legacy)
-  tokenModifier: .5,
+  tokenModifier: 0.5,
   bgPrices: {
     UR: 32520, SR: 15250, R: 8200, U: 3100, C: 1850,
   },

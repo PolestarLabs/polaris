@@ -16,7 +16,7 @@ class ReactionCollector extends EventEmitter {
     if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
   }
 
-  verify(message, emoji, {id:userID}) {
+  verify(message, emoji, { id: userID }) {
     if (message.id !== this.message.id) return false;
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;

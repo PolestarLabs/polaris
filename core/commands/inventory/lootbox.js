@@ -5,15 +5,12 @@ const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
 const init = async function (msg, args, memberObj) {
-
   const userID = memberObj?.id || memberObj;
 
-  console.log({args})
+  console.log({ args });
 
-  console.log({userID, args10: args[10]?.id||args[10] }, "init")
+  console.log({ userID, args10: args[10]?.id || args[10] }, "init");
 
-
-  
   if (userID && args[10]?.id != userID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
@@ -44,10 +41,10 @@ const init = async function (msg, args, memberObj) {
 };
 
 const open = async function (msg, args, memberObj) {
-  const userID = memberObj?.id || memberObj
+  const userID = memberObj?.id || memberObj;
   args = args.map((a) => (typeof a === "string" ? a.toUpperCase() : a));
 
-  console.log({userID, args10: args[10]?.id }, "open")
+  console.log({ userID, args10: args[10]?.id }, "open");
 
   INVOKERS.delete(userID || msg.author.id);
   INV_STATUS.delete(userID || msg.author.id);
@@ -67,7 +64,7 @@ const reactionOption = (rar) => ({
   emoji: _emoji(rar).reaction,
   type: "cancel",
   response: (msg, args, uid) => open(args[0], [rar, args[1]], uid),
-  filter: (msg, emj, uid) =>  INVOKERS.get(uid.id||uid) === msg.id && INV_STATUS.get(uid.id||uid).includes( rar ) //&& !LOOTING.get(uid)
+  filter: (msg, emj, uid) => INVOKERS.get(uid.id || uid) === msg.id && INV_STATUS.get(uid.id || uid).includes(rar), // && !LOOTING.get(uid)
 });
 
 module.exports = {

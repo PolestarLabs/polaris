@@ -3,10 +3,10 @@ const ReactionMenu = require("../../../structures/ReactionMenu");
 const itemTypes = ["background"];
 const abbrevs = {
   bg: "background",
-}
+};
 
 const init = async (msg, args) => {
-  let itemType = ((args[0] = args[0].toLowerCase()) && abbrevs[args[0]])?? args[0];
+  let itemType = ((args[0] = args[0].toLowerCase()) && abbrevs[args[0]]) ?? args[0];
   const itemId = args[1];
   const userData = await DB.users.getFull({ id: msg.author.id });
 
@@ -16,8 +16,7 @@ const init = async (msg, args) => {
     holder: msg.author.id,
   };
 
-  if (!itemTypes.includes(itemType)) 
-    return `You can only wrap one of the following types: ${itemTypes.map((s, i, a) => `${s}${i == a.length ? "" : ", "}`)}`;
+  if (!itemTypes.includes(itemType)) { return `You can only wrap one of the following types: ${itemTypes.map((s, i, a) => `${s}${i == a.length ? "" : ", "}`)}`; }
   if (!itemId) return `What \`${itemType}\` are you trying to wrap?`;
 
   if (["background", "bg"].includes(itemType)) {
@@ -47,7 +46,7 @@ const init = async (msg, args) => {
   const menuMessage = await msg.channel.send("**Choose your wrapping**");
   const res = await ReactionMenu(menuMessage, msg, wrapChoices, { time: 10000 });
 
-  let emoji = res ? wrapChoices[res.index] : shuffle(wrapChoices)[0];
+  const emoji = res ? wrapChoices[res.index] : shuffle(wrapChoices)[0];
 
   giftItem.emoji = emoji;
 

@@ -3,7 +3,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const userData = await DB.userDB.findOne({ id: msg.author.id });
   const persotxt = msg.args.join(" ");
 

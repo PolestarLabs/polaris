@@ -73,23 +73,23 @@ const init = async (msg, args) => {
             i === R || box === cbx ? "✔️" : `[${i}]`
           }${box.tradeable ? "[" : " "}${box.name}${box.tradeable ? "]" : " "}\n`,
         )
-        .join("")      
+        .join("")
     }\`\`\``;
 
-    let invEmpty = userBoxList.length == 0;
+    const invEmpty = userBoxList.length == 0;
 
     const embed = {};
     P.userB = `<@${Target.id}>`;
     embed.description = `
-    ${invEmpty?  "" : $t("responses.transfer.transferboxto", P)}   
-    ${invEmpty?  "*```"+rand$t("responses.inventory.emptyJokes", P)+"```*" : boxtats(userBoxList)}
-    ${invEmpty?  "" : $t("responses.generic.selectIndex",P)}
+    ${invEmpty ? "" : $t("responses.transfer.transferboxto", P)}   
+    ${invEmpty ? `*\`\`\`${rand$t("responses.inventory.emptyJokes", P)}\`\`\`*` : boxtats(userBoxList)}
+    ${invEmpty ? "" : $t("responses.generic.selectIndex", P)}
     `;
     embed.thumbnail = { url: Target.avatarURL };
     embed.footer = { text: message.author.tag, icon_url: message.author.avatarURL };
 
     const prompt = await message.channel.send({ embed });
-    if(invEmpty) return false;
+    if (invEmpty) return false;
 
     const timeout = () => {
       embed.color = 0xffc936;

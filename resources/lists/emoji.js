@@ -1,25 +1,24 @@
-//_PLX[epic=Utilities] Emojis File
+// _PLX[epic=Utilities] Emojis File
 const POLARIS_UI = {
- 
 
-  nope :"<:NOPE:763616715036033084>",
-  yep :"<:YEP:763616714914922527>",
-  maybe :"<:MAYB:763616754743115796>",
-  
-  save :"<:SAVE:763615045182554172>",
-  undo :"<:UNDO:763615045032083476>",
-  redo :"<:REDO:768519564517834762>",
-  channel :"<:CHANNEL:763615045099323392>",
+  nope: "<:NOPE:763616715036033084>",
+  yep: "<:YEP:763616714914922527>",
+  maybe: "<:MAYB:763616754743115796>",
+
+  save: "<:SAVE:763615045182554172>",
+  undo: "<:UNDO:763615045032083476>",
+  redo: "<:REDO:768519564517834762>",
+  channel: "<:CHANNEL:763615045099323392>",
   override: "<:override:763615044520509502>",
 
-  on_small : "<:swon:763615045024088104>",
-  off_small : "<:swpartial:763615045048467456>",
-  partial_small : "<:swoff:763615045174427649>",
+  on_small: "<:swon:763615045024088104>",
+  off_small: "<:swpartial:763615045048467456>",
+  partial_small: "<:swoff:763615045174427649>",
 
-  on : "<:switchON:763615044936007701>",
-  off : "<:switchOFF:763615045128945694>",
-  partial : "<:switchPARTIAL:763615045011374082>",
-  onoff_neutral : "<:switchNEUTRAL:763615045153456128>",
+  on: "<:switchON:763615044936007701>",
+  off: "<:switchOFF:763615045128945694>",
+  partial: "<:switchPARTIAL:763615045011374082>",
+  onoff_neutral: "<:switchNEUTRAL:763615045153456128>",
 
   whitegreenem: "<:switchpartialON:763615045133139968>",
   whiteredem: "<:switchpartialOFF:763615045111906314>",
@@ -27,39 +26,39 @@ const POLARIS_UI = {
 
   cogs: "<:cogs:763615044625760287>",
   THX: "<:THX:767860827435827230>",
- 
-// RANKS
- rank1: '<:rank1:767906710495952933>',
- rank2: '<:rank2:767906710790471701>',
- rank3: '<:rank3:767906710806724608>',
- rank4: '<:rank4:767906710638952498>',
- rank5: '<:rank5:767906710601203742>',
- rank6: '<:rank6:767906710660448276>',
- rank7: '<:rank7:767906710370254940>',
- rank8: '<:rank8:767906710219915295>',
- rank9: '<:rank9:767906710849060864>',
- rank10: '<:rank10:767906710626107442>',
 
- //GRADES
- gradeSSS: "<:gradeSSS:777037978127695872>",
- gradeSS: "<:gradeSS:777037978211057664>",
- gradeS: "<:gradeS:777037977976832080>",
- gradeA: "<:gradeA:777037977796870145>",
- gradeB: "<:gradeB:777037977989414939>",
- gradeC: "<:gradeC:777037977913524234>",
- gradeD: "<:gradeD:777037978085359636>", 
- gradeF: "<:gradeF:777037977921781770>",
- 
+  // RANKS
+  rank1: "<:rank1:767906710495952933>",
+  rank2: "<:rank2:767906710790471701>",
+  rank3: "<:rank3:767906710806724608>",
+  rank4: "<:rank4:767906710638952498>",
+  rank5: "<:rank5:767906710601203742>",
+  rank6: "<:rank6:767906710660448276>",
+  rank7: "<:rank7:767906710370254940>",
+  rank8: "<:rank8:767906710219915295>",
+  rank9: "<:rank9:767906710849060864>",
+  rank10: "<:rank10:767906710626107442>",
+
+  // GRADES
+  gradeSSS: "<:gradeSSS:777037978127695872>",
+  gradeSS: "<:gradeSS:777037978211057664>",
+  gradeS: "<:gradeS:777037977976832080>",
+  gradeA: "<:gradeA:777037977796870145>",
+  gradeB: "<:gradeB:777037977989414939>",
+  gradeC: "<:gradeC:777037977913524234>",
+  gradeD: "<:gradeD:777037978085359636>",
+  gradeF: "<:gradeF:777037977921781770>",
+
   // NAMED COPIES
 
   swon: "<:swon:763615045024088104>",
   swpartial: "<:swpartial:763615045048467456>",
   swoff: "<:swoff:763615045174427649>",
-  
+
   switchpartialON: "<:switchpartialON:763615045133139968>",
   switchpartialOFF: "<:switchpartialOFF:763615045111906314>",
   switchpartialPARTIAL: "<:switchpartialPARTIAL:763615044914642975>",
-  
+
   switchON: "<:switchON:763615044936007701>",
   switchOFF: "<:switchOFF:763615045128945694>",
   switchPARTIAL: "<:switchPARTIAL:763615045011374082>",
@@ -68,11 +67,8 @@ const POLARIS_UI = {
   UNAUTHORIZED: "<:UNAUTHORIZED:773091703464525844>",
   COMMAND_DISABLED: "<:COMMAND_DISABLED:773090932210925579>",
   CHECK_PERMISSIONS: "<:CHECK_PERMISSIONS:773090687817089025>",
-  
-  
+
   return: "<:return:763615045090803713>",
-
-
 
   loot: "<:loot:339957191027195905>",
   // token: "<:token:597978242535915526>",
@@ -99,39 +95,37 @@ const POLARIS_UI = {
   CTK: "<:CTK:765990892715638804>",
   comToken: "<:CTK:765990892715638804>",
 
-
-  //DONO
+  // DONO
   aluminium: "<:aluminium:673593146025967617>",
-carbon: "<:carbon:673593105458659356>",
-zircon: "<:zircon:673593105525637140>",
-uranium: "<:uranium:673593105454465035>",
-plastic: "<:plastic:673593105458528266>",
-palladium: "<:palladium:673593105055875073>",
-neutrino: "<:neutrino:673593105102143495>",
-lithium: "<:lithium:673593105391288357>",
-iron: "<:iron:673593105253007381>",
-iridium: "<:iridium:673593105546477568>",
-carbon: "<:carbon:673593105458659356>",
-astatine: "<:astatine:673593105479499817>",
-antimatter: "<:antimatter:673593105429299211>",
+  carbon: "<:carbon:673593105458659356>",
+  zircon: "<:zircon:673593105525637140>",
+  uranium: "<:uranium:673593105454465035>",
+  plastic: "<:plastic:673593105458528266>",
+  palladium: "<:palladium:673593105055875073>",
+  neutrino: "<:neutrino:673593105102143495>",
+  lithium: "<:lithium:673593105391288357>",
+  iron: "<:iron:673593105253007381>",
+  iridium: "<:iridium:673593105546477568>",
+  carbon: "<:carbon:673593105458659356>",
+  astatine: "<:astatine:673593105479499817>",
+  antimatter: "<:antimatter:673593105429299211>",
 
-  
-  rubine:  "<:RBN:765986694717374515>",
+  rubine: "<:RBN:765986694717374515>",
   rubine_simplelarge: "<:rubine_simplelarge:550389037265977382>",
   rubine_flatlarge: "<:rubine_flatlarge:550389035818942476>",
   rubine_fulllarge: "<:rubine_fulllarge:550389035835588638>",
-  
+
   jade: "<:JDE:765986694641352704>",
   jade_simplelarge: "<:jade_simplelarge:550389035806228502>",
   jade_flatlarge: "<:jade_flatlarge:550389035722342400>",
   jade_fulllarge: "<:jade_fulllarge:550389035906891789>",
-  
-  sapphire:"<:SPH:765986694507135017>",
+
+  sapphire: "<:SPH:765986694507135017>",
   sapphire_simplelarge: "<:sapphire_simplelarge:550389035953160222>",
   sapphire_flatlarge: "<:sapphire_flatlarge:550389035474878496>",
   sapphire_fulllarge: "<:sapphire_fulllarge:550389035848171523>",
-  
-  token:  this.TKN,
+
+  token: this.TKN,
   token_simplelarge: "<:token_simplelarge:550389035642912779>",
   token_flatlarge: "<:token_flatlarge:550389035848171521>",
   token_fulllarge: "<:token_fulllarge:550389036905398282>",
@@ -162,85 +156,84 @@ antimatter: "<:antimatter:673593105429299211>",
   can_trade: "<:can_trade:601282813177757726>",
   can_destroy: "<:can_destroy:601282813471490051>",
   deckie: "<:deckie:586933317077827594>",
-  
-  // ITEMS 
-  
-  // Cards 
-    Rdek: "<:Rdek:586968935514112002>",
-    SRdek: "<:SRdek:586968935648329729>",
-    Cdek: "<:Cdek:586968935837204501>",
-    Udek: "<:Udek:586968935883210785>",
-    XRdek: "<:XRdek:586968935967096832>",
-    URdek: "<:URdek:586968936105377811>",
-    
-  // CASINO 
+
+  // ITEMS
+
+  // Cards
+  Rdek: "<:Rdek:586968935514112002>",
+  SRdek: "<:SRdek:586968935648329729>",
+  Cdek: "<:Cdek:586968935837204501>",
+  Udek: "<:Udek:586968935883210785>",
+  XRdek: "<:XRdek:586968935967096832>",
+  URdek: "<:URdek:586968936105377811>",
+
+  // CASINO
   chipWARN: "<:chipWARN:719041743743352884>",
   chipOK: "<:chipOK:719041743906930688>",
   chipINFO: "<:chipINFO:719042194258001972>",
   chipERROR: "<:chipERROR:719041743504539741>",
-  rubineCHIP: '<:rubineCHIP:719171507581878312>',
+  rubineCHIP: "<:rubineCHIP:719171507581878312>",
 
-  //ROULETTE
+  // ROULETTE
   roulette19: "<:roulette19:763433091267821589>",
   roulette00: "<:roulette00:763623494101499905>",
-roulette5: "<:roulette5:763433091309633620>",
-roulette14: "<:roulette14:763433091322216529>",
-roulette1: "<:roulette1:763433091346989148>",
-roulette12: "<:roulette12:763433091444113470>",
-roulette0: "<:roulette0:763433091586064384>",
-roulette18: "<:roulette18:763433091611230229>",
-roulette6: "<:roulette6:763433091611754546>",
-roulette15: "<:roulette15:763433091623813120>",
-roulette17: "<:roulette17:763433091649241107>",
-roulette8: "<:roulette8:763433091653173298>",
-roulette16: "<:roulette16:763433091653304320>",
-roulette20: "<:roulette20:763433091657105458>",
-roulette27: "<:roulette27:763433091657236561>",
-roulette3: "<:roulette3:763433091657629696>",
-roulette13: "<:roulette13:763433091658022932>",
-roulette2: "<:roulette2:763433091658154054>",
-roulette9: "<:roulette9:763433091661955072>",
-roulette22: "<:roulette22:763433091679125534>",
-roulette11: "<:roulette11:763433091682664468>",
-roulette33: "<:roulette33:763433091724345404>",
-roulette31: "<:roulette31:763433091758293002>",
-roulette35: "<:roulette35:763433091816882217>",
-roulette21: "<:roulette21:763433091858432002>",
-roulette10: "<:roulette10:763433091879927818>",
-roulette4: "<:roulette4:763433091880058980>",
-roulette32: "<:roulette32:763433091918069770>",
-roulette34: "<:roulette34:763433091930652692>",
-roulette23: "<:roulette23:763433091934978068>",
-roulette28: "<:roulette28:763433091939172422>",
-roulette26: "<:roulette26:763433091972464640>",
-roulette29: "<:roulette29:763433091996844052>",
-roulette25: "<:roulette25:763433092060413982>",
-roulette30: "<:roulette30:763433092069195786>",
-roulette24: "<:roulette24:763433092098555915>",
-roulette7: "<:roulette7:763433092983291914>",
-roulette36: "<:roulette36:763433093062459412>",
+  roulette5: "<:roulette5:763433091309633620>",
+  roulette14: "<:roulette14:763433091322216529>",
+  roulette1: "<:roulette1:763433091346989148>",
+  roulette12: "<:roulette12:763433091444113470>",
+  roulette0: "<:roulette0:763433091586064384>",
+  roulette18: "<:roulette18:763433091611230229>",
+  roulette6: "<:roulette6:763433091611754546>",
+  roulette15: "<:roulette15:763433091623813120>",
+  roulette17: "<:roulette17:763433091649241107>",
+  roulette8: "<:roulette8:763433091653173298>",
+  roulette16: "<:roulette16:763433091653304320>",
+  roulette20: "<:roulette20:763433091657105458>",
+  roulette27: "<:roulette27:763433091657236561>",
+  roulette3: "<:roulette3:763433091657629696>",
+  roulette13: "<:roulette13:763433091658022932>",
+  roulette2: "<:roulette2:763433091658154054>",
+  roulette9: "<:roulette9:763433091661955072>",
+  roulette22: "<:roulette22:763433091679125534>",
+  roulette11: "<:roulette11:763433091682664468>",
+  roulette33: "<:roulette33:763433091724345404>",
+  roulette31: "<:roulette31:763433091758293002>",
+  roulette35: "<:roulette35:763433091816882217>",
+  roulette21: "<:roulette21:763433091858432002>",
+  roulette10: "<:roulette10:763433091879927818>",
+  roulette4: "<:roulette4:763433091880058980>",
+  roulette32: "<:roulette32:763433091918069770>",
+  roulette34: "<:roulette34:763433091930652692>",
+  roulette23: "<:roulette23:763433091934978068>",
+  roulette28: "<:roulette28:763433091939172422>",
+  roulette26: "<:roulette26:763433091972464640>",
+  roulette29: "<:roulette29:763433091996844052>",
+  roulette25: "<:roulette25:763433092060413982>",
+  roulette30: "<:roulette30:763433092069195786>",
+  roulette24: "<:roulette24:763433092098555915>",
+  roulette7: "<:roulette7:763433092983291914>",
+  roulette36: "<:roulette36:763433093062459412>",
 
-
-rouge: "<a:rouge:763625777420828683>",
-dozen2: "<a:dozen2:763625777513758732>",
-column: "<a:column:763625777534468097>",
-odd: "<a:odd:763625777680875521>",
-even: "<a:even:763625778130190336>",
-column2: "<a:column2:763625777727668265>",
-basket: "<a:basket:763625777731731476>",
-dozen3: "<a:dozen3:763625777735794719>",
-dozen: "<a:dozen:763625777752834048>",
-manque: "<a:manque:763625777753227295>",
-street: "<a:street:763625777756372993>",
-noir: "<a:noir:763625777777606656>",
-column1: "<a:column1:763625777786257418>",
-snake: "<a:snake:763625777802641458>",
-dstreet: "<a:doublestreet:763625777803296819>",
-square: "<a:square:763625777824006175>",
-dozen1: "<a:dozen1:763625777861886033>",
-column3: "<a:column3:763625777895440394>",
-split: "<a:split:763625778025463828>",
-passe: "<a:passe:763625778175934514>",
+  rouge: "<a:rouge:763625777420828683>",
+  dozen2: "<a:dozen2:763625777513758732>",
+  column: "<a:column:763625777534468097>",
+  odd: "<a:odd:763625777680875521>",
+  even: "<a:even:763625778130190336>",
+  column2: "<a:column2:763625777727668265>",
+  basket: "<a:basket:763625777731731476>",
+  dozen3: "<a:dozen3:763625777735794719>",
+  dozen: "<a:dozen:763625777752834048>",
+  manque: "<a:manque:763625777753227295>",
+  street: "<a:street:763625777756372993>",
+  noir: "<a:noir:763625777777606656>",
+  column1: "<a:column1:763625777786257418>",
+  snake: "<a:snake:763625777802641458>",
+  dstreet: "<a:doublestreet:763625777803296819>",
+  square: "<a:square:763625777824006175>",
+  dozen1: "<a:dozen1:763625777861886033>",
+  column3: "<a:column3:763625777895440394>",
+  split: "<a:split:763625778025463828>",
+  passe: "<a:passe:763625778175934514>",
 
   // BLACKJACK
   plxcards: "<:plxcards:598784000353370113>",
@@ -380,8 +373,8 @@ const emojibank = {
   check: "<:check:314349398811475968>",
   xmark: "<:xmark:314349398824058880>",
   empty: "<:empty:314349398723264512>",
-  //yep: "<:yep:339398829050953728>",
-  //nope: "<:nope:339398829088571402>",
+  // yep: "<:yep:339398829050953728>",
+  // nope: "<:nope:339398829088571402>",
 
   windky: "<:windky:386609737241853952>",
 
@@ -691,10 +684,10 @@ function getShallowMoji(identifier) {
 shallowEmojiBank();
 
 class PolluxEmoji extends String {
-  constructor(identifier,fallback) {
+  constructor(identifier, fallback) {
     const print = emojibank[identifier]
       || getShallowMoji(identifier).string
-      || getShallowMoji(fallback||"____").string
+      || getShallowMoji(fallback || "____").string
       || fallback
       || "⬜";
 

@@ -1,30 +1,30 @@
-const YesNo = require('../../core/structures/YesNo.js');
+const YesNo = require("../../core/structures/YesNo.js");
 
-exports.run = (msg, args, userData, itemDetails) => {
-    return new Promise(async (resolve)=>{
-        
-        const TARGET = args[0] || 'daily'; 
-        
-        const destinationCounter = userData.counters?.[TARGET];
+exports.run = (msg, args, userData, itemDetails) => new Promise(async (resolve) => {
+  const TARGET = args[0] || "daily";
 
-        if(!destinationCounter || !destinationCounter.streak) return msg.channel.send("You do not have a streak here to be fixed.");
-        if((destinationCounter.lastStreak||0) <= destinationCounter.streak ) return msg.channel.send("You cannot restore your streak backwards.");
+  const destinationCounter = userData.counters?.[TARGET];
 
-        let promptMessage = await msg.channel.send({embed:{description:"Would you like to consume your Streakfix ?"+`
+  if (!destinationCounter || !destinationCounter.streak) return msg.channel.send("You do not have a streak here to be fixed.");
+  if ((destinationCounter.lastStreak || 0) <= destinationCounter.streak) return msg.channel.send("You cannot restore your streak backwards.");
+
+  const promptMessage = await msg.channel.send({
+    embed: {
+      description: "Would you like to consume your Streakfix ?" + `
 \`${TARGET}\` [${destinationCounter.streak}] >> [${destinationCounter.lastStreak}]        
-        `}});
+        `,
+    },
+  });
 
-        YesNo(promptMessage,msg,
-            async (cancel,prompt)=>{
-                await DB.users.set(userData.id,{[`counters.${TARGET}.streak`]:destinationCounter.lastStreak});
-                resolve("OK")
-            },
-            ()=>{
-                resolve("CANCEL")                
-            },
-            (prompt)=>{
-                resolve("TIMEOUT")
-            },
-        )
-    })    
-}
+  YesNo(promptMessage, msg,
+    async (cancel, prompt) => {
+      await DB.users.set(userData.id, { [`counters.${TARGET}.streak`]: destinationCounter.lastStreak });
+      resolve("OK");
+    },
+    () => {
+      resolve("CANCEL");
+    },
+    (prompt) => {
+      resolve("TIMEOUT");
+    });
+});

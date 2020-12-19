@@ -8,26 +8,24 @@ exports.run = function run(cat, msg, perms) {
 
   if (typeof perms === "object") {
     let check1;
-    let permsPass = []
+    const permsPass = [];
     Object.keys(perms).forEach((i) => {
       if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i]) && !msg.guild.member(PLX.user.id).hasPermission(perms[i])) {
-        permsPass.push(_emoji('nope'))
+        permsPass.push(_emoji("nope"));
         check1 = "error1";
-      }else{
-        permsPass.push(_emoji('yep'))
+      } else {
+        permsPass.push(_emoji("yep"));
       }
-      
     });
-    
-    if(check1 == "error1"){
-      msg.addReaction(_emoji('nope')).catch(err=>null);
+
+    if (check1 == "error1") {
+      msg.addReaction(_emoji("nope")).catch((err) => null);
       msg.channel.send(`${
         $t("error.iNeedThesePerms", { lngs: msg.lang })
       }\n${
-        perms.map((p,i)=> permsPass[i] + p ).join("\n")
-      }`).catch(err=>null);
+        perms.map((p, i) => permsPass[i] + p).join("\n")
+      }`).catch((err) => null);
     }
-
 
     if (check1) return check1;
   }

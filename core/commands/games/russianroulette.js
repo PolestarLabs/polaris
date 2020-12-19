@@ -1,18 +1,18 @@
-//@ts-check
+// @ts-check
 /* eslint-disable no-await-in-loop */
 const { global } = require("../../../../internal_modules/database_schema/schemas/_misc.js");
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
-const BOARD = require('../../archetypes/Soundboard.js')
-const gunRoll = appRoot+"/../assets/sound/gunroll.mp3";
-const awp = appRoot+"/../assets/sound/awp.mp3";
-const click = appRoot+"/../assets/sound/click.mp3";
-const clickNoAmmo = appRoot+"/../assets/sound/noammo.mp3";
+const BOARD = require("../../archetypes/Soundboard.js");
+
+const gunRoll = `${appRoot}/../assets/sound/gunroll.mp3`;
+const awp = `${appRoot}/../assets/sound/awp.mp3`;
+const click = `${appRoot}/../assets/sound/click.mp3`;
+const clickNoAmmo = `${appRoot}/../assets/sound/noammo.mp3`;
 
 // TRANSLATE[epic=translations] russian roulette
 // TODO[epic=anyone] rr - add easter egg with `=say` cmd
 // FIXME[epic=flicky] rr - sound stopped working
 // NOTE rr- could really some code cleanup
-
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 
@@ -90,7 +90,7 @@ const playerRoulette = async (player, game) => {
 };
 
 const handlePlayers = async (msg, players, game, gameFrame) => {
-  let voiceChannel = msg.member.voiceState.channelID
+  let voiceChannel = msg.member.voiceState.channelID;
   voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
   let dead = null;
   for (const index in players) { // eslint-disable-line guard-for-in
@@ -104,11 +104,11 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
     // gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
     await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
     const died = await playerRoulette(player, game);
-   
+
     await wait(4);
 
     // Fire. Check if they're dead
-    
+
     if (died) { // Person died
       dead = player; // This is the person who died
       players.splice(index, 1); //  Person should be removed from array
@@ -122,18 +122,14 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
     }
 
     // Tell players the status of that player
-    //await wait(1);
-    //if (game.voiceChannel) game.voiceChannel.stopPlaying();
-  
- 
+    // await wait(1);
+    // if (game.voiceChannel) game.voiceChannel.stopPlaying();
+
     if (voiceChannel) voiceChannel.stopPlaying();
     await msg.edit(gameFrame);
-    if (died){
+    if (died) {
       if (voiceChannel) voiceChannel.play(awp);
-    }else{
-      if (voiceChannel) voiceChannel.play(clickNoAmmo);
-    }
-  
+    } else if (voiceChannel) voiceChannel.play(clickNoAmmo);
 
     if (died) break;
   }
@@ -143,11 +139,11 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 const newRound = async (msg, players, round = 0) => {
   // Initialise game
-  let voiceChannel = msg.member.voiceState.channelID
+  let voiceChannel = msg.member.voiceState.channelID;
   voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
-  if(voiceChannel) voiceChannel.play(gunRoll);
+  if (voiceChannel) voiceChannel.play(gunRoll);
   await wait(2);
-  
+
   const value = players.map((a) => a.money).reduce((a, b) => a + b);
   const game = new RussianRoulette(null, 0);
   const gameFrame = {
@@ -173,8 +169,8 @@ const newRound = async (msg, players, round = 0) => {
     gameFrame.embed.color = 0x608a6d;
     gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
 
-    let plxMessage = await msg.channel.send(gameFrame);
-    if(voiceChannel) voiceChannel.once("end", ()=> PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID) );
+    const plxMessage = await msg.channel.send(gameFrame);
+    if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
     return;
   }
   // There are more people in the game
@@ -203,8 +199,8 @@ const init = async (msg, args) => {
         image: { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` },
       },
     });
-    
-    return newRound(msg, shuffle(players),0);
+
+    return newRound(msg, shuffle(players), 0);
   }
 
   const BET = parseInt(args[0]);

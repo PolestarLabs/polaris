@@ -1,5 +1,4 @@
-
-const init = async function (msg,args) {
+const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const target = Number.isNaN(Number(msg.args[0])) ? 1 : parseInt(msg.args.shift());
@@ -37,8 +36,8 @@ const init = async function (msg,args) {
     sendArgs(m1.array, 1, m1.msg).then((m2) => {
       sendArgs(m2.array, 2, m2.msg).then(async (m3) => {
         await wait(2);
-        let pick = shuffle(m3.array).slice(0, target).join(', ');
-        console.log({pick})
+        const pick = shuffle(m3.array).slice(0, target).join(", ");
+        console.log({ pick });
         P.list_item = pick;
         embed.fields = [];
         embed.field("\u200b", $t("interface.shuffle.ichoose", P), true);
@@ -60,7 +59,7 @@ const init = async function (msg,args) {
   }
 
   async function sendArgs(a, i, m) {
-    console.log({a})
+    console.log({ a });
     if (target === a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
     if (target > a.length) {
       a_len = target - a.length;

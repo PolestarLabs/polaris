@@ -1,63 +1,58 @@
-
-
 const CLEAN_ID_REGEX = /[<!@>]/g;
 const ID_REGEX = /^\d{17,19}$/;
 
 module.exports = {
 
-  resolveUser: async function resolveUser(user,options){
-    let enforceDB = options?.enforceDB || false;    
+  resolveUser: async function resolveUser(user, options) {
+    const enforceDB = options?.enforceDB || false;
     user = user?.id || user;
-    
-    if (typeof user === 'string') {
-      const ID = user.replace(CLEAN_ID_REGEX, "");
-      const isID = ID_REGEX.test(ID);
-      if(isID){
-        if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
-        let userObject = PLX.users.find(u=> u.id === ID) || (await PLX.getRESTUser(ID));
-        if ( !userObject ) return Promise.reject("USER NOT FOUND");
-        return Promise.resolve(userObject);
-        }
-      }else{
-        return Promise.reject("USER MUST BE A STRING");
-      }
-  },
 
-  resolveMember: async function resolveMember(guild, user,options){
-    let enforceDB = options?.enforceDB || false;
-    let softMatch = options?.softMatch || false;
-    let guildID = guild?.id || guild;
-    user = user?.id || user;
-    
-    if (typeof user === 'string') {
+    if (typeof user === "string") {
       const ID = user.replace(CLEAN_ID_REGEX, "");
       const isID = ID_REGEX.test(ID);
-      let memberObject;
-      if(isID){
+      if (isID) {
         if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
-        memberObject = await PLX.getRESTGuildMember(guildID,ID).catch(err=>null);
-      }else if (softMatch){
-        if (enforceDB) return Promise.reject("CANNOT SOFTMATCH WITH ENFORCEDB");
-        [memberObject] = await PLX.searchGuildMembers(guildID, user, 1).catch(err=>[null]);
+        const userObject = PLX.users.find((u) => u.id === ID) || (await PLX.getRESTUser(ID));
+        if (!userObject) return Promise.reject("USER NOT FOUND");
+        return Promise.resolve(userObject);
       }
-      if ( !memberObject ) return Promise.reject("MEMBER NOT FOUND");
-      return Promise.resolve(memberObject);
-    }else{
+    } else {
       return Promise.reject("USER MUST BE A STRING");
     }
   },
 
+  resolveMember: async function resolveMember(guild, user, options) {
+    const enforceDB = options?.enforceDB || false;
+    const softMatch = options?.softMatch || false;
+    const guildID = guild?.id || guild;
+    user = user?.id || user;
+
+    if (typeof user === "string") {
+      const ID = user.replace(CLEAN_ID_REGEX, "");
+      const isID = ID_REGEX.test(ID);
+      let memberObject;
+      if (isID) {
+        if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
+        memberObject = await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
+      } else if (softMatch) {
+        if (enforceDB) return Promise.reject("CANNOT SOFTMATCH WITH ENFORCEDB");
+        [memberObject] = await PLX.searchGuildMembers(guildID, user, 1).catch((err) => [null]);
+      }
+      if (!memberObject) return Promise.reject("MEMBER NOT FOUND");
+      return Promise.resolve(memberObject);
+    }
+    return Promise.reject("USER MUST BE A STRING");
+  },
+
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
     if (member) {
-      return (await this.resolveMember(guild,query,{softMatch: !strict}).catch(e=>null));
-    }else{
-      return (await this.resolveUser(query,{enforceDB: strict}).catch(e=>null));
+      return (await this.resolveMember(guild, query, { softMatch: !strict }).catch((e) => null));
     }
+    return (await this.resolveUser(query, { enforceDB: strict }).catch((e) => null));
   },
 
   getTargetLegacy: async function getTargetLegacy(query, guild = null, strict = false, member = false) {
-
-    query = typeof query === 'string' ? query?.trim() : query?.id;
+    query = typeof query === "string" ? query?.trim() : query?.id;
     if (!query) return null;
 
     const ID = query.replace(CLEAN_ID_REGEX, "");
@@ -68,19 +63,19 @@ module.exports = {
 
     switch (true) {
       case guild && !strict:
-        user = isID ? await guild.getRESTMember(ID).catch(() => null) : null /*PLX.findMember(query, guild.members)*/;
-        //if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
+        user = isID ? await guild.getRESTMember(ID).catch(() => null) : null;
+        // if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && strict:
         user = await PLX.getRESTUser(ID).catch(() => null);
         break;
       case guild && strict:
         user = await guild.getRESTMember(ID).catch(() => null);
-        //if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
+        // if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && !strict:
       default:
-        user = isID ? await PLX.getRESTUser(ID).catch(() => null) : null /* PLX.resolveUser(query)*/;
+        user = isID ? await PLX.getRESTUser(ID).catch(() => null) : null;
     }
 
     if (user && member && guild) return user;
@@ -90,7 +85,7 @@ module.exports = {
   // Get IMG from Channel MSGs
   getChannelImg: async function getChannelImg(message, nopool) {
     const hasImageURL = message.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
-    if (hasImageURL) return "https://proxy.pollux.workers.dev/?pollux_url=" + encodeURIComponent(hasImageURL[0]);
+    if (hasImageURL) return `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(hasImageURL[0])}`;
     if (message.attachments[0]) return message.attachments[0].url;
     const sevmesgs = message.channel.messages;
 

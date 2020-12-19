@@ -7,12 +7,12 @@ const WORDS = require("./words.json");
 const Hangmaid = require("../../../archetypes/Hangmaid.js");
 
 const init = async function (msg, args) {
-  let oldGame = Hangmaid.gameExists(msg.channel.id);
+  const oldGame = Hangmaid.gameExists(msg.channel.id);
   if (oldGame) {
     await PLX.reply({
       id: oldGame,
       channel: msg.channel,
-      guild: msg.guild
+      guild: msg.guild,
     }, "There's already a game going on here.");
     return;
   }
@@ -22,7 +22,6 @@ const init = async function (msg, args) {
   const mainMessage = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`);
   GAME.registerMessage(mainMessage);
   await startCollector(GAME, msg, MODE);
-
 };
 
 // TODO[epic=mistery]: hm - Add language support
@@ -41,10 +40,10 @@ const startCollector = async (Game, msg, mode) => {
   const filter = mode === "group" ? (m) => m.author.id !== PLX.author.id : (m) => m.author.id === msg.author.id;
   const commandMsg = Game.originalMessage;
 
-  const Collector = commandMsg.channel.createMessageCollector(filter, { time: 5 * 60e3 }); //5 Minutes
+  const Collector = commandMsg.channel.createMessageCollector(filter, { time: 5 * 60e3 }); // 5 Minutes
 
   let active = true;
-  let activity = setInterval(() => {
+  const activity = setInterval(() => {
     if (!active) return Collector.stop("time");
     active = false;
   }, 30e3);
@@ -53,15 +52,15 @@ const startCollector = async (Game, msg, mode) => {
     active = true;
     if (paused) return;
 
-    let guessClean = attemptMsg.content.toUpperCase();
-    let guess = Game.sanitize(attemptMsg.content);
+    const guessClean = attemptMsg.content.toUpperCase();
+    const guess = Game.sanitize(attemptMsg.content);
 
     const RegexCyrillic = /[а-яё]/gi;
     const RegexLatin = /[A-Z]/gi;
 
     if (Game.language === "ru" && !RegexCyrillic.test(guess)) {
       return attemptMsg.addReaction(_emoji("nope").reaction);
-    } else if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
+    } if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
 
     let attemptFullWord = false;
     if (guessClean.startsWith(">")) {
@@ -73,7 +72,7 @@ const startCollector = async (Game, msg, mode) => {
 
     if (guess.length === 1 || guessClean.startsWith(">") || Game.isFullGuess(guess)) {
       attemptMsg.delete()
-        .catch(e => 0);
+        .catch((e) => 0);
 
       // TRANSLATE[epic=translations] Translation strings
 
@@ -86,7 +85,7 @@ const startCollector = async (Game, msg, mode) => {
 
       if (Game.ENDGAME) Collector.stop(Game.ENDGAME);
       await Game.originalMessage.delete()
-        .catch(e => 0);
+        .catch((e) => 0);
 
       const newMsg = await commandMsg.channel.send(`${paths.DASH}/generators/hangmaid?${
         encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)

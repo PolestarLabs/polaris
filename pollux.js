@@ -1,5 +1,5 @@
 // STARTUP FLAIR
-//process.stdout.write("\x1Bc");
+// process.stdout.write("\x1Bc");
 console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
@@ -66,7 +66,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   prefix: ["===", "p!+", "@mention"],
 });
 
-global.MARKET_TOKEN = cfg["pollux-api-token"]
+global.MARKET_TOKEN = cfg["pollux-api-token"];
 
 PLX.engine = Eris;
 PLX.beta = process.env.NODE_ENV !== "production";
@@ -86,7 +86,7 @@ Object.assign(PLX, Gearbox.Client);
 PLX.execQueue = [];
 PLX.commandPool = {};
 
-global._emoji = (E,F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E,F);
+global._emoji = (E, F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E, F);
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;
@@ -101,7 +101,8 @@ PLX.updateBlacklists = (DB) => Promise.all([
   PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
 });
 
-const DBSchema = require('@polestar/database_schema');
+const DBSchema = require("@polestar/database_schema");
+
 const dbConnectionData = {
   hook,
   url: cfg.dbURL,
@@ -115,15 +116,14 @@ const dbConnectionData = {
   },
 };
 
-DBSchema(dbConnectionData).then(Connection => {
+DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
 
   setTimeout(() => {
     console.log("Discord connection start...");
     PLX.connect().then(postConnect).catch(console.error);
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
-})
-
+});
 
 // Translation Engine ------------- <
 global.translateEngineStart = () => {
@@ -179,7 +179,7 @@ PLX.once("ready", async () => {
     PLX.user.setStatus("online");
     console.log(`${"● ".green}Shard${1 + PLX.shard.id}/${PLX.shard.count} [ONLINE]`);
   }
-  
+
   PLX.updateBlacklists(DB).then(() => {
     console.log("• ".blue, "Blacklist Loaded!");
   }).catch(console.error);
@@ -199,13 +199,13 @@ PLX.once("ready", async () => {
     PLX.microserver.microtasks.updateChannels("all");
   } catch (e) {
     console.error(e);
-    for (let i in new Int8Array(10)) console.error("ERROR MTASK");
+    for (const i in new Int8Array(10)) console.error("ERROR MTASK");
   }
 
   hook.info(`**INFO:** Cluster connected and all shards reported online!
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
 
-  require('./core/utilities/debugTools');
+  require("./core/utilities/debugTools");
 });
 
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
@@ -254,26 +254,21 @@ PLX.setAvatar = async (url) => {
   }
 };
 
-
-PLX.bean = (guild,user,delete_message_days=0,reason="No reason specified") => {
-  return axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days,reason }, {headers: { Authorization: PLX.token }})
-}
-PLX.unbean = (guild,user,delete_message_days=0,reason="No reason specified") => {
-  return axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days,reason }, {headers: { Authorization: PLX.token }})
-}
-PLX.reply = (msg,content) => {
-  let payload = {
-    message_reference:{ 
+PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
+PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
+PLX.reply = (msg, content) => {
+  const payload = {
+    message_reference: {
       channel_id: msg.channel.id,
       guild_id: msg.guild.id,
-      message_id: msg.id
-    }
-  }
-  if (typeof content === 'string') payload.content = content;
-  else Object.assign(payload,content);
+      message_id: msg.id,
+    },
+  };
+  if (typeof content === "string") payload.content = content;
+  else Object.assign(payload, content);
 
-  return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, {headers: { Authorization: PLX.token }});
-}
+  return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, { headers: { Authorization: PLX.token } });
+};
 
 function postConnect() {
   console.log("Discord Client Connected".cyan);
@@ -285,12 +280,12 @@ global.errorsHook = cfg.errorsHook;
 process.on("uncaughtException", (err) => {
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
-  hook.error( `
+  hook.error(`
   **Uncaught Exception**
   \`\`\`js
-${err.slice(0,1900)}
+${err.slice(0, 1900)}
   \`\`\`
-  `,{hook: cfg.errorsHook})
+  `, { hook: cfg.errorsHook });
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
@@ -298,24 +293,24 @@ ${err.slice(0,1900)}
 process.on("unhandledRejection", (err) => {
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
-  hook.warn( `
+  hook.warn(`
   **Unhandled Rejection**
   \`\`\`js
-${err.stack.slice(0,1900)}
+${err.stack.slice(0, 1900)}
   \`\`\`
-  `,{hook: cfg.errorsHook})
+  `, { hook: cfg.errorsHook });
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
 
-//TODO[epic=anyone]: Remember to delete this in production
+// TODO[epic=anyone]: Remember to delete this in production
 
-const dumpsterLogs = {id: '789784919202594836', token: "HkR_pSCRopvIbhEpFzGqSHSCe9mf3h_gusrSsgzxTbD8gqeLV79_Cv4i9kkQ3_VpTrhz"};
+const dumpsterLogs = { id: "789784919202594836", token: "HkR_pSCRopvIbhEpFzGqSHSCe9mf3h_gusrSsgzxTbD8gqeLV79_Cv4i9kkQ3_VpTrhz" };
 const oldLog = console.log;
-console.log = function(...args){
+console.log = function (...args) {
   hook.raw(`\`\`\`js
-${  [...args].join(' ').slice(0,1900) }
-    \`\`\``
-   ,{hook:dumpsterLogs});
-   oldLog(...args)
-}
+${[...args].join(" ").slice(0, 1900)}
+    \`\`\``,
+  { hook: dumpsterLogs });
+  oldLog(...args);
+};

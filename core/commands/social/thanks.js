@@ -1,29 +1,29 @@
-const {autoSubs:topAutoSubs} = require('./top.js');
+const { autoSubs: topAutoSubs } = require("./top.js");
 
 const DAY = 3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
-const init = async function (msg,args) {
+const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  let Target = await PLX.getTarget(msg.args[0], msg.guild, false);
+  const Target = await PLX.getTarget(msg.args[0], msg.guild, false);
 
-  const embed = {}
+  const embed = {};
 
   const after = async function after(msg) {
-    await DB.localranks.set({user:Target.id, server:msg.guild.id}, {$inc:{thx:1}});
-    let TargetServerData = await DB.localranks.get({user:Target.id, server:msg.guild.id});
+    await DB.localranks.set({ user: Target.id, server: msg.guild.id }, { $inc: { thx: 1 } });
+    const TargetServerData = await DB.localranks.get({ user: Target.id, server: msg.guild.id });
 
     P.userA = msg.member.nick || msg.author.username;
     P.userB = Target.nick || (Target.user || Target).username;
-    P.THX = $t('terms.thx',P).toUpperCase();
+    P.THX = $t("terms.thx", P).toUpperCase();
     P.totalTHX = TargetServerData.thx;
 
-    embed.description = $t('responses.thx.after',P)
-    embed.thumbnail = {url:`https://cdn.discordapp.com/emojis/${_emoji('THX').id}.png?size=64`}
-    embed.footer = {icon_url: msg.guild.iconURL, text: msg.guild.name}
-     
+    embed.description = $t("responses.thx.after", P);
+    embed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji("THX").id}.png?size=64` };
+    embed.footer = { icon_url: msg.guild.iconURL, text: msg.guild.name };
+
     msg.channel.send({ embed });
   };
 
@@ -47,63 +47,61 @@ const init = async function (msg,args) {
     remainingEmbed.description = `
     ${_emoji("THX")} ${dailyAvailable ? _emoji("online") + $t("responses.timers_generic.check_yes", P) : _emoji("dnd") + $t("responses.timers_generic.check_no", P)} 
     `;
-    
-       
+
     return msg.channel.send({ embed: remainingEmbed });
   };
 
-  if (!Target && !['info','status'].includes(args[0]) )  msg.args[0] = "status";
+  if (!Target && !["info", "status"].includes(args[0])) msg.args[0] = "status";
 
   Timed.init(msg, "thx", { day: DAY }, after, reject, status);
 };
- 
 
-let topAutoSub = topAutoSubs.find(a=>a.label=='thanks');
+const topAutoSub = topAutoSubs.find((a) => a.label == "thanks");
 topAutoSub.label = "top";
 
-const YesNo = require('../../structures/YesNo.js'); 
+const YesNo = require("../../structures/YesNo.js");
 
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'thanks'
-    ,cat:'social'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:['thx','obg','svp']
-    ,autoSubs:[
-        topAutoSub,
-        {
-            label: "clear",
-            gen: async (msg,args) => {
-                const ServerDATA = await DB.servers.get(msg.guild.id);
-                const modPass = PLX.modPass(msg.member, "manageServer", ServerDATA);
-                
-                const P = {lngs:msg.lang};
+module.exports = {
+  init,
+  pub: true,
+  cmd: "thanks",
+  cat: "social",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: ["thx", "obg", "svp"],
+  autoSubs: [
+    topAutoSub,
+    {
+      label: "clear",
+      gen: async (msg, args) => {
+        const ServerDATA = await DB.servers.get(msg.guild.id);
+        const modPass = PLX.modPass(msg.member, "manageServer", ServerDATA);
 
+        const P = { lngs: msg.lang };
 
-                if (!modPass) return $t('responses.errors.denied', P);
-                let Target = await PLX.getTarget(msg.args[0]||msg.author, msg.guild);
-                if (!Target) return  $t('responses.errors.target404', P);
-                P.user = `<@${Target.id}>`
-                let embed = {
-                    description: $t('responses.thx.wipe', P),
-                    color: 0xEE5522
-                }
-                let prompt = await msg.channel.send({embed});
+        if (!modPass) return $t("responses.errors.denied", P);
+        const Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild);
+        if (!Target) return $t("responses.errors.target404", P);
+        P.user = `<@${Target.id}>`;
+        const embed = {
+          description: $t("responses.thx.wipe", P),
+          color: 0xEE5522,
+        };
+        const prompt = await msg.channel.send({ embed });
 
-                YesNo(prompt,msg,false,false,false,{embed}).then( async res=>{
-                    console.log(res)
-                    if (res === true) await DB.localranks.set({user:Target.id,server:msg.guild.id},{thx:0}).catch(err=>{
-                        console.error(err);
-                        msg.channel.send("Oop! Something went wrong!")
-                    });
-                });
-
-            },
-            options: {
-              aliases: ["wipe", "reset"],
-              invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "thanks", opt: "social" }); },
-            },
-        },
-    ]
-}
+        YesNo(prompt, msg, false, false, false, { embed }).then(async (res) => {
+          console.log(res);
+          if (res === true) {
+            await DB.localranks.set({ user: Target.id, server: msg.guild.id }, { thx: 0 }).catch((err) => {
+              console.error(err);
+              msg.channel.send("Oop! Something went wrong!");
+            });
+          }
+        });
+      },
+      options: {
+        aliases: ["wipe", "reset"],
+        invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "thanks", opt: "social" }); },
+      },
+    },
+  ],
+};

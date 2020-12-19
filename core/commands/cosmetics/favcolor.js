@@ -4,7 +4,7 @@ const HEX_REGEX = /^#?[a-fA-F0-9]{3}([a-fA-F0-9]{3})?$/;
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const colorChanged = $t("misc.colorChange", P);
   const getColor = require("../utility/color");
 

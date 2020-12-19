@@ -5,7 +5,7 @@ const Picto = require("../../utilities/Picto");
 
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   Target = msg.mentions[0] || {};
   let onepart = true;
   let textop;

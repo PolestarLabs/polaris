@@ -112,18 +112,18 @@ const init = async (msg, args) => {
       );
     }
 
-    let mes = await procedure({ embed });
+    const mes = await procedure({ embed });
     const options = {
       page,
       tot_pages: totPages,
     };
     navigator(mes, msg, Pagination, options, recursion);
-    //mes = null;
-    //mss = null;
+    // mes = null;
+    // mss = null;
   }
 
-  Pagination(thispage)
-}
+  Pagination(thispage);
+};
 
 module.exports = {
   init,

@@ -53,20 +53,18 @@ const init = async (msg) => {
   }
 
   if (TARGETDATA) {
-
-    
-    emb.field("\u200bClassic Gems",`\u200b`
+    emb.field("\u200bClassic Gems", "\u200b"
     + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.RBN, true)}**`
     + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.SPH, true)}**`
     + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.JDE, true)}**`,
-    true)
-    
-    emb.field("\u200bPolaris Gems",`\u200b`
-    + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find(i=>i.id==='cosmo_fragment')?.count||0, true)}**`
+    true);
+
+    emb.field("\u200bPolaris Gems", "\u200b"
+    + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
     + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.prisms ?? 0, true)}**` // REVIEW[epic=flicky] was prism intentionally '---' instead of 0?
     + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
     + `\n${invisibar}`,
-    true)
+    true);
 
     lastTrans = await DB.audits.find({ $or: [{ from: TARGETDATA.id }, { to: TARGETDATA.id }] }).sort({ timestamp: -1 }).limit(5);
     emb.field("Last Transactions",
@@ -86,7 +84,7 @@ ${await lastTransBuild(lastTrans[4])}
     emb.fields = [];
     emb.fields = [];
   }
-  emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`)
+  emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`);
   msg.channel.send({ embed: emb });
 };
 module.exports = {

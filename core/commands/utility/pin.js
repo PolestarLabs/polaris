@@ -12,7 +12,7 @@ const init = async function (msg) {
     messageGrab = await PLX.getPreviousMessage(msg, messagebyID[0]);
   }
 
-  if (!messageGrab){
+  if (!messageGrab) {
     return msg.channel.send("Sorry, there's no message to be pinned!");
   }
 

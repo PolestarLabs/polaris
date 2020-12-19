@@ -29,10 +29,10 @@ class GenericItemInventory {
     this.color = color || 0xEBBEFF;
     this.pub = pub || true;
 
-    this.init = async (msg, args, userObj ) => {
+    this.init = async (msg, args, userObj) => {
       const userID = userObj?.id || userObj;
-      console.log({userID}, 'generic')
-      
+      console.log({ userID }, "generic");
+
       if (userID && args[10]?.id != userID) return "Only the owner can see inside";
       msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
@@ -45,7 +45,7 @@ class GenericItemInventory {
         response.embed = { description: `*${rand$t("responses.inventory.emptyJokes", P)}*`, color: this.color };
         return response;
       }
-      const itemsPerPage = 10
+      const itemsPerPage = 10;
       const Pagination = async (page, mss, recursion = 0) => {
         const tot_pages = Math.ceil(Inventory.length / itemsPerPage);
         page = page > tot_pages ? tot_pages : page < 1 ? 1 : page;
@@ -91,7 +91,7 @@ class GenericItemInventory {
         mss = null;
       };
 
-      return Pagination(1,msg);
+      return Pagination(1, msg);
     };
 
     this.cat = "inventory";

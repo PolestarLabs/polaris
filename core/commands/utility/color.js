@@ -4,7 +4,6 @@ const axios = require("axios");
 const Picto = require("../../utilities/Picto");
 
 const init = async function (msg, programatic) {
-
   const hexRegex = /^#?([a-fA-F0-9]{3}([a-fA-F0-9]{3})?)$/;
   const hexColor = (msg.args[0].match(hexRegex))?.[1];
   let result;
@@ -50,9 +49,9 @@ const init = async function (msg, programatic) {
     const CMYK = result.data.cmyk;
     const RGB = result.data.rgb;
 
-    embed.author = {name: result.title, icon_url: "https://img.icons8.com/dusk/250/paint-brush.png"} 
-    embed.color =  parseInt(result.hex,16)
-    embed.thumbnail = {url: "attachment://color.png"}  
+    embed.author = { name: result.title, icon_url: "https://img.icons8.com/dusk/250/paint-brush.png" };
+    embed.color = parseInt(result.hex, 16);
+    embed.thumbnail = { url: "attachment://color.png" };
     embed.description = `      
       HEX \`#${result.hex}\`
       RGB \`${RGB.r}\` \`${RGB.g}\` \`${RGB.b}\`  
@@ -71,7 +70,7 @@ const init = async function (msg, programatic) {
       };
     }
 
-    msg.channel.send({ embed }, {file: Canvas.toBuffer(), name: "color.png"});
+    msg.channel.send({ embed }, { file: Canvas.toBuffer(), name: "color.png" });
   } else {
     if (programatic === true) {
       Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");

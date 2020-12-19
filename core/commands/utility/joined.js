@@ -1,6 +1,6 @@
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const moment = require("moment");
   moment.locale(msg.lang[0]);
 

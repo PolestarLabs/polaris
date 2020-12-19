@@ -3,7 +3,7 @@
 
 const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const subcommand = msg.args[0];
   const arg1 = msg.args[1]; // channel
   const arg2 = msg.args[2]; // message

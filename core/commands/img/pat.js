@@ -11,7 +11,7 @@ const init = async (msg, args) => {
   embed.image(img);
   embed.color(avgcolor);
   console.log(avgcolor);
-  embed.description = `${msg.member.nick || msg.author.username} pats ${Target?.nick || Target?.username || 'everyone'}`;
+  embed.description = `${msg.member.nick || msg.author.username} pats ${Target?.nick || Target?.username || "everyone"}`;
   msg.channel.send({ embed });
 };
 

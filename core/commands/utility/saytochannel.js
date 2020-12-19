@@ -2,7 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const ServerDATA = await DB.servers.get(msg.guild.id);
   const modPass = PLX.modPass(msg.member, null, ServerDATA);
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch((e) => null);
@@ -13,7 +13,7 @@ const init = async function (msg) {
     if (!nex_msg.channel) return msg.channel.send(`${_emoji("nope")} \`ERROR :: Channel not set\``);
     nex_msg.args = msg.args.slice(1);
     nex_msg.delete = () => null;
-    require("./say").init(nex_msg,nex_msg.args);
+    require("./say").init(nex_msg, nex_msg.args);
   } else {
     msg.reply($t("responses.errors.cantFindChannel", P));
   }

@@ -7,7 +7,6 @@ const init = async function (msg) {
   const moment = require("moment");
   moment.locale(msg.lang[0] || "en");
 
-   
   const emb = new Embed();
 
   emb.color("#e83774");

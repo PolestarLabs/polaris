@@ -1,16 +1,14 @@
-const BOARD = require('../../archetypes/Soundboard.js')
+const BOARD = require("../../archetypes/Soundboard.js");
 
-const init = async function (msg){
+const init = async function (msg) {
+  BOARD.play(msg, `${appRoot}/../assets/sound/bolinadegolfe.mp3`);
+};
 
-    BOARD.play(msg, appRoot + "/../assets/sound/bolinadegolfe.mp3");
-
-}
-
-module.exports={
-    init
-    ,pub:false
-    ,cmd:'bolinha'
-    ,cat:'sound'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
-}
+module.exports = {
+  init,
+  pub: false,
+  cmd: "bolinha",
+  cat: "sound",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: [],
+};

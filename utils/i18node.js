@@ -9,7 +9,7 @@ module.exports = {
 
   rand: function rand(string, params) {
     const loc = reroute;
-    const options = loc(string, Object.assign({ returnObjects: true },params), params);
+    const options = loc(string, { returnObjects: true, ...params }, params);
     const ran = Math.floor(Math.random() * (options.length));
 
     return options[ran];

@@ -6,7 +6,7 @@ const YesNo = require("../../structures/YesNo");
 const parser = new RSS();
 
 const init = async function (msg) {
-  const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };  
+  const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
 
   const feedData = await DB.feed.find({ server: msg.guild.id, type: "rss" }).lean().exec();
 
@@ -86,7 +86,6 @@ const init = async function (msg) {
 };
 
 async function feedEmbed(item, data) {
-
   const embed = new Embed();
   const ogs = require("open-graph-scraper");
   embed.color("#ff8a42");
@@ -103,12 +102,11 @@ async function feedEmbed(item, data) {
   ]);
 
   embed.thumbnail = normalizeImage(res_thumb) || { url: data.image?.url || data.logo || "https://img.icons8.com/dusk/344/rss.png" };
-  embed.image = {url:item['media:content']?.$?.url } || normalizeImage(results);
+  embed.image = { url: item["media:content"]?.$?.url } || normalizeImage(results);
   embed.author.icon_url = "https://img.icons8.com/dusk/344/rss.png";
 
   return embed;
 }
-
 
 function normalizeImage(results) {
   const img_link = results?.result?.ogImage?.url || null;

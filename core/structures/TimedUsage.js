@@ -2,16 +2,16 @@ const moment = require("moment");
 
 class DailyCmd {
   /**
-   * 
+   *
    * @param {string} command The name of the command/item to be timed. This string is how it is gonna be called in database, must be unique.
    * @param {object} options opts
    * @param {number|7.2e+7} options.day Cooldown time in milliseconds
    * @param {boolean|false} [options.streak]
    * @param {number|null} [options.expiration] If there is a streak tracking, the timeout of said streak
-   * 
+   *
    * @returns {void}
    */
-  
+
   constructor(command, options) {
     this.command = command;
     this.day = options.day || 7.2e+7;
@@ -22,45 +22,43 @@ class DailyCmd {
   async parseUserData(user) {
     const USERDATA = await DB.users.get({ id: user.id }, undefined, "users");
     const userDaily = USERDATA.counters?.[this.command] || { last: 1, streak: 1 };
-    this.userDaily = userDaily
+    this.userDaily = userDaily;
     return userDaily;
   }
-  userData(user){
-    return this.parseUserData // COMPATIBILITY
+
+  userData(user) {
+    return this.parseUserData; // COMPATIBILITY
   }
 
   dailyAvailable(user) {
     const now = Date.now();
-    const userDaily = this.userDaily;
+    const { userDaily } = this;
     return now - (userDaily.last || 0) >= this.day;
   }
 
   keepStreak() {
     const now = Date.now();
-    const userDaily = this.userDaily;
+    const { userDaily } = this;
     return now - (userDaily.last || 0) <= this.expiration;
   }
 
-  async streakProcess(streakContinues,user){
-    if(streakContinues){
-      if(this.userDaily.streak > (this.userDaily.highest||1)){
-        await DB.users.set(user.id,{ [`counters.${this.command}.highest`]: this.userDaily.streak});
-      } 
+  async streakProcess(streakContinues, user) {
+    if (streakContinues) {
+      if (this.userDaily.streak > (this.userDaily.highest || 1)) {
+        await DB.users.set(user.id, { [`counters.${this.command}.highest`]: this.userDaily.streak });
+      }
       if (this.userDaily.streak == 1) return "first";
       return "pass";
-      
-    }else{
-      if(this.userDaily.insured){
-        await DB.users.set(user.id,{ [`counters.${this.command}.insured`]: false});
-        this.userDaily.insured = false;
-        return "recovered";
-      }else{
-        await DB.users.set(user.id,{ [`counters.${this.command}.lastStreak`]: this.userDaily.streak});
-        this.userDaily.lastStreak = this.userDaily.streak
-        this.userDaily.streak = 1
-        return "lost";
-      }
     }
+    if (this.userDaily.insured) {
+      await DB.users.set(user.id, { [`counters.${this.command}.insured`]: false });
+      this.userDaily.insured = false;
+      return "recovered";
+    }
+    await DB.users.set(user.id, { [`counters.${this.command}.lastStreak`]: this.userDaily.streak });
+    this.userDaily.lastStreak = this.userDaily.streak;
+    this.userDaily.streak = 1;
+    return "lost";
   }
 }
 exports.init = async function init(message, cmd, opts, success, reject, info, presuccess) {
@@ -81,18 +79,14 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
 
   const DAY = Daily.day;
 
-  
-    
-  await  Daily.parseUserData(Author);
-  
+  await Daily.parseUserData(Author);
+
   const userDaily = Daily.userDaily.last || Date.now();
   const dailyAvailable = Daily.dailyAvailable(Author);
-  
 
   const embed = new Embed();
   embed.setColor("#d83668");
   if (message.args.includes("status") || message.args.includes("stats") || message.args.includes("info")) {
-    
     const remain = userDaily + DAY;
     if (info) return info(message, Daily, remain);
     const embe2 = new Embed();
@@ -106,7 +100,7 @@ ${_emoji("future")} ${dailyAvailable
     return message.channel.send({ embed: embe2 });
   }
 
-  if (!dailyAvailable && !( PLX.timerBypass?.includes(Author.id) )/**/) {
+  if (!dailyAvailable && !(PLX.timerBypass?.includes(Author.id))/**/) {
     const remain = userDaily + DAY;
     Daily.userDataStatic = userDaily;
     return reject(message, Daily, remain);
@@ -117,24 +111,22 @@ ${_emoji("future")} ${dailyAvailable
   }
 
   Author.dailing = true;
-  await wait(.2);
+  await wait(0.2);
   const now = Date.now();
   DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.last`]: now } });
 
-  let streakStatus = await Daily.streakProcess(Daily.keepStreak(),Author);
+  const streakStatus = await Daily.streakProcess(Daily.keepStreak(), Author);
 
-  if (Daily.streak && streakStatus !== 'lost') {
-    if(streakStatus === 'recovered') Daily.insuranceUsed = true;
+  if (Daily.streak && streakStatus !== "lost") {
+    if (streakStatus === "recovered") Daily.insuranceUsed = true;
     DB.users.set(Author.id, { $inc: { [`counters.${Daily.command}.streak`]: 1 } });
-  } else if (Daily.streak && streakStatus === 'lost') {
+  } else if (Daily.streak && streakStatus === "lost") {
     DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.streak`]: 1 } });
   }
   Daily.streakStatus = streakStatus;
-  
+
   success(message, Daily);
 
   Author.dailing = false;
   return null;
 };
-
-

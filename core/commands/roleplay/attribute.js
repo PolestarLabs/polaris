@@ -3,7 +3,6 @@ const cmd = "attribute";
 
 const init = async function (message) {
   const P = { user: message.member.displayName, lang: message.lngs };
-  
 
   let requiredArgs = 2;
 

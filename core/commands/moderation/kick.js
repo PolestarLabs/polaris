@@ -4,7 +4,7 @@ const Gal = require("../../structures/Galleries");
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const serverData = await DB.servers.get(msg.guild.id);
   P.imsorry = rand$t("responses.verbose.interjections.gomenasai");
   if (!PLX.modPass(msg.member, "kickMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));
@@ -15,9 +15,9 @@ const init = async function (msg) {
 
   let Target;
   try {
-    Target = await PLX.resolveMember( msg.guild, msg.args[0]);
+    Target = await PLX.resolveMember(msg.guild, msg.args[0]);
   } catch (e) {
-      return msg.channel.send($t("responses.errors.kin404", P));
+    return msg.channel.send($t("responses.errors.kin404", P));
   }
 
   if (Target.id === msg.author.id) {
@@ -84,7 +84,7 @@ const init = async function (msg) {
     embed.color = 0x3355EE;
     embed.description = `${_emoji("yep")}  ${$t("interface.kickban.userKicked", P)}\n${rand$t("interface.kickban.kickFlavs", P)}\n\`\`\` ${reason} \`\`\``;
     if (pre_msg) {
-      await wait(1)
+      await wait(1);
       pre_msg.edit({ content: "", embed });
     } else {
       msg.channel.send({ embed });

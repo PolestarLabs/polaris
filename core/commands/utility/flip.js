@@ -2,7 +2,7 @@
 
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
-  
+
   const A = `${paths.CDN}/build/coins/befli_heads.gif`;
   const A1 = `${paths.CDN}/build/coins/befli_h_s.png`;
   const B = `${paths.CDN}/build/coins/befli_tails.gif`;

@@ -1,4 +1,4 @@
-//@ts-check
+// @ts-check
 // TRANSLATE[epic=translations] betflip
 const ECO = require("../../archetypes/Economy");
 
@@ -16,7 +16,6 @@ const init = async (msg) => {
   let call = msg.args[1] ? msg.args[1].toUpperCase() : null;
   let currency = msg.args[2] ? msg.args[2].toUpperCase() : "RBN";
 
- 
   if (!["HEADS", "TAILS", $t("terms.coinHeads", P).toUpperCase(), $t("terms.coinTails", P).toUpperCase()].includes(call)) {
     return msg.channel.send("invalid face called");
   }
@@ -46,9 +45,9 @@ const init = async (msg) => {
 
   let noFunds;
   await ECO.pay(msg.author, bet, "Gambling : Betflip", currency)
-    .then(() => win ? ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency) : null)
-    .catch(async ({reason})=> reason === 'NO FUNDS' ? (noFunds = true) && msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`) : null);
-    // TRANSLATE: No funds text
+    .then(() => (win ? ECO.receive(msg.author, Math.ceil(bet * 1.5), "Gambling : Betflip", currency) : null))
+    .catch(async ({ reason }) => (reason === "NO FUNDS" ? (noFunds = true) && msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`) : null));
+  // TRANSLATE: No funds text
 
   if (noFunds) return;
 

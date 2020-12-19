@@ -1,5 +1,5 @@
-const { dbGetter } = require('../../../dashboard/structures/PrimitiveGearbox.js');
-const Picto = require('../utilities/Picto.js');
+const { dbGetter } = require("../../../dashboard/structures/PrimitiveGearbox.js");
+const Picto = require("../utilities/Picto.js");
 
 /* eslint max-classes-per-file: ["error", 2] */
 const VENTURE_EVENTS = [
@@ -138,14 +138,13 @@ function eventProcessor(event, Venture) {
   return { res, payQuery, text };
 }
 
-
 // {id,timemin,timemax,odds,event,landscape, condition, cosmo, rubines,sapphires,jades,lootbox,special}
 
 const TIME_SLICE = 30;
 
 module.exports = {
   Venture: class Venture {
-    constructor(player, time, landscape,playersHere =[]) {
+    constructor(player, time, landscape, playersHere = []) {
       Object.assign(this, { player: player.id, time, landscape });
       this.start = Date.now();
       this.end = Date.now() + time * 60 * 60 * 1000;
@@ -173,15 +172,15 @@ module.exports = {
         const IX = weightedRand(odds);
         const thisEvent = eligibleEvents[IX];
         eventProcessor(thisEvent, this);
-        
-        let noise = randomize(0,5);
-        let time = i*TIME_SLICE+5;
+
+        const noise = randomize(0, 5);
+        const time = i * TIME_SLICE + 5;
 
         this.journey.push({
           id: thisEvent.id,
-          time:  time-noise,
-          trueTime:  time,
-          interactions: shuffle(playersHere)[0]
+          time: time - noise,
+          trueTime: time,
+          interactions: shuffle(playersHere)[0],
         });
       }
     }
@@ -191,7 +190,7 @@ module.exports = {
     constructor(Venture) {
       Venture = { ...Venture };
 
-      this.events = VENTURE_EVENTS.filter((VE) => Venture.journey.map(e=>e.id).includes(VE.id));
+      this.events = VENTURE_EVENTS.filter((VE) => Venture.journey.map((e) => e.id).includes(VE.id));
       this.log = Venture.journey.map((ev) => this.events.map((e) => e.id).indexOf(ev.id));
 
       this.journal = this.log.map((idx, i) => {
@@ -219,97 +218,88 @@ module.exports = {
       });
     }
   },
-  renderMap: async function(location,msg){
-    let H = 500
-    const canvas = Picto.new(800,H);
-    const ctx = canvas.getContext('2d');
+  async renderMap(location, msg) {
+    const H = 500;
+    const canvas = Picto.new(800, H);
+    const ctx = canvas.getContext("2d");
 
-    const LOC = await DB.advLocations.findOne({id:location}).lean();
-    console.log(LOC)
+    const LOC = await DB.advLocations.findOne({ id: location }).lean();
+    console.log(LOC);
     const NEI = await DB.advLocations.traceRoutes(location, 0);
-    const LOCS = await DB.advLocations.find({id: {$in: NEI.map(x=>x._id)}}).lean();
+    const LOCS = await DB.advLocations.find({ id: { $in: NEI.map((x) => x._id) } }).lean();
 
-    const coords = LOC.coordinates
- console.log(LOCS)
+    const coords = LOC.coordinates;
+    console.log(LOCS);
 
+    const bigMap = await Picto.getCanvas("https://cdn.discordapp.com/attachments/488142034776096772/773752670418501652/unknown.png");
+    const overlay = await Picto.getCanvas("https://cdn.discordapp.com/attachments/488142034776096772/774058122729488384/frame.png");
 
-    const bigMap = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/773752670418501652/unknown.png');
-    const overlay = await Picto.getCanvas('https://cdn.discordapp.com/attachments/488142034776096772/774058122729488384/frame.png');
+    ctx.drawImage(bigMap, -coords.x + H / 2, -coords.y + H / 2);
+    LOCS.forEach((loc) => {
+      const thisCoords = loc.coordinates;
 
-    ctx.drawImage(bigMap, -coords.x+H/2,-coords.y+H/2);
-    LOCS.forEach(loc=>{
-      let thisCoords = loc.coordinates;
-      
       ctx.beginPath();
       ctx.lineWidth = "5";
-      ctx.strokeStyle = "#FFFA";  
+      ctx.strokeStyle = "#FFFA";
       ctx.setLineDash([5, 15]);
-      ctx.lineCap='round'; 
-      ctx.fillStyle = "red";  
-      ctx.moveTo(H/2, H/2);
+      ctx.lineCap = "round";
+      ctx.fillStyle = "red";
+      ctx.moveTo(H / 2, H / 2);
       ctx.lineTo(
-        -coords.x + thisCoords.x + H/2,
-        -coords.y + thisCoords.y + H/2
-        );
-        ctx.stroke();  
-        
-        
-      })
+        -coords.x + thisCoords.x + H / 2,
+        -coords.y + thisCoords.y + H / 2,
+      );
+      ctx.stroke();
+    });
 
-      let playerCount = await DB.advJourneys.countDocuments({location, end: {$gt: Date.now()} });
-  
-    
- 
-    ctx.fillStyle = playerCount?'green':'red'
-    ctx.fillRect(265,46,30,30)
-    ctx.fillStyle = 'yellow'
-    ctx.fillRect(0,0,153,32)
-    
-    ctx.drawImage(overlay, 0,0);
-    
-    ctx.drawImage( Picto.tag(ctx,"Players Here",'12px Quicksand').item ,270,25)
-    ctx.drawImage( Picto.tag(ctx,playerCount,'12px Quicksand').item ,292,50)
+    const playerCount = await DB.advJourneys.countDocuments({ location, end: { $gt: Date.now() } });
 
-    Picto.popOutTxt(ctx,LOC.name,89,413,"900 italic 43px 'Panton Black'",'white', 770)
-    
+    ctx.fillStyle = playerCount ? "green" : "red";
+    ctx.fillRect(265, 46, 30, 30);
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(0, 0, 153, 32);
 
+    ctx.drawImage(overlay, 0, 0);
 
-    msg.channel.send({embed:{
+    ctx.drawImage(Picto.tag(ctx, "Players Here", "12px Quicksand").item, 270, 25);
+    ctx.drawImage(Picto.tag(ctx, playerCount, "12px Quicksand").item, 292, 50);
 
-     title: `**${LOC.name}**`,
-     description:`
+    Picto.popOutTxt(ctx, LOC.name, 89, 413, "900 italic 43px 'Panton Black'", "white", 770);
+
+    msg.channel.send({
+      embed: {
+
+        title: `**${LOC.name}**`,
+        description: `
      **Connects to:**
-      ${LOCS.map(x=> `\`${x.id}\`${x.name}: (${cardinalDirection(coords,x.coordinates)}) `).join('\n')}
-      `, 
-      image:{url:"attachment://map.png"}
-    
-    }}
-      ,{file: await canvas.toBuffer(), name: 'map.png'})
+      ${LOCS.map((x) => `\`${x.id}\`${x.name}: (${cardinalDirection(coords, x.coordinates)}) `).join("\n")}
+      `,
+        image: { url: "attachment://map.png" },
 
-
-
-  }
+      },
+    },
+    { file: await canvas.toBuffer(), name: "map.png" });
+  },
 };
 
+function cardinalDirection(LocationA, LocationB) {
+  console.log(LocationA);
+  const dy = LocationB.y - LocationA.y;
+  const dx = LocationB.x - LocationA.x;
+  let θ  = Math.atan2(dy, dx) * 180 / Math.PI;
 
-
-
-function cardinalDirection(LocationA,LocationB){
-  console.log(LocationA)
-  const dy = LocationB.y - LocationA.y,
-        dx = LocationB.x - LocationA.x;
-  let   θ  = Math.atan2(dy,dx) * 180/Math.PI; 
-
-  console.log({LocationA,LocationB,dy,dx,θ})
+  console.log({
+    LocationA, LocationB, dy, dx, θ,
+  });
 
   if (θ < 0) θ = 360 + θ;
 
-  if(θ <  23) return "E";
-  if(θ >= 23  && θ < 68) return "SE";
-  if(θ >= 68  && θ < 113) return "S";
-  if(θ >= 113 && θ < 158) return "SW";
-  if(θ >= 158 && θ < 203) return "W";
-  if(θ >= 203 && θ < 248) return "NW";
-  if(θ >= 248 && θ < 303) return "N";
-  if(θ >= 248 ) return "NE";
+  if (θ < 23) return "E";
+  if (θ >= 23 && θ < 68) return "SE";
+  if (θ >= 68 && θ < 113) return "S";
+  if (θ >= 113 && θ < 158) return "SW";
+  if (θ >= 158 && θ < 203) return "W";
+  if (θ >= 203 && θ < 248) return "NW";
+  if (θ >= 248 && θ < 303) return "N";
+  if (θ >= 248) return "NE";
 }

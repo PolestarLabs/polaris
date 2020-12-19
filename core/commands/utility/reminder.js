@@ -17,25 +17,24 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
-  moment.locale(msg.lang[0] || 'en')
+  moment.locale(msg.lang[0] || "en");
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
-
-  if (msg.content.split(" ")[0].includes("reminders") || (args[0] === "list" && args.length === 1))  {
+  if (msg.content.split(" ")[0].includes("reminders") || (args[0] === "list" && args.length === 1)) {
     return {
       content: $t("interface.reminders.currentActive", P),
       embed: {
-          author: {
-            name: `${msg.author.username}'s Appointments`,
-            icon_url: msg.author.avatarURL
-          },
-          fields: userReminders.map((r) => ({
-            name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
-            value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
-            inline: false,
-          })),
-        footer: {text: "All times are in UTC"}
+        author: {
+          name: `${msg.author.username}'s Appointments`,
+          icon_url: msg.author.avatarURL,
+        },
+        fields: userReminders.map((r) => ({
+          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
+          value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
+          inline: false,
+        })),
+        footer: { text: "All times are in UTC" },
       },
     };
   }
@@ -72,30 +71,28 @@ const init = async (msg, args) => {
     input = input.split("|").slice(1).join(" ").trim();
   }
 
-  //const regex = /^@?([^\s]+)(?: to )?(.*)$/;
-  
+  // const regex = /^@?([^\s]+)(?: to )?(.*)$/;
+
   const options = { forwardDate: true, startOfDay: 9 };
   const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
-  
+
   // FIXME[epic=anyone] reminder - breaks with xhxx (implicit minutes) -- probably needs better custom parser
-  const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(wk?s?)?/gm
-  input = input.replace(regex,function(full, $1,$2,$3,$4,$5,$6){
-    console.log($1,$2,$3)
-    if($2) $2 = " hour";
-    if($3) $3 = " day";
-    if($4) $4 = " minute";
-    if($5) $5 = " second";
-    if($6) $6 = " week";
-    
-    return $1 + [$2,$3,$4,$5,$6].join('')
-  })
+  const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(wk?s?)?/gm;
+  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => {
+    console.log($1, $2, $3);
+    if ($2) $2 = " hour";
+    if ($3) $3 = " day";
+    if ($4) $4 = " minute";
+    if ($5) $5 = " second";
+    if ($6) $6 = " week";
+
+    return $1 + [$2, $3, $4, $5, $6].join("");
+  });
 
   let what = preInput || input;
   const when = parser.parse(input, from, options);
 
-
-  const timestamp = when[0].start.date().getTime(); //+ 3600000 * 3;
-
+  const timestamp = when[0].start.date().getTime(); // + 3600000 * 3;
 
   if (when.length < 1) return $t("interface.reminders.errorWhen", P);
   if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);

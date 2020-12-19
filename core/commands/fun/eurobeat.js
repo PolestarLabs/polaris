@@ -52,7 +52,6 @@ const init = async (message) => {
     "Play this and turn the volume to *the top*!",
   ];
 
-
   const rand = randomize(0, stuff.length - 1);
   const rand2 = randomize(0, stuff2.length - 1);
   const thing = stuff[rand]; // message.author.id === "169551262981816321" ? : 'a wet trout'

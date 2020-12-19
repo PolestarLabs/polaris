@@ -2,7 +2,6 @@
 // const DB = require('../../database/db_ops');
 
 const init = async function (msg) {
-  
   const subcommand = msg.args[0];
 
   if (subcommand === "personaltxt") {
@@ -60,7 +59,7 @@ const init = async function (msg) {
 
     if (res.index === 0) {
       PROCESS_SUBRESPONSE(msg, "**TEXT** `One line of text`").then((res) => {
-        require("./tagline").init(res.forward,res.forward.args);
+        require("./tagline").init(res.forward, res.forward.args);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}tagline ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
@@ -69,27 +68,27 @@ const init = async function (msg) {
     if (res.index === 1) {
       const forward = msg;
       forward.content = "+cmd frame toggle";
-      require("./profile").init(forward,res.forward.args).then((r) => men.addReaction(yep).catch()).catch((err) => console.log(err));
+      require("./profile").init(forward, res.forward.args).then((r) => men.addReaction(yep).catch()).catch((err) => console.log(err));
       msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}profile frame toggle\`` } });
       men.deleteAfter(3000);
     }
     if (res.index === 2) {
       PROCESS_SUBRESPONSE(msg, "**TEXT** `150 Characters of Text`").then((res) => {
-        require("./personaltext").init(res.forward,res.forward.args);
+        require("./personaltext").init(res.forward, res.forward.args);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}personaltxt ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
     }
     if (res.index === 3) {
       PROCESS_SUBRESPONSE(msg, "**HEXCOLOR** `#000000`").then((res) => {
-        require("../cosmetics/favcolor").init(res.forward,res.forward.args);
+        require("../cosmetics/favcolor").init(res.forward, res.forward.args);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}favcolor ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
     }
     if (res.index === 4) {
       PROCESS_SUBRESPONSE(msg, "**SEARCH** `bg name or code`").then((res) => {
-        require("../cosmetics/background").init(res.forward,res.forward.args);
+        require("../cosmetics/background").init(res.forward, res.forward.args);
         msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}bg ${res ? res.string : ""}\`` } });
         men.deleteAfter(3000);
       });
