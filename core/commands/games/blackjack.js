@@ -802,7 +802,6 @@ const init       = async (msg, args) => {
           });
           log.embed.fields[1] = { name: "Pollux Turn", value: log.plx.join("\n"), inline: true };
           log.embed.fields[0] = { name: "Player Turn", value: log.usr.join("\n"), inline: true };
-          wait(1).then(() => msg.channel.send({ embed: log.embed }));
         }
         m.channel.send({ content: rebalance, embed: splitExplain.length ? log.embed : {} }).catch(() => null);
       });
