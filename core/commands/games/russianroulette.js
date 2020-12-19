@@ -1,6 +1,6 @@
 // @ts-check
 /* eslint-disable no-await-in-loop */
-const { global } = require("../../../../internal_modules/database_schema/schemas/_misc.js");
+const { global } = DB.miscDB;
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 const BOARD = require("../../archetypes/Soundboard.js");
 
