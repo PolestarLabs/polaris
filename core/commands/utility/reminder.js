@@ -107,9 +107,10 @@ const init = async (msg, args) => {
   let what = preInput || input;
   const when = parser.parse(input, from, options);
 
+  if (when.length < 1) return $t("interface.reminders.errorWhen", P);
+
   const timestamp = when[0].start.date().getTime(); // + 3600000 * 3;
 
-  if (when.length < 1) return $t("interface.reminders.errorWhen", P);
   if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
 
   when.forEach((w) => {
