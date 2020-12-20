@@ -780,6 +780,8 @@
             "noGuess": "{{interjectionB}} Looks like nobody guessed it... Better luck next time!"
         },
         "coinflip": {
+            "playerFlipsCoin": "{{player}} flips a coin...",
+            "andLanded": "...and landed **{{coinFace}}**",
             "coinVictory": "{{interjection}} You won! You got **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
             "coinDefeat": "{{interjection}} You seem to have lost...better luck next time!"
         },

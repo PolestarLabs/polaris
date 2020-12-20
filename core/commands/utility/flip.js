@@ -1,5 +1,3 @@
-// TRANSLATE[epic=translations] flip
-
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
@@ -11,14 +9,16 @@ const init = async function (msg) {
 
   const res = rand % 2 === 0 ? A : B;
   const res2 = rand % 2 === 0 ? A1 : B1;
-  const face = rand % 2 === 0 ? $t("terms.coinHeads") : $t("terms.coinTails");
+  const face = rand % 2 === 0 ? $t("terms.coinHeads",P) : $t("terms.coinTails"),P;
 
   const embed = new Embed();
-  embed.author(`${msg.author.tag} flips a coin...`, msg.author.avatarURL);
+  P.player = msg.author.username;
+  embed.author( $t("games.coinflip.playerFlipsCoin",P) , msg.author.avatarURL);
   embed.thumbnail(res);
 
   msg.channel.send({ embed }).then(async (x) => {
-    embed.description = `... and landed **${face}**
+    P.coinFace = face;
+    embed.description = `${ $t("games.coinflip.andLanded",P) }
         
         \u200b`;
     embed.thumbnail.url = res2;
