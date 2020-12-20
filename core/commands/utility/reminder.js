@@ -55,6 +55,7 @@ const init = async (msg, args) => {
     return { embed: { description: `⚠ ${$t("interface.reminders.maxActive", P)}`, color: 0xcc8811 } };
   }
 
+  /** @type {string} */
   let input = args.join(" ");
   let destination;
 
@@ -77,16 +78,31 @@ const init = async (msg, args) => {
   const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
 
   // FIXME[epic=anyone] reminder - breaks with xhxx (implicit minutes) -- probably needs better custom parser
-  const regex = /([0-9]+)(hr?s?)?(ds?)?(ms?)?(s)?(wk?s?)?/gm;
-  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => {
+  const regex = /([0-9]+)(wk?s?)?(ds?)?(hr?s?)?(ms?)?(s)?/gm;
+  let lastUnit;
+  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO clean this up
+    if (lastUnit === " second") throw new Error("Unit exceeds seconds");
     console.log($1, $2, $3);
-    if ($2) $2 = " hour";
+    if ($2) $2 = " week";
     if ($3) $3 = " day";
-    if ($4) $4 = " minute";
-    if ($5) $5 = " second";
-    if ($6) $6 = " week";
+    if ($4) $4 = " hour";
+    if ($5) $5 = " minute";
+    if ($6) $6 = " second";
+    let unit = $6 || $5 || $4 || $3 || $2;
+    if (unit) lastUnit = unit;
+    else {
+      unit = lastUnit === " week"
+        ? " day"
+        : lastUnit === " day"
+          ? " hour"
+          : lastUnit === " hour"
+            ? " minute"
+            : lastUnit === " minute"
+              ? " second"
+              : " minute";
+    }
 
-    return $1 + [$2, $3, $4, $5, $6].join("");
+    return $1 + unit;
   });
 
   let what = preInput || input;
