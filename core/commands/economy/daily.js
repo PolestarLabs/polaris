@@ -157,7 +157,7 @@ const init = async (msg, args) => {
       myDaily.SPH += 10;
     }
     if (dailyPLXMember?.premiumSince) {
-      myDaily.PSM = ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10);
+      myDaily.PSM = Math.min( ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10) 150);
       ctx.drawImage(await boost, 0 - 50, 0);
     }
     if (userData.donator) {
