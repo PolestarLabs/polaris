@@ -37,7 +37,7 @@ const constantAssets = [
 
 function awardPrizes(userData, myDaily, actions) {
   const currencies = ["RBN", "JDE", "SPH", "PSM"];
-  return Promise.all([actions,
+  return Promise.all([...actions,
     ECO.receive(userData.id, currencies.map((curr) => myDaily[curr]), "Daily Rewards", currencies),
     DB.users.set(userData.id, {
       $inc: {
@@ -157,7 +157,7 @@ const init = async (msg, args) => {
       myDaily.SPH += 10;
     }
     if (dailyPLXMember?.premiumSince) {
-      myDaily.PSM = Math.min( ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10) 150);
+      myDaily.PSM = Math.min( ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10), 150);
       ctx.drawImage(await boost, 0 - 50, 0);
     }
     if (userData.donator) {
@@ -251,6 +251,7 @@ const init = async (msg, args) => {
 
       if (itm === "cosmo_fragment") { // FIXME[epic=anyone] daily -  cosmos don't actually get added to inventory.
         itemName = $t("items:cosmo_fragment.name", P);
+        console.log({myDaily})
         fragAction = userData.addItem("cosmo_fragment", myDaily[itm]);
         itemoji = _emoji("COS");
       }
