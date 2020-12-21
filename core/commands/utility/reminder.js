@@ -79,7 +79,7 @@ const init = async (msg, args) => {
 
   const regex = /([0-9]+)(wk?s?)?(ds?)?(hr?s?)?(ms?)?(s)?/gm;
   let lastUnit;
-  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO clean this up
+  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO[epic=bsian] clean this up
     if (lastUnit === " second") throw new Error("Unit exceeds seconds");
     console.log($1, $2, $3);
     if ($2) $2 = " week";

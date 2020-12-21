@@ -55,7 +55,7 @@ const init = async function (msg) {
   P.user = Target.user.tag;
   const embed = new Embed();
   // embed.author = $('interface.kickban.kickingUser',P);
-  embed.author(`🔨 Banning user [${P.user}]`, Target.user.avatarURL); // TODO translate
+  embed.author(`🔨 Banning user [${P.user}]`, Target.user.avatarURL); // TRANSLATE[epic=translations] translate
   embed.footer(msg.author.tag, msg.author.avatarURL);
   embed.timestamp(new Date());
   embed.color = 0x36393f;
