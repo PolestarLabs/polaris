@@ -1,7 +1,7 @@
 // TRANSLATE[epic=translations] lootbox
 
 const Canvas = require("canvas");
-const { Lootbox, rates } = require("../../archetypes/Lootbox.js");
+const Lootbox = require("../../archetypes/Lootbox.js");
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
 
@@ -12,6 +12,7 @@ const CARD_WIDTH = 270;
 const BASELINE_REROLLS = 3;
 const REROLL_MSG = (P) => ({ embed: { description: $t("loot.rerolled", P) } });
 const FIRSTROLL_MSG = (P) => ({ embed: { description: $t("loot.opening", P) } });
+const rates = GNums.LootRates;
 
 const staticAssets = {};
 staticAssets.load = Promise.all([

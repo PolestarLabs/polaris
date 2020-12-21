@@ -108,7 +108,11 @@ module.exports = class Roulette {
     if (bet === "snake" || bet === "snek") return { ...valid, ...bets.snake };
     if (bet === "manque" || bet === "low") return { ...valid, ...bets.manque };
     if (bet === "passe" || bet === "high") return { ...valid, ...bets.passe };
-    if (["even", "odd", "uneven", "pair", "impair"].includes(bet)) return { ...valid, ...bets.parity, offset: (bet === "even" || bet === "pair") ? 0 : 1 };
+    if (["even", "odd", "uneven", "pair", "impair"].includes(bet)) {
+      return {
+        ...valid, ...bets.parity, offset: (bet === "even" || bet === "pair") ? 0 : 1,
+      };
+    }
     if (["red", "rouge", "noir", "black"].includes(bet)) return { ...valid, ...bets.colour, offset: (bet === "black" || bet === "noir") ? 0 : 1 };
 
     if (offset && offset >= 1 && offset <= 3) {

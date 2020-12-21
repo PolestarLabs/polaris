@@ -31,17 +31,17 @@ module.exports = class Hangmaid {
 
   terminate(result) {
     this.end = result;
-    result === "win" ? this.word : this.wordBoard.join("");
+    result === "win" ? this.word : this.wordBoard.join(""); // REVIEW what is this supposed to do?????
     return true;
   }
 
   async handleFullGuess(guess, message, guessMessage) {
     const m = await message.channel.send(`You're about to guess \`${guess}\`. Is that right?`);
-    return (await yesNo(m, guessMessage));
+    return yesNo(m, guessMessage);
   }
 
   registerMessage(message) {
-    return this.originalMessage = message;
+    return (this.originalMessage = message);
   }
 
   handleInput(guess) { // handleInput () => Object
@@ -56,7 +56,7 @@ module.exports = class Hangmaid {
       return false;
     }
 
-    wordArray.forEach((wl, i) => (wl === guess ? this.wordBoard[i] = guess : null));
+    wordArray.forEach((wl, i) => (wl === guess ? (this.wordBoard[i] = guess) : null));
     if (this.sanitize(this.wordBoard.join("")) === this.sanitize(this.word)) return this.terminate("win");
 
     return false;

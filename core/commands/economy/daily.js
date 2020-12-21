@@ -157,7 +157,7 @@ const init = async (msg, args) => {
       myDaily.SPH += 10;
     }
     if (dailyPLXMember?.premiumSince) {
-      myDaily.PSM = Math.min( ~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10), 150);
+      myDaily.PSM = Math.min(~~((Date.now() - new Date(msg.member.premiumSince).getTime()) / (24 * 60 * 60e3) / 10), 150);
       ctx.drawImage(await boost, 0 - 50, 0);
     }
     if (userData.donator) {
@@ -251,7 +251,7 @@ const init = async (msg, args) => {
 
       if (itm === "cosmo_fragment") {
         itemName = $t("items:cosmo_fragment.name", P);
-        console.log({myDaily})
+        console.log({ myDaily });
         fragAction = userData.addItem("cosmo_fragment", myDaily[itm]);
         itemoji = _emoji("COS");
       }

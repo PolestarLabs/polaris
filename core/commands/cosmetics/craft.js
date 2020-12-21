@@ -6,7 +6,8 @@
 const cmd = "craft";
 const { inspect } = require("util");
 const YesNo = require("../../structures/YesNo");
-const { Crafter, Visualizer } = require("../../archetypes/Crafter");
+const { Crafter } = require("../../archetypes/Crafter");
+const Visualizer = require("../../archetypes/Visualizer");
 
 const YA = { r: _emoji("yep").reaction, id: _emoji("yep").id };
 const NA = { r: _emoji("nope").reaction, id: _emoji("nope").id };

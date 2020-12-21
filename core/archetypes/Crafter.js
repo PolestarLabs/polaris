@@ -2,7 +2,7 @@
 const diff = require("fast-diff");
 const { EventEmitter } = require("events");
 const { inspect } = require("util");
-const { checkFunds, pay, generatePayload } = require("./Economy");
+const { generatePayload } = require("./Economy");
 
 const allItems = new Map();
 const allItemsName = new Map();
@@ -65,7 +65,7 @@ class Crafter extends EventEmitter {
 
     _itemsMissing = {};
 
-    _penalty_gems = {};
+    _penaltyGems = {};
 
     _mode = 0;
 
@@ -106,9 +106,9 @@ class Crafter extends EventEmitter {
       for (const gem of Object.keys(gemsTotal)) {
         toret.push([
           gem,
-          gemsTotal[gem] + (this._penalty_gems[gem] || 0),
+          gemsTotal[gem] + (this._penaltyGems[gem] || 0),
           this._modules[gem],
-          (this._penalty_gems[gem] || 0),
+          (this._penaltyGems[gem] || 0),
         ]);
       } // @ts-ignore
       return toret;
@@ -159,13 +159,15 @@ class Crafter extends EventEmitter {
 
     get itemsCrafted() { return Object.keys(this._itemsCrafting).map((itm) => [itm, this._itemsCrafting[itm]]); }
 
-    get itemsInventory() { return Object.keys(this._itemsInventory).map((itm) => [itm, this._itemsInventory[itm], this._getFromInventory(itm)?.count || 0]); }
+    get itemsInventory() {
+      return Object.keys(this._itemsInventory).map((itm) => [itm, this._itemsInventory[itm], this._getFromInventory(itm)?.count || 0]);
+    }
 
     get isMissingItems() { return !!this.itemsMissing.length; }
 
-    get xp() { return this._xp() - this.penalty_xp; }
+    get xp() { return this._xp() - this.penaltyXP; }
 
-    get penalty_xp() { return autoPenalties.xp >= 1 ? autoPenalties.xp : this._xp() * autoPenalties.xp; }
+    get penaltyXP() { return autoPenalties.xp >= 1 ? autoPenalties.xp : this._xp() * autoPenalties.xp; }
 
     _xp() {
       return Object.keys(this._itemsCrafting)
@@ -232,15 +234,27 @@ class Crafter extends EventEmitter {
       }
       for (const gemArr of this.gemsTotal) {
         user[`modules.${gemArr[0]}`] = -gemArr[1];
-        plx[`modules.${gemArr[0]}`] = gemArr[1];
+        [plx[`modules.${gemArr[0]}`]] = gemArr;
       }
       if (this.xp) user["progression.craftingXP"] = this.xp;
 
       const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters } }]; // @ts-ignore
-      if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } }); // @ts-ignore
-      if (Object.keys(toAdd).length) toWrite.splice(0, 0, { updateOne: { filter: { id: this._userID }, update: { $addToSet: { "modules.inventory": toAdd } } } });
+      if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
+      if (Object.keys(toAdd).length) {
+        toWrite.splice(0, 0, {
+          updateOne: {
+            filter: { id: this._userID }, // @ts-ignore
+            update: { $addToSet: { "modules.inventory": toAdd } },
+          },
+        });
+      }
 
-      console.log(inspect(toWrite, { depth: 5 })); console.log("USER"); console.table(user); console.log(inspect(arrayFilters)); console.log("PLX"); console.table(plx);
+      console.log(inspect(toWrite, { depth: 5 }));
+      console.log("USER");
+      console.table(user);
+      console.log(inspect(arrayFilters));
+      console.log("PLX");
+      console.table(plx);
 
       return DB.users.bulkWrite(toWrite).then(() => {
         const payloads = this.gemsTotal
@@ -351,27 +365,26 @@ class Crafter extends EventEmitter {
       const penalties = Object.keys(autoPenalties);
       const { gemsTotal } = this;
       for (const gem of penalties) {
+        let penaltyAmount;
         switch (gem) {
           case "xp": break;
           case "gems":
             for (const gemArr of gemsTotal) {
               if (penalties.includes(gemArr[0])) continue;
-              let penaltyAmount;
               if (autoPenalties.gems >= 1) penaltyAmount = autoPenalties.gems;
               else if (autoPenalties.gems >= 0) penaltyAmount = Math.floor(gemArr[1] * autoPenalties.gems);
-              if (penaltyAmount > 0) this._penalty_gems[gemArr[0]] = penaltyAmount;
+              if (penaltyAmount > 0) this._penaltyGems[gemArr[0]] = penaltyAmount;
             }
             break;
           default:
-            let penaltyAmount;
             if (autoPenalties[gem] >= 1) penaltyAmount = autoPenalties[gem];
             else if (autoPenalties[gem] >= 0) penaltyAmount = Math.floor(gemsTotal.find((a) => a[0] === gem)?.[1] * autoPenalties[gem]);
-            if (penaltyAmount > 0) this._penalty_gems[gem] = penaltyAmount;
+            if (penaltyAmount > 0) this._penaltyGems[gem] = penaltyAmount;
             break;
         }
       }
       console.log("PENALTIES:");
-      console.log(inspect(this._penalty_gems));
+      console.log(inspect(this._penaltyGems));
     }
 
     /**
@@ -443,97 +456,9 @@ class Crafter extends EventEmitter {
       return items;
     }
 }
-const yep = _emoji("yep");
-const nope = _emoji("nope");
-class Visualizer {
-    crafter;
-
-    report;
-
-    P;
-
-    depth = 2;
-
-    constructor(crafter, P, opt) {
-      if (!crafter || !P) throw new Error("Gotten too few arguments");
-      if (!(crafter instanceof Crafter)) throw new Error("crafter not instance of Crafter");
-      this.crafter = crafter;
-      this.report = crafter._report;
-      this.P = P;
-      Object.assign(this, opt);
-    }
-
-    visualize() {
-      let toret = "";
-      if (this.crafter.isMissingGems || this.crafter.isMissingItems) toret = this._genFail();
-      else toret = this._genSuccess();
-      return `${toret}\n\n${this._genRecursive(this.report, JSON.parse(JSON.stringify(this.crafter._itemsInventory)) /* 0, this.report?.items?.length */)}`;
-    }
-
-    _genFail() {
-      let toret = "";
-
-      const { gemsMissing } = this.crafter;
-      const { itemsMissing } = this.crafter;
-
-      for (const gemArr of gemsMissing) toret += `\n${nope} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[2] ? ` (+${miliarize(gemArr[2])})` : ""}`;
-      for (const itemArr of itemsMissing) {
-        const item = Crafter.getItem(itemArr[0]);
-        toret += `\n${nope} | ${item.emoji || "📦"} ${item.name} ${miliarize(itemArr[1])}${itemArr[1] >= 10000 ? "" : "x"}`;
-      }
-
-      return toret;
-    }
-
-    _genSuccess() {
-      let toret = "Total cost:";
-
-      const { gemsTotal } = this.crafter;
-      const { itemsInventory } = this.crafter;
-
-      for (const gemArr of gemsTotal) toret += `\n${yep} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** ${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[3] ? ` (+${miliarize(gemArr[3])})` : ""}`;
-      for (const itemArr of itemsInventory) {
-        const item = Crafter.getItem(itemArr[0]);
-        toret += `\n${yep} | ${item.emoji || "📦"} ${item.name} ${miliarize(itemArr[1])}${itemArr[1] >= 10000 ? "" : "x"}`;
-      }
-
-      return toret;
-    }
-
-    _genRecursive(item, inventory, depth = 0, length = 1, index = 1, parentIndex = 1, maxdepth = 1) {
-      let str = "";
-      let depthstr = "";
-      const it = "\u2003\u2002";
-      const pipe = "║";
-      const _T  = "╠═";
-      const _L  = "╚═";
-      console.log(` ${item.id} `.bgRed);
-      for (let i = 0; i < depth; i++) depthstr += ((parentIndex < maxdepth && (maxdepth - (i + 1) == depth || parentIndex + i == maxdepth || depth == i + 1)) ? pipe : "\u200b ") + it;
-
-      if (length === index) depthstr += _L;
-      else depthstr += _T;
-
-      const { items } = item;
-      const emote = item.craft ? "🛠️" : item.id === this.crafter._item.id ? " <:gooselike:678164792103534594>"
-        : (inventory[item.id] >= item.count && ((inventory[item.id] -= item.count) || true)) ? _emoji("yep")
-          : _emoji("nope");
-
-      str += `${depthstr} ${emote} **${item.id}** ${miliarize(item.count) || 1}${item.count >= 10000 ? "" : "x"}`;
-      if (item.craft) str += Object.keys(item.gems).map((gem, i) => `${i === 0 ? " :: " : ""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`).join(" ");
-      str += "\n";
-
-      if ((item.craft || item.id === this.crafter._item.id) && items?.length) {
-        if (depth == this.depth) str += `${depthstr}${it} and more...\n`;
-        else items.forEach((itm, i, arr) => str += this._genRecursive(itm, inventory, depth + 1, arr.length, i + 1, index, length));
-      }
-
-      return str;
-    }
-}
 
 module.exports = {
   Crafter,
-  Visualizer,
   allItems,
   craftedItems,
 };

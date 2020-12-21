@@ -67,6 +67,8 @@ class AchievementsManager extends EventEmitter {
   on(event: "award", cb: (achievID: string, userID: string) => any): this;
 }
 
+// TODO string colours
+
 declare global {
 
     // pollux.js
