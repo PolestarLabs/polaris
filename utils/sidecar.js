@@ -108,33 +108,8 @@ const ONEminute = new CronJob("*/1 * * * *", async () => {
     });
 
   /* Manage Reminders */ //= ===============================
-  DB.feed.find({ expires: { $lte: Date.now() } }).lean().exec()
-    .then((reminders) => {
-      console.log({ reminders });
-      reminders.forEach(async (rem) => {
-        console.log(rem);
-        try {
-          // url = userID
-          const destChannel = (await PLX.getRESTChannel(rem.channel).catch((e) => null)) || (await PLX.getDMChannel(rem.url));
-          await DB.feed.deleteOne({ _id: rem._id });
-          await destChannel.createMessage({
-            content: (rem.channel === "dm" ? "" : `<@${rem.url}>`),
-            embed:
-        {
-          title: "<:alarm:446901834305634304> REMINDER:",
-          description: rem.name,
-          timestamp: new Date(),
-          color: 0xcc2233,
-          thumbnail: { url: "https://visualpharm.com/assets/601/Stopwatch-595b40b65ba036ed117d167a.svg" },
-        },
-          });
-        } catch (e) {
-          await DB.feed.deleteOne({ _id: rem._id });
-          console.error("REMOVED FAULTY REMINDER");
-          console.error(e);
-        }
-      });
-    });
+  processReminders();
+  setTimeout(()=>processReminders(),30e3);
 
   /* Manage Mutes */ //= ===============================
   DB.mutes.find({ expires: { $lte: Date.now() } })
@@ -195,3 +170,34 @@ ONEminute.start();
 
 FIFTEENminute.start();
 console.log("• ".green, "CRONs ready");
+
+
+function processReminders() {
+  DB.feed.find({ expires: { $lte: Date.now() } }).lean().exec()
+    .then((reminders) => {
+      console.log({ reminders });
+      reminders.forEach(async (rem) => {
+        console.log(rem);
+        try {
+          // url = userID
+          const destChannel = (await PLX.getRESTChannel(rem.channel).catch((e) => null)) || (await PLX.getDMChannel(rem.url));
+          await DB.feed.deleteOne({ _id: rem._id });
+          await destChannel.createMessage({
+            content: (rem.channel === "dm" ? "" : `<@${rem.url}>`),
+            embed: {
+              title: "<:alarm:446901834305634304> REMINDER:",
+              description: rem.name,
+              timestamp: new Date(),
+              color: 0xcc2233,
+              thumbnail: { url: "https://visualpharm.com/assets/601/Stopwatch-595b40b65ba036ed117d167a.svg" },
+            },
+          });
+        } catch (e) {
+          await DB.feed.deleteOne({ _id: rem._id });
+          console.error("REMOVED FAULTY REMINDER");
+          console.error(e);
+        }
+      });
+    });
+}
+
