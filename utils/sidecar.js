@@ -13,10 +13,10 @@ console.log("Sidecar Started".blue);
 global.PLX = new Client(`Bot ${cfg.token}`, { restMode: true, intents: 0 });
 PLX.cluster = { id: "-1", name: "[SIDECAR]" };
 
-const hook = new WebhookDigester(PLX);
 
 const DBSchema = require("@polestar/database_schema");
 const WebhookDigester = require("./WebhookDigester.js");
+const hook = new WebhookDigester(PLX);
 
 const dbConnectionData = {
   hook: null,
