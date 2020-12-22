@@ -35,7 +35,7 @@ const init = async function (msg, args, memberObj) {
 
   if (userID) return response;
   const res = await msg.channel.send(response);
-  INVOKERS.set(userID || msg.author.id, res.id);
+  INVOKERS.set(msg.author.id, res.id);
   console.log("end");
   return res;
 };
