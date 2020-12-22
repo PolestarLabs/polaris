@@ -12,6 +12,8 @@
 //   PSM: "prisms"
 // };
 
+// NOTE don't touch this thnx
+
 const toCurrencies = {
   RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
   AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
