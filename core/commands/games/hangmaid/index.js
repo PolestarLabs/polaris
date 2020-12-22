@@ -19,14 +19,20 @@ const init = async function (msg, args) {
   const GAME = new Hangmaid(msg, WORDS);
   const MODE = args[0] === "group" ? "group" : "solo";
 
-  const mainMessage = await msg.channel.send(`${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`);
+  const embed = {
+    description: `The word's theme is ${GAME.HINT}\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
+    image: {
+      url: `${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`
+    },
+    title: "it's fucked"
+  };
+
+  const mainMessage = await msg.channel.send({ embed: embed });
   GAME.registerMessage(mainMessage);
   await startCollector(GAME, msg, MODE);
 };
 
 // TODO[epic=mistery]: hm - Add language support
-// TODO[epic=mistery]: hm - Ability to play solo /  group ( group default? ) | in progress
-// TODO[epic=mistery]: hm - Possibly add a specific keyword to prompt a full guess attempt
 
 /* TODO[epic=mistery]: hm - Optional: Add ranks just like Guessflag  (SEE LINKS)
     #  GAME MODES EXAMPLE -------------- LINK ../../../archetypes/GuessingGames.js:105
@@ -37,7 +43,7 @@ const init = async function (msg, args) {
 // Need msg for the collector filter in solo mode
 const startCollector = async (Game, msg, mode) => {
   let paused = false;
-  const filter = mode === "group" ? (m) => m.author.id !== PLX.author.id : (m) => m.author.id === msg.author.id;
+  const filter = mode === "group" ? (m) => m.author.id !== PLX.user.id : (m) => m.author.id === msg.author.id;
   const commandMsg = Game.originalMessage;
 
   const Collector = commandMsg.channel.createMessageCollector(filter, { time: 5 * 60e3 }); // 5 Minutes
@@ -60,7 +66,8 @@ const startCollector = async (Game, msg, mode) => {
 
     if (Game.language === "ru" && !RegexCyrillic.test(guess)) {
       return attemptMsg.addReaction(_emoji("nope").reaction);
-    } if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
+    }
+    if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
 
     let attemptFullWord = false;
     if (guessClean.startsWith(">")) {
@@ -81,26 +88,34 @@ const startCollector = async (Game, msg, mode) => {
           .then((warn) => setTimeout(() => warn.delete(), 1500));
       }
 
-      const result = await Game.handleInput(guess);
-
       if (Game.ENDGAME) Collector.stop(Game.ENDGAME);
       await Game.originalMessage.delete()
         .catch((e) => 0);
 
-      const newMsg = await commandMsg.channel.send(`${paths.DASH}/generators/hangmaid?${
-        encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
-      }`);
+      const newEmbed = {
+        title: "Game's on!",
+        description: `The word's theme is \`${Game.HINT}\`\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
+        image: {
+          url: `${paths.DASH}/generators/hangmaid?${
+            encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME === "win" ? "win" : "lose"}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
+          }`
+        }
+      };
 
-      await Game.registerMessage(newMsg);
+      //Game.ENDGAME === 'win' ? newEmbed.title = 'Congratulations! You made it!' : 'Game over...'
+
+      const newMsg = await msg.channel.send({ embed: newEmbed });
+      Game.registerMessage(newMsg);
+
     }
   });
 
   Collector.on("end", (col, reason) => {
     clearInterval(activity);
     Game.finish();
-    if (reason === "win") return commandMsg.channel.send("Congratulations! You guessed it!");
+    if (reason === "win") return commandMsg.channel.send(":tada: :tada: :tada: :tada: Congratulations! You guessed it!");
     if (reason === "lose") return commandMsg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
-    if (reason === "time") return commandMsg.channel.send("Time's up");
+    if (reason === "time") return commandMsg.channel.send(":hourglass: Time's up!");
     if (reason === "attempts") return commandMsg.channel.send("Oops! You're out of attempts...");
   });
 };
@@ -111,5 +126,5 @@ module.exports = {
   perms: 3,
   cat: "games",
   botPerms: ["attachFiles"],
-  aliases: ["hangman", "forca"],
+  aliases: ["hangman", "forca", "hm"],
 };
