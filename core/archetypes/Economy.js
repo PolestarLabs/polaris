@@ -166,11 +166,11 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (userTo["id"]) userTo = userTo["id"];
 
   // Checks
-  curr = parseCurrencies(curr);
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
     if (!hasFunds) return Promise.reject({reason: "NO FUNDS"}); //throw new Error("User doesn't have the funds necessary.");
 
     // Argument validation
+    curr = parseCurrencies(curr);
     if (typeof amt === "number" || typeof curr === "string") {
       if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
       amt = [amt];
