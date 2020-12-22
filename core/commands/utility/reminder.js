@@ -1,3 +1,4 @@
+// @ts-check
 const chrono = require("chrono-node");
 const moment = require("moment");
 
@@ -65,6 +66,40 @@ const init = async (msg, args) => {
     destination = msg.channelMentions[msg.channelMentions.length - 1] || msg.channel.id;
   }
 
+  const options = { forwardDate: true, startOfDay: 9 };
+  const from = new Date(Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3);
+
+  /** @type {import('chrono-node').ParsedResult[]} */
+  let chronoResult;
+  let reminder;
+
+  if (input.includes(" | ")) {
+    const temp = input.split(" | ");
+    chronoResult = parser.parse(temp.pop(), from, options);
+    reminder = temp.join(" | ");
+  } else {
+    chronoResult = parser.parse(input, from, options);
+  }
+
+  if (chronoResult.length < 1) return $t("interface.reminders.errorWhen", P);
+
+  if (!reminder) reminder = input.replace(chronoResult[0].text, "").trim();
+
+  const timestamp = chronoResult[0].start.date();
+  if (timestamp < from) return $t("interface.reminders.er rorTARDIS", P);
+
+  await DB.feed.new({
+    url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
+  });
+
+  P.appointment = `\`${reminder}\``;
+  P.time = moment.utc(timestamp).calendar();
+  P.channel = `<#${destination}>`;
+  P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
+
+  return $t("interface.reminders.reminderOk", P);
+
+  /*
   let preInput = null;
 
   if (input.includes("|")) {
@@ -79,7 +114,7 @@ const init = async (msg, args) => {
 
   const regex = /([0-9]+)(wk?s?)?(ds?)?(hr?s?)?(ms?)?(s)?/gm;
   let lastUnit;
-  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO clean this up
+  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO[epic=bsian] clean this up
     if (lastUnit === " second") throw new Error("Unit exceeds seconds");
     console.log($1, $2, $3);
     if ($2) $2 = " week";
@@ -128,6 +163,7 @@ const init = async (msg, args) => {
   P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
 
   return $t("interface.reminders.reminderOk", P);
+  */
 };
 module.exports = {
   init,
