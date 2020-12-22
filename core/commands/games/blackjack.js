@@ -578,246 +578,250 @@ const init       = async (msg, args) => {
   }
 
   const blackjack  = new Blackjack(msg);
-  const playerHand = blackjack.getHand(powerups);
-  const dealerHand = blackjack.getHand().map((card) => (card.startsWith("JOKER") ? `${randomize(1, 10)}H` : card));
-  const balance    = USERDATA.modules.RBN;
+  try {
+    const playerHand = blackjack.getHand(powerups);
+    const dealerHand = blackjack.getHand().map((card) => (card.startsWith("JOKER") ? `${randomize(1, 10)}H` : card));
+    const balance    = USERDATA.modules.RBN;
 
-  const canInsurance  = testInsurance(balance, bet, playerHand, dealerHand);
-  const canDoubleDown = testDoubleDown(balance, bet, playerHand);
-  const canSplit      = testSplit(balance, bet, playerHand);
+    const canInsurance  = testInsurance(balance, bet, playerHand, dealerHand);
+    const canDoubleDown = testDoubleDown(balance, bet, playerHand);
+    const canSplit      = testSplit(balance, bet, playerHand);
 
-  const hitstandPre = hitStandMessage(P, canDoubleDown, canSplit, canInsurance);
+    const hitstandPre = hitStandMessage(P, canDoubleDown, canSplit, canInsurance);
 
-  msg.channel.send(v.NEWGAME);
-  return msg.channel.send(`
-    ${hitstandPre}
-    `).then(async (introMessage) => {
-    // powerups.nojoker = false; // testing
-    let playerHands;
+    msg.channel.send(v.NEWGAME);
+    return msg.channel.send(`
+      ${hitstandPre}
+      `).then(async (introMessage) => {
+      // powerups.nojoker = false; // testing
+      let playerHands;
 
-    const log = {
-      embed: {
-        description: "Game Started",
-        fields: [
-          { name: "Player", value: "\u200b", inline: true },
-          { name: "Pollux", value: "\u200b", inline: true },
-        ],
-        color: 0xF03350,
-        footer: {
-          icon_url: msg.author.avatarURL,
-          text: msg.author.tag,
+      const log = {
+        embed: {
+          description: "Game Started",
+          fields: [
+            { name: "Player", value: "\u200b", inline: true },
+            { name: "Pollux", value: "\u200b", inline: true },
+          ],
+          color: 0xF03350,
+          footer: {
+            icon_url: msg.author.avatarURL,
+            text: msg.author.tag,
+          },
+          timestamp: new Date(),
         },
-        timestamp: new Date(),
-      },
-      usr: [],
-      plx: [`> ${_emoji("plxcards")} Pollux \`OPEN\` **${Blackjack.handValue(dealerHand)}**`],
-    };
+        usr: [],
+        plx: [`> ${_emoji("plxcards")} Pollux \`OPEN\` **${Blackjack.handValue(dealerHand)}**`],
+      };
 
-    const drawOptions = {
-      v,
-      b: bet,
-      bbt: bet,
-      B: balance,
-      p: playerName,
-      d: polluxNick,
-      m: msg,
-      intro: introMessage,
-      log,
-    };
-    const playerHandValueCalc = Blackjack.handValue(playerHand);
+      const drawOptions = {
+        v,
+        b: bet,
+        bbt: bet,
+        B: balance,
+        p: playerName,
+        d: polluxNick,
+        m: msg,
+        intro: introMessage,
+        log,
+      };
+      const playerHandValueCalc = Blackjack.handValue(playerHand);
 
-    if (playerHandValueCalc !== "Blackjack" && !playerHandValueCalc.toString().includes("JOKER")) {
-      playerHands = await getFinalHand(blackjack, playerHand, dealerHand, myDeck, powerups, drawOptions);
-      const result = gameResult(Blackjack.handValue(playerHands[0]), 0);
-      const noHit = playerHands.length === 1 && result === "bust";
+      if (playerHandValueCalc !== "Blackjack" && !playerHandValueCalc.toString().includes("JOKER")) {
+        playerHands = await getFinalHand(blackjack, playerHand, dealerHand, myDeck, powerups, drawOptions);
+        const result = gameResult(Blackjack.handValue(playerHands[0]), 0);
+        const noHit = playerHands.length === 1 && result === "bust";
 
-      // loli
+        // loli
 
-      while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) {
-        log.plx.push(`> ${Blackjack.handValue(dealerHand) > 21
-          ? _emoji("plxbjkbust")
-          : _emoji("plxcards")} Pollux \`HIT\` **${Blackjack.handValue(dealerHand)}** `
-            + `> **${Blackjack.handValue(blackjack.hit(dealerHand, { nojoker: true }))}**`);
-      }
-      if (noHit) {
-        log.plx.push(`> ${_emoji("plxbjkwin")} **Pollux wins**`);
-      }
-
-      log.embed.description = (`Game finished in ${log.plx.length + log.usr.length} turns.`);
-      introMessage.delete();
-    } else {
-      playerHands = [playerHand];
-    }
-
-    const dealerValue = Blackjack.handValue(dealerHand);
-    let winnings = 0;
-    let hideHoleCard = true;
-    const multiHandData = [];
-    let finalResult;
-
-    const H_DATA = {};
-    let doubles = 0;
-    let surrenders = 0;
-    let insurances = 0;
-    let insuranceAmount = 0;
-    /** @type {Boolean} */
-    let hasJoker = false;
-    const gameJokers = [];
-    const splitExplain = [];
-
-    playerHands.forEach((hand, i) => {
-      let calcBet = bet;
-
-      const playerValue = Blackjack.handValue(hand);
-      let result = gameResult(playerValue, dealerValue);
-
-      if (result !== "bust") hideHoleCard = false;
-      doubles += hand.doubled ? 1 : 0;
-      if (hand.surrendered) {
-        surrenders++;
-        calcBet = Math.ceil(calcBet / 2);
-        result = "surrender";
-      }
-      if (hand.insurance) {
-        insurances++;
-        insuranceAmount = Math.ceil(bet / 2);
-      }
-
-      let lossOrGain = Math.floor(
-        (
-          (["loss", "bust", "surrender"].includes(result) ? -1 : result === "push" ? 0 : 1)
-            * (hand.doubled ? 2 : 1)
-            * (playerValue === "Blackjack"
-              ? 1.5
-              : playerValue.toString().includes("JOKER")
-                ? 2
-                : 1
-            )
-            * calcBet
-        ),
-      );
-
-      lossOrGain += (dealerValue === "Blackjack" ? insuranceAmount : -insuranceAmount);
-      if (dealerValue === "Blackjack") log.plx.push(`> ${_emoji("plxbjkbjk")} **Pollux has a Blackjack**`);
-      if (playerValue === "Blackjack") log.usr.push(`> ${_emoji("plxbjkbjk")} **Player has a Blackjack**`);
-      if (playerValue.toString().includes("JOKER")) log.usr.push(`> ${_emoji("plxbjkjkr")} **Player has a Joker**`);
-
-      // winnings += lossOrGain;
-      const soft = Blackjack.isSoft(hand);
-      H_DATA.num = i + 1;
-      H_DATA.val = playerValue;
-      H_DATA.status = soft ? "SOFT" : "";
-      H_DATA.result = playerHands.length === 1
-        ? `** ${msg.member.displayName}**`
-        : ` ${result.replace(/(^\w|\s\w)/g, (ma) => ma.toUpperCase())}${result !== "push"
-          ? `, ${lossOrGain}`
-          : `, ${"Rubines"}"} back`}\n`;
-      multiHandData.push(H_DATA);
-      winnings += Number(lossOrGain);
-      if (playerValue.toString().includes("JOKER")) {
-        hasJoker = true;
-        gameJokers.push(playerValue.toString());
-      }
-
-      const RESULT_EMOJI = (res) => (playerValue.toString().includes("JOKER")
-        ? _emoji("plxbjkjkr")
-        : playerValue === "Blackjack"
-          ? _emoji("plxbjkbjk")
-          : res === "push"
-            ? _emoji("plxbjkpush")
-            : res === "loss"
-              ? _emoji("plxbjkloss")
-              : res === "bust"
-                ? _emoji("plxbjkbust")
-                : res === "Dealer bust"
-                  ? _emoji("plxbjkwin")
-                  : res.toLowerCase() === "blackjack"
-                    ? _emoji("plxbjkbjk")
-                    : res.toLowerCase() === "surrender"
-                      ? _emoji("plxbjksurr")
-                      : _emoji("plxbjkwin"));
-
-      splitExplain.push(
-        `${_emoji("plxcards").no_space}\`\u200b${(`${i + 1}`).padStart(2, " ")}\` : **\`\u200b${(`${lossOrGain}`).padStart(6, " ")}\`** `
-          + `${_emoji("RBN")} ${RESULT_EMOJI(result)}${hand.doubled
-            ? _emoji("plxbjk2x")
-            : ""}${hand.insurance ? `${_emoji("plxbjkinsu")}\`${dealerValue === "Blackjack" ? "+" : "-"}${insuranceAmount}\`` : ""}`,
-      );
-      finalResult = result;
-    });
-
-    const POL_DATA = {};
-    POL_DATA.val = `${hideHoleCard ? Blackjack.handValue([dealerHand[0]]) : dealerValue}`;
-    const visihand = [dealerHand[0], ["X"]];
-
-    let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE;
-    if (Blackjack.handValue(playerHands[0]).toString().includes("JOKER")) PLAY_RES = v._JOKER;
-
-    P.insurance = insuranceAmount;
-
-    // TOP -> Result
-
-    if (finalResult === "push") PLAY_RES = v._EVEN;
-
-    if (finalResult === "surrender") PLAY_RES = $t("games.blackjack.surrender_res", P);
-
-    if (dealerValue === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_lose", P);
-
-    if (playerHands.length === 1 && Blackjack.handValue(playerHand) === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_win", P);
-
-    // TOP -> Commentary
-
-    if (playerHand.doubled && ["loss", "bust", "surrender"].includes(finalResult)) PLAY_RES += `\n${$t("games.blackjack.double_lose", P)}`;
-    else if (playerHand.doubled) PLAY_RES += `\n${$t("games.blackjack.double_win", P)}`;
-
-    if (playerHand.insurance && dealerValue === "Blackjack") PLAY_RES += `\n${$t("games.blackjack.insurance_win", P)}`;
-    else if (playerHand.insurance) PLAY_RES += `\n${$t("games.blackjack.insurance_lost", P)}`;
-
-    const [POLLUX_HAND_GFX, PLAYER_HAND_GFX] = await Promise.all([
-      renderHand(playerHands, myDeck),
-      renderHand([hideHoleCard ? visihand : dealerHand], myDeck),
-    ]);
-
-    if (winnings !== 0) {
-      if (winnings > 0) { // REVIEW[epic=mitchell] bj - change to one-line transfer if it defaults to receive/pay
-        await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
-      }
-      if (winnings < 0) {
-        await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
-      }
-    }
-    drawOptions.b = bet * playerHands.length + doubles * bet;
-    drawOptions.bbt = bet;
-    drawOptions.ins = playerHands.filter((x) => x.insurance).length;
-    drawOptions.actions = null;
-
-    const scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, multiHandData[0], POL_DATA, drawOptions);
-    const resp = winnings > 0 ? v._PRIZE : winnings < 0 ? v._ANTIPRIZE : "";
-    const rebalance = resp.replace("%R%", _emoji("rubine") + Math.abs(winnings));
-
-    blackjack.endGame();
-
-    msg.channel.send(PLAY_RES, { file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
-      .then((m) => {
-        if (splitExplain.length) {
-          log.embed.fields.push({
-            name: `**${splitExplain.length > 1 ? $t("games.blackjack.splitbreak", P) : $t("games.blackjack.result", P)}**`,
-            value: splitExplain.join("\n"),
-            inline: false,
-          });
-          log.embed.fields[1] = { name: "Pollux Turn", value: log.plx.join("\n"), inline: true };
-          log.embed.fields[0] = { name: "Player Turn", value: log.usr.join("\n"), inline: true };
+        while ((Blackjack.isSoft(dealerHand) || Blackjack.handValue(dealerHand) < 17) && !noHit) {
+          log.plx.push(`> ${Blackjack.handValue(dealerHand) > 21
+            ? _emoji("plxbjkbust")
+            : _emoji("plxcards")} Pollux \`HIT\` **${Blackjack.handValue(dealerHand)}** `
+              + `> **${Blackjack.handValue(blackjack.hit(dealerHand, { nojoker: true }))}**`);
         }
-        m.channel.send({ content: rebalance, embed: splitExplain.length ? log.embed : {} }).catch(() => null);
+        if (noHit) {
+          log.plx.push(`> ${_emoji("plxbjkwin")} **Pollux wins**`);
+        }
+
+        log.embed.description = (`Game finished in ${log.plx.length + log.usr.length} turns.`);
+        introMessage.delete();
+      } else {
+        playerHands = [playerHand];
+      }
+
+      const dealerValue = Blackjack.handValue(dealerHand);
+      let winnings = 0;
+      let hideHoleCard = true;
+      const multiHandData = [];
+      let finalResult;
+
+      const H_DATA = {};
+      let doubles = 0;
+      let surrenders = 0;
+      let insurances = 0;
+      let insuranceAmount = 0;
+      /** @type {Boolean} */
+      let hasJoker = false;
+      const gameJokers = [];
+      const splitExplain = [];
+
+      playerHands.forEach((hand, i) => {
+        let calcBet = bet;
+
+        const playerValue = Blackjack.handValue(hand);
+        let result = gameResult(playerValue, dealerValue);
+
+        if (result !== "bust") hideHoleCard = false;
+        doubles += hand.doubled ? 1 : 0;
+        if (hand.surrendered) {
+          surrenders++;
+          calcBet = Math.ceil(calcBet / 2);
+          result = "surrender";
+        }
+        if (hand.insurance) {
+          insurances++;
+          insuranceAmount = Math.ceil(bet / 2);
+        }
+
+        let lossOrGain = Math.floor(
+          (
+            (["loss", "bust", "surrender"].includes(result) ? -1 : result === "push" ? 0 : 1)
+              * (hand.doubled ? 2 : 1)
+              * (playerValue === "Blackjack"
+                ? 1.5
+                : playerValue.toString().includes("JOKER")
+                  ? 2
+                  : 1
+              )
+              * calcBet
+          ),
+        );
+
+        lossOrGain += (dealerValue === "Blackjack" ? insuranceAmount : -insuranceAmount);
+        if (dealerValue === "Blackjack") log.plx.push(`> ${_emoji("plxbjkbjk")} **Pollux has a Blackjack**`);
+        if (playerValue === "Blackjack") log.usr.push(`> ${_emoji("plxbjkbjk")} **Player has a Blackjack**`);
+        if (playerValue.toString().includes("JOKER")) log.usr.push(`> ${_emoji("plxbjkjkr")} **Player has a Joker**`);
+
+        // winnings += lossOrGain;
+        const soft = Blackjack.isSoft(hand);
+        H_DATA.num = i + 1;
+        H_DATA.val = playerValue;
+        H_DATA.status = soft ? "SOFT" : "";
+        H_DATA.result = playerHands.length === 1
+          ? `** ${msg.member.displayName}**`
+          : ` ${result.replace(/(^\w|\s\w)/g, (ma) => ma.toUpperCase())}${result !== "push"
+            ? `, ${lossOrGain}`
+            : `, ${"Rubines"}"} back`}\n`;
+        multiHandData.push(H_DATA);
+        winnings += Number(lossOrGain);
+        if (playerValue.toString().includes("JOKER")) {
+          hasJoker = true;
+          gameJokers.push(playerValue.toString());
+        }
+
+        const RESULT_EMOJI = (res) => (playerValue.toString().includes("JOKER")
+          ? _emoji("plxbjkjkr")
+          : playerValue === "Blackjack"
+            ? _emoji("plxbjkbjk")
+            : res === "push"
+              ? _emoji("plxbjkpush")
+              : res === "loss"
+                ? _emoji("plxbjkloss")
+                : res === "bust"
+                  ? _emoji("plxbjkbust")
+                  : res === "Dealer bust"
+                    ? _emoji("plxbjkwin")
+                    : res.toLowerCase() === "blackjack"
+                      ? _emoji("plxbjkbjk")
+                      : res.toLowerCase() === "surrender"
+                        ? _emoji("plxbjksurr")
+                        : _emoji("plxbjkwin"));
+
+        splitExplain.push(
+          `${_emoji("plxcards").no_space}\`\u200b${(`${i + 1}`).padStart(2, " ")}\` : **\`\u200b${(`${lossOrGain}`).padStart(6, " ")}\`** `
+            + `${_emoji("RBN")} ${RESULT_EMOJI(result)}${hand.doubled
+              ? _emoji("plxbjk2x")
+              : ""}${hand.insurance ? `${_emoji("plxbjkinsu")}\`${dealerValue === "Blackjack" ? "+" : "-"}${insuranceAmount}\`` : ""}`,
+        );
+        finalResult = result;
       });
 
-    // JOKER EFFECTS GO HERE
-    if (hasJoker) {
-      gameJokers.forEach((JKR, i) => {
-        msg.channel.send(`\`${JKR}\` eff -- immediate -- J:${i}/${gameJokers.length}`);
-      });
-    }
-  });
+      const POL_DATA = {};
+      POL_DATA.val = `${hideHoleCard ? Blackjack.handValue([dealerHand[0]]) : dealerValue}`;
+      const visihand = [dealerHand[0], ["X"]];
+
+      let PLAY_RES = winnings === 0 ? v._EVEN : winnings > 0 ? v._WIN : v._LOSE;
+      if (Blackjack.handValue(playerHands[0]).toString().includes("JOKER")) PLAY_RES = v._JOKER;
+
+      P.insurance = insuranceAmount;
+
+      // TOP -> Result
+
+      if (finalResult === "push") PLAY_RES = v._EVEN;
+
+      if (finalResult === "surrender") PLAY_RES = $t("games.blackjack.surrender_res", P);
+
+      if (dealerValue === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_lose", P);
+
+      if (playerHands.length === 1 && Blackjack.handValue(playerHand) === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_win", P);
+
+      // TOP -> Commentary
+
+      if (playerHand.doubled && ["loss", "bust", "surrender"].includes(finalResult)) PLAY_RES += `\n${$t("games.blackjack.double_lose", P)}`;
+      else if (playerHand.doubled) PLAY_RES += `\n${$t("games.blackjack.double_win", P)}`;
+
+      if (playerHand.insurance && dealerValue === "Blackjack") PLAY_RES += `\n${$t("games.blackjack.insurance_win", P)}`;
+      else if (playerHand.insurance) PLAY_RES += `\n${$t("games.blackjack.insurance_lost", P)}`;
+
+      const [POLLUX_HAND_GFX, PLAYER_HAND_GFX] = await Promise.all([
+        renderHand(playerHands, myDeck),
+        renderHand([hideHoleCard ? visihand : dealerHand], myDeck),
+      ]);
+
+      if (winnings !== 0) {
+        if (winnings > 0) { // REVIEW[epic=mitchell] bj - change to one-line transfer if it defaults to receive/pay
+          await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
+        }
+        if (winnings < 0) {
+          await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
+        }
+      }
+      drawOptions.b = bet * playerHands.length + doubles * bet;
+      drawOptions.bbt = bet;
+      drawOptions.ins = playerHands.filter((x) => x.insurance).length;
+      drawOptions.actions = null;
+
+      const scenario = await drawTable(PLAYER_HAND_GFX, POLLUX_HAND_GFX, multiHandData[0], POL_DATA, drawOptions);
+      const resp = winnings > 0 ? v._PRIZE : winnings < 0 ? v._ANTIPRIZE : "";
+      const rebalance = resp.replace("%R%", _emoji("rubine") + Math.abs(winnings));
+
+      blackjack.endGame();
+
+      msg.channel.send(PLAY_RES, { file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
+        .then((m) => {
+          if (splitExplain.length) {
+            log.embed.fields.push({
+              name: `**${splitExplain.length > 1 ? $t("games.blackjack.splitbreak", P) : $t("games.blackjack.result", P)}**`,
+              value: splitExplain.join("\n"),
+              inline: false,
+            });
+            log.embed.fields[1] = { name: "Pollux Turn", value: log.plx.join("\n"), inline: true };
+            log.embed.fields[0] = { name: "Player Turn", value: log.usr.join("\n"), inline: true };
+          }
+          m.channel.send({ content: rebalance, embed: splitExplain.length ? log.embed : {} }).catch(() => null);
+        });
+
+      // JOKER EFFECTS GO HERE
+      if (hasJoker) {
+        gameJokers.forEach((JKR, i) => {
+          msg.channel.send(`\`${JKR}\` eff -- immediate -- J:${i}/${gameJokers.length}`);
+        });
+      }
+    });
+  } catch (error) {
+    blackjack.endGame();
+  }
 };
 
 module.exports = {
