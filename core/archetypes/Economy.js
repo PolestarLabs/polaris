@@ -45,7 +45,7 @@ function parseCurrencies(curr) {
   if (!curr || curr.some((c) => !currencies.includes(c))) {
     throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
   }
-  return (typeof curr === "string" ? curr[0] : curr);
+  return (Array.isArray(curr) ? curr[0] : curr);
 }
 
 /**
