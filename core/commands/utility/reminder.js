@@ -67,7 +67,7 @@ const init = async (msg, args) => {
   }
 
   const options = { forwardDate: true, startOfDay: 9 };
-  const from = new Date(Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3);
+  const from = new Date(msg.createdAt);
 
   /** @type {import('chrono-node').ParsedResult[]} */
   let chronoResult;
