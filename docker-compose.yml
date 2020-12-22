@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+ pollux:
+  build:
+   context: .
+   dockerfile: Dockerfile
+   args:
+    - |
+     SSH_PRIVATE_KEY=
+     -----BEGIN OPENSSH PRIVATE KEY-----
+     b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+     QyNTUxOQAAACBuUVvqSvxg4iEkkLp32DyYMMCbgCMKiBuBNpIt483jjAAAAJC9/yvdvf8r
+     3QAAAAtzc2gtZWQyNTUxOQAAACBuUVvqSvxg4iEkkLp32DyYMMCbgCMKiBuBNpIt483jjA
+     AAAEBk270LzyJoZaWhP66dHKCcxFA+cXKri1rtyOVD+558UG5RW+pK/GDiISSQunfYPJgw
+     wJuAIwqIG4E2ki3jzeOMAAAACkZvciBHaXRMYWIBAgM=
+     -----END OPENSSH PRIVATE KEY-----
+  expose:
+   - 27472
+  ports:
+   - 27472:27472
+  environment:
+   - PROD=true

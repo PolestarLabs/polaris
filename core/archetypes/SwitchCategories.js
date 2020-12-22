@@ -66,3 +66,5 @@ class Categories {
     });
   }
 }
+
+module.exports = Categories;

@@ -1,3 +1,4 @@
+// @ts-check
 const chrono = require("chrono-node");
 const moment = require("moment");
 
@@ -65,6 +66,40 @@ const init = async (msg, args) => {
     destination = msg.channelMentions[msg.channelMentions.length - 1] || msg.channel.id;
   }
 
+  const options = { forwardDate: true, startOfDay: 9 };
+  const from = new Date(Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3);
+
+  /** @type {import('chrono-node').ParsedResult[]} */
+  let chronoResult;
+  let reminder;
+
+  if (input.includes(" | ")) {
+    const temp = input.split(" | ");
+    chronoResult = parser.parse(temp.pop(), from, options);
+    reminder = temp.join(" | ");
+  } else {
+    chronoResult = parser.parse(input, from, options);
+  }
+
+  if (chronoResult.length < 1) return $t("interface.reminders.errorWhen", P);
+
+  if (!reminder) reminder = input.replace(chronoResult[0].text, "").trim();
+
+  const timestamp = chronoResult[0].start.date();
+  if (timestamp < from) return $t("interface.reminders.er rorTARDIS", P);
+
+  await DB.feed.new({
+    url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
+  });
+
+  P.appointment = `\`${reminder}\``;
+  P.time = moment.utc(timestamp).calendar();
+  P.channel = `<#${destination}>`;
+  P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
+
+  return $t("interface.reminders.reminderOk", P);
+
+  /*
   let preInput = null;
 
   if (input.includes("|")) {
@@ -128,6 +163,7 @@ const init = async (msg, args) => {
   P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
 
   return $t("interface.reminders.reminderOk", P);
+  */
 };
 module.exports = {
   init,

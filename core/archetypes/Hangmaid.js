@@ -10,6 +10,7 @@ module.exports = class Hangmaid {
     this.chances = 5;
     this.wordBoard = (new Array(this.word.length)).fill(" ");
     this.incorrectLetters = [];
+    this.startedAt = new Date()
     this.originalMessage = message;
     this.end = false;
     this.channel = message.channel.id;
@@ -62,13 +63,29 @@ module.exports = class Hangmaid {
     return false;
   }
 
-  get GUESSES() { return this.end === "win" ? this.word : this.wordBoard.join(""); }
+  get GUESSES() {
+    return this.end === "win" ? this.word : this.wordBoard.join("");
+  }
 
-  get ATTEMPTS() { return this.incorrectLetters.join(""); }
+  get ATTEMPTS() {
+    return this.incorrectLetters.join("");
+  }
 
-  get HINT() { return this.theme; }
+  get HINT() {
+    return this.theme;
+  }
 
-  get ENDGAME() { return this.end; }
+  get ENDGAME() {
+    return this.end;
+  }
+
+  get SCORE() { // TODO[epic=mistery] points thing
+
+  }
+
+  get MESSAGE() {
+    return this.originalMessage
+  }
 
   static gameExists(channelID) {
     return games.get(channelID);

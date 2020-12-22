@@ -1,4 +1,5 @@
 // @ts-check
+const Categories = require("./SwitchCategories");
 
 /**
  * Just a way to get this loading to function before Switch is called
