@@ -67,6 +67,7 @@ function checkFunds(user, amount, currency = "RBN") {
   // NOTE: comparing currency first and then curr might result in error if parseCurrencies doesn't return a string/array as it should.
   if (typeof amount === "number" || typeof currency === "string") {
     console.log("========================================\n", amount, currency);
+    console.log(typeof amount, typeof currency, "\n========================================")
     if (!(typeof amount === "number" && typeof curr === "string")) {
       throw new Error("amt & curr need to be a single number & string or equal length arrays.");
     }
