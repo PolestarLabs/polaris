@@ -2,7 +2,8 @@
 
 const INVENTORY = require("../../archetypes/Inventory");
 
-const init = async function (msg, args, { id: userID }) {
+const init = async function (msg, args, reactor) {
+  const userID = reactor?.id || msg.author.id;
   console.log({ userID }, "booster");
 
   if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
