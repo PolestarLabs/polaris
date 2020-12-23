@@ -93,7 +93,7 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} symbol Transaction symbol.
  * @return {object} The payload generated.
  */
-function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
+function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
   if (userFrom["id"]) userFrom = userFrom["id"];
   if (userTo["id"]) userTo = userTo["id"];
@@ -123,7 +123,7 @@ function generatePayload(userFrom,userTo, amt, type, curr, subtype, symbol) {
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function pay(user, amt, type = "OTHER", currency = "RBN",) {
+function pay(user, amt, type = "OTHER", currency = "RBN") {
   return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-");
 }
 

@@ -780,12 +780,8 @@ const init       = async (msg, args) => {
       ]);
 
       if (winnings !== 0) {
-        if (winnings > 0) { // REVIEW[epic=mitchell] bj - change to one-line transfer if it defaults to receive/pay
-          await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
-        }
-        if (winnings < 0) {
-          await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
-        }
+        if (winnings > 0) await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
+        else await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
       }
       drawOptions.b = bet * playerHands.length + doubles * bet;
       drawOptions.bbt = bet;

@@ -42,7 +42,7 @@ const startGameCollector = async (game, msg, cb) => {
   }
 
   const message = await msg.channel.send("Let's see if you're going to die now...");
-  if (result.lost) { // REVIEW[epic=mitchell] rr - check if we can use transfer instead
+  if (result.lost) {
     await ECO.pay(msg.author.id, BET, "Russian Roulette FAILURE");
     return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
   } if (result.won) {
