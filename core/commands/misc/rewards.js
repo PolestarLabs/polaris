@@ -383,15 +383,8 @@ ${stickernames.map((f) => f.name).join(" • ")}
 
   const querystring = queryGen(T);
 
-  // TODO[epic=anyone] rewards - use bulk economy feature
-
-  await Promise.all([
-    DB.users.set(message.author.id, querystring),
-    userData.addItem(T.boxes[0].name, T.boxes[0].count),
-    ECO.receive(message.author, T.JDE, "Donator's Rewards: Monthly", "JDE"),
-    ECO.receive(message.author, T.SPH, "Donator's Rewards: Monthly", "SPH"),
-
-  ]);
+  const amts = [T.JDE, T.SPH];
+  const curr = ["JDE", "SPH"];
 
   if (!userData.counters?.donateStreak.total) {
     // await userDB.set(message.author.id,{
@@ -403,7 +396,8 @@ ${stickernames.map((f) => f.name).join(" • ")}
   // await DB.users.set(message.author.id,{
   //  $inc:{"modules.SPH":T.immediate}
   // });
-    ECO.receive(message.author, T.immediate, "Donator's Rewards: Immediate", "SPH");
+    amts.push(T.immediate);
+    curr.push("SPH");
 
     embed.description += `**Tier First-Time Sapphire Bonus**
 ${_emoji("sapphire")} x ${T.immediate}
@@ -411,6 +405,12 @@ ${_emoji("yep")} **${capitalize(T.title)} Donator's Flair**
 `;
     embed.description += "\n*Enable profile frame with `p!profile frame [on|off]`*\n";
   }
+
+  await Promise.all([
+    DB.users.set(message.author.id, querystring),
+    userData.addItem(T.boxes[0].name, T.boxes[0].count),
+    ECO.receive(message.author, amts, "Donator's Rewards: Monthly", curr),
+  ]);
 
   embed.description += `📶 **Streak:** ${(userData.counters?.donateStreak.total || 0) + 1} (${(userData.counters?.donateStreak[T.title] || 0) + 1} as ${[T.title]})`;
 
