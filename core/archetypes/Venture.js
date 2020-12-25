@@ -1,4 +1,3 @@
-const { dbGetter } = require("../../../dashboard/structures/PrimitiveGearbox.js");
 const Picto = require("../utilities/Picto.js");
 
 /* eslint max-classes-per-file: ["error", 2] */
