@@ -66,7 +66,7 @@ const init = async (msg, args) => {
     destination = msg.channelMentions[msg.channelMentions.length - 1] || msg.channel.id;
   }
 
-  const options = { forwardDate: true, startOfDay: 9 };
+  const options = { forwardDate: true, startOfDay: 9, useShorts: true };
   const from = new Date(msg.createdAt);
 
   /** @type {import('chrono-node').ParsedResult[]} */
