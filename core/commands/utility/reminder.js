@@ -101,7 +101,7 @@ const init = async (msg, args) => {
   if (!reminder) reminder = input.replace(chronoResult[0].text, "").trim();
 
   const timestamp = chronoResult[0].start.date();
-  if (timestamp < from) return $t("interface.reminders.er rorTARDIS", P);
+  if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
 
   await DB.feed.new({
     url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
