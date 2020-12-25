@@ -87,7 +87,7 @@ const ONEminute = new CronJob("*/1 * * * *", async () => {
           if (PLX.tempRoleTimers.has(tprl._id)) return;
           PLX.tempRoleTimers.set(
             tprl._id,
-            setTimeout(() => {
+            setTimeout(async () => {
               PLX.tempRoleTimers.delete(tprl._id); // We don't need to cache expired Timeouts
               const [logSERVER, logMEMBER] = await Promise.all([
                 PLX.getRESTGuild(tprl.server),
@@ -134,7 +134,7 @@ const ONEminute = new CronJob("*/1 * * * *", async () => {
             if (PLX.muteTimers.has(mtu._id)) return;
             PLX.muteTimers.set(
               mtu._id,
-              setTimeout(() => {
+              setTimeout(async () => {
                 PLX.muteTimers.delete(mtu._id);
                 // DB.mutes.expire(Date.now());
                 const logSERVER = await PLX.getRESTGuild(mtu.server);
@@ -201,7 +201,7 @@ function processReminders() {
         if (PLX.reminderTimers.has(rem._id)) return;
         PLX.reminderTimers.set(
           rem._id,
-          setTimeout(() => {
+          setTimeout(async () => {
             PLX.reminderTimers.delete(rem._id);
             try {
               // url = userID
