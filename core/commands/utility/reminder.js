@@ -2,6 +2,19 @@
 const chrono = require("chrono-node");
 const moment = require("moment");
 
+const longDateFormat = {
+  LTS: "h:mm:ss A",
+  LT: "h:mm:ss A",
+  L: "MM/DD/YYYY",
+  l: "M/D/YYYY",
+  LL: "MMMM Do YYYY",
+  ll: "MMM D YYYY",
+  LLL: "MMMM Do YYYY LT",
+  lll: "MMM D YYYY LT",
+  LLLL: "dddd, MMMM Do YYYY LT",
+  llll: "ddd, MMM D YYYY LT",
+};
+
 const parser = new chrono.Chrono();
 /*
 parser.refiners.push({refine (text, results, opt) {
@@ -18,7 +31,7 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
-  moment.locale(msg.lang[0] || "en");
+  moment.locale(msg.lang[0] || "en", { longDateFormat });
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
@@ -31,7 +44,7 @@ const init = async (msg, args) => {
           icon_url: msg.author.avatarURL,
         },
         fields: userReminders.map((r) => ({
-          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
+          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm:ss")} `,
           value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
           inline: false,
         })),
