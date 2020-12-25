@@ -19,7 +19,7 @@
     "canvas": "^2.6.1",
     "canvas-text-wrapper": "^0.10.2",
     "cheerio": "^1.0.0-rc.2",
-    "chrono-node": "github:Mitchell3514/chrono#e0cabd068cb74900d248d682bc34cf69c6987aea",
+    "chrono-node": "github:Mitchell3514/chrono#ff42f01c662073c9cb9c3d88f84d1754097f9581",
     "cron": "^1.5.1",
     "eris": "^0.14.0",
     "eris-additions": "git+https://github.com/PolluxBot/eris-additions-plus.git",
