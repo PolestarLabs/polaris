@@ -163,5 +163,8 @@ declare module "eris" {
     bean(guild: string, user: string, delete_message_days?: number, reason?: string): Promise<AxiosResponse>;
     unbean(guild: string, user: string, delete_message_days?: number, reason?: string): Promise<AxiosResponse>;
     reply(msg: Message, content: MessageContent): Promise<AxiosResponse>;
+    tempRoleTimers: Map<string, NodeJS.Timeout>;
+    muteTimers: Map<string, NodeJS.Timeout>;
+    reminderTimers: Map<string, NodeJS.Timeout>;
   }
 }

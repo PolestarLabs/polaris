@@ -270,6 +270,10 @@ PLX.reply = (msg, content) => {
   return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, { headers: { Authorization: PLX.token } });
 };
 
+PLX.tempRoleTimers = new Map();
+PLX.muteTimers = new Map();
+PLX.reminderTimers = new Map();
+
 function postConnect() {
   console.log("Discord Client Connected".cyan);
   // POST STATS TO LISTS

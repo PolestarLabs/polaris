@@ -136,7 +136,10 @@ const init = async function (msg, args) {
     if (tm === undefined) return false;
     return setTimeout((f) => {
       Target.removeRole(role.id, "Mute Expired");
-      DB.mutes.expire({ S: Target.guild.id, U: Target.id });
+      DB.mutes.expire({ S: Target.guild.id, U: Target.id }).lean().exec().then((d) => {
+        clearTimeout(PLX.muteTimers.get(d._id));
+        PLX.muteTimers.delete(d._id);
+      });
     }, tm * 60000);
   }
 
