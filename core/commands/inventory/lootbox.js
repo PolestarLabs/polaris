@@ -4,17 +4,17 @@ const GENERATOR = require("../cosmetics/lootbox_generator.js");
 const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
-const init = async function (msg, args, memberObj) {
-  const userID = memberObj?.id || memberObj;
+const init = async function (msg, args, reactionMember) {
+  const reactionUserID = reactionMember?.id || reactionMember;
 
   console.log({ args });
 
-  console.log({ userID, args10: args[10]?.id || args[10] }, "init");
+  console.log({ userID: reactionUserID, args10: args[10]?.id || args[10] }, "init");
 
-  if (userID && args[10]?.id != userID) return "Only the owner can see inside";
+  if (reactionUserID && args[10]?.id != reactionUserID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
-  const userInventory = new INVENTORY(userID || msg.author.id, "box");
+  const userInventory = new INVENTORY(reactionUserID || msg.author.id, "box");
   const Inventory = await userInventory.listItems(args[10]);
 
   const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
@@ -24,7 +24,7 @@ const init = async function (msg, args, memberObj) {
 
   args[0] = msg;
   args[1] = Inventory.map((i) => i.rarity);
-  INV_STATUS.set(userID || msg.author.id, args[1]);
+  INV_STATUS.set(reactionUserID || msg.author.id, args[1]);
 
   embed.footer = {
     text: (args[12] || msg).author.tag,
@@ -33,7 +33,7 @@ const init = async function (msg, args, memberObj) {
 
   const response = { content: `${_emoji("LOOTBOX")} ${$t("responses.inventory.browsingBox", { lngs: msg.lang })}`, embed };
 
-  if (userID) return response;
+  if (reactionUserID) return response;
   const res = await msg.channel.send(response);
   INVOKERS.set(msg.author.id, res.id);
   console.log("end");

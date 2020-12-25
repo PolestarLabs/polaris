@@ -2,16 +2,15 @@
 
 const INVENTORY = require("../../archetypes/Inventory");
 
-const init = async function (msg, args, reactor) {
-  const userID = reactor?.id || msg.author.id;
-  console.log({ userID }, "booster");
+const init = async function (msg, args, reactionMember) {
+  const reactionUserID = reactionMember?.id || reactionMember;
 
-  if (userID && (args[10] || {}).id != userID) return "Only the owner can see inside";
+  if (reactionUserID && (args[10] || {}).id != reactionUserID) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
   const P =  { lngs: msg.lang };
 
-  const userInventory = new INVENTORY(userID || msg.author.id, "boosterpack");
+  const userInventory = new INVENTORY(reactionUserID || msg.author.id, "boosterpack");
   const Inventory = await userInventory.listItems(args[10]);
   const embed = { color: 0xeb546d };
 

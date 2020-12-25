@@ -29,16 +29,15 @@ class GenericItemInventory {
     this.color = color || 0xEBBEFF;
     this.pub = pub || true;
 
-    this.init = async (msg, args, userObj) => {
-      const userID = userObj?.id || userObj;
-      console.log({ userID }, "generic");
+    this.init = async (msg, args, reactionMember) => {
+      const reactionUserID = reactionMember?.id || reactionMember;
 
-      if (userID && args[10]?.id != userID) return "Only the owner can see inside";
+      if (reactionUserID && args[10]?.id != reactionUserID) return "Only the owner can see inside";
       msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
       const P = { lngs: msg.lang.concat("dev") };
 
-      const userInventory = new INVENTORY(userID || msg.author.id, this.invIdentifier);
+      const userInventory = new INVENTORY(reactionUserID || msg.author.id, this.invIdentifier);
       const Inventory = await userInventory.listItems(args[10]);
       const response = { content: `${_emoji(this.emoji)} ${$t(`responses.inventory.browsing${this.browsingTag}`, P)} ` };
       if (Inventory.length === 0) {
