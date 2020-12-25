@@ -107,11 +107,13 @@ const init = async (msg, args) => {
     url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
   });
 
-  P.appointment = `\`${reminder}\``;
   P.time = moment.utc(timestamp).calendar();
   P.channel = `<#${destination}>`;
   P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
 
+  if (!reminder) return $t("interface.reminders.reminderOk_empty", P);
+
+  P.appointment = `\`${reminder}\``;
   return $t("interface.reminders.reminderOk", P);
 
   /*

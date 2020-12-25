@@ -643,6 +643,7 @@
             "errorWhen": "Sorry, this is confusing. I didn't understand *when* you want me to remind that.",
             "errorTARDIS": "Excuse me time traveler, I cannot go to the past to remind you of what you already forgot.",
             "reminderOk": "Ok I'll remind you of {{appointment}} by **{{time}} (UTC)** {{location}}",
+            "reminderOk_empty": "Ok I'll remind you by **{{time}} (UTC)** {{location}}",
             "reminderChannel": "at {{channel}}",
             "reminderDMs": "in your DMs"
         },
