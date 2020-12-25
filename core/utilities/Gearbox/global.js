@@ -166,5 +166,24 @@ module.exports = {
     };
     return fileObject;
   },
+  exec(command, options) {
+    return new Promise((res, rej) => {
+      let output = "";
 
+      const write = (data) => { output += data; };
+      const cmd = require("child_process").exec(command, options);
+
+      cmd.stderr.on("data", write);
+      cmd.stdout.on("data", write);
+      cmd.on("error", write);
+      cmd.once("exit", (code) => {
+        cmd.stderr.off("data", write);
+        cmd.stdout.off("data", write);
+        cmd.off("error", write);
+
+        if (code !== 0) rej(new Error(`Command failed: ${command}\n${output}`));
+        res(output);
+      });
+    });
+  },
 };
