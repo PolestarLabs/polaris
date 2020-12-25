@@ -1,6 +1,5 @@
 // TRANSLATE[epic=translations] guessflag
 
-const { dbGetter } = require("../../../../dashboard/structures/PrimitiveGearbox");
 const GG = require("../../archetypes/GuessingGames");
 
 const init = async function (msg, args) {

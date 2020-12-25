@@ -1,5 +1,3 @@
-const { exec } = require("child_process");
-
 const init = async (msg, args) => {
   const regex = /^git[\w\d\s-"'./]+$/;
 

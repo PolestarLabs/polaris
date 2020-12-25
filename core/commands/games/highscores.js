@@ -1,7 +1,5 @@
 // TRANSLATE[epic=translations] highscores
 
-const { dbGetter } = require("../../../../dashboard/structures/PrimitiveGearbox");
-
 const init = async function (msg, args, telePass) {
   if (telePass == "flags") return topFlags(msg, args);
 };

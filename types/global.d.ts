@@ -1,6 +1,7 @@
 import { Bucket, Client, CommandClient, Embed, EmbedOptions } from "eris";
 import { i18n, TranslationFunction } from "i18next";
 import Bluebird from "bluebird";
+import { ExecOptions } from "child_process";
 
 declare class PolluxEmoji extends String {
   constructor(identifier: string, fallback?: PolluxEmoji);
@@ -101,6 +102,7 @@ declare global {
     export function objCount<T>(array: T[], what: T): number;
     export function resolveFile(resource: Buffer | string | ReadableStream): Buffer;
     export function file(file: string | number | Buffer | URL, name?: string): { finalFile: Buffer, name: string; };
+    export function exec(command: string, options: ExecOptions): Promise<string>;
 
     // archetypes
     export const Achievements: AchievementsManager;

@@ -2,6 +2,19 @@
 const chrono = require("chrono-node");
 const moment = require("moment");
 
+const longDateFormat = {
+  LTS: "h:mm:ss A",
+  LT: "h:mm:ss A",
+  L: "MM/DD/YYYY",
+  l: "M/D/YYYY",
+  LL: "MMMM Do YYYY",
+  ll: "MMM D YYYY",
+  LLL: "MMMM Do YYYY LT",
+  lll: "MMM D YYYY LT",
+  LLLL: "dddd, MMMM Do YYYY LT",
+  llll: "ddd, MMM D YYYY LT",
+};
+
 const parser = new chrono.Chrono();
 /*
 parser.refiners.push({refine (text, results, opt) {
@@ -18,7 +31,7 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
-  moment.locale(msg.lang[0] || "en");
+  moment.locale(msg.lang[0] || "en", { longDateFormat });
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
@@ -31,7 +44,7 @@ const init = async (msg, args) => {
           icon_url: msg.author.avatarURL,
         },
         fields: userReminders.map((r) => ({
-          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm")} `,
+          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm:ss")} `,
           value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
           inline: false,
         })),
@@ -47,6 +60,8 @@ const init = async (msg, args) => {
     if (Number(args[1])) index = (parseInt(args[1]) || 1) - 1;
     const targetReminder = userReminders[index];
     await DB.feed.deleteOne({ _id: targetReminder._id });
+    clearTimeout(PLX.reminderTimers.get(targetReminder._id));
+    PLX.reminderTimers.delete(targetReminder._id);
 
     return { embed: { description: ` ${_emoji("nope")} **${$t("interface.generic.deleted", P)}** *${targetReminder.name}.*`, color: 0xcc2233 } };
   }
@@ -86,7 +101,7 @@ const init = async (msg, args) => {
   if (!reminder) reminder = input.replace(chronoResult[0].text, "").trim();
 
   const timestamp = chronoResult[0].start.date();
-  if (timestamp < from) return $t("interface.reminders.er rorTARDIS", P);
+  if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
 
   await DB.feed.new({
     url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
