@@ -1,3 +1,4 @@
+// @ts-check
 const { performance } = require("perf_hooks");
 
 const clean = (text) => {
@@ -31,7 +32,7 @@ const init = async (msg) => {
 
   // eslint-disable-next-line max-len
   const invisibar = "\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b";
-  const code = msg.args.join(" ");
+  let code = msg.args.join(" ");
 
   if (code.includes("child_process") && msg.author.id !== "88120564400553984") return null;
   if (code.includes("exec") && msg.author.id !== "88120564400553984") return null;
@@ -51,7 +52,7 @@ const init = async (msg) => {
   }
 
   // allow top-level await
-  if (code.includes(/await/i)) 
+  if (/await/i.test(code)) 
     code = `(async() => {${code}})()`;
 
   let runtime = performance.now();
