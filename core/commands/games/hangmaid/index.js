@@ -146,11 +146,11 @@ const startCollector = async (Game, msg, mode) => {
       };
 
       if (Game.MODE === "solo") {
-        data.id = `${commandMsg.author.id}`
-        data.type = "hangmaid-solo"
+        data.id = `${commandMsg.author.id}`;
+        data.type = "hangmaid-solo";
       } else if (Game.MODE === "group") {
-        data.id = `${commandMsg.guild.id}`
-        data.type = "hangmaid-group"
+        data.id = `${commandMsg.guild.id}`;
+        data.type = "hangmaid-group";
       }
 
       await DB.rankings.collection.insert(data);
