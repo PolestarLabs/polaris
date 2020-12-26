@@ -149,12 +149,13 @@ class Weather extends EventEmitter {
             "X-Yahoo-App-Id": appId,
           },
         }, (res) => {
+          if (res.statusCode !== 200) return this.emit("error", res.statusCode);
           res.setEncoding("utf-8");
           let data = "";
           res.on("data", (chunk) => data += chunk);
           res.on("end", () => {
+            console.log(data);
             this._apiResponse = JSON.parse(data);
-            if (res.statusCode !== 200) return this.emit("error", res.statusCode, data);
             if (Object.keys(this._apiResponse.location).length == 0 || this._apiResponse.forecasts.length == 0) this.found = false;
             else this.found = true;
             this.emit("done", this);

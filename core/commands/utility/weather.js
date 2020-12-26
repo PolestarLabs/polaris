@@ -8,14 +8,7 @@ const init = async (msg, args) => {
     args.splice(0, 1);
   }
   const weather = new Weather(args.join(" "));
-  weather.on("error", (code, obj) => msg.reply({
-    content: "Something went wrong...",
-    embed: {
-      title: `Response code: ${code}`,
-      description: obj,
-      color: 0x9dd9f2,
-    },
-  })); // return code != 200
+  weather.on("error", (code) => msg.reply("Something went wrong...")); // return code != 200
   weather.on("done", () => { // got API response
     if (!weather.found) {
       return msg.channel.send("Location not found :(");
