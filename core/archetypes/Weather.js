@@ -129,7 +129,7 @@ class Weather {
 	 */
 	initiate(locationstr = "") {
 		if (!locationstr) throw new Error("Initiate needs to be called with location string");
-		locationstr = locationstr.replace("'", "%27");
+		locationstr = locationstr.replace(/[']/, ""); // Yahoo can't handle these chars
 		if (!locationstr) throw new Error("Bad location string");
 		this.locationstr = locationstr;
 
@@ -148,7 +148,6 @@ class Weather {
 			oauth.oauth_signature = sig;
 			const auth = `OAuth ${Object.keys(oauth).map((k) => [`${k}="${oauth[k]}"`]).join(",")}`;
 			const url = `${this.#baseURL}?${Object.keys(query).map((k) => `${k}=${query[k]}`).join("&")}`;
-			PLX.guilds.get("789382326680551455").channels.get("789988243117834293").send(`\`\`\`${url}\`\`\`\n\`\`\`${auth}\`\`\``);
 
 			https.get(url,
 				{
