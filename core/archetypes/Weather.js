@@ -136,7 +136,7 @@ class Weather extends EventEmitter {
         oauth_timestamp: parseInt(Date.now() / 1000).toString(),
         oauth_version: "1.0",
       };
-      const merge = Object.keys({ ...query, ...oauth }).sort().map((k) => [`${k}=${encodeURIComponent(query[k] || oauth[k])}`]);
+      const merge = Object.entries({ ...query, ...oauth }).sort().map(([k, v]) => [`${encodeURIComponent(k)}=${encodeURIComponent(v)}`]);
       const sigstr = `GET&${encodeURIComponent(this._baseURL)}&${encodeURIComponent(merge.join("&"))}`;
       const sig = crypto.createHmac("sha1", `${encodeURIComponent(secret)}&`).update(sigstr).digest("base64");
       oauth.oauth_signature = sig;
