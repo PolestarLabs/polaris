@@ -128,7 +128,7 @@ class Weather extends EventEmitter {
      * Private method to initiate data to _apiResponse
      */
     _initiate() {
-      const query = { location: encodeURIComponent(this.locationstr), format: "json", u: "c" };
+      const query = { location: this.locationstr, format: "json", u: "c" };
       const oauth = {
         oauth_consumer_key: client,
         oauth_nonce: Date.now().toString(36),
