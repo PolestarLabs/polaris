@@ -12,7 +12,7 @@ const init = async (msg, args) => {
     content: "Something went wrong...",
     embed: {
       title: `Response code: ${code}`,
-      description: require("util").inspect(obj._apiResponse),
+      description: obj,
       color: 0x9dd9f2,
     },
   })); // return code != 200
