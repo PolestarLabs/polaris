@@ -148,7 +148,7 @@ class Weather {
 			oauth.oauth_signature = sig;
 			const auth = `OAuth ${Object.keys(oauth).map((k) => [`${k}="${oauth[k]}"`]).join(",")}`;
 			const url = `${this.#baseURL}?${Object.keys(query).map((k) => `${k}=${query[k]}`).join("&")}`;
-			PLX.guilds.get("789382326680551455").channels.get("789988243117834293").send(`${url}\n${auth}`);
+			PLX.guilds.get("789382326680551455").channels.get("789988243117834293").send(`\`\`\`${url}\`\`\`\n\`\`\`${auth}\`\`\``);
 
 			https.get(url,
 				{
