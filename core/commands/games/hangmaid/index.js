@@ -16,15 +16,16 @@ const init = async function (msg, args) {
     }, "There's already a game going on here.");
     return;
   }
-  const GAME = new Hangmaid(msg, WORDS);
   const MODE = args[0] === "group" ? "group" : "solo";
+  const GAME = new Hangmaid(msg, WORDS, MODE);
 
   const embed = {
     description: `The word's theme is ${GAME.HINT}\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
     image: {
       url: `${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`
     },
-    title: "it's fucked"
+    title: "Game's on!",
+    color: 0x5A90F5
   };
 
   const mainMessage = await msg.channel.send({ embed: embed });
@@ -64,6 +65,10 @@ const startCollector = async (Game, msg, mode) => {
     const RegexCyrillic = /[а-яё]/gi;
     const RegexLatin = /[A-Z]/gi;
 
+    if (!Game.originalMessage) {
+      return attemptMsg.delete();
+    }
+
     if (Game.language === "ru" && !RegexCyrillic.test(guess)) {
       return attemptMsg.addReaction(_emoji("nope").reaction);
     }
@@ -88,11 +93,13 @@ const startCollector = async (Game, msg, mode) => {
           .then((warn) => setTimeout(() => warn.delete(), 1500));
       }
 
-      if (Game.ENDGAME) Collector.stop(Game.ENDGAME);
       await Game.originalMessage.delete()
         .catch((e) => 0);
+      Game.unregisterMessage();
+      await Game.handleInput(guess);
 
       const newEmbed = {
+        color: 0x5A90F5,
         title: "Game's on!",
         description: `The word's theme is \`${Game.HINT}\`\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
         image: {
@@ -102,7 +109,25 @@ const startCollector = async (Game, msg, mode) => {
         }
       };
 
-      //Game.ENDGAME === 'win' ? newEmbed.title = 'Congratulations! You made it!' : 'Game over...'
+      if (Game.ENDGAME) {
+        Collector.stop(Game.ENDGAME);
+        switch (Game.ENDGAME) {
+          case "attempts":
+            newEmbed.title = _emoji("NOPE").no_space + " Oopsie... you're out of attempts!";
+            newEmbed.description = "";
+            newEmbed.color = 0xFC5065;
+            break;
+          case "win":
+            newEmbed.title = ":tada: Congratulations! You guessed it!";
+            newEmbed.description = `You scored ${Game.SCORE} points.`;
+            newEmbed.color = 0x2BE0AF;
+            break;
+          case "lose":
+            newEmbed.title = _emoji("NOPE").no_space + " Oh, dear, you missed it... better luck next time~";
+            newEmbed.description = "";
+            newEmbed.color = 0xFC5065;
+        }
+      }
 
       const newMsg = await msg.channel.send({ embed: newEmbed });
       Game.registerMessage(newMsg);
@@ -110,13 +135,27 @@ const startCollector = async (Game, msg, mode) => {
     }
   });
 
-  Collector.on("end", (col, reason) => {
+  Collector.on("end", async (col, reason) => {
     clearInterval(activity);
-    Game.finish();
-    if (reason === "win") return commandMsg.channel.send(":tada: :tada: :tada: :tada: Congratulations! You guessed it!");
-    if (reason === "lose") return commandMsg.channel.send("Oh no... you guessed it wrong. Better luck next time~");
-    if (reason === "time") return commandMsg.channel.send(":hourglass: Time's up!");
-    if (reason === "attempts") return commandMsg.channel.send("Oops! You're out of attempts...");
+    if (reason === "time") return commandMsg.channel.send(":hourglass: Ah, you took too long.");
+    if (reason === "win") {
+      const data = {
+        points: results.score,
+        timestamp: Date.now(),
+        data: results,
+      };
+
+      if (Game.MODE === "solo") {
+        data.id = `${commandMsg.author.id}`
+        data.type = "hangmaid-solo"
+      } else if (Game.MODE === "group") {
+        data.id = `${commandMsg.guild.id}`
+        data.type = "hangmaid-group"
+      }
+
+      await DB.rankings.collection.insert(data);
+      Game.finish();
+    }
   });
 };
 
