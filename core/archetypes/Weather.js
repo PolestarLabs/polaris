@@ -122,7 +122,7 @@ class Weather {
 	 * @param {string} location the location to get weather of
 	 */
 	initiate(locationstr) {
-		if (!locationstr) throw new Error("Constructor needs to be called with location string");
+		if (!locationstr) throw new Error("Initiate needs to be called with location string");
 		this.locationstr = locationstr;
 
 		return new Promise((resolve, reject) => {

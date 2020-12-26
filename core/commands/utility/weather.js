@@ -2,22 +2,23 @@ const Weather = require("../../archetypes/Weather");
 
 const init = async (msg, args) => {
   if (!args.length) msg.reply("Where though?");
+
+
   let far = false;
-  if (args[0] == "F") {
+  if (args[0] == "F") { // NOTE document that Farenheit is an option
     far = true;
     args.splice(0, 1);
   }
+
   const weather = new Weather();
 
   try {
     await weather.initiate(args.join(" "));
-  } catch (code) { msg.reply(`${code} - Oops, something went wrong...`) };
+  } catch (code) { return msg.reply(`${code} - Oops, something went wrong...`) };
 
-  if (!weather.found) {
-    return msg.channel.send("Location not found :(");
-  }
+  if (!weather.found) return msg.channel.send("Location not found :(");
 
-  // WEATHER SHOWCASE
+  // ANCHOR WEATHER SHOWCASE -- not actual cmd
   if (far) weather.setUnit("F");
   const { inspect } = require("util");
   const now = inspect(weather.now);
