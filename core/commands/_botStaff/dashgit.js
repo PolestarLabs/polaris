@@ -1,17 +1,12 @@
 const init = async (msg, args) => {
-  exec(`git ${args.join(" ")}`, {
+  const description = await exec(`git ${args.join(" ")}`, {
     cwd: "/home/pollux/polaris/dashboard",
-  }, (error, stdout, stderr) => {
-    const description =  `
-        ${
-  error
-    ? `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${stderr.slice(0, 1900)}\`\`\``
-    : `${_emoji("yep")} \`${args.join(" ")}\` ${stdout.length ? "```nginx\n" : "```OK!"}${stdout.slice(0, 1900)}${"```"}`
-} 
-        `;
+  }).then(
+    (res) => `${_emoji("yep")} \`${args.join(" ")}\` ${res.length ? "```nginx\n" : "```OK!"}${res.slice(0, 1900)}${"```"}`,
+    (rej) => `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${rej.message.slice(0, 1900)}\`\`\``,
+  );
 
-    msg.channel.send({ embed: { description } });
-  });
+  msg.channel.send({ embed: { description } });
 };
 
 module.exports = {
