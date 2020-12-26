@@ -50,6 +50,10 @@ const init = async (msg) => {
     });
   }
 
+  // allow top-level await
+  if (code.includes(/await/i)) 
+    code = `(async() => {${code}})()`;
+
   let runtime = performance.now();
   const runtimeOutput = (rtm) => (rtm * 1000 < 1000 ? `${Math.floor(rtm * 1000)}μs `
     : rtm < 1000 ? `${rtm.toFixed(2)}ms ` : `${(rtm / 1000).toFixed(2)}s `);
