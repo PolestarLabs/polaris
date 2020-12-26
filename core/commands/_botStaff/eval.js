@@ -53,7 +53,7 @@ const init = async (msg) => {
 
   // allow top-level await
   if (/await/i.test(code)) 
-    code = `(async() => {${/return/i.test(code) ? "return " : ""}${code}})()`;
+    code = `(async() => {${/return/i.test(code) ? "" : "return "}${code}})()`;
 
   let runtime = performance.now();
   const runtimeOutput = (rtm) => (rtm * 1000 < 1000 ? `${Math.floor(rtm * 1000)}μs `
