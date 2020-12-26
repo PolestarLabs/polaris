@@ -129,7 +129,7 @@ class Weather {
 	 */
 	initiate(locationstr = "") {
 		if (!locationstr) throw new Error("Initiate needs to be called with location string");
-		locationstr = locationstr.replace(/[^-a-zA-Z0-9._~+/\s]/gm, "");
+		// locationstr = locationstr.replace(/[^-a-zA-Z0-9._~+/\s]/gm, "");
 		if (!locationstr) throw new Error("Bad location string");
 		this.locationstr = locationstr;
 
