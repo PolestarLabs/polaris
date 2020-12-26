@@ -124,9 +124,13 @@ class Weather {
 	/**
 	 * Retrieves data from Yahoo API.
 	 * @param {string} location the location to get weather of
+	 * @returns {Promise<this|number>} this or HTTP error code.
+	 * @throws Bad input string (either none, empty or only illegal characters)
 	 */
-	initiate(locationstr) {
+	initiate(locationstr = "") {
 		if (!locationstr) throw new Error("Initiate needs to be called with location string");
+		locationstr = locationstr.replace(/[^-a-zA-Z0-9._~+/\s]/gm, "");
+		if (!locationstr) throw new Error("Bad location string");
 		this.locationstr = locationstr;
 
 		return new Promise((resolve, reject) => {
