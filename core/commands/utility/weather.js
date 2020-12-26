@@ -14,7 +14,11 @@ const init = async (msg, args) => {
 
   try {
     await weather.initiate(args.join(" "));
-  } catch (code) { return msg.reply(`${code} - Oops, something went wrong...`) };
+  } catch (code) {
+    if (code instanceof Error) msg.reply("Location has to be of a-Z characters."); // or _- and some more.
+    else msg.reply(`${code} - Couldn't connect with the API`); // probably...
+    return;
+  };
 
   if (!weather.found) return msg.channel.send("Location not found :(");
 
