@@ -7,7 +7,7 @@ const countries = JSON.parse(require("fs").readFileSync(`${appRoot}/resources/li
 class Weather {
 	#baseURL = "https://weather-ydn-yql.media.yahoo.com/forecastrss";
 
-	unit = "C";
+	#unit = "C";
 
 	#apiResponse;
 
@@ -51,7 +51,7 @@ class Weather {
 	}
 
 	/**
-	 * Retusn an array of forcasts
+	 * Returns an array of forcasts
 	 * Properties: date, low, high, text, code.
 	 * @readonly
 	 */
@@ -65,7 +65,7 @@ class Weather {
 	 */
 	setUnit(newUnit) {
 		if (!["C", "F"].includes(newUnit)) throw new Error("Required unit is 'C' or 'F'");
-		else this.unit = newUnit;
+		else this.#unit = newUnit;
 	}
 
 	/**
@@ -81,8 +81,12 @@ class Weather {
 			if (country.country.includes(name)) {
 				const charArr1 = country.country.split("");
 				const charArr2 = name.split("");
+
 				let diff = 0;
-				for (let i = 0; i < charArr1.length; i++) if (!charArr2[i] || charArr1[i] != charArr2[i]) diff += 1;
+				for (let i = 0; i < charArr1.length; i++) 
+					if (!charArr2[i] || charArr1[i] != charArr2[i]) 
+						diff += 1;
+
 				possibilities.push({ name: country.country, toRet: country.iso, diff });
 			}
 		}
