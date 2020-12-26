@@ -3,11 +3,11 @@ const init = async (msg, args) => {
 
   if (!regex.test(`git ${args.join(" ")}`)) return ` ${_emoji("nope")}`;
 
-  let description;
-  exec(`git ${args.join(" ")}`).then(
-    (res) => (description = `${_emoji("yep")} \`${args.join(" ")}\` ${res.length ? "```nginx\n" : "```OK!"}${res.slice(0, 1900)}${"```"}`),
-    (rej) => (description = `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${rej.message.slice(0, 1900)}\`\`\``),
+  const description = await exec(`git ${args.join(" ")}`).then(
+    (res) => `${_emoji("yep")} \`${args.join(" ")}\` ${res.length ? "```nginx\n" : "```OK!"}${res.slice(0, 1900)}${"```"}`,
+    (rej) => `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${rej.message.slice(0, 1900)}\`\`\``,
   );
+
   msg.channel.send({ embed: { description } });
 
   return require("./reload").init(msg, ["hard"]);
