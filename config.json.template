@@ -12,6 +12,7 @@
     ,"sentryDSN" : ""
     ,"testChannels" : [],
     "mainWebhook": {
-        "id": ""
+        "id": "",
+        "token": "",
     }
 }
