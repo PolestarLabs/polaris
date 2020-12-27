@@ -1,3 +1,4 @@
+// @ts-check
 const cfg = require("../config.json");
 
 class WebhookDigester {
@@ -11,6 +12,7 @@ class WebhookDigester {
       pings, once, hook, noRepeat, id,
     } = options;
     const destination = hook || cfg.mainWebhook;
+    if (!destination.id) return; FIXME[epic=flicky] way to disable this completely
     let content = "";
 
     if (once) {
@@ -70,6 +72,7 @@ class WebhookDigester {
   raw(message, options) {
     const { hook } = options;
     const destination = hook || cfg.mainWebhook;
+    if (!destination.id) return; // FIXME[epic=flicky] way to disable this completely
     this.client.executeWebhook(destination.id, destination.token, {
       content: `\`[${PLX.cluster.name || "N/A"} | #${PLX.cluster.id || 0}]\` ::  ${message.slice(0, 2000)}`,
     });
