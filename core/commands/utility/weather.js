@@ -4,9 +4,8 @@ const Weather = require("../../archetypes/Weather");
 const init = async (msg, args) => {
   if (!args.length) msg.reply("Where though?");
 
-
   let far = false;
-  if (args[0] == "F") { // NOTE document that Farenheit is an option
+  if (args[0] === "F") { // NOTE document that Farenheit is an option
     far = true;
     args.splice(0, 1);
   }
@@ -16,10 +15,9 @@ const init = async (msg, args) => {
   try {
     await weather.initiate(args.join(" "));
   } catch (code) {
-    if (code instanceof Error) msg.reply("Location has to be of a-Z characters."); // or _- and some more.
-    else msg.reply(`${code} - Couldn't connect with the API`); // probably...
-    return;
-  };
+    if (code instanceof Error) return msg.reply("Location has to be of a-Z characters."); // or _- and some more.
+    return msg.reply(`${code} - Couldn't connect with the API`); // probably...
+  }
 
   if (!weather.found) return msg.channel.send("Location not found :(");
 
