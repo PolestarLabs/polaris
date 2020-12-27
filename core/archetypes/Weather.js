@@ -46,7 +46,7 @@ class Weather {
 	 */
 	get location() {
 		const { location } = this.#apiResponse;
-		location.country = { name: location.country, iso: this._findISO(location.country) };
+		if (typeof location.country == 'string') location.country = { name: location.country, iso: this._findISO(location.country) };
 		return location;
 	}
 
