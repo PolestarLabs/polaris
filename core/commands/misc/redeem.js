@@ -1,25 +1,71 @@
-const yesNo = require("../../structures/YesNo");
+const Redeem = require("../../archetypes/Redeem");
 
 const init = async (msg, args) => {
   const code = args[0];
-  const lookup = await DB.promocodes.findOne({ code });
-  if (!lookup) return msg.reply(`${_emoji("NOPE").no_space} Invalid code. Double-check and try again.`);
+  const prizeOperator = new Redeem(code, msg.author.id);
+  const invalid = await prizeOperator.verify();
+
+  if (invalid) {
+    switch (invalid) {
+      case "invalid":
+        return msg.reply(`${_emoji("NOPE").no_space} Oopsie! This code is invalid. Please double-check it and try again.`);
+      case "locked":
+        return msg.reply(`${_emoji("NOPE").no_space} This code is not redeemable at the moment. Please try again later.`);
+      case "nonredeemable":
+        return msg.reply(`${_emoji("NOPE").no_space} This code is not redeemable anymore.`);
+      case "already_exists":
+        return msg.reply(`${_emoji("NOPE").no_space} You've already redeemed this code`);
+
+    }
+  }
+
   await msg.delete();
-  const prize = lookup.prize.split(" ");
-  const confirmation = await msg.channel.send(`You got a code? How nice! Here is what you're about to win:\n • ${prize[0]}x ${prize[1]} ${_emoji(prize[2]).no_space}\n\nYou want to proceed?`);
-  const resp = await yesNo(confirmation, msg);
+  const prize = prizeOperator.prize.split(" ");
+  const embed = {
+    fields: [
+      {
+        name: "Here's what you get by redeeming this code:",
+        value: `• ${prize[0]}x ${prize[1]} ${_emoji(prize[2]).no_space}\n\nYou want to proceed?`
+      }
+    ],
+    footer: {
+      text: `${msg.author.username}#${msg.author.discriminator}`,
+      icon_url: msg.author.avatarURL
+    },
+    color: 0x1B1B2B
+  };
+  const confirmation = await msg.channel.send({
+    content: "So you got a gift code to redeem? How nice!",
+    embed
+  });
+  const prompt = await prizeOperator.prompt(confirmation, msg);
 
-  if (resp) {
-    const userData = await DB.users.getFull(msg.author.id);
-    const lookup = await DB.promocodes.findOne({ code });
-    if (!lookup) return msg.reply("whoopsie oopsie... you took too long and someone claimed the prizes before you!")
-    await userData.addItem(`${prize[1]}_${prize[2]}_O`, Number(prize[0]));
-    msg.channel.send(`${_emoji("YEP").no_space} Great! The items were added to your inventory.`);
-    await confirmation.delete();
-    await DB.promocodes.collection.deleteOne({ code });
+  if (prompt) {
+    const prize = prizeOperator.prize.split(" ");
+    const newEmbed = {
+      fields: [
+        {
+          name: "Good! The items were added to your inventory",
+          value: `> ${prize[0]}x ${prize[1]} ${_emoji(prize[2]).no_space}`
+        }
+      ],
+      footer: {
+        text: `${msg.author.username}#${msg.author.discriminator}`,
+        icon_url: msg.author.avatarURL
+      },
+      color: 0x1B1B2B
+    };
 
-  } else if (!resp) {
-    await confirmation.edit(`${_emoji("NOPE").no_space} Alright, cancelled.`);
+    await prizeOperator.redeem(msg.author.id, prizeOperator.prize);
+    await confirmation.edit({
+      embed: newEmbed,
+      content: ""
+    });
+
+  } else if (!prompt) {
+    await DB.promocodes.collection.updateOne({ code }, {
+      $set: { locked: false }
+    });
   }
 };
 
