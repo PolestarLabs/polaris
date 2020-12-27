@@ -19,6 +19,8 @@ const init = async (msg, args) => {
     }
   }
 
+  //TODO[epic=translations]
+
   await msg.delete();
   const prize = prizeOperator.prize.split(" ");
   const embed = {
@@ -62,7 +64,7 @@ const init = async (msg, args) => {
       content: ""
     });
 
-  } else if (!prompt) {
+  } else if (!prompt) { // unlock code in timeout/cancel
     await DB.promocodes.collection.updateOne({ code }, {
       $set: { locked: false }
     });

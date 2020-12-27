@@ -24,7 +24,7 @@ module.exports = class Redeem {
     const data = await DB.promocodes.findOne({ code })
       .lean();
 
-    if (!data.maxUses || data.maxUses === 1) { // single-redeem
+    if (!data.maxUses || data.maxUses === 1) { // single-redeem: lock code, otherwise just prompt
       await DB.promocodes.collection.updateOne({ code }, {
         $set: { locked: true }
       });
@@ -37,7 +37,7 @@ module.exports = class Redeem {
     let data = await DB.promocodes.findOne({ code })
       .lean();
 
-    if (!data.maxUses || data.maxUses === 1) { // single-redeem
+    if (!data.maxUses || data.maxUses === 1) { // single-redeem (only if maxUses is missing or == 1): unlock code, set used and usedBy
       await DB.promocodes.collection.updateOne({ code }, {
         $set: {
           locked: false,
@@ -47,7 +47,7 @@ module.exports = class Redeem {
       });
     }
 
-    if (data?.maxUses > 1) { // multi-redeem
+    if (data?.maxUses > 1) { // multi-redeem (only if maxUses is present and >1: increment uses, add redeemedUser to array
       await DB.promocodes.collection.updateOne({ code }, {
         $inc: { uses: 1 },
         $push: { usedBy: this.user }
@@ -56,13 +56,14 @@ module.exports = class Redeem {
       data = await DB.promocodes.findOne({ code })
         .lean();
 
-      if (data.maxUses === data.uses) { // limit reached
+      if (data.maxUses === data.uses) { // limit reached: set used
         await DB.promocodes.collection.updateOne({ code }, {
           $set: { used: true }
         });
       }
     }
 
+    // no needed "else", this is executed both in single and multi redeem
     const userData = await DB.users.getFull(this.user);
     const sPrize = prize.split(" ");
     return userData.addItem(`${sPrize[1]}_${sPrize[2]}_O`, Number(sPrize[0]));
