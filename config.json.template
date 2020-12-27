@@ -10,6 +10,9 @@
     ,"twitch"    : ""
     ,"google"    : ""
     ,"sentryDSN" : ""
-    ,"testChannels" : []
-
+    ,"testChannels" : [],
+    "mainWebhook": {
+        "id": "",
+        "token": "",
+    }
 }
