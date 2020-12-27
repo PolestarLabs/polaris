@@ -4,9 +4,8 @@ const Weather = require("../../archetypes/Weather");
 const init = async (msg, args) => {
   if (!args.length) msg.reply("Where though?");
 
-
   let far = false;
-  if (args[0] == "F") { // NOTE document that Farenheit is an option
+  if (args[0] === "F") { // NOTE document that Farenheit is an option
     far = true;
     args.splice(0, 1);
   }
@@ -16,10 +15,9 @@ const init = async (msg, args) => {
   try {
     await weather.initiate(args.join(" "));
   } catch (code) {
-    if (code instanceof Error) msg.reply("Location has to be of a-Z characters."); // or _- and some more.
-    else msg.reply(`${code} - Couldn't connect with the API`); // probably...
-    return;
-  };
+    if (code instanceof Error) return msg.reply("Location has to be of a-Z characters."); // or _- and some more.
+    return msg.reply(`${code} - Couldn't connect with the API`); // probably...
+  }
 
   if (!weather.found) return msg.channel.send("Location not found :(");
 
@@ -30,26 +28,23 @@ const init = async (msg, args) => {
   const week = inspect([weather.week[0], weather.week[2], "and more..."], { depth: 1 });
   const loc = inspect(weather.location);
 
-  
-  let payload =  {};
-  payload.city =  weather.location.city;
-  payload.region=  weather.location.region;
-  payload.country=  weather.location.country;
-  payload.timezone_id=  weather.location.timezone_id;
-  console.log(weather.location.country,"country".blue)
-  console.log(payload ,"LOC".blue)
-  payload.temp = weather.now.curr
-  payload.text = weather.now.text
-  payload.code = weather.now.code
+  const payload =  {};
+  payload.city = weather.location.city;
+  payload.region = weather.location.region;
+  payload.country = weather.location.country;
+  payload.timezone_id = weather.location.timezone_id;
+  console.log(weather.location.country, "country".blue);
+  console.log(payload, "LOC".blue);
+  payload.temp = weather.now.curr;
+  payload.text = weather.now.text;
+  payload.code = weather.now.code;
   payload.week = [
     weather.week[0],
     weather.week[1],
     weather.week[2],
   ];
 
-
-  let buffer = new Buffer(JSON.stringify(payload)).toString('base64');
-
+  const buffer = Buffer.from(JSON.stringify(payload)).toString("base64");
 
   msg.channel.send({
     embed: {
@@ -72,16 +67,17 @@ const init = async (msg, args) => {
       ],
     },
   });
-  
-  msg.channel.send({
-    embed:{
-      description:"```"+buffer+"```",
-      image:{
-        url: "attachment://weather.png"
-      }
-    }
-  },{file: await resolveFile(`https://beta.pollux.gg/generators/weather.png?refresh=1&furball=${encodeURIComponent(buffer)}`), name: 'weather.png'})
-  
+
+  return msg.channel.send({
+    embed: {
+      description: `\`\`\`${buffer}\`\`\``,
+      image: {
+        url: "attachment://weather.png",
+      },
+    },
+  }, {
+    file: await resolveFile(`https://beta.pollux.gg/generators/weather.png?refresh=1&furball=${encodeURIComponent(buffer)}`), name: "weather.png",
+  });
 };
 
 module.exports = {
