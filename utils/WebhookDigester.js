@@ -12,7 +12,7 @@ class WebhookDigester {
       pings, once, hook, noRepeat, id,
     } = options;
     const destination = hook || cfg.mainWebhook;
-    if (!destination.id) return; FIXME[epic=flicky] way to disable this completely
+    if (!destination.id) return; // FIXME[epic=flicky] way to disable this completely
     let content = "";
 
     if (once) {
