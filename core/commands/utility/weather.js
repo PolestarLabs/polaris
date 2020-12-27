@@ -36,9 +36,9 @@ const init = async (msg, args) => {
   payload.region=  weather.location.region;
   payload.country=  weather.location.country;
   payload.timezone_id=  weather.location.timezone_id;
-  console.log(weather.location.country,"country".blue)
-  console.log(payload ,"LOC".blue)
   payload.temp = weather.now.curr
+  payload.sunset = weather.now.sunset
+  payload.sunrise = weather.now.sunrise
   payload.text = weather.now.text
   payload.code = weather.now.code
   payload.week = [
@@ -50,7 +50,7 @@ const init = async (msg, args) => {
 
   let buffer = new Buffer(JSON.stringify(payload)).toString('base64');
 
-
+  /*
   msg.channel.send({
     embed: {
       title: "Weather properties",
@@ -72,15 +72,10 @@ const init = async (msg, args) => {
       ],
     },
   });
-  
-  msg.channel.send({
-    embed:{
-      description:"```"+buffer+"```",
-      image:{
-        url: "attachment://weather.png"
-      }
-    }
-  },{file: await resolveFile(`https://beta.pollux.gg/generators/weather.png?refresh=1&furball=${encodeURIComponent(buffer)}`), name: 'weather.png'})
+  */
+
+  msg.channel.send(""
+  ,{file: await resolveFile(`${paths.DASH}/generators/weather.png?furball=${encodeURIComponent(buffer)}`), name: 'weather.png'})
   
 };
 
@@ -91,5 +86,5 @@ module.exports = {
   perms: 3,
   cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: [],
+  aliases: ["wtt"],
 };
