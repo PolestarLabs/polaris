@@ -1,3 +1,33 @@
+const EASTER_EGGS = [
+  {
+    trigger: "south pole"
+    ,dummyLocation: "ushuaia argentina"
+    ,city: "South Pole"
+    ,country:  {name: "Antarctica"}
+    ,flag_override:  "united-nations"       
+    ,map_override:  "/build/weather/eggs/southpole.png"       
+    ,temp_offset: -30  
+    ,text: "Freezing"  
+    ,code: 21         
+  } 
+  /*
+  {
+    trigger: ""         // Args match
+    ,dummyLocation: ""  // Real location to use as a template
+    ,city: ""           // 
+    ,region: ""         //
+    ,country: {name:""} //
+    ,timezone_id:  ""   //
+    ,curr: 00           // Current temp
+    ,temp_offset: 00    // Add/Remove degrees from the original
+    ,sunset: ""         // XX:XX TT
+    ,sunrise:  ""       // XX:XX TT
+    ,text: ""           // Condition text
+    ,code: 00           // Condition code (See Yahoo Docs)
+  } 
+  */
+]
+
 const { resolveFile } = require("../../../../event-instance/core/utilities/Gearbox/global");
 const Weather = require("../../archetypes/Weather");
 
@@ -19,8 +49,44 @@ const init = async (msg, args) => {
     return msg.reply(`${code} - Couldn't connect with the API`); // probably...
   }
 
+  let EGG={};
+  if ( EASTER_EGGS.map(ee=>ee.trigger).includes(args.join(" ")) ){
+    EGG = EASTER_EGGS.find(ee=> ee.trigger === args.join(" "));
+    await weather.initiate( EGG.dummyLocation );
+  }
+
   if (!weather.found) return msg.channel.send("Location not found :(");
 
+    
+  const PAYLOAD =  {
+    city:           EGG.city        || weather.location.city
+    ,region:        EGG.region      || weather.location.region
+    ,country:       EGG.country     || weather.location.country
+    ,timezone_id:   EGG.timezone_id || weather.location.timezone_id
+    ,temp:          EGG.curr        || weather.now.curr + (EGG.temp_offset || 0)
+    ,sunset:        EGG.sunset      || weather.now.sunset
+    ,sunrise:       EGG.sunrise     || weather.now.sunrise
+    ,text:          EGG.text        || weather.now.text
+    ,code:          EGG.code        || weather.now.code
+    ,flag_override: EGG.flag_override
+    ,map_override:  EGG.map_override
+    ,week:  [
+      weather.week[0],
+      weather.week[1],
+      weather.week[2],
+    ]
+  };
+
+ let buffer = new Buffer(JSON.stringify(PAYLOAD)).toString('base64'); 
+
+  msg.channel.send("",{
+    file: await resolveFile(`${paths.DASH}/generators/weather.png?furball=${encodeURIComponent(buffer)}`),
+    name: 'weather.png'
+  })
+  
+  
+
+  /*
   // ANCHOR WEATHER SHOWCASE -- not actual cmd
   if (far) weather.setUnit("F");
   const { inspect } = require("util");
@@ -28,27 +94,6 @@ const init = async (msg, args) => {
   const week = inspect([weather.week[0], weather.week[2], "and more..."], { depth: 1 });
   const loc = inspect(weather.location);
 
-  
-  let payload =  {};
-  payload.city =  weather.location.city;
-  payload.region=  weather.location.region;
-  payload.country=  weather.location.country;
-  payload.timezone_id=  weather.location.timezone_id;
-  payload.temp = weather.now.curr
-  payload.sunset = weather.now.sunset
-  payload.sunrise = weather.now.sunrise
-  payload.text = weather.now.text
-  payload.code = weather.now.code
-  payload.week = [
-    weather.week[0],
-    weather.week[1],
-    weather.week[2],
-  ];
-
-
-  let buffer = new Buffer(JSON.stringify(payload)).toString('base64');
-
-  /*
   msg.channel.send({
     embed: {
       title: "Weather properties",
@@ -72,9 +117,7 @@ const init = async (msg, args) => {
   });
   */
 
-  msg.channel.send(""
-  ,{file: await resolveFile(`${paths.DASH}/generators/weather.png?furball=${encodeURIComponent(buffer)}`), name: 'weather.png'})
-  
+    
 };
 
 module.exports = {
