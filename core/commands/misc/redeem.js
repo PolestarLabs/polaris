@@ -19,7 +19,7 @@ const init = async (msg, args) => {
     }
   }
 
-  //TODO[epic=translations]
+  //TRANSLATE[epic=translations] redeem
 
   await msg.delete();
   const prize = prizeOperator.prize.split(" ");
