@@ -91,12 +91,12 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
- * @return {object} The payload generated.
+ * @return {{subtype: string, type: string, currency: string, transaction: string, from: string, to: string, timestamp: number, transactionId: string, amt: number}} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
-  if (userFrom["id"]) userFrom = userFrom["id"];
-  if (userTo["id"]) userTo = userTo["id"];
+  if (typeof userFrom === "object") userFrom = userFrom["id"];
+  if (typeof userTo === "object") userTo = userTo["id"];
   const now = Date.now();
   const payload = {
     subtype: subtype,
