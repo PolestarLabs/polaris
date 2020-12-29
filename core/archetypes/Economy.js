@@ -1,18 +1,26 @@
-//@ts-check
-// const DB = require('../database/db_ops');
+// @ts-check
+/// <reference path="../../types/global.d.ts" />
 
-// const CURRENCIES = {
-//   RBN: "rubines",
-//   JDE: "jades",
-//   SPH: "sapphires",
-//   LCL: false,
-//   AMY: "amethysts",
-//   EMD: "emeralds",
-//   TPZ: "topazes",
-//   PSM: "prisms"
-// };
+/**
+ * @typedef transaction
+ * @property {string} transactionId
+ * @property {string} from
+ * @property {string} to
+ * @property {number} amt
+ * @property {string} currency
+ * @property {string} type
+ * @property {string} subtype
+ * @property {string} transaction
+ * @property {number} timestamp
+ */
 
 // NOTE don't touch this thnx
+
+/*
+ * TODO[epic=mitchell] Add options to transactions
+ * Pay, Receive, Transfer: allowZero - to go through when amt = 0.
+ * GeneratePayload could allow custom fields.
+*/
 
 const toCurrencies = {
   RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
@@ -91,7 +99,7 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
- * @return {{subtype: string, type: string, currency: string, transaction: string, from: string, to: string, timestamp: number, transactionId: string, amt: number}} The payload generated.
+ * @return {transaction} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
@@ -119,7 +127,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -134,7 +142,7 @@ function pay(user, amt, type = "OTHER", currency = "RBN") {
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -152,7 +160,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
  * @param {string|Array.<string>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
  * @param {string} [subtype="TRANSFER"] The sub-type of the transaction :: default "TRANSFER"
  * @param {string} [symbol=">"] The transaction symbol :: default ">"
- * @return {Promise<Array<object>|object|null>} The payload(s) or null if [amt === 0].
+ * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -220,7 +228,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
- * @return {Promise<object>|null} The payload or null if missing args.
+ * @return {Promise<transaction>|null} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!") {
   if (!from || !to) return null;
