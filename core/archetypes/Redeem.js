@@ -66,7 +66,29 @@ module.exports = class Redeem {
     // no needed "else", this is executed both in single and multi redeem
     const userData = await DB.users.getFull(this.user);
     const sPrize = prize.split(" ");
-    return userData.addItem(`${sPrize[1]}_${sPrize[2]}_O`, Number(sPrize[0]));
+    await userData.addItem(`${sPrize[1]}_${sPrize[2]}_O`, Number(sPrize[0]));
+    return this.audit()
+  }
+
+  async audit() {
+    const c = this.prize.split(" ")[1].toUpperCase();
+    const currency = c === "LOOTBOX" ? "LBX" : "?"; //TODO add more types
+
+    return DB.audits.new({
+      from: PLX.user.id,
+      to: this.user,
+      type: "Code Redeemed",
+      currency: currency,
+      transaction: "+",
+      amt: Number(this.prize.split(" ")[0]),
+      timestamp: Date.now(),
+      transactionId: Date.now()
+        .toString(36)
+        .toUpperCase(),
+      details: {
+        code: this.code
+      }
+    });
   }
 
 };
