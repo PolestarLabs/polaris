@@ -13,45 +13,55 @@ const { CronJob }       = require("cron");
 exports.run = async function run() {
   console.log("• ".blue, "Loading CRON subroutines...");
 
-  const MIDNIGHT = new CronJob("0 0 * * *", () => {
   //= =====================================================================================
   /* EVERY MIDNIGHT */
   //= =====================================================================================
+  const MIDNIGHT = new CronJob("0 0 * * *", () => {
 
   }, null, true);
 
-  const FIVEminute = new CronJob("*/5  * * * *", async () => {
   //= =====================================================================================
   /* EVERY 5 MINUTES */
   //= =====================================================================================
-
+  const FIVE_MINUTES = new CronJob("*/5  * * * *", async () => {
+    
     PLX.gamechange();
-    // let sname = getShardCodename(bot,Number(process.env.SHARD)+1)
-    // bot.user.setPresence({shardID:Number(process.env.SHARD),status:'online',activity:{name:sname,type:0}});
+    
   }, null, true);
-
-  const ONEhour = new CronJob("* */1 * * *", async () => {
-    PLX.microserver.microtasks.updateServerCache("all");
+  
+  //= =====================================================================================
+  /* EVERY 1 HOUR */
+  //= =====================================================================================
+  const ONE_HOUR = new CronJob("0 */1 * * *", async () => {
+    
   });
 
-  const FIFTEENminute = new CronJob("*/15 * * * *", async () => {
-    PLX.updateBlacklists(DB);
+  //= =====================================================================================
+  /* EVERY 15 MINUTES */
+  //= =====================================================================================
+  const FIFTEEN_MINUTE = new CronJob("*/15 * * * *", async () => {
+
+    PLX.updateBlacklists(DB)
+      .then(()=>{console.report("•".green+" Blacklist updated")});
+      
+    PLX.microserver.microtasks.updateServerCache("all")
+      .then(()=>{console.report("•".green+" Server cache updated")});
+
   });
 
-  const ONEminute = new CronJob("*/1 * * * *", async () => {
-    console.log(`
-   ${PLX.cluster.name.bgBlue} - Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${moment(Date.now() - PLX.uptime).fromNow(true)}
-  `);
+  //= =====================================================================================
+  /* EVERY 1 MINUTE */
+  //= =====================================================================================
+  const ONE_MINUTE = new CronJob("*/1 * * * *", async () => {
+    console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${moment(Date.now() - PLX.uptime).fromNow(true)}
+    `.gray);
 
-    //= =====================================================================================
-    /* EVERY 1 MINUTE */
-    //= =====================================================================================
   }, null, true);
 
   MIDNIGHT.start();
-  FIVEminute.start();
-  ONEminute.start();
-  ONEhour.start();
-  FIFTEENminute.start();
+  FIVE_MINUTES.start();
+  ONE_MINUTE.start();
+  ONE_HOUR.start();
+  FIFTEEN_MINUTE.start();
   console.log("• ".green, "CRONs ready");
 };
