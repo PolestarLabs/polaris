@@ -1,8 +1,5 @@
-// @ts-check
-/// <reference path="../../types/global.d.ts" />
-
 /**
- * @typedef transaction
+ * @typedef Transaction
  * @property {string} transactionId
  * @property {string} from
  * @property {string} to
@@ -22,33 +19,52 @@
  * GeneratePayload could allow custom fields.
 */
 
+/** 
+ * @typedef CurrencyMap
+ * @property {"RBN"} RUBINE
+ * @property {"JDE"} JADE
+ * @property {"SPH"} SAPPHIRE
+ * @property {"AMY"} AMETHYST
+ * @property {"EMD"} EMERALD
+ * @property {"TPZ"} TOPAZE
+ * @property {"PSM"} PRISM
+ */
+/** @type {CurrencyMap} */
 const toCurrencies = {
   RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
   AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
 }
+/** @typedef {"RBN" | "JDE" | "SPH" | "AMY" | "EMD" | "TPZ" | "PSM"} Currency */
+/** @typedef {Currency[]} CurrencyArray*/
+/** @type {CurrencyArray} */
 const currencies = [
   "RBN", "JDE", "SPH",
   "AMY", "EMD", "TPZ", "PSM"
 ]
 
+
+/** @typedef {keyof CurrencyMap | Currency} curr */
 /**
- * Checks if currency or currencies are valid, otherwise throws error.
- *
- * @param {string|Array<string>} curr the currency or currency array to parse
- * @return {string|string[]} returns the correct formats ; string/array dependent on input
- * @throws {Error} Unknown currency
+ * parseCurrencies Checks if currency or currencies are valid, otherwise throws error.
+ * 
+ * @param {Currency|Currency[]} curr
+ * @returns {Currency|Currency[]}
+ * @throws {Error} 
  */
-function parseCurrencies(curr) {
+function parseCurrencies(/** @type {curr|curr[]} */ curr) {
   // Argument parsing
   const type = typeof curr;
-  if (typeof curr === "string") curr = [curr.toUpperCase()];
-  else curr = curr.map(c => c.toUpperCase());
+
+  // @ts-expect-error non-strict checks in other files
+  if (typeof curr === "string") curr = [curr.toUpperCase()]; // @ts-expect-error non-strict checks in other files
+  else currarr = curr.map(c => c.toUpperCase());
 
   // convert currencies to XXX format. eg. rubines/rubine → RBN.
-  if (curr) curr = curr.map(c => toCurrencies[c] ? toCurrencies[c] : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
+  // @ts-expect-error can't handle this...
+  if (curr) curr = (/** @type {Currency[]} */(curr)).map(c => toCurrencies[c] ? (toCurrencies[(/** @type {keyof CurrencyMap} */(c))]) : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
   
   // NOTE: changing the way this returns has implications down the line.
-  if (!curr || curr.some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`);
+  if ((/** @type {Currency[]} */(curr)).some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`); // @ts-expect-error
   return (type === "string" ? curr[0] : curr);
 }
 
@@ -57,7 +73,7 @@ function parseCurrencies(curr) {
  *
  * @param {string|{id: string}} user user(ID)
  * @param {number|Array<number>} amount The amount necessary.
- * @param {string|Array<string>} [currency="RBN"] Currency to check against :: default "RBN".
+ * @param {Currency|Currency[]} [currency="RBN"] Currency to check against :: default "RBN".
  * @return {Promise<boolean>} True iff enough funds.
  * @throws {Error} Invalid arguments.
  */
@@ -75,15 +91,15 @@ function checkFunds(user, amount, currency = "RBN") {
     curr = [curr];
   } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
 
-  const uID = user["id"] || user;
+  const uID = (typeof user === "object") ? user.id : user;
   if (uID === PLX.user.id) return Promise.resolve(true);
 
-  return DB.users.get(uID).then((userData) => {
+  return DB.users.get(uID).then((  /** @type { { modules: {[K in Currency]:number} } | null } */ userData) => {
     if (!userData) return false;
-    return curr.every((c, i) => {
-      if (amount[i] === 0) return true;
+    return (/** @type {Currency[]} */(curr)).every((c, i) => {
+      if ((/** @type {number[]} */(amount))[i] === 0) return true;
       if (!userData.modules[c]) return false;
-      return (userData.modules[c] >= amount[i]);
+      return (userData.modules[c] >= (/** @type {number[]} */(amount))[i]);
     });
   });
 }
@@ -99,7 +115,7 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
- * @return {transaction} The payload generated.
+ * @return {Transaction} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
@@ -126,8 +142,8 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
  * @param {{id: string}|string} user user(ID)
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
+ * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -141,8 +157,8 @@ function pay(user, amt, type = "OTHER", currency = "RBN") {
  * @param {{id: string}|string} user user object or ID
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
- * @param {string|Array<string>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
+ * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -157,10 +173,10 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
  * @param {string|{id: string}} userTo user(ID) to
  * @param {number|Array.<number>} amt The amounts to transfer, or an array of.
  * @param {string} [type="SEND"] The type of transaction :: default "SEND"
- * @param {string|Array.<string>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
+ * @param {Currency|Array<Currency>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
  * @param {string} [subtype="TRANSFER"] The sub-type of the transaction :: default "TRANSFER"
  * @param {string} [symbol=">"] The transaction symbol :: default ">"
- * @return {Promise<Array<transaction>|transaction|null>} The payload(s) or null if [amt === 0].
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
@@ -170,8 +186,8 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (!amt || (typeof amt !== "number" && !amt.length)) return Promise.resolve(null);
 
   // Argument parsing
-  if (userFrom["id"]) userFrom = userFrom["id"];
-  if (userTo["id"]) userTo = userTo["id"];
+  if (typeof userFrom === "object") userFrom = userFrom.id;
+  if (typeof userTo === "object") userTo = userTo.id;
 
   // Checks
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
@@ -186,8 +202,11 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
 
     // Setup v1.0
+    /** @type {{[index: string]: number}} */
     const fromUpdate = {};
+    /** @type {{[index: string]: number}} */
     const toUpdate = {};
+    /** @type {Transaction[]} */
     const payloads = [];
 
     // Fill DB calls
@@ -228,7 +247,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
- * @return {Promise<transaction>|null} The payload or null if missing args.
+ * @returns {Promise<Transaction>|null} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!") {
   if (!from || !to) return null;
