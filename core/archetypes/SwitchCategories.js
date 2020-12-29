@@ -1,4 +1,3 @@
-// @ts-check
 const readdirAsync = Promise.promisify(require("fs").readdir);
 
 /**

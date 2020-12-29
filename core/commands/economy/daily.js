@@ -1,4 +1,3 @@
-// @ts-check
 const DAY = 1;// 22 * 60 * 60e3;
 const EXPIRE = 10000000000000000 * DAY * 2.1;
 
@@ -72,14 +71,14 @@ const init = async (msg, args) => {
 
   let [boost, expTag, expTagInsu, expTagWARNING, expTagLOST, donoTag, super10, prev100, prev30, prev10, soft100, soft30, soft10, soft9, soft8, soft7, soft6, soft5, soft4, soft3, soft2, soft1] = constantAssets;
 
-  const success = async (msg, DAILY) => {
+  const success = async (msg, dailyInfo) => {
     // const premiumTier = await Premium.getTier(msg.author);
 
     const dailyCard = Picto.new(800, 600);
     const ctx = dailyCard.getContext("2d");
 
     // let streak = Number(args[0]||1)
-    const { streak } = DAILY.userDaily;
+    const { streak } = dailyInfo.userDaily;
 
     const myDaily = {
       RBN: 0,
@@ -164,14 +163,14 @@ const init = async (msg, args) => {
       const donoBoost = Premium.DAILY[userData.donator] || 0;
       let donoEmblem = Picto.getCanvas(`${paths.CDN}/images/donate/icony/${userData.donator}-small.png`);
       myDaily.RBN += donoBoost;
-      const number_DONOBOOST = Picto.tag(ctx, `+ ${donoBoost}`, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
-      const text_DONOBOOST = Picto.tag(ctx, (userData.donator?.toUpperCase() || "UNKNOWN"), "italic 900 15px 'Panton Black'", "#FFF");
+      const numberDONOBOOST = Picto.tag(ctx, `+ ${donoBoost}`, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
+      const textDONOBOOST = Picto.tag(ctx, (userData.donator?.toUpperCase() || "UNKNOWN"), "italic 900 15px 'Panton Black'", "#FFF");
 
       [donoTag, donoEmblem] = await Promise.all([donoTag, donoEmblem]);
 
       ctx.drawImage(donoTag, 0, 0);
-      ctx.drawImage(number_DONOBOOST.item, 683 - number_DONOBOOST.width, 11);
-      ctx.drawImage(text_DONOBOOST.item, 668 - text_DONOBOOST.width, 53);
+      ctx.drawImage(numberDONOBOOST.item, 683 - numberDONOBOOST.width, 11);
+      ctx.drawImage(textDONOBOOST.item, 668 - textDONOBOOST.width, 53);
       ctx.drawImage(donoEmblem, 698, 14, 52, 52);
     }
 
@@ -180,25 +179,25 @@ const init = async (msg, args) => {
     Picto.popOutTxt(ctx, "Daily Rewards", 60, 40, "italic 900 45px 'Panton Black'", "#FFF", 300, { style: "#1b1b25", line: 12 });
     ctx.restore();
 
-    const text_STREAK = Picto.tag(ctx, "STREAK ", "italic 900 14px 'Panton Black'", "#FFF"); // ,{line: 6, style: "#223"} )
-    const text_EXP = Picto.tag(ctx, "EXP", "italic 900 18px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
-    const number_STREAK = Picto.tag(ctx, streak, "italic 900 32px 'Panton Black'", "#FFF"); // ,{line: 6, style: "#223"} )
-    const number_STREAK_PRIZE = Picto.tag(ctx, myDaily.EXP, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
-    const number_BOOST_PRIZE = Picto.tag(ctx, `+${miliarize(myDaily.PSM)}`, "italic 900 35px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
+    const textStreak = Picto.tag(ctx, "STREAK ", "italic 900 14px 'Panton Black'", "#FFF"); // ,{line: 6, style: "#223"} )
+    const textEXP = Picto.tag(ctx, "EXP", "italic 900 18px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
+    const numberStreak = Picto.tag(ctx, streak, "italic 900 32px 'Panton Black'", "#FFF"); // ,{line: 6, style: "#223"} )
+    const numberStreakPrize = Picto.tag(ctx, myDaily.EXP, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
+    const numberBoostPrize = Picto.tag(ctx, `+${miliarize(myDaily.PSM)}`, "italic 900 35px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
 
     /// //////////////////////////////////////////////
 
-    if (myDaily.PSM) ctx.drawImage(number_BOOST_PRIZE.item, 660 - 35, 540);
+    if (myDaily.PSM) ctx.drawImage(numberBoostPrize.item, 660 - 35, 540);
 
-    if (DAILY.userDaily.insured) ctx.drawImage(await expTagInsu, 0, 0);
-    else if (DAILY.streakStatus === "recovered") {
+    if (dailyInfo.userDaily.insured) ctx.drawImage(await expTagInsu, 0, 0);
+    else if (dailyInfo.streakStatus === "recovered") {
       ctx.drawImage(await expTagWARNING, 0, 0);
       Picto.popOutTxt(ctx,
         $t("Streak insurance activated!", P),
         360, 540,
         "italic 900 35px 'Panton Black'", "#FFF", 400,
         { line: 8, style: "#223" });
-    } else if (DAILY.streakStatus === "lost") {
+    } else if (dailyInfo.streakStatus === "lost") {
       ctx.drawImage(await expTagLOST, 0, 0);
       Picto.popOutTxt(ctx,
         $t("Streak Lost!", P),
@@ -207,12 +206,12 @@ const init = async (msg, args) => {
         { line: 8, style: "#F23" });
     } else ctx.drawImage(await expTag, 0, 0);
 
-    if (DAILY.streakStatus !== "lost") {
+    if (dailyInfo.streakStatus !== "lost") {
       ctx.rotate(-0.03490658503988659);
-      ctx.drawImage(number_STREAK.item, 258 - number_STREAK.width / 2, 526);
-      ctx.drawImage(text_STREAK.item, 221, 557);
-      ctx.drawImage(number_STREAK_PRIZE.item, 160 - number_STREAK_PRIZE.width, 530);
-      ctx.drawImage(text_EXP.item, 200 - text_EXP.width, 537);
+      ctx.drawImage(numberStreak.item, 258 - numberStreak.width / 2, 526);
+      ctx.drawImage(textStreak.item, 221, 557);
+      ctx.drawImage(numberStreakPrize.item, 160 - numberStreakPrize.width, 530);
+      ctx.drawImage(textEXP.item, 200 - textEXP.width, 537);
       ctx.rotate(0.03490658503988659);
     }
 
@@ -289,21 +288,21 @@ const init = async (msg, args) => {
 
         */
     let postmortem;
-    if (DAILY.streakStatus === "first") {
+    if (dailyInfo.streakStatus === "first") {
       P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.firstDaily", P);
     }
-    if (DAILY.streakStatus === "recovered") {
+    if (dailyInfo.streakStatus === "recovered") {
       P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.insuranceConsumed", P);
     }
-    if (DAILY.streakStatus === "lost") {
-      P.oldStreak = DAILY.userDaily.lastStreak;
+    if (dailyInfo.streakStatus === "lost") {
+      P.oldStreak = dailyInfo.userDaily.lastStreak;
       const streakfixes = userData.modules.inventory.find((i) => i.id === "streakfix")?.count || 0;
       postmortem = `${$t("responses.daily.streakLost", P)}\n${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
     }
 
-    if (DAILY.streakStatus.pass && randomize(0, 5) === 3) {
+    if (dailyInfo.streakStatus.pass && randomize(0, 5) === 3) {
       fields.push({
         name: "Want to boost your dailies further?",
         value: "Check out the full extra rewards set [**HERE**]" + `(${paths.DASH})`,

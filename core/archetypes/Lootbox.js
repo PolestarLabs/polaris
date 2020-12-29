@@ -1,4 +1,3 @@
-// @ts-check
 const LootboxItem = require("./LootboxItem");
 /** *********************** */
 //          ODDS          //

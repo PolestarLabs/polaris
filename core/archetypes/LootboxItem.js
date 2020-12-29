@@ -1,4 +1,3 @@
-// @ts-check
 const gemRATES = GNums.LootRates.gems;
 
 class LootboxItem {

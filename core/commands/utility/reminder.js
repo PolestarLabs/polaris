@@ -1,4 +1,3 @@
-// @ts-check
 const chrono = require("chrono-node");
 const moment = require("moment");
 

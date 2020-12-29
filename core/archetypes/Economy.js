@@ -1,4 +1,3 @@
-//@ts-check
 // const DB = require('../database/db_ops');
 
 // const CURRENCIES = {

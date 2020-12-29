@@ -1,4 +1,3 @@
-// @ts-check
 // TRANSLATE[epic=translations] blackjack
 const Picto = require("../../utilities/Picto");
 const deckManager = require("../inventory/decks.js");

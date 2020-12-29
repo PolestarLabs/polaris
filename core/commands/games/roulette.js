@@ -1,4 +1,3 @@
-// @ts-check
 const config = require("../../../../dashboard/config");
 const ECO = require("../../archetypes/Economy");
 const Roulette = require("../../archetypes/Roulette");

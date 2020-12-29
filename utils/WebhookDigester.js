@@ -1,4 +1,3 @@
-// @ts-check
 const cfg = require("../config.json");
 
 class WebhookDigester {

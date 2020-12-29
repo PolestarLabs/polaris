@@ -1,4 +1,3 @@
-// @ts-check
 const diff = require("fast-diff");
 const { EventEmitter } = require("events");
 const { inspect } = require("util");

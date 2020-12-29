@@ -1,4 +1,3 @@
-// @ts-check
 
 // LINK Trello https://trello.com/c/KLEVWE10
 // TRANSLATE[epic=translations] craft
