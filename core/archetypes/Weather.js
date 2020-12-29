@@ -161,7 +161,7 @@ class Weather {
 					let data = "";
 					res.on("data", (chunk) => data += chunk);
 					res.on("end", () => {
-						console.log(data);
+						//console.log(data);
 						this.#apiResponse = JSON.parse(data);
 						if (Object.keys(this.#apiResponse.location).length == 0 || this.#apiResponse.forecasts.length == 0) this.found = false;
 						else this.found = true;

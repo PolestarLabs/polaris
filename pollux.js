@@ -1,11 +1,13 @@
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
+
 console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
 global.GNums = require("./resources/lists/GlobalNumbers.js");
+
 
 const Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
@@ -66,12 +68,14 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   prefix: ["===", "p!+", "@mention"],
 });
 
+
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
 PLX.engine = Eris;
 PLX.beta = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+console.report = (...args) =>  console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(' '));
 global.hook = new WebhookDigester(PLX);
 
 Gearbox = require("./core/utilities/Gearbox");
@@ -303,14 +307,4 @@ ${err.stack.slice(0, 1900)}
   // else PLX.hardKill();
 });
 
-// TODO[epic=anyone]: Remember to delete this in production
 
-const dumpsterLogs = { id: "789784919202594836", token: "HkR_pSCRopvIbhEpFzGqSHSCe9mf3h_gusrSsgzxTbD8gqeLV79_Cv4i9kkQ3_VpTrhz" };
-const oldLog = console.log;
-console.log = function (...args) {
-  hook.raw(`\`\`\`js
-${[...args].join(" ").slice(0, 1900)}
-    \`\`\``,
-  { hook: dumpsterLogs });
-  oldLog(...args);
-};
