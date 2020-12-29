@@ -22,8 +22,8 @@ const init = async (msg, args) => {
   }
 
   const transactionUser = log.from === "271394014358405121"
-    ? (await DB.users.get({ id: log.to })).meta
-    : (await DB.users.getFull({ id: log.from })).meta;
+    ? (await DB.users.get({ id: log.to }))?.meta
+    : (await DB.users.getFull({ id: log.from }))?.meta;
   embed.author = {
     name: transactionUser.tag,
     icon_url: `${paths.CDN}/images/${curr || "x"}.png`,
@@ -60,14 +60,14 @@ const init = async (msg, args) => {
       inline: true,
     });
   }
-  if (log.details.state) {
+  if (log.details?.state) {
     embed.fields.push({
       name: "State",
       value: log.details.state === "approved" ? _emoji("yep") : _emoji("nope"),
       inline: true,
     });
   }
-  if (log.type.includes("give")) {
+  if (log.type?.includes("give")) {
     embed.field(
       log.transaction === "+" ? "FROM" : "TO",
       `**${transactionUser.tag}** \`${log.to}\``,
