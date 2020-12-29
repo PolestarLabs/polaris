@@ -38,7 +38,7 @@ module.exports = async (guild, member) => {
     const welcomeSkin = svData.modules.GREET.type;
     const welcomeImage = svData.modules.GREET.image;
     if (embed) {
-      embed.image = embed.image.url ? embed.image : welcomeImage && embed ? { url: "attachment://in.png" } : undefined;
+      embed.image = embed.image?.url ? embed.image : welcomeImage && embed ? { url: "attachment://in.png" } : undefined;
       embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
       console.log(embed, `${paths.CDN}/backdrops/${userData.modules.bgID}.png`);
     }

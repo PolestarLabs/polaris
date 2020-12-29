@@ -33,7 +33,7 @@ module.exports = async (guild, member) => {
     const fwellSkin = svData.modules.FWELL.type;
     const fwellImage = svData.modules.FWELL.image;
     if (embed) {
-      embed.image = embed.image.url ? embed.image : fwellImage && embed ? { url: "attachment://out.png" } : undefined;
+      embed.image = embed.image?.url ? embed.image : fwellImage && embed ? { url: "attachment://out.png" } : undefined;
       embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
     }
 
