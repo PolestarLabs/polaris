@@ -235,7 +235,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
         return payloads.length === 1 ? payloads[0] : payloads;
       });
   });
-}
+} 
 
 /**
  * Creates a new audit. 
