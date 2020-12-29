@@ -1,7 +1,24 @@
 const cfg = require(`${appRoot}/config.json`);
 const axios = require("axios");
 
-exports.run = async (feed, serverLang = "en") => {
+
+
+/**
+ * @typedef TwitchData
+ * @property {string} last.type
+ * @property {string} last.title
+ * @property {string} last.started_at 
+ */
+
+/**
+ * @typedef Twitch
+ * @property {TwitchData} last
+ */
+
+/**  @typedef {import("./").Feed & Twitch} TwitchFeed */
+
+exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
+  // @ts-expect-error axios
   const response = await axios.get(
     `https://api.twitch.tv/helix/streams?user_login=${feed.url}`,
     { headers: { "User-Agent": "Pollux@Polaris.beta-0.1", "Client-ID": cfg.twitch } },
@@ -18,6 +35,7 @@ exports.run = async (feed, serverLang = "en") => {
         && feed.last.started_at === StreamData.started_at
     )
   ) {
+    // @ts-expect-error axios
     const res = await axios.get(
       `https://api.twitch.tv/helix/users?login=${feed.url}`,
       { headers: { "User-Agent": "Pollux@Polaris.beta-0.1", "Client-ID": cfg.twitch } },
@@ -41,6 +59,7 @@ exports.run = async (feed, serverLang = "en") => {
       { $set: { last: StreamData, thumb: streamer.profile_image_url } },
     ).catch(console.error);
 
+    // @ts-expect-error eris-additions
     PLX.getChannel(feed.channel).send({
       content: `${ping}${$t("interface.feed.newTwitchStatus", P)} <https://twitch.tv/${streamer.login}>`,
       embed,

@@ -1,4 +1,17 @@
+const { Message } = require("eris");
 const RSS = require("rss-parser");
+
+/**
+ * @typedef YoutubeData
+ * @property {string} link
+ */
+
+/**
+ * @typedef Youtube
+ * @property {YoutubeData} last
+ */
+
+/** @typedef {import("./index.js").Feed & Youtube} YoutubeFeed*/
 
 const tubeParser = new RSS({
   customFields: {
@@ -8,15 +21,16 @@ const tubeParser = new RSS({
 
 const { ytEmbedCreate } = require("../../commands/utility/ytalert.js");
 
-exports.run = async (feed, serverLang = "en") => {
+exports.run = async (/** @type {YoutubeFeed} */feed, serverLang = "en") => {
   const P = { lngs: [serverLang, "dev"] };
 
   const data = await tubeParser.parseURL(
-    `https://www.youtube.com/feeds/videos.xml?channel_id=${feed.url}`,
+    `https://www.youtube.com/feeds/videos.xml?channel_id=${feed.url}`, // @ts-expect-error FIXME[epic=bsian] RSS/Bluebird?
   ).timeout(3120).catch(() => null);
 
   if (feed.last.link !== data?.items[0]?.link) {
     const embed = await ytEmbedCreate(data.items[0], data);
+    // @ts-expect-error P
     P.tuber = data.items[0].author;
     const LastVideoLink = `
         ${$t("interface.feed.newYoutube", P)}
@@ -28,10 +42,11 @@ exports.run = async (feed, serverLang = "en") => {
     ).catch(console.error);
 
     const ping = feed.pings || feed.pings || "";
+    // @ts-expect-error eris-additions
     PLX.getChannel(feed.channel).send({
       content: ping + LastVideoLink,
-    })
-      .then((m) => m.channel.send({ embed }))
+    }) // @ts-expect-error eris-additions
+      .then((/** @type {Message} */ m) => m.channel.send({ embed }))
       .catch(() => null);
   }
 };
