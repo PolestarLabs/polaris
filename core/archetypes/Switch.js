@@ -1,4 +1,3 @@
-// @ts-check
 const Categories = require("./SwitchCategories");
 
 /**

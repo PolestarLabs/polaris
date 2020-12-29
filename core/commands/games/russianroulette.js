@@ -1,4 +1,3 @@
-// @ts-check
 /* eslint-disable no-await-in-loop */
 const { global } = DB.miscDB;
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");

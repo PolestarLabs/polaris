@@ -1,4 +1,3 @@
-// @ts-check
 const { performance } = require("perf_hooks");
 
 const clean = (text) => {

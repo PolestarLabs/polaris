@@ -1,4 +1,3 @@
-// @ts-check
 // const gear = require('../../utilities/Gearbox');
 // const DB = require('../../database/db_ops');
 const Picto = require("../../utilities/Picto");

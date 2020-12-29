@@ -1,4 +1,3 @@
-// @ts-check
 const { Crafter } = require("./Crafter");
 
 const yep = _emoji("yep");

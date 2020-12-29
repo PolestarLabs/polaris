@@ -1,4 +1,3 @@
-// @ts-check
 // TRANSLATE[epic=translations] betflip
 const ECO = require("../../archetypes/Economy");
 
