@@ -1,14 +1,13 @@
 import { AxiosResponse } from "axios";
-import "eris";
-import { TextableChannel } from "eris";
 import { EventEmitter } from "events";
+import { Textable, TextableChannel, Message, BaseData } from "eris";
 
 interface EA_awaitMessagesOptions {
   maxMatches: number;
   time?: number;
 }
 
-class MessageCollector<T extends Textable = TextableChannel> extends EventEmitter {
+declare class MessageCollector<T extends Textable = TextableChannel> extends EventEmitter {
   filter: (m: Message<T>) => any;
   channel: T;
   options: EA_awaitMessagesOptions;
@@ -21,7 +20,7 @@ class MessageCollector<T extends Textable = TextableChannel> extends EventEmitte
   on(event: "end", cb: (collected: Message<T>[], reason: string) => any): this;
 }
 
-class Microserver {
+declare class Microserver {
   microtasks: {
     updateServerCache(body: BaseData | "all", url: string, res: any): Promise<any>;
     reloadServerCache(): Promise<void>;
@@ -31,13 +30,21 @@ class Microserver {
 }
 
 declare module "eris" {
-  interface TextableChannel {
+  interface Textable {
     awaitMessages(filter: (m: Message) => any, options: EA_awaitMessagesOptions): Promise<Message[]>;
     createCode(code: string, language: string): Promise<Message>;
     sendCode(code: string, language: string): Promise<Message>;
     createEmbed(embed: EmbedOptions): Promise<Message>;
     sendEmbed(embed: EmbedOptions): Promise<Message>;
-    sendMessage(content: MessageContent  , file?: MessageFile | MessageFile[]): Promise<Message>;
+    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message>;
+  }
+  interface GuildTextable {
+    awaitMessages(filter: (m: Message<GuildTextableChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<GuildTextableChannel>[]>;
+    createCode(code: string, language: string): Promise<Message<GuildTextableChannel>>;
+    sendCode(code: string, language: string): Promise<Message<GuildTextableChannel>>;
+    createEmbed(embed: EmbedOptions): Promise<Message<GuildTextableChannel>>;
+    sendEmbed(embed: EmbedOptions): Promise<Message<GuildTextableChannel>>;
+    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<GuildTextableChannel>>;
   }
   interface PrivateChannel {
     awaitMessages(filter: (m: Message<PrivateChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<PrivateChannel>[]>;
@@ -45,7 +52,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<PrivateChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
-    sendMessage(content: MessageContent  , file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
   }
   interface TextChannel {
     awaitMessages(filter: (m: Message<TextChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<TextChannel>[]>;
@@ -53,7 +60,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<TextChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<TextChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<TextChannel>>;
-    sendMessage(content: MessageContent  , file?: MessageFile | MessageFile[]): Promise<Message<TextChannel>>;
+    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<TextChannel>>;
   }
   interface NewsChannel {
     awaitMessages(filter: (m: Message<NewsChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<NewsChannel>[]>;
@@ -61,7 +68,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<NewsChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<NewsChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<NewsChannel>>;
-    sendMessage(content: MessageContent  , file?: MessageFile | MessageFile[]): Promise<Message<NewsChannel>>;
+    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<NewsChannel>>;
   }
 
   interface Client {
@@ -112,8 +119,10 @@ declare module "eris" {
     sendMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
   }
 
-  interface Message<T extends Textable> {
+  interface Message<T extends Textable = TextChannel> {
+    args: string[];
     guild: T extends GuildTextableChannel ? Guild : never;
+    lang: string[];
   }
 
   interface Role {
@@ -124,6 +133,8 @@ declare module "eris" {
   interface User {
     createMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
     displayAvatarURL: string;
+    dailing: boolean;
+    tag: string;
   }
 
   interface Guild {
@@ -135,12 +146,10 @@ declare module "eris" {
   interface CommandClient {
     resolveUser(user: User | Member | BaseData | string, options?: { enforceDB?: boolean }): Promise<User>;
     resolveMember(guild: Guild | BaseData | string, user: User | Member | BaseData | string, options?: { enforceDB?: boolean; softMatch?: boolean; }): Promise<Member>;
-    getTarget(query: string, guild?: Guild | BaseData | string | null, strict?: boolean, member?: false): Promise<User>;
-    getTarget(query: string, guild: Guild | BaseData | string | null, strict?: boolean, member: true): Promise<User>;
-    getTargetLegacy(query: string | User | Member | BaseData, guild?: Guild | null, strict?: boolean, member?: false): Promise<User | null>;
-    getTargetLegacy(query: string | User | Member | BaseData, guild?: Guild | null, strict?: boolean, member: true): Promise<Member | null>;
+    getTarget(query: string, guild?: Guild | BaseData | string | null, strict?: boolean, member?: boolean): Promise<User>;
+    getTargetLegacy(query: string | User | Member | BaseData, guild?: Guild | null, strict?: boolean, member?: boolean): Promise<User | null>;
     getChannelImg(message: Message, nopool?: boolean): Promise<string | boolean>;
-    modPass(member: Member, extra?: string, sData?: boolea | object, channel?: Channel | null): boolean;
+    modPass(member: Member, extra?: string, sData?: boolean | object, channel?: Channel | null): boolean;
     gamechange(gamein?: [string, number] | false, status?: Status): void;
     getPreviousMessage(msg: Message, ID?: string): Promise<Message>;
     autoHelper(trigger: string, options?: { message?: Message; msg?: Message; cmd: string; opt?: string; [s: string]: any }): boolean;
@@ -166,5 +175,6 @@ declare module "eris" {
     tempRoleTimers: Map<string, NodeJS.Timeout>;
     muteTimers: Map<string, NodeJS.Timeout>;
     reminderTimers: Map<string, NodeJS.Timeout>;
+    timerBypass?: string[];
   }
 }
