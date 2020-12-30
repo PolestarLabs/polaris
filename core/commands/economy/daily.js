@@ -1,5 +1,5 @@
-const DAY =  22 * 60 * 60e3;
-const EXPIRE = DAY * 2.1;
+const DAY =  1; // 22 * 60 * 60e3;
+const EXPIRE = 1000000000000000 * DAY * 2.1;
 
 const { DailyCmd, STATUS } = require("@polestar/timed-usage");
 const Premium = require("../../utilities/Premium");
