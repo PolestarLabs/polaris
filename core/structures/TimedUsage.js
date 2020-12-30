@@ -91,12 +91,9 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
     if (info) return info(message, Daily, remain);
     const embe2 = new Embed();
     embe2.setColor("#e35555");
-    embe2.description(`
-${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily).fromNow()}
-${_emoji("future")} ${dailyAvailable
-  ? _emoji("online")
-  : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily).add((DAY / 1000 / 60 / 60), "hours").fromNow()}
-  `);
+    embe2.description(`${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily).fromNow()}\n`
+      + `${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} `
+      + `**${v.next}** ${moment.utc(userDaily).add((DAY / 1000 / 60 / 60), "hours").fromNow()}`);
     return message.channel.send({ embed: embe2 });
   }
 
