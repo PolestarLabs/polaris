@@ -1,9 +1,16 @@
 const moment = require("moment");
+const { DailyCmd } = require("@polestar/timed-usage");
 const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
-const Timed = require("../../structures/TimedUsage");
 
+const day = 2 * 60 * 60e3;
+
+/**
+ * @param {import("eris").Message} msg
+ * @param {string[]} args
+ */
 const init = async (msg, args) => {
+  /** @type {import("i18next").TranslationOptions} */
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const v = {
@@ -11,52 +18,26 @@ const init = async (msg, args) => {
     next: $t("responses.transfer.next", P),
   };
 
-  // y
-  const reject = (message, Daily, r) => {
-    P.remaining = moment.utc(r).fromNow(true);
-    const dailyNope = $t("responses.give.cooldown", P);
+  const Daily = await new DailyCmd("transfer_box", { day }).loadUser(msg.author);
+
+  if (["status", "stats"].includes(args[0].toLowerCase())) {
+    const { dailyAvailable, userDaily: { last } } = Daily;
+
     const embed = new Embed();
     embed.setColor("#e35555");
-    embed.description = _emoji("nope") + dailyNope;
-    return message.channel.send({ embed });
-  };
+    embed.description(`${_emoji} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}\n`
+      + `${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(last).add(2, "hours").fromNow()}`);
+    return msg.channel.createMessage({ embed });
+  }
 
-  // y
-  const info = async (message, Daily) => {
-    const { last } = await Daily.userData(message.author);
-    const dailyAvailable = await Daily.dailyAvailable(message.author);
-
-    const embe2 = new Embed();
-    embe2.setColor("#e35555");
-    embe2.description = `
-    ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment
-  .utc(last)
-  .fromNow()}
-    ${_emoji("future")} ${
-  dailyAvailable ? _emoji("online") : _emoji("dnd")
-} **${v.next}** ${moment
-  .utc(last)
-  .add(2, "hours")
-  .fromNow()}
-        `;
-    return message.channel.send({ embed: embe2 });
-  };
-
-  // y
-  const precheck = async (message) => {
-    const Target = message.mentions[0] || await PLX.getTarget(message.args[1]);
+  Daily.precheck = async () => {
+    const Target = msg.mentions[0] || await PLX.getTarget(args[1]);
     console.log({ Target });
-    if (!Target) {
-      await message.channel.send($t("responses.errors.target404", P));
-
-      message.command.invalidUsageMessage(message, message.args);
-      return false;
-    }
-    if (Target.id === message.author.id) return message.channel.send($t("responses.give.not2self", P)).then(() => false);
-    const preRarity = args[0] ? args[0].toUpperCase() : null;
+    if (!Target) return msg.channel.send($t("responses.errors.target404", P)).then(() => false);
+    if (Target.id === msg.author.id) return msg.channel.send($t("responses.give.not2self", P)).then(() => false);
 
     const [userData, targetData, Boxes] = await Promise.all([
-      DB.users.getFull({ id: message.author.id }),
+      DB.users.getFull({ id: msg.author.id }),
       DB.users.getFull({ id: Target.id }),
       DB.items.find({ type: "box" }),
     ]);
@@ -76,8 +57,9 @@ const init = async (msg, args) => {
         .join("")
     }\`\`\``;
 
-    const invEmpty = userBoxList.length == 0;
+    const invEmpty = userBoxList.length === 0;
 
+    /** @type {Required<import("eris").EmbedOptions>} */
     const embed = {};
     P.userB = `<@${Target.id}>`;
     embed.description = `
@@ -86,9 +68,9 @@ const init = async (msg, args) => {
     ${invEmpty ? "" : $t("responses.generic.selectIndex", P)}
     `;
     embed.thumbnail = { url: Target.avatarURL };
-    embed.footer = { text: message.author.tag, icon_url: message.author.avatarURL };
+    embed.footer = { text: msg.author.tag, icon_url: msg.author.avatarURL };
 
-    const prompt = await message.channel.send({ embed });
+    const prompt = await msg.channel.send({ embed });
     if (invEmpty) return false;
 
     const timeout = () => {
@@ -129,13 +111,14 @@ const init = async (msg, args) => {
         await prompt.edit({ embed });
         const yes = async () => {
           const audit = await ECO.arbitraryAudit(
-            message.author.id,
+            msg.author.id,
             Target.id,
+            1,
             `[${CHOSENBOX.id}]`,
             "BOX",
             ">",
           );
-          await ECO.pay(message.author.id, 250, "Lootbox Transfer Tax");
+          await ECO.pay(msg.author.id, 250, "Lootbox Transfer Tax");
 
           userData.removeItem(CHOSENBOX.id);
           targetData.addItem(CHOSENBOX.id);
@@ -155,7 +138,7 @@ const init = async (msg, args) => {
           return true;
         };
 
-        return YesNo(prompt, message, yes, cancel, timeout, { time: 10e3 });
+        return YesNo(prompt, msg, yes, cancel, timeout, { time: 10e3 });
       }
       embed.color = 0xff3636;
       embed.description = `
@@ -172,17 +155,18 @@ const init = async (msg, args) => {
       return false;
     }
 
+    const preRarity = args[0]?.toUpperCase() || null;
     if (
       preRarity
       && userBoxList.find((box) => box.tradeable && box.rarity === preRarity)
     ) {
-      return boxTransfer(
+      return !!boxTransfer(
         userBoxList.find((box) => box.tradeable && box.rarity === preRarity),
       );
     }
 
-    const responses = await message.channel.awaitMessages(
-      (msg2) => msg2.author.id === message.author.id
+    const responses = await msg.channel.awaitMessages(
+      (msg2) => msg2.author.id === msg.author.id
         && Math.abs(Number(msg2.content)) < userBoxList.length,
       { maxMatches: 1, time: 30e3 },
     );
@@ -191,21 +175,25 @@ const init = async (msg, args) => {
 
     responses[0].delete().catch(() => null);
     const R = Math.abs(Number(responses[0].content));
-    return boxTransfer(userBoxList[R], R);
+    return !!boxTransfer(userBoxList[R], R);
   };
 
-  const after = async () => {
-    console.log("ok");
-  };
+  if (!Daily.dailyAvailable) {
+    P.remaining = moment.utc(Daily.availableAt).fromNow(true);
+    const dailyNope = $t("responses.give.cooldown", P);
+    const embed = new Embed();
+    embed.setColor("#e35555");
+    embed.description = _emoji("nope") + dailyNope;
+    return msg.channel.send({ embed });
+  }
 
   msg.author.looting = true;
   try {
-    await Timed.init(msg, "transfer_box", { day: 2 * 60 * 60 * 1000 }, after, reject, info, precheck);
-  } catch (error) {
+    const run = await Daily.process();
+    // TODO[epic=flicky] Implement success message - could probably do with moving some of the stuff in precheck to here
+  } finally {
     msg.author.looting = false;
-    throw error;
   }
-  msg.author.looting = false;
 };
 
 module.exports = {
@@ -213,6 +201,7 @@ module.exports = {
   pub: false,
   cmd: "givebox",
   perms: 3,
+  argsRequired: true,
   cat: "economy",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
