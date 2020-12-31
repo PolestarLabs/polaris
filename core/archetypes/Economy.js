@@ -238,7 +238,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 } 
 
 /**
- * Creates a new audit. 
+ * Creates a new audit.
  * NOTE: this will immediately end up in DB.
  *
  * @param {string|{id: string}} from user(ID) from
@@ -247,10 +247,10 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
- * @returns {Promise<Transaction|null>} The payload or null if missing args.
+ * @returns {Promise<Transaction>} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!") {
-  if (!from || !to) return null;
+  if (!from || !to) throw new Error("Missing arguments");
   const payload = generatePayload(from, to, amt, type, tag, type, symbol);
   await DB.audits.new(payload);
   return payload;
