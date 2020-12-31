@@ -123,13 +123,13 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     return msg.channel.send({ embed });
   }
 
-  const run = await Daily.process();
-  if (run === null) return null;
-
-  if (run === STATUS.onCooldown) {
+  if (!Daily.dailyAvailable) {
     P.remaining = moment.utc(Daily.availableAt).fromNow(true);
     return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P));
   }
+
+  const run = await Daily.process();
+  if (run === null) return null;
 
   // =========================================================================================
   // =========================================================================================
