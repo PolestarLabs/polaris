@@ -113,7 +113,7 @@ const init = async (msg, args) => {
           const audit = await ECO.arbitraryAudit(
             msg.author.id,
             Target.id,
-            1,
+            0,
             `[${CHOSENBOX.id}]`,
             "BOX",
             ">",
