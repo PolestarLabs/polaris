@@ -135,6 +135,7 @@ declare module "eris" {
     displayAvatarURL: string;
     dailing: boolean;
     tag: string;
+    looting?: boolean;
   }
 
   interface Guild {

@@ -85,7 +85,7 @@ declare global {
   export const nope: string;
   export function reload(): void;
   export const invisibar: string;
-  export const Embed: Embed;
+  export const Embed: new (...args: any) => Embed;
   export const RichEmbed: Embed;
   export function weightedRand(wArr: number[]): number;
   export function randomize(min: number, max: number, seed?: number): number;
