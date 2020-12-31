@@ -83,7 +83,7 @@ const init = async (msg) => {
 
   const Daily = await new DailyCmd("daily", { day: DAY, expiration: EXPIRE, streak: true }).loadUser(msg.author);
 
-  if (msg.args.includes("status") || msg.args.includes("stats")) {
+  if (["status", "stats"].includes(msg.args[0].toLowerCase())) {
     const { userDaily, dailyAvailable, keepStreak } = Daily;
     const { streak, insured, last } = userDaily;
 
