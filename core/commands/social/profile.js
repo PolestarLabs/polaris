@@ -474,16 +474,15 @@ const init = async (msg) => {
       } else if (valid_medals === 2) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y + 100;
-        await Promise.all([
+        Promise.all([
           img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
-        ]);
       
       } else if (valid_medals === 3) {
         const x = XYZ.medals.X;
         const x1 = XYZ.medals.X + (200 / 2 - 50);
         const y = XYZ.medals.Y;
-        await Promise.all([
+        Promise.all([
           img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x1, y, 100, 100)),
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
           img.medals[valid[2]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
@@ -492,7 +491,7 @@ const init = async (msg) => {
       } else if (valid_medals === 4) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y;
-        await Promise.all([
+        Promise.all([
           img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
           img.medals[valid[2]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
@@ -505,7 +504,7 @@ const init = async (msg) => {
         let ind = 0;
         let row = 0;
         
-        Promise.all(img.medals.map((x) => x.canvas)).then((medalie) => {
+        await Promise.all(img.medals.map((x) => x.canvas)).then((medalie) => {
           while (ind < 8) {
             let col = 0;
             while (col < 3) {
