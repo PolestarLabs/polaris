@@ -137,6 +137,8 @@ const TEXT = {
 };
 
 const { performance } = require("perf_hooks");
+const { Canvas, Image } = require("canvas");
+const { Message } = require("eris");
 
 init = async (msg) => {
   msg.runtime_internal = performance.now();
@@ -189,6 +191,7 @@ init = async (msg) => {
   const PFLD = Target_Database.switches?.profiled || false;
 
   // Strictly accepts UDBData and DiscordUser/DiscordMember
+  /** @type {any} */
   const USERPROFILE = new UserProfileModel(Target_Database, Target);
 
   console.log({ USERPROFILE });
@@ -203,7 +206,31 @@ init = async (msg) => {
     //                            Gather Images
     //= ========================================
 
-    let img = {};
+    // TODO[epic=bsian] help why doesn't wifeAvatar and wifeHeart show up?
+    /** 
+     * @typedef img
+     * @property {string} wifeAvatar
+     * @property {Promise<Canvas|Image>} sidebar
+     * @property {Promise<Canvas|Image>} ranks
+     * @property {Promise<Canvas|Image>} defaultAvi
+     * @property {Promise<Canvas|Image>} mainframe
+     * @property {Promise<Canvas|Image>} background
+     * @property {Promise<Canvas|Image>} flair
+     * @property {Promise<Canvas|Image>} sticker
+     * @property {Promise<Canvas|Image>} flag
+     * @property {Promise<Canvas|Image>} aviFrame
+     * @property {Promise<Canvas|Image>} medals
+     * @property {Promise<Canvas|Image>} iconRubine
+     * @property {Promise<Canvas|Image>} iconSapphire
+     * @property {Promise<Canvas|Image>} global_roundel
+     * @property {Promise<Canvas|Image>} hex_frame
+     * @property {Promise<Canvas|Image|null>|undefined} wifeAvatar
+     * @property {Promise<Canvas|Image|null>|undefined} wifeHeart
+     * @property {Promise<Canvas|Image>} hex_pic
+    */
+
+    
+    let img /** @type {img} */ = {};
     img.sidebar = Picto.getCanvas(`${paths.CDN}/build/profile/sidebar.png`);
     img.ranks = Picto.getCanvas(`${paths.CDN}/build/profile/global-server-tag.png`);
     img.defaultAvi = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
@@ -236,7 +263,9 @@ init = async (msg) => {
     //                      Gather Graphic Text
     //= =========================================
 
+    /** @type {any} */
     let txt = {};
+    /** @type {keyof TEXT} */
     let txt_type;
 
     txt_type = "NAME";
@@ -271,10 +300,10 @@ init = async (msg) => {
 
     const REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff");
 
-    const isMarried = USERPROFILE.marriage && USERPROFILE.wife;
-    if (isMarried) {
+    const isMarried = (USERPROFILE.marriage && USERPROFILE.wife);
+    if (isMarried) { // @ts-expect-error NOTE tsc
       img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar).catch((err) => null);
-      // img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
+      // img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png") // @ts-expect-error NOTE tsc
       img.wifeHeart = Picto.getCanvas(`${paths.CDN}/build/items/ring_${USERPROFILE.wife.ring}.png`);
     }
     if (isMarried) {
@@ -335,6 +364,7 @@ init = async (msg) => {
         ctx.shadowColor = "rgba(30,30,30,.13)";
         ctx.save();
 
+        // @ts-expect-error NOTE tsc
         await img.wifeHeart.then((IMG) => ctx.drawImage(IMG, wR.X + 6, wR.Y + 6, 55, 55));
 
         try {
@@ -392,38 +422,40 @@ init = async (msg) => {
     });
 
     if (USERPROFILE.medalsArrangement && USERPROFILE.medalsArrangement.valid.length > 0) {
-      valid_medals = USERPROFILE.medalsArrangement.style;
-      valid = USERPROFILE.medalsArrangement.valid;
+      /** @type {any} */
+      const valid_medals = USERPROFILE.medalsArrangement.style;
+      /** @type {any} */
+      const valid = USERPROFILE.medalsArrangement.valid;
 
       if (valid_medals === 1) {
         const x = XYZ.medals.X + (150 / 2 - 50);
         const y = XYZ.medals.Y + (150 / 2 - 50);
 
-        img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x, y, 150, 150));
+        img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 150, 150));
       } else if (valid_medals === 2) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y + 100;
         await Promise.all([
-          img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
-          img.medals[valid[1]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
+          img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
+          img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
         ]);
       } else if (valid_medals === 3) {
         const x = XYZ.medals.X;
         const x1 = XYZ.medals.X + (200 / 2 - 50);
         const y = XYZ.medals.Y;
         await Promise.all([
-          img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x1, y, 100, 100)),
-          img.medals[valid[1]].canvas.then((IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
-          img.medals[valid[2]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
+          img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x1, y, 100, 100)),
+          img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
+          img.medals[valid[2]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
         ]);
       } else if (valid_medals === 4) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y;
         await Promise.all([
-          img.medals[valid[0]].canvas.then((IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
-          img.medals[valid[1]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
-          img.medals[valid[2]].canvas.then((IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
-          img.medals[valid[3]].canvas.then((IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
+          img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
+          img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
+          img.medals[valid[2]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
+          img.medals[valid[3]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
         ]);
       } else {
         const x = XYZ.medals.X;
@@ -474,7 +506,7 @@ init = async (msg) => {
     //= ====================================================
 
     if (isMarried) {
-      ["wifeName", "lovepoints", "wifeSince"].forEach((z) => {
+      ["wifeName", "lovepoints", "wifeSince"].forEach((/** @type {keyof XYZ} */ z) => {
         Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y, XYZ[z].W, XYZ[z].A);
       });
       if (!Target.bot) ctx.drawImage(await img.ranks, XYZ.ranks.X, XYZ.ranks.Y); // 513 265
@@ -649,7 +681,7 @@ module.exports = {
   cool: 800,
 };
 
-async function FINALIZE(msg, canvas) {
+async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas) {
   setImmediate(async () => {
     const buff = canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
 
