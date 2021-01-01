@@ -48,8 +48,11 @@ class UserProfileModel {
   }
 
   get globalRank() {
-    return DB.users
-      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec();
+    return  DB.users
+      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res=>{
+        this.rank = res;
+      });
+
   }
 
   get localData() {
@@ -79,7 +82,7 @@ class UserProfileModel {
         if (!wifeID) return resolve(null);
         const discordWife = PLX.users.get(wifeID)
           || (await PLX.resolveUser(wifeID))
-          || { username: "Unknown", avatar: PLX.users.get(userID).defaultAvatarURL };
+          || { username: "Unknown", avatar: PLX.users.get(this.ID).defaultAvatarURL };
 
         this.wife = {
           ring: marriage.ring,
