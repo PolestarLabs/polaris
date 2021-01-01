@@ -36,7 +36,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message>;
     createEmbed(embed: EmbedOptions): Promise<Message>;
     sendEmbed(embed: EmbedOptions): Promise<Message>;
-    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message>;
   }
   interface GuildTextable {
     awaitMessages(filter: (m: Message<GuildTextableChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<GuildTextableChannel>[]>;
@@ -44,7 +44,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<GuildTextableChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<GuildTextableChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<GuildTextableChannel>>;
-    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<GuildTextableChannel>>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<GuildTextableChannel>>;
   }
   interface PrivateChannel {
     awaitMessages(filter: (m: Message<PrivateChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<PrivateChannel>[]>;
@@ -52,7 +52,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<PrivateChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
-    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
   }
   interface TextChannel {
     awaitMessages(filter: (m: Message<TextChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<TextChannel>[]>;
@@ -60,7 +60,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<TextChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<TextChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<TextChannel>>;
-    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<TextChannel>>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<TextChannel>>;
   }
   interface NewsChannel {
     awaitMessages(filter: (m: Message<NewsChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<NewsChannel>[]>;
@@ -68,7 +68,7 @@ declare module "eris" {
     sendCode(code: string, language: string): Promise<Message<NewsChannel>>;
     createEmbed(embed: EmbedOptions): Promise<Message<NewsChannel>>;
     sendEmbed(embed: EmbedOptions): Promise<Message<NewsChannel>>;
-    send(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<NewsChannel>>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<NewsChannel>>;
   }
 
   interface Client {
@@ -135,6 +135,7 @@ declare module "eris" {
     displayAvatarURL: string;
     dailing: boolean;
     tag: string;
+    looting?: boolean;
   }
 
   interface Guild {

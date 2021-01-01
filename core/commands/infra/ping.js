@@ -3,6 +3,7 @@
 const Gal = require("../../structures/Galleries");
 
 const init = async (msg) => {
+  // FIXME[epic=anyone] This could be negative if clocks are out of sync
   const ack   = Date.now() - msg.timestamp;
 
   const embed = {};
