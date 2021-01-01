@@ -179,7 +179,7 @@ const registerOne = (folder, _cmd) => {
       });
     }
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
-    return null;
+    return {pass: true, cmd: _cmd, hidden: !commandFile.pub};
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
     hook.error(`
@@ -191,7 +191,7 @@ ${e.stack.slice(0, 1900)}
     `, { hook: errorsHook });
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
     // console.error("\r                                " + e.message.red)
-    return null;
+    return {pass: false, cmd: _cmd};
   }
 };
 const registerCommands = (rel) => {
@@ -199,10 +199,28 @@ const registerCommands = (rel) => {
     Object.keys(PLX.commands).forEach((cmd) => PLX.unregisterCommand(cmd));
   }
   readdirAsync("./core/commands").then((modules) => {
-    modules.forEach(async (folder) => {
-      const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
-      commands.forEach((_cmd) => registerOne(folder, _cmd));
-    });
+    let results = [];
+    Promise.all(
+      modules.map(async (folder) => {
+        const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
+        results = results.concat( commands.map((_cmd) => registerOne(folder, _cmd)).filter(x=>!!x) );
+        console.log({folder},{results})
+      })
+    ).then(res => {
+      console.log({res,results})
+      hook.info(`
+      **Commands Reloaded**
+${_emoji('yep') } **${      results.length }** / ${ results.filter(_=>!!_.pass).length } commands registered.
+${_emoji('maybe')} *(${      results.filter(_=>_.hidden).length } hidden)*
+${_emoji('nope')} ${      results.filter(_=>!_.pass).length } commands failed.
+${      results.filter(_=>!_.pass).length ?
+`
+\`\`\`js
+${      results.filter(_=>!_.pass).map(c=> " • " + c.cmd).join('\n') }
+\`\`\`
+` : ""
+}  `);
+    })
   });
 };
 
