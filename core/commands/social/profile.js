@@ -477,7 +477,7 @@ const init = async (msg) => {
         Promise.all([
           img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
-      
+        ]);
       } else if (valid_medals === 3) {
         const x = XYZ.medals.X;
         const x1 = XYZ.medals.X + (200 / 2 - 50);
