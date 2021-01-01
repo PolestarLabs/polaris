@@ -744,7 +744,10 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
       
       if (msg.content.includes("-ni")) noimg = true;
       messageToSend += msg.content.includes('-bm') ?  `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";      
-      msg.channel.createMessage(messageToSend, noimg ? null : {file: buff,name: "profile.png"});
+      msg.channel.createMessage(messageToSend, noimg ? undefined : {
+        file: buff,
+        name: "profile.png",
+      });
       
     } ,"image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
     
