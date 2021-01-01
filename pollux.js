@@ -1,3 +1,4 @@
+process.env.UV_THREADPOOL_SIZE = 64;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
 

@@ -28,18 +28,19 @@ class Animation extends EventEmitter {
   }
 
   async generate(fun) {
-    let framesDone = 0;
     let frameNumber = 0;
+    renderedFrames = [];
     // Array(this.lastFrame).fill(null).forEach(async (n, frameNumber) => {
-    while (frameNumber < this.lastFrame) {
-      (async () => {
-        const frame = fun(frameNumber);
-        this.gif.addFrame(frame.getImageData(0, 0, this.options.w, this.options.h).data);
-        framesDone += 1;
-        if (framesDone === this.lastFrame) this.gif.finish();
-      })();
-      frameNumber += 1;
-    }
+    
+    Array(this.lastFrame-1).fill(" ").map((_,frame)=>{
+      const frame = fun(frameNumber);
+      renderedFrames.push(frame);
+    });
+    renderedFrames.forEach(frame=>{
+      this.gif.addFrame(frame.getImageData(0, 0, this.options.w, this.options.h).data);
+    });
+
+    this.gif.finish();
     // });
   }
 }

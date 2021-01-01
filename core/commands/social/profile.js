@@ -1,3 +1,4 @@
+
 const UserProfileModel = require("../../archetypes/UserProfileModel");
 // const gear = require('../../utilities/Gearbox.js');
 const Picto = require("../../utilities/Picto.js");
@@ -140,12 +141,14 @@ const { performance } = require("perf_hooks");
 const { Canvas, Image } = require("canvas");
 const { Message } = require("eris");
 
-init = async (msg) => {
+
+const init = async (msg) => {
   msg.runtime_internal = performance.now();
 
   const startimer = Date.now();
 
-  _benchmark = (s) => {
+  
+  const _benchmark = (s) => {
     console.log(`${s.blue + (Date.now() - startimer)}ms`);
   };
 
@@ -160,6 +163,7 @@ init = async (msg) => {
         $set: {
           "switches.profileFrame": true,
         },
+      
       }).then((x) => null); // msg.addReaction(':switchon:343511231434588161'));
     }
 
@@ -168,6 +172,7 @@ init = async (msg) => {
         $set: {
           "switches.profileFrame": false,
         },
+      
       }).then((x) => null); // msg.addReaction(':switchoff:343511248085843968'));
     }
 
@@ -182,6 +187,7 @@ init = async (msg) => {
   }
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
+  
   const Target = ((await (PLX.resolveMember(msg.guild, msg.args[0]).catch((e) => null)) || (await PLX.resolveUser(msg.args[0]).catch((e) => console.error(e))))) || msg.member;
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
@@ -241,10 +247,12 @@ init = async (msg) => {
       }.png`)
       : Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
 
+    
     img.flair = Picto.getCanvas(`${paths.CDN}/flairs/${Target.bot ? "bot" : USERPROFILE.flair}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`));
     img.sticker = USERPROFILE.sticker && Picto.getCanvas(`${paths.CDN}/stickers/${USERPROFILE.sticker}.png`);
     img.flag = USERPROFILE.countryFlag && Picto.getCanvas(`${paths.CDN}/build/flags/${USERPROFILE.countryFlag}.png`);
     img.aviFrame = USERPROFILE.profileFrame && Picto.getCanvas(`${paths.CDN}/build/profile/frames/${USERPROFILE.profileFrame}.png`);
+    
     img.medals = USERPROFILE.medals.map((mdl) => new Object({
       canvas: Picto.getCanvas(`${paths.CDN}/medals/${mdl}.png`),
       index: USERPROFILE.medals.indexOf(mdl),
@@ -269,35 +277,48 @@ init = async (msg) => {
     let txt_type;
 
     txt_type = "NAME";
+    
+    // @ts-ignore
     txt.name = await Picto.tagMoji(ctx, USERPROFILE.localName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
     txt_type = "TAGLINE";
+    
     txt.tagline = Picto.tag(ctx, USERPROFILE.tagline, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
     txt_type = "PERSOTEX";
     txt.persotex = Picto.block(
       ctx, USERPROFILE.personalText,
+      
       `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,
+      
       TEXT[txt_type].COLOR,
       XYZ.persotex.W, XYZ.persotex.H, { lineHeight: "20px", paddingY: 5 }, // 255, 70
     );
 
     txt_type = "RUBINES";
+    
     txt.rubines = Picto.tag(ctx, miliarize(USERPROFILE.rubines), `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
+    
     txt.sapphires = Picto.tag(ctx, miliarize(USERPROFILE.sapphires), `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
     txt_type = "RANKS";
 
     const [, gRank] = await Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData]);
 
+    
     USERPROFILE.rank = gRank + 1;
+    
     txt.globalRank = Picto.tag(ctx, `#${miliarize(USERPROFILE.rank || 1)}`, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
+    
     txt.localRank = Picto.tag(ctx, `#${miliarize(USERPROFILE.localRank || 1)}`, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
     txt_type = "SIDEBAR";
+    
     txt.commend = Picto.tag(ctx, USERPROFILE.commend, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
+    
     txt.thx = Picto.tag(ctx, USERPROFILE.thx, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
+    
     const REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff");
 
     const isMarried = (USERPROFILE.marriage && USERPROFILE.wife);
@@ -308,10 +329,13 @@ init = async (msg) => {
     }
     if (isMarried) {
       txt_type = "WIFENAME";
+      
       txt.wifeName = Picto.tag(ctx, USERPROFILE.wife.wifeName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
       txt_type = "WIFESMALL";
+      
       txt.lovepoints = Picto.tag(ctx, `${USERPROFILE.wife.lovepoints} LVP`, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
+      
       txt.wifeSince = Picto.tag(ctx, USERPROFILE.wife.since, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
     }
 
@@ -332,6 +356,7 @@ init = async (msg) => {
         const rad = {
           tl: 0, tr: 30, br: 0, bl: 0,
         };
+        
         Picto.roundRect(ctx, XYZ.background.X, XYZ.background.Y, XYZ.background.W, XYZ.background.H, rad, IMG);
         ctx.drawImage(mainframe, 0, 0);
         return resolveBack(canvas);
@@ -343,14 +368,19 @@ init = async (msg) => {
       if (USERPROFILE.sticker) sticker = img.sticker;
       if (isMarried) {
         ctx.lineWidth = 2;
+        
         const picDiameter = 26;
         const rectFill = COLORS.wifeFill;
 
         const WIFE = USERPROFILE.wife;
         let ringTierColor = "white";
+        
         if (WIFE.ring === "stardust") ringTierColor = "#2d6fe8";
+        
         if (WIFE.ring === "sapphire") ringTierColor = "#DaA905";
+        
         if (WIFE.ring === "rubine") ringTierColor = "#DaA905";
+        
         if (WIFE.ring === "jade") ringTierColor = "#7888a7";
 
         ctx.shadowBlur = 25;
@@ -358,6 +388,7 @@ init = async (msg) => {
 
         const wR = XYZ.wifeRect;
 
+        
         Picto.roundRect(ctx, wR.X, wR.Y, wR.W, wR.H, wR.R, rectFill, ringTierColor);
 
         ctx.shadowBlur = 0;
@@ -368,8 +399,10 @@ init = async (msg) => {
         await img.wifeHeart.then((IMG) => ctx.drawImage(IMG, wR.X + 6, wR.Y + 6, 55, 55));
 
         try {
+          
           Picto.roundRect(ctx, wR.X + wR.W - wR.H + 3, wR.Y + 3, wR.H - 8, wR.H - 8, wR.H / 2, (await img.wifeAvatar));
         } catch (e) {
+          
           Picto.roundRect(ctx, wR.X + wR.W - wR.H + 3, wR.Y + 3, wR.H - 8, wR.H - 8, wR.H / 2, (await img.defaultAvi));
         }
         ctx.restore();
@@ -380,6 +413,7 @@ init = async (msg) => {
         ctx.globalCompositeOperation = "destination-over";
         ctx.drawImage(array[0], 0, 0);
         ctx.globalCompositeOperation = "source-over";
+        
         array = null;
         return resolveAll(canvas);
       });
@@ -396,8 +430,10 @@ init = async (msg) => {
           ctx.drawImage(txt.sapphires.item, XYZ.sapphires.X - txt.sapphires.width - txt.rubines.width - 50, XYZ.sapphires.Y + 3);
 
           z = "global_roundel";
+          
           const [imgRND, imgSPH, imgRBN] = await Promise.all([img[z], img.iconSapphire, img.iconRubine]);
 
+          
           ctx.drawImage(imgRND, XYZ[z].X, XYZ[z].Y),
           ctx.drawImage(imgSPH, XYZ.sapphires.X + 5 - txt.rubines.width - 50, XYZ.sapphires.Y - 2, 37, 37),
           ctx.drawImage(imgRBN, XYZ.rubines.X + 5, XYZ.rubines.Y - 5, 37, 37);
@@ -408,6 +444,7 @@ init = async (msg) => {
       })();
 
       if (USERPROFILE.countryFlag) {
+        
         img.flag.then((flaggie) => {
           ctx.shadowBlur = 5;
           ctx.shadowColor = "rgba(30,30,38,.3)";
@@ -416,6 +453,7 @@ init = async (msg) => {
         });
       }
 
+      
       await Promise.all([rubine_n_roundel, flair]).then((arr) => {
         resolveAll(canvas);
       });
@@ -427,6 +465,7 @@ init = async (msg) => {
       /** @type {any} */
       const valid = USERPROFILE.medalsArrangement.valid;
 
+      
       if (valid_medals === 1) {
         const x = XYZ.medals.X + (150 / 2 - 50);
         const y = XYZ.medals.Y + (150 / 2 - 50);
@@ -439,6 +478,7 @@ init = async (msg) => {
           img.medals[valid[0]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y, 100, 100)),
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y, 100, 100)),
         ]);
+      
       } else if (valid_medals === 3) {
         const x = XYZ.medals.X;
         const x1 = XYZ.medals.X + (200 / 2 - 50);
@@ -448,6 +488,7 @@ init = async (msg) => {
           img.medals[valid[1]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x, y + 100, 100, 100)),
           img.medals[valid[2]].canvas.then((/** @type {Canvas|Image} */ IMG) => ctx.drawImage(IMG, x + 100, y + 100, 100, 100)),
         ]);
+      
       } else if (valid_medals === 4) {
         const x = XYZ.medals.X;
         const y = XYZ.medals.Y;
@@ -463,6 +504,7 @@ init = async (msg) => {
 
         let ind = 0;
         let row = 0;
+        
         Promise.all(img.medals.map((x) => x.canvas)).then((medalie) => {
           while (ind < 8) {
             let col = 0;
@@ -484,6 +526,7 @@ init = async (msg) => {
     const cx = colorstrap.getContext("2d");
 
     cx.fillStyle = USERPROFILE.favColor;
+    
     Picto.roundRect(cx, 0, 0, 80, 643, 10, cx.fillStyle, false);
     cx.globalAlpha = 0.9;
     cx.globalCompositeOperation = "destination-atop";
@@ -529,6 +572,7 @@ init = async (msg) => {
             const r = data[i];
             const g = data[i + 1];
             const b = data[i + 2];
+            
             const y = 0.299 * r + 0.587 * g + 0.114 * b;
             data[i] = 255;
             data[i + 1] = 255;
@@ -547,16 +591,19 @@ init = async (msg) => {
           ctx.globalCompositeOperation = "source-over";
           // ctx.filter =  'none'
         } else {
+          
           Picto.setAndDraw(ctx, txt[z], XYZ[z].X, XYZ[z].Y + (z.includes("Rank") && !isMarried ? 80 : 0), XYZ[z].W, XYZ[z].A);
         }
       }
     });
 
     ["persotex"].forEach((z) => {
+      
       ctx.drawImage(txt[z].item, XYZ[z].X, XYZ[z].Y);// XYZ[z].W,  XYZ[z].A )
     });
 
     z = "commend";
+    
     Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
 
     if (!Target.bot) {
@@ -632,10 +679,12 @@ init = async (msg) => {
           console.error(e);
         }
 
+        
         img = null;
+        
         txt = null;
         Target_Database = null;
-
+        
         FINALIZE(msg, canvas);
       });
     });
@@ -675,6 +724,7 @@ module.exports = {
   pub: true,
   cmd: "profile",
   perms: 3,
+  
   init,
   cat: "social",
   aliases: ["ppc", "perfil"],
@@ -687,12 +737,21 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
 
     let messageToSend = "";
     let noimg = false;
-    if (msg.content.includes("-ni")) noimg = true;
-    if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
+    let preBuffer = performance.now();
 
-    await msg.channel.createMessage(messageToSend, noimg ? null : {
-      file: buff,
-      name: "profile.png",
-    });
-  });
+    
+    canvas.toBuffer( (err,buff) => {
+      if (err) throw err;
+      let postBuffer = performance.now() - preBuffer;
+      
+      if (msg.content.includes("-ni")) noimg = true;
+      messageToSend += msg.content.includes('-bm') ?  `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";      
+      msg.channel.createMessage(messageToSend, noimg ? null : {
+        file: buff,
+        name: "profile.png",
+      });
+      
+    } ,"image/png", { compressionLevel: 1, filters: canvas.PNG_FILTERS_NONE });
+    
+    if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
 }
