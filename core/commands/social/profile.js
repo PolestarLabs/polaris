@@ -731,7 +731,6 @@ module.exports = {
 };
 
 async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas) {
-  setImmediate(async () => {
     const buff = canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
 
     let messageToSend = "";
@@ -745,12 +744,9 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
       
       if (msg.content.includes("-ni")) noimg = true;
       messageToSend += msg.content.includes('-bm') ?  `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";      
-      msg.channel.createMessage(messageToSend, noimg ? null : {
-        file: buff,
-        name: "profile.png",
-      });
+      msg.channel.createMessage(messageToSend, noimg ? null : {file: buff,name: "profile.png"});
       
-    } ,"image/png", { compressionLevel: 1, filters: canvas.PNG_FILTERS_NONE });
+    } ,"image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
     
     if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
 }
