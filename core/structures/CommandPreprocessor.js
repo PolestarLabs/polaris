@@ -210,7 +210,7 @@ const registerCommands = (rel) => {
       console.log({res,results})
       hook.info(`
       **Commands Reloaded**
-${_emoji('yep') } **${      results.length }** / ${ results.filter(_=>!!_.pass).length } commands registered.
+${_emoji('yep') } **${     results.filter(_=>!!_.pass).length  }** / ${  results.length } commands registered.
 ${_emoji('maybe')} *(${      results.filter(_=>_.hidden).length } hidden)*
 ${_emoji('nope')} ${      results.filter(_=>!_.pass).length } commands failed.
 ${      results.filter(_=>!_.pass).length ?
