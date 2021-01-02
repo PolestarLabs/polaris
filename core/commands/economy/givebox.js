@@ -1,5 +1,5 @@
 const moment = require("moment");
-const { DailyCmd } = require("@polestar/timed-usage");
+const { TimedUsage } = require("@polestar/timed-usage");
 const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
 
@@ -18,7 +18,7 @@ const init = async (msg, args) => {
     next: $t("responses.transfer.next", P),
   };
 
-  const Daily = await new DailyCmd("transfer_box", { day }).loadUser(msg.author);
+  const Daily = await new TimedUsage("transfer_box", { day }).loadUser(msg.author);
 
   if (["status", "stats"].includes(args[0].toLowerCase())) {
     const { dailyAvailable, userDaily: { last } } = Daily;
