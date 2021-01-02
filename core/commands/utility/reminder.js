@@ -101,6 +101,7 @@ const init = async (msg, args) => {
 
   const timestamp = chronoResult[0].start.date();
   if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
+  if (timestamp.getTime() < from.getTime() + 60e3) return $t("interface.reminders.errorTooShort")
 
   await DB.feed.new({
     url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
