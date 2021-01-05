@@ -119,9 +119,10 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
+ * @param {object} fields An object with custom fields (does not override existing)
  * @return {Transaction} The payload generated.
  */
-function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
+function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
   if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
   if (typeof userFrom === "object") userFrom = userFrom["id"];
   if (typeof userTo === "object") userTo = userTo["id"];
@@ -137,7 +138,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol) {
     transactionId: `${curr}${now.toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
-  return payload;
+  return { ...fields, ...payload };
 }
 
 /**
@@ -254,11 +255,12 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
+ * @param {object} fields An object with custom fields (does not override existing)
  * @returns {Promise<Transaction>} The payload or null if missing args.
  */
-async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!") {
+async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!", fields = {}) {
   if (!from || !to) throw new Error("Missing arguments");
-  const payload = generatePayload(from, to, amt, type, tag, type, symbol);
+  const payload = generatePayload(from, to, amt, type, tag, type, symbol, fields);
   await DB.audits.new(payload);
   return payload;
 }
