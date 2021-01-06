@@ -2,7 +2,6 @@ const cfg = require(`${appRoot}/config.json`);
 const axios = require("axios");
 
 
-
 /**
  * @typedef TwitchData
  * @property {string} last.type
@@ -16,6 +15,11 @@ const axios = require("axios");
  */
 
 /**  @typedef {import("./").Feed & Twitch} TwitchFeed */
+
+// TODO update display_name etc upon checks
+// TODO fix axios (take function from twitchalert and put in utilities to share)
+// LINK https://dev.twitch.tv/docs/api/reference#get-users
+// LINK https://dev.twitch.tv/docs/api/reference#get-streams
 
 exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
   // @ts-expect-error axios
