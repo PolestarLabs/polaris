@@ -25,7 +25,8 @@ const channelREGEXP = /<#(\d+)>/;
 
 
 async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
-    const P = { lngs: msg.lang, prefix: msg.prefix, command: msg.cmd };
+    // @ts-ignore
+    const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
 
     /** @type {import("../../subroutines/feeds/twitch").TwitchFeed[]} */
     const feedData = await DB.feed.find({ server: msg.guild.id, type: "twitch" })
