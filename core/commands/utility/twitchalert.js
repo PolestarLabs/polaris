@@ -38,7 +38,7 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
             if (!textchannel) return msg.channel.send($t("interface.feed.noDefault", P));
             if (feedData.length >= 2) return msg.channel.send($t("interface.feed.feedLimitTwitch", P));
 
-            
+            break;
         case "delete":
         case "remove":
             if (!textchannel) return msg.channel.send($t("interface.feed.feedLimitTwitch", P));
@@ -69,6 +69,7 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
                 // TODO add deletion message 
             });
 
+            break;
         case "list": 
             if (feedData.length === 0) return msg.channel.send($t("interface.feed.noTwitch", P));
             
@@ -84,6 +85,8 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
                     value: `${$t("terms.discord.channel", P)}: <#${data.channel}>`
                 })),
             });
+            
+            break;
     }
 };
 
