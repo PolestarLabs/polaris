@@ -42,7 +42,8 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
             break;
         case "delete":
         case "remove":
-            if (!twitchchannel && !id) return msg.channel.send($t("interface.feed.stateIDorURL", P));
+            if (feedData.length === 0) return msg.channel.send($t("interface.feed.noTwitch", P));
+            if (!twitchchannel && typeof id !== "number") return msg.channel.send($t("interface.feed.stateIDorURL", P));
 
             // @ts-ignore
             let todelete = feedData[id];
@@ -90,7 +91,7 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
     }
 };
 
-/** @returns {Promise<[string?, TwitchUserData?, TextChannel?, string?]>} */
+/** @returns {Promise<[string?, TwitchUserData?, TextChannel?, number?]>} */
 async function parseArgs(/** @type {string[]} */ args, /** @type {import("../../subroutines/feeds/twitch").TwitchFeed[]} */ data) {
     let intent, twitch, channel, id;
 
@@ -100,8 +101,8 @@ async function parseArgs(/** @type {string[]} */ args, /** @type {import("../../
         if (intents.includes(arg)) intent = arg;
 
         // @ts-ignore - this isn't even correct from ts...
-        else if ((!channel || !id) && (parseInt(arg) || (channelREGEXP.test(arg) && (arg = arg.match(channelREGEXP)[1])))) {
-            if (arg.length < 2 && !id) id = arg; // NOTE if limit >= 10 this needs updating.
+        else if ((!channel || typeof id !== "number") && (parseInt(arg) !== NaN || (channelREGEXP.test(arg) && (arg = arg.match(channelREGEXP)[1])))) {
+            if (arg.length < 2 && typeof id !== "number") id = parseInt(arg); // NOTE if limit >= 10 this needs updating.
             if (!(channel = PLX.getChannel(arg)) && !twitch) twitch = await getStreamer(arg); 
         }
 
