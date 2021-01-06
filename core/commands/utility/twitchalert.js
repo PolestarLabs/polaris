@@ -41,7 +41,6 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
             break;
         case "delete":
         case "remove":
-            if (!textchannel) return msg.channel.send($t("interface.feed.feedLimitTwitch", P));
             if (!twitchchannel && !id) return msg.channel.send($t("interface.feed.stateIDorURL", P));
 
             // @ts-ignore
@@ -85,7 +84,7 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
                     value: `${$t("terms.discord.channel", P)}: <#${data.channel}>`
                 })),
             });
-            
+
             break;
     }
 };
