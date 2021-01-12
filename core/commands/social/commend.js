@@ -75,19 +75,16 @@ const init = async function (msg) {
 const info = async (msg, args) => {
   const Target = await PLX.getTarget(args[0] || msg.author, msg.guild);
 
-  const [targetData, targetDataC] = await Promise.all([
-    (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
-    ((await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] }),
-  ]);
+  const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
-  const metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
-  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id)?.meta?.tag || `<@${u.id}>`, amt: u.count })).sort((c1, c2) => c2.amt - c1.amt);
+  const metas = await DB.users.find({ id: { $in: targetData.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
+  const commendT3 = targetData.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id)?.meta?.tag || `<@${u.id}>`, amt: u.count })).sort((c1, c2) => c2.amt - c1.amt);
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(
       `__**Commend Info for ${Target.mention}**__\
-      \n\u2003 Total Commends Received: **${targetDataC.totalIn || 0}**\
-      \n\u2003 Total Commends Given: **${targetDataC.totalOut || 0}**\
+      \n\u2003 Total Commends Received: **${targetData.totalIn || 0}**\
+      \n\u2003 Total Commends Given: **${targetData.totalOut || 0}**\
     ${commendT3.length == 0 ? ""
     : `\n\n__**Top Commenders**__\
       \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
