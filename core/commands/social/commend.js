@@ -8,8 +8,7 @@ const init = async function (msg) {
   if (!Target) Target = msg.author;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
-  const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
-  const targetDataC = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
+  const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
@@ -32,8 +31,8 @@ const init = async function (msg) {
 
     P.target = Target.nick || (Target.user || Target).username;
     P.author = msg.member.nick || msg.author.username;
-    P.cmcount = (targetData.modules.commend + 1) || 0;
-    P.pplcount = targetDataC.whoIn.length;
+    P.cmcount = (targetData.totalIn + 1) || 0;
+    P.pplcount = targetData.whoIn.length + 1;
 
     const embed = new Embed()
       .thumbnail("https://pollux.fun/build/rank.png")
