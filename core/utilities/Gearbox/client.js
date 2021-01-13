@@ -14,6 +14,7 @@ module.exports = {
         if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
         const userObject = PLX.users.find((u) => u.id === ID) || (await PLX.getRESTUser(ID));
         if (!userObject) return Promise.reject("USER NOT FOUND");
+        PLX.users.set(userObject.id,userObject);
         return Promise.resolve(userObject);
       }
     } else {
