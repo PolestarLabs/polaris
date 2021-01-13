@@ -300,7 +300,7 @@ const init = async (msg) => {
 
     txt_type = "RANKS";
 
-    const [, gRank] = await Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData]);
+    const [, gRank] = await Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData, USERPROFILE.commends]);
 
     
     USERPROFILE.rank = gRank + 1;
