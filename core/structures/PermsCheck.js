@@ -2,7 +2,7 @@
 // const $t = i18node.getT();
 
 exports.run = function run(cat, msg, perms) {
-  if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) {
+  if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages") || !msg.channel.permissionsOf(PLX.user.id).has("readMessageHistory") ) {
     return "error";// 'error chan permis catchcheck'
   }
 
