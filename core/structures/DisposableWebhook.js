@@ -1,25 +1,28 @@
-const i2b64 = Promise.promisify( (require("imageurl-base64")) );
-class DisposableHook{
+const i2b64 = Promise.promisify((require("imageurl-base64")));
 
-    constructor(msg,name,avatar,info){
-        this.hook = i2b64(avatar).then(b64=>PLX.createChannelWebhook(msg.channel.id, {name,avatar:b64.dataUri}, (info.reason || info)).catch(e=>{msg.channel.send('Cannot Create Webhooks :(');return null} ) );
-        
-        if(info.once){
-            this.hook.then(hk=> hk ? PLX.executeWebhook(hk.id,hk.token,info.payload).then(m=> this.destroy())  : null );
-        }
-        
-    }
+class DisposableHook {
+  constructor(msg, name, avatar, info) {
+    this.hook = i2b64(avatar).then((b64) => PLX.createChannelWebhook(
+      msg.channel.id,
+      { name, avatar: b64.dataUri },
+      (info.reason || info),
+    ).catch(() => { msg.channel.send("Cannot Create Webhooks :("); return null; }));
 
-    destroy(){
-        this.hook.then(hk=>{
-            console.log(hk)
-            PLX.deleteWebhook(hk.id, hk.token, "Expired");
-        })
+    if (info.once) {
+      this.hook.then((hk) => (hk ? PLX.executeWebhook(hk.id, hk.token, info.payload).then(() => this.destroy()) : null));
     }
+  }
 
-    exec(fun){
-        this.hook.then(hk=>  hk ? fun(hk).then(res=> PLX.executeWebhook(hk.id,hk.token,res).then(_=> this.destroy())) : null );
-    }
+  destroy() {
+    this.hook.then((hk) => {
+      console.log(hk);
+      PLX.deleteWebhook(hk.id, hk.token, "Expired");
+    });
+  }
+
+  exec(fun) {
+    this.hook.then((hk) => (hk ? fun(hk).then((res) => PLX.executeWebhook(hk.id, hk.token, res).then(() => this.destroy())) : null));
+  }
 }
 
 module.exports = DisposableHook;

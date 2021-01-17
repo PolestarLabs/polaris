@@ -268,13 +268,13 @@
         },
         "toggle": {
             "disabledSer": "El modulo **{{module}}** fue deshabilitado **Globalmente**.",
-            "disabledChn": "El modulo {{module}} fue deshabilitado en el canal #{{channel}}",
+            "disabledChn": "El modulo {{module}} fue deshabilitado en el canal <#{{channel}}>",
             "disabledComSer": "El comando **{{command}}** fue deshabilitado **Globalmente**",
-            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal #{{channel}}",
+            "disabledComChn": "El comando **{{command}}** ha sido deshabilitado en el canal <#{{channel}}>",
             "enabledSer": "El modulo **{{module}}** ha sido habilitado **Globalmente**",
-            "enabledChn": "El modulo **{{module}}** ha sido habilitado en el canal #{{channel}}",
+            "enabledChn": "El modulo **{{module}}** ha sido habilitado en el canal <#{{channel}}>",
             "enabledComSer": "El comando **{{command}}** ha sido habilitado **Globalmente**",
-            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal #{{channel}}"
+            "enabledComChn": "El comando **{{command}}** ha sido habilitado en el canal <#{{channel}}>"
         },
         "reput": {
             "noSelf": "No, me niego a que te des rep a ti mismo.",
@@ -360,9 +360,7 @@
             "timeout": "¡Tiempo de Bombardeo Acabado!",
             "completed": "La información del servidor ha sido exitosamente borrada y reiniciada. Intenta usar **+serverinfo** para ver si todo fue reiniciado correctamente. No soy responsable de cualquier contaminación Nuclear."
         },
-        "pleasewait": {
-
-        }
+        "pleasewait": {}
     },
     "games": {
         "flags": {

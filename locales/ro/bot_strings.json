@@ -413,13 +413,13 @@
         },
         "toggle": {
             "disabledSer": "Modulul **{{module}}** a fost dezactivat **Global** .␣",
-            "disabledChn": "Modulul {{module}} a fost dezactivat in canalul #{{channel}}",
+            "disabledChn": "Modulul {{module}} a fost dezactivat in canalul <#{{channel}}>",
             "disabledComSer": "Comanda **{{command}}**a fost dezactivata **Global**",
-            "disabledComChn": "Comanda **{{command}}** a fost dezactivata in canalul #{{channel}}",
+            "disabledComChn": "Comanda **{{command}}** a fost dezactivata in canalul <#{{channel}}>",
             "enabledSer": "Modulul **{{module}}** a fost activat **Global**",
-            "enabledChn": "Modulul {{module}} a fost activat in canalul #{{channel}}",
+            "enabledChn": "Modulul {{module}} a fost activat in canalul <#{{channel}}>",
             "enabledComSer": "Comanda **{{command}}**a fost activata **Global**",
-            "enabledComChn": "Comanda **{{command}}** a fost activata in canalul #{{channel}}"
+            "enabledComChn": "Comanda **{{command}}** a fost activata in canalul <#{{channel}}>"
         },
         "reput": {
             "noSelf": "Hei, desteptule! Nu poti sa iti dai reputatie singur!",
@@ -461,6 +461,7 @@
             "inChan": ""
         },
         "forFun": {
+            "thisShit": "",
             "saltLVL": "{{target}}' Salt Level este de **{{amount}}%** {{emoji}}",
             "booru404": "Oopsie, nu am gasit nimic cu aceste taguri. Verifica daca totul e in regula sweetie!",
             "nsfw404": "Ba, pornul tau e atat de ciudat cu nu ili am gasit nici unde... Incearca sa fii mai putin dus cu capu",
@@ -744,6 +745,18 @@
             "split": "",
             "double": "",
             "pass": "",
+            "surrender": "",
+            "insurance": "",
+            "surrender_res": "",
+            "joker": "",
+            "blackjack_win": "",
+            "blackjack_lose": "",
+            "double_win": "",
+            "double_lose": "",
+            "insurance_lost": "",
+            "insurance_win": "",
+            "surrender_helper": "",
+            "insurance_helper": "",
             "splitbreak": "",
             "switchdeck": "",
             "switchdeckEgg": "",
@@ -783,18 +796,17 @@
             "",
             ""
         ],
+        "duplicate": "",
         "lootPick": "",
         "goesTo": "",
         "congrats": "",
         "opening": "",
         "contains": "",
-        "options": "",
         "keep": "",
         "reroll": "",
         "rerolled": "",
         "noMoreRolls": "",
         "noFunds": "",
-        "rerollRemain": "",
         "addedRubines": "",
         "addedJades": "",
         "addedMedal": "",
@@ -804,7 +816,12 @@
         "morons": "",
         "contesting": "",
         "eventDrop": "",
-        "notThisbox": ""
+        "notThisbox": "",
+        "options_new": "",
+        "rerollRemain_new": "",
+        "rerollRemain_new_plural": "",
+        "hasDupes": "",
+        "allItemsAdded": ""
     },
     "eastereggs": {
         "konodioda": "",

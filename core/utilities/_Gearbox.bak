@@ -27,8 +27,8 @@ module.exports = {
 
     if (!user) {
       user = msg.guild.members.find(mbr =>
-          mbr.username.toLowerCase() == msg.args[argPos].toLowerCase() ||
-          (mbr.nick||"").toLowerCase() == msg.args[argPos].toLowerCase() 
+          mbr.username.toLowerCase() === msg.args[argPos].toLowerCase() ||
+          (mbr.nick||"").toLowerCase() === msg.args[argPos].toLowerCase() 
         ) ||
         msg.guild.members.find(mbr =>
           soft && (mbr.nick && mbr.nick.toLowerCase().includes(msg.args[argPos].toLowerCase()))
@@ -40,7 +40,7 @@ module.exports = {
           soft && mbr.user.tag.toLowerCase().includes(msg.args[argPos].toLowerCase())
         );
  
-      if (!user && self == true) user = msg.author;
+      if (!user && self === true) user = msg.author;
     }
     if(!user) return null;
     DB.users.new(user.user||user);
@@ -55,7 +55,7 @@ module.exports = {
   },
 
   wait: function wait(time){
-      time = typeof time == 'number' ? time : 1000;
+      time = typeof time === 'number' ? time : 1000;
       return new Promise(resolve => {
           setTimeout(() => {
             resolve(true);
@@ -66,7 +66,7 @@ module.exports = {
 
   miliarize: function miliarize(numstring,strict,char="."){
       try{
-        if (typeof numstring == "number"){
+        if (typeof numstring === "number"){
             numstring = numstring.toString() || "0";
         };
         numstring = numstring.split('.')[0]

@@ -1,71 +1,76 @@
+// TRANSLATE[epic=translations] color
+
+const axios = require("axios");
 const Picto = require("../../utilities/Picto");
-const axios = require('axios')
 
-
-const init = async function(msg, programatic) {
-
-
-  let P = { lngs: msg.lang, prefix: msg.prefix };
-  if (
-    PLX.autoHelper(["noargs", $t("helpkey", P)], {
-      cmd: this.cmd,
-      msg,
-      opt: this.cat
-    })
-  )
-    return;
-
-  let hexRegex = /^#?([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
-  let hexColor = (msg.args[0].match(hexRegex) || [])[0];
+const init = async function (msg, programatic) {
+  const hexRegex = /^#?([a-fA-F0-9]{3}([a-fA-F0-9]{3})?)$/;
+  const hexColor = (msg.args[0].match(hexRegex))?.[1];
   let result;
   try {
-    URL = "https://www.thecolorapi.com/id?hex=" + hexColor.replace("#", "")
+    URL = `https://www.thecolorapi.com/id?hex=${hexColor}`;
     const pre_res = (await axios.get(URL, {
-        headers: { 'Accept': 'json' },
-        responseType: 'json'
-    })).data ;
- 
-console.log({pre_res})
-  //  const colors = require("name-this-color");
+      headers: { Accept: "json" },
+      responseType: "json",
+    })).data;
+
+    console.log({ pre_res });
     result = hexColor
-      ? [{title: pre_res.name.value, hex: hexColor, data: pre_res}]
-      : [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+      ? [{ title: pre_res.name.value, hex: hexColor, data: pre_res }]
+      : [{
+        title: "Invalid Color (Defaults to Black)",
+        hex: "#000000",
+        data: {
+          cmyk: {
+            c: 0, m: 0, y: 0, k: 100,
+          },
+          rgb: { r: 0, g: 0, b: 0 },
+        },
+      }];
   } catch (e) {
-    result = [{ title: "Invalid Color (Defaults to Black)", hex: "#000000" }];
+    result = [{
+      title: "Invalid Color (Defaults to Black)",
+      hex: "#000000",
+      data: {
+        cmyk: {
+          c: 0, m: 0, y: 0, k: 100,
+        },
+        rgb: { r: 0, g: 0, b: 0 },
+      },
+    }];
   }
 
-  let embed = new Embed(),
-    Canvas = Picto.new(140, 140),
-    ctx = Canvas.getContext("2d");
+  const embed = {};
+  const Canvas = Picto.new(140, 140);
+  const ctx = Canvas.getContext("2d");
 
   if (result) {
     result = result[0];
-    // let RGB = colors.rgb(result[0])
-    let CMYK = result.data.cmyk
-    let RGB = result.data.rgb
+    const CMYK = result.data.cmyk;
+    const RGB = result.data.rgb;
 
-    embed
-      .author(result.title, "https://img.icons8.com/dusk/250/paint-brush.png")
-      .color(result.hex)
-      .thumbnail("attachment://color.png")
-      .description(`
-      HEX \`${result.hex}\`
+    embed.author = { name: result.title, icon_url: "https://img.icons8.com/dusk/250/paint-brush.png" };
+    embed.color = parseInt(result.hex, 16);
+    embed.thumbnail = { url: "attachment://color.png" };
+    embed.description = `      
+      HEX \`#${result.hex}\`
       RGB \`${RGB.r}\` \`${RGB.g}\` \`${RGB.b}\`  
       CMYK \`${CMYK.c}\` \`${CMYK.m}\` \`${CMYK.y}\` \`${CMYK.k}\`
-      `);
+      `;
 
-    Picto.roundRect(ctx, 10, 10, 120, 120, 20,  hexColor);
+    Picto.roundRect(ctx, 10, 10, 120, 120, 20, `#${hexColor}`);
 
-    console.log(Canvas)
-    if (programatic === true)
+    console.log(Canvas);
+    if (programatic === true) {
       return {
         embed,
         file: file(Canvas.toBuffer(), "color.png"),
         hex: result.hex,
-        name: result.title
+        name: result.title,
       };
+    }
 
-    msg.channel.send({ embed }, file(Canvas.toBuffer(), "color.png"));
+    msg.channel.send({ embed }, { file: Canvas.toBuffer(), name: "color.png" });
   } else {
     if (programatic === true) {
       Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");
@@ -73,7 +78,7 @@ console.log({pre_res})
         embed,
         file: file(Canvas.toBuffer(), "color.png"),
         hex: "#000000",
-        name: "INVALID COLOR"
+        name: "INVALID COLOR",
       };
     }
     msg.reply("`ERROR :: COLOR NOT FOUND`");
@@ -83,8 +88,9 @@ module.exports = {
   init,
   pub: true,
   cmd: "color",
+  argsRequired: true,
   perms: 3,
   cat: "util",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: []
+  aliases: ["colour"],
 };
