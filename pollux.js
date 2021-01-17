@@ -136,10 +136,11 @@ global.translateEngineStart = () => {
   const multilang = require("./utils/i18node.js");
   const i18nBackend = require("i18next-node-fs-backend");
   const backendOptions = {
-    loadPath: "./locales/{{lng}}/{{ns}}.json",
+    //loadPath: "./locales/{{lng}}/{{ns}}.json",
+    loadPath: paths.LOCALES + "{{lng}}/{{ns}}.json",
     jsonIndent: 2,
   };
-  readdirAsync("./locales/").then((list) => {
+  readdirAsync( paths.LOCALES ).then((list) => {
     i18next.use(i18nBackend).init({
       backend: backendOptions,
       lng: "en",
