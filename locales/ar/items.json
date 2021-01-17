@@ -1,330 +1,330 @@
 {
     "anime_booster": {
-        "name": ""
+        "name": "أنيمي جنرال VOL.1"
     },
     "broken_excavator": {
-        "name": ""
+        "name": "خلفية مكسورة"
     },
     "commendtoken": {
-        "name": "",
-        "description": ""
+        "name": "رمز الثناء",
+        "description": "ما هذا؟ الإيثار؟"
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": ""
+        "name": "خاتم الشم المشتت",
+        "description": "أخضر كتعليقك مع الحب."
     },
     "complete_ring_rubine": {
-        "name": "",
-        "description": ""
+        "name": "خاتم روبين رائع",
+        "description": "الورود أحمر، البنفسجية زرقاء، هذه الخاتم أيضا أحمر وجميل لك!"
     },
     "complete_ring_sapphire": {
-        "name": "",
-        "description": ""
+        "name": "خاتم اللانهائي",
+        "description": "الخطوة الأولى نحو الالتزام هي التخلي عن جوهرة نادرة لأحبابك - تهانينا! "
     },
     "complete_ring_stardust": {
-        "name": "",
-        "description": ""
+        "name": "خاتم نجم عارض",
+        "description": "\"كل محب هو في قلبه رجل مجنون، وفي رأسه، منستريل\". \nنيل غايمان ستاردوست."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "شظايا الكون",
+        "description": "الحصى الضئيلة المستخدمة لربط قطع الكون"
     },
     "cosmo_gem_C": {
-        "name": "",
-        "description": ""
+        "name": "جوهرة الكون الشائعة",
+        "description": "أوه حسناً، على الأقل إنها مألوفة."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "جوهرة كونية نادرة",
+        "description": "أوه؟ باهظ الثمن، أليس كذلك؟"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "جوهرة كونية نادرة",
+        "description": "حسناً، هذه جوهرة صغيرة حصلت على هناك. كم تريدون لها؟ ستة أنقاض؟ ثمانية؟"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "جوهرة كونية غير عادية",
+        "description": "أعني، أعتقد أنها أفضل من الشائعة."
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "أتمنى على نجم... وأخيراً حصلت على واحدة."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "مراقبة من قبل دايانبان",
+        "description": "الرجاء عدم 4 DPS في حزمة تعزيز الفريق"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "نادي دوكي الأدبي",
+        "description": "مونيكا فقط"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "هوك مزدوج",
+        "description": "ربط الرابط، أو إذا كنت تفضل الرابط2"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "تخريج الخلفية",
+        "description": "للأشخاص الذين لا يريدون الحصول على أيديهم قذرة."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "ربط",
+        "description": "شوهدت آخر مرة تطارد حول صبي طيران صغير."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "1 ف-5",
+        "description": "ديجاوفو. لقد فتحت للتو هذا التعزيز من قبل."
     },
     "iwd1_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - الموسم 1",
+        "description": "ملصقات العضوية الحصرية للديسكورد المتصدعة للإنترنت. 2018"
     },
     "iwd2_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - الموسم 2",
+        "description": "ملصقات العضوية الحصرية للديسكورد المتصدعة للإنترنت. 2019"
     },
     "lootbox_C_C": {
-        "name": ""
+        "name": "صندوق Chibi الشائع"
     },
     "lootbox_C_E": {
-        "name": ""
+        "name": "لوتصندوق الملحمي الشائع"
     },
     "lootbox_C_event_1": {
-        "name": ""
+        "name": "صندوق الهالوين الشائع"
     },
     "lootbox_C_event_2": {
-        "name": ""
+        "name": "لوتبوكس عيد الميلاد الشائع"
     },
     "lootbox_C_event_3": {
-        "name": ""
+        "name": "صندوق عيد الفصح الشائع"
     },
     "lootbox_C_event_s1": {
-        "name": ""
+        "name": "لوتصندوق الصيف الشائع"
     },
     "lootbox_C_event_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء الشائع"
     },
     "lootbox_C_event_s3": {
-        "name": ""
+        "name": "لوتبوكس سولتيس الشائع"
     },
     "lootbox_C_O": {
-        "name": ""
+        "name": "لوتبوكس شائع"
     },
     "lootbox_C_s1": {
-        "name": ""
+        "name": "لوتصندوق الصيف الشائع"
     },
     "lootbox_C_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء الشائع"
     },
     "lootbox_dev": {
-        "name": "",
-        "description": ""
+        "name": "صندوق هدية ديف",
+        "description": "Starter Lootbox، هدية من Pollux's dev للمبتدئين. يضمن أن يكون لديك عنصر UR واحد على الأقل!"
     },
     "lootbox_EL": {
-        "name": "",
-        "description": ""
+        "name": "صندوق",
+        "description": "إذا فتحت هذا المربع ستنفجر مخزونك"
     },
     "lootbox_R_C": {
-        "name": ""
+        "name": "Chibi Rare Lootbox"
     },
     "lootbox_R_E": {
-        "name": ""
+        "name": "لوتبوكس الملحمي"
     },
     "lootbox_R_event_1": {
-        "name": ""
+        "name": "Rare Halloween Lootbox"
     },
     "lootbox_R_event_2": {
-        "name": ""
+        "name": "لوتبوكس عيد الميلاد نادر"
     },
     "lootbox_R_event_3": {
-        "name": ""
+        "name": "لوتصندوق عيد الفصح نادر"
     },
     "lootbox_R_event_s1": {
-        "name": ""
+        "name": "صندوق لوت الصيف النادر"
     },
     "lootbox_R_event_s2": {
-        "name": ""
+        "name": "صندوق لوتبوكس الشتاء النادر"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Rare Lootbox"
     },
     "lootbox_R_s1": {
-        "name": ""
+        "name": "صندوق لوت الصيف النادر"
     },
     "lootbox_R_s2": {
-        "name": ""
+        "name": "صندوق لوتبوكس الشتاء النادر"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Chibi Super Rar Lootbox"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "ملحمة لوتبوكس نادر"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "صندوق لوتين النادر الممتاز"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "لوتبوكس عيد الميلاد النادر"
     },
     "lootbox_SR_event_3": {
-        "name": ""
+        "name": "صندوق لوتبو عيد الفصح النادر"
     },
     "lootbox_SR_event_s1": {
-        "name": ""
+        "name": "صندوق لوت صيف نادر جدا"
     },
     "lootbox_SR_event_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء النادر"
     },
     "lootbox_SR_event_s3": {
-        "name": ""
+        "name": "صندوق لوتس سوبر نادر"
     },
     "lootbox_SR_O": {
-        "name": ""
+        "name": "لوتبوكس نادر"
     },
     "lootbox_SR_s1": {
-        "name": ""
+        "name": "صندوق لوت صيف نادر جدا"
     },
     "lootbox_SR_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء النادر"
     },
     "lootbox_SR_s3": {
-        "name": ""
+        "name": "صندوق لوتس سوبر نادر"
     },
     "lootbox_U_C": {
-        "name": ""
+        "name": "Chibi Uncommon Lootbox"
     },
     "lootbox_U_E": {
-        "name": ""
+        "name": "لوتبوكس ملحمي غير شائع"
     },
     "lootbox_U_event_1": {
-        "name": ""
+        "name": "Uncommon Halloween Lootbox"
     },
     "lootbox_U_event_2": {
-        "name": ""
+        "name": "لوتبوكس عيد الميلاد غير شائع"
     },
     "lootbox_U_event_3": {
-        "name": ""
+        "name": "صندوق لوكس عيد الفصح غير مألوف"
     },
     "lootbox_U_event_s1": {
-        "name": ""
+        "name": "صندوق لوت الصيف غير شائع"
     },
     "lootbox_U_event_s2": {
-        "name": ""
+        "name": "لوتبوكس شتاء غير شائع"
     },
     "lootbox_U_event_s3": {
-        "name": ""
+        "name": "لوتبوكس سولتيس غير شائع"
     },
     "lootbox_U_O": {
-        "name": ""
+        "name": "لوتبوكس غير شائع"
     },
     "lootbox_U_s1": {
-        "name": ""
+        "name": "صندوق لوت الصيف غير شائع"
     },
     "lootbox_U_s2": {
-        "name": ""
+        "name": "لوتبوكس شتاء غير شائع"
     },
     "lootbox_U_s3": {
-        "name": ""
+        "name": "لوتبوكس سولتيس غير شائع"
     },
     "lootbox_UR_C": {
-        "name": ""
+        "name": "Chibi Ultra Rare Lootbox"
     },
     "lootbox_UR_E": {
-        "name": ""
+        "name": "Epic Ultra Rare Lootbox"
     },
     "lootbox_UR_event_1": {
-        "name": ""
+        "name": "صندوق لوتين فائق الندرة"
     },
     "lootbox_UR_event_2": {
-        "name": ""
+        "name": "لوتبوكس عيد الميلاد النادر"
     },
     "lootbox_UR_event_s1": {
-        "name": ""
+        "name": "صندوق لوت صيف فائق الندرة"
     },
     "lootbox_UR_event_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء النادر"
     },
     "lootbox_UR_event_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "lootbox_UR_O": {
-        "name": ""
+        "name": "Ultra Rare Lootbox"
     },
     "lootbox_UR_s1": {
-        "name": ""
+        "name": "صندوق لوت صيف فائق الندرة"
     },
     "lootbox_UR_s2": {
-        "name": ""
+        "name": "لوتبوكس الشتاء النادر"
     },
     "lootbox_UR_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "nierauto_booster": {
-        "name": "",
-        "description": ""
+        "name": "NieR: Automata",
+        "description": "المعزز الذي تحتاج إليه سعيدة 2B"
     },
     "p5_booster": {
-        "name": "",
-        "description": ""
+        "name": "Persona 5",
+        "description": "أنت لا ترى ذلك قادماً"
     },
     "padoru_booster": {
-        "name": "",
-        "description": ""
+        "name": "مجموعة برادورو النهائية",
+        "description": "هاشير يحزن ويخيم على روبينات"
     },
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "خاتم جزئي",
+        "description": "مجموعة مستديرة من المعادن تستخدم لإنشاء حلقة زفاف جميلة"
     },
     "reel": {
-        "name": "",
-        "description": ""
+        "name": "معمل صيد الأسماك",
+        "description": "تقوم بدورانه بشكل صحيح ولكن ليس مثل السجل. يبدو أنه يحتاج إلى أن يكون مرفقا في مكان ما."
     },
     "rod_c": {
-        "name": "",
-        "description": ""
+        "name": "صياد السمك المخي",
+        "description": "فقط سحب السمك، وليس الإمتثالات."
     },
     "rod_r": {
-        "name": "",
-        "description": ""
+        "name": "صياد كريم",
+        "description": "إنها ليست سيئة تقنياً، لكنها ليست عظيمة تقنياً."
     },
     "rod_sr": {
-        "name": "",
-        "description": ""
+        "name": "صياد رائع",
+        "description": "~يقولون ان قضيب الصيد هذا قد صنع من قبل بوب روز~"
     },
     "rod_u": {
-        "name": "",
-        "description": ""
+        "name": "صيد الخيزران",
+        "description": "عصا الخيزران هذه أخذت من حديقة راهب صيني حكيم."
     },
     "rod_ur": {
-        "name": "",
-        "description": ""
+        "name": "حوض صيد مهني",
+        "description": "س. لا. تفكك. هذا واحد."
     },
     "rope": {
-        "name": "",
-        "description": ""
+        "name": "الحلوب",
+        "description": "لا، هذا ليس ما تعتقدون أنه من أجله."
     },
     "shovel": {
-        "name": "",
-        "description": ""
+        "name": "مجرفة",
+        "description": "تستخدم في حفر الثقوب المادية والاستعارة على حد سواء."
     },
     "spoon": {
-        "name": "",
-        "description": ""
+        "name": "بقعة",
+        "description": "هذا ملحق مثير جداً، يرجى استخدامه بشكل مسؤول."
     },
     "spork": {
-        "name": "",
-        "description": ""
+        "name": "شباك",
+        "description": "ملعقة، بالإضافة إلى شوك. إنه فون!"
     },
     "stick": {
-        "name": "",
-        "description": ""
+        "name": "عصا شبه مستحقة",
+        "description": "السعر ليس ما يهم، لكن الشعور قد أثار مدى رهيبة هذه العصا"
     },
     "fork": {
-        "name": "",
-        "description": ""
+        "name": "Fork",
+        "description": "بأربعة أضعاف القدرة على الطعن في سكين، ولكن نصف التأثير، إنها ضعف القيمة!"
     }
 }

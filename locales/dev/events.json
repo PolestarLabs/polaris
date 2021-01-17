@@ -1,6 +1,30 @@
 { 
 
+  "halloween20": {
+
+    "covenants":{
+      "dusk":"The Dusk Covenant",
+      "umbral":"The Umbral Covenant",
+      "plsupdate":"Please update your avatar and check with `{{prefix}}avatarcheck`",
+      "joinDusk": "You're joining the **Dusk Covenant**.",
+      "joinDuskAffinity": "This increases affinity with **Arsenika** the Dusk Priestess",
+
+      "joinUmbral": "You're joining the **Umbral Covenant**.",
+      "joinUmbralAffinity": "This increases affinity with **Noctix** the Underworld's Gravekeeper"
+    },
+    "avatar":{
+      "clickHere": "Click here and download this image to use as avatar.",
+      "preview": "This is a preview of your avatar. Confirm to receive a larger version.",
+      "dusk":"Your avatar tells you're in the **Dusk Covenant**",
+      "night":"Your avatar tells you're in the **Umbral Covenant**",
+      "inad":"It doesn't seem to be aligned with any of the covenants. Try `{{prefix}}eventavatar [umbral|dusk]` to pick one!",
+      "fine":"It seems to be just fine!",
+      "opos":"It seems to be the opposite of what you intended.",
+      "diff":"It does not belong to any of the covenants."
+    }
+  },
   "halloween18": {
+    
     "noctix":{
 
       "acCask":   "Teehee. After you get the first, you can't stop anymore, huh? So, what are you giving me in exchange for this **Casket**?" ,

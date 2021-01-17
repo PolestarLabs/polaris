@@ -22,8 +22,8 @@
         "description": "Pierwszy krok w kierunku zaangażowania jest oddanie bardzo rzadkiego kryształu osobie, którą się kocha - gratulacje! "
     },
     "complete_ring_stardust": {
-        "name": "",
-        "description": ""
+        "name": "Bogaty Gwiezdny Pierścień",
+        "description": "\"Każdy kochanek jest w jego sercu szaleńcem, a w jego głowie natomiast minstrelem.. \n― Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
         "name": "Kosmiczny Fragment",
@@ -51,7 +51,7 @@
     },
     "daianwatch_booster": {
         "name": "Overwatch stworzony przez Daianpan",
-        "description": ""
+        "description": "Proszę nie wybieraj 4 DPS w drużynowym boosterze."
     },
     "doki_booster": {
         "name": "Doki Doki Literature Club",
@@ -71,7 +71,7 @@
     },
     "initd_booster": {
         "name": "Initial D",
-        "description": "Dejà Vu. Otwierałem już tą paczkę wcześniej."
+        "description": "Dejà Vu. Otwierałam już tą paczkę wcześniej."
     },
     "iwd1_booster": {
         "name": "IWD - Sezon 1",
@@ -116,10 +116,10 @@
     },
     "lootbox_dev": {
         "name": "Skrzynka - Prezent Dev'a",
-        "description": ""
+        "description": "Lootbox Startowy, prezent od twórcy Pollux'a dla początkujących. Gwarantowany jeden przedmiot rzadkości UR!"
     },
     "lootbox_EL": {
-        "name": "",
+        "name": "Pud**El**ko",
         "description": "Jeśli otworzysz tę skrzynkę to twój ekwipunek eksploduje"
     },
     "lootbox_R_C": {
@@ -265,11 +265,11 @@
     },
     "nierauto_booster": {
         "name": "NieR: Automata",
-        "description": ""
+        "description": "Z tym boosterem będziesz **2B**ardzo szczęśliwy"
     },
     "p5_booster": {
         "name": "Persona 5",
-        "description": ""
+        "description": "Nigdy nie widzisz, jak nadchodzi"
     },
     "padoru_booster": {
         "name": "Padoru Ultimate Collection",
@@ -326,5 +326,20 @@
     "fork": {
         "name": "Widelec",
         "description": "Licząc jego czterokrotną możliwość dźgania noża, ale tylko połowę jego efektu, to wychodzi podwójna wartość!"
+    },
+    "lootbox_C_D": {
+        "name": "Pospolita Dzienna Skrzynia"
+    },
+    "lootbox_U_D": {
+        "name": "Niepospolita Dzienna Skrzynia"
+    },
+    "lootbox_R_D": {
+        "name": "Rzadka Dzienna Skrzynia"
+    },
+    "lootbox_SR_D": {
+        "name": "Super Rzadka Dzienna Skrzynia"
+    },
+    "lootbox_UR_D": {
+        "name": "Ultra Rzadka Dzienna Skrzynia"
     }
 }
