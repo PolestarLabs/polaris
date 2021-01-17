@@ -64,7 +64,7 @@ const init = async (msg, args, ext) => {
   if (res) enhancedRes = (await ax.get(`http://danbooru.donmai.us/posts.json?md5=${res.md5 || res.hash}`).catch(() => ({ data: null }))).data;
 
   if (res && enhancedRes) {
-    embed.image(enhancedRes.file_url);
+    embed.image(res.sample_url);
     const elipsis = enhancedRes.tag_string_character.split(" ").length > 5 ? " (...)" : "";
     if (enhancedRes.tag_string_artist) {
       embed.field(
@@ -88,6 +88,21 @@ const init = async (msg, args, ext) => {
           .join(", "),
         true,
       );
+    }
+    if(msg.content.includes('--debug')){
+      embed.field(
+        "Reference Link",
+        enhancedRes.file_url,
+
+      )
+      embed.field(
+        "Preview Link",
+        enhancedRes.preview_file_url,
+      )
+      embed.field(
+        "KEYS",
+        Object.keys(res).join('\n'),
+      )
     }
     if (enhancedRes.tag_string_general && ext?.tags) {
       embed.field(
