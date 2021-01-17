@@ -1,19 +1,19 @@
 const Picto = require("../../utilities/Picto.js");
 
-const init = async function(message) {
+const init = async (message) => {
   try {
     const canvas = Picto.new(300, 500);
     const ctx = canvas.getContext("2d");
 
     const P = {
-      lngs: message.lang
+      lngs: message.lang,
     };
 
-    let rand = randomize(0, 1000);
+    const rand = randomize(0, 1000);
     let num;
 
     switch (true) {
-      case rand == 1000:
+      case rand === 1000:
         num = "CANCER";
         break;
       case rand > 950:
@@ -28,8 +28,8 @@ const init = async function(message) {
       default:
         num = randomize(0, 350);
     }
-    //num=42 ;
-    let randmin = randomize(200, 800);
+    // num=42 ;
+    const randmin = randomize(200, 800);
     if (message.channel.decontamination) {
       num = num - randmin > 0 ? num - randmin : 0;
       message.channel.decontamination = false;
@@ -38,47 +38,39 @@ const init = async function(message) {
       num = message.channel.cancer + Math.floor(1 + num - 200);
     }
 
-    let geiger = await Picto.getCanvas(paths.BUILD + "geiger.png");
-    let needle = Picto.new(116, 116);
+    const geiger = await Picto.getCanvas(`${paths.BUILD}geiger.png`);
+    const needle = Picto.new(116, 116);
     const ctx2 = needle.getContext("2d");
-    let needle_p = await Picto.getCanvas(paths.BUILD + "cen_needle.png");
+    const needleP = await Picto.getCanvas(`${paths.BUILD}cen_needle.png`);
     await ctx.drawImage(geiger, 0, 0, 300, 500);
 
     ctx2.translate(58, 58);
-    let pointer = num > 350 ? 120 : num / 3;
-    let light = num > 350;
-    let light_p = await Picto.getCanvas(paths.BUILD + "geig_lite.png");
-    let warn = num > 10000;
-    let warn_p = await Picto.getCanvas(paths.BUILD + "geig_radio.png");
+    const pointer = num > 350 ? 120 : num / 3;
+    const light = num > 350;
+    const lightP = await Picto.getCanvas(`${paths.BUILD}geig_lite.png`);
+    const warn = num > 10000;
+    const warnP = await Picto.getCanvas(`${paths.BUILD}geig_radio.png`);
 
-    if (light) {
-      await ctx.drawImage(light_p, 0, 0);
-    }
-    if (warn) {
-      await ctx.drawImage(warn_p, 0, 0);
-    }
+    if (light) ctx.drawImage(lightP, 0, 0);
+    if (warn) ctx.drawImage(warnP, 0, 0);
 
     ctx2.rotate((Math.PI / 180) * (-60 + pointer));
     ctx2.translate(-58, -58);
-    await ctx2.drawImage(needle_p, 0, 0, 116, 116);
+    ctx2.drawImage(needleP, 0, 0, 116, 116);
 
-    await ctx.drawImage(needle, 84, 77, 116, 116);
+    ctx.drawImage(needle, 84, 77, 116, 116);
 
-    if (randomize(1, 10) == 10) {
-      message.channel.cancer -= 10000;
-    }
+    if (randomize(1, 10) === 10) msg.channel.cancer -= 10000;
 
-    setTimeout(function() {
-      message.channel.cancer = 0;
-    }, 30000);
+    setTimeout(() => (msg.channel.cancer = 0), 30000);
 
-    let tagA = await Picto.tag(ctx, 888888, "34px 'digital-7'", "#59652d");
-    let tagB = await Picto.tag(ctx, num, "34px 'digital-7'", "#111114");
+    const tagA = Picto.tag(ctx, 888888, "34px 'digital-7'", "#59652d");
+    const tagB = Picto.tag(ctx, num, "34px 'digital-7'", "#111114");
 
-    await ctx.drawImage(tagA.item, 90, 224);
-    await ctx.drawImage(tagB.item, 90 - tagB.width + 90, 224);
+    ctx.drawImage(tagA.item, 90, 224);
+    ctx.drawImage(tagB.item, 90 - tagB.width + 90, 224);
 
-    P.percentage = miliarize(Math.floor(Math.pow((num / 350) * 100, 2) / 100));
+    P.percentage = miliarize(Math.floor((((num / 350) * 100) ** 2) / 100));
     P.radiation = miliarize(num);
     P.user = message.member.nick || message.author.username;
 
@@ -99,6 +91,6 @@ module.exports = {
   pub: true,
   cmd: "geiger",
   perms: 3,
-  init: init,
-  cat: "fun"
+  init,
+  cat: "fun",
 };

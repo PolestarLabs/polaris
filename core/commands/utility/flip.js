@@ -1,45 +1,37 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
+const init = async function (msg) {
+  const P = { lngs: msg.lang, prefix: msg.prefix };
 
-const init = async function (msg){
+  const A = `${paths.CDN}/build/coins/befli_heads.gif`;
+  const A1 = `${paths.CDN}/build/coins/befli_h_s.png`;
+  const B = `${paths.CDN}/build/coins/befli_tails.gif`;
+  const B1 = `${paths.CDN}/build/coins/befli_t_s.png`;
+  const rand = randomize(1, 59);
 
-    let P={lngs:msg.lang,prefix:msg.prefix}
-    if(PLX.autoHelper([$t('helpkey',P)],{cmd:this.cmd,msg,opt:this.cat}))return;
+  const res = rand % 2 === 0 ? A : B;
+  const res2 = rand % 2 === 0 ? A1 : B1;
+  const face = rand % 2 === 0 ? $t("terms.coinHeads", P) : $t("terms.coinTails", P);
 
+  const embed = new Embed();
+  P.player = msg.author.username;
+  embed.author($t("games.coinflip.playerFlipsCoin", P), msg.author.avatarURL);
+  embed.thumbnail(res);
 
-    let A = paths.CDN + "/build/coins/befli_heads.gif"
-    let A1= paths.CDN + "/build/coins/befli_h_s.png"
-    let B = paths.CDN + "/build/coins/befli_tails.gif"
-    let B1= paths.CDN + "/build/coins/befli_t_s.png"
-    let rand = randomize(1,59)
-
-    let res = rand % 2 === 0 ? A : B
-    let res2 = rand % 2 === 0 ? A1 : B1
-    let face = rand % 2 === 0 ? $t('terms.coinHeads') : $t('terms.coinTails')
-
-    let embed = new Embed()
-    embed.author(msg.author.tag + " flips a coin...",msg.author.avatarURL)
-    embed.thumbnail(res)
-    
-    msg.channel.send({embed}).then(async x=>{
-        embed.description = `... and landed **${face}**
+  msg.channel.send({ embed }).then(async (x) => {
+    P.coinFace = face;
+    embed.description = `${$t("games.coinflip.andLanded", P)}
         
-        \u200b` 
-        embed.thumbnail.url = res2
-        await wait(5.5);
-        x.edit({embed})
-
-    })
-
-
-
-}
-module.exports={
-    init
-    ,pub:true
-    ,cmd:'flip'
-    ,perms:3
-    ,cat:'util'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
-}
+        \u200b`;
+    embed.thumbnail.url = res2;
+    await wait(5.5);
+    x.edit({ embed });
+  });
+};
+module.exports = {
+  init,
+  pub: true,
+  cmd: "flip",
+  perms: 3,
+  cat: "util",
+  botPerms: ["attachFiles", "embedLinks"],
+  aliases: [],
+};
