@@ -1,6 +1,5 @@
 // guessingGame('name' , 'type(text/image)' ,'thumb', options)
 const axios = require("axios");
-const { resolveFile, wait, capitalize } = require("../../../event-instance/core/utilities/Gearbox/global");
 
 function parseGrade(g) {
   let grade;
