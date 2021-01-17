@@ -1,3 +1,4 @@
+const PORT_PREFIX = process.env.MICRO_PORT_PREFIX || (require('../../config.json')).microPortPrefix || 90
 const http = require("http");
 
 class Microserver {
@@ -32,7 +33,7 @@ class Microserver {
         });
       }
     });
-    const port = `90${(PLX.cluster.id || "0").toString().padStart(2, "0")}`;
+    const port = `${PORT_PREFIX}${(PLX.cluster.id || "0").toString().padStart(2, "0")}`;
     server.listen(Number(port));
     console.info("Shard cluster", (PLX.cluster.name || "NONAME").yellow, "microserver listening at port", port.green);
   }
