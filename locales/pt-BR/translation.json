@@ -65,7 +65,6 @@
         "colorChange": "Sua cor favorita foi salva!"
     },
     "CMD": {
-        "denied": "Você não tem autorização para usar esse comando. Ele requer Permissões de nível {{rankNeed}}, seu nível de permissão é {{rankMe}}. Contate o dono do servidor, ou um moderador, ou o Papa.",
         "incorrectUsage": "Nananão, não é assim que se usa esse comando. Tenta {{usage}}. Ex.: {{example}}",
         "disabledModule": ":no_entry_sign: Nosso mestre declarou que o módulo {{module}} não é permitido aqui. Que chato...",
         "genericInvalid": "O-oh... Comando inválido ;~;",
@@ -781,7 +780,7 @@
         "egghuntfail": "*... mas não encontrou necas de pitibiriba.*",
         "egghuntsuccess": "Oba! Tem um ovo aqui! Vejamos...",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} encontrou um **Ovo {{rarity}}**!",
-        "egghuntsuccess3": "Você tem um total de **{{X}}** ovos com você.\n**{{Y}}** deles são únicos.\n\nMais informações em: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+        "egghuntsuccess3": "",
         "delaytrade": "Calma lá, jovem! Você vai poder trocar Ovos de novo dentro de {{remaining}}",
         "wanttrade": "{{user}} quer trocar **{{tradingEgg}}** com você.",
         "wanttrade2": "*Para aceitar, digite `accept` seguido do ID de um dos Ovos que mandará de volta.*\n\nEx.: `accept C1` para dar um Ovo [**C1**] em troca por este Ovo [**{{eggcode}}**]",

@@ -65,7 +65,6 @@
         "colorChange": "Your favorite color has been saved!"
     },
     "CMD": {
-        "denied": "You are not authorized to use this. This command requires an Elevation Rank of {{rankNeed}}, your Rank is {{rankMe}}. Contact the Server Owner or a Mod.",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
         "genericInvalid": "Oh my, seems like that Command is Invalid ;~;",
@@ -781,7 +780,7 @@
         "egghuntfail": "*But couldn't find a single thing*",
         "egghuntsuccess": "Great! There's an egg here! Let's see...",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} found a **{{rarity}} Egg**!",
-        "egghuntsuccess3": "You have a total of **{{X}}** eggs with you.\n**{{Y}}** of them are unique.\n\nMore info at: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+        "egghuntsuccess3": "",
         "delaytrade": "",
         "wanttrade": "{{user}} wants to trade **{{tradingEgg}}** with you.",
         "wanttrade2": "*To accept it, type `accept` followed by the ID of the Egg you're sending back.*\n\nE.g. `accept C1` to give a [**C1**] Egg in exchange for this [**{{eggcode}}**] Egg",

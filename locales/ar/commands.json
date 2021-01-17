@@ -1,7 +1,7 @@
 {
 	"help": {
-		"checkYeDM": "بسست، لقد ارسلت لك المعلومات في DM، اذهب خذ نضرة.",
-		"availableComms": "الأوامر المتاحة",
+		"checkYeDM": "",
+		"availableComms": "",
 		"airwaifu": "",
 		"announce": "",
 		"balance": "",
@@ -278,7 +278,7 @@
 		"mod": "",
 		"$": "",
 		"game": "",
-		"rubine": "الروبن",
+		"rubine": "",
 		"cosmetics": "",
 		"social": "",
 		"img": "",

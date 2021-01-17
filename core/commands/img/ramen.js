@@ -1,11 +1,11 @@
 const Gal = require("../../structures/Galleries");
 
-const init = async function(msg) {
+const init = async function (msg) {
   const embed = new Embed();
 
-  let img = await Gal.randomOne("ramen", true);
+  const img = await Gal.randomOne("ramen", true);
 
-  let avgcolor = await require("../../utilities/Picto").avgColor(img);
+  const avgcolor = await require("../../utilities/Picto").avgColor(img);
 
   embed.image(img);
   embed.color(avgcolor);
@@ -21,5 +21,5 @@ module.exports = {
   perms: 3,
   cat: "img",
   botPerms: ["embedLinks"],
-  aliases: []
+  aliases: [],
 };

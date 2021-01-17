@@ -9,5 +9,10 @@
     ,"riot"      : ""
     ,"twitch"    : ""
     ,"google"    : ""
-
+    ,"sentryDSN" : ""
+    ,"testChannels" : [],
+    "mainWebhook": {
+        "id": "",
+        "token": "",
+    }
 }

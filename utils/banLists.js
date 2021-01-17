@@ -1,18 +1,17 @@
-let BLACKLIST   = [
+const BLACKLIST = [
   //
-  
-  //
-];
-let YELLOWLIST  = [
-  //
-  
+
   //
 ];
-let REDLIST     = [
+const YELLOWLIST = [
   //
-  
+
+  //
+];
+const REDLIST = [
+  //
+
   //
 ];
 
-
-module.exports = {BLACKLIST,YELLOWLIST,REDLIST} 
+module.exports = { BLACKLIST, YELLOWLIST, REDLIST };
