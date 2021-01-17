@@ -261,8 +261,9 @@ PLX.setAvatar = async (url) => {
 
 PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
 PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
-PLX.reply = (msg, content) => {
+PLX.reply = (msg, content, ping=false) => {
   const payload = {
+    replied_user: ping,
     message_reference: {
       channel_id: msg.channel.id,
       guild_id: msg.guild.id,
