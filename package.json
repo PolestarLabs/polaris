@@ -1,5 +1,5 @@
 {
-  "name": "@polestar/polaris",
+  "name": "polaris",
   "version": "1.0.0",
   "description": "Pollux on Eris",
   "main": "pollux.js",
