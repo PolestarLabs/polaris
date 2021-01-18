@@ -1,5 +1,5 @@
 // @ts-check
-const DAY = 1;// 22 * 60 * 60e3;
+const DAY = 22 * 60 * 60e3;
 const EXPIRE = 10000000000000000 * DAY * 2.1;
 
 const Timed = require("../../structures/TimedUsage");
