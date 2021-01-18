@@ -83,14 +83,14 @@ function parseCurrencies(/** @type {curr|curr[]} */ curr) {
  */
 function checkFunds(user, amount, currency = "RBN") {
   if (amount === 0) return Promise.resolve(true);
-  if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
+  if (!(user && amount)) return;
 
   let curr = parseCurrencies(currency);
 
   // Argument validation
   // NOTE: comparing currency first and then curr might result in error if parseCurrencies doesn't return a string/array as it should.
   if (typeof amount === "number" || typeof currency === "string") {
-    if (!(typeof amount === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
+    if (!(typeof amount === "number" && typeof curr === "string")) return; //throw new Error("amt & curr need to be a single number & string or equal length arrays.");
     amount = [amount];
     curr = [curr];
   } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
