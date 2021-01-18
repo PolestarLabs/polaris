@@ -28,7 +28,6 @@ const EASTER_EGGS = [
   */
 ]
 
-const { resolveFile } = require("../../../../event-instance/core/utilities/Gearbox/global");
 const Weather = require("../../archetypes/Weather");
 
 const init = async (msg, args) => {
