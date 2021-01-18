@@ -72,69 +72,70 @@ declare class AchievementsManager extends EventEmitter {
 
 // TODO[epic=bsian] string colours
 
-declare global {
-
-  // In both
-  export const HOST: string;
-  export const appRoot: string;
-  export interface Promise<T> extends Bluebird<T> {};
-  export const MARKET_TOKEN: string;
-  export const PLX: CommandClient;
-  export const DB: any; // @polestar/database_schema
-  // gearbox
-  export const nope: string;
-  export function reload(): void;
-  export const invisibar: string;
-  export const Embed: new (...args: any) => Embed;
-  export const RichEmbed: Embed;
-  export function weightedRand(wArr: number[]): number;
-  export function randomize(min: number, max: number, seed?: number): number;
-  export function wait(time: number): Promise<true>;
-  export function miliarize(numstring: number | string, strict?: boolean | "soft", char?: string): string;
-  export function shuffle<T>(array: T[]): T[];
-  export function capitalize(string: string): string;
-  export function objCount<T>(array: T[], what: T): number;
-  export function resolveFile(resource: Buffer | string | ReadableStream): Buffer;
-  export function file(file: string | number | Buffer | URL, name?: string): { finalFile: Buffer, name: string; };
-  export function exec(command: string, options: ExecOptions): Promise<string>;
-  export const i18n: i18n;
-  export const $t: TranslationFunction;
-  export const paths: run;
+declare namespace NodeJS {
+  export namespace global {
+    // In both
+    export const HOST: string;
+    export const appRoot: string;
+    export interface Promise<T> extends Bluebird<T> {};
+    export const MARKET_TOKEN: string;
+    export const PLX: CommandClient;
+    export const DB: any; // @polestar/database_schema
+    // gearbox
+    export const nope: string;
+    export function reload(): void;
+    export const invisibar: string;
+    export const Embed: new (...args: any) => Embed;
+    export const RichEmbed: Embed;
+    export function weightedRand(wArr: number[]): number;
+    export function randomize(min: number, max: number, seed?: number): number;
+    export function wait(time: number): Promise<true>;
+    export function miliarize(numstring: number | string, strict?: boolean | "soft", char?: string): string;
+    export function shuffle<T>(array: T[]): T[];
+    export function capitalize(string: string): string;
+    export function objCount<T>(array: T[], what: T): number;
+    export function resolveFile(resource: Buffer | string | ReadableStream): Buffer;
+    export function file(file: string | number | Buffer | URL, name?: string): { finalFile: Buffer, name: string; };
+    export function exec(command: string, options: ExecOptions): Promise<string>;
+    export const i18n: i18n;
+    export const $t: TranslationFunction;
+    export const paths: run;
+    
+    // In bot only
+    export const clusterNames: string[];
+    export const GNums: GlobalNumbers;
+    export const hook: WebhookDigester;
+    export const _emoji: ((E: string, F?: PolluxEmoji) => PolluxEmoji);
+    export const translateEngineStart: (() => void);
+    export const errorsHook: { id: string; token: string };
+    export const Achievements: AchievementsManager;
+    export const userLimits: Map<string, Bucket>;
+    export const rand$t: ((string: string, params?: {[s: string]: any}) => string);
+    export const fakeFeed: null | { link: string; title: string; };
+    export const piggyback: any; // TODO what is this?
+  }
   
-  // In bot only
-  export const clusterNames: string[];
-  export const GNums: GlobalNumbers;
-  export const hook: WebhookDigester;
-  export const _emoji: ((E: string, F?: PolluxEmoji) => PolluxEmoji);
-  export const translateEngineStart: (() => void);
-  export const errorsHook: { id: string; token: string };
-  export const Achievements: AchievementsManager;
-  export const userLimits: Map<string, Bucket>;
-  export const rand$t: ((string: string, params?: {[s: string]: any}) => string);
-  export const fakeFeed: null | { link: string; title: string; };
-  export const piggyback: any; // TODO what is this?
-}
-
-interface run {
-    CDN: string
-    GENERATORS: string
-    API: string
-    DASH: string
-    WIKI: string
-    ASSETS: string
-    MISC: string
-    REACTIONS: string
-    CARDS:string
-    MEDALS: string
-    LISTS: string
-    Build: string
-    BUILD: string
-    LEWD: string
-    EVENT: string
-    PROFILE: string
-    SKINS: string
-    FONTS: string
-    AVIS: string
-    LOCALE: string
-    UTILS: string
+  interface run {
+      CDN: string
+      GENERATORS: string
+      API: string
+      DASH: string
+      WIKI: string
+      ASSETS: string
+      MISC: string
+      REACTIONS: string
+      CARDS:string
+      MEDALS: string
+      LISTS: string
+      Build: string
+      BUILD: string
+      LEWD: string
+      EVENT: string
+      PROFILE: string
+      SKINS: string
+      FONTS: string
+      AVIS: string
+      LOCALE: string
+      UTILS: string
+  }
 }
