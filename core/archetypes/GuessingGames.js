@@ -82,6 +82,7 @@ class GuessingGame {
       const response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
       console.log(response);
       this.imageFile = await resolveFile(response.url);
+
       if (this.gamemode === "endless") this.embed.footer.text = `Endless Mode | Round ${this.round || 1}`;
       if (this.gamemode === "time") {
         this.embed.footer.text = `Time Attack Mode | Remaining: ${~~((this.time - ~~(Date.now() - (this.start || Date.now()))) / 1000)}s`;
@@ -93,7 +94,7 @@ class GuessingGame {
   }
 
   async play(msg) {
-    return new Promise((resolve) => {
+    return new Promise( async(resolve) => {
       const v = {
         points: $t(["keywords.points", "points"], { lngs: msg.lang }),
         grade: $t(["keywords.grade", "Grade"], { lngs: msg.lang }),
@@ -107,10 +108,11 @@ class GuessingGame {
         seconds: $t(["keywords.seconds", "seconds"], { lngs: msg.lang }),
 
       };
-      Promise.all([
-        this.generate(),
-        msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` }),
-      ]).then(([{ names }]) => {
+
+      let { names } = await this.generate();
+
+      msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
+      .then( ()=> {
         this.start = Date.now();
         console.log(this.gamemode);
 
