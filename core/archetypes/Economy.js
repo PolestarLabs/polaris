@@ -86,10 +86,10 @@ function checkFunds(user, amount, currency = "RBN") {
   // Argument validation
   // NOTE: comparing currency first and then curr might result in error if parseCurrencies doesn't return a string/array as it should.
   if (typeof amount === "number" || typeof currency === "string") {
-    if (!(typeof amount === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
+    if (!(typeof amount === "number" && typeof curr === "string")) throw new TypeError("amt & curr need to be a single number & string or equal length arrays.");
     amount = [amount];
     curr = [curr];
-  } else if (amount.length !== currency.length) throw new Error("amt & curr arrays need to be equal length");
+  } else if (amount.length !== currency.length) throw new TypeError("amt & curr arrays need to be equal length");
 
   const uID = (typeof user === "object") ? user.id : user;
   if (uID === PLX.user.id) return Promise.resolve(true);
