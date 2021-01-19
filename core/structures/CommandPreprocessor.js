@@ -129,13 +129,13 @@ const DEFAULT_CMD_OPTS = {
     let hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js
-${err.stack.slice(0, 1850)}
+${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
     \`\`\`
     **Command:** \`${msg.command.label || 'NO-COMMAND-LABEL'}\`
     **CODE:** \`${errorCode}\`
     `, { hook: errorsHook });
 
-    return ({
+    msg.channel.send({
       embed: {
         // description: "Oh **no**! Something went wrong...\n"
         // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
