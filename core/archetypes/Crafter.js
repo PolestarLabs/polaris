@@ -196,7 +196,7 @@ class Crafter extends EventEmitter {
 
     /**
      * Confirm the craft
-     * @return {object[]} the audits
+     * @return {Promise<object[]>} the audits
      * @memberof Crafter
      */
     confirm() {
