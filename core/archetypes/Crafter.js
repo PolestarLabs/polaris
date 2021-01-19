@@ -350,7 +350,7 @@ class Crafter extends EventEmitter {
 
           // The item can't be crafted, or we have some left.
           if (!material.crafted || amountLeft) {
-            toRet.items.push({ id: materialID, count: material.crafted ? amountLeft : need });
+            toRet.items.push({ id: materialID, count: material.crafted ? Math.min(amountLeft, need) : need });
             if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] ?? 0) + amountLeft;
             if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] ?? 0) + (need - amountLeft);
           }
