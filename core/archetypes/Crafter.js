@@ -274,7 +274,7 @@ class Crafter extends EventEmitter {
 
     _init() {
       // selected item
-      this._itemsCrafting[this._item] = this._count;
+      this._itemsCrafting[this._item.id] = this._count;
 
       // items
       if (this._item.materials) {
@@ -324,7 +324,7 @@ class Crafter extends EventEmitter {
     _autoGenHelper(item, count = 1, ignore = false) {
       if (!item) throw new Error(`autoGen did not receive an item: ${item}`);
       if (!item.crafted) throw new Error(`Item ${item} not craftable`);
-      if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] || 0) + count;
+      if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] ?? 0) + count;
 
       // Some initialization
       const toRet = {
