@@ -196,7 +196,7 @@ class Crafter extends EventEmitter {
 
     /**
      * Confirm the craft
-     * @return {object[]} the audits
+     * @return {Promise<object[]>} the audits
      * @memberof Crafter
      */
     confirm() {
@@ -213,6 +213,8 @@ class Crafter extends EventEmitter {
         toAdd = [];
 
       let i = 0;
+
+      // ITEMS CRAFTED
       const { itemsCrafted } = this;
       for (;i < itemsCrafted.length; i++) {
         const [itemID, amount] = itemsCrafted[i];
@@ -224,6 +226,8 @@ class Crafter extends EventEmitter {
         const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
         if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
       }
+
+      // ITEMS INVENTORY
       const { itemsInventory } = this;
       for (let j = 0; j < itemsInventory.length; j++) {
         const [itemID, amount] = itemsInventory[j];
@@ -231,12 +235,15 @@ class Crafter extends EventEmitter {
         user[`modules.inventory.$[i${i}].count`] = -amount;
         i++;
       }
+
+      // GEMS
       for (const gemArr of this.gemsTotal) {
         user[`modules.${gemArr[0]}`] = -gemArr[1];
-        [plx[`modules.${gemArr[0]}`]] = gemArr;
+        plx[`modules.${gemArr[0]}`] = gemArr[1];
       }
       if (this.xp) user["progression.craftingXP"] = this.xp;
 
+      // SETUP DB CALLS
       const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters } }]; // @ts-ignore
       if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
       if (Object.keys(toAdd).length) {
@@ -255,6 +262,7 @@ class Crafter extends EventEmitter {
       console.log("PLX");
       console.table(plx);
 
+      // EXECUTE
       return DB.users.bulkWrite(toWrite).then(() => {
         const payloads = this.gemsTotal
           .map((gem) => generatePayload(this._userID, PLX.user.id, -gem[1], "crafting", gem[0], "PAYMENT", "-"));
@@ -265,15 +273,21 @@ class Crafter extends EventEmitter {
     }
 
     _init() {
+      // selected item
+      this._itemsCrafting[this._item.id] = this._count;
+
+      // items
       if (this._item.materials) {
         const countList = this._sumMaterials(this._item.materials, this._count);
         for (const item of Object.keys(countList)) {
-          const have = this._getFromInventory(item)?.count || 0;
+          const have = this._getFromInventory(item)?.count ?? 0;
           const need = countList[item];
-          if (have) this._itemsInventory[item] = have > need ? need : have;
-          if (have < need) this._itemsMissing[item] = need - have;
+          if (have) this._itemsInventory[item] = Math.min(need, have);
+          if (have < need) this._itemsMissing[item] = Math.max(need - have, 0);
         }
       }
+
+      // gems
       const gems = this._item.gemcraft;
       for (const gem of Object.keys(gems)) if (gems[gem] && typeof gems[gem] === "number") this._gemsTotal[gem] = gems[gem];
       this.emit("ready");
@@ -310,7 +324,7 @@ class Crafter extends EventEmitter {
     _autoGenHelper(item, count = 1, ignore = false) {
       if (!item) throw new Error(`autoGen did not receive an item: ${item}`);
       if (!item.crafted) throw new Error(`Item ${item} not craftable`);
-      if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] || 0) + count;
+      if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] ?? 0) + count;
 
       // Some initialization
       const toRet = {
@@ -320,8 +334,8 @@ class Crafter extends EventEmitter {
       // add gem cost
       if (!ignore) {
         for (const gem of Object.keys(item.gemcraft)) {
-          if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] || 0) + (item.gemcraft[gem] * count);
-          if (toRet.gems[gem]) this._gemsTotal[gem] = (this._gemsTotal[gem] || 0) + toRet.gems[gem];
+          if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] ?? 0) + (item.gemcraft[gem] * count);
+          if (toRet.gems[gem]) this._gemsTotal[gem] = (this._gemsTotal[gem] ?? 0) + toRet.gems[gem];
         }
       }
 
@@ -338,15 +352,15 @@ class Crafter extends EventEmitter {
 
           // Check inventory if we have any or even enough left.
           const need = countList[materialID];
-          const inInventory = this._getFromInventory(materialID)?.count || 0;
-          const amountLeft = (inInventory - (this._itemsInventory[materialID] || 0)) || 0;
+          const inInventory = this._getFromInventory(materialID)?.count ?? 0;
+          const amountLeft = (inInventory - (this._itemsInventory[materialID] || 0)) ?? 0;
           const haveEnough = amountLeft >= countList[materialID];
 
           // The item can't be crafted, or we have some left.
           if (!material.crafted || amountLeft) {
-            toRet.items.push({ id: materialID, count: material.crafted ? amountLeft : need });
-            if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] || 0) + amountLeft;
-            if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] || 0) + (need - amountLeft);
+            toRet.items.push({ id: materialID, count: material.crafted ? Math.min(amountLeft, need) : need });
+            if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] ?? 0) + Math.min(amountLeft, need);
+            if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] ?? 0) + Math.max((need - amountLeft), 0);
           }
 
           // Not enough items and it's craftable... generate auto report for the material and add it.
@@ -364,18 +378,19 @@ class Crafter extends EventEmitter {
       const penalties = Object.keys(autoPenalties);
       const { gemsTotal } = this;
       for (const gem of penalties) {
-        let penaltyAmount;
         switch (gem) {
           case "xp": break;
           case "gems":
             for (const gemArr of gemsTotal) {
               if (penalties.includes(gemArr[0])) continue;
+              let penaltyAmount;
               if (autoPenalties.gems >= 1) penaltyAmount = autoPenalties.gems;
               else if (autoPenalties.gems >= 0) penaltyAmount = Math.floor(gemArr[1] * autoPenalties.gems);
               if (penaltyAmount > 0) this._penaltyGems[gemArr[0]] = penaltyAmount;
             }
             break;
           default:
+            let penaltyAmount;
             if (autoPenalties[gem] >= 1) penaltyAmount = autoPenalties[gem];
             else if (autoPenalties[gem] >= 0) penaltyAmount = Math.floor(gemsTotal.find((a) => a[0] === gem)?.[1] * autoPenalties[gem]);
             if (penaltyAmount > 0) this._penaltyGems[gem] = penaltyAmount;

@@ -8,6 +8,7 @@ const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const Target = await PLX.getTarget(msg.args[0], msg.guild, false);
+  if (Target && Target.id === msg.author.id) return `${_emoji("nope")} $t("responses.thx.noself")`;
 
   const embed = {};
 

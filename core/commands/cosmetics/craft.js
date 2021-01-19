@@ -138,26 +138,28 @@ const init = async (msg, args) => {
 
             // Ask for confirmation
             return getYesNo(m, 30000).then(async () => {
-              crafter.confirm().then(() => done());
-            }).catch((e) => endNo(e, m));
+              crafter.confirm()
+                .then(() => done())
+                .catch(e => endNo(e, m));
+            });
           }).catch((e) => endNo(e, m));
         });
       }
-      /** ------------------------------/
-        |* EVERYTHING AVAILABLE → CRAFT *
-        \**-----------------------------*/
+      /** ----------------------------*\
+      |* EVERYTHING AVAILABLE → CRAFT *|
+      \**-----------------------------*/
       craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
       embed.description = gemDisplay + matDisplay + craftExplan;
 
       // Show craft cost & info
-
       return msg.channel.send({ embed }).then((m) => {
         embedmsg = m;
         // Ask for confirmation
         return getYesNo(m).then(async () => {
-          crafter.confirm();
-          done();
-        }).catch((e) => endNo(e, m));
+          crafter.confirm()
+            .then(() => done())
+            .catch(e => endNo(e, m));
+        });
       });
 
       function done() {
@@ -180,7 +182,7 @@ const init = async (msg, args) => {
         }
         console.error(" CRAFT ERROR ".bgRed);
         if (e && e.stack) console.error(e.stack);
-        throw new Error("shouldn't happen");
+        throw new Error(e);
       }
 
       function endMissingMaterials(m, v) {
