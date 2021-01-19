@@ -28,7 +28,7 @@ const init = async (msg) => {
   emb.title(bal);
 
   async function lastTransBuild(x) {
-    if (!x) return "\u200b";
+    if (!x) return "";
 
     const POLid = PLX.user.id;
 
@@ -49,7 +49,7 @@ const init = async (msg) => {
     if (x.to === POLid) return `📤  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
     if (x.from === POLid) return `📥  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
 
-    return "\u200b";
+    return "";
   }
 
   if (TARGETDATA) {
