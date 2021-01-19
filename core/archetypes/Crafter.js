@@ -213,6 +213,8 @@ class Crafter extends EventEmitter {
         toAdd = [];
 
       let i = 0;
+
+      // ITEMS
       const { itemsCrafted } = this;
       for (;i < itemsCrafted.length; i++) {
         const [itemID, amount] = itemsCrafted[i];
@@ -231,12 +233,15 @@ class Crafter extends EventEmitter {
         user[`modules.inventory.$[i${i}].count`] = -amount;
         i++;
       }
+
+      // GEMS
       for (const gemArr of this.gemsTotal) {
         user[`modules.${gemArr[0]}`] = -gemArr[1];
-        [plx[`modules.${gemArr[0]}`]] = gemArr;
+        plx[`modules.${gemArr[0]}`] = gemArr[1];
       }
       if (this.xp) user["progression.craftingXP"] = this.xp;
 
+      // SETUP DB CALLS
       const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters } }]; // @ts-ignore
       if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
       if (Object.keys(toAdd).length) {
@@ -255,6 +260,7 @@ class Crafter extends EventEmitter {
       console.log("PLX");
       console.table(plx);
 
+      // EXECUTE
       return DB.users.bulkWrite(toWrite).then(() => {
         const payloads = this.gemsTotal
           .map((gem) => generatePayload(this._userID, PLX.user.id, -gem[1], "crafting", gem[0], "PAYMENT", "-"));
