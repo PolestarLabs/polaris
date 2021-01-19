@@ -31,6 +31,7 @@ class WebhookDigester {
     embed.timestamp = new Date();
 
     return this.client.executeWebhook(destination.id, destination.token, {
+      wait: true,
       content,
       embeds: [embed],
     });
