@@ -112,7 +112,7 @@ const init = async (msg, args) => {
     if (canReroll) message.addReaction("🔁").catch((e) => null);
 
     return message.awaitReactions((reaction) => {
-      if (reaction.author.id === PLX.user.id) return false;
+      if (reaction.author.id !== msg.author.id) return false;
       if (reaction.emoji.name === "🔁") {
         return canReroll;
       } if (reaction.emoji.name === "⭐") return true;
