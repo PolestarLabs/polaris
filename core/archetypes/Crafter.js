@@ -190,8 +190,7 @@ class Crafter extends EventEmitter {
     setMode(int) {
       this._mode = int;
       this._clear();
-      if (int === 1) this.autoGen(false);
-      if (int === 2) this.autoGen(true);
+      this.autoGen();
     }
 
     /**
@@ -216,6 +215,7 @@ class Crafter extends EventEmitter {
 
       // ITEMS CRAFTED
       const { itemsCrafted } = this;
+      if (this._mode !== 2) itemsCrafted[this._item.id] = (itemsCrafted[this._item.id] ?? 0) + this._count; // add item we're making
       for (;i < itemsCrafted.length; i++) {
         const [itemID, amount] = itemsCrafted[i];
         arrayFilters.push({ [`i${i}.id`]: itemID });
@@ -273,9 +273,6 @@ class Crafter extends EventEmitter {
     }
 
     _init() {
-      // selected item
-      this._itemsCrafting[this._item.id] = this._count;
-
       // items
       if (this._item.materials) {
         const countList = this._sumMaterials(this._item.materials, this._count);
@@ -304,11 +301,10 @@ class Crafter extends EventEmitter {
     /**
      * Sets this Crafter's values to the necessary value for autocrafting.
      *
-     * @param {boolean} onlyDependencies if true the item itself will be ignored in the cost.
      * @memberof Crafter
      */
-    autoGen(onlyDependencies) {
-      this._report = this._autoGenHelper(this._item, this._count, onlyDependencies);
+    autoGen() {
+      this._report = this._autoGenHelper(this._item, this._count, true);
       this._setPenalties();
     }
 
