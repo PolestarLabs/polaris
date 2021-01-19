@@ -11,15 +11,11 @@
  * @property {number} timestamp
  */
 
-/**
- * @typedef TransactionOptions
- * @property {boolean} [allowzero=false] Whether to allow transactions with amt=0 to go through.
- */
-
 // NOTE don't touch this thnx
 
 /*
  * TODO[epic=mitchell] Add options to transactions
+ * Pay, Receive, Transfer: allowZero - to go through when amt = 0.
  * GeneratePayload could allow custom fields.
 */
 
@@ -119,7 +115,6 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
- * @param {object} fields An object with custom fields (does not override existing)
  * @return {Transaction} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
@@ -139,7 +134,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     transactionId: `${curr}${now.toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
-  return { ...fields, ...payload };
+  return payload;
 }
 
 /**
@@ -149,13 +144,12 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @param {TransactionOptions} options The transaction options
- * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0] without allowZero.
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-", options);
+function pay(user, amt, type = "OTHER", currency = "RBN") {
+  return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-");
 }
 
 /**
@@ -165,13 +159,12 @@ function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
- * @param {TransactionOptions} options The transaction options.
- * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0] without allowZero.
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+", options);
+function receive(user, amt, type = "OTHER", currency = "RBN") {
+  return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+");
 }
 
 /**
@@ -184,12 +177,11 @@ function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @param {Currency|Array<Currency>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
  * @param {string} [subtype="TRANSFER"] The sub-type of the transaction :: default "TRANSFER"
  * @param {string} [symbol=">"] The transaction symbol :: default ">"
- * @param {TransactionOptions} options The transaction options.
- * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0] without allowZero.
+ * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false } = {}) {
+function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">") {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
   if (amt === 0) return Promise.resolve(null);
@@ -221,7 +213,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     // Fill DB calls
     for (let i in curr) {
       let absAmount = Math.abs(amt[i]);
-      if (!allowZero && absAmount === 0) continue; // stop if AMT = 0 or not present
+      if (!absAmount) continue; // stop if AMT = 0 or not present
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
       payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
@@ -244,10 +236,10 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
         return payloads.length === 1 ? payloads[0] : payloads;
       });
   });
-} 
+}
 
 /**
- * Creates a new audit.
+ * Creates a new audit. 
  * NOTE: this will immediately end up in DB.
  *
  * @param {string|{id: string}} from user(ID) from
@@ -256,7 +248,6 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
- * @param {object} fields An object with custom fields (does not override existing)
  * @returns {Promise<Transaction>} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!", fields = {}) {

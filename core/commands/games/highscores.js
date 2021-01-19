@@ -2,6 +2,7 @@
 
 const init = async function (msg, args, telePass) {
   if (telePass == "flags") return topFlags(msg, args);
+  if (telePass == "gtf") return topFlags(msg, args);
 };
 
 async function topFlags(msg, args) {

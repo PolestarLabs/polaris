@@ -8,7 +8,7 @@ const allItemsName = new Map();
 const craftedItems = new Map();
 
 function init() { // @ts-ignore
-  return DB.items.find({}).lean().exec().then((ALLITEMS) => {
+  return DB.items.find({}).lean().then((ALLITEMS) => {
     for (const item of ALLITEMS) {
       // Add all items by ID & name iff different.
       allItems.set(item.id, item);
@@ -429,11 +429,13 @@ class Crafter extends EventEmitter {
       if (!search) throw new Error("Need a string to search for");
       const entries = allItems.entries();
       const items = [];
-
+      
       // calc diff and add if <5
       for (const entry of entries) {
         const itm = entry[1];
+
         if (!itm.name) throw new Error(`Item without name... ID: ${itm.id}`);
+       
         itm.diff = diff(search, itm.name.toLowerCase());
         itm.diffs = {};
         itm.diffs.E = itm.diff.filter((x) => x[0] === 0).length;
@@ -448,6 +450,7 @@ class Crafter extends EventEmitter {
               - itm.diffs.E * 3
               - itm.diff.filter((x) => x[1].length > search.length / 2 && x[0] === 0).length * 2.6;
 
+       
         if (itm.diffScore < 5) items.push(itm);
       }
       // sort and return

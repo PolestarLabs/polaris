@@ -56,7 +56,7 @@ const PERMS_CALC = function CommandPermission(msg) {
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
-    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction), false;
+    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch(err=> console.error("Messed up perms at "+msg.guild.id) ), false;
   }
   if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
   return (!uIDs.length || uIDs.includes(msg.author.id));
@@ -204,10 +204,10 @@ const registerCommands = (rel) => {
       modules.map(async (folder) => {
         const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
         results = results.concat( commands.map((_cmd) => registerOne(folder, _cmd)).filter(x=>!!x) );
-        console.log({folder},{results})
+        //console.log({folder},{results})
       })
     ).then(res => {
-      console.log({res,results})
+      //console.log({res,results})
       hook.info(`
       **Commands Reloaded**
 ${_emoji('yep') } **${     results.filter(_=>!!_.pass).length  }** / ${  results.length } commands registered.

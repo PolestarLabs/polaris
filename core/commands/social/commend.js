@@ -8,8 +8,7 @@ const init = async function (msg) {
   if (!Target) Target = msg.author;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
-  const targetData = (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target));
-  const targetDataC = (await DB.commends.findOne({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
+  const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
@@ -27,15 +26,13 @@ const init = async function (msg) {
   const after = async function after(msg, Dly) {
     await Promise.all([
       userData.removeItem("commendtoken"),
-      userData.incrementAttr("commended", 1),
-      targetData.incrementAttr("commend", 1),
-      targetData.upCommend(msg.author),
+      DB.commends.add(userData.id, Target.id, 1),
     ]);
 
     P.target = Target.nick || (Target.user || Target).username;
     P.author = msg.member.nick || msg.author.username;
-    P.cmcount = (targetData.modules.commend + 1) || 0;
-    P.pplcount = targetDataC.whoIn.length;
+    P.cmcount = (targetData.totalIn + 1) || 0;
+    P.pplcount = targetData.whoIn.length + 1;
 
     const embed = new Embed()
       .thumbnail("https://pollux.fun/build/rank.png")
@@ -77,19 +74,16 @@ const init = async function (msg) {
 const info = async (msg, args) => {
   const Target = await PLX.getTarget(args[0] || msg.author, msg.guild);
 
-  const [targetData, targetDataC] = await Promise.all([
-    (await DB.users.getFull({ id: Target.id })) || (await DB.users.new(Target)),
-    ((await DB.commends.findOne({ id: Target.id }).lean().exec()) || { id: Target.id, whoIn: [], whoOut: [] }),
-  ]);
+  const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
 
-  const metas = await DB.users.find({ id: { $in: targetDataC.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
-  const commendT3 = targetDataC.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id).meta.tag, amt: u.count })).sort((c1, c2) => c2.amt - c1.amt);
+  const metas = await DB.users.find({ id: { $in: targetData.whoIn.map((u) => u.id) } }, { id: 1, meta: 1 }).sort({ amt: -1 }).lean().exec();
+  const commendT3 = targetData.whoIn.map((u) => ({ name: metas.find((x) => x.id === u.id)?.meta?.tag || `<@${u.id}>`, amt: u.count })).sort((c1, c2) => c2.amt - c1.amt);
   const embed = new Embed()
     .color("#3b9ea5").thumbnail(`${paths.CDN}/build/rank.png`)
     .description(
       `__**Commend Info for ${Target.mention}**__\
-      \n\u2003 Total Commends Received: **${targetData.modules.commend || 0}**\
-      \n\u2003 Total Commends Given: **${targetData.modules.commended || 0}**\
+      \n\u2003 Total Commends Received: **${targetData.totalIn || 0}**\
+      \n\u2003 Total Commends Given: **${targetData.totalOut || 0}**\
     ${commendT3.length == 0 ? ""
     : `\n\n__**Top Commenders**__\
       \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
@@ -109,7 +103,7 @@ module.exports = {
   perms: 3,
   cat: "social",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["com", "rec"],
+  aliases: ["com", "rec","rep"],
   autoSubs: [
     { label: "info", gen: info },
   ],

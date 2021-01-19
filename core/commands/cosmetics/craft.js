@@ -37,7 +37,7 @@ const init = async (msg, args) => {
     if (!craftedItem) {
       const userDiscoveries = (await DB.users.get(msg.author.id))?.modules.inventory.filter((itm) => itm.crafted).map((itm) => itm.id) || [];
       const searchResults = Crafter.searchItems(toBeCrafted);
-      const DYM = searchResults.filter((x) => userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
+      const DYM = searchResults.filter((x) => x.open || userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
       const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
 
       if (DYM.length > 0) {

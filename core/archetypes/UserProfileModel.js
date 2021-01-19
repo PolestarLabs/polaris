@@ -36,7 +36,7 @@ class UserProfileModel {
     this.sapphires = userDBData.modules.SPH || 0;
     this.medals = userDBData.modules.medals || [];
     this.marriage = userDBData.featuredMarriage || null;
-    this.commend = userDBData.modules.commend || 0;
+    this.commend =  0;
     this.countryFlag = userDBData.personal?.country || null;
     this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
 
@@ -53,6 +53,16 @@ class UserProfileModel {
         this.rank = res;
       });
 
+  }
+
+  get commends() {
+    return new Promise((resolve) => {
+      DB.commends.parseFull(this.ID)
+        .then(res=>{
+          this.commend = res.totalIn;
+          resolve(res.totalIn)
+        })
+    })
   }
 
   get localData() {

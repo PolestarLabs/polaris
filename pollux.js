@@ -136,10 +136,11 @@ global.translateEngineStart = () => {
   const multilang = require("./utils/i18node.js");
   const i18nBackend = require("i18next-node-fs-backend");
   const backendOptions = {
-    loadPath: "./locales/{{lng}}/{{ns}}.json",
+    //loadPath: "./locales/{{lng}}/{{ns}}.json",
+    loadPath: paths.LOCALES + "{{lng}}/{{ns}}.json",
     jsonIndent: 2,
   };
-  readdirAsync("./locales/").then((list) => {
+  readdirAsync( paths.LOCALES ).then((list) => {
     i18next.use(i18nBackend).init({
       backend: backendOptions,
       lng: "en",
@@ -261,8 +262,9 @@ PLX.setAvatar = async (url) => {
 
 PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
 PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
-PLX.reply = (msg, content) => {
+PLX.reply = (msg, content, ping=false) => {
   const payload = {
+    replied_user: ping,
     message_reference: {
       channel_id: msg.channel.id,
       guild_id: msg.guild.id,
