@@ -370,18 +370,19 @@ class Crafter extends EventEmitter {
       const penalties = Object.keys(autoPenalties);
       const { gemsTotal } = this;
       for (const gem of penalties) {
-        let penaltyAmount;
         switch (gem) {
           case "xp": break;
           case "gems":
             for (const gemArr of gemsTotal) {
               if (penalties.includes(gemArr[0])) continue;
+              let penaltyAmount;
               if (autoPenalties.gems >= 1) penaltyAmount = autoPenalties.gems;
               else if (autoPenalties.gems >= 0) penaltyAmount = Math.floor(gemArr[1] * autoPenalties.gems);
               if (penaltyAmount > 0) this._penaltyGems[gemArr[0]] = penaltyAmount;
             }
             break;
           default:
+            let penaltyAmount;
             if (autoPenalties[gem] >= 1) penaltyAmount = autoPenalties[gem];
             else if (autoPenalties[gem] >= 0) penaltyAmount = Math.floor(gemsTotal.find((a) => a[0] === gem)?.[1] * autoPenalties[gem]);
             if (penaltyAmount > 0) this._penaltyGems[gem] = penaltyAmount;
