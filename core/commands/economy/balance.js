@@ -73,7 +73,7 @@ ${await lastTransBuild(lastTrans[1])}
 ${await lastTransBuild(lastTrans[2])}
 ${await lastTransBuild(lastTrans[3])}
 ${await lastTransBuild(lastTrans[4])}
-` || "\u200b", false);
+`.trim() || "\u200b", false);
   } else {
     emb.description(`User \`${Target.id}\` not found in Pollux Database`);
   }
