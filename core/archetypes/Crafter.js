@@ -37,10 +37,10 @@ const baselineBonus = {
 // A penalty < 1 will be interpreted as a %. Penalties have to be positive.
 // Can also define every currency for itself.
 // Note that'll exclude it from the general 'gems'.
-const autoPenalties = {
-  xp: 0.2,
-  gems: 0.5,
-  SPH: 0,
+const autoPenalties = { // REVIEW[epic=flicky] review these penalties 
+  xp: 0.2, // +20% on exp
+  gems: 0.5, // +50% on each gem except...
+  SPH: 0, // sph will be ignored
 };
 
 /** *********\
@@ -166,7 +166,7 @@ class Crafter extends EventEmitter {
 
     get xp() { return this._xp() - this.penaltyXP; }
 
-    get penaltyXP() { return autoPenalties.xp >= 1 ? autoPenalties.xp : this._xp() * autoPenalties.xp; }
+    get penaltyXP() { return autoPenalties.xp >= 1 ? autoPenalties.xp : (this._xp() * autoPenalties.xp ?? 0); }
 
     _xp() {
       return Object.keys(this._itemsCrafting)
