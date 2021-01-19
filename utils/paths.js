@@ -15,7 +15,7 @@ exports.run = () => {
     LISTS: `${appRoot}/resources/lists/`,
     BUILD: `${CDN}/build/`,
     PROFILE: `${CDN}/build/profile/`,
-    LOCALES: `${appRoot}/../../LOCALES/`,
+    LOCALES: `${appRoot}/locales/`,
     
     //LEGACY
     Build: `${CDN}/build/`,
