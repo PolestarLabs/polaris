@@ -409,7 +409,8 @@
         },
         "thx": {
             "after": "{{userA}} sent *\"Thanks\"* to **{{userB}}**!\n{{userB}} has been thanked **{{totalTHX}}** times.",
-            "wipe": "This will remove **all** {{THX}} points from {{user}}. **Are you sure you want to do that?**"
+            "wipe": "This will remove **all** {{THX}} points from {{user}}. **Are you sure you want to do that?**",
+            "noself": "I would rather you thank someone else."
         },
         "divorce": {
             "confirmdiag": "Do you agree to get a divorce from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
