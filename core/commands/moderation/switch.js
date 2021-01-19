@@ -1,6 +1,7 @@
 // TRANSLATE[epic=translations] switch
 
 const SwitchArch = require("../../archetypes/Switch");
+const INPUT_TIMEOUT = 2 * 60e3;
 
 let cats;
 let catsArr;
@@ -104,7 +105,7 @@ async function sendHelpEmbed(msg) {
     omsg.delete();
     return true;
   };
-  const RC = omsg.createReactionCollector(reactionRemoveFunction, { time: 60e5, max: 1 });
+  const RC = omsg.createReactionCollector(reactionRemoveFunction, { time: INPUT_TIMEOUT, max: 1 });
   RC.on("emoji", () => RC.stop());
 }
 
@@ -144,14 +145,14 @@ async function init(msg) {
     return (Switch.mode === "category" ? cats[Switch.category].cmds.includes(name) : catsArr.includes(name));
   }
   const reactionFilter = (r) => msg.author.id === r.userID && menuEmoijisNames.flat().includes(r.emoji.name);
-  const MC = msg.channel.createMessageCollector(messageFilter, { time: 60e5 });
-  const RC = omsg.createReactionCollector(reactionFilter, { time: 60e5 });
+  const MC = msg.channel.createMessageCollector(messageFilter, { time: INPUT_TIMEOUT });
+  const RC = omsg.createReactionCollector(reactionFilter, { time: INPUT_TIMEOUT });
 
   let wasActive = true;
   const inactivityInterval = setInterval(() => {
     if (!wasActive) return exit(true);
     wasActive = false;
-  }, 6e3);
+  }, INPUT_TIMEOUT);
 
   // On emoji added
   RC.on("emoji", (emoji) => {
@@ -274,9 +275,9 @@ async function init(msg) {
         savemsg.addReaction(R_YEP);
         savemsg.addReaction(R_NOPE);
         Promise.race([
-          msg.channel.awaitMessages((m) => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: 6e4 }),
-          savemsg.awaitReactions((r) => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: 6e4 }),
-          new Promise((resolve) => setTimeout(() => resolve([]), 2 * 6e4)),
+          msg.channel.awaitMessages((m) => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: INPUT_TIMEOUT }),
+          savemsg.awaitReactions((r) => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: INPUT_TIMEOUT }),
+          new Promise((resolve) => setTimeout(() => resolve([]), 2 * INPUT_TIMEOUT)),
         ]).then((r) => {
           if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP)) {
             savemsg.edit(savingEmbed);
