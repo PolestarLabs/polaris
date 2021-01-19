@@ -11,7 +11,7 @@
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
     "@polestar/database_schema": "gitlab:PolestarLabs/database_schema",
-    "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#61566a3d99ed764ca4a52c1ad03f39f82df0272d",
+    "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#223d899a572a225caff4fac9fd1b22f73bc1abda",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
     "axios": "^0.21.1",
