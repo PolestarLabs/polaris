@@ -455,7 +455,7 @@
                 "Your balance is looking a little sad - let's spruce it up together! Maybe these will help:",
                 "Wow, is this what you look like in the morning? Don't answer. Take these and brush your hair:"
             ],
-            "firstDaily": "Hey! You are new here... right? Well you can come by every day for some goodies!",
+            "firstDaily": "Hey! You are new here ...right? Well you can come by every day for some goodies!",
             "dailyNope": "Hmm? Seems you already claimed your Bonuses today. You can get more in **{{remaining}}**"
             
         },
