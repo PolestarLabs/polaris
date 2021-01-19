@@ -38,9 +38,9 @@ const baselineBonus = {
 // Can also define every currency for itself.
 // Note that'll exclude it from the general 'gems'.
 const autoPenalties = { // REVIEW[epic=flicky] review these penalties 
-  xp: 0.2, // +20% on exp
+  xp: 0.2, // -20% on exp
   gems: 0.5, // +50% on each gem except...
-  SPH: 0, // sph will be ignored
+  SPH: 0, // sph will be set to 0% (% as it's <0, but 0% = 0...)
 };
 
 /** *********\
