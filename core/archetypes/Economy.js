@@ -19,9 +19,7 @@
 // NOTE don't touch this thnx
 
 /*
- * TODO[epic=mitchell] Add options to transactions
- * Pay, Receive, Transfer: allowZero - to go through when amt = 0.
- * GeneratePayload could allow custom fields.
+ * TODO[epic=mitchell,priority=low] Refactor to be more option oriented instead of infinite params.
 */
 
 /** 
