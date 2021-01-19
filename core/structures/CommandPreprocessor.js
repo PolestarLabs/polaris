@@ -204,10 +204,10 @@ const registerCommands = (rel) => {
       modules.map(async (folder) => {
         const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
         results = results.concat( commands.map((_cmd) => registerOne(folder, _cmd)).filter(x=>!!x) );
-        console.log({folder},{results})
+        //console.log({folder},{results})
       })
     ).then(res => {
-      console.log({res,results})
+      //console.log({res,results})
       hook.info(`
       **Commands Reloaded**
 ${_emoji('yep') } **${     results.filter(_=>!!_.pass).length  }** / ${  results.length } commands registered.
