@@ -26,7 +26,7 @@ const init = async (msg) => {
   const thisPack = boosterData.find((b) => b.id === `${collection}_booster`);
   P.boostername = thisPack.name;
   P.dashboard = `[${$t("terms.dashboard", P)}](${paths.DASH}/dashboard#/stickers)`;
-  embed.author(_emoji(thisPack.rarity) + $t("interface.booster.title", P));
+  embed.author($t("interface.booster.title", P));
   embed.color = 0x36393f;
   embed.description = `${"------------------------------------------------\n"
   + `${stk1.new ? ":new:" : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
