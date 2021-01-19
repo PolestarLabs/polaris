@@ -199,6 +199,11 @@ class Crafter extends EventEmitter {
      * @memberof Crafter
      */
     confirm() {
+      // First add the item we're making to crafting items.
+      // Supports circular dependency just in case.
+      this._itemsCrafting[this._item.id] = (this._itemsCrafting[this._item.id] ?? 0) + this._count;
+
+
       /**
         * Handling all the DB stuff in one query:
         * 1. User pays all the gem(s).
@@ -215,7 +220,6 @@ class Crafter extends EventEmitter {
 
       // ITEMS CRAFTED
       const { itemsCrafted } = this;
-      if (this._mode !== 2) itemsCrafted[this._item.id] = (itemsCrafted[this._item.id] ?? 0) + this._count; // add item we're making
       for (;i < itemsCrafted.length; i++) {
         const [itemID, amount] = itemsCrafted[i];
         arrayFilters.push({ [`i${i}.id`]: itemID });
