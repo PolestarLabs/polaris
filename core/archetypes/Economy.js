@@ -123,7 +123,8 @@ function checkFunds(user, amount, currency = "RBN") {
  * @return {Transaction} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
-  if (!(userFrom && amt && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
+  if (!(userFrom && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
+  if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
   if (typeof userFrom === "object") userFrom = userFrom["id"];
   if (typeof userTo === "object") userTo = userTo["id"];
   const now = Date.now();
@@ -190,8 +191,8 @@ function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  */
 function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false } = {}) {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
+  if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
   if (amt === 0) return Promise.resolve(null);
-  if (!amt || (typeof amt !== "number" && !amt.length)) return Promise.resolve(null);
 
   // Argument parsing
   if (typeof userFrom === "object") userFrom = userFrom.id;
@@ -260,6 +261,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!", fields = {}) {
   if (!from || !to) throw new Error("Missing arguments");
+  if (typeof amt !== "number") throw new TypeError("Type of amt should be number.");
   const payload = generatePayload(from, to, amt, type, tag, type, symbol, fields);
   await DB.audits.new(payload);
   return payload;
