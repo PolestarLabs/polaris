@@ -326,8 +326,8 @@ class Crafter extends EventEmitter {
       // add gem cost
       if (!ignore) {
         for (const gem of Object.keys(item.gemcraft)) {
-          if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] || 0) + (item.gemcraft[gem] * count);
-          if (toRet.gems[gem]) this._gemsTotal[gem] = (this._gemsTotal[gem] || 0) + toRet.gems[gem];
+          if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] ?? 0) + (item.gemcraft[gem] * count);
+          if (toRet.gems[gem]) this._gemsTotal[gem] = (this._gemsTotal[gem] ?? 0) + toRet.gems[gem];
         }
       }
 
@@ -344,15 +344,15 @@ class Crafter extends EventEmitter {
 
           // Check inventory if we have any or even enough left.
           const need = countList[materialID];
-          const inInventory = this._getFromInventory(materialID)?.count || 0;
-          const amountLeft = (inInventory - (this._itemsInventory[materialID] || 0)) || 0;
+          const inInventory = this._getFromInventory(materialID)?.count ?? 0;
+          const amountLeft = (inInventory - (this._itemsInventory[materialID] || 0)) ?? 0;
           const haveEnough = amountLeft >= countList[materialID];
 
           // The item can't be crafted, or we have some left.
           if (!material.crafted || amountLeft) {
             toRet.items.push({ id: materialID, count: material.crafted ? amountLeft : need });
-            if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] || 0) + amountLeft;
-            if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] || 0) + (need - amountLeft);
+            if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] ?? 0) + amountLeft;
+            if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] ?? 0) + (need - amountLeft);
           }
 
           // Not enough items and it's craftable... generate auto report for the material and add it.
