@@ -123,7 +123,7 @@ const ONEminute = new CronJob("*/1 * * * *", async () => {
 
   /* Manage Reminders */ //= ===============================
   processReminders();
-  setTimeout(() => processReminders(), 30e3);
+  //setTimeout(() => processReminders(), 30e3);
 
   /* Manage Mutes */ //= ===============================
   DB.mutes.find({ expires: { $lte: Date.now() + 75e3 } })
@@ -193,7 +193,7 @@ FIFTEENminute.start();
 console.log("• ".green, "CRONs ready");
 
 function processReminders() {
-  DB.feed.find({ expires: { $lte: Date.now() + 45e3 } }).lean().exec()
+  DB.feed.find({ expires: { $lte: Date.now() + 45e3 } }).lean()
     .then((reminders) => {
       console.log({ reminders });
       reminders.forEach(async (rem) => {

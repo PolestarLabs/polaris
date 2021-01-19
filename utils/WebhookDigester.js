@@ -30,7 +30,8 @@ class WebhookDigester {
     embed.footer = { text: `Reported by cluster: ${PLX.cluster.name}` };
     embed.timestamp = new Date();
 
-    this.client.executeWebhook(destination.id, destination.token, {
+    return this.client.executeWebhook(destination.id, destination.token, {
+      wait: true,
       content,
       embeds: [embed],
     });
@@ -41,7 +42,7 @@ class WebhookDigester {
       color: 0x15A9D6,
       description: message,
     };
-    this.execute(embed, options);
+    return this.execute(embed, options);
   }
 
   warn(message, options) {
@@ -49,7 +50,7 @@ class WebhookDigester {
       color: 0xD6A915,
       description: message,
     };
-    this.execute(embed, options);
+    return this.execute(embed, options);
   }
 
   error(message, options) {
@@ -57,7 +58,7 @@ class WebhookDigester {
       color: 0xF05956,
       description: message,
     };
-    this.execute(embed, options);
+    return this.execute(embed, options);
   }
 
   ok(message, options) {
@@ -65,14 +66,14 @@ class WebhookDigester {
       color: 0x40F066,
       description: message,
     };
-    this.execute(embed, options);
+    return this.execute(embed, options);
   }
 
   raw(message, options) {
     const { hook } = options;
     const destination = hook || cfg.mainWebhook;
     if (!destination?.id) return; // FIXME[epic=flicky] way to disable this completely
-    this.client.executeWebhook(destination.id, destination.token, {
+    return this.client.executeWebhook(destination.id, destination.token, {
       content: `\`[${PLX.cluster.name || "N/A"} | #${PLX.cluster.id || 0}]\` ::  ${message.slice(0, 2000)}`,
     });
   }
