@@ -214,7 +214,7 @@ class Crafter extends EventEmitter {
 
       let i = 0;
 
-      // ITEMS
+      // ITEMS CRAFTED
       const { itemsCrafted } = this;
       for (;i < itemsCrafted.length; i++) {
         const [itemID, amount] = itemsCrafted[i];
@@ -226,6 +226,8 @@ class Crafter extends EventEmitter {
         const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
         if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
       }
+
+      // ITEMS INVENTORY
       const { itemsInventory } = this;
       for (let j = 0; j < itemsInventory.length; j++) {
         const [itemID, amount] = itemsInventory[j];
