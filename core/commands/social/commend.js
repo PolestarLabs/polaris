@@ -26,7 +26,7 @@ const init = async function (msg) {
   const after = async function after(msg, Dly) {
     await Promise.all([
       userData.removeItem("commendtoken"),
-      userData.upCommend(Target.id),
+      DB.commends.add(userData.id, Target.id, 1),
     ]);
 
     P.target = Target.nick || (Target.user || Target).username;
@@ -103,7 +103,7 @@ module.exports = {
   perms: 3,
   cat: "social",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["com", "rec"],
+  aliases: ["com", "rec","rep"],
   autoSubs: [
     { label: "info", gen: info },
   ],
