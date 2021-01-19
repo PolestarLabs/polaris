@@ -271,15 +271,21 @@ class Crafter extends EventEmitter {
     }
 
     _init() {
+      // selected item
+      this._itemsCrafting[this._item] = this._count;
+
+      // items
       if (this._item.materials) {
         const countList = this._sumMaterials(this._item.materials, this._count);
         for (const item of Object.keys(countList)) {
-          const have = this._getFromInventory(item)?.count || 0;
+          const have = this._getFromInventory(item)?.count ?? 0;
           const need = countList[item];
-          if (have) this._itemsInventory[item] = have > need ? need : have;
-          if (have < need) this._itemsMissing[item] = need - have;
+          if (have) this._itemsInventory[item] = Math.min(need, have);
+          if (have < need) this._itemsMissing[item] = Math.max(need - have, 0);
         }
       }
+
+      // gems
       const gems = this._item.gemcraft;
       for (const gem of Object.keys(gems)) if (gems[gem] && typeof gems[gem] === "number") this._gemsTotal[gem] = gems[gem];
       this.emit("ready");

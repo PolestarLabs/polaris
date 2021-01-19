@@ -145,14 +145,13 @@ const init = async (msg, args) => {
           }).catch((e) => endNo(e, m));
         });
       }
-      /** ------------------------------/
-        |* EVERYTHING AVAILABLE → CRAFT *
-        \**-----------------------------*/
+      /** ----------------------------*\
+      |* EVERYTHING AVAILABLE → CRAFT *|
+      \**-----------------------------*/
       craftExplan = `\n\n${$t("responses.crafting.materialPresent", P)}`;
       embed.description = gemDisplay + matDisplay + craftExplan;
 
       // Show craft cost & info
-
       return msg.channel.send({ embed }).then((m) => {
         embedmsg = m;
         // Ask for confirmation
