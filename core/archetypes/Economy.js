@@ -11,6 +11,11 @@
  * @property {number} timestamp
  */
 
+/**
+ * @typedef TransactionOptions
+ * @property {boolean} [allowZero] whether to allow transactions with amt=0 to go through.
+ */
+
 // NOTE don't touch this thnx
 
 /*
@@ -72,19 +77,26 @@ function parseCurrencies(/** @type {curr|curr[]} */ curr) {
  * Checks whether the user's funds are equal to or exceed amt.
  *
  * @param {string|{id: string}} user user(ID)
- * @param {number|Array<number>} amount The amount necessary.
+ * @param {number|number[]} amount The amount necessary.
  * @param {Currency|Currency[]} [currency="RBN"] Currency to check against :: default "RBN".
  * @return {Promise<boolean>} True iff enough funds.
  * @throws {Error} Invalid arguments.
  */
 function checkFunds(user, amount, currency = "RBN") {
   if (amount === 0) return Promise.resolve(true);
-  if (!(user && amount)) throw new Error(`Missing arguments. User: ${user} amount: ${amount}`);
+  if (!user) throw new Error(`Missing user: ${user}`);
+
+  if (typeof amount !== "number") {
+    if (amount.length) {
+      for (let amt of amount)
+        if (typeof amt !== "number") throw new TypeError("Amounts should of type number.");
+    } else throw new TypeError("Amount should be of type number.")
+  }
 
   let curr = parseCurrencies(currency);
 
   // Argument validation
-  // NOTE: comparing currency first and then curr might result in error if parseCurrencies doesn't return a string/array as it should.
+  // NOTE: comparing currency first and then curr might result in error if parseCurrencies isn't typesafe.
   if (typeof amount === "number" || typeof currency === "string") {
     if (!(typeof amount === "number" && typeof curr === "string")) throw new TypeError("amt & curr need to be a single number & string or equal length arrays.");
     amount = [amount];
@@ -115,13 +127,16 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {string} curr The currency in 3 letter descriptor.
  * @param {string} subtype Subtype of this transaction.
  * @param {string} symbol Transaction symbol.
+ * @param {object} [fields={}] Custom fields added to the Payload
  * @return {Transaction} The payload generated.
  */
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
   if (!(userFrom && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
+
   if (typeof userFrom === "object") userFrom = userFrom["id"];
   if (typeof userTo === "object") userTo = userTo["id"];
+
   const now = Date.now();
   const payload = {
     subtype: subtype,
@@ -134,7 +149,8 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     transactionId: `${curr}${now.toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
-  return payload;
+
+  return { ...fields, ...payload };
 }
 
 /**
@@ -144,12 +160,13 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
+ * @param {TransactionOptions} [options={}] The transaction options
  * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function pay(user, amt, type = "OTHER", currency = "RBN") {
-  return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-");
+function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
+  return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-", options);
 }
 
 /**
@@ -159,12 +176,13 @@ function pay(user, amt, type = "OTHER", currency = "RBN") {
  * @param {number|Array<number>} amt amt user will receive
  * @param {string} [type="OTHER"] transaction type :: default OTHER
  * @param {Currency|Array<Currency>} [currency="RBN"] currency in any letter format :: default "RBN"
+ * @param {TransactionOptions} options The transaction options
  * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function receive(user, amt, type = "OTHER", currency = "RBN") {
-  return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+");
+function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
+  return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+", options);
 }
 
 /**
@@ -172,19 +190,19 @@ function receive(user, amt, type = "OTHER", currency = "RBN") {
  * 
  * @param {string|{id: string}} userFrom user(ID) from
  * @param {string|{id: string}} userTo user(ID) to
- * @param {number|Array.<number>} amt The amounts to transfer, or an array of.
+ * @param {number|number[]} amt The amounts to transfer, or an array of.
  * @param {string} [type="SEND"] The type of transaction :: default "SEND"
- * @param {Currency|Array<Currency>} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
+ * @param {Currency|Currency[]} [curr="RBN"] The currenc(y)(ies) to transfer :: default "RBN"
  * @param {string} [subtype="TRANSFER"] The sub-type of the transaction :: default "TRANSFER"
  * @param {string} [symbol=">"] The transaction symbol :: default ">"
- * @return {Promise<Array<Transaction>|Transaction|null>} The payload(s) or null if [amt === 0].
+ * @param {TransactionOptions} [options] The transaction options
+ * @return {Promise<Transaction[]|Transaction|null>} The payload(s) or null if [amt === 0].
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">") {
+function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false } = {}) {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
-  if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
-  if (amt === 0) return Promise.resolve(null);
+  if (typeof amt !== "number" && !amt?.length) throw new TypeError("Type of amount should be number.");
 
   // Argument parsing
   if (typeof userFrom === "object") userFrom = userFrom.id;
@@ -192,7 +210,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 
   // Checks
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds) return Promise.reject({reason: "NO FUNDS"}); //throw new Error("User doesn't have the funds necessary.");
+    if (!hasFunds) return Promise.reject({ reason: "NO FUNDS" });
 
     // Argument validation
     curr = parseCurrencies(curr);
@@ -213,7 +231,8 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     // Fill DB calls
     for (let i in curr) {
       let absAmount = Math.abs(amt[i]);
-      if (!absAmount) continue; // stop if AMT = 0 or not present
+      if (typeof absAmount !== "number") throw new TypeError("Amounts should be of type number.");
+      if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
       payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
@@ -248,14 +267,15 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
  * @param {string} type The type of audit :: default "ARBITRARY"
  * @param {string} [tag="OTH"] The tag (usually currency) :: default "OTH"
  * @param {string} [symbol="!!"] The transaction symbol :: default "!!"
+ * @param {object} [fields={}] Custom fields added to the Audit
  * @returns {Promise<Transaction>} The payload or null if missing args.
  */
 async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH", symbol = "!!", fields = {}) {
   if (!from || !to) throw new Error("Missing arguments");
   if (typeof amt !== "number") throw new TypeError("Type of amt should be number.");
   const payload = generatePayload(from, to, amt, type, tag, type, symbol, fields);
-  await DB.audits.new(payload);
-  return payload;
+  await DB.audits.new({ ...fields, ...payload });
+  return { ...fields, ...payload};
 }
 
 module.exports = {
