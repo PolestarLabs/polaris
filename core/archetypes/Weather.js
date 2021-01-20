@@ -107,10 +107,10 @@ class Weather {
 			code,
 			day: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][new Date(date * 1000).getDay()],
 			date: new Date(date * 1000),
-			low: low ? this.unit == "F" ? this._convert(low) : low : null,
-			high: high ? this.unit == "F" ? this._convert(high) : high : null,
+			low: low ? this.#unit == "F" ? this._convert(low) : low : null,
+			high: high ? this.#unit == "F" ? this._convert(high) : high : null,
 		};
-		if (curr) toRet.curr = this.unit == "F" ? this._convert(curr) : curr;
+		if (curr) toRet.curr = this.#unit == "F" ? this._convert(curr) : curr;
 		return toRet;
 	}
 
