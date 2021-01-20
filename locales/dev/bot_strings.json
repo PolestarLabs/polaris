@@ -457,7 +457,6 @@
             ],
             "firstDaily": "Hey! You are new here ...right? Well you can come by every day for some goodies!",
             "dailyNope": "Hmm? Seems you already claimed your Bonuses today. You can get more in **{{remaining}}**"
-            
         },
         "toggle": {
             "disabledSer": "The **{{module}}** module has been disabled **Globally**.",
