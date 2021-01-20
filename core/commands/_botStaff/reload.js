@@ -4,7 +4,7 @@ const init = async (msg, args) => {
   if (args[0] === "hard") {
     Object.keys(require.cache).forEach((R) => {
       if (R.includes("node_modules")) return;
-      if (R.includes("bot/pollux.js")) return;
+      if (R.includes("pollux.js")) return;
       if (R.includes("core/database")) return;
       if (R.includes("Microserver")) return;
 
