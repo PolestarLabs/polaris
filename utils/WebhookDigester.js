@@ -11,6 +11,7 @@ class WebhookDigester {
       pings, once, hook, noRepeat, id,
     } = options;
     const destination = hook || cfg.mainWebhook;
+    if (this.client?.disableHooks) return; // REVIEW[epic=mitchell] this works?
     if (!destination?.id) return; // FIXME[epic=flicky] way to disable this completely
     let content = "";
 
