@@ -74,6 +74,7 @@ const init = async (msg, args) => {
 			weather.week[1],
 			weather.week[2],
 		]
+		, unit: far ? "F" : "C"
 	};
 
 	let buffer = new Buffer(JSON.stringify(PAYLOAD)).toString('base64');
