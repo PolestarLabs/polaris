@@ -119,24 +119,29 @@ ${_emoji("future")} ${dailyAvailable
   }
 
   Author.dailing = true;
-  await wait(.2);
-  const now = Date.now();
-  DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.last`]: now } });
-
-  let streakStatus = await Daily.streakProcess(Daily.keepStreak(),Author);
-
-  if (Daily.streak && streakStatus !== 'lost') {
-    if(streakStatus === 'recovered') Daily.insuranceUsed = true;
-    DB.users.set(Author.id, { $inc: { [`counters.${Daily.command}.streak`]: 1 } });
-  } else if (Daily.streak && streakStatus === 'lost') {
-    DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.streak`]: 1 } });
-  }
-  Daily.streakStatus = streakStatus;
+  try {
+    await wait(.2);
+    const now = Date.now();
+    DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.last`]: now } });
   
-  success(message, Daily);
-
-  Author.dailing = false;
-  return null;
+    let streakStatus = await Daily.streakProcess(Daily.keepStreak(),Author);
+  
+    if (Daily.streak && streakStatus !== 'lost') {
+      if(streakStatus === 'recovered') Daily.insuranceUsed = true;
+      DB.users.set(Author.id, { $inc: { [`counters.${Daily.command}.streak`]: 1 } });
+    } else if (Daily.streak && streakStatus === 'lost') {
+      DB.users.set(Author.id, { $set: { [`counters.${Daily.command}.streak`]: 1 } });
+    }
+    Daily.streakStatus = streakStatus;
+    
+    success(message, Daily);
+  } catch (e) {
+    Author.dailing = false;
+    throw e;
+  } finally {
+    Author.dailing = false;
+    return null;
+  }
 };
 
 

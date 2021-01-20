@@ -89,7 +89,7 @@ const info = async (msg, args) => {
       \n\u2003 ${commendT3[0] ? `**${commendT3[0].name}** > ${commendT3[0].amt}` : ""}\
       \n\u2003 ${commendT3[1] ? `**${commendT3[1].name}** > ${commendT3[1].amt}` : ""}\
       \n\u2003 ${commendT3[2] ? `**${commendT3[2].name}** > ${commendT3[2].amt}` : ""}`
-}`,
+      }`,
     );
 
   return { embed };
@@ -103,7 +103,7 @@ module.exports = {
   perms: 3,
   cat: "social",
   botPerms: ["attachFiles", "embedLinks"],
-  aliases: ["com", "rec","rep"],
+  aliases: ["com", "rec", "rep"],
   autoSubs: [
     { label: "info", gen: info },
   ],
