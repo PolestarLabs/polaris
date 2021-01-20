@@ -19,7 +19,7 @@ const init = async (msg, args) => {
   itemType = itemType === "bg" ? "background" : itemType;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
-  let BASE;
+  let BASE; let inventory; let param;
 
   if (itemType === "background") {
     BASE = await DB.cosmetics.find({ type: "background", code: { $in: userData.modules.bgInventory } });
