@@ -191,6 +191,7 @@ const init = async (msg, args) => {
   try {
     const run = await Daily.process();
     // TODO[epic=flicky] Implement success message - could probably do with moving some of the stuff in precheck to here
+    // REVIEW[epic=mitchell] is this needed? the yesno visual feedback seems enough
   } finally {
     msg.author.looting = false;
   }

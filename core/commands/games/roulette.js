@@ -4,9 +4,9 @@ const Roulette = require("../../archetypes/Roulette");
 
 // REVIEW[epic=flicky] check and alter the amounts
 const settings = {
-  collectTime: 45e3,
+  collectTime: 60e3,
   sendWheelTime: 30e3,
-  wheelSpinTime: 10e3,
+  wheelSpinTime: 8e3,
   // @flicky (set to 0/null to ignore)
   boardEmbedColor: 0x14ACB7,
   helpEmbedColor: 0x5A90F5,
