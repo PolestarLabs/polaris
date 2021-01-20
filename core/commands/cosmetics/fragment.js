@@ -51,6 +51,8 @@ const init = async (msg, args) => {
     { Target, inventory, targetItem }, userData.modules[inventory][userData.modules[inventory].length - 1], userData.modules[inventory].length,
   );
 
+  if (!targetItem) return "[REQUIRES_TRANSLATION] Target item not found";
+
   if (userData.modules[inventory].includes(targetItem[param])) {
     P.rarity_emoji = _emoji(targetItem.rarity);
 
