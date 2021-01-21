@@ -19,7 +19,7 @@ const init = async (msg, args) => {
   itemType = itemType === "bg" ? "background" : itemType;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
-  let BASE;
+  let BASE; let inventory; let param;
 
   if (itemType === "background") {
     BASE = await DB.cosmetics.find({ type: "background", code: { $in: userData.modules.bgInventory } });
@@ -50,6 +50,8 @@ const init = async (msg, args) => {
   console.log(
     { Target, inventory, targetItem }, userData.modules[inventory][userData.modules[inventory].length - 1], userData.modules[inventory].length,
   );
+
+  if (!targetItem) return "[REQUIRES_TRANSLATION] Target item not found";
 
   if (userData.modules[inventory].includes(targetItem[param])) {
     P.rarity_emoji = _emoji(targetItem.rarity);
