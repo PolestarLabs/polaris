@@ -72,7 +72,7 @@ class Weather {
 	 * Private method to find ISO-2 by country name
 	 * Warning: might not return correct ISO
 	 * @param {string} name
-	 * @returns {string} iso
+	 * @returns {string?} iso
 	 */
 	_findISO(name) {
 		const possibilities = [];
@@ -110,7 +110,7 @@ class Weather {
 			low: typeof low === "number" ? (this.#unit == "F" ? this._convert(low) : low) : null,
 			high: typeof high === "number" ? (this.#unit == "F" ? this._convert(high) : high) : null,
 		};
-		if (curr) toRet.curr = this.#unit == "F" ? this._convert(curr) : curr;
+		if (typeof curr === "number") toRet.curr = (this.#unit == "F" ? this._convert(curr) : curr);
 		return toRet;
 	}
 
