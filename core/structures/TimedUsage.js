@@ -118,7 +118,9 @@ ${_emoji("future")} ${dailyAvailable
     if (pre !== true) return null;
   }
 
-  Author.dailing = true;
+  Author.dailing = true; // end function is for scope
+  const end = () => Author.dailing = false;
+
   try {
     await wait(.2);
     const now = Date.now();
@@ -136,12 +138,13 @@ ${_emoji("future")} ${dailyAvailable
     
     success(message, Daily);
   } catch (e) {
-    Author.dailing = false;
+    end();
     throw e;
   } finally {
-    Author.dailing = false;
+    end();
     return null;
   }
+
 };
 
 
