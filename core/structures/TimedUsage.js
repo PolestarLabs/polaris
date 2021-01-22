@@ -136,13 +136,12 @@ ${_emoji("future")} ${dailyAvailable
     }
     Daily.streakStatus = streakStatus;
     
+    end();
     success(message, Daily);
+    return null;
   } catch (e) {
     end();
     throw e;
-  } finally {
-    end();
-    return null;
   }
 
 };
