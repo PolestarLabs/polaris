@@ -118,8 +118,13 @@ ${_emoji("future")} ${dailyAvailable
     if (pre !== true) return null;
   }
 
+  // NOTE debug - delete later
+  const DEBUG_LOG = () => PLX.createMessage("789397583407349771", `${Author.id} - dailing = ${Author.dailing}`);
+
   Author.dailing = true; // end function is for scope
   const end = () => Author.dailing = false;
+
+  DEBUG_LOG();
 
   try {
     await wait(.2);
@@ -138,9 +143,11 @@ ${_emoji("future")} ${dailyAvailable
     
     end();
     success(message, Daily);
+    DEBUG_LOG();
     return null;
   } catch (e) {
     end();
+    DEBUG_LOG();
     throw e;
   }
 
