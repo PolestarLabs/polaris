@@ -6,7 +6,7 @@ const init = async (msg, args) => {
     (rej) => ((fail = true), `${_emoji("nope")}**Oopsie Woopsie:** \`\`\`nginx\n${rej.message.slice(0, 1900)}\`\`\``),
   );
 
-  msg.channel.send({ embed: { description } });
+  await msg.channel.send({ embed: { description } });
   if (!fail) reload();
 };
 
