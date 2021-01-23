@@ -6,7 +6,7 @@ exports.run = (msg, args, userData, itemDetails) => new Promise(async (resolve) 
   const destinationCounter = userData.counters?.[TARGET];
 
   if (!destinationCounter || !destinationCounter.streak) return msg.channel.send("You do not have a streak here to be fixed.");
-  if ((destinationCounter.lastStreak || 0) <= destinationCounter.streak) return msg.channel.send("You cannot restore your streak backwards.");
+  if ((destinationCounter.lastStreak || 0) <= destinationCounter.streak) return msg.channel.send("You cannot restore your streak to a number below your current one.");
 
   const promptMessage = await msg.channel.send({
     embed: {
