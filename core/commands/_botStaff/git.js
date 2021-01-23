@@ -7,10 +7,10 @@ const init = async (msg, args) => {
   );
 
   await msg.channel.send({ embed: { description } });
-  if (!fail) reload();
+  if (!fail) reload(msg);
 };
 
-function reload() {
+function reload(msg) {
   return require("./reload").init(msg, ["hard"]);
 }
 
