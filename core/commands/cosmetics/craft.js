@@ -20,7 +20,6 @@ const init = async (msg, args) => {
     if (msg.author.crafting) return;
 
     // Check arguments
-    let pos;
     console.log(`args: ${args}`);
     const depsOnly = args.some((arg, i) => (arg.toLowerCase() === "-deps" || arg.toLowerCase() === "-d") && args.splice(i, 1));
     console.log(`only: ${depsOnly}, args: ${args}`);
