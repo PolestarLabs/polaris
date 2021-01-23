@@ -25,7 +25,7 @@ const init = async (msg, args) => {
     const depsOnly = args.some((arg, i) => (arg.toLowerCase() === "-deps" || arg.toLowerCase() === "-d") && args.splice(i, 1));
     console.log(`only: ${depsOnly}, args: ${args}`);
 
-    let amount = ~~(Math.abs(Number(args[0]))) || (pos = 1) && ~~(Math.abs(Number(args[1])));
+    let amount = ~~(Math.abs(Number(args[0]))) || (pos = 1) && ~~(Math.abs(Number(args[args.length-1])));
     if (isNaN(amount) || amount <= 0) amount = 1;
     else pos ? args.pop() : args.shift();
     if (!args) return;
