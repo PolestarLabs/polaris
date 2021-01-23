@@ -1,3 +1,57 @@
+//STUB putting things together 
+/*
+
+To draw the card we need, per user:
+
+FROM DISCORD
+    Nick or Username
+    Avatar
+FROM DATABASE
+    EXP
+    Level
+    Background
+    Favcolor
+    Tagline
+
+
+requests needed:
+  LOCAL:
+    list of user ranks
+    DB users from this list
+    Discord MEMBERS from this list
+  GLOBAL:
+    list of global ranks
+    DB users from this list
+    Discord USERS from this list
+
+  other fetches:
+    AVATAR IMAGE x 6
+    BG IMAGE x 6
+
+
+
+*/
+
+const PROJECTION = {id:1,'modules.level':1,'modules.exp':1,'modules.bgID':1,'modules.favcolor':1,'modules.tagline':1};
+
+function fetchGlobalRanks(server){ return  DB.users.find({},PROJECTION).sort({ "modules.exp": -1 }).limit(5).lean() };
+async function fetchLocalRanks(server){ 
+  let lRanks = await DB.localranks.find({ server } ).sort({ exp: -1 }).limit(5);
+  let dbRankData = await DB.users.find({id: {$in: lRanks.map(u=>u.user)} },PROJECTION).lean();
+  return lRanks.map(usr=>{
+    let thisUser = dbRankData.find(u=>usr.id === u.id);
+    thisUser.modules.exp = usr.exp;
+    thisUser.modules.level = usr.level;
+    return thisUser;
+  })
+};
+
+
+
+
+
+
+
 const init = async (msg, args) => {
   delete require.cache[require.resolve("../../utilities/Picto")];
   const Picto = require("../../utilities/Picto");
@@ -17,22 +71,29 @@ const init = async (msg, args) => {
     DB.users.find({}).sort({ "modules.exp": -1 }).limit(5).lean(),
   ]);
     
-  const localUsers = await DB.users.find({ id: { $in: localRanks.map((u) => u.user) } });
+  const localUsers_from_DB = await DB.users.find({ id: { $in: localRanks.map((u) => u.user) } });
 
-  const localUserRanks = localRanks.map((index) => {
-    const SMEM = Server.members.find((mem) => mem.id === index.user);
 
-    const us = localUsers.find((u) => u.id === index.user) || SMEM || {};
+
+
+
+
+  const localUserRanks = Promise.all(localRanks.map( async index => {
+    const SMEM = await PLX.resolveMember(msg.guild.id,index.user);
+
+    const us = localUsers_from_DB.find((u) => u.id === index.user) || SMEM || {};
     if (!us.modules) us.modules = {};
     us.modules.exp = index.exp;
     us.modules.level = index.level;
     us.nick = SMEM.nick;
     us.user = SMEM.user;
     return us;
-  });
+  }));
+
+
   const _LOCAL = ["server", "local", "sv", "here"].includes(args[0]);
 
-  const Ranks = _LOCAL ? localUserRanks.map(rankify) : userRanks.map(rankify);
+  const Ranks = _LOCAL ? (await localUserRanks.map(rankify)) : userRanks.map(rankify);
 
   const selfLocal = await DB.localranks.get({ server: msg.guild.id, user: msg.author.id });
   const selfRank = rankify(userData, "self");
@@ -40,11 +101,13 @@ const init = async (msg, args) => {
   function rankify(usr, self) {
     if (!usr) return;
     if (!usr.meta) usr.meta = {};
-    const aviDummy = { staticAvatarURL: "https://cdn.discordapp.com/embed/avatars/0.png" };
+
+    console.log(usr)
+
     return new Object({
       id: usr.id,
       name: _LOCAL ? usr.nick || usr.name : usr?.meta.username || usr.nick || usr?.user.username || "Unknown",
-      avatar: Picto.getCanvas(self === "self" ? (msg.author || aviDummy).staticAvatarURL : (_LOCAL ? `https://cdn.discordapp.com/avatars/${usr.id}/${(usr.user || usr).avatar}.png` : (PLX.users.find((u) => u.id === usr.id) || aviDummy).staticAvatarURL) || (usr.meta.avatar || "").replace("gif", "png") || "https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
+      avatar: Picto.getCanvas( usr.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
       exp: self === "self"&&_LOCAL ? selfLocal.exp : usr.modules.exp,
       level: self === "self"&&_LOCAL ? selfLocal.level : usr.modules.level,
       tagline: usr.modules.tagline,
@@ -84,7 +147,7 @@ const init = async (msg, args) => {
     return res;
   }
 
-  async function rankFront(usr, sec) {
+  function rankFront(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
     const ct = res.getContext("2d");
     if (!usr) return res;
