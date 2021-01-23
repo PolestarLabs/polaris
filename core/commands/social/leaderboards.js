@@ -16,12 +16,12 @@ FROM DATABASE
 
 requests needed:
   LOCAL:
-    list of user ranks
-    DB users from this list
+    -list of user ranks
+    -DB users from this list
     Discord MEMBERS from this list
   GLOBAL:
-    list of global ranks
-    DB users from this list
+    -list of global ranks
+    -DB users from this list
     Discord USERS from this list
 
   other fetches:
@@ -34,12 +34,14 @@ requests needed:
 
 const PROJECTION = {id:1,'modules.level':1,'modules.exp':1,'modules.bgID':1,'modules.favcolor':1,'modules.tagline':1};
 
-function fetchGlobalRanks(server){ return  DB.users.find({},PROJECTION).sort({ "modules.exp": -1 }).limit(5).lean() };
+function fetchGlobalRanks(){ return  DB.users.find({},PROJECTION).sort({ "modules.exp": -1 }).limit(5).lean() };
 async function fetchLocalRanks(server){ 
   let lRanks = await DB.localranks.find({ server } ).sort({ exp: -1 }).limit(5);
   let dbRankData = await DB.users.find({id: {$in: lRanks.map(u=>u.user)} },PROJECTION).lean();
+  console.log({lRanks}) 
   return lRanks.map(usr=>{
-    let thisUser = dbRankData.find(u=>usr.id === u.id);
+    let thisUser = dbRankData.find(u=>usr.user === u.id);
+    
     thisUser.modules.exp = usr.exp;
     thisUser.modules.level = usr.level;
     return thisUser;
@@ -64,36 +66,38 @@ const init = async (msg, args) => {
 
   // DATA NEEDED
 
-  const [svData,localRanks,userData,userRanks] = await Promise.all([
+  const [svData,localRanks,userData] = await Promise.all([
     DB.servers.get(Server.id),
-    DB.localranks.find({ server: msg.guild.id} ).sort({ exp: -1 }).limit(5),
-    DB.users.get(Author.id),
-    DB.users.find({}).sort({ "modules.exp": -1 }).limit(5).lean(),
+    fetchLocalRanks(msg.guild.id),
+    DB.users.get(Author.id),    
   ]);
     
-  const localUsers_from_DB = await DB.users.find({ id: { $in: localRanks.map((u) => u.user) } });
-
-
-
-
-
-
-  const localUserRanks = Promise.all(localRanks.map( async index => {
-    const SMEM = await PLX.resolveMember(msg.guild.id,index.user);
-
-    const us = localUsers_from_DB.find((u) => u.id === index.user) || SMEM || {};
-    if (!us.modules) us.modules = {};
-    us.modules.exp = index.exp;
-    us.modules.level = index.level;
-    us.nick = SMEM.nick;
-    us.user = SMEM.user;
-    return us;
-  }));
-
+  
 
   const _LOCAL = ["server", "local", "sv", "here"].includes(args[0]);
 
-  const Ranks = _LOCAL ? (await localUserRanks.map(rankify)) : userRanks.map(rankify);
+
+  let localUserRanks, userRanks;
+  if(_LOCAL){
+    localUserRanks = await Promise.all(localRanks.map( async index => {
+      console.log({index})
+      const discordMember = await PLX.resolveMember(msg.guild.id,index.id);
+      index.discordData = discordMember;
+      return index;
+    }));
+
+  }else{
+    userRanks = await Promise.all( (await fetchGlobalRanks()).map( async index => { 
+      const discordUser = await PLX.resolveUser(index.id);
+      index.discordData = discordUser;
+      return index;
+    }));
+  }
+
+
+
+
+  const Ranks = _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify);
 
   const selfLocal = await DB.localranks.get({ server: msg.guild.id, user: msg.author.id });
   const selfRank = rankify(userData, "self");
@@ -106,16 +110,17 @@ const init = async (msg, args) => {
 
     return new Object({
       id: usr.id,
-      name: _LOCAL ? usr.nick || usr.name : usr?.meta.username || usr.nick || usr?.user.username || "Unknown",
-      avatar: Picto.getCanvas( usr.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
+      name: _LOCAL ? usr.discordData?.nick || usr.discordData?.user?.username : usr.discordData?.username || "Unknown",
+      avatar: Picto.getCanvas( usr.discordData?.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
+
       exp: self === "self"&&_LOCAL ? selfLocal.exp : usr.modules.exp,
       level: self === "self"&&_LOCAL ? selfLocal.level : usr.modules.level,
       tagline: usr.modules.tagline,
       color: usr.modules.favcolor,
-      rubines: usr.modules.RBN,
+      rubines:0,// usr.modules.RBN,
       bg: Picto.getCanvas(`${paths.CDN}/backdrops/${usr.modules?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`),
-      ACV: (usr?.modules.achievements || []).length,
-      DLY: usr.modules?.counters?.daily.streak || 0,
+      ACV:0,// (usr?.modules.achievements || []).length,
+      DLY:0,// usr.modules?.counters?.daily.streak || 0,
     });
   }
 
