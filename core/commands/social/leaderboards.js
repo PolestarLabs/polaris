@@ -1,10 +1,3 @@
-// const gear = require('../../utilities/Gearbox')
-
-// const DB = require('../../database/db_ops')
-// const locale = require(appRoot+'/utils/i18node');
-// const $t = locale.getT();
-const cmd = "leaderboards";
-
 const init = async (msg, args) => {
   delete require.cache[require.resolve("../../utilities/Picto")];
   const Picto = require("../../utilities/Picto");
@@ -16,13 +9,14 @@ const init = async (msg, args) => {
   const ctx = Canvas.getContext("2d");
 
   // DATA NEEDED
-  const svData = DB.servers.get(Server.id);
-  let localRanks = DB.localranks.find({ server: msg.guild.id, user: { $in: Server.members.map((x) => x.id) } }).sort({ exp: -1 }).limit(5);
-  let userData = DB.users.get(Author.id);
-  let userRanks = DB.users.find({}).sort({ "modules.exp": -1 }).limit(5).lean()
-    .exec();
 
-  await Promise.all([svdata = await svData, userData = await userData, userRanks = await userRanks, localRanks = await localRanks]);
+  const [svData,localRanks,userData,userRanks] = await Promise.all([
+    DB.servers.get(Server.id),
+    DB.localranks.find({ server: msg.guild.id, user: { $in: Server.members.map((x) => x.id) } }).sort({ exp: -1 }).limit(5),
+    DB.users.get(Author.id),
+    DB.users.find({}).sort({ "modules.exp": -1 }).limit(5).lean(),
+  ]);
+    
   const localUsers = await DB.users.find({ id: { $in: localRanks.map((u) => u.user) } });
 
   const localUserRanks = localRanks.map((index) => {
@@ -51,8 +45,8 @@ const init = async (msg, args) => {
       id: usr.id,
       name: _LOCAL ? usr.nick || usr.name : usr?.meta.username || usr.nick || usr?.user.username || "Unknown",
       avatar: Picto.getCanvas(self === "self" ? (msg.author || aviDummy).staticAvatarURL : (_LOCAL ? `https://cdn.discordapp.com/avatars/${usr.id}/${(usr.user || usr).avatar}.png` : (PLX.users.find((u) => u.id === usr.id) || aviDummy).staticAvatarURL) || (usr.meta.avatar || "").replace("gif", "png") || "https://pollux.fun/backdrops/5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6.png"),
-      exp: usr.modules.exp,
-      level: usr.modules.level,
+      exp: self === "self"&&_LOCAL ? selfLocal.exp : usr.modules.exp,
+      level: self === "self"&&_LOCAL ? selfLocal.level : usr.modules.level,
       tagline: usr.modules.tagline,
       color: usr.modules.favcolor,
       rubines: usr.modules.RBN,
@@ -81,7 +75,7 @@ const init = async (msg, args) => {
 
     ct.fillStyle = "rgba(45, 63, 77,0.1)";
     ct.fillRect(255, -50, 400, 206);
-    const EXP = Picto.tag(ct, usr.exp, `400 ${18 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
+    const EXP = Picto.tag(ct,  usr.exp, `400 ${18 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
     let ww = EXP.width;
     ww = ww > 100 ? 100 : ww;
     Picto.roundRect(ct, 606 - ww, sec ? 15 : 16, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
@@ -132,11 +126,13 @@ const init = async (msg, args) => {
   Picto.roundRect(ctx, dsp + 506 - ww, dsp2 + 498, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
   Picto.setAndDraw(ctx, EXP, dsp + 510, dsp2 + 500, 100, "right");
 
-  ctx.drawImage((await rankBack(Ranks[0])), 57, 0);
-  ctx.drawImage((await rankBack(Ranks[1])), 57, YA);
-  ctx.drawImage((await rankBack(Ranks[2])), 57, YB);
-  ctx.drawImage((await rankBack(Ranks[3], true)), 55, YC);
-  ctx.drawImage((await rankBack(Ranks[4], true)), 55, YD);
+  await Promise.all([
+    ctx.drawImage((await rankBack(Ranks[0])), 57, 0),
+    ctx.drawImage((await rankBack(Ranks[1])), 57, YA),
+    ctx.drawImage((await rankBack(Ranks[2])), 57, YB),
+    ctx.drawImage((await rankBack(Ranks[3], true)), 55, YC),
+    ctx.drawImage((await rankBack(Ranks[4], true)), 55, YD),
+  ]);
   ctx.drawImage((await mFrame), 0, 0);
 
   let myPos = _LOCAL
@@ -162,5 +158,5 @@ const init = async (msg, args) => {
   msg.channel.send(message, FILE);
 };
 module.exports = {
-  pub: true, cmd, perms: 3, init, cat: "social", aliases: ["lb", "lead"],
+  pub: true, cmd: "leaderboards", perms: 3, init, cat: "social", aliases: ["lb", "lead"],
 };
