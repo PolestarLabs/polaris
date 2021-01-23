@@ -3,6 +3,18 @@
 const init = async function (msg, args, telePass) {
   if (telePass == "flags") return topFlags(msg, args);
   if (telePass == "gtf") return topFlags(msg, args);
+
+
+  return {
+    embed:{
+      title: "**Here are the currently available Highscores Tables:**",
+      description: `
+      • \`${msg.prefix}highscores flags\` - for the \`${prefix}guessflag\` minigame.
+      • ~~\`${msg.prefix}highscores hangmaid\` - for the \`${prefix}hangmaid\` minigame.~~ (SOON™)
+      `
+    }
+  }
+
 };
 
 async function topFlags(msg, args) {

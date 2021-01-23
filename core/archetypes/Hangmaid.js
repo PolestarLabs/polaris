@@ -52,7 +52,8 @@ module.exports = class Hangmaid {
 
   handleInput(guess) {
     if (this.isFullGuess(guess)) return this.terminate("win");
-    if (guess.length > 1) return this.terminate("lose"); // REVIEW what is this?
+    //If a full guess is attepmted without triggering a correct answer, game is automatically lost
+    if (guess.length > 1) return this.terminate("lose"); 
 
     const wordArray = this.word.toUpperCase()
       .split("");
@@ -92,10 +93,11 @@ module.exports = class Hangmaid {
 
   get SCORE() {
     // REVIEW[epic=flicky] review points
-    if ((Date.now() - this.startedAt) < 60000) return 1500 // first min
-    if ((Date.now() - this.startedAt) < 120000) return 900 // second min
-    if ((Date.now() - this.startedAt) < 180000) return 500 // third min
-    if ((Date.now() - this.startedAt) > 240000) return 300 // fourth+ min
+    if ((Date.now() - this.startedAt) < 30e3) return 1500; // 30s
+    if ((Date.now() - this.startedAt) < 60e3) return 900; // 1m
+    if ((Date.now() - this.startedAt) < 180e3) return 500; // 3m
+    if ((Date.now() - this.startedAt) < 240e3) return 300; // 4m
+    else return 0;
   }
 
   get MESSAGE() {
