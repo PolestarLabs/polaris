@@ -12,7 +12,7 @@ const init = async (msg, args) => {
 
   const [svData,localRanks,userData,userRanks] = await Promise.all([
     DB.servers.get(Server.id),
-    DB.localranks.find({ server: msg.guild.id, user: { $in: Server.members.map((x) => x.id) } }).sort({ exp: -1 }).limit(5),
+    DB.localranks.find({ server: msg.guild.id} ).sort({ exp: -1 }).limit(5),
     DB.users.get(Author.id),
     DB.users.find({}).sort({ "modules.exp": -1 }).limit(5).lean(),
   ]);
