@@ -184,8 +184,8 @@ const init = async (msg, args) => {
 
   ctx.fillStyle = "#212329";
   ctx.fillRect(20, 20, 700, 500);
-  ctx.drawImage(await selfRank.avatar, 650, 485, 58, 58);
-  ctx.drawImage(await selfRank.bg, 245, 450, 400, 206);
+  ctx.drawImage( selfRank.avatar, 650, 485, 58, 58);
+  ctx.drawImage( selfRank.bg, 245, 450, 400, 206);
   ctx.fillStyle = selfRank.color;
   ctx.fillRect(127, 450, 45, 100);
   const EXP = Picto.tag(ctx, selfRank.exp, "400 18px 'Panton'", "#FFF");
@@ -197,11 +197,11 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, EXP, gap1 + 510, gap2 + 500, 110, "right");
 
   await Promise.all([
-    ctx.drawImage((await rankBack(Ranks[0])), 57, 0),
-    ctx.drawImage((await rankBack(Ranks[1])), 57, YA),
-    ctx.drawImage((await rankBack(Ranks[2])), 57, YB),
-    ctx.drawImage((await rankBack(Ranks[3], true)), 55, YC),
-    ctx.drawImage((await rankBack(Ranks[4], true)), 55, YD),
+    ctx.drawImage(( rankBack(Ranks[0])), 57, 0),
+    ctx.drawImage(( rankBack(Ranks[1])), 57, YA),
+    ctx.drawImage(( rankBack(Ranks[2])), 57, YB),
+    ctx.drawImage(( rankBack(Ranks[3], true)), 55, YC),
+    ctx.drawImage(( rankBack(Ranks[4], true)), 55, YD),
   ]);
   ctx.drawImage((await mFrame), 0, 0);
 
