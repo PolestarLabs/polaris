@@ -136,7 +136,9 @@ const init = async (msg, args) => {
     ct.fillRect(0, 1, 45, sec ? 80 : 100);
     ct.drawImage(await usr.avatar, 90, 2, sec ? 80 : 90, sec ? 80 : 90);
     try {
+      if(sec) ct.globalAlpha = .5;
       ct.drawImage(await usr.bg, 255, -50, 400, 206);
+      ct.globalAlpha = 1
     } catch (e) {
       console.error(e);
       console.error("ERRORED BG".bgRed + usr.bg);
@@ -216,11 +218,11 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, NME, 192, 495, 300);
   Picto.setAndDraw(ctx, RNK, 75, 495, 100, "center");
 
-  ctx.drawImage((await rankFront(Ranks[0])), 57, 0);
-  ctx.drawImage((await rankFront(Ranks[1])), 57, YA);
-  ctx.drawImage((await rankFront(Ranks[2])), 57, YB);
-  ctx.drawImage((await rankFront(Ranks[3], true)), 57, YC);
-  ctx.drawImage((await rankFront(Ranks[4], true)), 57, YD);
+  ctx.drawImage(( rankFront(Ranks[0])), 57, 0);
+  ctx.drawImage(( rankFront(Ranks[1])), 57, YA);
+  ctx.drawImage(( rankFront(Ranks[2])), 57, YB);
+  ctx.drawImage(( rankFront(Ranks[3], true)), 57, YC);
+  ctx.drawImage(( rankFront(Ranks[4], true)), 57, YD);
 
   const FILE = file(await Canvas.toBuffer(), "rank.png");
   const message = _LOCAL ? `:trophy: **Local Leaderboards for ${msg.guild.name}**` : ":trophy: **Global Leaderboards**";
