@@ -1,37 +1,4 @@
-//STUB putting things together 
-/*
-
-To draw the card we need, per user:
-
-FROM DISCORD
-    Nick or Username
-    Avatar
-FROM DATABASE
-    EXP
-    Level
-    Background
-    Favcolor
-    Tagline
-
-
-requests needed:
-  LOCAL:
-    -list of user ranks
-    -DB users from this list
-    Discord MEMBERS from this list
-  GLOBAL:
-    -list of global ranks
-    -DB users from this list
-    Discord USERS from this list
-
-  other fetches:
-    AVATAR IMAGE x 6
-    BG IMAGE x 6
-
-
-
-*/
-
+const Picto = require("../../utilities/Picto");
 
 const PROJECTION = {id:1,'modules.level':1,'modules.exp':1,'modules.bgID':1,'modules.favcolor':1,'modules.tagline':1};
 
@@ -49,15 +16,13 @@ async function fetchLocalRanks(server){
   })
 };
 
-
-
-
+const mFrame =  Picto.getCanvas(`${paths.BUILD}/rank_mainframe.png`);
 
 
 
 const init = async (msg, args) => {
   
-  const Picto = require("../../utilities/Picto");
+
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const Canvas = Picto.new(718, 570);
@@ -65,17 +30,21 @@ const init = async (msg, args) => {
 
   // DATA NEEDED
 
-  const [localRanks,userData,selfLocal] = await Promise.all([
+  async function parseUserPosition(){
+    return 1 + (_LOCAL
+      ? await DB.localranks.find({ server: msg.guild.id, exp: { $gt: selfLocal.exp } }, { _id: 1 }).count()
+      : await DB.users.find({ "modules.exp": { $gt: userData.modules.exp } }, { _id: 1 }).count());      
+  }
+
+  const [localRanks,userData,selfLocal,myPos] = await Promise.all([
     //DB.servers.get(Server.id),
     fetchLocalRanks(msg.guild.id),
     DB.users.get(msg.author.id),    
-    DB.localranks.get({ server: msg.guild.id, user: msg.author.id })
+    DB.localranks.get({ server: msg.guild.id, user: msg.author.id }),
+    parseUserPosition()
   ]);
-    
-  
 
   const _LOCAL = ["server", "local", "sv", "here"].includes(args[0]);
-
 
   let localUserRanks, userRanks;
   if(_LOCAL){
@@ -93,8 +62,6 @@ const init = async (msg, args) => {
       return index;
     }));
   }
-
-
 
 
   const Ranks = await Promise.all( _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify) );
@@ -126,7 +93,7 @@ const init = async (msg, args) => {
   }
 
   // GATHER IMAGES NEEDED
-  const mFrame = Picto.getCanvas(`${paths.BUILD}/rank_mainframe.png`);
+
 
   function rankBack(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
@@ -196,19 +163,14 @@ const init = async (msg, args) => {
   Picto.roundRect(ctx, gap1 + 506 - maxWidth, gap2 + 498, maxWidth + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
   Picto.setAndDraw(ctx, EXP, gap1 + 510, gap2 + 500, 110, "right");
 
-  await Promise.all([
-    ctx.drawImage(( rankBack(Ranks[0])), 57, 0),
-    ctx.drawImage(( rankBack(Ranks[1])), 57, YA),
-    ctx.drawImage(( rankBack(Ranks[2])), 57, YB),
-    ctx.drawImage(( rankBack(Ranks[3], true)), 55, YC),
-    ctx.drawImage(( rankBack(Ranks[4], true)), 55, YD),
-  ]);
-  ctx.drawImage((await mFrame), 0, 0);
 
-  let myPos = _LOCAL
-    ? await DB.localranks.find({ server: msg.guild.id, exp: { $gt: selfLocal.exp } }, { _id: 1 }).count()
-    : await DB.users.find({ "modules.exp": { $gt: userData.modules.exp } }, { _id: 1 }).count();
-  myPos++;
+  ctx.drawImage(( rankBack(Ranks[0])), 57, 0);
+  ctx.drawImage(( rankBack(Ranks[1])), 57, YA);
+  ctx.drawImage(( rankBack(Ranks[2])), 57, YB);
+  ctx.drawImage(( rankBack(Ranks[3], true)), 55, YC);
+  ctx.drawImage(( rankBack(Ranks[4], true)), 55, YD);
+
+  ctx.drawImage((await mFrame), 0, 0);
 
   const NME = Picto.tag(ctx, msg.member.nick || msg.author.username, "600 36px 'Panton'", "#FFF");
   const RNK = Picto.tag(ctx, `${myPos}`, "400 40px 'Panton'", "#FFF");
