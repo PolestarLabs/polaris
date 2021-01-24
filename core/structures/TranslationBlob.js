@@ -146,11 +146,11 @@ module.exports = {
   },
   grabLang(msg) {
     let langTo; let langFrom;
-    const langsAvailable = Object.keys(translate.languages).map((l) => l.toLowerCase());
+    const langsAvailable = Object.fromEntries(Object.keys(translate.languages).map((l) => [l.toLowerCase(), l]));
     msg.args[0] = this.replaceLang(msg.args[0]);
-    if (langsAvailable.includes(msg.args[0])) {
-      langFrom = langsAvailable.includes(msg.args[1].toLowerCase()) ? msg.args.shift() : "auto";
-      langTo = msg.args.shift();
+    if (langsAvailable[msg.args[0].toLowerCase()]) {
+      langFrom = langsAvailable[msg.args[1].toLowerCase()] ? langsAvailable[msg.args.shift().toLowerCase()] : "auto";
+      langTo = langsAvailable[msg.args.shift().toLowerCase()];
     } else {
       langFrom = "auto";
       [langTo] = (msg.channel.LANG || msg.guild.LANG || "en").split("-");
@@ -191,7 +191,7 @@ module.exports = {
    * @param {String} key
    */
   replaceLang(key) {
-    switch (key) {
+    switch (key.toLowerCase()) {
       case "al": key = "sq"; return key;
       case "arm": key = "hy"; return key;
       case "baq": key = "eu"; return key;
