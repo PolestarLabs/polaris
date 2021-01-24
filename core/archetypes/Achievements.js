@@ -1,3 +1,4 @@
+// @ts-nocheck
 const { EventEmitter } = require("events");
 
 class AchievementsManager extends EventEmitter {
@@ -25,8 +26,8 @@ class AchievementsManager extends EventEmitter {
     return { current, goal, percent };
   }
 
-  async check(userData, beau, awardRightAway) {
-    return new Promise((resolve, reject) => {
+  check(userData, beau, awardRightAway,opts) {
+    return new Promise( async (resolve, reject) => {
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.get(userData.id || userData);
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
 
@@ -36,7 +37,8 @@ class AchievementsManager extends EventEmitter {
         a.map(async (achiev) => {
           const user = userData;
           const revealed = userData.modules.level >= achiev.reveal_level
-          && (this.has(userData.id, achiev.achiev_requisites) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
+          && (this.has(achiev.id,userData.id) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
+          //&& (this.has(userData.id, achiev.achiev_requisites) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
           const C1 = eval(`try{${achiev.condition}}catch(err){false}`); // eslint-disable-line no-eval
           let C2;
           if (achiev.advanced_conditions?.length > 0) {
@@ -45,7 +47,7 @@ class AchievementsManager extends EventEmitter {
           const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
           const switcher = (c) => (c ? "✔️" : "❌");
 
-          if (awardRightAway && C1 && C2) this.emit("award", achiev.id, user.id);
+          if (awardRightAway && C1 && C2) this.emit("award", achiev.id, user.id,opts);
           if (beau) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
 
           return {
@@ -61,6 +63,7 @@ class AchievementsManager extends EventEmitter {
 global.Achievements = new AchievementsManager();
 
 Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
+  //if (await Achievements.has(achievement,uID)) return null;
   const { DM, msg } = options;
   const userData = await DB.users.get(uID);
   const awarded = await Achievements.give(userData, achievement);
@@ -68,11 +71,13 @@ Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false
   const DMchannel = await PLX.getDMChannel(uID);
   const channel = DM ? DMchannel : msg.channel || DMchannel;
 
+  console.log(options,channel,DM)
+
   if (!channel) return awarded;
 
   const embed = {
     title: $t("interface.achievementUnlocked", { lngs: msg.lang || ["dev"] }),
-    description: `**${awarded.name}**\n> *${$t(`achievements:${awarded.id}.howto`, { lngs: msg.lang || ["dev"] })}*`,
+    description: `**${awarded.name}**\n> *${$t([`achievements:${awarded.id}.description`,awarded.description], { lngs: msg.lang || ["dev"] })}*`,
     thumbnail: { url: `${paths.CDN}/build/achievements/${awarded.icon}.png` },
     timestamp: new Date(),
     color: awarded.color || 0xEf9f8a,
