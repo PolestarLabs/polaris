@@ -6,10 +6,8 @@ function fetchGlobalRanks(){ return  DB.users.find({},PROJECTION).sort({ "module
 async function fetchLocalRanks(server){ 
   let lRanks = await DB.localranks.find({ server } ).sort({ exp: -1 }).limit(5);
   let dbRankData = await DB.users.find({id: {$in: lRanks.map(u=>u.user)} },PROJECTION).lean();
-  console.log({lRanks}) 
   return lRanks.map(usr=>{
-    let thisUser = dbRankData.find(u=>usr.user === u.id);
-    
+    let thisUser = dbRankData.find(u=>usr.user === u.id);    
     thisUser.modules.exp = usr.exp;
     thisUser.modules.level = usr.level;
     return thisUser;
@@ -48,7 +46,7 @@ const init = async (msg, args) => {
   
   let localUserRanks, userRanks;
   if(_LOCAL){
-    localUserRanks = await Promise.all(localRanks.map( async index => {
+    localUserRanks = Promise.all(localRanks.map( async index => {
       console.log({index})
       const discordMember = await PLX.resolveMember(msg.guild.id,index.id);
       index.discordData = discordMember;
@@ -56,7 +54,7 @@ const init = async (msg, args) => {
     }));
 
   }else{
-    userRanks = await Promise.all( (await fetchGlobalRanks()).map( async index => { 
+    userRanks = Promise.all( (await fetchGlobalRanks()).map( async index => { 
       const discordUser = await PLX.resolveUser(index.id);
       index.discordData = discordUser;
       return index;
@@ -65,7 +63,7 @@ const init = async (msg, args) => {
 
   userData.discordData = msg.author;
   const [Ranks, selfRank, myPos] = await Promise.all([
-    Promise.all( _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify) ),
+    Promise.all( _LOCAL ? ((await localUserRanks).map(rankify)) : (await userRanks).map(rankify) ),
     rankify(userData, "self"),
     parseUserPosition()
   ]);
@@ -182,7 +180,7 @@ const init = async (msg, args) => {
   ctx.drawImage(( rankFront(Ranks[3], true)), 57, YC);
   ctx.drawImage(( rankFront(Ranks[4], true)), 57, YD);
 
-  const FILE = file( Canvas.toBuffer("image/png", { compressionLevel: 1, filters: Canvas.PNG_FILTER_NONE }), "rank.png");
+  const FILE = file( Canvas.toBuffer("image/png", { compressionLevel: 3, filters: Canvas.PNG_FILTER_NONE }), "rank.png");
   const message = _LOCAL ? `:trophy: **Local Leaderboards for ${msg.guild.name}**` : ":trophy: **Global Leaderboards**";
   msg.channel.send(message, FILE);
 };
