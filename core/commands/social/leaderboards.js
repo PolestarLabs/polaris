@@ -97,10 +97,10 @@ const init = async (msg, args) => {
 
 
 
-  const Ranks = _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify);
+  const Ranks = await Promise.all( _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify) );
 
   userData.discordData = msg.author;
-  const selfRank = rankify(userData, "self");
+  const selfRank = await rankify(userData, "self");
 
   async function rankify(usr, self) {
     if (!usr) return;
@@ -223,7 +223,7 @@ const init = async (msg, args) => {
   ctx.drawImage(( rankFront(Ranks[3], true)), 57, YC);
   ctx.drawImage(( rankFront(Ranks[4], true)), 57, YD);
 
-  const FILE = file( Canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE }), "rank.png");
+  const FILE = file( Canvas.toBuffer("image/png", { compressionLevel: 1, filters: Canvas.PNG_FILTER_NONE }), "rank.png");
   const message = _LOCAL ? `:trophy: **Local Leaderboards for ${msg.guild.name}**` : ":trophy: **Global Leaderboards**";
   msg.channel.send(message, FILE);
 };
