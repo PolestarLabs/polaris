@@ -149,7 +149,7 @@ module.exports = {
     const langsAvailable = Object.keys(translate.languages).map((l) => l.toLowerCase());
     msg.args[0] = this.replaceLang(msg.args[0]);
     if (langsAvailable.includes(msg.args[0])) {
-      langFrom = langsAvailable.includes(msg.args[1]) ? msg.args.shift() : "auto";
+      langFrom = langsAvailable.includes(msg.args[1].toLowerCase()) ? msg.args.shift() : "auto";
       langTo = msg.args.shift();
     } else {
       langFrom = "auto";
