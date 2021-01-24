@@ -32,7 +32,6 @@ requests needed:
 
 */
 
-const avatar = require("../utility/avatar");
 
 const PROJECTION = {id:1,'modules.level':1,'modules.exp':1,'modules.bgID':1,'modules.favcolor':1,'modules.tagline':1};
 
@@ -128,11 +127,12 @@ const init = async (msg, args) => {
 
   // GATHER IMAGES NEEDED
   const mFrame = Picto.getCanvas(`${paths.BUILD}/rank_mainframe.png`);
-  console.log(`${paths.BUILD}/rank_mainframe.png`);
+
   function rankBack(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
-    const ct = res.getContext("2d");
     if (!usr) return res;
+    const ct = res.getContext("2d");
+
     ct.fillStyle = usr.color;
     ct.fillRect(0, 1, 45, sec ? 80 : 100);
     ct.drawImage(usr.avatar, 90, 2, sec ? 80 : 90, sec ? 80 : 90);
@@ -148,9 +148,8 @@ const init = async (msg, args) => {
     ct.fillStyle = "rgba(45, 63, 77,0.1)";
     ct.fillRect(255, -50, 400, 206);
     const EXP = Picto.tag(ct,  usr.exp, `400 ${18 - (sec ? 2 : 0)}px 'Panton'`, "#FFF");
-    let ww = EXP.width;
-    ww = ww > 100 ? 100 : ww;
-    Picto.roundRect(ct, 606 - ww, sec ? 15 : 16, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
+    let maxWidth = Math.min(EXP.width,100);
+    Picto.roundRect(ct, 606 - maxWidth, sec ? 15 : 16, maxWidth + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
     Picto.setAndDraw(ct, EXP, 610, sec ? 16 : 17, 100, "right");
 
     return res;
@@ -190,13 +189,12 @@ const init = async (msg, args) => {
   ctx.fillStyle = selfRank.color;
   ctx.fillRect(127, 450, 45, 100);
   const EXP = Picto.tag(ctx, selfRank.exp, "400 18px 'Panton'", "#FFF");
-  let ww = EXP.width;
-  ww = ww > 100 ? 100 : ww;
+  let maxWidth = Math.min(EXP.width,100);
   ctx.fillStyle = "rgb(48, 53, 67)";
-  dsp = 100;
-  dsp2 = 13;
-  Picto.roundRect(ctx, dsp + 506 - ww, dsp2 + 498, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
-  Picto.setAndDraw(ctx, EXP, dsp + 510, dsp2 + 500, 110, "right");
+  let gap1 = 100;
+  let gap2 = 13;
+  Picto.roundRect(ctx, gap1 + 506 - maxWidth, gap2 + 498, maxWidth + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
+  Picto.setAndDraw(ctx, EXP, gap1 + 510, gap2 + 500, 110, "right");
 
   await Promise.all([
     ctx.drawImage((await rankBack(Ranks[0])), 57, 0),
