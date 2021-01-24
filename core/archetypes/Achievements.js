@@ -6,13 +6,25 @@ class AchievementsManager extends EventEmitter {
     return DB.achievements.findOne({ id: ach }).lean().exec();
   }
 
-  async give(user, ach) {
-    await DB.achievements.award(user, ach);
-    return this.get(ach);
+  //FIXME Consistency in USER / ACHIEVEMENT order
+  async give(user, achievement) {
+    await DB.achievements.award(user, achievement);
+    return this.get(achievement);
+    //NOTE PROPOSAL
+      return DB.progression.set({achievement,user,type:'achievement'},{$set: {awarded:true} } );
   }
 
-  has(ach, user) {
-    return DB.users.get(user.id || user).then((userData) => !!(userData?.modules.achievements?.find((a) => a.id === ach)));
+  async has(achievement, user) {
+    return DB.users.get(user.id || user).then((userData) => !!(userData?.modules.achievements?.find((a) => a.id === achievement)));
+    //NOTE PROPOSAL
+      return !!(await DB.progression.get({achievement,user,type:'achievement'})).awarded;
+  }
+
+  advance(achievement,user,value){
+    return DB.progression.set({achievement,user,type:'achievement'},{$inc: {tracker:value} } );
+  }
+  update(achievement,user,value){
+    return DB.progression.set({achievement,user,type:'achievement'},{$set: {tracker:value} } );
   }
 
   async progress(ach, user) {
@@ -63,7 +75,10 @@ class AchievementsManager extends EventEmitter {
 global.Achievements = new AchievementsManager();
 
 Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
+  
+  //FIXME Temporary switch, must be uncommented later;
   //if (await Achievements.has(achievement,uID)) return null;
+  
   const { DM, msg } = options;
   const userData = await DB.users.get(uID);
   const awarded = await Achievements.give(userData, achievement);
@@ -75,6 +90,7 @@ Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false
 
   if (!channel) return awarded;
 
+  //TODO Make this look better
   const embed = {
     title: $t("interface.achievementUnlocked", { lngs: msg.lang || ["dev"] }),
     description: `**${awarded.name}**\n> *${$t([`achievements:${awarded.id}.description`,awarded.description], { lngs: msg.lang || ["dev"] })}*`,
