@@ -224,7 +224,7 @@ const init = async (msg, args) => {
   ctx.drawImage(( rankFront(Ranks[3], true)), 57, YC);
   ctx.drawImage(( rankFront(Ranks[4], true)), 57, YD);
 
-  const FILE = file(await Canvas.toBuffer(), "rank.png");
+  const FILE = file( Canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE }), "rank.png");
   const message = _LOCAL ? `:trophy: **Local Leaderboards for ${msg.guild.name}**` : ":trophy: **Global Leaderboards**";
   msg.channel.send(message, FILE);
 };
