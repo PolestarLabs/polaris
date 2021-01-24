@@ -223,6 +223,7 @@ module.exports = {
       case "tj": key = "tg"; return key;
       case "tw": key = "zh-TW"; return key;
       case "wel": key = "cy"; return key;
+      case "zh": key = "zh-CN"; return key;
       default: return key;
     }
   },
