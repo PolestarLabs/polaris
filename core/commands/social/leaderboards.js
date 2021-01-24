@@ -100,6 +100,7 @@ const init = async (msg, args) => {
   const Ranks = _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify);
 
   const selfLocal = await DB.localranks.get({ server: msg.guild.id, user: msg.author.id });
+  userData.discordData = msg.author;
   const selfRank = rankify(userData, "self");
 
   function rankify(usr, self) {
@@ -143,7 +144,7 @@ const init = async (msg, args) => {
 
     ct.fillStyle = "rgba(45, 63, 77,0.1)";
     ct.fillRect(255, -50, 400, 206);
-    const EXP = Picto.tag(ct,  usr.exp, `400 ${18 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
+    const EXP = Picto.tag(ct,  usr.exp, `400 ${18 - (sec ? 2 : 0)}px 'Panton'`, "#FFF");
     let ww = EXP.width;
     ww = ww > 100 ? 100 : ww;
     Picto.roundRect(ct, 606 - ww, sec ? 15 : 16, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
@@ -158,18 +159,18 @@ const init = async (msg, args) => {
     if (!usr) return res;
     // ct.shadowColor = "rgba(0,0,0,0.8)";
     // ct.shadowBlur = 4;
-    const NME = Picto.tag(ct, usr.name, `600 ${26 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
-    const LVL = Picto.tag(ct, usr.level, `900 ${36 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
-    const TAG = Picto.tag(ct, usr.tagline, `400 ${16 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#AAA");
+    const NME = Picto.tag(ct, usr.name, `600 ${26 - (sec ? 2 : 0)}px 'Panton'`, "#FFF");
+    const LVL = Picto.tag(ct, usr.level, `900 ${36 - (sec ? 2 : 0)}px 'Panton'`, "#FFF");
+    const TAG = Picto.tag(ct, usr.tagline, `400 ${16 - (sec ? 2 : 0)}px 'Panton'`, "#AAA");
 
-    const _lvTag = Picto.tag(ct, "LEVEL", `300 ${14 - (sec ? 2 : 0)}px 'Whitney HTF'`, "#FFF");
+    const _lvTag = Picto.tag(ct, "LEVEL", `300 ${14 - (sec ? 2 : 0)}px 'Panton'`, "#FFF");
     const _uid = Picto.tag(ct, `${miliarize(usr.rubines, true, " ")} 💎 | ${usr.id}`, `300 ${12 - (sec ? 2 : 0)}px 'monospace'`, "#FFF5");
 
     Picto.setAndDraw(ct, _uid, 640, sec ? 70 : 81, 450, "right");
     Picto.setAndDraw(ct, _lvTag, 60, sec ? 18 : 20, 45, "center");
-    Picto.setAndDraw(ct, LVL, 60, sec ? 26 : 30, 45, "center");
-    Picto.setAndDraw(ct, NME, 192, sec ? 16 : 20, 300);
-    Picto.setAndDraw(ct, TAG, 192, (sec ? 16 : 20) + 32, 300);
+    Picto.setAndDraw(ct, LVL, 60, sec ? 32 : 36, 45, "center");
+    Picto.setAndDraw(ct, NME, 192, sec ? 18 : 22, 300);
+    Picto.setAndDraw(ct, TAG, 192, (sec ? 15 : 21) + 32, 300);
 
     return res;
   }
@@ -185,14 +186,14 @@ const init = async (msg, args) => {
   ctx.drawImage(await selfRank.bg, 245, 450, 400, 206);
   ctx.fillStyle = selfRank.color;
   ctx.fillRect(127, 450, 45, 100);
-  const EXP = Picto.tag(ctx, selfRank.exp, "400 18px 'Whitney HTF'", "#FFF");
+  const EXP = Picto.tag(ctx, selfRank.exp, "400 18px 'Panton'", "#FFF");
   let ww = EXP.width;
   ww = ww > 100 ? 100 : ww;
   ctx.fillStyle = "rgb(48, 53, 67)";
   dsp = 100;
   dsp2 = 13;
   Picto.roundRect(ctx, dsp + 506 - ww, dsp2 + 498, ww + 40, EXP.height + 4, 10, "rgb(48, 53, 67)");
-  Picto.setAndDraw(ctx, EXP, dsp + 510, dsp2 + 500, 100, "right");
+  Picto.setAndDraw(ctx, EXP, dsp + 510, dsp2 + 500, 110, "right");
 
   await Promise.all([
     ctx.drawImage((await rankBack(Ranks[0])), 57, 0),
@@ -208,12 +209,12 @@ const init = async (msg, args) => {
     : await DB.users.find({ "modules.exp": { $gt: userData.modules.exp } }, { _id: 1 }).count();
   myPos++;
 
-  const NME = Picto.tag(ctx, msg.member.nick || msg.author.tag, "600 36px 'Whitney HTF'", "#FFF");
-  const RNK = Picto.tag(ctx, `#${myPos}`, "400 36px 'Whitney HTF'", "#FFF");
+  const NME = Picto.tag(ctx, msg.member.nick || msg.author.username, "600 36px 'Panton'", "#FFF");
+  const RNK = Picto.tag(ctx, `${myPos}`, "400 40px 'Panton'", "#FFF");
   ctx.shadowColor = "rgba(0,0,0,0.8)";
   ctx.shadowBlur = 4;
-  Picto.setAndDraw(ctx, NME, 192, 490, 300);
-  Picto.setAndDraw(ctx, RNK, 75, 490, 100, "center");
+  Picto.setAndDraw(ctx, NME, 192, 495, 300);
+  Picto.setAndDraw(ctx, RNK, 75, 495, 100, "center");
 
   ctx.drawImage((await rankFront(Ranks[0])), 57, 0);
   ctx.drawImage((await rankFront(Ranks[1])), 57, YA);
