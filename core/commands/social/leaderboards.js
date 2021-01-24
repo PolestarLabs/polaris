@@ -57,10 +57,8 @@ async function fetchLocalRanks(server){
 
 
 const init = async (msg, args) => {
-  delete require.cache[require.resolve("../../utilities/Picto")];
+  
   const Picto = require("../../utilities/Picto");
-  const Server = msg.guild;
-  const Author = msg.author;
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const Canvas = Picto.new(718, 570);
@@ -68,10 +66,11 @@ const init = async (msg, args) => {
 
   // DATA NEEDED
 
-  const [svData,localRanks,userData] = await Promise.all([
-    DB.servers.get(Server.id),
+  const [localRanks,userData,selfLocal] = await Promise.all([
+    //DB.servers.get(Server.id),
     fetchLocalRanks(msg.guild.id),
-    DB.users.get(Author.id),    
+    DB.users.get(msg.author.id),    
+    DB.localranks.get({ server: msg.guild.id, user: msg.author.id })
   ]);
     
   
@@ -101,7 +100,6 @@ const init = async (msg, args) => {
 
   const Ranks = _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify);
 
-  const selfLocal = await DB.localranks.get({ server: msg.guild.id, user: msg.author.id });
   userData.discordData = msg.author;
   const selfRank = rankify(userData, "self");
 
