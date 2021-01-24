@@ -107,7 +107,6 @@ const init = async (msg, args) => {
 
   async function rankify(usr, self) {
     if (!usr) return;
-    if (!usr.meta) usr.meta = {};
 
     const [avatar,bg] = await Promise.all([
       Picto.getCanvas( usr.discordData?.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
@@ -118,7 +117,6 @@ const init = async (msg, args) => {
       id: usr.id,
       name: _LOCAL ? usr.discordData?.nick || usr.discordData?.user?.username : usr.discordData?.username || "Unknown",
       avatar,
-
       exp: self === "self"&&_LOCAL ? selfLocal.exp : usr.modules.exp,
       level: self === "self"&&_LOCAL ? selfLocal.level : usr.modules.level,
       tagline: usr.modules.tagline,
