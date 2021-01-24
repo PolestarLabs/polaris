@@ -32,6 +32,8 @@ requests needed:
 
 */
 
+const avatar = require("../utility/avatar");
+
 const PROJECTION = {id:1,'modules.level':1,'modules.exp':1,'modules.bgID':1,'modules.favcolor':1,'modules.tagline':1};
 
 function fetchGlobalRanks(){ return  DB.users.find({},PROJECTION).sort({ "modules.exp": -1 }).limit(5).lean() };
@@ -103,23 +105,26 @@ const init = async (msg, args) => {
   userData.discordData = msg.author;
   const selfRank = rankify(userData, "self");
 
-  function rankify(usr, self) {
+  async function rankify(usr, self) {
     if (!usr) return;
     if (!usr.meta) usr.meta = {};
 
-    console.log(usr)
+    const [avatar,bg] = await Promise.all([
+      Picto.getCanvas( usr.discordData?.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
+      Picto.getCanvas(`${paths.CDN}/backdrops/${usr.modules?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`)
+    ]);
 
     return new Object({
       id: usr.id,
       name: _LOCAL ? usr.discordData?.nick || usr.discordData?.user?.username : usr.discordData?.username || "Unknown",
-      avatar: Picto.getCanvas( usr.discordData?.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png" ),
+      avatar,
 
       exp: self === "self"&&_LOCAL ? selfLocal.exp : usr.modules.exp,
       level: self === "self"&&_LOCAL ? selfLocal.level : usr.modules.level,
       tagline: usr.modules.tagline,
       color: usr.modules.favcolor,
       rubines:0,// usr.modules.RBN,
-      bg: Picto.getCanvas(`${paths.CDN}/backdrops/${usr.modules?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`),
+      bg,
       ACV:0,// (usr?.modules.achievements || []).length,
       DLY:0,// usr.modules?.counters?.daily.streak || 0,
     });
@@ -128,16 +133,16 @@ const init = async (msg, args) => {
   // GATHER IMAGES NEEDED
   const mFrame = Picto.getCanvas(`${paths.BUILD}/rank_mainframe.png`);
   console.log(`${paths.BUILD}/rank_mainframe.png`);
-  async function rankBack(usr, sec) {
+  function rankBack(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
     const ct = res.getContext("2d");
     if (!usr) return res;
     ct.fillStyle = usr.color;
     ct.fillRect(0, 1, 45, sec ? 80 : 100);
-    ct.drawImage(await usr.avatar, 90, 2, sec ? 80 : 90, sec ? 80 : 90);
+    ct.drawImage(usr.avatar, 90, 2, sec ? 80 : 90, sec ? 80 : 90);
     try {
       if(sec) ct.globalAlpha = .5;
-      ct.drawImage(await usr.bg, 255, -50, 400, 206);
+      ct.drawImage(usr.bg, 255, -50, 400, 206);
       ct.globalAlpha = 1
     } catch (e) {
       console.error(e);
