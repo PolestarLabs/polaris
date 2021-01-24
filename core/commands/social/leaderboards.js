@@ -30,22 +30,22 @@ const init = async (msg, args) => {
 
   // DATA NEEDED
 
+  const _LOCAL = ["server", "local", "sv", "here"].includes(args[0]);
+  
+  
+  const [localRanks,userData,selfLocal] = await Promise.all([
+    //DB.servers.get(Server.id),
+    fetchLocalRanks(msg.guild.id),
+    DB.users.get(msg.author.id),    
+    DB.localranks.get({ server: msg.guild.id, user: msg.author.id }),
+  ]);
+
   async function parseUserPosition(){
     return 1 + (_LOCAL
       ? await DB.localranks.find({ server: msg.guild.id, exp: { $gt: selfLocal.exp } }, { _id: 1 }).count()
       : await DB.users.find({ "modules.exp": { $gt: userData.modules.exp } }, { _id: 1 }).count());      
   }
-
-  const [localRanks,userData,selfLocal,myPos] = await Promise.all([
-    //DB.servers.get(Server.id),
-    fetchLocalRanks(msg.guild.id),
-    DB.users.get(msg.author.id),    
-    DB.localranks.get({ server: msg.guild.id, user: msg.author.id }),
-    parseUserPosition()
-  ]);
-
-  const _LOCAL = ["server", "local", "sv", "here"].includes(args[0]);
-
+  
   let localUserRanks, userRanks;
   if(_LOCAL){
     localUserRanks = await Promise.all(localRanks.map( async index => {
@@ -63,11 +63,12 @@ const init = async (msg, args) => {
     }));
   }
 
-
-  const Ranks = await Promise.all( _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify) );
-
   userData.discordData = msg.author;
-  const selfRank = await rankify(userData, "self");
+  const [Ranks, selfRank, myPos] = await Promise.all([
+    Promise.all( _LOCAL ? (localUserRanks.map(rankify)) : userRanks.map(rankify) ),
+    rankify(userData, "self"),
+    parseUserPosition()
+  ]);
 
   async function rankify(usr, self) {
     if (!usr) return;
@@ -91,9 +92,6 @@ const init = async (msg, args) => {
       DLY:0,// usr.modules?.counters?.daily.streak || 0,
     });
   }
-
-  // GATHER IMAGES NEEDED
-
 
   function rankBack(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
@@ -121,7 +119,6 @@ const init = async (msg, args) => {
 
     return res;
   }
-
   function rankFront(usr, sec) {
     const res = Picto.new(656, sec ? 80 : 100);
     const ct = res.getContext("2d");
