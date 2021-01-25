@@ -205,11 +205,12 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     });
 
   await daily.init();
+  //await Promise.all(processQueue);
   while (processQueue.length) {
     // @ts-ignore
-    setImmediate(async ()=> {
-      await processQueue.shift()(); // eslint-disable-line no-await-in-loop
-    })
+
+    await processQueue.shift()(); // eslint-disable-line no-await-in-loop
+
   }
 
   let lootAction = null;
