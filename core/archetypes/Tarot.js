@@ -2,11 +2,6 @@ const ARCANA = [
   {
     id: "fool",
     Arcana: "The Fool",
-    UPRIGHT:{
-        START:  "UPRIGHT.START": "living a happy life and being carefree",
-        MID:    "pay more attention to your surroundings",
-        END:    "new things in your life",
-    }
 
     "UPRIGHT.START": "living a happy life and being carefree",
     "UPRIGHT.MID": "pay more attention to your surroundings",
@@ -304,9 +299,18 @@ class Tarot {
   }
 
   async luckyScore(user){
-    const timedUsage = await new TimedUsage("tarot", { day: DAY }).loadUser(user);
+    const timed = await new TimedUsage("tarot", { day: DAY }).loadUser(user);
+    if (timed.dailyAvailable){
+      let myScore = scores().reduce((a,b)=>a+b);
+      DB.users.set(user.id,{
+        $set:{
+          "counters.tarot.luckyScore": myScore, 
+        }
+      })
 
-
+    }else{
+      timed.availableAt
+    }
   }
 
 
