@@ -124,7 +124,7 @@ module.exports = {
         from: langFrom,
         to: langTo,
       }).then((res) => {
-        const langFromPost = res.from.language.iso.toLowerCase();
+        const langFromPost = res.from.language.iso;
         // const gear = require("../utilities/Gearbox");
         const embed = new Embed();
         embed.title("Pollux Machine Translation 5000");
