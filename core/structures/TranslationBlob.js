@@ -1,4 +1,4 @@
-//TODO[epic=[FUTURE]] (Low Priority) - Flag Arrays
+//FUTURE[epic=anyone] (Low Priority) - Flag Arrays
 
 const LANGFLAGS = {
   //en: "🇬🇧/🇺🇸/🇦🇺/🇳🇿/🇨🇦",
