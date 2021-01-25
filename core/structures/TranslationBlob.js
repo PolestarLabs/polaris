@@ -96,6 +96,7 @@ const LANGFLAGS = {
   vi: "🇻🇳",
   xh: "🇿🇦/🇿🇼",
   yo: "🇳🇬/🇧🇯/🇹🇬/🇬🇭",
+  zh: "🇹🇼/🇭🇰/🇲🇴/🇨🇳",
   "zh-CN": "🇨🇳",
   "zh-TW": "🇹🇼/🇭🇰/🇲🇴",
   zu: "🇿🇦",
@@ -103,6 +104,7 @@ const LANGFLAGS = {
 
 const translate = require("@vitalets/google-translate-api");
 // const DB = require("../database/db_ops");
+translate.languages.zh = "Chinese";
 
 module.exports = {
   LANGNAMES: translate.languages,
