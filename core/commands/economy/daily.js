@@ -306,7 +306,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
   }
 
-  // @ts-ignore TODO Ask flicky
+  // @ts-ignore TODO[epic=flicky] Random self-ad for daily perks.
   if (timedUsage.streakStatus?.pass && randomize(0, 5) === 3) {
     fields.push({
       name: "Want to boost your dailies further?",
