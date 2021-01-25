@@ -38,7 +38,7 @@ const init = async (msg, args, ext) => {
 
   const embed = new Embed();
   embed.color = 0xf44283;
-  embed.footer(msg.author.tag, msg.author.avatarURL);
+  embed.footer(msg.author.tag + ext.nsfw?" | Content provided as-is by Gelbooru":"", msg.author.avatarURL);
   embed.title("\\❤ \u2003 S a f e b o o r u \u2003 \\❤");
 
   if (ext && ext.constructor !== Array) {
