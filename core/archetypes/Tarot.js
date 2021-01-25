@@ -2,6 +2,12 @@ const ARCANA = [
   {
     id: "fool",
     Arcana: "The Fool",
+    UPRIGHT:{
+        START:  "UPRIGHT.START": "living a happy life and being carefree",
+        MID:    "pay more attention to your surroundings",
+        END:    "new things in your life",
+    }
+
     "UPRIGHT.START": "living a happy life and being carefree",
     "UPRIGHT.MID": "pay more attention to your surroundings",
     "UPRIGHT.END": "new things in your life",
@@ -221,7 +227,17 @@ const ARCANA = [
   },
 ];
 
+const DAY =  22 * 60 * 60e3;
+
+
 const Picto = require("../utilities/Picto");
+const { TimedUsage } = require("@polestar/timed-usage");
+const { _cardValue } = require("./Blackjack");
+
+
+
+
+
 
 class Tarot {
   constructor(msg = {}, spreadSize = 3) {
@@ -267,6 +283,33 @@ class Tarot {
     return canvas;
   }
 
+  readings(){
+    return this.spread.map((draw,i,a)=> {
+      const {card,pose:POSITION} = draw;
+      if(i === 0) return card[POSITION].START;
+      if(i === a.length-1) return card[POSITION].END;
+      return card[POSITION].MID;
+    })
+  }
+  scores(){
+    this.spread.map((draw,i,a)=> {
+      const {card,pose:POSITION} = draw;
+      if(i === 0) return card[POSITION].SCORE_START;
+      if(i === a.length-1) return card[POSITION].SCORE_END;
+      return card[POSITION].SCORE_MID;
+    }).map(value=>{
+      if(value.includes("RNG")) value = randomize(0,value.split(":")[1]);
+      return value;
+    })
+  }
+
+  async luckyScore(user){
+    const timedUsage = await new TimedUsage("tarot", { day: DAY }).loadUser(user);
+
+
+  }
+
+
   static _shuffle(array) {
     const newArray = array.slice();
     for (let i = array.length - 1; i > 0; i--) {
@@ -277,6 +320,7 @@ class Tarot {
     }
     return newArray;
   }
+  
 
   static _pos() {
     const r = Math.floor(Math.random() * 10 + 1);
