@@ -207,7 +207,9 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   await daily.init();
   while (processQueue.length) {
     // @ts-ignore
-    await processQueue.shift()(); // eslint-disable-line no-await-in-loop
+    setImmediate(async ()=> {
+      await processQueue.shift()(); // eslint-disable-line no-await-in-loop
+    })
   }
 
   let lootAction = null;
