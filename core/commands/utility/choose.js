@@ -2,7 +2,7 @@ const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const target = Number.isNaN(Number(msg.args[0])) ? 1 : parseInt(msg.args.shift());
-  let trueArgs = msg.args.length < 2 ? args.join(" ").split(/, ?/g) : msg.content.split(/, ?/g);
+  let trueArgs = msg.args.length < 2 ? args.join(" ").split(/, ?/g) : args.join(" ").split(/, ?/g);
 
   const rolefind = (x) => msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase() || rl.id == args[x]);
   if (
