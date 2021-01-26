@@ -2,6 +2,7 @@ const EventEmitter = require("events");
 const {ACHIEVEMENTS} = require("./Achievements.js");
 
 
+
 class ProgressionManager extends EventEmitter {
     constructor(){
         super();
@@ -54,6 +55,12 @@ class ProgressionManager extends EventEmitter {
         });
         return quest;
     }
+
+    async available(userID){
+        const userData = await DB.users.get(userID);
+        return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
+    }
+
 }
 
 
