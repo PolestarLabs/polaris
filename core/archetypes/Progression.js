@@ -42,7 +42,53 @@ Progression.on("*", async (param,value,msg)=>{
     //quests.
 
 });
+/*
 
+
+spend/earn
+    RBN
+    SPH
+    JDE
+    PSM
+    TKN
+    COS
+
+        <SOURCE>
+
+        example: earn.RBN.blackjack
+            ommitting source = any
+
+craft
+    <ITEM FIELD NAME> (rarity, id, type)
+
+lootbox
+    open
+    reroll
+buy
+    bg
+    medal
+    market
+play
+    <COMMAND LABEL>
+        <SPECIAL CONDITION> 
+            | examples:
+            |    play.blackjack.insurance
+            |    play.roulette.5friends
+
+command
+    <COMMAND LABEL>
+        <SPECIAL CONDITION> (none if just usage)
+
+
+
+
+EMIT EVENT:
+([action* , type* , (condition)], value)
+or
+("action.type.condition", value)
+
+
+*/
 
 
 Progression.on("QUEST_COMPLETED",(quest,msg)=>{
