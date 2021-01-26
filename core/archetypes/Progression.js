@@ -77,122 +77,74 @@ async function isPartOfAchievement(param,value,options){
 
 
 
-global.Progression = new ProgressionManager();
-
-
-
 /*
 Progression.on("param", async (value,msg)=>{
 
 })
 */
 
-Progression.on("*", async (event,value,msg)=>{
-    if(!value.content && !msg.content) return;
-    if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
-    await Progression.checkStatus(msg.author.id,msg);
+const init = ()=>{
 
-    //quests.
+    global.Progression = new ProgressionManager();
 
-});
+    Progression.on("*", async (event,value,msg)=>{
+            if(!value.content && !msg.content) return;
+        if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
+        await Progression.checkStatus(msg.author.id,msg);
+
+        //quests.
+
+    });
 
 
-Progression.on("craft", async (event,item,amount,msg)=>{
-    const userQuests = Progression.getUserQuests(msg.author.id);
-    await Promise.all( userQuests.map(async quest => {        
-        const [action,type,condition] = quest.tracker.split('.');
-        if(action!=='craft') return;
-        if(item[type] === condition){
-            await Progression.updateProgress(msg.author.id,quest.id,amount);
+    Progression.on("craft", async (event,item,amount,msg)=>{
+        const userQuests = Progression.getUserQuests(msg.author.id);
+        await Promise.all( userQuests.map(async quest => {        
+            const [action,type,condition] = quest.tracker.split('.');
+            if(action!=='craft') return;
+            if(item[type] === condition){
+                await Progression.updateProgress(msg.author.id,quest.id,amount);
+            }
+        }));
+        await Progression.checkStatus(msg.author.id,msg);    
+    })
+
+    Progression.on("spend", async (event,currency,amount,msg)=>{
+        const userQuests = Progression.getUserQuests(msg.author.id);
+        await Promise.all( userQuests.map(async quest => {        
+            const [action,type,condition] = quest.tracker.split('.');
+            if(action!=='spend') return;
+            if(currency === type){
+                await Progression.updateProgress(msg.author.id,quest.id,amount);
+            }
+        }));
+        await Progression.checkStatus(msg.author.id,msg);    
+    })
+
+
+
+    Progression.on("QUEST_COMPLETED",(quest,msg,userQuests)=>{
+        //DEBUG
+        msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
+        msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
+        
+        //award rewards;
+        msg.channel.send("Quest completed msg")
+            .catch(()=>{
+                PLX.getDMChannel(msg.author.id).then(DM=>
+                    DM.createMessage("Dm Quest completed msg")
+                ).catchReturn(0);
+            });
+        if(userQuests?.every(q=>q.completed)){
+            //award extra bonus
+            msg.channel.send("Extra bonus msg")
         }
-    }));
-    await Progression.checkStatus(msg.author.id,msg);    
-})
+        
+        //notify user
+    })
+}
 
-Progression.on("spend", async (event,currency,amount,msg)=>{
-    const userQuests = Progression.getUserQuests(msg.author.id);
-    await Promise.all( userQuests.map(async quest => {        
-        const [action,type,condition] = quest.tracker.split('.');
-        if(action!=='spend') return;
-        if(currency === type){
-            await Progression.updateProgress(msg.author.id,quest.id,amount);
-        }
-    }));
-    await Progression.checkStatus(msg.author.id,msg);    
-})
-
-
-/*
-
-
-spend/earn
-    RBN
-    SPH
-    JDE
-    PSM
-    TKN
-    COS
-
-        <SOURCE>
-
-        example: earn.RBN.blackjack
-            ommitting source = any
-
-craft
-    <ITEM FIELD NAME> (rarity, id, type)
-
-lootbox
-    open
-    reroll
-buy
-    bg
-    medal
-    market
-play
-    <COMMAND LABEL>
-        <SPECIAL CONDITION> 
-            | examples:
-            |    play.blackjack.insurance
-            |    play.roulette.5friends
-
-command
-    <COMMAND LABEL>
-        <SPECIAL CONDITION> (none if just usage)
-
-
-
-
-EMIT EVENT:
-([action* , type* , (condition)], value)
-or
-("action.type.condition", value)
-
-
-*/
-
-
-Progression.on("QUEST_COMPLETED",(quest,msg,userQuests)=>{
-    //DEBUG
-    msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
-    msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
-    
-    //award rewards;
-    msg.channel.send("Quest completed msg")
-        .catch(()=>{
-            PLX.getDMChannel(msg.author.id).then(DM=>
-                DM.createMessage("Dm Quest completed msg")
-            ).catchReturn(0);
-        });
-    if(userQuests?.every(q=>q.completed)){
-        //award extra bonus
-        msg.channel.send("Extra bonus msg")
-    }
-    
-    //notify user
-})
-
-
-module.exports = ProgressionManager;
+module.exports = {ProgressionManager,init};
 
 
 
@@ -202,3 +154,51 @@ module.exports = ProgressionManager;
     // Parameter ID
     // Parameter value
     // MSG
+
+    /*
+
+
+    spend/earn
+        RBN
+        SPH
+        JDE
+        PSM
+        TKN
+        COS
+
+            <SOURCE>
+
+            example: earn.RBN.blackjack
+                ommitting source = any
+
+    craft
+        <ITEM FIELD NAME> (rarity, id, type)
+
+    lootbox
+        open
+        reroll
+    buy
+        bg
+        medal
+        market
+    play
+        <COMMAND LABEL>
+            <SPECIAL CONDITION> 
+                | examples:
+                |    play.blackjack.insurance
+                |    play.roulette.5friends
+
+    command
+        <COMMAND LABEL>
+            <SPECIAL CONDITION> (none if just usage)
+
+
+
+
+    EMIT EVENT:
+    ([action* , type* , (condition)], value)
+    or
+    ("action.type.condition", value)
+
+
+    */
