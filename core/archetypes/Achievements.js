@@ -86,7 +86,7 @@ class AchievementsManager extends EventEmitter {
 
 
 
-async function initialize(){
+async function init(){
   await ACHIEVEMENTS;
   global.Achievements = new AchievementsManager();
 
@@ -129,4 +129,4 @@ async function initialize(){
   });
 }
 
-module.exports = {ACHIEVEMENTS, AchievementsManager,initialize};
+module.exports = {ACHIEVEMENTS, AchievementsManager, init};
