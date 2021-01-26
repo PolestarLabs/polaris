@@ -84,47 +84,49 @@ class AchievementsManager extends EventEmitter {
 }
 
 
-Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
-  
-  //FIXME Temporary switch, must be uncommented later;
-  //if (await Achievements.has(achievement,uID)) return null;
-  
-  const { DM, msg } = options;
-  const userData = await DB.users.get(uID);
-  const awarded = await Achievements.give(userData, achievement);
-  DB.users.set(uID, { $inc: { "modules.exp": awarded.exp || 100 } });
-  const DMchannel = await PLX.getDMChannel(uID);
-  const channel = DM ? DMchannel : msg.channel || DMchannel;
 
-  console.log(options,channel,DM)
-
-  if (!channel) return awarded;
-
-  //TODO Make this look better
-  const embed = {
-    title: $t("interface.achievementUnlocked", { lngs: msg.lang || ["dev"] }),
-    description: `**${awarded.name}**\n> *${$t([`achievements:${awarded.id}.description`,awarded.description], { lngs: msg.lang || ["dev"] })}*`,
-    thumbnail: { url: `${paths.CDN}/build/achievements/${awarded.icon}.png` },
-    timestamp: new Date(),
-    color: awarded.color || 0xEf9f8a,
-    footer: msg.author ? { text: msg.author.tag, icon_url: msg.author.avatarURL } : {},
-  };
-
-  if (!((channel.DISABLED || []).includes("ACHIEVEMENTS")) || msg?.command) {
-    channel.createMessage({ embed }).catch((e) => {
-      console.log(e);
-      return DMchannel.createMessage({ embed }).catch(() => null);
-    });
-  } else if (userData.allowDMs !== false) {
-    console.log("X");
-    return DMchannel.createMessage({ embed }).catch(() => null);
-  }
-  return null;
-});
 
 async function initialize(){
   await ACHIEVEMENTS;
   global.Achievements = new AchievementsManager();
+
+  Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
+  
+    //FIXME Temporary switch, must be uncommented later;
+    //if (await Achievements.has(achievement,uID)) return null;
+    
+    const { DM, msg } = options;
+    const userData = await DB.users.get(uID);
+    const awarded = await Achievements.give(userData, achievement);
+    DB.users.set(uID, { $inc: { "modules.exp": awarded.exp || 100 } });
+    const DMchannel = await PLX.getDMChannel(uID);
+    const channel = DM ? DMchannel : msg.channel || DMchannel;
+  
+    console.log(options,channel,DM)
+  
+    if (!channel) return awarded;
+  
+    //TODO Make this look better
+    const embed = {
+      title: $t("interface.achievementUnlocked", { lngs: msg.lang || ["dev"] }),
+      description: `**${awarded.name}**\n> *${$t([`achievements:${awarded.id}.description`,awarded.description], { lngs: msg.lang || ["dev"] })}*`,
+      thumbnail: { url: `${paths.CDN}/build/achievements/${awarded.icon}.png` },
+      timestamp: new Date(),
+      color: awarded.color || 0xEf9f8a,
+      footer: msg.author ? { text: msg.author.tag, icon_url: msg.author.avatarURL } : {},
+    };
+  
+    if (!((channel.DISABLED || []).includes("ACHIEVEMENTS")) || msg?.command) {
+      channel.createMessage({ embed }).catch((e) => {
+        console.log(e);
+        return DMchannel.createMessage({ embed }).catch(() => null);
+      });
+    } else if (userData.allowDMs !== false) {
+      console.log("X");
+      return DMchannel.createMessage({ embed }).catch(() => null);
+    }
+    return null;
+  });
 }
 
 module.exports = {ACHIEVEMENTS, AchievementsManager,initialize};
