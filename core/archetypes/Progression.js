@@ -15,10 +15,29 @@ class ProgressionManager extends EventEmitter {
         let quests = this.userQuestsCache.get(userID);
         if (!quests){
             const userData = await DB.users.get(userID);
-            this.userQuestsCache.get(userID,userData.quests);
+            this.userQuestsCache.set(userID,userData.quests);
             quests = userData.quests;
         }
         return quests;
+    }
+    async updateProgress(userID,questID,value){
+        const userData = await DB.users.findOneAndUpdate({id:userID,"quests.id":questID},{$set:{'quests.$.progress':value}});
+        this.userQuestsCache.set(userID,userData.quests);
+    }
+    async updateAll(userID,quests){
+        await DB.users.set(userID,{$set:{quests}});
+        this.userQuestsCache.set(userID,quests);
+    }
+    async checkStatus(userID,msg){
+        let userQuests = await this.getUserQuests(userID);
+        userQuests.forEach(quest => {
+            if(quest.progress >= quest.target) {
+                quest.completed = true;                 
+                Progression.emit("QUEST_COMPLETED",quest,msg,userQuests)
+            };
+        });
+        await this.updateAll(userID,userQuests);
+
     }
 }
 
@@ -34,10 +53,11 @@ async function isPartOfAchievement(param,value,options){
 global.Progression = new ProgressionManager();
 
 
+
 Progression.on("*", async (param,value,msg)=>{
     if(!value.content && !msg.content) return;
     if (isPartOfAchievement(param)) Achievements.check(msg.author.id,true,{msg:msg||value});
-    let quests = await Progression.getUserQuests(msg.author.id);
+    await Progression.checkStatus(msg.author.id,msg);
 
     //quests.
 
@@ -91,9 +111,23 @@ or
 */
 
 
-Progression.on("QUEST_COMPLETED",(quest,msg)=>{
+Progression.on("QUEST_COMPLETED",(quest,msg,userQuests)=>{
+    //DEBUG
+    msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
+    msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
+    
     //award rewards;
-    //remove quest from list;
+    msg.channel.send("Quest completed msg")
+        .catch(()=>{
+            PLX.getDMChannel(msg.author.id).then(DM=>
+                DM.createMessage("Dm Quest completed msg")
+            ).catchReturn(0);
+        });
+    if(userQuests?.every(q=>q.completed)){
+        //award extra bonus
+        msg.channel.send("Extra bonus msg")
+    }
+    
     //notify user
 })
 
