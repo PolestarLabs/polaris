@@ -21,8 +21,9 @@ class ProgressionManager extends EventEmitter {
         return quests;
     }
     async updateProgress(userID,questID,value){
-        const userData = await DB.users.findOneAndUpdate({id:userID,"quests.id":questID},{$set:{'quests.$.progress':value}});
+        const userData = await DB.users.findOneAndUpdate({id:userID,"quests.id":questID},{$inc:{'quests.$.progress':value}},{new:!0});
         this.userQuestsCache.set(userID,userData.quests);
+        return userData.quests;
     }
     async updateAll(userID,quests){
         await DB.users.set(userID,{$set:{quests}});
@@ -37,7 +38,21 @@ class ProgressionManager extends EventEmitter {
             };
         });
         await this.updateAll(userID,userQuests);
-
+        return userQuests;
+    }
+    async assign(questID,userID){
+        let quest = await DB.quests.get(questID);
+        await DB.users.set(userID,{
+            $push:{
+                quests: {
+                    id: quest.id,
+                    target: quest.target,
+                    progress: 0,
+                    completed: false,
+                }
+            }
+        });
+        return quest;
     }
 }
 
