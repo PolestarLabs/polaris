@@ -109,6 +109,18 @@ Progression.on("craft", async (event,item,amount,msg)=>{
     await Progression.checkStatus(msg.author.id,msg);    
 })
 
+Progression.on("spend", async (event,currency,amount,msg)=>{
+    const userQuests = Progression.getUserQuests(msg.author.id);
+    await Promise.all( userQuests.map(async quest => {        
+        const [action,type,condition] = quest.tracker.split('.');
+        if(action!=='spend') return;
+        if(currency === type){
+            await Progression.updateProgress(msg.author.id,quest.id,amount);
+        }
+    }));
+    await Progression.checkStatus(msg.author.id,msg);    
+})
+
 
 /*
 
