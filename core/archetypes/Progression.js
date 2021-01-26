@@ -9,8 +9,12 @@ class ProgressionManager extends EventEmitter {
         this.userQuestsCache = new Map();
     }
     emit(event, ...args){                
+        const [action,type,condition] = event.split('.');
+        console.log({action,type,condition})
         super.emit('*',event,...args); // Catch-all
-        super.emit(event, ...args);
+        super.emit(action,event, ...args); // emit top-level
+        if (type) super.emit(`${action}.${type}`, event, ...args); // emit specific
+        if (condition) super.emit(`${action}.${type}.${condition}`, event, ...args); // emit super specific
     }
     async getUserQuests(userID){
         let quests = this.userQuestsCache.get(userID);
@@ -48,6 +52,7 @@ class ProgressionManager extends EventEmitter {
                 quests: {
                     id: quest.id,
                     target: quest.target,
+                    tracker: `${quest.action}.${quest.type}.${quest.condition}`,
                     progress: 0,
                     completed: false,
                 }
@@ -76,14 +81,35 @@ global.Progression = new ProgressionManager();
 
 
 
-Progression.on("*", async (param,value,msg)=>{
+/*
+Progression.on("param", async (value,msg)=>{
+
+})
+*/
+
+Progression.on("*", async (event,value,msg)=>{
     if(!value.content && !msg.content) return;
-    if (isPartOfAchievement(param)) Achievements.check(msg.author.id,true,{msg:msg||value});
+    if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
     await Progression.checkStatus(msg.author.id,msg);
 
     //quests.
 
 });
+
+
+Progression.on("craft", async (event,item,amount,msg)=>{
+    const userQuests = Progression.getUserQuests(msg.author.id);
+    await Promise.all( userQuests.map(async quest => {        
+        const [action,type,condition] = quest.tracker.split('.');
+        if(action!=='craft') return;
+        if(item[type] === condition){
+            await Progression.updateProgress(msg.author.id,quest.id,amount);
+        }
+    }));
+    await Progression.checkStatus(msg.author.id,msg);    
+})
+
+
 /*
 
 
