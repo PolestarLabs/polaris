@@ -1,20 +1,58 @@
 const EventEmitter = require("events");
+const {ACHIEVEMENTS} = require("./Achievements.js");
 
-class Progression extends EventEmitter {
+
+class ProgressionManager extends EventEmitter {
     constructor(){
         super();
-        
+        this.userQuestsCache = new Map();
+    }
+    emit(event, ...args){                
+        super.emit('*',event,...args); // Catch-all
+        super.emit(event, ...args);
+    }
+    async getUserQuests(userID){
+        let quests = this.userQuestsCache.get(userID);
+        if (!quests){
+            const userData = await DB.users.get(userID);
+            this.userQuestsCache.get(userID,userData.quests);
+            quests = userData.quests;
+        }
+        return quests;
     }
 }
 
 
 
-isPartOfAchievement(param,value,options){
-    
+async function isPartOfAchievement(param,value,options){
+    if(!ACHIEVEMENTS.length) await ACHIEVEMENTS;
+    return !!ACHIEVEMENTS.find(a=> a.condition.includes(param));
 }
 
 
-module.exports = Progression;
+
+global.Progression = new ProgressionManager();
+
+
+Progression.on("*", async (param,value,msg)=>{
+    if(!value.content && !msg.content) return;
+    if (isPartOfAchievement(param)) Achievements.check(msg.author.id,true,{msg:msg||value});
+    let quests = await Progression.getUserQuests(msg.author.id);
+
+    //quests.
+
+});
+
+
+
+Progression.on("QUEST_COMPLETED",(quest,msg)=>{
+    //award rewards;
+    //remove quest from list;
+    //notify user
+})
+
+
+module.exports = ProgressionManager;
 
 
 
