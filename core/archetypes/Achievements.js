@@ -36,7 +36,7 @@ class AchievementsManager extends EventEmitter {
   progress(achievementID, user, statistics) {
     //user = userData; used in eval
     //statistics is also used in eval
-    
+
     if (!user || !user.modules) throw new Error("User must be a DB userData object");
     const achiev = this.get(achievementID);
     const conditions = achiev.condition?.split(">=") || 0;
@@ -127,4 +127,4 @@ async function initialize(){
   global.Achievements = new AchievementsManager();
 }
 
-module.exports = {AchievementsManager,initialize};
+module.exports = {ACHIEVEMENTS, AchievementsManager,initialize};
