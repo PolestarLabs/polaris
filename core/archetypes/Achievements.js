@@ -1,9 +1,12 @@
 // @ts-nocheck
 const { EventEmitter } = require("events");
+let ACHIEVEMENTS = DB.achievements.find({}).lean().then(a=> ACHIEVEMENTS = a);
+
 
 class AchievementsManager extends EventEmitter {
+
   get(ach) {
-    return DB.achievements.findOne({ id: ach }).lean().exec();
+    return ACHIEVEMENTS.find(a=>a.id === ach);
   }
 
   //FIXME Consistency in USER / ACHIEVEMENT order
@@ -11,25 +14,31 @@ class AchievementsManager extends EventEmitter {
     await DB.achievements.award(user, achievement);
     return this.get(achievement);
     //NOTE PROPOSAL
-      return DB.progression.set({achievement,user,type:'achievement'},{$set: {awarded:true} } );
+    //  return DB.progression.set({achievement,user,type:'achievement'},{$set: {awarded:true} } );
   }
 
-  async has(achievement, user) {
-    return DB.users.get(user.id || user).then((userData) => !!(userData?.modules.achievements?.find((a) => a.id === achievement)));
+  has(achievementID, userData) {
+    return !!(userData?.modules.achievements?.find((a) => a.id === achievementID));
     //NOTE PROPOSAL
-      return !!(await DB.progression.get({achievement,user,type:'achievement'})).awarded;
+    //  return !!(await DB.progression.get({achievement,user,type:'achievement'})).awarded;
   }
 
-  advance(achievement,user,value){
-    return DB.progression.set({achievement,user,type:'achievement'},{$inc: {tracker:value} } );
-  }
-  update(achievement,user,value){
-    return DB.progression.set({achievement,user,type:'achievement'},{$set: {tracker:value} } );
-  }
+  //NOTE: Achievements updates may not be useful as it is retroactively detected based on persistent historic data.
+  /*
+    advance(achievement,user,value){
+      return DB.progression.set({achievement,user,type:'achievement'},{$inc: {tracker:value} } );
+    }
+    update(achievement,user,value){
+      //return DB.progression.set({achievement,user,type:'achievement'},{$set: {tracker:value} } );
+    }
+  */
 
-  async progress(ach, user) {
-    if ((!user?.modules && user.id) || typeof user === "string") user = await DB.users.get(user.id || user);
-    const achiev = await this.get(ach);
+  progress(achievementID, user, statistics) {
+    //user = userData; used in eval
+    //statistics is also used in eval
+    
+    if (!user || !user.modules) throw new Error("User must be a DB userData object");
+    const achiev = this.get(achievementID);
     const conditions = achiev.condition?.split(">=") || 0;
     const goal = conditions?.[1] || 1;
     const current = eval(`try{${conditions[0] || 0}}catch(err){0}`); // eslint-disable-line no-eval
@@ -38,41 +47,42 @@ class AchievementsManager extends EventEmitter {
     return { current, goal, percent };
   }
 
-  check(userData, beau, awardRightAway,opts) {
+  check(userData, awardRightAway,opts) {
+    const {debug} = opts;
     return new Promise( async (resolve, reject) => {
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.get(userData.id || userData);
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
+      const user = userData;
+      const statistics = (await DB.control.get(userData.id)).data.statistics;
 
-      const res = await DB.achievements.find({}, {
-        _id: 0, id: 1, reveal_requisites: 1, reveal_level: 1, advanced_conditions: 1, condition: 1,
-      }).lean().exec().then((a) => Promise.all(
-        a.map(async (achiev) => {
-          const user = userData;
-          const revealed = userData.modules.level >= achiev.reveal_level
-          && (this.has(achiev.id,userData.id) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
-          //&& (this.has(userData.id, achiev.achiev_requisites) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
-          const C1 = eval(`try{${achiev.condition}}catch(err){false}`); // eslint-disable-line no-eval
-          let C2;
-          if (achiev.advanced_conditions?.length > 0) {
-            C2 = achiev.advanced_conditions.every((acv) => eval(`try{${acv}}catch(err){false}`)); // eslint-disable-line no-eval
-          } else C2 = true;
-          const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
-          const switcher = (c) => (c ? "✔️" : "❌");
+      const res = ACHIEVEMENTS.map((achiev) => {
 
-          if (awardRightAway && C1 && C2) this.emit("award", achiev.id, user.id,opts);
-          if (beau) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+        const revealed = userData.modules.level >= achiev.reveal_level
+          && (this.has(achiev.id,userData) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
+        //&& (this.has(userData.id, achiev.achiev_requisites) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
+        const C1 = eval(`try{${achiev.condition}}catch(err){false}`); // eslint-disable-line no-eval
+        let C2;
+        if (achiev.advanced_conditions?.length > 0) {
+          C2 = achiev.advanced_conditions.every((acv) => eval(`try{${acv}}catch(err){false}`)); // eslint-disable-line no-eval
+        } else C2 = true;
+        
+        const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
+        const switcher = (c) => (c ? "✔️" : "❌");
 
-          return {
-            achievement: achiev.id, revealed, unlocked: (C1 && C2), awarded, progress: await this.progress(achiev.id, userData),
-          };
-        }),
-      ));
+        if (awardRightAway && C1 && C2) this.emit("award", achiev.id, user.id,opts);
+        if (debug) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+
+        return {
+          achievement: achiev.id, revealed, unlocked: (C1 && C2), awarded, progress: this.progress(achiev.id, userData, statistics),
+        };
+
+      });
+      
       return resolve(res);
     });
   }
 }
 
-global.Achievements = new AchievementsManager();
 
 Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
   
@@ -112,4 +122,9 @@ Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false
   return null;
 });
 
-module.exports = AchievementsManager;
+async function initialize(){
+  await ACHIEVEMENTS;
+  global.Achievements = new AchievementsManager();
+}
+
+module.exports = {AchievementsManager,initialize};
