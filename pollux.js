@@ -9,8 +9,6 @@ global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
 global.GNums = require("./resources/lists/GlobalNumbers.js");
 
-(require('./core/archetypes/Progression.js')).init();
-(require('./core/archetypes/Achievements.js')).init();
 
 
 const Sentry          = require("@sentry/node");
@@ -126,6 +124,9 @@ const dbConnectionData = {
 
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
+
+  (require('./core/archetypes/Progression.js')).init();
+  (require('./core/archetypes/Achievements.js')).init();
 
   setTimeout(() => {
     console.log("Discord connection start...");
