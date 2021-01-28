@@ -142,8 +142,8 @@ const init = ()=>{
     })
 
     Progression.on("spend", async (event,opts)=>{
-        const {currency,amount,msg} = opts;
-        const userQuests = Progression.getUserQuests(msg.author.id);
+        const {currency,amount,msg,userID} = opts;
+        const userQuests = Progression.getUserQuests(msg?.author?.id || userID);
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='spend') return;
