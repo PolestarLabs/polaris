@@ -1,5 +1,5 @@
 const EventEmitter = require("events");
-const {ACHIEVEMENTS} = require("./Achievements.js");
+let {ACHIEVEMENTS} = require("./Achievements.js");
 
 
 
@@ -10,6 +10,7 @@ class ProgressionManager extends EventEmitter {
     }
     emit(event, ...args){                
         const [action,type,condition] = event.split('.');
+        hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([...args])}\`\`\``)
         console.log({action,type,condition})
         super.emit('*',event,...args); // Catch-all
         super.emit(action,event, ...args); // emit top-level
@@ -25,8 +26,8 @@ class ProgressionManager extends EventEmitter {
         }
         return quests;
     }
-    async updateProgress(userID,questID,value){
-        const userData = await DB.users.findOneAndUpdate({id:userID,"quests.id":questID},{$inc:{'quests.$.progress':value}},{new:!0});
+    async updateProgress(userID,questUniqueID,value){
+        const userData = await DB.users.findOneAndUpdate({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
@@ -36,10 +37,21 @@ class ProgressionManager extends EventEmitter {
     }
     async checkStatus(userID,msg){
         let userQuests = await this.getUserQuests(userID);
+        if(!userQuests) return [];
         userQuests.forEach(quest => {
+            //DEBUG
+            if(msg.content.includes('-dbg')){
+    
+                msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
+                //msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
+            }
             if(quest.progress >= quest.target) {
-                quest.completed = true;                 
-                Progression.emit("QUEST_COMPLETED",quest,msg,userQuests)
+
+
+
+
+                if(msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
+                quest.completed = true; 
             };
         });
         await this.updateAll(userID,userQuests);
@@ -47,23 +59,38 @@ class ProgressionManager extends EventEmitter {
     }
     async assign(questID,userID){
         let quest = await DB.quests.get(questID);
-        await DB.users.set(userID,{
-            $push:{
-                quests: {
-                    id: quest.id,
-                    target: quest.target,
-                    tracker: `${quest.action}.${quest.type}.${quest.condition}`,
-                    progress: 0,
-                    completed: false,
-                }
-            }
-        });
+        let newQuest = {
+            id: quest.id,
+            target: quest.target,
+            tracker: `${quest.action}.${quest.type}.${quest.condition}`,
+            progress: 0,
+            completed: false,
+        }
+        await DB.users.set(userID,{ $push:{ quests: newQuest } });
+        let quests = this.userQuestsCache.get(userID) || [];
+        quests.push(newQuest);
+        this.userQuestsCache.set(userID,quests);
         return quest;
+    }
+    async assignArbitrary(newQuest,userID){
+        await DB.users.set(userID,{ $push:{ quests: newQuest } });
+        let quests = this.userQuestsCache.get(userID) || [];
+        quests.push(newQuest);
+        this.userQuestsCache.set(userID,quests);
+        return newQuest;
     }
 
     async available(userID){
         const userData = await DB.users.get(userID);
         return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
+    }
+    async updateQuestTracker(userID,tracker,value=1){
+        let userQuests = await this.getUserQuests(userID);
+        if(!userQuests) return [];
+
+        userQuests.forEach(quest => {
+            if(quest.tracker === tracker) this.updateProgress(userID,quest._id,value);
+        });
     }
 
 }
@@ -72,6 +99,7 @@ class ProgressionManager extends EventEmitter {
 
 async function isPartOfAchievement(param,value,options){
     if(!ACHIEVEMENTS.length) await ACHIEVEMENTS;
+    if(!ACHIEVEMENTS.length) return false;
     return !!ACHIEVEMENTS.find(a=> a.condition.includes(param));
 }
 
@@ -87,35 +115,40 @@ const init = ()=>{
 
     global.Progression = new ProgressionManager();
 
-    Progression.on("*", async (event,value,msg)=>{
-            if(!value.content && !msg.content) return;
+    Progression.on("*", async (event,opts)=>{
+        const {value,msg} = opts;
+        if(!msg) return;
+        if(!value?.content && !msg?.content) return;
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
         await Progression.checkStatus(msg.author.id,msg);
+        Progression.updateQuestTracker(msg.author.id,event,value);
 
         //quests.
 
     });
 
 
-    Progression.on("craft", async (event,item,amount,msg)=>{
+    Progression.on("craft", async (event,opts)=>{
+        const { item,amount,msg } = opts;
         const userQuests = Progression.getUserQuests(msg.author.id);
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='craft') return;
             if(item[type] === condition){
-                await Progression.updateProgress(msg.author.id,quest.id,amount);
+                await Progression.updateProgress(msg.author.id,quest._id,amount);
             }
         }));
         await Progression.checkStatus(msg.author.id,msg);    
     })
 
-    Progression.on("spend", async (event,currency,amount,msg)=>{
+    Progression.on("spend", async (event,opts)=>{
+        const {currency,amount,msg} = opts;
         const userQuests = Progression.getUserQuests(msg.author.id);
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='spend') return;
             if(currency === type){
-                await Progression.updateProgress(msg.author.id,quest.id,amount);
+                await Progression.updateProgress(msg.author.id,quest._id,amount);
             }
         }));
         await Progression.checkStatus(msg.author.id,msg);    
@@ -123,13 +156,13 @@ const init = ()=>{
 
 
 
-    Progression.on("QUEST_COMPLETED",(quest,msg,userQuests)=>{
-        //DEBUG
-        msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
-        msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
+    Progression.on("QUEST_COMPLETED",(event,quest,opts)=>{
+        const {msg,userQuests} = opts;
+        console.log({event,quest,opts})
+
         
         //award rewards;
-        msg.channel.send("Quest completed msg")
+        msg.channel.send("Quest completed msg `"+quest.id+"`")
             .catch(()=>{
                 PLX.getDMChannel(msg.author.id).then(DM=>
                     DM.createMessage("Dm Quest completed msg")
@@ -137,7 +170,7 @@ const init = ()=>{
             });
         if(userQuests?.every(q=>q.completed)){
             //award extra bonus
-            msg.channel.send("Extra bonus msg")
+            msg.channel.send("Extra bonus msg `all quests`")
         }
         
         //notify user
