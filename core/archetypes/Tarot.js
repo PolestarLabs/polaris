@@ -99,7 +99,8 @@ class Tarot {
       const {card,pose:POSITION} = draw;
       return card[POSITION].SCORE[i];
     }).map(value=>{
-      if(value.includes("RNG")) value = randomize(value.split(":")[1] ||0 ,value.split(":")[2] ||0);
+      const [,MIN,MAX] = value.split(":").map(x=>parseInt(x));
+      if(value.includes("RNG")) value = randomize(MIN,MAX);
       return value;
     })
   }
