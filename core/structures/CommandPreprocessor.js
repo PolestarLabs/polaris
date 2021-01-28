@@ -87,6 +87,7 @@ const DEFAULT_CMD_OPTS = {
   cooldown: 3456.777,
   cooldownMessage: (msg) => `⏱ ${rand$t([`responses.cooldown.${msg.command.cmd}`, "responses.cooldown.generic"], { lngs: msg.lang })}`,
   cooldownReturns: 2,
+  cooldownExclusions: {guildIDs:['789382326680551455']},	
   requirements: { custom: PERMS_CALC },
   permissionMessage: (msg) => (
     msg.guild.disaReply
