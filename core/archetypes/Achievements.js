@@ -18,7 +18,7 @@ class AchievementsManager extends EventEmitter {
   }
 
   has(achievementID, userData) {
-    return !!(userData?.modules.achievements?.find((a) => a.id === achievementID));
+    return !!(userData?.modules?.achievements?.find((a) => a.id === achievementID));
     //NOTE PROPOSAL
     //  return !!(await DB.progression.get({achievement,user,type:'achievement'})).awarded;
   }
@@ -47,8 +47,8 @@ class AchievementsManager extends EventEmitter {
     return { current, goal, percent };
   }
 
-  check(userData, awardRightAway,opts) {
-    const {debug} = opts;
+  check(userData, awardRightAway,opts = {}) {
+    const {debug,filter} = opts;
     return new Promise( async (resolve, reject) => {
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.get(userData.id || userData);
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
@@ -69,8 +69,11 @@ class AchievementsManager extends EventEmitter {
         const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
         const switcher = (c) => (c ? "✔️" : "❌");
 
-        if (awardRightAway && C1 && C2) this.emit("award", achiev.id, user.id,opts);
-        if (debug) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+        if (awardRightAway && C1 && C2 && !awarded) this.emit("award", achiev.id, user.id,opts);
+        if (debug) {
+          if(!filter || awarded) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+          else return null;
+        };
 
         return {
           achievement: achiev.id, revealed, unlocked: (C1 && C2), awarded, progress: this.progress(achiev.id, userData, statistics),
@@ -78,7 +81,7 @@ class AchievementsManager extends EventEmitter {
 
       });
       
-      return resolve(res);
+      return resolve(res.filter(x=>x));
     });
   }
 }
@@ -92,8 +95,9 @@ async function init(){
 
   Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
   
+    if(uID !="88120564400553984") return;
     //FIXME Temporary switch, must be uncommented later;
-    //if (await Achievements.has(achievement,uID)) return null;
+    if (await Achievements.has(achievement,uID)) return null;
     
     const { DM, msg } = options;
     const userData = await DB.users.get(uID);
@@ -102,7 +106,7 @@ async function init(){
     const DMchannel = await PLX.getDMChannel(uID);
     const channel = DM ? DMchannel : msg.channel || DMchannel;
   
-    console.log(options,channel,DM)
+    //console.log(options)
   
     if (!channel) return awarded;
   
@@ -118,7 +122,7 @@ async function init(){
   
     if (!((channel.DISABLED || []).includes("ACHIEVEMENTS")) || msg?.command) {
       channel.createMessage({ embed }).catch((e) => {
-        console.log(e);
+        console.error(e);
         return DMchannel.createMessage({ embed }).catch(() => null);
       });
     } else if (userData.allowDMs !== false) {
