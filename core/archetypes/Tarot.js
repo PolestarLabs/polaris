@@ -101,20 +101,22 @@ class Tarot {
     }).map(value=>{
       const [,MIN,MAX] = value.split(":").map(x=>parseInt(x));
       if(value.includes("RNG")) value = randomize(MIN,MAX);
-      return value;
+      return parseInt(value);
     })
   }
 
   async luckyScore(user){
     const timed = await new TimedUsage("tarot", { day: DAY }).loadUser(user);
+    console.log(timed)
     if (timed.dailyAvailable){
       let myScore = this.scores.reduce((a,b)=>a+b);
       DB.users.set(user.id,{
         $set:{"counters.tarot.luckyScore": myScore}
-      })
+      });
+      return timed
 
     }else{
-      timed.availableAt
+      return timed.availableAt
     }
   }
 
