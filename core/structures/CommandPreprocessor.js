@@ -110,6 +110,7 @@ const DEFAULT_CMD_OPTS = {
       return undefined;
     },
     postCommand: (m) => {
+      Progression.emit(`command.${m.command.label}`,{msg:m});
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
       if (m.content.includes("--bmk")) {
