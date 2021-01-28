@@ -79,7 +79,7 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
   };
 
   const Author = message.author;
-  if (Author.dailing === true) return message.channel.send(`There's already a \`${Daily.command}\` request going on!`);
+  if (Author.dailing === true) return Author.dailing = false && message.channel.send(`There's already a \`${Daily.command}\` request going on!`);
 
   const DAY = Daily.day;
 
@@ -125,7 +125,7 @@ ${_emoji("future")} ${dailyAvailable
   const end = () => Author.dailing = false;
 
   DEBUG_LOG();
-
+  Author.dailing = false;
   try {
     await wait(.2);
     const now = Date.now();
@@ -150,6 +150,7 @@ ${_emoji("future")} ${dailyAvailable
     DEBUG_LOG();
     throw e;
   }
+  
 
 };
 
