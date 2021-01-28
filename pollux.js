@@ -125,8 +125,8 @@ const dbConnectionData = {
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
 
-  (require('./core/archetypes/Progression.js')).init();
   (require('./core/archetypes/Achievements.js')).init();
+  (require('./core/archetypes/Progression.js')).init();
 
   setTimeout(() => {
     console.log("Discord connection start...");
