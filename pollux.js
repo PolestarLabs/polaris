@@ -66,6 +66,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
 }, {
   defaultHelpCommand: false,
   ignoreBots: true,
+  requestTimeout:5000,
   defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
   prefix: ["===", "p!+", "@mention"],
 });
