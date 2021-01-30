@@ -164,7 +164,9 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
  * @throws {Error} Not enough funds.
  */
 function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`spend.${currency}.${type}`,{value:amt,userID:user,options});
+  [currency].flat().forEach((CURR,i)=>{
+    Progression.emit(`spend.${CURR}.${type}`,{value:[amt].flat()[i],userID:user,options});
+  });
   return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-", options);
 }
 
@@ -181,7 +183,9 @@ function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Not enough funds.
  */
 function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`earn.${currency}.${type}`,{value:amt,userID:user,options});
+  [currency].flat().forEach((CURR,i)=>{
+    Progression.emit(`earn.${CURR}.${type}`,{value:[amt].flat()[i],userID:user,options});
+  });
   return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+", options);
 }
 
