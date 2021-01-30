@@ -8,7 +8,7 @@ class Airline {
     const airportData = await DB.airlines.AIRPORT.findOne({ id: airport });
     if (!airportData) return Promise.reject("Invalid airport ID.");
     
-    return ECO.pay((await this.airline).user, airportData.slotPrice, "AIRLINES").then(async () => {
+    return ECO.pay((await this.airline).user, airportData.slotPrice, "airlines_buy_slot").then(async () => {
       return DB.airlines.SLOTS.new((await this.airline).id, airportData.id, time);
     });
   }
@@ -17,7 +17,7 @@ class Airline {
     const airplaneData = await DB.airlines.AIRPLANES.findOne({ id });
     if (!airplaneData) return Promise.reject("Invalid airplane ID.");
     
-    return ECO.pay((await this.airline).user, airplaneData.price, "AIRLINES").then(async () => {
+    return ECO.pay((await this.airline).user, airplaneData.price, "airlines_buy_plane").then(async () => {
       return DB.airlines.AIRPLANES.buy((await this.airline).id, airplaneData.id);
     });
   }
