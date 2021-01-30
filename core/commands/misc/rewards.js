@@ -1,6 +1,7 @@
 // TODO[epic=Refactor] rewards - Plan this properly and rewrite the entire command.
 // TRANSLATE[epic=translations] rewards
 
+const YEAR = "2021";
 const MONTHNAME = "March";
 const MONTHCHECK = 2;
 const STICKERS = [
@@ -409,7 +410,7 @@ ${_emoji("yep")} **${capitalize(T.title)} Donator's Flair**
   await Promise.all([
     DB.users.set(message.author.id, querystring),
     userData.addItem(T.boxes[0].name, T.boxes[0].count),
-    ECO.receive(message.author, amts, "Donator's Rewards: Monthly", curr),
+    ECO.receive(message.author, amts, "dono_rewards", curr,{details:{tier: T.title, month: MONTHNAME, year: YEAR}}),
   ]);
 
   embed.description += `📶 **Streak:** ${(userData.counters?.donateStreak.total || 0) + 1} (${(userData.counters?.donateStreak[T.title] || 0) + 1} as ${[T.title]})`;
