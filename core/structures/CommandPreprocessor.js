@@ -94,7 +94,7 @@ const DEFAULT_CMD_OPTS = {
       ? msg.commandDenyChn
         ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
         : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
-          : msg.addReaction(_emoji("nope").reaction)
+          : msg.addReaction(_emoji("nope").reaction).then(() => undefined)
       : null
   ),
   hooks: {
