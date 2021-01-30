@@ -81,8 +81,8 @@ const helpEmbed = {
       {
         name: "Channel states",
         value: `When you switch in channel mode, things get more difficult.\nThis is what the different states mean:
-				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")} server mode: on/partial/off | channel mode: overrides server\
-				\n> <:${R_WG}>/<:${R_WO}>/<:${R_WR}> channel mode: following server settings\
+				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")}\tserver mode: on/partial/off | channel mode: overrides server\
+				\n> <:${R_WG}>/<:${R_WO}>/<:${R_WR}>\tchannel mode: following server settings\
 				`,
         inline: false,
       },
