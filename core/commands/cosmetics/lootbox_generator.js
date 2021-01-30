@@ -268,7 +268,7 @@ function renderDupeTag(rarity, P) {
 function getPrize(loot, USERDATA) {
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
-  if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox", loot.currency);
+  if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox_rewards", loot.currency);
 
   if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
 
