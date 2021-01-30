@@ -1,3 +1,66 @@
+//STUB Transaction Types Table
+
+const TRANSACTION_TYPES = {
+
+   daily:                 "Daily Rewards"
+   
+  ,lootbox_drop:          "Lootbox Drop: {{loot_id}}"
+  ,lootbox_transfer:      "Lootbox Transfer: {{user_id}}"
+
+  ,lootbox_rewards:       "Lootbox Rewards"
+  ,lootbox_reroll:        "Lootbox Reroll"
+  ,lootbox_transfer_tax:  "Lootbox Transfer Tax"
+  
+  ,rubine_transfer:       "Rubine Transfer Fee"
+
+  ,gambling_betflip:      "Betflip"
+  ,gambling_blackjack:    "Blackjack"
+  ,gambling_roulette:     "Casino Roulette"
+  ,gambling_russroll:     "Russian Roulette"
+  
+  ,role_purchase:         "Role Purchase at {{server_id}}"
+
+  ,bgshop_bot:            "Background Quickbuy"
+  ,bgshop_dash:           "Background Shop Classic"
+  ,medalshop_dash:        "Medal Shop Classic"
+
+  ,crafting_dash:         "Crafting: [Dashboard]"
+  ,crafting_bot:          "Crafting: [Bot]"
+  ,crafting_discovery:    "Crafting: [Discovery]"
+  
+  ,crafting_service:      "Crafting: {{player}} Service"
+  ,crafting_advanced:     "Adv.Crafting: Material Costs"
+
+  ,expand_gallery_slots:  "Expand Gallery Slots"
+  ,expand_wife_slots:     "Expand Marriage Slots"
+  ,webshop_custom:        "Webshop(?) - {{type}}"
+  
+  ,storefront_bundle:     "Storefront: Bundle"
+  ,storefront_background: "Storefront: Background"
+  ,storefront_medal:      "Storefront: Medal"
+  ,storefront_other:      "Storefront: Other"
+
+  ,marketplace_buy:       "Marketplace: BUY"
+  ,marketplace_sell:      "Marketplace: SELL"
+  ,marketplace_post:      "Marketplace: POST Fee"  
+  
+  ,event_action:          "Event: [{{action}}]"
+
+  ,airlines:              "Airlines: {{???}}"
+  ,discoin_out:           "Discoin: >> [{{currency}}]"
+  ,discoin_in:            "Discoin: << [{{currency}}]"
+  ,local$:                "Custom Currency: [{{currency}}]"
+
+  ,venture_event:         "Adventure Journey Event"
+  ,venture_insurance:     "Adventure Insurance"
+
+  ,adm_awarded:           "Admin Awarded"
+  ,dono_rewards:          "{{tier}} Rewards: {{month}}/{{year}}"
+  ,dono_rewards_1st:      "{{tier}} Rewards: {{month}}/{{year}} (First Month Bonus)"
+  
+}
+
+
 /**
  * @typedef Transaction
  * @property {string} transactionId
