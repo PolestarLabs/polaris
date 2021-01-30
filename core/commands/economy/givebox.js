@@ -118,7 +118,7 @@ const init = async (msg, args) => {
             "BOX",
             ">",
           );
-          await ECO.pay(msg.author.id, 250, "Lootbox Transfer Tax");
+          await ECO.pay(msg.author.id, 250, "lootbox_transfer_tax");
 
           userData.removeItem(CHOSENBOX.id);
           targetData.addItem(CHOSENBOX.id);
