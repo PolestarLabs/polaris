@@ -105,7 +105,7 @@ const DEFAULT_CMD_OPTS = {
     },
     postCheck: (m, a, chk) => {
       if (!chk) return null;
-      m.channel.sendTyping();
+      if (m.command.sendTyping !== false) m.channel.sendTyping();
       commandRoutine.commLog(m, m.command);
       commandRoutine.updateMeta(m, m.command);
       return undefined;

@@ -38,4 +38,5 @@ module.exports = {
   cat: "fun",
   botPerms: ["attachFiles", "embedLinks", "manageWebhooks"],
   aliases: [],
+  sendTyping: false,
 };
