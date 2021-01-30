@@ -30,7 +30,7 @@ const init = async (msg, args) => {
   }
 
   await msg.member.addRole(pRole.role, "Purchased Role");
-  await ECO.pay(msg.author, pRole.price, `Role Purchase at ${msg.guild.name}`);
+  await ECO.pay(msg.author, pRole.price, `role_purchase`,"RBN",{details:{server_id: msg.guild.id}});
 
   msg.channel.send({
     embed: {
