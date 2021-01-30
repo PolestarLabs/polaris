@@ -31,7 +31,7 @@ module.exports = {
   pub: true,
   cmd: "flip",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
 };

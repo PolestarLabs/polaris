@@ -29,7 +29,7 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
     const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
 
     /** @type {import("../../subroutines/feeds/twitch").TwitchFeed[]} */
-    const feedData = await DB.feed.find({ server: msg.guild.id, type: "twitch" })
+    const feedData = await DB.feed.find({ server: msg.guild.id, type: "twitch" });
 
     const [intent, twitchchannel, textchannel, id] = await parseArgs(args, feedData);
 
@@ -47,11 +47,11 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
 
             // @ts-ignore
             let todelete = feedData[id];
-            if (!todelete) 
+            if (!todelete)
                 for (let ind in feedData) // @ts-ignore
-                    if (feedData[ind].id === twitchchannel.id) {  todelete = feedData[ind]; break; };
+                    if (feedData[ind].id === twitchchannel.id) { todelete = feedData[ind]; break; };
             if (!todelete) return msg.channel.send($t("interface.feed.invalidTwitch", P)); // TODO custom string
-            
+
             // @ts-expect-error
             let { profile_image_url, display_name } = twitchchannel ?? (await getStreamer(todelete.id));
 
@@ -65,17 +65,17 @@ async function init(/** @type {any} */ msg, /** @type {string[]} */ args) {
                 },
             });
 
-            YesNo(m, msg, async() => {
+            YesNo(m, msg, async () => {
                 await DB.feed.deleteOne({ server: msg.guild.id, _id: todelete._id });
                 // TODO add deletion message 
             });
 
             break;
-        case "list": 
+        case "list":
             if (feedData.length === 0) return msg.channel.send($t("interface.feed.noTwitch", P));
-            
+
             // TODO display if they're live
-            
+
             msg.channel.send({
                 embed: {
                     title: $t("interface.feed.listShowTwitch", P),
@@ -103,7 +103,7 @@ async function parseArgs(/** @type {string[]} */ args, /** @type {import("../../
         // @ts-ignore - this isn't even correct from ts...
         else if ((!channel || typeof id !== "number") && (parseInt(arg) !== NaN || (channelREGEXP.test(arg) && (arg = arg.match(channelREGEXP)[1])))) {
             if (arg.length < 2 && typeof id !== "number") id = parseInt(arg); // NOTE if limit >= 10 this needs updating.
-            if (!(channel = PLX.getChannel(arg)) && !twitch) twitch = await getStreamer(arg); 
+            if (!(channel = PLX.getChannel(arg)) && !twitch) twitch = await getStreamer(arg);
         }
 
         // NOTE - Check twitch last since the getStreamer is time intensive
@@ -142,7 +142,7 @@ module.exports = {
     init,
 
     cmd: "twitchalert",
-    cat: "util",
+    cat: "utility",
     aliases: ["twitch"],
 
     pub: true,
@@ -150,4 +150,4 @@ module.exports = {
 
     argsRequired: true,
     botPerms: ["embedLinks"],
-}
+};

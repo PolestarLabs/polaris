@@ -21,7 +21,7 @@ module.exports = {
   pub: true,
   cmd: "avatar",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["embedLinks"],
   aliases: [],
 };

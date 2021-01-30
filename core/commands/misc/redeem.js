@@ -74,5 +74,6 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   cmd: "redeem",
+  cat: "inventory",
   argsRequired: true
 };

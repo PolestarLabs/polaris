@@ -39,6 +39,6 @@ module.exports = {
   cmd,
   perms: 3,
   init,
-  cat: "util",
+  cat: "utility",
   botPerms: ["manageMessages", "embedLinks"],
 };

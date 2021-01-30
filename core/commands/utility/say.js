@@ -71,7 +71,7 @@ module.exports = {
   pub: true,
   cmd: "say",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["attachFiles", "embedLinks", "manageMessages"],
   aliases: [],
 };

@@ -54,17 +54,17 @@ const init = async (msg) => {
 
   if (TARGETDATA) {
     emb.field("\u200bClassic Gems", "\u200b"
-    + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.RBN, true)}**`
-    + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.SPH, true)}**`
-    + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.JDE, true)}**`,
-    true);
+      + `\u2003${_emoji("RBN")} ${$t("keywords.RBN_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.RBN, true)}**`
+      + `\n\u2003${_emoji("SPH")} ${$t("keywords.SPH_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.SPH, true)}**`
+      + `\n\u2003${_emoji("JDE")} ${$t("keywords.JDE_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.JDE, true)}**`,
+      true);
 
     emb.field("\u200bPolaris Gems", "\u200b"
-    + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
-    + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.prisms ?? 0, true)}**`
-    + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
-    + `\n${invisibar}`,
-    true);
+      + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
+      + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.prisms ?? 0, true)}**`
+      + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
+      + `\n${invisibar}`,
+      true);
 
     lastTrans = await DB.audits.find({ $or: [{ from: TARGETDATA.id }, { to: TARGETDATA.id }] }).sort({ timestamp: -1 }).limit(5);
     emb.field("Last Transactions",
@@ -94,5 +94,5 @@ module.exports = {
   cmd: "balance",
   perms: 3,
   init,
-  cat: "cash",
+  cat: "economy",
 };
