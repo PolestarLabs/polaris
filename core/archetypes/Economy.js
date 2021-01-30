@@ -3,7 +3,7 @@
 const TRANSACTION_TYPES = {
 
    daily:                 "Daily Rewards"
-   
+
   ,lootbox_drop:          "Lootbox Drop: {{loot_id}}"
   ,lootbox_transfer:      "Lootbox Transfer: {{user_id}}"
 
@@ -346,6 +346,7 @@ async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH"
 }
 
 module.exports = {
+  TRANSACTION_TYPES,
   currencies,
   arbitraryAudit,
   checkFunds,
