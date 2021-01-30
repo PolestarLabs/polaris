@@ -8,6 +8,13 @@ const TRANSACTION_TYPES = {
 
    daily:                 "Daily Rewards"
   ,webdaily:              "Daily Rewards [Dashboard]"
+  ,daily_10streak_website:        "Daily 10 Streak Bonus [Dashboard]"
+  ,daily_3streak_website:         "Daily 3 Streak Bonus [Dashboard]"
+  ,daily_250streak_website:       "Daily 250 Streak Bonus [Dashboard]"
+  ,daily_365streak_website:       "Daily 365 Streak Bonus [Dashboard]"
+  ,upvote_daily_boost_website:    "Daily Upvote Bonus [Dashboard]"
+  ,special_daily_boost_website:   "Daily Special Bonus [Dashboard]"
+
 
   ,lootbox_drop:          "Lootbox Drop: {{loot_id}}"
   ,lootbox_transfer:      "Lootbox Transfer: {{user_id}}"
@@ -57,6 +64,9 @@ const TRANSACTION_TYPES = {
   ,discoin_in:            "Discoin: << [{{currency}}]"
   ,local$:                "Custom Currency Trade [{{currency}}]"
   ,local$_convert:        "Trade for Rubines"
+  ,local$_trade:          "Trade with {{user_id}}"
+  ,local$_treasury:       "Custom Currency Treasury"
+  ,local$_invest:         "Custom Currency Invest"
 
   ,venture_event:         "Adventure Journey Event"
   ,venture_insurance:     "Adventure Insurance"
