@@ -62,7 +62,7 @@ class ProgressionManager extends EventEmitter {
         let newQuest = {
             id: quest.id,
             target: quest.target,
-            tracker: `${quest.action}.${quest.type}.${quest.condition}`,
+            tracker: `${quest.action}.${quest.type}${quest.condition?"."+quest.condition:""}`,
             progress: 0,
             completed: false,
         }
@@ -116,17 +116,18 @@ const init = ()=>{
     global.Progression = new ProgressionManager();
 
     Progression.on("*", async (event,opts)=>{
-        const {value,msg} = opts;
+        const {value,msg,userID} = opts;
+        Progression.updateQuestTracker(userID || msg?.author?.id,event,value);
         if(!msg) return;
         if(!value?.content && !msg?.content) return;
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
         await Progression.checkStatus(msg.author.id,msg);
-        Progression.updateQuestTracker(msg.author.id,event,value);
 
         //quests.
 
     });
-
+    
+    /*
 
     Progression.on("craft", async (event,opts)=>{
         const { item,amount,msg } = opts;
@@ -139,21 +140,24 @@ const init = ()=>{
             }
         }));
         await Progression.checkStatus(msg.author.id,msg);    
-    })
+    });
 
+    
     Progression.on("spend", async (event,opts)=>{
-        const {currency,amount,msg,userID} = opts;
-        const userQuests = Progression.getUserQuests(msg?.author?.id || userID);
+        let {currency,value,msg,userID} = opts;
+        userID = msg?.author?.id || userID;
+        const userQuests = await Progression.getUserQuests(userID);
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='spend') return;
             if(currency === type){
-                await Progression.updateProgress(msg.author.id,quest._id,amount);
+                await Progression.updateProgress( userID,quest._id,value);
             }
         }));
-        await Progression.checkStatus(msg.author.id,msg);    
+        if(!msg) return;
+        await Progression.checkStatus(userID,msg);    
     })
-
+*/
 
 
     Progression.on("QUEST_COMPLETED",(event,quest,opts)=>{
