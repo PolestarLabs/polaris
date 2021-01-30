@@ -1,8 +1,13 @@
 //STUB Transaction Types Table
 
+// type = "<type>[.specifics]" 
+//or
+// type + options.details[.specifics]  (user_id, loot_id, servr_id etc.)
+
 const TRANSACTION_TYPES = {
 
    daily:                 "Daily Rewards"
+  ,webdaily:              "Daily Rewards [Dashboard]"
 
   ,lootbox_drop:          "Lootbox Drop: {{loot_id}}"
   ,lootbox_transfer:      "Lootbox Transfer: {{user_id}}"
@@ -32,6 +37,7 @@ const TRANSACTION_TYPES = {
   ,crafting_advanced:     "Adv.Crafting: Material Costs"
 
   ,expand_gallery_slots:  "Expand Gallery Slots"
+  ,sell_gallery_slots:    "Sell Gallery Slots"
   ,expand_wife_slots:     "Expand Marriage Slots"
   ,webshop_custom:        "Webshop(?) - {{type}}"
   
