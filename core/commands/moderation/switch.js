@@ -82,7 +82,7 @@ const helpEmbed = {
         name: "Channel states",
         value: `When you switch in channel mode, things get more difficult.\nThis is what the different states mean:
 				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")} server mode: on/partial/off | channel mode: overrides server\
-				\n> ${R_WG}/${R_WO}/${R_WR} channel mode: following server settings\
+				\n> <:${R_WG}>/<:${R_WO}>/<:${R_WR}> channel mode: following server settings\
 				`,
         inline: false,
       },
@@ -256,7 +256,7 @@ async function init(msg) {
     return true;
   }
 
-  // Exit function; too complex to put in Switch
+  // Exit function; too complex to put in a switch case
   function exit(inactive = false) {
     // exit command
     omsg.removeReactions();
@@ -302,31 +302,31 @@ async function init(msg) {
  */
 function genSwitchEmbed(Switch, options) {
   /**
-	 * Notes; the different states.
-	 * global
-	 * - guild
-	 * - - enabled
-	 * - - partial : show amount on/off (mini versions)
-	 * - - disabled
-	 * - channel
-	 * - - enabled
-	 * - - enabled overwrite
-	 * - - partial : show amount on/off (mini versions)
-	 * - - partial overwrite : show amount on/off (mini versions)
-	 * - - disabled
-	 * - - disable overwrite
-	 *
-	 * category
-	 * - guild
-	 * - - enabled
-	 * - - disabled
-	 * - channel
-	 * - - enabled
-	 * - - enabled overwrite
-	 * - - disabled
-	 * - - disabled overwrite
-	 *
-	 */
+   * Notes; the different states.
+   * global
+   * - guild
+   * - - enabled
+   * - - partial : show amount on/off (mini versions)
+   * - - disabled
+   * - channel
+   * - - enabled
+   * - - enabled overwrite
+   * - - partial : show amount on/off (mini versions)
+   * - - partial overwrite : show amount on/off (mini versions)
+   * - - disabled
+   * - - disable overwrite
+   *
+   * category
+   * - guild
+   * - - enabled
+   * - - disabled
+   * - channel
+   * - - enabled
+   * - - enabled overwrite
+   * - - disabled
+   * - - disabled overwrite
+   *
+   */
   if (!Switch || !(Switch instanceof SwitchArch)) throw new TypeError("GenSwitchEmbed: Switch not of type Switch");
 
   const { modules } = Switch;
