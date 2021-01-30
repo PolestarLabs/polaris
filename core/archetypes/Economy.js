@@ -1,3 +1,88 @@
+//STUB Transaction Types Table
+
+// type = "<type>[.specifics]" 
+//or
+// type + options.details[.specifics]  (user_id, loot_id, servr_id etc.)
+
+const TRANSACTION_TYPES = {
+
+  daily: "Daily Rewards"
+  , webdaily: "Daily Rewards [Dashboard]"
+  , daily_10streak_website: "Daily 10 Streak Bonus [Dashboard]"
+  , daily_3streak_website: "Daily 3 Streak Bonus [Dashboard]"
+  , daily_250streak_website: "Daily 250 Streak Bonus [Dashboard]"
+  , daily_365streak_website: "Daily 365 Streak Bonus [Dashboard]"
+  , upvote_daily_boost_website: "Daily Upvote Bonus [Dashboard]"
+  , special_daily_boost_website: "Daily Special Bonus [Dashboard]"
+
+
+  , lootbox_drop: "Lootbox Drop: {{loot_id}}"
+  , lootbox_transfer: "Lootbox Transfer: {{user_id}}"
+
+  , lootbox_rewards: "Lootbox Rewards"
+  , lootbox_reroll: "Lootbox Reroll"
+  , lootbox_transfer_tax: "Lootbox Transfer Tax"
+
+  , rubine_transfer: "Rubine Transfer Fee"
+
+  , gambling_betflip: "Betflip"
+  , gambling_blackjack: "Blackjack"
+  , gambling_roulette: "Casino Roulette"
+  , gambling_russroll: "Russian Roulette"
+
+  , role_purchase: "Role Purchase at {{server_id}}"
+
+  , bgshop_bot: "Background Quickbuy"
+  , bgshop_dash: "Background Shop Classic"
+  , background_shop_dash: "Background Shop Classic"
+  , medalshop_dash: "Medal Shop Classic"
+  , medal_shop_dash: "Medal Shop Classic"
+
+  , bgshop_dash_bundle: "Background Shop Bundle"
+  , medalshop_dash_bundle: "Medal Shop Bundle"
+
+  , crafting_dash: "Crafting: [Dashboard]"
+  , crafting_bot: "Crafting: [Bot]"
+  , crafting_discovery: "Crafting: [Discovery]"
+
+  , crafting_service: "Crafting: {{player}} Service"
+  , crafting_advanced: "Adv.Crafting: Material Costs"
+
+  , expand_gallery_slots: "Expand Gallery Slots"
+  , sell_gallery_slots: "Sell Gallery Slots"
+  , expand_wife_slots: "Expand Marriage Slots"
+  , webshop_custom: "Webshop(?) - {{type}}"
+
+  , storefront_bundle: "Storefront: Bundle"
+  , storefront_background: "Storefront: Background"
+  , storefront_medal: "Storefront: Medal"
+  , storefront_other: "Storefront: Other"
+
+  , marketplace_buy: "Marketplace: BUY"
+  , marketplace_sell: "Marketplace: SELL"
+  , marketplace_post: "Marketplace: POST Fee"
+
+  , event_action: "Event: [{{action}}]"
+
+  , airlines: "Airlines: {{???}}"
+  , discoin_out: "Discoin: >> [{{currency}}]"
+  , discoin_in: "Discoin: << [{{currency}}]"
+  , local$: "Custom Currency Trade [{{currency}}]"
+  , local$_convert: "Trade for Rubines"
+  , local$_trade: "Trade with {{user_id}}"
+  , local$_treasury: "Custom Currency Treasury"
+  , local$_invest: "Custom Currency Invest"
+
+  , venture_event: "Adventure Journey Event"
+  , venture_insurance: "Adventure Insurance"
+
+  , adm_awarded: "Admin Awarded"
+  , dono_rewards: "{{tier}} Rewards: {{month}}/{{year}}"
+  , dono_rewards_1st: "{{tier}} Rewards: {{month}}/{{year}} (First Month Bonus)"
+
+};
+
+
 /**
  * @typedef Transaction
  * @property {string} transactionId
@@ -165,7 +250,9 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
  * @throws {Error} Not enough funds.
  */
 function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`spend.${currency}.${type}`, { value: amt, userID: user, options });
+  [currency].flat().forEach((CURR, i) => {
+    Progression.emit(`spend.${CURR}.${type}`, { value: [amt].flat()[i], userID: user, options });
+  });
   return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-", options);
 }
 
@@ -182,7 +269,9 @@ function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Not enough funds.
  */
 function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`earn.${currency}.${type}`, { value: amt, userID: user, options });
+  [currency].flat().forEach((CURR, i) => {
+    Progression.emit(`earn.${CURR}.${type}`, { value: [amt].flat()[i], userID: user, options });
+  });
   return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+", options);
 }
 
@@ -280,6 +369,7 @@ async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH"
 }
 
 module.exports = {
+  TRANSACTION_TYPES,
   currencies,
   arbitraryAudit,
   checkFunds,

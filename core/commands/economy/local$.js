@@ -113,8 +113,8 @@ const init = async (msg) => {
     if (amt + eco.volume > eco.pool) return msg.reply("Denied. Pool exceeded");
     eco.incVol = (amt * eco.rateIn);
     eco.incTrea = (amt * 0.65);
-    await ECO.pay(msg.author, amt, "Local$>", "RBN");
-    await DB.audits.new(msg.author, amt, "Local$>", eco.code); // NOTE audit is automatically made -- double auditing?
+    await ECO.pay(msg.author, amt, "local$", "RBN",{details:{currency: eco.code }});
+    await DB.audits.new(msg.author, amt, "local$_convert", eco.code); // NOTE audit is automatically made -- double auditing?
     msg.author.customCurr[msg.guild.id] += amt * eco.rateIn;
 
     msg.reply(`OK (${amt * eco.rateIn})`);
@@ -127,10 +127,12 @@ const init = async (msg) => {
 
     const eco = msg.guild.economy;
 
+    const currencyCode = "????"
+
     eco.incVol = (-(amt));
     eco.incTrea = (-(amt * eco.rateOut));
-    await ECO.receive(msg.author, Math.floor(amt * eco.rateOut * 0.8), "Local$<", "RBN");
-    await DB.audits.new(msg.author, -amt, "Local$<", eco.code);
+    await ECO.receive(msg.author, Math.floor(amt * eco.rateOut * 0.8), "local$", "RBN",{details:{currency: eco.code }});
+    await DB.audits.new(msg.author, -amt, "local$_convert", eco.code);
     msg.author.customCurr[msg.guild.id] -= amt;
 
     msg.reply(`OK (${amt * eco.rateOut})`);

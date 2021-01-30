@@ -101,7 +101,7 @@ const init = async (msg, args) => {
 
     return DCN.create(msg.author.id, amtAfterTax, currency)
       .then(async (transaction) => {
-        await ECO.pay(msg.author.id, amount, "DISCOIN");
+        await ECO.pay(msg.author.id, amount, "discoin_out");
         msg.reply($t("responses.discoin.discoin_desc", { ...P, bot: `<@${transaction.to.id}>` }));
 
         const receiptURL = genURL + transaction.id;

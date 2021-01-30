@@ -26,7 +26,7 @@ const init = async (msg) => {
   ];
 
   // eslint-disable-next-line no-new
-  new DspHook(msg, "Faustão", shuffle(avatars)[0], { payload: { content: shuffle(phrases)[0] }, once: true, reason: `+fausto [${msg.author.tag}]` });
+  await new DspHook(msg, "Faustão", undefined, { payload: { content: shuffle(phrases)[0] }, once: true, reason: `+fausto [${msg.author.tag}]` }).init(shuffle(avatars)[0]);
 };
 module.exports = {
   init,
@@ -36,4 +36,5 @@ module.exports = {
   cat: "fun",
   botPerms: ["attachFiles", "embedLinks", "manageWebhooks"],
   aliases: ["faustão"],
+  sendTyping: false,
 };
