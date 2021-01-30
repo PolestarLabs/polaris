@@ -24,7 +24,7 @@ const init = async (msg) => {
   ];
 
   // eslint-disable-next-line no-new
-  new DspHook(msg, "Gordon Ramsay", undefined, {
+  await new DspHook(msg, "Gordon Ramsay", undefined, {
     payload: { content: shuffle(phrases)[0] },
     once: true,
     reason: `+ramsay [${msg.author.tag}]`,
