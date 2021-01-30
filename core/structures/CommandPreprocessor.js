@@ -56,7 +56,7 @@ const PERMS_CALC = function CommandPermission(msg) {
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
-    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch(err=> console.error("Messed up perms at "+msg.guild.id) ), false;
+    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch((err) => console.error(`Messed up perms at ${msg.guild.id}`)), false;
   }
   if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
   return (!uIDs.length || uIDs.includes(msg.author.id));
@@ -87,16 +87,17 @@ const DEFAULT_CMD_OPTS = {
   cooldown: 3456.777,
   cooldownMessage: (msg) => `⏱ ${rand$t([`responses.cooldown.${msg.command.cmd}`, "responses.cooldown.generic"], { lngs: msg.lang })}`,
   cooldownReturns: 2,
-  cooldownExclusions: {guildIDs:['789382326680551455']},	
+  cooldownExclusions: { guildIDs: ["789382326680551455"] },
   requirements: { custom: PERMS_CALC },
-  permissionMessage: (msg) => (
+  permissionMessage: (msg) => { // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     msg.guild.disaReply
       ? msg.commandDenyChn
         ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
-        : msg.commandDenySer ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
+        : msg.commandDenySer
+          ? msg.channel.send($t("responses.toggle.disabledComSer", { lngs: msg.lang, command: msg.command.label }))
           : msg.addReaction(_emoji("nope").reaction)
-      : null
-  ),
+      : null;
+  },
   hooks: {
     preCommand: (m, a) => {
       m.args = a;
@@ -105,13 +106,13 @@ const DEFAULT_CMD_OPTS = {
     },
     postCheck: (m, a, chk) => {
       if (!chk) return null;
-      m.channel.sendTyping();
+      if (m.command.sendTyping !== false) m.channel.sendTyping();
       commandRoutine.commLog(m, m.command);
       commandRoutine.updateMeta(m, m.command);
       return undefined;
     },
     postCommand: (m) => {
-      Progression.emit(`command.${m.command.label}`,{msg:m});
+      Progression.emit(`command.${m.command.label}`, { msg: m });
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
       if (m.content.includes("--bmk")) {
@@ -126,14 +127,14 @@ const DEFAULT_CMD_OPTS = {
   errorMessage: async function errorMessage(msg, err) {
     console.error(" COMMAND ERROR ".bgRed);
     console.error(err);
-    let errorCode = '0x' + (Date.now()).toString(16).toUpperCase();
+    const errorCode = `0x${(Date.now()).toString(16).toUpperCase()}`;
 
-    let hookResponse = await hook.error(`
+    const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js
 ${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
     \`\`\`
-    **Command:** \`${msg.command.label || 'NO-COMMAND-LABEL'}\`
+    **Command:** \`${msg.command.label || "NO-COMMAND-LABEL"}\`
     **CODE:** \`${errorCode}\`
     `, { hook: errorsHook });
 
@@ -143,10 +144,10 @@ ${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
         // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
         description: "Oh **no**! Something went wrong...\n"
           + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${
-            PLX.beta || cfg.testChannels.includes(msg.channel.id) 
-            //? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\`` 
-            ? `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
-            : ""
+            PLX.beta || cfg.testChannels.includes(msg.channel.id)
+            // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
+              ? `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
+              : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
         color: 0xF05060,
@@ -173,6 +174,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].related = commandFile.related;
     PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
+    PLX.commands[CMD.label].sendTyping = typeof commandFile.sendTyping === "boolean" ? commandFile.sendTyping : true;
     PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "externalEmojis"]
       .concat(commandFile.botPerms || []).filter((v, i, a) => a.indexOf(v) === i);
     if (commandFile.subs) {
@@ -197,7 +199,7 @@ const registerOne = (folder, _cmd) => {
       });
     }
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
-    return {pass: true, cmd: _cmd, hidden: !commandFile.pub};
+    return { pass: true, cmd: _cmd, hidden: !commandFile.pub };
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
     hook.error(`
@@ -209,7 +211,7 @@ ${e.stack.slice(0, 1900)}
     `, { hook: errorsHook });
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
     // console.error("\r                                " + e.message.red)
-    return {pass: false, cmd: _cmd};
+    return { pass: false, cmd: _cmd };
   }
 };
 const registerCommands = (rel) => {
@@ -221,24 +223,24 @@ const registerCommands = (rel) => {
     Promise.all(
       modules.map(async (folder) => {
         const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
-        results = results.concat( commands.map((_cmd) => registerOne(folder, _cmd)).filter(x=>!!x) );
-        //console.log({folder},{results})
-      })
-    ).then(res => {
-      //console.log({res,results})
+        results = results.concat(commands.map((_cmd) => registerOne(folder, _cmd)).filter((x) => !!x));
+        // console.log({folder},{results})
+      }),
+    ).then((res) => {
+      // console.log({res,results})
       hook.info(`
       **Commands Reloaded**
-${_emoji('yep') } **${     results.filter(_=>!!_.pass).length  }** / ${  results.length } commands registered.
-${_emoji('maybe')} *(${      results.filter(_=>_.hidden).length } hidden)*
-${_emoji('nope')} ${      results.filter(_=>!_.pass).length } commands failed.
-${      results.filter(_=>!_.pass).length ?
-`
+${_emoji("yep")} **${results.filter((_) => !!_.pass).length}** / ${results.length} commands registered.
+${_emoji("maybe")} *(${results.filter((_) => _.hidden).length} hidden)*
+${_emoji("nope")} ${results.filter((_) => !_.pass).length} commands failed.
+${results.filter((_) => !_.pass).length
+    ? `
 \`\`\`js
-${      results.filter(_=>!_.pass).map(c=> " • " + c.cmd).join('\n') }
+${results.filter((_) => !_.pass).map((c) => ` • ${c.cmd}`).join("\n")}
 \`\`\`
 ` : ""
 }  `);
-    })
+    });
   });
 };
 

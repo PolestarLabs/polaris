@@ -1,27 +1,38 @@
 const i2b64 = Promise.promisify((require("imageurl-base64")));
 
 class DisposableHook {
-  constructor(msg, name, avatar, info) {
-    this.hook = i2b64(avatar).then((b64) => PLX.createChannelWebhook(
-      msg.channel.id,
-      { name, avatar: b64.dataUri },
-      (info.reason || info),
-    ).catch(() => { msg.channel.send("Cannot Create Webhooks :("); return null; }));
-
-    if (info.once) {
-      this.hook.then((hk) => (hk ? PLX.executeWebhook(hk.id, hk.token, info.payload).then(() => this.destroy()) : null));
-    }
+  constructor(msg, name, b64avatar, info) {
+    this.msg = msg;
+    this.name = name;
+    this.avatar = b64avatar;
+    this.info = info;
   }
 
   destroy() {
-    this.hook.then((hk) => {
-      console.log(hk);
-      PLX.deleteWebhook(hk.id, hk.token, "Expired");
-    });
+    console.log(this.hook);
+    this.hook && PLX.deleteWebhook(this.hook.id, this.hook.token, "Expired");
   }
 
   exec(fun) {
-    this.hook.then((hk) => (hk ? fun(hk).then((res) => PLX.executeWebhook(hk.id, hk.token, res).then(() => this.destroy())) : null));
+    this.hook && fun(this.hook).then((res) => PLX.executeWebhook(this.hook.id, this.hook.token, res).then(() => this.destroy()));
+  }
+
+  async init(avatarURL) {
+    const avatar = avatarURL ? await i2b64(avatarURL).then((b64) => b64.dataUri) : this.avatar;
+    this.hook = await PLX.createChannelWebhook(
+      this.msg.channel.id,
+      { name: this.name, avatar },
+      this.info.reason || this.info,
+    ).catch((e) => {
+      if (e.code === 50013) return this.msg.channel.send("Missing Manage Webhook permisision :(").then(() => null);
+      throw e;
+    });
+
+    if (this.info.once) {
+      return PLX.executeWebhook(this.hook.id, this.hook.token, this.info.payload).then(() => this.destroy());
+    }
+
+    return this;
   }
 }
 
