@@ -55,7 +55,8 @@ const TRANSACTION_TYPES = {
   ,airlines:              "Airlines: {{???}}"
   ,discoin_out:           "Discoin: >> [{{currency}}]"
   ,discoin_in:            "Discoin: << [{{currency}}]"
-  ,local$:                "Custom Currency: [{{currency}}]"
+  ,local$:                "Custom Currency Trade [{{currency}}]"
+  ,local$_convert:        "Trade for Rubines"
 
   ,venture_event:         "Adventure Journey Event"
   ,venture_insurance:     "Adventure Insurance"
