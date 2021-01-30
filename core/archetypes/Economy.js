@@ -98,8 +98,10 @@ const TRANSACTION_TYPES = {
 
 /**
  * @typedef TransactionOptions
- * @property {boolean} [allowZero] whether to allow transactions with amt=0 to go through.
- * @property {object} [fields] custom fields to add to the audit
+ * @property {boolean} [allowZero] false :: whether to allow transactions with amt=0 to go through.
+ * @property {boolean} [disableFundsCheck] false :: if true payments will go through with insufficient balance.
+ * @property {object} [fields] {} :: custom fields to add to the audit
+ * @property {object} [progressionOptions] {} :: options passed onto Progression
  */
 
 // NOTE don't touch this thnx
@@ -136,11 +138,17 @@ const currencies = [
 /**
  * parseCurrencies Checks if currency or currencies are valid, otherwise throws error.
  * 
- * @param {Currency|Currency[]} curr
- * @returns {Currency|Currency[]}
+ * @param {Currency} curr
+ * @returns {Currency}
  * @throws {Error} 
- */
-function parseCurrencies(/** @type {curr|curr[]} */ curr) {
+ */ /**
+* parseCurrencies Checks if currency or currencies are valid, otherwise throws error.
+* 
+* @param {Currency[]} curr
+* @returns {Currency[]}
+* @throws {Error} 
+*/
+function parseCurrencies(curr) {
   // Argument parsing
   const type = typeof curr;
 
@@ -290,7 +298,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false, fields = {} } = {}) {
+function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false, disableFundsCheck = false, fields = {}, progressionOptions = {} } = {}) {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number" && !amt?.length) throw new TypeError("Type of amount should be number.");
 
@@ -300,7 +308,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
 
   // Checks
   return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds) return Promise.reject({ reason: "NO FUNDS" });
+    if (!hasFunds && !disableFundsCheck) return Promise.reject({ reason: "NO FUNDS" });
 
     // Argument validation
     curr = parseCurrencies(curr);
@@ -309,6 +317,14 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       amt = [amt];
       curr = [curr];
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
+
+    /** @type {number} */
+    let incomeType;
+    if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) && incomeType > -1) {
+      curr.forEach((CURR, i) => {
+        Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], user: ([userTo, userFrom][incomeType]), progressionOptions });
+      });
+    }
 
     // Setup v1.0
     /** @type {{[index: string]: number}} */
