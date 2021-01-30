@@ -53,8 +53,8 @@ async function creditUsers(results) {
     const { userID } = result;
     ECO.checkFunds(userID, result.cost).then((hasEnough) => {
       if (!hasEnough) result.invalid = true;
-      else if (result.payout < 0) ECO.pay(userID, result.payout, "ROULETTE").catch(() => "Too bad");
-      else if (result.payout > 0) ECO.receive(userID, result.payout, "ROULETTE").catch(() => "Shouldn't happen");
+      else if (result.payout < 0) ECO.pay(userID, result.payout, "gambling_roulette").catch(() => "Too bad");
+      else if (result.payout > 0) ECO.receive(userID, result.payout, "gambling_roulette").catch(() => "Shouldn't happen");
     });
   }
   return results;
