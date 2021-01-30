@@ -34,7 +34,12 @@ const TRANSACTION_TYPES = {
 
   ,bgshop_bot:            "Background Quickbuy"
   ,bgshop_dash:           "Background Shop Classic"
+  ,background_shop_dash:  "Background Shop Classic"
   ,medalshop_dash:        "Medal Shop Classic"
+  ,medal_shop_dash:       "Medal Shop Classic"
+
+  ,bgshop_dash_bundle:    "Background Shop Bundle"
+  ,medalshop_dash_bundle: "Medal Shop Bundle"
 
   ,crafting_dash:         "Crafting: [Dashboard]"
   ,crafting_bot:          "Crafting: [Bot]"
