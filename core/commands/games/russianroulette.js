@@ -33,7 +33,7 @@ const startGameCollector = async (game, msg, cb) => {
   console.log({ result });
 
   if (result.stopped) {
-    await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette STOP");
+    await ECO.receive(msg.author.id, game.currentPayout - BET, "gambling_russroll");
     return msg.channel.send(`You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`);
     // return msg.channel.send(result.better
     //   ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`
@@ -42,10 +42,10 @@ const startGameCollector = async (game, msg, cb) => {
 
   const message = await msg.channel.send("Let's see if you're going to die now...");
   if (result.lost) {
-    await ECO.pay(msg.author.id, BET, "Russian Roulette FAILURE");
+    await ECO.pay(msg.author.id, BET, "gambling_russroll");
     return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
   } if (result.won) {
-    await ECO.receive(msg.author.id, game.currentPayout - BET, "Russian Roulette FLAWLESS");
+    await ECO.receive(msg.author.id, game.currentPayout - BET, "gambling_russroll");
     return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.currentPayout}** rubines to your account.`);
   }
 
@@ -84,7 +84,7 @@ const startPlayerCollector = async (msg) => {
 // Does member die?
 const playerRoulette = async (player, game) => {
   const rst = game.handleInput("shoot");
-  if (rst.lost) await ECO.pay(player.id, player.money, "RUSSIANROULETTE");
+  if (rst.lost) await ECO.pay(player.id, player.money, "gambling_russroll");
   return !!rst.lost;
 };
 
@@ -161,7 +161,7 @@ const newRound = async (msg, players, round = 0) => {
 
   // Is there 1 person left?
   if (players.length === 1) { // This person wins
-    await ECO.receive(players[0].id, value, "RUSSIANROULETTE");
+    await ECO.receive(players[0].id, value, "gambling_russroll");
 
     gameFrame.embed.title = "Show is over, kids!";
     gameFrame.embed.description = `${players[0].name} stands victorious!`;
