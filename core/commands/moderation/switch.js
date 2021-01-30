@@ -69,8 +69,8 @@ const helpEmbed = {
         inline: true,
       },
       {
-        name: "Switching",
-        value: "> economy\nEnable/disable economy.\n\n> **>**economy\nShow economy commands.",
+        name: "Usage",
+        value: "> economy\nEnables/disables economy.\n\n> **>**economy\nShows economy commands.",
         inline: true,
       },
       {
@@ -79,7 +79,7 @@ const helpEmbed = {
         inline: true,
       },
       {
-        name: "Channel states",
+        name: "Switch states",
         value: `When you switch in channel mode, things get more difficult.\nThis is what the different states mean:
 				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")}\tserver mode: on/partial/off | channel mode: overrides server\
 				\n> <:${R_WG}>/<:${R_WO}>/<:${R_WR}>\tchannel mode: following server settings\
