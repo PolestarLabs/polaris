@@ -174,6 +174,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].related = commandFile.related;
     PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
+    PLX.commands[CMD.label].sendTyping = typeof commandFile.sendTyping === "boolean" ? commandFile.sendTyping : true;
     PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "externalEmojis"]
       .concat(commandFile.botPerms || []).filter((v, i, a) => a.indexOf(v) === i);
     if (commandFile.subs) {
