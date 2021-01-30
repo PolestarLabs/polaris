@@ -43,8 +43,8 @@ const init = async (msg) => {
   const win = R === call;
 
   let noFunds;
-  await ECO.pay(msg.author, bet, "betflip", currency)
-    .then(() => (win ? ECO.receive(msg.author, Math.ceil(bet * 1.5), "betflip", currency) : null))
+  await ECO.pay(msg.author, bet, "gambling_betflip", currency)
+    .then(() => (win ? ECO.receive(msg.author, Math.ceil(bet * 1.5), "gambling_betflip", currency) : null))
     .catch(async ({ reason }) => (reason === "NO FUNDS" ? (noFunds = true) && msg.channel.send(`Cannot afford. ${await userData.modules[currency]}/${bet}`) : null));
   // TRANSLATE: No funds text
 
