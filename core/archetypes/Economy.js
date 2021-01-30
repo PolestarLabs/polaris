@@ -14,6 +14,7 @@
 /**
  * @typedef TransactionOptions
  * @property {boolean} [allowZero] whether to allow transactions with amt=0 to go through.
+ * @property {object} [fields] custom fields to add to the audit
  */
 
 // NOTE don't touch this thnx
@@ -36,14 +37,14 @@
 const toCurrencies = {
   RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
   AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
-}
+};
 /** @typedef {"RBN" | "JDE" | "SPH" | "AMY" | "EMD" | "TPZ" | "PSM"} Currency */
 /** @typedef {Currency[]} CurrencyArray*/
 /** @type {CurrencyArray} */
 const currencies = [
   "RBN", "JDE", "SPH",
   "AMY", "EMD", "TPZ", "PSM"
-]
+];
 
 
 /** @typedef {keyof CurrencyMap | Currency} curr */
@@ -64,8 +65,8 @@ function parseCurrencies(/** @type {curr|curr[]} */ curr) {
 
   // convert currencies to XXX format. eg. rubines/rubine → RBN.
   // @ts-expect-error can't handle this...
-  if (curr) curr = (/** @type {Currency[]} */(curr)).map(c => toCurrencies[c] ? (toCurrencies[(/** @type {keyof CurrencyMap} */(c))]) : toCurrencies[c.slice(0, c.length-1)] ? c.slice(0, c.length-1) : c);
-  
+  if (curr) curr = (/** @type {Currency[]} */(curr)).map(c => toCurrencies[c] ? (toCurrencies[(/** @type {keyof CurrencyMap} */(c))]) : toCurrencies[c.slice(0, c.length - 1)] ? c.slice(0, c.length - 1) : c);
+
   // NOTE: changing the way this returns has implications down the line.
   if ((/** @type {Currency[]} */(curr)).some(curr => !currencies.includes(curr))) throw new Error(`Unknown ${!curr ? "object" : typeof curr === "string" ? "currency" : "currencies"}: ${curr}`); // @ts-expect-error
   return (type === "string" ? curr[0] : curr);
@@ -88,7 +89,7 @@ function checkFunds(user, amount, currency = "RBN") {
     if (amount.length) {
       for (let amt of amount)
         if (typeof amt !== "number") throw new TypeError("Amounts should of type number.");
-    } else throw new TypeError("Amount should be of type number.")
+    } else throw new TypeError("Amount should be of type number.");
   }
 
   let curr = parseCurrencies(currency);
@@ -164,7 +165,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
  * @throws {Error} Not enough funds.
  */
 function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`spend.${currency}.${type}`,{value:amt,userID:user,options});
+  Progression.emit(`spend.${currency}.${type}`, { value: amt, userID: user, options });
   return transfer(user, PLX.user.id, amt, type, currency, "PAYMENT", "-", options);
 }
 
@@ -181,7 +182,7 @@ function pay(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Not enough funds.
  */
 function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
-  Progression.emit(`earn.${currency}.${type}`,{value:amt,userID:user,options});
+  Progression.emit(`earn.${currency}.${type}`, { value: amt, userID: user, options });
   return transfer(PLX.user.id, user, amt, type, currency, "INCOME", "+", options);
 }
 
@@ -200,7 +201,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false } = {}) {
+function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false, fields = {} } = {}) {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number" && !amt?.length) throw new TypeError("Type of amount should be number.");
 
@@ -235,7 +236,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
       if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
       fromUpdate[`modules.${curr[i]}`] = -absAmount;
       toUpdate[`modules.${curr[i]}`] = absAmount;
-      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol));
+      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol, fields));
     }
 
     // If every amt was zero
@@ -275,7 +276,7 @@ async function arbitraryAudit(from, to, amt = 1, type = "ARBITRARY", tag = "OTH"
   if (typeof amt !== "number") throw new TypeError("Type of amt should be number.");
   const payload = generatePayload(from, to, amt, type, tag, type, symbol, fields);
   await DB.audits.new({ ...fields, ...payload });
-  return { ...fields, ...payload};
+  return { ...fields, ...payload };
 }
 
 module.exports = {
