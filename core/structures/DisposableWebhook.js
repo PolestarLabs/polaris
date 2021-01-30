@@ -8,7 +8,7 @@ class DisposableHook {
         { name, avatar: b64.dataUri },
         (info.reason || info),
       ).catch(() => { msg.channel.send("Cannot Create Webhooks :("); return null; }),
-      (e) => { throw e; },
+      (e) => { msg.channel.send("image download failed"); throw e; },
     );
 
     if (info.once) {

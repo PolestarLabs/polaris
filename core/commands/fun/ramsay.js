@@ -2,7 +2,7 @@ const DspHook = require("../../structures/DisposableWebhook.js");
 
 const init = async (msg) => {
   const avatars = [
-    // "https://robbreportedit.files.wordpress.com/2018/04/gordon-ramsay-1-e1523056498302.jpg?w=1008",
+    "https://robbreportedit.files.wordpress.com/2018/04/gordon-ramsay-1-e1523056498302.jpg?w=1008",
     "https://i.ytimg.com/vi/AVMtt2o2KiI/hqdefault.jpg",
     "https://hips.hearstapps.com/esquireuk.cdnds.net/17/14/1600x1010/gallery-1491385818-la-dd-jacques-pepin-gordon-ramsay-20140715.jpg?resize=480:*",
   ];
