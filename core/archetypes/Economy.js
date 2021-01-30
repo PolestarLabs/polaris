@@ -316,7 +316,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     let incomeType;
     if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) && incomeType > -1) {
       curr.forEach((CURR, i) => {
-        Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], user: ([userTo, userFrom][incomeType]), progressionOptions });
+        Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), progressionOptions });
       });
     }
 
