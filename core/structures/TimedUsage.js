@@ -49,7 +49,7 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
   const DAY = Daily.day;
 
   const userDaily = (await Daily.userData(Author)).last || Date.now();
-  const dailyAvailable = await Daily.dailyAvailable(Author);
+  const dailyAvailable = await Daily.available(Author);
 
   const embed = new Embed();
   embed.setColor("#d83668");
