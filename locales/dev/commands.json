@@ -153,9 +153,11 @@
 		"vsauce": "Random Vsauce out-of-context clip",
 		"weather": "Pollux Forecast for today! Check the weather somewhere with a fancy card!",
 		"welcome": "Set messages for when someone joins the Server",
-		"ytalert": "Post new videos from a YouTube Channel to your server!"
+		"ytalert": "Post new videos from a YouTube Channel to your server!",
+		"whatanime": "Finds from what anime an image is."
 	},
 	"usage": {
+		"whatanime": "`{{prefix}}whatanime [IMAGE URL]`\n\nUsing this command with an attachment also works",
 		"ahegao": "Quite simple, just type `{{prefix}}ahegao` and you get an アヘ顔",
 		"airwaifu": "`{{prefix}}airwaifu` or `{{prefix}}aerowaifu`",
 		"akerfeldt": "`{{prefix}}akerfeldt`",
