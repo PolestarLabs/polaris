@@ -3,6 +3,8 @@ const axios = require("axios");
 const init = async function (msg, args) {
   let imgUrl = args[0] || (await PLX.getChannelImg(msg));
 
+  if(!imgUrl) return msg.command.invalidUsageMessage(msg);
+
   let response = await axios.get(`https://trace.moe/api/search?url=${imgUrl}`);
   //TODO Add better ratelimiting
   //RL = 10 per minute per IP
@@ -61,7 +63,6 @@ ${ is_adult?"\n🔞 **Adult warning**\n":"" }
 
 module.exports = {
   init,
-  argsRequired: true,
   pub: true,
   cmd: "whatanime",
   cat: "anime",
