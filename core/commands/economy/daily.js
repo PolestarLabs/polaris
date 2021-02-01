@@ -103,7 +103,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     return msg.channel.send({ embed });
   }
 
-  if (!timedUsage.dailyAvailable) {
+  if (!timedUsage.available) {
     P.remaining = moment.utc(timedUsage.availableAt).fromNow(true);
     return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P));
   }

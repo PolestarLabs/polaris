@@ -29,7 +29,7 @@ class DailyCmd {
     return this.parseUserData // COMPATIBILITY
   }
 
-  dailyAvailable(user) {
+  available(user) {
     const now = Date.now();
     const userDaily = this.userDaily;
     return now - (userDaily.last || 0) >= this.day;
@@ -88,7 +88,7 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
   await  Daily.parseUserData(Author);
   
   const userDaily = Daily.userDaily.last || Date.now();
-  const dailyAvailable = Daily.dailyAvailable(Author);
+  const dailyAvailable = Daily.available(Author);
   
 
   const embed = new Embed();

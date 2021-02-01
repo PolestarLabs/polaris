@@ -40,7 +40,7 @@ const init = async function (msg, args) {
 
   const status = async function (msg, timer) {
     const userDaily = await timer.userData(msg.author);
-    const dailyAvailable = await timer.dailyAvailable(msg.author);
+    const dailyAvailable = await timer.available(msg.author);
     P.remaining = moment.utc(userDaily.last).add(timer.day, "milliseconds").fromNow(true);
     P.command = msg.prefix + msg.command.label;
     const remainingEmbed = {};

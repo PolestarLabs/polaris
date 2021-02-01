@@ -108,7 +108,7 @@ class Tarot {
   async luckyScore(user){
     const timed = await new TimedUsage("tarot", { day: DAY }).loadUser(user);
     console.log(timed)
-    if (timed.dailyAvailable){
+    if (timed.available){
       let myScore = this.scores.reduce((a,b)=>a+b);
       DB.users.set(user.id,{
         $set:{"counters.tarot.luckyScore": myScore}

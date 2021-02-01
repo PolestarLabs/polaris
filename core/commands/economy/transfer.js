@@ -46,7 +46,7 @@ const init = async (msg) => {
   };
   const info = async (message, Daily) => {
     const { last } = await Daily.userData(message.author);
-    const dailyAvailable = await Daily.dailyAvailable(message.author);
+    const dailyAvailable = await Daily.available(message.author);
 
     const embe2 = new Embed();
     embe2.setColor("#e35555");

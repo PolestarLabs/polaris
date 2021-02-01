@@ -57,7 +57,7 @@ const init = async function (msg) {
 
   const status = async function (msg, Daily) {
     const userDaily = await Daily.userData(msg.author);
-    const dailyAvailable = await Daily.dailyAvailable(msg.author);
+    const dailyAvailable = await Daily.available(msg.author);
     P.remaining = moment.utc(userDaily.last).add(Daily.day, "milliseconds").fromNow(true);
     const embed = new Embed();
     embed.setColor("#3b9ea5");

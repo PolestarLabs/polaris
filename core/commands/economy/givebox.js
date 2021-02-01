@@ -178,7 +178,7 @@ const init = async (msg, args) => {
     return !!boxTransfer(userBoxList[R], R);
   };
 
-  if (!Daily.dailyAvailable) {
+  if (!Daily.available) {
     P.remaining = moment.utc(Daily.availableAt).fromNow(true);
     const dailyNope = $t("responses.give.cooldown", P);
     const embed = new Embed();
