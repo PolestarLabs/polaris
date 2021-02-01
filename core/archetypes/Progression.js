@@ -127,21 +127,22 @@ const init = ()=>{
 
     });
     
-    /*
-
+    
     Progression.on("craft", async (event,opts)=>{
-        const { item,amount,msg } = opts;
-        const userQuests = Progression.getUserQuests(msg.author.id);
+        const { item,amount,userID,msg } = opts;
+        const userQuests = await Progression.getUserQuests(userID);
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='craft') return;
             if(item[type] === condition){
-                await Progression.updateProgress(msg.author.id,quest._id,amount);
+                await Progression.updateProgress(userID,quest._id,amount);
             }
         }));
+        if(!msg) return;
         await Progression.checkStatus(msg.author.id,msg);    
     });
-
+    
+    /*
     
     Progression.on("spend", async (event,opts)=>{
         let {currency,value,msg,userID} = opts;
