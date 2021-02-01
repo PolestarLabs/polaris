@@ -166,6 +166,9 @@ const init = async (msg, args) => {
         embed.color = 0x78eb87;
         embed.description = "";
         embed.footer = { text: $t("responses.crafting.crafted", P) };
+
+        Progression.emit(`craft.item`,{userID: msg.author.id, item: craftedItem, amount  });
+
         // @ts-ignore
         return embedmsg.edit({ embed });
       }
