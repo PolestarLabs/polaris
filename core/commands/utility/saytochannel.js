@@ -24,7 +24,7 @@ module.exports = {
   cmd: "saytochannel",
   argsRequired: true,
   perms: 2,
-  cat: "util",
+  cat: "utility",
   botPerms: ["attachFiles", "embedLinks", "manageMessages"],
   aliases: ["stc", "sayto"],
 };

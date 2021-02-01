@@ -7,7 +7,7 @@ const init = async (msg, args) => {
   const rolefind = (x) => msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase());
   if (
     msg.args[0] === "role" && msg.args[1] && (msg.roleMentions.length > 0 || rolefind(1))
-        || msg.args[1] === "role" && msg.args[2] && (msg.roleMentions.length > 0 || rolefind(2))
+    || msg.args[1] === "role" && msg.args[2] && (msg.roleMentions.length > 0 || rolefind(2))
   ) {
     ENTS = msg.guild.members.filter((memb) => memb.roles.some((rl) => msg.roleMentions.includes(rl) || (rolefind(1) || rolefind(2) || {}).id === rl)).map((m) => m.user.tag);
   }
@@ -79,7 +79,7 @@ module.exports = {
   pub: true,
   cmd: "brackets",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["bkt", "bracket", "tournament"],
   argsReqed: true,

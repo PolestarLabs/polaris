@@ -90,7 +90,7 @@ module.exports = {
   cmd: "color",
   argsRequired: true,
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["colour"],
 };

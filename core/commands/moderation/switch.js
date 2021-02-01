@@ -69,8 +69,8 @@ const helpEmbed = {
         inline: true,
       },
       {
-        name: "Switching",
-        value: "> economy\nEnable/disable economy.\n\n> **>**economy\nShow economy commands.",
+        name: "Usage",
+        value: "> economy\nEnables/disables economy.\n\n> **>**economy\nShows economy commands.",
         inline: true,
       },
       {
@@ -79,10 +79,10 @@ const helpEmbed = {
         inline: true,
       },
       {
-        name: "Channel states",
+        name: "Switch states",
         value: `When you switch in channel mode, things get more difficult.\nThis is what the different states mean:
-				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")} server mode: on/partial/off | channel mode: overrides server\
-				\n> ${R_WG}/${R_WO}/${R_WR} channel mode: following server settings\
+				\n> ${_emoji("on")}/${_emoji("partial")}/${_emoji("off")}\tserver mode: on/partial/off | channel mode: overrides server\
+				\n> <:${R_WG}>/<:${R_WO}>/<:${R_WR}>\tchannel mode: following server settings\
 				`,
         inline: false,
       },
@@ -256,7 +256,7 @@ async function init(msg) {
     return true;
   }
 
-  // Exit function; too complex to put in Switch
+  // Exit function; too complex to put in a switch case
   function exit(inactive = false) {
     // exit command
     omsg.removeReactions();
@@ -302,31 +302,31 @@ async function init(msg) {
  */
 function genSwitchEmbed(Switch, options) {
   /**
-	 * Notes; the different states.
-	 * global
-	 * - guild
-	 * - - enabled
-	 * - - partial : show amount on/off (mini versions)
-	 * - - disabled
-	 * - channel
-	 * - - enabled
-	 * - - enabled overwrite
-	 * - - partial : show amount on/off (mini versions)
-	 * - - partial overwrite : show amount on/off (mini versions)
-	 * - - disabled
-	 * - - disable overwrite
-	 *
-	 * category
-	 * - guild
-	 * - - enabled
-	 * - - disabled
-	 * - channel
-	 * - - enabled
-	 * - - enabled overwrite
-	 * - - disabled
-	 * - - disabled overwrite
-	 *
-	 */
+   * Notes; the different states.
+   * global
+   * - guild
+   * - - enabled
+   * - - partial : show amount on/off (mini versions)
+   * - - disabled
+   * - channel
+   * - - enabled
+   * - - enabled overwrite
+   * - - partial : show amount on/off (mini versions)
+   * - - partial overwrite : show amount on/off (mini versions)
+   * - - disabled
+   * - - disable overwrite
+   *
+   * category
+   * - guild
+   * - - enabled
+   * - - disabled
+   * - channel
+   * - - enabled
+   * - - enabled overwrite
+   * - - disabled
+   * - - disabled overwrite
+   *
+   */
   if (!Switch || !(Switch instanceof SwitchArch)) throw new TypeError("GenSwitchEmbed: Switch not of type Switch");
 
   const { modules } = Switch;
@@ -360,7 +360,7 @@ function genSwitchEmbed(Switch, options) {
       const disabledCount = cats[cat].cmds.filter((cmd) => (gdcmds.includes(cmd) || (cmode ? cdcmds.includes(cmd) : false)) && (cmode ? !cecmds.includes(cmd) : true)).length;
       const catName = cat.slice(0, 1).toUpperCase() + cat.slice(1);
       embed.fields.push({
-        name: `${(disabled ? (override && cmode ? _emoji("off") : cmode ? R_WR : _emoji("off")) : disabledCount ? (override && cmode ? _emoji("partial") : cmode ? R_WO : _emoji("partial")) : (override && cmode ? _emoji("on") : cmode ? R_WG : _emoji("on")))} ${catName}`,
+        name: `${(disabled ? (override && cmode ? _emoji("off") : cmode ? `<:${R_WR}>` : _emoji("off")) : disabledCount ? (override && cmode ? _emoji("partial") : cmode ? `<:${R_WO}>` : _emoji("partial")) : (override && cmode ? _emoji("on") : cmode ? `<:${R_WG}>` : _emoji("on")))} ${catName}`,
         value: disabledCount && !disabled ? `${MINI_ON}${cats[cat].cmds.length - disabledCount}    ${MINI_OFF}${disabledCount}` : `${cats[cat].cmds.length} commands`,
         inline: true,
       });
@@ -381,7 +381,7 @@ function genSwitchEmbed(Switch, options) {
       const disabled = cmode ? (cdcmds.includes(cmd) || (gdcmds.includes(cmd)) && !cecmds.includes(cmd)) : gdcmds.includes(cmd);
       const override = cmode && (cdcmds.includes(cmd) || cecmds.includes(cmd));
       const cmdName = cmd.slice(0, 1).toUpperCase() + cmd.slice(1);
-      embed.fields[currField].value += `${disabled ? override ? R_WR : _emoji("off") : override ? R_WG : _emoji("on")} ${cmdName}\n`;
+      embed.fields[currField].value += `${disabled ? override ? `<:${R_WR}>` : _emoji("off") : override ? `<:${R_WG}>` : _emoji("on")} ${cmdName}\n`;
     }
   }
 

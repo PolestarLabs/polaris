@@ -73,7 +73,7 @@ const init = async function (msg) {
                 `;
     const confirm = await msg.channel.send({
       content:
-            $t("interface.generic.confirmDelete", P),
+        $t("interface.generic.confirmDelete", P),
       embed,
     });
     YesNo(confirm, msg, async (cc) => {
@@ -129,7 +129,7 @@ module.exports = {
   pub: true,
   cmd: "ytalert",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["embedLinks", "manageMessages", "manageChannels"],
   aliases: ["yta"],
 };

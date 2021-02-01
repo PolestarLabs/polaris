@@ -55,7 +55,7 @@ const init = async function (msg) {
                 `;
     const confirm = await msg.channel.send({
       content:
-            $t("interface.generic.confirmDelete", P),
+        $t("interface.generic.confirmDelete", P),
       embed,
     });
     YesNo(confirm, msg, async (cc) => {
@@ -121,7 +121,7 @@ module.exports = {
   argsRequired: true,
   cmd: "rss",
   perms: 3,
-  cat: "util",
+  cat: "utility",
   botPerms: ["embedLinks", "manageMessages", "manageChannels"],
   aliases: ["feed"],
 };
