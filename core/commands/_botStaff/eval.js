@@ -88,13 +88,15 @@ const init = async (msg) => {
  * @returns {string} code with return
  */
 function addReturn(code) {
-  const lastSemiColon = code.match(/(;)(?!.*;.*[\w\n\r]+)/m);
-  if (lastSemiColon === null || lastSemiColon.index === undefined) return `return ${code}`;
-  else {
-    const codeArray = code.split("");
-    codeArray.splice(lastSemiColon.index + 1, 0, ..." return ".split(""))
-    return codeArray.join("");
-  } 
+  const lastSemiColon = code.match(/(;)(?!.*;.*\w+)(?=.*\w+)/m);
+  const codeArray = code.split("");
+
+  let index = lastSemiColon?.index;
+  if (index) index += 1;
+  else index = 0;
+
+  codeArray.splice(index, 0, ..." return ".split(""))
+  return codeArray.join("");
 }
 
 module.exports = {
