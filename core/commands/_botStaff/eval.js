@@ -88,7 +88,7 @@ const init = async (msg) => {
  * @returns {string} code with return
  */
 function addReturn(code) {
-  const lastSemiColon = code.match(/(;)(?!.*;.*[\w\n\r]+)/m);
+  const lastSemiColon = code.match(/(;)(?!.*;.*[\w]+)/m);
   if (lastSemiColon === null || lastSemiColon.index === undefined) return `return ${code}`;
   else {
     const codeArray = code.split("");
