@@ -88,12 +88,11 @@ const init = async (msg) => {
  * @returns {string} code with return
  */
 function addReturn(code) {
-  const lastSemiColon = code.match(/(;)(?!.*;.*\w+)(?=.*\w+)/m);
+  const lastSemiColonWithContentAfter = code.match(/(;)(?!.*;.*\w+)(?=.*\w+)/m);
   const codeArray = code.split("");
 
-  let index = lastSemiColon?.index;
-  if (index) index += 1;
-  else index = 0;
+  let index = lastSemiColonWithContentAfter?.index ?? 0;
+  if (index > 0) index += 1;
 
   codeArray.splice(index, 0, ..." return ".split(""))
   return codeArray.join("");
