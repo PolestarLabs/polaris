@@ -72,6 +72,11 @@ class ProgressionManager extends EventEmitter {
         this.userQuestsCache.set(userID,quests);
         return quest;
     }
+    async remove(questID,userID){
+        await DB.users.set(userID,{ $pull:{ "quests":{id:questID} } });
+        const userData = await DB.users.get(userID);
+        this.userQuestsCache.set(userID,userData.quests);
+    }
     async assignArbitrary(newQuest,userID){
         await DB.users.set(userID,{ $push:{ quests: newQuest } });
         let quests = this.userQuestsCache.get(userID) || [];
