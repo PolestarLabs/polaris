@@ -157,7 +157,7 @@
 		"whatanime": "Finds from what anime an image is."
 	},
 	"usage": {
-		"whatanime": "`{{prefix}}whatanime [IMAGE URL]`\n\nUsing this command with an attachment also works",
+		"whatanime": "`{{prefix}}whatanime [IMAGE URL]`\n\nUsing this command with an attachment also works.\nIf no image is provided, the last posted image in the channel will be used.",
 		"ahegao": "Quite simple, just type `{{prefix}}ahegao` and you get an アヘ顔",
 		"airwaifu": "`{{prefix}}airwaifu` or `{{prefix}}aerowaifu`",
 		"akerfeldt": "`{{prefix}}akerfeldt`",
