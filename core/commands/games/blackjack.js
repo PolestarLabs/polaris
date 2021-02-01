@@ -428,7 +428,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
       msg.channel.send(hitstand).then((mm) => (introMessage = mm));
     }
 
-    const responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id && (msg2.content = msg2.content.toLowerCase()) (
+    const responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id && (msg2.content = msg2.content.toLowerCase()) && (
       msg2.content === "hit"
       || msg2.content === "stand"
       || msg2.content === "STANDO"
