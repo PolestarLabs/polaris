@@ -61,9 +61,11 @@ ${ is_adult?"\n🔞 **Adult warning**\n":"" }
 
 module.exports = {
   init,
+  argsRequired: true,
   pub: true,
   cmd: "whatanime",
   cat: "anime",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["wa"],
+  cooldown: 10000
 };
