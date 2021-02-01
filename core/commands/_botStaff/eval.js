@@ -90,7 +90,12 @@ const init = async (msg) => {
 function addReturn(code) {
   const lastSemiColon = code.match(/(;)(?!.*;.*\w+)(?=.*\w+)/m);
   const codeArray = code.split("");
-  codeArray.splice((lastSemiColon?.index ?? 0) + 1, 0, ..." return ".split(""))
+
+  let index = lastSemiColon?.index;
+  if (index) index += 1;
+  else index = 0;
+
+  codeArray.splice(index, 0, ..." return ".split(""))
   return codeArray.join("");
 }
 
