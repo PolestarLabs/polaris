@@ -52,7 +52,7 @@ const init = async (msg) => {
 
   // allow top-level await
   if (/await/i.test(code)) 
-    code = `(async() => {${/return/i.test(code) ? "" : "return "}${code}})()`;
+    code = `(async() => {${/return/i.test(code) ? code : addReturn(code)}})()`;
 
   let runtime = performance.now();
   const runtimeOutput = (rtm) => (rtm * 1000 < 1000 ? `${Math.floor(rtm * 1000)}μs `
@@ -81,8 +81,24 @@ const init = async (msg) => {
   }
 };
 
+/**
+ * Attempts to place a return in the correct spot.
+ * 
+ * @param {string} code
+ * @returns {string} code with return
+ */
+function addReturn(code) {
+  const lastSemiColon = code.match(/(;)(?!.*;.*[\w\n\r]+)/m);
+  if (lastSemiColon === null || lastSemiColon.index === undefined) return `return ${code}`;
+  else {
+    const codeArray = code.split("");
+    codeArray.splice(lastSemiColon.index + 1, 0, ..." return ".split(""))
+    return codeArray.join("");
+  } 
+}
+
 module.exports = {
-  init,
+  init, 
   aliases: ["ev", "ee"],
   cat: "dev",
 };
