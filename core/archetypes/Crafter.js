@@ -34,15 +34,20 @@ const baselineBonus = {
   XR: 50,
 };
 
+//_PLX[epic=Balancing] Autocrafter cost penalties
 // A penalty < 1 will be interpreted as a %. Penalties have to be positive.
 // Can also define every currency for itself.
 // Note that'll exclude it from the general 'gems'.
-//_PLX[epic=Balancing] Autocrafter cost penalties
-const autoPenalties = { 
-  xp: 0.2, // -20% on exp
-  gems: 0.35, // +35% on each gem except...
-  SPH: 0, // sph will be set to 0% (% as it's <0, but 0% = 0...)
-};
+// NOTE Example
+// autoPenalties = { 
+//   xp: 0.2, // -20% on exp
+//   gems: 0.35, // +35% on each gem except...
+//   SPH: 0, // sph will be set to 0% (% as it's <0, but 0% = 0...)
+// };
+
+const autoPenalties = {
+
+}
 
 /** *********\
 * *  END  * *
