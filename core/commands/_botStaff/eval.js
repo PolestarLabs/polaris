@@ -90,7 +90,11 @@ const init = async (msg) => {
 function addReturn(code) {
   const lastSemiColon = code.match(/(;)(?!.*;)/m);
   if (lastSemiColon === null || lastSemiColon.index === undefined) return `return ${code}`;
-  else return code.split("").splice(lastSemiColon.index + 1, 0, ..."return ".split("")).join("");
+  else {
+    const codeArray = code.split("");
+    codeArray.splice(lastSemiColon.index + 1, 0, ..." return ".split(""))
+    return codeArray.join("");
+  } 
 }
 
 module.exports = {
