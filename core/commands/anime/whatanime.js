@@ -5,13 +5,13 @@ const init = async function (msg, args) {
 
   if(!imgUrl) return msg.command.invalidUsageMessage(msg);
 
-  let response = await axios.get(`https://trace.moe/api/search?url=${imgUrl}`);
+  let response = await axios.get(`https://trace.moe/api/search?url=${imgUrl}`).catchReturn(null);
   //TODO Add better ratelimiting
   //RL = 10 per minute per IP
 
   const res = response?.data?.docs?.[0];
 
-  if (!res) return msg.addReaction(_emoji("nope").reaction);
+  if (!res) return msg.addReaction(_emoji("nope").reaction), "Sorry, couldn't find anything over here. :c";
   const {
     mal_id,
     episode,
