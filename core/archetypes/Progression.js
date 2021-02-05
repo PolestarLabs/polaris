@@ -31,6 +31,11 @@ class ProgressionManager extends EventEmitter {
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
+    async overrideProgress(userID,questUniqueID,value){
+        const userData = await DB.users.findOneAndUpdate({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
+        this.userQuestsCache.set(userID,userData.quests);
+        return userData.quests;
+    }
     async updateAll(userID,quests){
         await DB.users.set(userID,{$set:{quests}});
         this.userQuestsCache.set(userID,quests);
@@ -89,12 +94,18 @@ class ProgressionManager extends EventEmitter {
         const userData = await DB.users.get(userID);
         return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
     }
-    async updateQuestTracker(userID,tracker,value=1){
+    async updateQuestTracker(userID,tracker,value=1,options){
         let userQuests = await this.getUserQuests(userID);
         if(!userQuests) return [];
 
         userQuests.forEach(quest => {
-            if(quest.tracker === tracker) this.updateProgress(userID,quest._id,value);
+            if(quest.tracker === tracker) {
+                if(typeof options?.valueSet){
+                    this.overrideProgress(userID,quest._id,options.valueSet);
+                }else{
+                    this.updateProgress(userID,quest._id,value);
+                }
+            }
         });
     }
 
@@ -122,7 +133,7 @@ const init = ()=>{
 
     Progression.on("*", async (event,opts)=>{
         const {value,msg,userID} = opts;
-        Progression.updateQuestTracker(userID || msg?.author?.id,event,value);
+        Progression.updateQuestTracker(userID || msg?.author?.id,event,value,opts);
         if(!msg) return;
         if(!value?.content && !msg?.content) return;
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
