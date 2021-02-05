@@ -464,6 +464,10 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     }
 
     if (action === "stando") {
+
+      Progression.emit("play.blackjack.stando",{msg,userID:msg.author.id});
+      Progression.emit("misc.easteregg",{msg,userID:msg.author.id});
+
       options.enemyStando = true;
       msg.channel.send($t("eastereggs.konodioda", { lngs: msg.lang }));
     }
@@ -478,6 +482,9 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     }
     if (action === "split" && canSplit) {
       // totalBet;
+
+      Progression.emit("play.blackjack.split",{msg,userID:msg.author.id});
+
       log.push(`> ${_emoji("plxcards")} Player \`SPLIT\` **${USR_HAND.val / 2}s**`);
       const newCurrent = [currentHand.shift()];
       hands.unshift(newCurrent);
@@ -577,6 +584,9 @@ const init       = async (msg, args) => {
   }
 
   const blackjack  = new Blackjack(msg);
+
+  Progression.emit("play.blackjack",{msg,userID:msg.author.id});
+
   try {
     const playerHand = blackjack.getHand(powerups);
     const dealerHand = blackjack.getHand().map((card) => (card.startsWith("JOKER") ? `${randomize(1, 10)}H` : card));
@@ -664,6 +674,7 @@ const init       = async (msg, args) => {
       let hasJoker = false;
       const gameJokers = [];
       const splitExplain = [];
+      let splitWins = 0;
 
       playerHands.forEach((hand, i) => {
         let calcBet = bet;
@@ -743,6 +754,7 @@ const init       = async (msg, args) => {
               ? _emoji("plxbjk2x")
               : ""}${hand.insurance ? `${_emoji("plxbjkinsu")}\`${dealerValue === "Blackjack" ? "+" : "-"}${insuranceAmount}\`` : ""}`,
         );
+        if(splitExplain.length > 1 && lossOrGain > 0) splitWins++;
         finalResult = result;
       });
 
@@ -779,9 +791,21 @@ const init       = async (msg, args) => {
       ]);
 
       if (winnings !== 0) {
-        if (winnings > 0) await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
-        else await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
+        if (winnings > 0) {
+          Progression.emit("play.blackjack.win",{msg, userID:msg.author.id});
+          Progression.emit("streak.blackjack.win",{value: 1, msg, userID:msg.author.id});
+          await ECO.receive(msg.author.id, winnings, "gambling_blackjack", "RBN");
+        }
+        else {
+          Progression.emit("play.blackjack.lose",{msg, userID:msg.author.id});
+          Progression.emit("streak.blackjack.win",{valueSet: 0, msg, userID:msg.author.id});
+          await ECO.pay(msg.author.id, Math.abs(winnings), "gambling_blackjack", "RBN");
+        }
+      }else{
+        Progression.emit("streak.blackjack.win",{valueSet: 0, msg, userID:msg.author.id});
+        Progression.emit("play.blackjack.push",{msg, userID:msg.author.id});
       }
+
       drawOptions.b = bet * playerHands.length + doubles * bet;
       drawOptions.bbt = bet;
       drawOptions.ins = playerHands.filter((x) => x.insurance).length;
@@ -792,6 +816,10 @@ const init       = async (msg, args) => {
       const rebalance = resp.replace("%R%", _emoji("rubine") + Math.abs(winnings));
 
       blackjack.endGame();
+
+      if(splitWins){
+        Progression.emit("play.blackjack.winsplit",{value: splitWins, msg, userID:msg.author.id})
+      }
 
       msg.channel.send(PLAY_RES, { file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
         .then((m) => {
