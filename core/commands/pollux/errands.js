@@ -45,10 +45,17 @@ const init = async function (msg){
     const embed = {};
     
     embed.description = `${
-        userErrands.map( errand => ` ${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ errandsData.find(e=>e.id===errand.id)?.INSTRUCTION ||"UNK" }** - Progress: ${  
-             ((Math.min(errand.progress,errand.target))/errand.target ) * 100 
-            }%` ).join('\n')
-    }`
+         0
+    }`;
+    embed.fields = userErrands.map( errand => ({
+        name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ errandsData.find(e=>e.id===errand.id)?.INSTRUCTION ||"UNK" }**`,
+        value: `${_emoji('__')} Progress: ${  
+            ((Math.min(errand.progress,errand.target))/errand.target ) * 100 
+           }%\n${_emoji('__')} Rewards: ${  
+             "---"
+           }`
+    }));
+
     //TRANSLATE[epic=translations] Errand Cooldown
     embed.footer =  {
         text: 
