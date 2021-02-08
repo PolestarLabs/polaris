@@ -21,18 +21,20 @@ class ProgressionManager extends EventEmitter {
         let quests = this.userQuestsCache.get(userID);
         if (!quests){
             const userData = await DB.users.get(userID);
-            this.userQuestsCache.set(userID,userData.quests);
-            quests = userData.quests;
+            quests = userData.quests || [];
+            this.userQuestsCache.set(userID,quests);
         }
         return quests;
     }
     async updateProgress(userID,questUniqueID,value){
-        const userData = await DB.users.findOneAndUpdate({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
+        await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
+        const userData = await DB.users.get(userID);
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
     async overrideProgress(userID,questUniqueID,value){
-        const userData = await DB.users.findOneAndUpdate({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
+        await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
+        const userData = await DB.users.get(userID);
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
@@ -100,7 +102,7 @@ class ProgressionManager extends EventEmitter {
 
         userQuests.forEach(quest => {
             if(quest.tracker === tracker) {
-                if(typeof options?.valueSet){
+                if(typeof options?.valueSet == 'number'){
                     this.overrideProgress(userID,quest._id,options.valueSet);
                 }else{
                     this.updateProgress(userID,quest._id,value);
