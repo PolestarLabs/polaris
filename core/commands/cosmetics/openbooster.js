@@ -1,3 +1,5 @@
+const newEmoji = _emoji`new`;
+
 const init = async (msg) => {
   const P = { lngs: msg.lang };
 
@@ -29,8 +31,8 @@ const init = async (msg) => {
   embed.author($t("interface.booster.title", P));
   embed.color = 0x36393f;
   embed.description = `${"------------------------------------------------\n"
-  + `${stk1.new ? ":new:" : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
-  + `${stk2.new ? ":new:" : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
+  + `${stk1.new ? newEmoji : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
+  + `${stk2.new ? newEmoji : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
   + "------------------------------------------------\n"}${
     $t("interface.booster.checkStickersAt", P)}`;
 
