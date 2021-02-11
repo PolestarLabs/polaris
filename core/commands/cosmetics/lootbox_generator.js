@@ -71,7 +71,7 @@ const init = async (msg, args) => {
     await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
     return {
       embed: {
-        description: `**You are already Looting in another server.** 
+        description: `**You are already Looting elsewhere.** 
                 Bear in mind that exploiting loopholes can get you banned from using my services!
                 \`- This incident will be reported to the moderators -\``,
         color: 0xFF9060,
