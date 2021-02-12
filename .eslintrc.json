@@ -41,7 +41,8 @@
         "fakeFeed": "writable",
         "piggyback": "readonly",
         "paths": "readonly",
-        "wait": "readonly"
+        "wait": "readonly",
+        "exec": "readonly"
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {

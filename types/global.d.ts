@@ -96,7 +96,7 @@ declare global {
   export function objCount<T>(array: T[], what: T): number;
   export function resolveFile(resource: Buffer | string | ReadableStream): Buffer;
   export function file(file: string | number | Buffer | URL, name?: string): { finalFile: Buffer, name: string; };
-  export function exec(command: string, options: ExecOptions): Promise<string>;
+  export function exec(command: string, options?: ExecOptions): Promise<string>;
   export const i18n: i18n;
   export const $t: TranslationFunction;
   export const paths: run;
