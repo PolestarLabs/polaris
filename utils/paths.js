@@ -1,6 +1,6 @@
 const CDN = "https://cdn.pollux.gg";
-const GENERATORS = "https://beta.pollux.gg/generators";
-const API = "https://beta.pollux.gg/api";
+const GENERATORS = "https://hijola.pollux.gg/generators";
+const API = "https://hijola.pollux.gg/api";
 const DASH = "https://beta.pollux.gg";
 
 exports.run = () => {
