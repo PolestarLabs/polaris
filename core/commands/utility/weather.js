@@ -39,7 +39,7 @@ const init = async (msg, args) => {
 
 	let far = false;
 	for (let i = 0; i < args.length; i++)
-		if (["-f", "f"].includes(args[i].toLowerCase()))
+		if (["-f", "f"].includes(args[i]?.toLowerCase()))
 			far = (args.splice(i, 1), true);
 
 	const weather = new Weather();
