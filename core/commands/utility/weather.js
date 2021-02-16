@@ -31,7 +31,11 @@ const EASTER_EGGS = [
 const Weather = require("../../archetypes/Weather");
 
 const init = async (msg, args) => {
-	if (!args.length) msg.reply("Where though?");
+	if (!args.length) {
+		//msg.channel.send("You didn't specify a region so I'm using yours instead");
+		args[0] = (await DB.users.get(msg.author.id,{personal:1})).personal?.city;
+	}
+	//msg.reply("Where though?");
 
 	let far = false;
 	for (let i = 0; i < args.length; i++)
