@@ -79,8 +79,10 @@ const init = async (msg, args) => {
 
 	let buffer = new Buffer(JSON.stringify(PAYLOAD)).toString('base64');
 
+	
+
 	msg.channel.send("", {
-		file: await resolveFile(`${paths.DASH}/generators/weather.png?furball=${encodeURIComponent(buffer)}`),
+		file: await resolveFile(`${ /*paths.DASH*/ "https://hijola.pollux.gg"}/generators/weather.png?furball=${encodeURIComponent(buffer)}`),
 		name: 'weather.png'
 	})
 
