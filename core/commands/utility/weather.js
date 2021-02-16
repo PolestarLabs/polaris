@@ -34,6 +34,7 @@ const init = async (msg, args) => {
 	if (!args.length) {
 		//msg.channel.send("You didn't specify a region so I'm using yours instead");
 		args[0] = (await DB.users.get(msg.author.id,{personal:1})).personal?.city;
+		if (!args[0]) return msg.command.invalidUsageMessage(msg)
 	}
 	//msg.reply("Where though?");
 
