@@ -44,8 +44,13 @@ exports.run = async function run() {
     PLX.updateBlacklists(DB)
       .then(()=>{console.report("•".green+" Blacklist updated")});
       
-    PLX.microserver.microtasks.updateServerCache("all")
-      .then(()=>{console.report("•".green+" Server cache updated")});
+    try{
+      PLX.microserver.microtasks.updateServerCache("all")
+        .then(()=>{console.report("•".green+" Server cache updated")});
+    }catch(err){
+      console.error("•".red + " Microserver update failed. Restarting...");
+      PLX.microserverStart();
+    }
 
   });
 

@@ -204,14 +204,20 @@ PLX.once("ready", async () => {
   }).catch(console.error);
 
   PLX.registerCommands();
-  try {
-    PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
-    PLX.microserver.microtasks.updateServerCache("all");
-    PLX.microserver.microtasks.updateChannels("all");
-  } catch (e) {
-    console.error(e);
-    for (const i in new Int8Array(10)) console.error("ERROR MTASK");
+
+  PLX.microserverStart = () => {
+      try {
+        PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
+        PLX.microserver.microtasks.updateServerCache("all");
+        PLX.microserver.microtasks.updateChannels("all");
+    } catch (e) {
+      console.error(e);
+      for (const i in new Int8Array(10)) console.error("ERROR MTASK");
+      
+      process.exit(1);
+    }
   }
+  PLX.microserverStart();
 
   hook.info(`**INFO:** Cluster connected and all shards reported online!
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
