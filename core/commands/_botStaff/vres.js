@@ -1,4 +1,4 @@
-const init = async () => exec("pm2 stop sharding").then(() => exec("pkill -fe vanilla").then(() => exec("pm2 start sharding")));
+const init = async () => exec("pm2 stop sharding").then(() => exec("pkill -fe vanilla").finally(() => exec("pm2 start sharding")));
 
 module.exports = {
   init,
