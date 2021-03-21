@@ -167,3 +167,17 @@ async function incrementGlobal(msg) {
   }
 }
 */
+
+
+
+
+//TODO[epic=flicky] Use these functions later on the appropriate spots
+
+function EXPtoLEVEL(LEVEL){
+  let baseline = ~~CURVE[0];
+  let multiplier = ~~CURVE[1];
+  let accel = ~~CURVE[2];
+  let drag = ~~CURVE[3];
+  return ~~(baseline* Math.pow( (LEVEL-1), (0.9 + accel / 250) ) * LEVEL * (LEVEL+1)/ (6 + Math.pow(LEVEL,2) / (50 / drag) ) + (LEVEL-1) * multiplier);
+}
+
