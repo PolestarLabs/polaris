@@ -1,0 +1,18 @@
+before_script:
+  - echo "What am I doing"
+  - cd /home/pollux/polaris/DEV/bot/
+building:
+  stage: build
+  script:
+    - git reset --hard origin/dev
+    - git pull
+    - npm install
+
+testing:
+  stage: test
+  script:
+    - echo "Pls send help"
+deploying:
+  stage: deploy
+  script:
+    - echo "Did this work idk"
