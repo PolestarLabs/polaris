@@ -1,3 +1,6 @@
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
 before_script:
   - echo "Hoping this won't break anything"
   - cd /home/pollux/polaris/DEV/bot/
