@@ -1,0 +1,22 @@
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
+before_script:
+  - echo "Hoping this won't break anything"
+  - cd /home/pollux/polaris/DEV/bot/
+cooking:
+  stage: build
+  script:
+    - git reset --hard origin/dev
+    - git pull
+    - npm install
+
+baking:
+  stage: test
+  script:
+    - echo "Pls send help"
+catapulting:
+  stage: deploy
+  script:
+    - echo "Did this work idk"
+    - plx-reload polaris
