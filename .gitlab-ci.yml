@@ -16,4 +16,4 @@ catapulting:
   stage: deploy
   script:
     - echo "Did this work idk"
-    - plx-reload /home/pollux/polaris/DEV/bot POLARIS
+    - plx-reload polaris
