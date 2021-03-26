@@ -1,5 +1,6 @@
 before_script:
   - echo "What am I doing"
+  - echo "$USER"
   - cd /home/pollux/polaris/DEV/bot/
 building:
   stage: build
