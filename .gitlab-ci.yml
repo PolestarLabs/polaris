@@ -1,19 +1,19 @@
 before_script:
-  - echo "What am I doing"
-  - echo "$USER"
+  - echo "Hoping this won't break anything"
   - cd /home/pollux/polaris/DEV/bot/
-building:
+cooking:
   stage: build
   script:
     - git reset --hard origin/dev
     - git pull
     - npm install
 
-testing:
+baking:
   stage: test
   script:
     - echo "Pls send help"
-deploying:
+catapulting:
   stage: deploy
   script:
     - echo "Did this work idk"
+    - plx-reload /home/pollux/polaris/DEV/bot POLARIS
