@@ -1,11 +1,15 @@
 include:
   - template: Code-Quality.gitlab-ci.yml
 
+
+
 before_script:
   - echo "Hoping this won't break anything"
   - cd /home/pollux/polaris/DEV/bot/
 cooking:
   stage: build
+  tags:
+    - polestar
   script:
     - git reset --hard origin/dev
     - git pull
@@ -13,6 +17,8 @@ cooking:
 
 baking:
   stage: test
+  tags:
+    - polestar
   script:
     - echo "Pls send help"
 catapulting:
