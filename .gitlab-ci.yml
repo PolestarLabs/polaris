@@ -25,7 +25,7 @@ baking:
     - echo "Pls send help"
 catapulting:
   stage: deploy
-   tags:
+  tags:
     - polestar
   script:
     - cd /home/pollux/polaris/DEV/bot/
