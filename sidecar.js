@@ -39,7 +39,7 @@ Gearbox = require("./core/utilities/Gearbox");
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
 
-global._emoji = (E, F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E, F);
+require('@polestar/emoji-grimoire').initialize(PLX);
 
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;

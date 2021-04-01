@@ -93,7 +93,7 @@ Object.assign(PLX, Gearbox.Client);
 PLX.execQueue = [];
 PLX.commandPool = {};
 
-global._emoji = (E, F) => new (require("./resources/lists/emoji.js")).PolluxEmoji(E, F);
+require('@polestar/emoji-grimoire').initialize(PLX);
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;
@@ -133,6 +133,8 @@ DBSchema(dbConnectionData).then((Connection) => {
     console.log("Discord connection start...");
     PLX.connect().then(postConnect).catch(console.error);
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
+}).catch(err=>{
+  console.error()
 });
 
 // Translation Engine ------------- <

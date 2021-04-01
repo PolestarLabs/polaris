@@ -12,6 +12,7 @@
     "@google-cloud/vision": "^2.1.2",
     "@polestar/database_schema": "gitlab:PolestarLabs/database_schema",
     "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage",
+    "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
     "axios": "^0.21.1",
