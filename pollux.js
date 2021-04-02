@@ -273,6 +273,8 @@ PLX.setAvatar = async (url) => {
   }
 };
 
+require("./core/utilities/SelfAPI.js");
+
 PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
 PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
 PLX.reply = (msg, content, ping=false) => {
