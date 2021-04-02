@@ -4,13 +4,13 @@ const apiToken = require("../../config.json")["pollux-api-token"];
 class SelfAPI {
   constructor(key) {
     this.key = key;
-    this.request = axios.create({
+    Object.assign(this, axios.create({
       baseURL: `${ paths.API }/`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.key}`,
       },
-    });
+    }));
   }
 }
 
