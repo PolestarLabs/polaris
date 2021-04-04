@@ -31,6 +31,11 @@ const init = async (msg) => {
 *\`Discord Latency\`*`,
     inline: true,
   });
+  embed.fields.push({
+    name: "Internal Services",
+    value: `${_emoji('loading')}`,
+    inline: true,
+  });
 
   const start = Date.now();
   const filepath = await Gal.randomOne("pong", true).catch(console.error);
@@ -58,6 +63,25 @@ const init = async (msg) => {
 *\`Discord Latency\`*`,
     inline: true,
   };
+
+  
+  PLX.api.get('/internal/ping').then( async res=>{
+    const {data} = res;
+    let INST = data.RABBITHOUSE;
+    INST.name = "RABBITHOUSE";
+    const cluster = ["cluster_"+ (process.env.CLUSTER_ID) ] ||0;
+    
+    embed.fields[3] = {
+      name: "Internal Services",
+      value: `${(INST?.[cluster]?.last) > Date.now() - 5e3 ? _emoji('yep') : _emoji('nope') } *\`${INST.name}/${process.env.CLUSTER_ID}\`* **${INST?.[cluster]?.diff || "000" }**ms\n` +
+             `${(data.METEORA?.cluster_0?.last) > Date.now() - 5e3 ? _emoji('yep') : _emoji('nope') } *\`${"METEORA"}/${0}\`* **${start - data?.METEORA?.cluster_0?.last || "000" }**ms`,
+      inline: true,
+    };
+    await wait(1);
+    ms2.edit({ embed });
+  });
+
+
 
   console.log(embed);
   await wait(0.5);
