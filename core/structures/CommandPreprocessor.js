@@ -34,7 +34,7 @@ const PERMS_CALC = function CommandPermission(msg) {
   switch (msg.command.module) {
     case "_botOwner": uIDs = [cfg.owner]; break;
     case "_botStaff":
-    case "dev": uIDs = cfg.admins; break;
+    case "dev": uIDs = cfg.admins.concat(cfg.owner); break;
     default: uIDs = [];
   }
 
