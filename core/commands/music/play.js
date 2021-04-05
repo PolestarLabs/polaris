@@ -25,8 +25,9 @@ const init = async function (msg){
 module.exports={
     init
     ,pub:true
+    ,argsRequired:true
     ,cmd:'play'
     ,cat:'music'
     ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
+    ,aliases:['p']
 }
