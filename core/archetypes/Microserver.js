@@ -5,6 +5,10 @@ class Microserver {
   constructor(crossAuth) {
     this.microtasks = require("../subroutines/microtasks");
     const server = http.createServer((req, res) => {
+      if (req.method === "GET" ){
+            res.statusCode = 200;
+            return res.end( ""+Date.now() );
+      }
       if (req.method === "POST") {
         let body = "";
         req.on("data", (chunk) => {
@@ -28,7 +32,7 @@ class Microserver {
           } catch (err) {
             res.statusCode = 504;
             console.error(err);
-            res.send(`ERROR: ${err.message}`);
+            res.end(`ERROR: ${err.message}`);
           }
         });
       }
