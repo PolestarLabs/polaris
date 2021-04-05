@@ -43,17 +43,18 @@ module.exports = {
 
     const SVR = trigger.guild;
     const CHN = trigger.channel;
+    
+    //FIXME This is pooling the DB on every message
     const serverDATA = await DB.servers.findOne({ id: SVR.id }, { "modules.LOCALRANK": 0 }).lean().exec();
-
     if (serverDATA.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
 
-    const prerf = serverDATA.modules.PREFIX || "+";
+    const prerf = trigger.prefix
     const _DROPMIN = 1;
     const _DROPMAX = 1000;
     const _RAREMAX = 250;
     const P = {
       lngs: trigger.lang,
-      prefix: prerf,
+      prefix: trigger.prefix,
     };
 
     const v = {
