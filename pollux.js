@@ -114,21 +114,31 @@ const dbConnectionData = {
   hook,
   url: cfg.dbURL,
   options: {
+
     useNewUrlParser: true,
     keepAlive: 1,
     connectTimeoutMS: 8000,
     useUnifiedTopology: true,
     promiseLibrary: global.Promise,
     poolSize: 16,
-  },
+  }
 };
 
-DBSchema(dbConnectionData).then((Connection) => {
+DBSchema(dbConnectionData,  {
+  redis:{
+    host: "127.0.0.1",
+    port: 6379
+  }
+}).then((Connection) => {
   global.DB = Connection;
-
-  (require('./core/archetypes/Achievements.js')).init();
-  (require('./core/archetypes/Progression.js')).init();
-
+  try{
+    (require('./core/archetypes/Achievements.js')).init();
+    (require('./core/archetypes/Progression.js')).init();
+  }catch(err){
+    console.log(err); 
+    process.exit(1);
+  }
+  
   setTimeout(() => {
     console.log("Discord connection start...");
     PLX.connect().then(postConnect).catch(console.error);
