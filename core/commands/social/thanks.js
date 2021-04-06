@@ -1,6 +1,6 @@
 const { autoSubs: topAutoSubs } = require("./top.js");
 
-const DAY = 3.6e+6;
+const DAY = .001*3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
@@ -14,7 +14,7 @@ const init = async function (msg, args) {
 
   const after = async function after(msg) {
     await DB.localranks.set({ user: Target.id, server: msg.guild.id }, { $inc: { thx: 1 } });
-    const TargetServerData = await DB.localranks.get({ user: Target.id, server: msg.guild.id });
+    const TargetServerData = await DB.localranks.findOne({ user: Target.id, server: msg.guild.id }).noCache().lean();
 
     P.userA = msg.member.nick || msg.author.username;
     P.userB = Target.nick || (Target.user || Target).username;
