@@ -254,6 +254,8 @@ async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, up
 
 module.exports = {
   init,
+  //TODO[epic=Unfinished Commands] Needs to comply with multiple rings format;
+  disabled: true, 
   pub: true,
   cmd: "marry",
   perms: 3,

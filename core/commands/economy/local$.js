@@ -143,7 +143,9 @@ const init = async (msg) => {
 };
 module.exports = {
   init,
-  pub: true,
+  //TODO[epic=Unfinished Commands] this one is barely fleshed out;
+  disabled: true, 
+  pub: false,
   cmd: "local$",
   perms: 3,
   cat: "economy",

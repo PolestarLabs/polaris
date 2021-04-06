@@ -75,5 +75,7 @@ module.exports = {
   init,
   cmd: "redeem",
   cat: "inventory",
-  argsRequired: true
+  argsRequired: true,
+  pub: false,
+  
 };

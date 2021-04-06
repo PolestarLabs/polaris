@@ -7,7 +7,7 @@ module.exports = {
   resolveUser: async function resolveUser(user, options) {
     const enforceDB = options?.enforceDB || false;
     user = user?.id || user;
-
+    console.log({user})
     if (typeof user === "string") {
       const ID = user.replace(CLEAN_ID_REGEX, "");
       const isID = ID_REGEX.test(ID);
@@ -19,6 +19,7 @@ module.exports = {
         return Promise.resolve(userObject);
       }
     } else {
+      
       return Promise.reject("USER MUST BE A STRING");
     }
   },

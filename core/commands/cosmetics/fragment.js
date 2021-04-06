@@ -114,6 +114,8 @@ const init = async (msg, args) => {
 };
 module.exports = {
   init,
+  //TODO[epic=Unfinished Commands] Depends on Synth;
+  disabled: true, 
   pub: true,
   argsRequired: true,
   cmd: "fragment",

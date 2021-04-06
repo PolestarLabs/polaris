@@ -64,6 +64,8 @@ const init = async (msg, args) => {
 
 module.exports = {
   init,
+  //TODO[epic=Unfinished Commands] Needs some testing and QoL tweaks;
+  disabled: true, 
   pub: true,
   cmd: "paidroles",
   perms: 3,

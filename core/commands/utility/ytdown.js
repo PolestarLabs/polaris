@@ -14,6 +14,8 @@ module.exports = {
   init,
   cooldown: 8000,
   pub: false,
+  //REVIEW Not supposed to be Public
+  disabled: true, 
   cmd: "ytdown",
   cat: "utility",
   botPerms: ["attachFiles", "embedLinks"],

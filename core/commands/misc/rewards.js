@@ -420,6 +420,8 @@ ${_emoji("yep")} **${capitalize(T.title)} Donator's Flair**
 module.exports = {
   init,
   pub: true,
+  //TODO[epic=Unfinished Commands] Needs to be redone before first month after release;
+  disabled: true, 
   cmd: "rewards",
   perms: 3,
   cat: "misc",

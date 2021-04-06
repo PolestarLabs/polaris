@@ -8,7 +8,7 @@ class ProgressionManager extends EventEmitter {
         super();
         this.userQuestsCache = new Map();
     }
-    emit(event, ...args){                
+    emit(event, ...args){
         const [action,type,condition] = event.split('.');
         hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([...args])}\`\`\``)
         console.log({action,type,condition})

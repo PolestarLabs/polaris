@@ -183,6 +183,8 @@ const init = async (msg, args) => {
 };
 
 module.exports = {
+  //TODO[epic=Unfinished Commands] barely fleshed out, needs luck system
+  disabled: true, 
   pub: true,
   cmd: "tarot",
   perms: 3,

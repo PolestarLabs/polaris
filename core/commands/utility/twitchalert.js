@@ -144,7 +144,8 @@ module.exports = {
     cmd: "twitchalert",
     cat: "utility",
     aliases: ["twitch"],
-
+    //REVIEW[epic=mitchell] does this work already?
+    disabled: true, 
     pub: true,
     perms: 3,
 

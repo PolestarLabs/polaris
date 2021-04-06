@@ -209,6 +209,8 @@ const init = async (msg, args) => {
 
 module.exports = {
   init,
+  //TODO[epic=Unfinished Commands] Discoin won't be out on launch;
+  disabled: true, 
   pub: true,
   cmd: "exchange",
   perms: 3,

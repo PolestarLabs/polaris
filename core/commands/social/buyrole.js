@@ -41,6 +41,7 @@ const init = async (msg, args) => {
 };
 module.exports = {
   init,
+  experimental: true,
   pub: true,
   cmd: "buyrole",
   perms: 3,

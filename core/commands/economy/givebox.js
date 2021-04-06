@@ -200,6 +200,8 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   pub: false,
+  //TODO[epic=Unfinished Commands] Still needs a few tweaks;
+  disabled: true, 
   cmd: "givebox",
   perms: 3,
   argsRequired: true,

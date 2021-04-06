@@ -1,10 +1,11 @@
 const { performance } = require("perf_hooks");
-
+const Eris = require('eris');
 const clean = (text) => {
   const output = (typeof text === "string" ? text
     .replace(/`/g, `\`${String.fromCharCode(8203)}`)
     .replace(/@/g, `@${String.fromCharCode(8203)}`)
     .replace(PLX.token, "[REDACTED]")
+    .replace("PLX.token", "[REDACTED]")
     .replace(DB.native.host, "[REDACTED]")
     .replace(DB.native.name, "[REDACTED]")
     .replace(DB.native.port, "[REDACTED]")
@@ -21,6 +22,8 @@ const init = async (msg) => {
     if (msg.content.includes("../../")) return null;
     // if (msg.content.includes("require")) return null;
   }
+  
+
 
   let depthParam = 0;
   if (msg.args[0] === "-depth") {
@@ -80,7 +83,7 @@ const init = async (msg) => {
     return msg.channel.createMessage({ embed });
   }
 };
-
+ 
 /**
  * Attempts to place a return in the correct spot.
  * 
