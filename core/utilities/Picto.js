@@ -246,17 +246,12 @@ module.exports = {
     ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
     ctx.lineTo(x, y + radius.tl);
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-    if (fill && typeof fill === "object") {
-      try{
-
+    if (fill && typeof fill === "object" && !(fill instanceof Canvas.CanvasGradient) ) {
         ctx.save();
         ctx.clip();
         ctx.drawImage(fill, x, y, width, height);
         ctx.closePath();
         ctx.restore();
-      }catch(e){
-        ctx.fillStyle = fill;
-      }
     } else {
       ctx.closePath();
     }
@@ -265,6 +260,7 @@ module.exports = {
       ctx.fillStyle = fill;
       ctx.fill();
     }
+
     if (stroke) {
       ctx.strokeStyle = typeof stroke === "string" ? stroke : ctx.strokeStyle;
       ctx.lineWidth = lineWidth;
