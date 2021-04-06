@@ -59,7 +59,7 @@ const PERMS_CALC = function CommandPermission(msg) {
     if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch((err) => console.error(`Messed up perms at ${msg.guild.id}`)), false;
   }
   if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
-  if(msg.command.disabled && !uIDs.includes(msg.author.id)) return msg.addReaction(_emoji('COMMAND_DISABLED').reaction), false;
+  if(msg.command.disabled && [...cfg.admins,cfg.owner].includes(msg.author.id)) return msg.addReaction(_emoji('COMMAND_DISABLED').reaction), false;
 
   return (!uIDs.length || uIDs.includes(msg.author.id));
 };
