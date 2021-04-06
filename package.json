@@ -15,6 +15,7 @@
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
+    "stackblur-canvas": "2.5.0",
     "axios": "^0.21.1",
     "bluebird": "^3.7.2",
     "bufferutil": "^4.0.0",

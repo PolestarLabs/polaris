@@ -2,6 +2,7 @@ const π = Math.PI;
 const Canvas = require("canvas");
 const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
 const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
+const StackBlur = require('stackblur-canvas');
 
 function RGBstring(rgbColor) {
   rgbColor = (rgbColor || "#F55595").replace(/\s/g, "");
@@ -30,12 +31,19 @@ function RGBstring(rgbColor) {
   return arrRGB.join(",");
 }
 
+const blur = function Blur(rad=10,x=0,y=0,w,h){
+  w = w || this.canvas.width;
+  h = h || this.canvas.height;
+  return StackBlur.canvasRGB(this.canvas,x,y,w,h,rad);
+}
+
 module.exports = {
   new: function newPicto(w = 800, h = 600) {
     const canvas = Canvas.createCanvas(w, h);
     const c = canvas.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
+    c.blur = blur;
     return canvas;
   },
 
@@ -48,6 +56,7 @@ module.exports = {
       c.fillRect(0, 0, 250, 250);
       c.fillStyle = "#000";
       c.fillText(`ERROR LOADING: ${[...args]} !`);
+      c.blur = blur;
       return canvas;
     });
   },
@@ -59,6 +68,7 @@ module.exports = {
     }).then((img) => {
       const canvas = Canvas.createCanvas(img.width, img.height);
       const c = canvas.getContext("2d");
+      c.blur = blur;
       c.drawImage(img, 0, 0);
       return canvas;
     });
@@ -206,7 +216,7 @@ module.exports = {
     width = 10,
     height = 10,
     radius = 5,
-    fill = "#FFF",
+    fill,
     stroke = false,
     lineWidth = 3,
   ) {
@@ -220,6 +230,7 @@ module.exports = {
       };
       Object.keys(defaultRadius).forEach((side) => { radius[side] = radius[side] || defaultRadius[side]; });
     }
+    
     ctx.beginPath();
     ctx.moveTo(x + radius.tl, y);
     ctx.lineTo(x + width - radius.tr, y);
@@ -236,11 +247,16 @@ module.exports = {
     ctx.lineTo(x, y + radius.tl);
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
     if (fill && typeof fill === "object") {
-      ctx.save();
-      ctx.clip();
-      ctx.drawImage(fill, x, y, width, height);
-      ctx.closePath();
-      ctx.restore();
+      try{
+
+        ctx.save();
+        ctx.clip();
+        ctx.drawImage(fill, x, y, width, height);
+        ctx.closePath();
+        ctx.restore();
+      }catch(e){
+        ctx.fillStyle = fill;
+      }
     } else {
       ctx.closePath();
     }
