@@ -117,15 +117,17 @@ module.exports = {
     }
     return false;
   },
-  modPass: function modPass(member, extra, sData = false, channel = null) {
-    if (sData?.modules.MODROLE) {
-      if (member.hasRole(sData.modules.MODROLE)) return true;
-    }
-    if (member.permission.has("manageGuild") || member.permission.has("administrator")) {
-      return true;
-    }
-    if (member.permission.has(extra) || channel?.permissionsOf?.(member.id).has(extra)) return true;
+  modPass: function modPass(member, extra= null, sData = {}, channel = null) {
+    // is owner
+    if (member.guild.ownerID === member.id) return true;
+    // is adm or manager
+    if (member.permission.has("manageGuild") || member.permission.has("administrator")) return true;    
+    // has explicit extra perms
+    if (extra && member.permission.has(extra) || channel?.permissionsOf?.(member.id).has(extra)) return true;
+    // has modrole assined
+    if ( sData?.modules.MODROLE && member.hasRole(sData.modules.MODROLE)) return true;    
 
+    // fuck you
     return false;
   },
   gamechange: function gamechange(gamein = false, status = "online") {
