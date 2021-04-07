@@ -3,6 +3,7 @@ const Canvas = require("canvas");
 const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
 const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
 const StackBlur = require('stackblur-canvas');
+const KnownErrors = new Map();
 
 function RGBstring(rgbColor) {
   rgbColor = (rgbColor || "#F55595").replace(/\s/g, "");
@@ -49,7 +50,13 @@ module.exports = {
 
   getCanvas: function getCanvas(img_path) {
     return Canvas.loadImage(img_path).catch((err) => {
-      console.error("• ".red + (img_path.toString().replace("undefined","?")).split('/').map(w=>w.includes('.')?w.yellow:w).join("/") + " not loaded.".gray );
+      let errorMsg = "• ".red + (img_path.toString().replace("undefined","?")).split('/').map(w=>w.includes('.')?w.yellow:w).join("/") + " not loaded.".gray;
+      
+      if (!KnownErrors.get( errorMsg )){
+        console.error(errorMsg);
+        KnownErrors.set( errorMsg , 1);
+      }
+
       const canvas = Canvas.createCanvas(250, 250);
       const c = canvas.getContext("2d");
       c.fillStyle = "#F0F";
