@@ -75,7 +75,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
 PLX.engine = Eris;
-PLX.beta = process.env.NODE_ENV !== "production";
+PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 console.report = (...args) =>  console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(' '));
