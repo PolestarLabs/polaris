@@ -1,3 +1,5 @@
+//TODO[epic=anyone] Replace REQUEST with AXIOS
+
 const request = require("request");
 
 const rescodes = [200, 201, 400, 401, 403];

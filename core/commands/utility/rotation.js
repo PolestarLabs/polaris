@@ -1,3 +1,5 @@
+//TODO[epic=anyone] Deprecate Request AND Cheerio
+
 const request = require("request");
 // const gear = require("../../utilities/Gearbox.js");
 const cheerio = require("cheerio");
