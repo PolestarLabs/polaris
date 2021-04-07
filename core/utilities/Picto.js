@@ -47,15 +47,13 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: function getCanvas(...args) {
-    return Canvas.loadImage(...args).catch((err) => {
-      console.error(...args);
+  getCanvas: function getCanvas(img_path) {
+    return Canvas.loadImage(img_path).catch((err) => {
+      console.error("• ".red + (img_path.toString().replace("undefined","?")).split('/').map(w=>w.includes('.')?w.yellow:w).join("/") + " not loaded.".gray );
       const canvas = Canvas.createCanvas(250, 250);
       const c = canvas.getContext("2d");
       c.fillStyle = "#F0F";
       c.fillRect(0, 0, 250, 250);
-      c.fillStyle = "#000";
-      c.fillText(`ERROR LOADING: ${[...args]} !`);
       c.blur = blur;
       return canvas;
     });
