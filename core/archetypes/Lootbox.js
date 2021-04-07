@@ -1,3 +1,5 @@
+const GNums = require("../../resources/lists/GlobalNumbers.js");
+
 const LootboxItem = require("./LootboxItem");
 /** *********************** */
 //          ODDS          //

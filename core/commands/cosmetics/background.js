@@ -1,7 +1,7 @@
 const cmd = "background";
 const ECO = require("../../archetypes/Economy.js");
 
-const GNums = require(`${appRoot}/resources/lists/GlobalNumbers`);
+const GNums = require("../../../resources/lists/GlobalNumbers.js");
 const Picto = require("../../utilities/Picto");
 const YesNo = require("../../structures/YesNo");
 

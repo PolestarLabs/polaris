@@ -7,8 +7,6 @@ console.log(require("./resources/asciiPollux.js").ascii());
 
 global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
-global.GNums = require("./resources/lists/GlobalNumbers.js");
-
 
 
 const Sentry          = require("@sentry/node");

@@ -4,6 +4,7 @@ const Canvas = require("canvas");
 const Lootbox = require("../../archetypes/Lootbox.js");
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
+const GNums = require("../../../resources/lists/GlobalNumbers.js");
 
 const LootingUsers = new Map();
 const VisualsCache = new Map();
