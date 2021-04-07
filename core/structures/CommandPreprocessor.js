@@ -164,8 +164,9 @@ const registerOne = (folder, _cmd) => {
     delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))];
     const commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
     // commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };
-    commandFile.hidden = !commandFile.pub; // legacy port
-
+    commandFile.hidden = !commandFile.pub;  // legacy port
+    
+    if(commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
     const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile);
