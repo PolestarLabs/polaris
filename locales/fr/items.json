@@ -30,56 +30,56 @@
         "description": "Gravier scintillant utilisé pour concocter les éclats des cosmos"
     },
     "cosmo_gem_C": {
-        "name": "",
+        "name": "Gemme Cosmo Ordinaire",
         "description": "Eh bien, au moins que ça brille."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "Gemme Cosmo rare",
+        "description": "Oh? Un peu cher, n'est-ce pas?"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "Gemme Cosmo rare",
+        "description": "« Woah, c'est une petite gemme spéciale que t'as trouvé. Combien veux-tu pour ça? Six rubines? Huit? »"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "Gemme Cosmo péculière",
+        "description": "Voyons, c'est mieux qu'une gemme commune."
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Gemme Cosmo ultra rare",
+        "description": "Souhaitez une étoile... Et vous en avez enfin eu une."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "Overwatch par Daianpan",
+        "description": "S'il vous plaît pas 4 DPS dans une équipe boosterpack"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "Doki Doki Literature Club",
+        "description": "Juste Monika"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "Double Crochet",
+        "description": "Un crochet crochet, ou si vous préférez un crochet²"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "Fossoyeur",
+        "description": "Pour les gens qui ne veulent pas se salir les mains."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "Crochet",
+        "description": "Vu pour la dernière fois chassant un petit garçon volant."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "Initial D",
+        "description": "Déjà vu. Je viens d'ouvrir ce booster avant."
     },
     "iwd1_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Saison 1",
+        "description": "Autocollants Exclusifs Internet Wrestling Discord. 2018"
     },
     "iwd2_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Saison 2",
+        "description": "Autocollants Exclusifs Internet Wrestling Discord. 2019"
     },
     "lootbox_C_C": {
         "name": "Coffre commun chibi"
@@ -123,97 +123,97 @@
         "description": "Si tu ouvres cette boîte, ton inventaire va exploser"
     },
     "lootbox_R_C": {
-        "name": ""
+        "name": "Lootbox Chibi Rare"
     },
     "lootbox_R_E": {
-        "name": ""
+        "name": "Lootbox Epic Rare"
     },
     "lootbox_R_event_1": {
-        "name": ""
+        "name": "Lootbox Rare Halloween"
     },
     "lootbox_R_event_2": {
-        "name": ""
+        "name": "Lootbox Noël Rare"
     },
     "lootbox_R_event_3": {
-        "name": ""
+        "name": "Lootbox Paques Rare"
     },
     "lootbox_R_event_s1": {
-        "name": ""
+        "name": "Lootbox Été Rare"
     },
     "lootbox_R_event_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Rare"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Lootbox Solstice Rare"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Lootbox Rare"
     },
     "lootbox_R_s1": {
-        "name": ""
+        "name": "Lootbox Été Rare"
     },
     "lootbox_R_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Rare"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Lootbox Solstice Rare"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Lootbox Chibi Super Rare"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "Lootbox Epic Super Rare"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "Lootbox Halloween Super Rare"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "Lootbox Noël Super Rare"
     },
     "lootbox_SR_event_3": {
-        "name": ""
+        "name": "Lootbox Paques Super Rare"
     },
     "lootbox_SR_event_s1": {
-        "name": ""
+        "name": "Lootbox Été Super Rare"
     },
     "lootbox_SR_event_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Super Rare"
     },
     "lootbox_SR_event_s3": {
-        "name": ""
+        "name": "Lootbox Solstice Super Rare"
     },
     "lootbox_SR_O": {
-        "name": ""
+        "name": "Lootbox Super Rare"
     },
     "lootbox_SR_s1": {
-        "name": ""
+        "name": "Lootbox Été Super Rare"
     },
     "lootbox_SR_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Super Rare"
     },
     "lootbox_SR_s3": {
-        "name": ""
+        "name": "Lootbox Solstice Super Rare"
     },
     "lootbox_U_C": {
-        "name": ""
+        "name": "Lootbox Chibi Peu Commune"
     },
     "lootbox_U_E": {
-        "name": ""
+        "name": "Lootbox Epic Peu Commune"
     },
     "lootbox_U_event_1": {
-        "name": ""
+        "name": "Lootbox Halloween Peu Commune"
     },
     "lootbox_U_event_2": {
-        "name": ""
+        "name": "Lootbox Noël Peu Commune"
     },
     "lootbox_U_event_3": {
-        "name": ""
+        "name": "Lootbox Paques Peu Commune"
     },
     "lootbox_U_event_s1": {
-        "name": ""
+        "name": "Lootbox Été Peu Commune"
     },
     "lootbox_U_event_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Peu Commune"
     },
     "lootbox_U_event_s3": {
         "name": "Coffre du solstice peu commun"
@@ -222,10 +222,10 @@
         "name": "Coffre peu commun"
     },
     "lootbox_U_s1": {
-        "name": ""
+        "name": "Lootbox Été Peu Commune"
     },
     "lootbox_U_s2": {
-        "name": ""
+        "name": "Lootbox Hiver Peu Commune"
     },
     "lootbox_U_s3": {
         "name": "Coffre du solstice peu commun"
@@ -265,14 +265,14 @@
     },
     "nierauto_booster": {
         "name": "NieR: Automata",
-        "description": ""
+        "description": "Le booster 2B dont vous avez besoin"
     },
     "p5_booster": {
         "name": "Persona 5",
-        "description": ""
+        "description": "You never see it coming"
     },
     "padoru_booster": {
-        "name": "",
+        "name": "Collection Ultime Padoru",
         "description": "Hashire sore yo and donne-moi tes Rubines"
     },
     "partial_ring": {
@@ -281,50 +281,65 @@
     },
     "reel": {
         "name": "Moulinet de pêche",
-        "description": ""
+        "description": "Vous le tournez en rond mais pas comme un enregistrement. On dirait qu'il doit être attaché quelque part."
     },
     "rod_c": {
-        "name": "",
-        "description": ""
+        "name": "Canne à pêche de fortune",
+        "description": "Ne tire que du poisson, pas de compliments."
     },
     "rod_r": {
-        "name": "",
-        "description": ""
+        "name": "Canne à pêche décente",
+        "description": "Techniquement, ce n'est pas mauvais, mais ce n'est pas génial non plus."
     },
     "rod_sr": {
-        "name": "",
-        "description": ""
+        "name": "Canne à pêche formidable",
+        "description": "~On dit que cette canne à pêche a été faite par Bob Ross~"
     },
     "rod_u": {
-        "name": "",
-        "description": ""
+        "name": "Canne à pêche artisanale en bambou",
+        "description": "Ce bâton de bambou a été pris dans un jardin de moine chinois sage."
     },
     "rod_ur": {
-        "name": "",
+        "name": "Canne à pêche professionnelle",
         "description": "Ne. Le. Brise. Pas."
     },
     "rope": {
         "name": "Corde",
-        "description": ""
+        "description": "Non, ce n'est pas ce que vous pensez."
     },
     "shovel": {
         "name": "Pelle",
-        "description": ""
+        "description": "Utilisée pour creuser des trous, à la fois physiques et métaphoriques."
     },
     "spoon": {
         "name": "Cuillère",
         "description": "C'est une cuillère très sexy, veuillez l'utiliser de manière responsable."
     },
     "spork": {
-        "name": "",
-        "description": ""
+        "name": "Cuillère-fourchette",
+        "description": "Une cuillère, plus une fourchette. C'est une cuillètte!"
     },
     "stick": {
-        "name": "",
-        "description": ""
+        "name": "Bâton semi-inutile",
+        "description": "Le prix n'est pas ce qui importe, mais le sentiment qui passe à travers ce bâton génial"
     },
     "fork": {
         "name": "Fourchette",
-        "description": ""
+        "description": "Avec quatre fois la capacité de poignard d'un couteau, mais la moitié de l'impact, c'est le double de la valeur !"
+    },
+    "lootbox_C_D": {
+        "name": "Lootbox Journalière Commune"
+    },
+    "lootbox_U_D": {
+        "name": "Lootbox Journalière Peu Commune"
+    },
+    "lootbox_R_D": {
+        "name": "Lootbox Journalière Rare"
+    },
+    "lootbox_SR_D": {
+        "name": "Lootbox Journalière Super Rare"
+    },
+    "lootbox_UR_D": {
+        "name": "Lootbox Journalière Ultra Rare"
     }
 }
