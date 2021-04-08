@@ -16,7 +16,10 @@ const bgP    = (S) => ~~( mdP(S) * FIBONACCI(BASELINE*2.5,1) * S / BASELINE );
 module.exports = {
 
   DROPMAX: 1000, // Maximum dice face for Lootbox Drops
-
+  
+  sapphireModifier: 0.000794912559618442, // ÷1258
+  jadeModifier: 2250, // (legacy)
+  tokenModifier: 0.5,
 
   bgPrices: {
     UR: bgP(6), SR: bgP(5), R: bgP(4), U: bgP(3), C: bgP(2),
