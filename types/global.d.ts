@@ -80,7 +80,6 @@ declare global {
   export interface Promise<T> extends Bluebird<T> {};
   export const MARKET_TOKEN: string;
   export const PLX: CommandClient;
-  export const DB: any; // @polestar/database_schema
   // gearbox
   export const nope: string;
   export function reload(): void;
