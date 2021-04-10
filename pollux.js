@@ -8,7 +8,6 @@ console.log(require("./resources/asciiPollux.js").ascii());
 global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
 
-
 const Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
@@ -64,11 +63,10 @@ global.PLX = new Eris.CommandClient(cfg.token, {
 }, {
   defaultHelpCommand: false,
   ignoreBots: true,
-  requestTimeout:5000,
+  requestTimeout: 5000,
   defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
   prefix: ["===", "p!+", "@mention"],
 });
-
 
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
@@ -76,7 +74,7 @@ PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
-console.report = (...args) =>  console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(' '));
+console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 global.hook = new WebhookDigester(PLX);
 
 Gearbox = require("./core/utilities/Gearbox");
@@ -91,7 +89,7 @@ Object.assign(PLX, Gearbox.Client);
 PLX.execQueue = [];
 PLX.commandPool = {};
 
-require('@polestar/emoji-grimoire').initialize(PLX);
+require("@polestar/emoji-grimoire").initialize(PLX);
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;
@@ -114,35 +112,35 @@ const dbConnectionData = {
   options: {
 
     useNewUrlParser: true,
-    keepAlive: 1,
+    keepAlive: true,
     connectTimeoutMS: 8000,
     useUnifiedTopology: true,
     promiseLibrary: global.Promise,
     poolSize: 16,
-  }
+  },
 };
 
-DBSchema(dbConnectionData,  {
-  redis:{
+DBSchema(dbConnectionData, {
+  redis: {
     host: "127.0.0.1",
-    port: 6379
-  }
+    port: 6379,
+  },
 }).then((Connection) => {
   global.DB = Connection;
-  try{
-    (require('./core/archetypes/Achievements.js')).init();
-    (require('./core/archetypes/Progression.js')).init();
-  }catch(err){
-    console.log(err); 
+  try {
+    (require("./core/archetypes/Achievements.js")).init();
+    (require("./core/archetypes/Progression.js")).init();
+  } catch (err) {
+    console.log(err);
     process.exit(1);
   }
-  
+
   setTimeout(() => {
     console.log("Discord connection start...");
     PLX.connect().then(postConnect).catch(console.error);
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
-}).catch(err=>{
-  console.error()
+}).catch((err) => {
+  console.error();
 });
 
 // Translation Engine ------------- <
@@ -151,11 +149,11 @@ global.translateEngineStart = () => {
   const multilang = require("./utils/i18node.js");
   const i18nBackend = require("i18next-node-fs-backend");
   const backendOptions = {
-    //loadPath: "./locales/{{lng}}/{{ns}}.json",
-    loadPath: paths.LOCALES + "{{lng}}/{{ns}}.json",
+    // loadPath: "./locales/{{lng}}/{{ns}}.json",
+    loadPath: `${paths.LOCALES}{{lng}}/{{ns}}.json`,
     jsonIndent: 2,
   };
-  readdirAsync( paths.LOCALES ).then((list) => {
+  readdirAsync(paths.LOCALES).then((list) => {
     i18next.use(i18nBackend).init({
       backend: backendOptions,
       lng: "en",
@@ -216,17 +214,17 @@ PLX.once("ready", async () => {
   PLX.registerCommands();
 
   PLX.microserverStart = () => {
-      try {
-        PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
-        PLX.microserver.microtasks.updateServerCache("all");
-        PLX.microserver.microtasks.updateChannels("all");
+    try {
+      PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
+      PLX.microserver.microtasks.updateServerCache("all");
+      PLX.microserver.microtasks.updateChannels("all");
     } catch (e) {
       console.error(e);
       for (const i in new Int8Array(10)) console.error("ERROR MTASK");
-      
+
       process.exit(1);
     }
-  }
+  };
   PLX.microserverStart();
 
   hook.info(`**INFO:** Cluster connected and all shards reported online!
@@ -285,7 +283,7 @@ require("./core/utilities/SelfAPI.js");
 
 PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
 PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
-PLX.reply = (msg, content, ping=false) => {
+PLX.reply = (msg, content, ping = false) => {
   const payload = {
     replied_user: ping,
     message_reference: {
@@ -332,5 +330,3 @@ ${err.stack.slice(0, 1900)}
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
-
-
