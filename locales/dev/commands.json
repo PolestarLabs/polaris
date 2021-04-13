@@ -155,9 +155,11 @@
 		"welcome": "Set messages for when someone joins the Server",
 		"ytalert": "Post new videos from a YouTube Channel to your server!",
 		"whatanime": "Finds from what anime an image is.",
-		"roulette": "Play the most fun and highest-paying of all casino minigames!"
+		"roulette": "Play the most fun and highest-paying of all casino minigames!",
+		"marketplace": "Trade items with other players!"
 	},
 	"usage": {
+		"marketplace": "**This is an advanced command in experimental stage!**\nBe wary that its usage is a bit rough around the edges and you may need to look up some stuff before properly using it. Be sure to read all information here and on the [wiki](https://wiki.pollux.gg/marketplace);\n\n`{{prefix}}market post [sell|buy] [background|medal|item] [item ID] (RBN|SPH)` Post a new item for sale or WTB (want to buy)\n`{{prefix}}market list [me|@user|user ID]` list entries for a specific user\n`{{prefix}}market delete [entry ID]` Deletes one of **your** entries\n",
 		"roulette": "Pollux roulette has all bells and whistles from the classic French Roulette as well as some bits of UK and US variations of the game.\n\nTo start a match use `{{prefix}}roulette` and invite your friends over. You'll have **45 seconds** to join.\n\nTo place a bet send `bet [AMOUNT] [TYPE]` where `[AMOUNT]` is how many Rubines you're betting (10 - 2500) and `[TYPE]` is what kind of bet you're doing.\n\n**Example bets:**\n • 100 Rubines on Number 25 `bet 100 25`\n • 50 Rubines on the lowest numbers (Manque) `bet 50 manque`\n • 1200 Rubines on a Square starting at 11 (11-12-14-15) `bet 1200 square 11`\n • Bet 88 Rubines on the First Column (Topmost row from 3 to 36) `bet 88 c 1`\n\n [Check the Wiki for more detailed info on how to play](https://wiki.pollux.gg/en/games/roulette)",
 		"whatanime": "`{{prefix}}whatanime [IMAGE URL]`\n\nUsing this command with an attachment also works.\nIf no image is provided, the last posted image in the channel will be used.",
 		"ahegao": "Quite simple, just type `{{prefix}}ahegao` and you get an アヘ顔",
