@@ -1,6 +1,7 @@
 // const DB = require('../../../database/db_ops');
 // const gear = require('../../../utilities/Gearbox');
 const YesNo = require("../../../structures/YesNo");
+const axios = require("axios");
 
 const init = async (msg, args) => {
   // buy type id
@@ -30,9 +31,9 @@ const init = async (msg, args) => {
   const embed = new Embed();
   embed.title = "Marketplace Listing information";
   embed.description = `
-        ${_emoji("RBN")} **Rubine** Listings cost 300 RBN upfront
+        ${_emoji("RBN")} **Rubine** Listings cost 50 RBN upfront
         ${_emoji("SPH")} **Sapphire** Listings cost 2 SPH upfront
-        To sell for Sapphires you need a [Sapphire License](${`${paths.CDN}/crafting/#sph-license`}) that must be crafted 
+        To sell for Sapphires you need a [Sapphire License](${`${paths.DASH}/crafting/#sph-license`}) that must be crafted 
         (Code: \`sph-license\`). It expires after 10 uses.
         There's a 5% cut from the selling price after it is completed.
         *You cannot sell items currently on sale at the storefront for more than their retail price.*
@@ -83,7 +84,7 @@ const init = async (msg, args) => {
     const checkSales = (uD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < 300) forRBN = false;
+      if (uD.modules.RBN < 50) forRBN = false;
       if (uD.amtItem("sph-license") < 1) forSPH = false;
       if (uD.modules.SPH < 2) forSPH = false;
 
@@ -107,9 +108,12 @@ const init = async (msg, args) => {
     }
 
     const validOperation = ["sell", "buy"].includes(operation);
-    const validType = ["background", "medal", "boosterpack", "sticker", "skin", "key", "consumable", "junk"].includes(itemType);
+    const validType = ["background", "medal", "boosterpack", "sticker", "skin", "key", "consumable", "junk","material","item"].includes(itemType);
     const validCurrency = ["RBN", "SPH"].includes(currency);
-    const validItem = await DB.items.findOne({ type: itemType, $or: [{ id: itemID }, { icon: itemID }] });
+    const itemFindQuery = {};
+    if (itemType !== 'item') itemFindQuery.type = itemType;
+    itemFindQuery["$or"] = [{ id: itemID }, { icon: itemID }];
+    const validItem = await DB.items.findOne( itemFindQuery );
     const checkCosmetic = await DB.cosmetics.findOne({
       type: itemType,
       $or: [
@@ -121,7 +125,7 @@ const init = async (msg, args) => {
     });
 
     return {
-      validOperation, validType, item_id: itemID, validItem, checkCosmetic, price, validCurrency, itemStatus, saleStatus,
+      validOperation, validType, item_id: validItem._id, validItem, checkCosmetic, price, validCurrency, itemStatus, saleStatus,
     };
   }
 
@@ -157,10 +161,11 @@ const init = async (msg, args) => {
 
   const confirm = async (cancellation) => {
     payload = await AllChecks();
-    if (!payload.pass) return;
+    console.log({payload})
+    if (!payload.itemStatus.pass) return cancellation();
     if (FULLCHECKS(payload)) {
       payload.LISTING = {
-        item_id: itemID,
+        item_id: validItem._id,
         item_type: itemType,
         price,
         currency,
@@ -168,17 +173,23 @@ const init = async (msg, args) => {
         type: operation,
       };
       payload.pollux = MARKET_TOKEN;
-
-      axios.post(`${paths.CDN}/api/marketplace`, payload).then((res) => {
-        if (res.data.status === "OK") {
-          entryId = res.data.payload.id;
+      console.log('pre axios')
+      console.log(`${paths.DASH}/api/marketplace`)
+      await axios.post(`${paths.DASH}/api/marketplace`, payload).then((res) => {
+        console.log('axios'.green,res.ok)
+        if (res.data.status == "OK" || res.data.status == 200) {
+          console.log(res.data)
+          let entryId = res.data.payload?.id ||  res.data.payload.PAYLOAD.id;
           msg.channel.send(`${_emoji("yep")} **Done!** You can find your entry here:\n`
-          + `${`${paths.CDN}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
+          + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
         } else {
+          console.log('cancel axios')
           cancellation();
         }
       });
+      console.log('wonk axios')
     } else {
+      console.log('invalid')
       msg.channel.send("Listing Invalidated");
       abort();
       cancellation();
@@ -192,8 +203,8 @@ const init = async (msg, args) => {
           description: `${operation === "sell" ? "Selling" : "Buying"}: \`${itemType}\``
           + `**${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}`,
         },
-      }).then((ms) => {
-        YesNo(ms, msg, confirm);
+      }).then(async (ms) => {
+        await YesNo(ms, msg, confirm);
       });
     }
   } else {
