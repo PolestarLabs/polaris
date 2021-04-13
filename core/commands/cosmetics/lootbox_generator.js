@@ -135,7 +135,7 @@ const init = async (msg, args) => {
         USERDATA.addItem("cosmo_fragment", P.cosmos),
         ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
-        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
+        Promise.all(lootbox.content.map(async (item) => await getPrize(item, USERDATA))),
       ]);
       LootingUsers.delete(msg.author.id);
 
