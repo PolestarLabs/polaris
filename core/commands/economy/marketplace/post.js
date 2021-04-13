@@ -123,9 +123,9 @@ const init = async (msg, args) => {
         { localizer: itemID },
       ],
     });
-
+    
     return {
-      validOperation, validType, item_id: validItem._id, validItem, checkCosmetic, price, validCurrency, itemStatus, saleStatus,
+      validOperation, validType, item_id: validItem?._id || checkCosmetic?._id, validItem, checkCosmetic, price, validCurrency, itemStatus, saleStatus,
     };
   }
 
@@ -165,7 +165,7 @@ const init = async (msg, args) => {
     if (!payload.itemStatus.pass) return cancellation();
     if (FULLCHECKS(payload)) {
       payload.LISTING = {
-        item_id: validItem._id,
+        item_id: validItem?._id || checkCosmetic?._id,
         item_type: itemType,
         price,
         currency,
