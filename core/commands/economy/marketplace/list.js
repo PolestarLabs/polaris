@@ -70,6 +70,8 @@ const init = async (msg, args) => {
     ],
   );
 
+  
+
   async function Pagination(page, mss, recursion = 0) {
     const totPages = Math.ceil(itemcount / 12);
     page = page > totPages ? totPages : page < 1 ? 1 : page;
@@ -80,7 +82,7 @@ const init = async (msg, args) => {
       return msg.channel.send(...arg);
     };
     const embed = new Embed();
-    embed.author("User Marketplace Listings", "", paths.CDN);
+    embed.author("User Marketplace Listings", "", paths.DASH);
     if (totPages > 0) {
       embed.description = `Showing entries (${page}/${totPages})
                     *Use **\`${msg.prefix}market list [PAGE]\`** for a specific page*`;
@@ -96,7 +98,7 @@ const init = async (msg, args) => {
         continue;
       }
 
-      const item = marketbase.find((it) => offer.item_id === it._id && offer.item_type === it.type);
+      const item = marketbase.find((it) => offer.item_id == it._id);
 
       if (!item) {
         embed.field("---", "`BAD ENTRY`", true);
@@ -107,7 +109,7 @@ const init = async (msg, args) => {
         `
         **\`${filter === "mine" ? offer.id : item.type.toUpperCase()}\`**
         ${offer.type === "sell" ? "Selling for: " : "Buying for: "} **${miliarize(offer.price, "soft")}**${_emoji(offer.currency)}
-        [\\🔗 See entry on web](${paths.CDN}/shop/marketplace/entry/${offer.id})
+        [\\🔗 See entry on web](${paths.DASH}/shop/marketplace/entry/${offer.id})
                     `, true,
       );
     }
