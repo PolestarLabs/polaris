@@ -3,12 +3,15 @@
         "RBN": "Rubine",
         "RBN_fullname": "Gemas de Rubine",
         "RBN_plural": "Rubines",
+        "rubines": "{{keywords.RBN_plural}}",
         "JDE": "Jade",
         "JDE_fullname": "Pó de Jades",
         "JDE_plural": "Jades",
+        "jades": "{{keywords.JDE_plural}}",
         "SPH": "Safira",
         "SPH_fullname": "Fragmentos de Safira",
         "SPH_plural": "Safiras",
+        "sapphires": "{{keywords.SPH_plural}}",
         "synthGems": "Gemas de Síntese",
         "cosmoFragment": "Fragmento Cósmico",
         "cosmoFragment_plural": "Fragmentos Cósmicos",
@@ -154,6 +157,9 @@
             "unparsable": "Este não é um embed válido. Já tentou o {{link}}?"
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "Espera aí, me dá um minutinho!",
                 "Reduza a marcha, por favor!",
@@ -162,7 +168,7 @@
                 "Comandos demais ao mesmo tempo!",
                 "Aaah! Vá com calma!",
                 "Eu não tenho dedos infinitos! Calma aí!",
-                "Pra que a pressa?!",
+                "Por que a pressa? Espere alguns segundos para usar esse comando novamente.",
                 "Preciso de um minuto pra respirar!",
                 "Amorzinho, por favor, um de cada vez.",
                 "*Você está indo rápido demais senpai uwu Não consigo aguentar uwu*"
@@ -306,6 +312,15 @@
         "profile": {
             "persotexUpdate": "Woo, tudo certinho! Seu texto pessoal mudou para: {{pstext}}\nDigite `{{prefix}}profile` para visualizar esta linda frase no seu ~~não tão lindo~~ perfil. Hihihi~"
         },
+        "gift": {
+            "noTarget": "Você precisa dizer quem deve receber isso!",
+            "noSelf": "Seria muito mais gentil dar esse presente para outra pessoa!",
+            "invEmpty": "Parece um pouco vazio aqui...",
+            "invEmptyGive": "Você ainda não tem presentes, por que não embrulha alguns?",
+            "inv>1": "Você tem {{count}} presentes, você precisa especificar qual dar!",
+            "inv<amt": "${count} são mais presentes do que você tem... tente novamente.",
+            "sent": "🎁 <@{{sender}}> deu **um presente** para <@{{target}}>"
+        },
         "trade": {
             "exchangeWhat": "O que você quer dar em troca?",
             "tradeStert": "**{{user.tag}}** começou uma Troca",
@@ -394,7 +409,8 @@
         },
         "thx": {
             "after": "{{userA}} mandou um *\"Valeu\"* para **{{userB}}**!\n{{userB}} foi agradecido **{{totalTHX}}** vezes.",
-            "wipe": "Isso vai remover **todos** os pontos de {{THX}} de {{user}}. **Tem certeza que quer fazer isso?**"
+            "wipe": "Isso vai remover **todos** os pontos de {{THX}} de {{user}}. **Tem certeza que quer fazer isso?**",
+            "noself": "Eu preferiria se você agradecesse a outra pessoa."
         },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",
@@ -428,19 +444,27 @@
             "noRestorerInfo": "Você pode craftar um restaurador com `{{prefix}}craft streakfix`",
             "yesRestorerInfo": "Você tem um restaurador em seu inventário! Tente `{{prefix}}use streakfix` para usá-lo!",
             "dailyBonus": [
-                "Bom dia! Vamos nos divertir muito hoje, que tal? Estas são as suas recompensas pra hoje:"
+                "Bom dia! Vamos nos divertir muito hoje, que tal? Estas são as suas recompensas pra hoje:",
+                "Você chegou! Bem-vindo de volta estes presentes estavam esperando por você:",
+                "Alguém passou da hora de novo? Bem, pegue esses:",
+                "Finalmente! Eu estive muito sozinha. Aqui está um incentivo para ter certeza de que você voltará amanhã:",
+                "Bom dia~ Você dormiu bem? Eu não! Estive esperando para te entregar isso a noite toda:",
+                "Olá, Olá, Olá! Pollux Maid aqui! Entrega para {{username}}:",
+                "Eu queria que alguém me desse prêmios diários por acordar. Acho que posso viver através de você, então por favor aproveite estes para mim:",
+                "Ei, aqui está seus brindes do dia! Não, eles não são da caixa de promoções, pare de perguntar:",
+                "Seu saldo está um pouco triste - vamos melhora-lo juntos! Talvez isso ajude um pouco:",
+                "Ah, é assim que você se parece de manhã? Não responda. Pegue isso e escove o seu cabelo:"
             ],
-            "dailyGet": "{{emoji}} Você recebeu 100 Rubines de bônus diário~",
-            "dailyNope": "{{emoji}} Ei! Você já pegou o seu bônus diário. Ele fica disponível novamente em **{{remaining}}**",
-            "dailyStreak": "{{emoji}} Eba! Você recebeu mais **500 Rubines** por fazer 10 dias seguidos de bônus diário!"
+            "firstDaily": "Ei! Você é novo aqui... certo? Bom, você pode vir todos os dias para alguns brindes!",
+            "dailyNope": "Hm? Parece que você já pegou seu bônus diário. Ele ficará disponível novamente em **{{remaining}}**"
         },
         "toggle": {
             "disabledSer": "O módulo **{{module}}** foi desabilitado **globalmente**",
-            "disabledChn": "O módulo **{{module}}** foi desabilitado no canal <#{{channel}}>",
+            "disabledChn": "O módulo {{module}} foi desabilitado no canal <#{{channel}}>",
             "disabledComSer": "O comando **{{command}}** foi desabilitado **globalmente**",
-            "disabledComChn": "O comando **{{command}}** foi desabilitado no canal <#{{channel}}>",
+            "disabledComChn": "O comando **{{command}}** foi desabilitado em <#{{channel}}>",
             "enabledSer": "O módulo **{{module}}** foi habilitado **globalmente**",
-            "enabledChn": "O módulo **{{module}}** foi habilitado no canal <#{{channel}}>",
+            "enabledChn": "O módulo **{{module}}** foi habilitado em <#{{channel}}>",
             "enabledComSer": "O comando **{{command}}** foi habilitado **globalmente**",
             "enabledComChn": "O comando **{{command}}** foi habilitado no canal <#{{channel}}>"
         },
@@ -525,10 +549,14 @@
         },
         "crafting": {
             "craftingItem": "Criando `{{item_name}}`",
+            "craftedItem": "Criado `{{item_name}}`",
             "noitem": "Não consegui encontrar este item",
-            "noitemu": "Não consegui achar esse item ou algo parecido.",
-            "materialMissing": "Há materiais faltando no seu inventário, eu não posso criar isso.",
+            "noitemlike": "Não consegui achar esse item nem nada parecido.",
+            "gemsMissing": "Criar não é gratuito, não posso fazer isso sem as gemas certas.",
+            "materialMissing": "Há itens faltando no seu inventário, não posso fabricar isso.",
+            "materialAutocraft": "Você tem alguns materiais faltando... quer que eu veja se consigo fazê-los?",
             "materialPresent": "Todos os materiais estão disponíveis no seu inventário, prosseguir com o crafting?",
+            "materialPresentAuto": "Todos os materiais para fabricação automática estão disponíveis, continuar com a fabricação?",
             "didyoumean": "Eu não consegui achar esse item. Por acaso, está falando de algum desses?",
             "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?",
             "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de forja esfriou.",
@@ -603,7 +631,10 @@
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
             "confirmDelete": "Confirmar exclusão?",
             "alotWentOn": "Muita coisa rolou nesse dia...",
-            "alreadyOwnThis": "Ei, você já tem esse item!"
+            "alreadyOwnThis": "Ei, você já tem esse item!",
+            "redactedLink": "LINK CENSURADO",
+            "redactedMention": "@MENÇÃO CENSURADA",
+            "redacted": "CENSURADO"
         },
         "reminders": {
             "currentActive": "Aqui estão seus lembretes ativos:",
@@ -611,7 +642,9 @@
             "maxActive": "Você só poder ter **{{count}}** lembretes ativos de uma vez!",
             "errorWhen": "Pera, me perdi. Não entendi exatamente *quando* você quer que eu te lembre disso.",
             "errorTARDIS": "Com licença viajante temporal, eu não posso voltar ao passado para te lembrar daquilo que você já esqueceu.",
+            "errorTooShort": "Por que você precisa de um lembrete para menos de um minuto? Você não pode usar um temporizador ou algo parecido?",
             "reminderOk": "Ok, te lembrarei de {{appointment}} às **{{time}} (UTC)** {{location}}",
+            "reminderOk_empty": "Ok, te lembrarei às **{{time}} (UTC)** {{location}}",
             "reminderChannel": "em {{channel}}",
             "reminderDMs": "no seu privado"
         },
@@ -749,6 +782,8 @@
             "noGuess": "{{interjectionB}} Parece que ninguém acertou... Mais sorte na próxima!"
         },
         "coinflip": {
+            "playerFlipsCoin": "{{player}} lança uma moeda...",
+            "andLanded": "...e caiu **{{coinFace}}**",
             "coinVictory": "{{interjection}} Você acertou! Você ganhou **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
             "coinDefeat": "{{interjection}} Parece que você se f... digo... mais sorte na próxima vez!"
         },
@@ -906,6 +941,7 @@
         "eventDrop": "E tem mais! Esta é uma **CAIXA DE EVENTO** o que significa que tem **coisas mais legais ainda** dentro!",
         "notThisbox": "Você não tem essa Caixa. Tenta `{{prefix}}lootbox` de novo para ver as opções.",
         "options_new": "{{k_emoji}}Manter | {{r_emoji}}Sortear novamente{{amt}}",
+        "options_nrr": "{{k_emoji}}Manter | {{r_emoji}}~~Sortear novamente~~ {{amt}}",
         "rerollRemain_new": "Você pode sortear **uma** última vez!",
         "rerollRemain_new_plural": "Você pode sortear mais **{{count}}** vezes!",
         "hasDupes": "{{x_frags}} de itens duplicados!",
