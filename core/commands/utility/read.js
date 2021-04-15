@@ -10,7 +10,9 @@ const init = async function (message, cmdPiece = false) {
     i2b(url, async (err, img) => {
       if (err) {
         let nwurl = await PLX.getChannelImg(message);
-        if (nwurl.includes("cdn.discordapp")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
+        console.log({err,nwurl})
+        if (nwurl?.includes(".discordapp.")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
+        console.log({nwurl})
         if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
         return i2b(nwurl, (err, b64) => resolve(vere(b64.base64, message, cmdPiece)));
       }
