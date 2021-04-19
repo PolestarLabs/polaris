@@ -188,7 +188,7 @@ const init = async (msg) => {
   const Target = ((await (PLX.resolveMember(msg.guild, msg.args[0]).catch((e) => null)) || (await PLX.resolveUser(msg.args[0]).catch((e) => console.error(e))))) || msg.member;
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
-  let Target_Database = await DB.users.get({ id: Target.id });
+  let Target_Database = await DB.users.findOne({ id: Target.id }).populate('featuredMarriage').lean();
 
   if (Target_Database) Target_Database.type = "udata";
   const PFLD = Target_Database.switches?.profiled || false;
@@ -196,6 +196,7 @@ const init = async (msg) => {
   // Strictly accepts UDBData and DiscordUser/DiscordMember
   /** @type {any} */
   const USERPROFILE = new UserProfileModel(Target_Database, Target);
+  const preprocessedParams = Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData, USERPROFILE.commends]);
 
   console.log({ USERPROFILE });
 
@@ -300,7 +301,7 @@ const init = async (msg) => {
 
     txt_type = "RANKS";
 
-    const [, gRank] = await Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData, USERPROFILE.commends]);
+    const [, gRank] = await preprocessedParams;
 
     
     USERPROFILE.rank = gRank + 1;
