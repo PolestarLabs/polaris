@@ -18,7 +18,7 @@ const init = async (msg, args) => {
     return $t("responses.marry.cantMarryPollux", P);
   }
 
-  const [userData, Rings] = await Promise.all([DB.users.getFull({ id: msg.author.id }), DB.items.find({ subtype: "ring" })]);
+  const [userData, Rings] = await Promise.all([DB.users.getFull({ id: msg.author.id }), DB.items.find({ series: "ring" })]);
 
   const RING = determineRing(args[0], Rings) || determineRing(args[1], Rings);
   if (!RING) return _emoji("nope") + V.needRing;
@@ -216,7 +216,7 @@ async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, up
   P.userB = Target.nick || Target.user.username;
 
   if (!(userData?.id === msg.author.id && RING && mrgPresent)) {
-    [userData, Rings] = await Promise.all([DB.users.getFull({ id: msg.author.id }), DB.items.find({ subtype: "ring" })]);
+    [userData, Rings] = await Promise.all([DB.users.getFull({ id: msg.author.id }), DB.items.find({ series: "ring" })]);
     RING = determineRing(args[0], Rings) || determineRing(args[1], Rings);
 
     if (!RING) return _emoji("nope") + V.needRing;
