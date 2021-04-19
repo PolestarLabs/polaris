@@ -83,27 +83,28 @@ class UserProfileModel {
   }
 
   get wifeData() {
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
       if (this.wife) return resolve(this.wife);
       if (!this.marriage) return resolve(null);
-      return DB.relationships.findOne({ type: "marriage", _id: this.marriage }).then(async (marriage) => {
-        if (!marriage) return resolve(null);
-        const wifeID = marriage.users.find((usr) => usr !== this.ID);
-        if (!wifeID) return resolve(null);
-        const discordWife = PLX.users.get(wifeID)
-          || (await PLX.resolveUser(wifeID))
-          || { username: "Unknown", avatar: PLX.users.get(this.ID).defaultAvatarURL };
+      let marriage = this.marriage
 
-        this.wife = {
-          ring: marriage.ring,
-          initiative: marriage.initiative === this.ID,
-          lovepoints: marriage.lovepoints || 0,
-          since: moment.utc(marriage.since).fromNow(true),
-          wifeName: discordWife.username,
-          wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
-        };
-        return resolve(this.wife);
-      });
+      const wifeID = marriage.users.find((usr) => usr !== this.ID);
+      if (!wifeID) return resolve(null);
+      const discordWife = PLX.users.get(wifeID)
+        || (await PLX.resolveUser(wifeID))
+        || { username: "Unknown", avatar: PLX.users.get(this.ID).defaultAvatarURL };
+
+      this.wife = {
+        ring: marriage.ring,
+        initiative: marriage.initiative === this.ID,
+        lovepoints: marriage.lovepoints || 0,
+        since: moment.utc(marriage.since).fromNow(true),
+        wifeName: discordWife.username,
+        wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
+      };
+       
+      return resolve(this.wife);
+       
     });
   }
 }
