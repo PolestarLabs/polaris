@@ -131,6 +131,37 @@ const DEFAULT_CMD_OPTS = {
     console.error(err);
     const errorCode = `0x${(Date.now()).toString(16).toUpperCase()}`;
 
+ 
+    Sentry.setTag("module", msg.command.module);    
+    Sentry.setTag("type", "USER-FACING ERROR");
+    Sentry.setContext("Command",{
+      label:  msg.command.label,
+      author: msg.author.id
+    });
+    Sentry.setContext("Permissions", msg.channel.permissionsOf(PLX.user.id) );
+    {
+      const {id,username,discriminator,createdAt,publicFlags,bot} = msg.author;
+      Sentry.setContext("user", {id,username,discriminator,createdAt,publicFlags,bot} );
+    }
+    {
+      const {id,name,topic,nsfw} = msg.channel;
+      Sentry.setContext("Channel", {id,name,topic,nsfw} );
+    }
+    {
+      const {name,id,ownerID,premiumSubscriptionCount,region,systemChannelID,createdAt,description,explicitContentFilter,joinedAt,memberCount} = msg.guild;
+      Sentry.setContext("Guild", {name,id,ownerID,premiumSubscriptionCount,region,systemChannelID,createdAt,description,explicitContentFilter,joinedAt,memberCount} );
+    }
+
+    Sentry.captureException(err,{
+      user:{
+        ip_address: msg.author.id,
+        username: msg.author.username,
+        id: msg.author.id
+      }
+    });
+
+
+
     const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js

@@ -8,7 +8,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
 
-const Sentry          = require("@sentry/node");
+global.Sentry          = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
@@ -23,7 +23,6 @@ require("./core/structures/ReactionCollector.js")(ERIS);
 
 const runtime         = performance.now();
 global.appRoot = path.resolve(__dirname);
-Sentry.init({ dsn: cfg.sentryDSN });
 Promise.config({ longStackTraces: true });
 require("./utils/paths").run();
 
@@ -40,6 +39,14 @@ Eris.Embed.prototype.setColor = function setColor(color) {
 const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID = parseInt(process.env.CLUSTER_ID, 10) || 0;
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
+
+Sentry.init({ 
+  dsn: cfg.sentryDSN,
+  environment: process.env.NODE_ENV,
+  serverName: `Polaris-[C${CLUSTER_ID}]`,
+  autoSessionTracking: false,
+
+});
 
 console.table({
   SHARDS_PER_CLUSTER,
@@ -67,6 +74,7 @@ global.PLX = new Eris.CommandClient(cfg.token, {
   defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
   prefix: ["===", "p!+", "@mention"],
 });
+
 
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
@@ -192,6 +200,8 @@ translateEngineStart();
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 
 PLX.once("ready", async () => {
+  
+
   console.log(" READY ".bold.bgCyan);
   require("./core/subroutines/cronjobs.js").run();
   if (PLX.shard) {
@@ -306,6 +316,7 @@ function postConnect() {
 global.errorsHook = cfg.errorsHook;
 
 process.on("uncaughtException", (err) => {
+  Sentry.captureException(err);
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
   hook.error(`
@@ -319,6 +330,7 @@ ${err.slice(0, 1900)}
 });
 
 process.on("unhandledRejection", (err) => {
+  Sentry.captureException(err);
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
   hook.warn(`
