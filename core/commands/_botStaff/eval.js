@@ -4,8 +4,8 @@ const clean = (text) => {
   const output = (typeof text === "string" ? text
     .replace(/`/g, `\`${String.fromCharCode(8203)}`)
     .replace(/@/g, `@${String.fromCharCode(8203)}`)
-    .replace(PLX.token, "[REDACTED]")
-    .replace("PLX.token", "[REDACTED]")
+    .replace(PLX._token, "[REDACTED]")
+    .replace("PLX._token", "[REDACTED]")
     .replace(DB.native.host, "[REDACTED]")
     .replace(DB.native.name, "[REDACTED]")
     .replace(DB.native.port, "[REDACTED]")
