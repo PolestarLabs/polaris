@@ -26,7 +26,7 @@ module.exports = {
 
   resolveMember: async function resolveMember(guild, user, options) {
     const enforceDB = options?.enforceDB || false;
-    const softMatch = options?.softMatch || false;
+    const softMatch = options?.softMatch || !options?.enforceDB;
     const guildID = guild?.id || guild;
     user = user?.id || user;
 
