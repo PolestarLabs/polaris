@@ -1,5 +1,7 @@
 //STUB Transaction Types Table
 
+const { t } = require("i18next");
+
 // type = "<type>[.specifics]" 
 //or
 // type + options.details[.specifics]  (user_id, loot_id, servr_id etc.)
@@ -352,7 +354,7 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     return DB.users.bulkWrite(toWrite)
       .then(() => DB.audits.collection.insertMany(payloads))
       .then(() => {
-        console.table(payloads); // log transactions
+        payloads.forEach(logTransaction)
         return payloads.length === 1 ? payloads[0] : payloads;
       });
   });
@@ -390,3 +392,24 @@ module.exports = {
   receive,
   transfer,
 };
+
+
+function logTransaction(t){
+  let cleanString = `-------${t.amt}---${t.currency}-${t.type}-${t.from}----${t.to}--${t.transactionId}--`
+  let fullString = `${
+    t.type === "PAYMENT" ? " [-] ".red : " [+] ".green 
+  } ${(" "+t.amt+" ").inverse}${
+    t.currency=="RBN" 
+      ? " RBN ".bgRed
+      : t.currency=="JDE" 
+        ? " JDE ".bgCyan
+        : t.currency=="SPH" 
+          ? " SPH ".bgBlue
+          : t.currency.yellow
+
+  } ${t.type.cyan} ${t.from} ${"->".gray} ${t.to} [${t.transactionId.gray}]`;
+
+  let line = "┌" + cleanString.replace(/./g,"─") + "┐\n"
+  let line2 = "\n└" + cleanString.replace(/./g,"─") + "┘"
+  console.log(line + "│"+ fullString +" │"+ line2);
+}
