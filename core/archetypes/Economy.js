@@ -313,8 +313,9 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
 
     /** @type {number} */
-    let incomeType;
-    if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) && incomeType > -1) {
+    let incomeType = ["INCOME", "PAYMENT"].indexOf(subtype);
+
+    if (incomeType > -1) {
       curr.forEach((CURR, i) => {
         Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), options: progressionOptions });
       });
