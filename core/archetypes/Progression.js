@@ -138,7 +138,7 @@ const init = ()=>{
 
         let [action, scope, condition] = event.split('.');
         console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${
-            typeof opts.setValue == 'number' ? " RESET ".bgRed : `+${value||1}`.bgCyan
+            typeof opts.setValue == 'number' ? " RESET ".bgRed : `[+${value||1}]`.cyan
         }`)
 
         Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
