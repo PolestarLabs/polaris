@@ -77,6 +77,22 @@ class GuessingGame {
     };
   }
 
+  static progressionTrack(){
+    if (!this.message) return;
+    Progression.emit(`play.${this.name}.${this.gamemode}`,{msg: this.message, userID: this.message.author.id});
+  }
+  static progressionScore(score){
+    if (!this.message) return;
+    Progression.emit(`play.${this.name}.score`,{setValue: score, msg: this.message, userID: this.message.author.id});
+  }
+  static progressionStreak(reset){
+    if (this.message) return;
+    if (reset)
+      Progression.emit(`streak.${this.name}.${this.gamemode}`,{setValue: 0, msg: this.message, userID: this.message.author.id, data: this});
+    else
+      Progression.emit(`streak.${this.name}.${this.gamemode}`,{value: 1, msg: this.message, userID: this.message.author.id, data: this});
+  }
+
   async generate() {
     if (this.type === "image") {
       const response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
@@ -94,6 +110,7 @@ class GuessingGame {
   }
 
   async play(msg) {
+    this.message = msg;
     return new Promise( async(resolve) => {
       const v = {
         points: $t(["keywords.points", "points"], { lngs: msg.lang }),
@@ -121,11 +138,17 @@ class GuessingGame {
         const isValid = (m, n) => n.includes(m.content.normalize().toLowerCase());
         const _capitalize = (s) => s.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
 
+        progressionStreak(/*RESET*/true); // NOTE Reset Streak Counters
+
         if (this.gamemode === "normal") {
           Collector.on("message", (m) => {
             if (isValid(m, names)) {
               const res = capitalize(names[0]);
               msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
+
+              progressionTrack();
+              progressionStreak();
+
               Collector.stop();
             }
           });
@@ -133,6 +156,7 @@ class GuessingGame {
         }
 
         if (this.gamemode === "endless") {
+
           this.round = 1;
           let active = true;
           const activity = setInterval(() => {
@@ -163,6 +187,9 @@ class GuessingGame {
                 inline: !0,
               };
 
+              progressionTrack();
+              progressionStreak();
+
               await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
             } else if (this.solo && m.content?.toLowerCase() === "quit") {
               Collector.end("retire");
@@ -190,6 +217,9 @@ class GuessingGame {
             });
 
             clearInterval(activity);
+            
+            progressionScore(~~points)
+
             resolve({
               rounds: this.round,
               time: totalTime,
@@ -200,6 +230,7 @@ class GuessingGame {
         }
 
         if (this.gamemode === "time") {
+
           this.round = 1;
           let points = 0;
 
@@ -218,6 +249,9 @@ class GuessingGame {
                 value: `${~~points} ${v.points}`,
                 inline: !0,
               };
+
+              progressionTrack();
+              progressionStreak();
 
               await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
             } else if (m.content?.toLowerCase() === "skip") {
@@ -245,6 +279,9 @@ class GuessingGame {
 
               },
             });
+
+            progressionScore(~~points)
+
             resolve({
               flags: this.round,
               score: ~~points,
@@ -258,3 +295,5 @@ class GuessingGame {
 }
 
 module.exports = GuessingGame;
+
+
