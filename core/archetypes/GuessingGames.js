@@ -77,20 +77,20 @@ class GuessingGame {
     };
   }
 
-  static progressionTrack(){
-    if (!this.message) return;
-    Progression.emit(`play.${this.name}.${this.gamemode}`,{msg: this.message, userID: this.message.author.id});
+  progressionTrack(message){
+    if (!message) return;
+    Progression.emit(`play.${this.name}.${this.gamemode}`,{msg: message, userID: message.author.id});
   }
-  static progressionScore(score){
-    if (!this.message) return;
-    Progression.emit(`play.${this.name}.score`,{setValue: score, msg: this.message, userID: this.message.author.id});
+  progressionScore(message,score){
+    if (!message) return;
+    Progression.emit(`play.${this.name}.score`,{valueSet: score, msg: message, userID: message.author.id});
   }
-  static progressionStreak(reset){
-    if (this.message) return;
+  progressionStreak(message,reset){
+    if (!message) return;
     if (reset)
-      Progression.emit(`streak.${this.name}.${this.gamemode}`,{setValue: 0, msg: this.message, userID: this.message.author.id, data: this});
+      Progression.emit(`streak.${this.name}.${this.gamemode}`,{valueSet: 0, msg: message, userID: message.author.id, data: this});
     else
-      Progression.emit(`streak.${this.name}.${this.gamemode}`,{value: 1, msg: this.message, userID: this.message.author.id, data: this});
+      Progression.emit(`streak.${this.name}.${this.gamemode}`,{value: 1, msg: message, userID: message.author.id, data: this});
   }
 
   async generate() {
@@ -110,7 +110,7 @@ class GuessingGame {
   }
 
   async play(msg) {
-    this.message = msg;
+  
     return new Promise( async(resolve) => {
       const v = {
         points: $t(["keywords.points", "points"], { lngs: msg.lang }),
@@ -131,28 +131,27 @@ class GuessingGame {
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
       .then( ()=> {
         this.start = Date.now();
-        console.log(this.gamemode);
 
         const Collector = msg.channel.createMessageCollector((m) => (this.solo ? m.author.id === msg.author.id : true), { time: this.time });
 
         const isValid = (m, n) => n.includes(m.content.normalize().toLowerCase());
         const _capitalize = (s) => s.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
 
-        progressionStreak(/*RESET*/true); // NOTE Reset Streak Counters
+        
 
         if (this.gamemode === "normal") {
-          Collector.on("message", (m) => {
+          Collector.on("message", (m) => {            
             if (isValid(m, names)) {
               const res = capitalize(names[0]);
               msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
 
-              progressionTrack();
-              progressionStreak();
+              this.progressionTrack(m);
+              this.progressionStreak(m);
 
               Collector.stop();
             }
           });
-          Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) : console.log({ reason })));
+          Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) && this.progressionStreak(m, /*RESET*/ true) : console.log({ reason })));
         }
 
         if (this.gamemode === "endless") {
@@ -187,8 +186,8 @@ class GuessingGame {
                 inline: !0,
               };
 
-              progressionTrack();
-              progressionStreak();
+              this.progressionTrack(m);
+              this.progressionStreak(m);
 
               await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
             } else if (this.solo && m.content?.toLowerCase() === "quit") {
@@ -217,8 +216,7 @@ class GuessingGame {
             });
 
             clearInterval(activity);
-            
-            progressionScore(~~points)
+            setTimeout( () => this.progressionStreak(m, /*RESET*/ true), 5000 );
 
             resolve({
               rounds: this.round,
@@ -250,8 +248,8 @@ class GuessingGame {
                 inline: !0,
               };
 
-              progressionTrack();
-              progressionStreak();
+              this.progressionTrack(m);
+              this.progressionStreak(m);
 
               await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
             } else if (m.content?.toLowerCase() === "skip") {
@@ -279,8 +277,6 @@ class GuessingGame {
 
               },
             });
-
-            progressionScore(~~points)
 
             resolve({
               flags: this.round,
