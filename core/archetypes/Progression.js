@@ -133,7 +133,14 @@ const init = ()=>{
     global.Progression = new ProgressionManager();
 
     Progression.on("*", async (event,opts)=>{
+
         const {value,msg,userID} = opts;
+
+        let [action, scope, condition] = event.split('.');
+        console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${
+            typeof opts.setValue == 'number' ? " RESET ".bgRed : `+${value||1}`.bgCyan
+        }`)
+
         Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
         if(!msg) return;
         if(!value?.content && !msg?.content) return;
@@ -141,6 +148,7 @@ const init = ()=>{
         await Progression.checkStatus(msg.author.id,msg);
 
         //quests.
+ 
 
     });
     
