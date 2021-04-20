@@ -78,12 +78,7 @@ const init = async (msg) => {
     }else{
       Progression.emit("streak.betflip.win",{valueSet: 0, msg, userID:msg.author.id});
     }
-    if(win){
-      Progression.emit("play.betflip.win",{msg, userID:msg.author.id});
-      Progression.emit("streak.betflip.win",{value: 1, msg, userID:msg.author.id});
-    }else{
-      Progression.emit("streak.betflip.win",{valueSet: 0, msg, userID:msg.author.id});
-    }
+
 
   });
 };
