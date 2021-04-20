@@ -10,7 +10,7 @@ class ProgressionManager extends EventEmitter {
     }
     emit(event, ...args){
         const [action,type,condition] = event.split('.');
-        hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([...args])}\`\`\``)
+        hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([args[0].userID,args[0].value,args[0].setValue])}\`\`\``)
         super.emit('*',event,...args); // Catch-all
         super.emit(action,event, ...args); // emit top-level
         if (type) super.emit(`${action}.${type}`, event, ...args); // emit specific
@@ -138,7 +138,7 @@ const init = ()=>{
 
         let [action, scope, condition] = event.split('.');
         console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${
-            typeof opts.setValue == 'number' ? " RESET ".bgRed : `[+${value||1}]`.cyan
+            typeof opts.valueSet == 'number' ? " RESET ".bgRed : `[+${value||1}]`.cyan
         }`)
 
         Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
