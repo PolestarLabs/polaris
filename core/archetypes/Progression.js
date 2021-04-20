@@ -151,6 +151,8 @@ const init = ()=>{
         await Promise.all( userQuests.map(async quest => {        
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='craft') return;
+
+            console.log(`craft ${type.red} ${item[type]} == ${condition?.blue} ? ${((item[type] === condition)+"").inverse}`);
             if(item[type] === condition){
                 await Progression.updateProgress(userID,quest._id,amount);
             }
