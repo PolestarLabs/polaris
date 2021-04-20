@@ -50,12 +50,14 @@ class AchievementsManager extends EventEmitter {
   check(userData, awardRightAway,opts = {}) {
     const {debug,filter} = opts;
     return new Promise( async (resolve, reject) => {
-      console.log(`Achievements Check [${userData?.id}]`.gray);
+      
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.get(userData.id || userData);
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
       const user = userData;
       const statistics = (await DB.control.get(userData.id)).data.statistics;
 
+      console.log(`Achievements Check [${userData?.id||userData}]`.gray);
+      
       const res = ACHIEVEMENTS.map((achiev) => {
 
         const revealed = userData.modules.level >= achiev.reveal_level
