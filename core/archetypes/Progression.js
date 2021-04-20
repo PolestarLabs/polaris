@@ -11,7 +11,6 @@ class ProgressionManager extends EventEmitter {
     emit(event, ...args){
         const [action,type,condition] = event.split('.');
         hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([...args])}\`\`\``)
-        console.log({action,type,condition})
         super.emit('*',event,...args); // Catch-all
         super.emit(action,event, ...args); // emit top-level
         if (type) super.emit(`${action}.${type}`, event, ...args); // emit specific
@@ -26,13 +25,13 @@ class ProgressionManager extends EventEmitter {
         }
         return quests;
     }
-    async updateProgress(userID,questUniqueID,value){
+    async updateProgress(userID,questUniqueID,value=1){
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
         const userData = await DB.users.get(userID);
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
-    async overrideProgress(userID,questUniqueID,value){
+    async overrideProgress(userID,questUniqueID,value=0){
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
         const userData = await DB.users.get(userID);
         this.userQuestsCache.set(userID,userData.quests);
@@ -135,7 +134,7 @@ const init = ()=>{
 
     Progression.on("*", async (event,opts)=>{
         const {value,msg,userID} = opts;
-        Progression.updateQuestTracker(userID || msg?.author?.id,event,value,opts);
+        Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
         if(!msg) return;
         if(!value?.content && !msg?.content) return;
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
@@ -160,14 +159,17 @@ const init = ()=>{
         await Progression.checkStatus(msg.author.id,msg);    
     });
     
-    /*
+    
     
     Progression.on("spend", async (event,opts)=>{
-        let {currency,value,msg,userID} = opts;
-        userID = msg?.author?.id || userID;
+        let {value,msg,userID} = opts;
+        let [,currency] = event.split('.');
+
+        userID ??= msg?.author?.id;
         const userQuests = await Progression.getUserQuests(userID);
-        await Promise.all( userQuests.map(async quest => {        
+        await Promise.all( userQuests.map(async quest => {
             const [action,type,condition] = quest.tracker.split('.');
+            if (condition) return;
             if(action!=='spend') return;
             if(currency === type){
                 await Progression.updateProgress( userID,quest._id,value);
@@ -176,13 +178,11 @@ const init = ()=>{
         if(!msg) return;
         await Progression.checkStatus(userID,msg);    
     })
-*/
+
 
 
     Progression.on("QUEST_COMPLETED",(event,quest,opts)=>{
         const {msg,userQuests} = opts;
-        console.log({event,quest,opts})
-
         
         //award rewards;
         msg.channel.send("Quest completed msg `"+quest.id+"`")
