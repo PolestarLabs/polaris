@@ -336,7 +336,7 @@ process.on("unhandledRejection", (err) => {
   hook.warn(`
   **Unhandled Rejection**
   \`\`\`js
-${err.stack.slice(0, 1900)}
+${err?.stack?.slice(0, 1900)}
   \`\`\`
   `, { hook: cfg.errorsHook });
   // if(!PLX.beta) PLX.softKill();
