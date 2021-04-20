@@ -315,9 +315,9 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
     } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
 
     /** @type {number} */
-    let incomeType = ["INCOME", "PAYMENT"].indexOf(subtype);
-
-    if (incomeType > -1) {
+    
+    let incomeType;
+    if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) > -1) {
       curr.forEach((CURR, i) => {
         Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), options: progressionOptions });
       });
@@ -407,7 +407,7 @@ function logTransaction(t){
           ? " SPH ".bgBlue
           : t.currency.yellow
 
-  } ${t.type.cyan} ${t.from} ${"->".gray} ${t.to} [${t.transactionId.gray}]`;
+  } ${t.type.cyan} ${t.from} ${"->".gray} ${t.to[t.to==PLX.user.id?'magenta':'white']} [${t.transactionId.gray}]`;
 
   let line = "┌" + cleanString.replace(/./g,"─") + "┐\n"
   let line2 = "\n└" + cleanString.replace(/./g,"─") + "┘"
