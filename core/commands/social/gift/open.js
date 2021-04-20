@@ -50,6 +50,7 @@ const init = async (msg, args) => {
   if (gift.type != "item" && gift.type != "gems") {
     if (!userData.modules[giftMetadata.inv].includes(gift.item)) {
       await DB.gifts.remove({ _id: gift._id });
+      Progression.emit("action.gift.open",{msg,value:1,userID:msg.author.id});
       await DB.users.set(msg.author.id, { $addToSet: { [`modules.${giftMetadata.inv}`]: gift.item } });
 
       return {

@@ -72,6 +72,7 @@ const init = async (msg, args) => {
   if (responses[0]) responses[0].delete();
 
   await DB.users.set(msg.author.id, destroystring);
+  Progression.emit("action.gift.pack",{msg,value:1,userID:msg.author.id});
   await DB.gifts.set(Date.now(), giftItem);
   msg.addReaction(_emoji("yep").reaction);
 };
