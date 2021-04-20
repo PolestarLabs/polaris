@@ -47,16 +47,15 @@ const init = async function (msg) {
       : $t("responses.forFun.kissedNone", P)}`;
   if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
-  if (Target) {
-    var USERDATA = await DB.users.getFull({ id: msg.author.id });
-    var marriedtarget = USERDATA.featuredMarriage ? await DB.relationships.get({ _id: USERDATA.featuredMarriage }) : null;
-  }
+  const userData = Target ? await DB.users.findOne({ id: msg.author.id }).populate('featuredMarriage') : null;
+  const marriedtarget = userData?.featuredMarriage;
 
-  if (marriedtarget) {
+  if (marriedtarget && marriedtarget.users.includes(Target?.id) &&  marriedtarget.users.includes(msg.author.id) ) {
+    Progression.emit("command.kiss.isWife",{msg});
     const noise = randomize(0, 50);
     let pris = randomize(1, 0);
     pris === 1 ? (pris = randomize(1, 0)) : false;
-    variation = USERDATA.lovepoints < 50 + noise ? "couple" : "wet";
+    variation = userData.lovepoints < 50 + noise ? "couple" : "wet";
     if (randomize(0, 5) === 1) variation = "cute";
     await DB.relationships.set({ _id: marriedtarget._id }, { $inc: { lovepoints: pris } });
   }
