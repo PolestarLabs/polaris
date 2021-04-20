@@ -126,6 +126,7 @@ const init = async (msg, args) => {
       if (choice?.emoji.name === "🔁") {
         message.delete();
         currentRoll++;
+        Progression.emit("lootbox.reroll",{msg,value:1,userID:msg.author.id});
         return process();
       }
 
@@ -135,8 +136,12 @@ const init = async (msg, args) => {
         USERDATA.addItem("cosmo_fragment", P.cosmos),
         ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
+        // FIXME [epic=flicky] Boosterpacks not being added
         Promise.all(lootbox.content.map(async (item) => await getPrize(item, USERDATA))),
       ]);
+
+      Progression.emit("lootbox.open",{msg,value:1,userID:msg.author.id});
+
       LootingUsers.delete(msg.author.id);
 
       firstRoll[0].embed.description = `
