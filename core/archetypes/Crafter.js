@@ -5,6 +5,7 @@ const { generatePayload } = require("./Economy");
 
 const allItems = new Map();
 const allItemsName = new Map();
+const allItemsCode = new Map();
 const craftedItems = new Map();
 
 function init() { // @ts-ignore
@@ -13,6 +14,7 @@ function init() { // @ts-ignore
       // Add all items by ID & name iff different.
       allItems.set(item.id, item);
       if (item.id !== item.name) allItemsName.set(item.name, item.id);
+      if (item.id !== item.code) allItemsCode.set(item.code, item.id);
 
       // Also add item to craftedItems if craftable.
       if (item.crafted) craftedItems.set(item.id, item);
@@ -438,7 +440,8 @@ class Crafter extends EventEmitter {
      * @memberof Crafter
      */
     static getItem(name) {
-      return (allItems.get(name) || allItems.get(allItemsName.get(name)) || null);
+      console.log(allItemsCode.get(name),'item by code'.red)
+      return (allItems.get(name) || allItems.get(allItemsCode.get(name)) || allItems.get(allItemsName.get(name)) || null);
     }
 
     /**
