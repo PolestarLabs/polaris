@@ -395,9 +395,10 @@ module.exports = {
 
 
 function logTransaction(t){
+  //if()
   let cleanString = `-------${t.amt}---${t.currency}-${t.type}-${t.from}----${t.to}--${t.transactionId}--`
   let fullString = `${
-    t.type === "PAYMENT" ? " [-] ".red : " [+] ".green 
+    t.subtype === "PAYMENT" ? " [-] ".red : t.subtype === "TRANSFER" ?  " [>] ".yellow : " [+] ".green 
   } ${(" "+t.amt+" ").inverse}${
     t.currency=="RBN" 
       ? " RBN ".bgRed
@@ -407,7 +408,7 @@ function logTransaction(t){
           ? " SPH ".bgBlue
           : t.currency.yellow
 
-  } ${t.type.cyan} ${t.from} ${"->".gray} ${t.to[t.to==PLX.user.id?'magenta':'white']} [${t.transactionId.gray}]`;
+  } ${t.type.cyan} ${t.from[t.from==PLX.user.id?'white':'magenta']} ${"->".gray} ${t.to[t.to==PLX.user.id?'white':'magenta']} [${t.transactionId.gray}]`;
 
   let line = "┌" + cleanString.replace(/./g,"─") + "┐\n"
   let line2 = "\n└" + cleanString.replace(/./g,"─") + "┘"
