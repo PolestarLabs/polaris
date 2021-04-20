@@ -27,7 +27,7 @@ const init = async (msg, args) => {
     let amount = 1;
     args.some((arg, i) => !isNaN(Number(arg)) && (amount = Math.abs(~~args.splice(i, 1)) || 1))
     if (!args) return;
-    const toBeCrafted = args.join(" ").toLowerCase();
+    const toBeCrafted = args.join(" ") //.toLowerCase();
 
     // If args === item.id
     let craftedItem = Crafter.getItem(toBeCrafted);
@@ -139,7 +139,7 @@ const init = async (msg, args) => {
               crafter.confirm()
                 .then(() => done())
                 .catch(e => endNo(e, m));
-            });
+            }).catch((e) => endNo(e, m));
           }).catch((e) => endNo(e, m));
         });
       }
