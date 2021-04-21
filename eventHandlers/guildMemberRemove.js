@@ -43,7 +43,9 @@ module.exports = async (guild, member) => {
     const url = `${paths.GENERATORS}/userio/out/${member.id}/${fwellSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
 
     resolveFile(url).then(async (buffer) => {
-      PLX.getChannel(fwellChannel).send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {
+      const fwellChannelObj = PLX.getChannel(fwellChannel);
+      if ( !fwellChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !fwellChannelObj.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+      fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
