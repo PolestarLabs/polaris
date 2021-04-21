@@ -55,10 +55,10 @@ declare class WebhookDigester {
   executed: string[];
   constructor(client: Client);
   execute(embed: EmbedOptions, options?: WHDOptions): void;
-  info(message: string, options: WHDOptions): void;
-  warn(message: string, options: WHDOptions): void;
-  error(message: string, options: WHDOptions): void;
-  ok(message: string, options: WHDOptions): void;
+  info(message: string, options?: WHDOptions): void;
+  warn(message: string, options?: WHDOptions): void;
+  error(message: string, options?: WHDOptions): void;
+  ok(message: string, options?: WHDOptions): void;
 }
 
 declare class AchievementsManager extends EventEmitter {
