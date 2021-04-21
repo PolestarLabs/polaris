@@ -318,6 +318,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   const actions = [lootAction, boosterAction, itemAction, fragAction, tokenAction];
   // @ts-ignore
   await daily.awardPrizes(ECO, actions);
+  await wait(1);
   P.username = msg.author.username;
   await msg.channel.send({
     embed: {
@@ -328,7 +329,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       color: 0x03dffc,
       image: { url: "attachment://daily.png" },
     },
-  }, { file: dailyCard.toBuffer("image/png"), name: "daily.png" }).then(() => {
+  }, { file: await dailyCard.toBuffer("image/png"), name: "daily.png" }).then(() => {
     if (postmortem) {
       msg.channel.send(postmortem);
     }
