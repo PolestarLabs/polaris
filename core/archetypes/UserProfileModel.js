@@ -88,7 +88,7 @@ class UserProfileModel {
       if (!this.marriage) return resolve(null);
       let marriage = this.marriage
 
-      const wifeID = marriage.users.find((usr) => usr !== this.ID);
+      const wifeID = marriage?.users?.find((usr) => usr !== this.ID);
       if (!wifeID) return resolve(null);
       const discordWife = PLX.users.get(wifeID)
         || (await PLX.resolveUser(wifeID))
