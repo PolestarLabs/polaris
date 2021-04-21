@@ -1,17 +1,21 @@
 const { TimedUsage } = require("@polestar/timed-usage");
-const { ProgressionManager } = require("../../archetypes/Progression");
 const moment = require("moment");
 //const Progression = require("../../archetypes/Progression.js");
 
 const INTERVAL = 8 * 60 * 60e3 // 8 Hours
+const FORFEIT  = 6 * 60 * 60e3 // 8 Hours
 
 
 const init = async function (msg){
 
+    moment.locale(msg.lang[0])
+
     const newErrand = await new TimedUsage( "errands", { day: INTERVAL } ).loadUser(msg.author);
+    const newForfeit = await new TimedUsage( "errandForfeit", { day: FORFEIT } ).loadUser(msg.author);
     let userErrands = await Progression.getUserQuests(msg.author.id);
     let completed = userErrands.filter(e=> e.completed);
 
+    
     console.log(userErrands.length,"availableErrands") // 3
     console.log(completed.length,"completed") // 1 
     console.log(  newErrand.available ," newErrand.available ")// false
@@ -41,22 +45,39 @@ const init = async function (msg){
  
     const embed = {};    
     
-    embed.description = "**Errands Pool**"
-    embed.fields = userErrands.map( errand => {
+    embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`
+    const parseQuest = ( errand ) => {
         const thisErrand = errandsData.find(e=>e.id===errand.id);
         const progress = ((Math.min(errand.progress , errand.target || 1)) / (errand.target || 1) );
         return ({
-        name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ thisErrand.INSTRUCTION ||"UNK" }**`,
-        value: `${_emoji('__')} Progress: ${
+            inline: 0,
+            name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ thisErrand.INSTRUCTION ||"UNK" }**`,
+            value: `${_emoji('__')} ${
                 "`"+ [...Array(10).keys()].map((b)=> b > ~~(progress*10) ? ' ' : '❚'  ).join('') +"`"
-           } ${ progress * 100 }% \n${_emoji('__')} Rewards: ${  
-                [
-                   (thisErrand.rewards?.exp ? `${_emoji('EXP')}**${thisErrand.rewards.exp}**  ` : ""),
-                   (thisErrand.rewards?.RBN ? `${_emoji('RBN')}**${thisErrand.rewards.RBN}**  ` : ""),
-                   (thisErrand.rewards?.SPH ? `${_emoji('SPH')}**${thisErrand.rewards.SPH}**  ` : "") 
-                ].filter(e=>!!e).join('\u2002•\u2002')
-           }`
-    })});
+            } ${ progress * 100 }% \n${_emoji('__')} Rewards: ${  
+                    [
+                    (thisErrand.rewards?.exp ? `${_emoji('EXP')}**${thisErrand.rewards.exp}**  ` : ""),
+                    (thisErrand.rewards?.RBN ? `${_emoji('RBN')}**${thisErrand.rewards.RBN}**  ` : ""),
+                    (thisErrand.rewards?.SPH ? `${_emoji('SPH')}**${thisErrand.rewards.SPH}**  ` : "") 
+                    ].filter(e=>!!e).join('\u2002•\u2002')
+            }`
+        })
+    };
+
+    embed.fields = [];
+    embed.fields.push({name:'\u200b',value:'Ongoing',inline:false});
+    embed.fields.push( ...userErrands.filter(e=>e.progress>0 && !e.completed).map(parseQuest) );
+
+    embed.fields.push({name:'\u200b',value:'Not Started',inline:false});
+    embed.fields.push( ...userErrands.filter(e=>e.progress==0).map(parseQuest) );
+
+    embed.fields.push({name:'\u200b',value:'Completed',inline:false});
+    embed.fields.push( ...userErrands.filter(e=>e.completed).map(parseQuest) );
+    console.log({newForfeit})
+    embed.fields.push({name:'\u200b',value:`
+\`${msg.prefix}errands forfeit\` Abandon one ongoing Errand ${newForfeit.available?`${_emoji('ONL')} **Available**`:`${_emoji('AWY')}${moment.utc(newForfeit.availableAt).fromNow(true)}`}
+    `,inline:false});
+
 
     //TRANSLATE[epic=translations] Errand Cooldown
     embed.footer =  {
