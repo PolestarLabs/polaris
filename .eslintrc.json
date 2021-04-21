@@ -45,17 +45,19 @@
     },
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
-        "ecmaVersion": 2018
+        "ecmaVersion": 2020
     },
     "plugins": ["@typescript-eslint"],
     "rules": {
-        "quotes": ["error", "double"],
+        "quotes": ["warn", "double"],
         "no-param-reassign": "off",
         "global-require": "off",
         "import/no-dynamic-require": "off",
+        "linebreak-style": "warn",
+        "disable-next-line": "off",
         "no-console": "off",
         "no-underscore-dangle": "off",
-        "no-multi-spaces": ["error", { "exceptions": { "VariableDeclarator": true, "Property": true } }],
+        "no-multi-spaces": ["warning", { "exceptions": { "VariableDeclarator": true, "Property": true } }],
         "max-len": ["error", 150],
         "no-bitwise": "off",
         "class-methods-use-this": "off",
@@ -65,7 +67,7 @@
         "no-cond-assign": ["error", "except-parens"],
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
-        "prefer-const": ["error", { "destructuring": "all" }],
+        "prefer-const": ["warning", { "destructuring": "all" }],
         "no-continue": "off",
         "no-empty": ["error", { "allowEmptyCatch": true }],
         "no-multi-assign": "off",
