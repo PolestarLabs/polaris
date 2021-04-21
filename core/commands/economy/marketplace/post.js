@@ -175,18 +175,22 @@ const init = async (msg, args) => {
       payload.pollux = MARKET_TOKEN;
       console.log('pre axios')
       console.log(`${paths.DASH}/api/marketplace`)
-      await axios.post(`${paths.DASH}/api/marketplace`, payload).then((res) => {
-        console.log('axios'.green,res.ok)
-        if (res.data.status == "OK" || res.data.status == 200) {
-          console.log(res.data)
-          let entryId = res.data.payload?.id ||  res.data.payload.PAYLOAD.id;
-          msg.channel.send(`${_emoji("yep")} **Done!** You can find your entry here:\n`
-          + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
-        } else {
-          console.log('cancel axios')
-          cancellation();
-        }
-      });
+      let submitMessage = await msg.channel.send(`${_emoji('loading')} Submitting Listing...`);
+      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err=> console.log(error) && null);
+
+      console.log('axios'.green,listingPOSTRequest.ok)
+
+      if (listingPOSTRequest && listingPOSTRequest.data?.status == "OK" || listingPOSTRequest.data?.status == 200) {
+        console.log(listingPOSTRequest.data)
+        let entryId = listingPOSTRequest.data.payload?.id ||  listingPOSTRequest.data.payload.PAYLOAD.id;
+        submitMessage.edit(`${_emoji("yep")} **Done!** You can find your entry here:\n`
+        + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
+      } else {
+        console.log('cancel axios');
+        submitMessage.edit(`${_emoji('nope')} Error! `);
+        return cancellation();
+      }
+
       console.log('wonk axios')
     } else {
       console.log('invalid')
