@@ -93,8 +93,7 @@ class ProgressionManager extends EventEmitter {
         let userQuests = await this.getUserQuests(userID);
         if(!userQuests) return [];
 
-        function processQuest(parent,q){
-            console.log({q},"process".blue)
+        function processQuest(parent,q){           
             if(typeof options?.valueSet == 'number'){
                 parent.overrideProgress(userID, q._id, options.valueSet);
             }else{
@@ -103,13 +102,6 @@ class ProgressionManager extends EventEmitter {
         }
 
         userQuests.forEach(quest => {
-            console.log("------------")
-            console.log("QUEST TRACKER".red, quest.tracker)
-            console.log("TRACKER".blue, tracker)
-            console.log("WAWA".yellow,  tracker.split('.').slice(0,2).join('.') )
-
-
-
             if(quest.tracker === tracker) {
                 processQuest(this,quest);
             }else if (quest.tracker === tracker.split('.').slice(0,2).join('.') ) {
