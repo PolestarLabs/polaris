@@ -1,8 +1,6 @@
 const EventEmitter = require("events");
 let {ACHIEVEMENTS} = require("./Achievements.js");
 
-
-
 class ProgressionManager extends EventEmitter {
     constructor(){
         super();
@@ -19,7 +17,7 @@ class ProgressionManager extends EventEmitter {
     async getUserQuests(userID){
         let quests = this.userQuestsCache.get(userID);
         if (!quests){
-            const userData = await DB.users.get(userID);
+            const userData = await DB.users.findOne({id:userID}).noCache().lean();
             quests = userData.quests || [];
             this.userQuestsCache.set(userID,quests);
         }
@@ -27,13 +25,13 @@ class ProgressionManager extends EventEmitter {
     }
     async updateProgress(userID,questUniqueID,value=1){
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
-        const userData = await DB.users.get(userID);
+        const userData = await DB.users.findOne({id:userID}).noCache();
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
     async overrideProgress(userID,questUniqueID,value=0){
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
-        const userData = await DB.users.get(userID);
+        const userData = await DB.users.findOne({id:userID}).noCache();
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
@@ -46,15 +44,11 @@ class ProgressionManager extends EventEmitter {
         if(!userQuests) return [];
         userQuests.forEach(quest => {
             //DEBUG
-            if(msg.content.includes('-dbg')){
-    
+            if(msg.content.includes('-dbg')){    
                 msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
                 //msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
             }
             if(quest.progress >= quest.target) {
-
-
-
 
                 if(msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
                 quest.completed = true; 
@@ -67,7 +61,7 @@ class ProgressionManager extends EventEmitter {
         let quest = await DB.quests.get(questID);
         let newQuest = {
             id: quest.id,
-            target: quest.target,
+            target: quest.target || 1,
             tracker: `${quest.action}.${quest.type}${quest.condition?"."+quest.condition:""}`,
             progress: 0,
             completed: false,
@@ -80,7 +74,7 @@ class ProgressionManager extends EventEmitter {
     }
     async remove(questID,userID){
         await DB.users.set(userID,{ $pull:{ "quests":{id:questID} } });
-        const userData = await DB.users.get(userID);
+        const userData = await DB.users.findOne({id:userID}).noCache().lean();
         this.userQuestsCache.set(userID,userData.quests);
     }
     async assignArbitrary(newQuest,userID){
@@ -92,20 +86,36 @@ class ProgressionManager extends EventEmitter {
     }
 
     async available(userID){
-        const userData = await DB.users.get(userID);
+        const userData = await DB.users.findOne({id:userID}).noCache().lean();
         return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
     }
     async updateQuestTracker(userID,tracker,value=1,options){
         let userQuests = await this.getUserQuests(userID);
         if(!userQuests) return [];
 
+        function processQuest(parent,q){
+            console.log({q},"process".blue)
+            if(typeof options?.valueSet == 'number'){
+                parent.overrideProgress(userID, q._id, options.valueSet);
+            }else{
+                parent.updateProgress(userID, q._id, value);
+            }
+        }
+
         userQuests.forEach(quest => {
+            console.log("------------")
+            console.log("QUEST TRACKER".red, quest.tracker)
+            console.log("TRACKER".blue, tracker)
+            console.log("WAWA".yellow,  tracker.split('.').slice(0,2).join('.') )
+
+
+
             if(quest.tracker === tracker) {
-                if(typeof options?.valueSet == 'number'){
-                    this.overrideProgress(userID,quest._id,options.valueSet);
-                }else{
-                    this.updateProgress(userID,quest._id,value);
-                }
+                processQuest(this,quest);
+            }else if (quest.tracker === tracker.split('.').slice(0,2).join('.') ) {
+                processQuest(this,quest);            
+            }else if (quest.tracker === tracker.split('.').shift() ) {
+                processQuest(this,quest);
             }
         });
     }
@@ -172,6 +182,7 @@ const init = ()=>{
     
     
     Progression.on("spend", async (event,opts)=>{
+        return;
         let {value,msg,userID} = opts;
         let [,currency] = event.split('.');
 
