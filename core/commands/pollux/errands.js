@@ -27,34 +27,36 @@ const init = async function (msg){
         if(userErrands.length - completed.length < 5 ){
             await Progression.assign(availableErrands[0].id,msg.author.id);
             await newErrand.process();
-            msg.channel.send(`⭐ **New Errand Available:** ${availableErrands[0].INSTRUCTION || "UNK"}`);
+            msg.channel.send(`⭐ **New Errand Available:** \`#${availableErrands[0].id}\` ${availableErrands[0].INSTRUCTION || "UNK"}`);
         }
 
        
     }
 
    
-    let errandsData = await DB.quests.find({id: {$in: userErrands.map(e=>e.id)} }).lean();
+    let errandsData = await DB.quests.find({id: {$in: userErrands.map(e=>e.id)} }).noCache().lean();
+
 
  
-    
-    console.log(
-       userErrands.map( errand => errandsData.find(e=>e.id===errand.id).INSTRUCTION  ) 
-   )
  
-    const embed = {};
+    const embed = {};    
     
-    embed.description = `${
-         0
-    }`;
-    embed.fields = userErrands.map( errand => ({
-        name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ errandsData.find(e=>e.id===errand.id)?.INSTRUCTION ||"UNK" }**`,
-        value: `${_emoji('__')} Progress: ${  
-            ((Math.min(errand.progress,errand.target))/errand.target ) * 100 
-           }%\n${_emoji('__')} Rewards: ${  
-             "---"
+    embed.description = "**Errands Pool**"
+    embed.fields = userErrands.map( errand => {
+        const thisErrand = errandsData.find(e=>e.id===errand.id);
+        const progress = ((Math.min(errand.progress , errand.target || 1)) / (errand.target || 1) );
+        return ({
+        name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ thisErrand.INSTRUCTION ||"UNK" }**`,
+        value: `${_emoji('__')} Progress: ${
+                "`"+ [...Array(10).keys()].map((b)=> b > ~~(progress*10) ? ' ' : '❚'  ).join('') +"`"
+           } ${ progress * 100 }% \n${_emoji('__')} Rewards: ${  
+                [
+                   (thisErrand.rewards?.exp ? `${_emoji('EXP')}**${thisErrand.rewards.exp}**  ` : ""),
+                   (thisErrand.rewards?.RBN ? `${_emoji('RBN')}**${thisErrand.rewards.RBN}**  ` : ""),
+                   (thisErrand.rewards?.SPH ? `${_emoji('SPH')}**${thisErrand.rewards.SPH}**  ` : "") 
+                ].filter(e=>!!e).join('\u2002•\u2002')
            }`
-    }));
+    })});
 
     //TRANSLATE[epic=translations] Errand Cooldown
     embed.footer =  {
@@ -64,7 +66,7 @@ const init = async function (msg){
             : `A new errand will be available in ${moment.utc(newErrand.availableAt).fromNow(true)}. You can have 5 active errands at a time`
     }
 
-    return {embed}
+    return {embed,messageReferenceID:msg.id}
 
 }
 module.exports={
