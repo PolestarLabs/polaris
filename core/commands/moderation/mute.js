@@ -18,7 +18,9 @@ const init = async function (msg, args) {
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
-  if (!Target.kickable) return msg.channel.send($t("responses.errors.unmutable", P));
+  if (msg.guild.roles.get(ServerDATA.modules.MUTEROLE).position >= msg.guild.me.highestRole.position) {
+    return msg.channel.send($t("responses.errors.unmutable", P));
+  }
 
   const regex = /([0-9]*)[\s+]?([m|h|d|w|y]?)/;
   const timing = msg.args[1];
