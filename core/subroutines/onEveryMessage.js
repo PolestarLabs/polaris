@@ -15,7 +15,7 @@ async function incrementLocal(msg) {
  */
 async function levelChecks(msg) {
   if (msg.author.bot) return;
-  console.log('lv check')
+  
   if (msg.guild.id === "110373943822540800") return;
 
   let servData = await DB.servers.get(msg.guild.id);
@@ -56,6 +56,7 @@ async function levelChecks(msg) {
     await DB.localranks.set({ server: msg.guild.id, user: msg.author.id }, { $set: LOCAL_RANK });
   }
 
+  //TODO[epic=anyone] Add level up image
   if (curLevelLocal > LOCAL_RANK.level) {
     await DB.localranks.set({ user: msg.author.id, server: msg.guild.id }, { $set: { level: curLevelLocal } });
 
