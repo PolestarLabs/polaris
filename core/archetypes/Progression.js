@@ -102,7 +102,7 @@ class ProgressionManager extends EventEmitter {
         }
 
         userQuests.forEach(quest => {
-            if(quest.tracker === tracker) {
+            if(quest.tracker === tracker || quest.tracker === "*") {
                 processQuest(this,quest);
             }else if (quest.tracker === tracker.split('.').slice(0,2).join('.') ) {
                 processQuest(this,quest);            
