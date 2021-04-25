@@ -6,7 +6,7 @@ const moment = require("moment");
 const INTERVAL = 8 * 60 * 60e3 // 8 Hours
 
 
-const init = async function (msg){
+const init = async function (msg,args){
 
     moment.locale(msg.lang[0])
 
@@ -42,7 +42,9 @@ const init = async function (msg){
  
     const embed = {};    
     
-    embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`
+    embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`+
+    "*Complete all of them for an extra bonus*";
+
     const parseQuest = ( errand ) => {
         return parseQuestItem(errandsData, errand);
     };
@@ -56,10 +58,16 @@ const init = async function (msg){
 
     embed.fields.push({name:'\u200b',value:'Completed',inline:false});
     embed.fields.push( ...userErrands.filter(e=>e.completed).map(parseQuest) );
-    console.log({newForfeit})
+    
+    if (args[0] === 'mini'){
+        embed.fields = [];
+        embed.description = userErrands.map(x=> parseQuestItem(errandsData, x, true) ).join('\n');
+    }
+
     embed.fields.push({name:'\u200b',value:`
 \`${msg.prefix}errands forfeit\` Abandon one ongoing Errand ${newForfeit.available?`${_emoji('ONL')} **Available**`:`${_emoji('AWY')}${moment.utc(newForfeit.availableAt).fromNow(true)}`}
     `,inline:false});
+
 
 
     //TRANSLATE[epic=translations] Errand Cooldown
