@@ -99,4 +99,5 @@ module.exports={
     
     // NAME PENDING
     ,aliases:['devoirs','quests','tasks']
+    ,subs: ["forfeit"]
 }
