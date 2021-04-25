@@ -1,9 +1,9 @@
+const {FORFEIT,parseQuestItem} = require('./_meta.js');
 const { TimedUsage } = require("@polestar/timed-usage");
 const moment = require("moment");
 //const Progression = require("../../archetypes/Progression.js");
 
 const INTERVAL = 8 * 60 * 60e3 // 8 Hours
-const FORFEIT  = 6 * 60 * 60e3 // 8 Hours
 
 
 const init = async function (msg){
@@ -15,7 +15,6 @@ const init = async function (msg){
     let userErrands = await Progression.getUserQuests(msg.author.id);
     let completed = userErrands.filter(e=> e.completed);
 
-    
     console.log(userErrands.length,"availableErrands") // 3
     console.log(completed.length,"completed") // 1 
     console.log(  newErrand.available ," newErrand.available ")// false
@@ -40,28 +39,12 @@ const init = async function (msg){
    
     let errandsData = await DB.quests.find({id: {$in: userErrands.map(e=>e.id)} }).noCache().lean();
 
-
- 
  
     const embed = {};    
     
     embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`
     const parseQuest = ( errand ) => {
-        const thisErrand = errandsData.find(e=>e.id===errand.id);
-        const progress = ((Math.min(errand.progress , errand.target || 1)) / (errand.target || 1) );
-        return ({
-            inline: 0,
-            name: `${errand.completed?_emoji('yep'):errand.progress?_emoji('maybe'):_emoji('nope') } **${ thisErrand.INSTRUCTION ||"UNK" }**`,
-            value: `${_emoji('__')} ${
-                "`"+ [...Array(10).keys()].map((b)=> b > ~~(progress*10) ? ' ' : '❚'  ).join('') +"`"
-            } ${ progress * 100 }% \n${_emoji('__')} Rewards: ${  
-                    [
-                    (thisErrand.rewards?.exp ? `${_emoji('EXP')}**${thisErrand.rewards.exp}**  ` : ""),
-                    (thisErrand.rewards?.RBN ? `${_emoji('RBN')}**${thisErrand.rewards.RBN}**  ` : ""),
-                    (thisErrand.rewards?.SPH ? `${_emoji('SPH')}**${thisErrand.rewards.SPH}**  ` : "") 
-                    ].filter(e=>!!e).join('\u2002•\u2002')
-            }`
-        })
+        return parseQuestItem(errandsData, errand);
     };
 
     embed.fields = [];
@@ -96,8 +79,9 @@ module.exports={
     ,cmd:'errands'
     ,cat:'pollux'
     ,botPerms:['attachFiles','embedLinks']
-    
+    ,TEST: true
     // NAME PENDING
     ,aliases:['devoirs','quests','tasks']
     ,subs: ["forfeit"]
 }
+
