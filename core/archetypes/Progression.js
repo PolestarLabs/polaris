@@ -1,5 +1,6 @@
 const EventEmitter = require("events");
 let {ACHIEVEMENTS} = require("./Achievements.js");
+const moment = require("moment");
 
 class ProgressionManager extends EventEmitter {
     constructor(){
@@ -210,7 +211,7 @@ const init = ()=>{
 
     Progression.on("QUEST_COMPLETED", async (event,quest,opts)=>{
         const {msg,userQuests} = opts;
-        
+        moment.locale(msg.lang?.[0]||'en');
         //award rewards;
         msg.channel.send( await questCompletedMsg(quest,msg.author.id) )
             .catch(()=>{
@@ -229,10 +230,16 @@ const init = ()=>{
 
 async function questCompletedMsg(userQuest,userID){
     
-    const quest = JSON.parse(JSON.stringify(await DB.quests.get(userQuest.id)));
-    
+    const quest =  await DB.quests.get(userQuest.id);
     const embed = {};
-    embed.description = `${_emoji('yep')} \`COMPLETED\` **${quest.INSTRUCTION}**
+    const createdAt = new Date(parseInt(userQuest._id.toString().substring(0,8),16) *1000 ).getTime();
+    const completion = moment.utc(createdAt).from(Date.now(),true);
+
+    embed.footer = `Completed in: ${completion}`;
+    embed.timestamp = new Date();
+
+    embed.description = `${_emoji('yep')} \`COMPLETED\` **${quest.name}**
+*${quest.INSTRUCTION}*
 Rewards:\n${[
         (quest.rewards?.exp ? `${_emoji('EXP')}**${quest.rewards.exp}**  ` : ""),
         (quest.rewards?.RBN ? `${_emoji('RBN')}**${quest.rewards.RBN}**  ` : ""),
