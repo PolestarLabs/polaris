@@ -47,8 +47,8 @@ const init = async function (msg) {
       : $t("responses.forFun.kissedNone", P)}`;
   if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
-  const userData = Target ? await DB.users.findOne({ id: msg.author.id }).populate('featuredMarriage') : null;
-  const marriedtarget = userData?.featuredMarriage;
+  const userData = Target ? await DB.users.findOne({ id: msg.author.id }).populate('marriageData') : null;
+  const marriedtarget = userData?.marriageData;
 
   if (marriedtarget && marriedtarget.users.includes(Target?.id) &&  marriedtarget.users.includes(msg.author.id) ) {
     Progression.emit("command.kiss.isWife",{msg});
