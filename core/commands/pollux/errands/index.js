@@ -43,7 +43,7 @@ const init = async function (msg,args){
     const embed = {};    
     
     embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`+
-    "\n*Complete all of them for an extra bonus*";
+    "\n*Complete all of them for an extra bonus*\n\n";
 
     const parseQuest = ( errand ) => {
         return parseQuestItem(errandsData, errand);
@@ -58,17 +58,10 @@ const init = async function (msg,args){
 
     embed.fields.push({name:'\u200b',value:'Completed',inline:false});
     embed.fields.push( ...userErrands.filter(e=>e.completed).map(parseQuest) );
-    
-    if (args[0] === 'mini'){
-        embed.fields = [];
-        embed.description = userErrands.map(x=> parseQuestItem(errandsData, x, true) ).join('\n');
-    }
 
     embed.fields.push({name:'\u200b',value:`
 \`${msg.prefix}errands forfeit\` Abandon one ongoing Errand ${newForfeit.available?`${_emoji('ONL')} **Available**`:`${_emoji('AWY')}${moment.utc(newForfeit.availableAt).fromNow(true)}`}
     `,inline:false});
-
-
 
     //TRANSLATE[epic=translations] Errand Cooldown
     embed.footer =  {
@@ -78,7 +71,26 @@ const init = async function (msg,args){
             : `A new errand will be available in ${moment.utc(newErrand.availableAt).fromNow(true)}. You can have 5 active errands at a time`
     }
 
-    return {embed,messageReferenceID:msg.id}
+    let isMini = true;
+    let embedMini = Object.assign({},embed);
+    
+    embedMini.fields = embedMini.fields.slice(-1);
+    embedMini.description += userErrands.map(x=> parseQuestItem(errandsData, x, true) ).join('\n');
+    
+    const errandMessage = await msg.channel.send( {embed:embedMini,messageReferenceID:msg.id} );
+    await errandMessage.addReaction('↗️');
+    const collector = errandMessage.createReactionCollector(r=>r.userID === msg.author.id,{time: 60e3});
+    
+    collector.on("emoji", async ()=>{
+        await errandMessage.removeReactions();
+        
+        if (isMini) await errandMessage.edit({embed:embed});
+        else await errandMessage.edit({embed:embedMini});
+        
+        !isMini ? errandMessage.addReaction('↗️') : errandMessage.addReaction('↙️');
+        isMini = !isMini;
+    })
+    collector.on("end", ()=>  errandMessage.removeReactions() )
 
 }
 module.exports={
