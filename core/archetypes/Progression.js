@@ -15,17 +15,23 @@ class ProgressionManager extends EventEmitter {
         if (condition) super.emit(`${action}.${type}.${condition}`, event, ...args); // emit super specific
     }
     async getUserQuests(userID){
+        
         let quests = this.userQuestsCache.get(userID);
         if (!quests){
             const userData = await DB.users.findOne({id:userID}).noCache().lean();
             quests = userData.quests || [];
-            this.userQuestsCache.set(userID,quests);
+            this.userQuestsCache.set(userID,quests);            
         }
+        
         return quests;
     }
     async updateProgress(userID,questUniqueID,value=1){
-        await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
+
+        let updateAttempt = await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
+        
+
         const userData = await DB.users.findOne({id:userID}).noCache();
+        //console.log({finalQuests: !!userData?.quests})
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
@@ -40,16 +46,20 @@ class ProgressionManager extends EventEmitter {
         this.userQuestsCache.set(userID,quests);
     }
     async checkStatus(userID,msg){
+        
         let userQuests = await this.getUserQuests(userID);
+        
         if(!userQuests) return [];
-        userQuests.forEach(quest => {
+        userQuests.forEach((quest,i) => {
+           
+            
+
             //DEBUG
             if(msg.content.includes('-dbg')){    
                 msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
                 //msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
             }
             if(quest.progress >= quest.target) {
-
                 if(msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
                 quest.completed = true; 
             };
@@ -87,29 +97,33 @@ class ProgressionManager extends EventEmitter {
 
     async available(userID){
         const userData = await DB.users.findOne({id:userID}).noCache().lean();
-        return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
+            return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
     }
     async updateQuestTracker(userID,tracker,value=1,options){
+
+        
         let userQuests = await this.getUserQuests(userID);
+        
+
         if(!userQuests) return [];
 
         function processQuest(parent,q){           
             if(typeof options?.valueSet == 'number'){
-                parent.overrideProgress(userID, q._id, options.valueSet);
+                return parent.overrideProgress(userID, q._id, options.valueSet);
             }else{
-                parent.updateProgress(userID, q._id, value);
+                return parent.updateProgress(userID, q._id, value);
             }
         }
 
-        userQuests.forEach(quest => {
+        return Promise.all( userQuests.map(async quest => {
             if(quest.tracker === tracker || quest.tracker === "*") {
-                processQuest(this,quest);
+                await processQuest(this,quest);
             }else if (quest.tracker === tracker.split('.').slice(0,2).join('.') ) {
-                processQuest(this,quest);            
+                await processQuest(this,quest);
             }else if (quest.tracker === tracker.split('.').shift() ) {
-                processQuest(this,quest);
+                await processQuest(this,quest);
             }
-        });
+        }) );
     }
 
 }
@@ -142,8 +156,10 @@ const init = ()=>{
         console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${
             typeof opts.valueSet == 'number' ? " RESET ".bgRed : `[+${value||1}]`.cyan
         }`)
+        
+        if (!userID && !msg?.author?.id) return;
+        await Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
 
-        Progression.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
         if(!msg) return;
         if(!value?.content && !msg?.content) return;
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
@@ -161,7 +177,6 @@ const init = ()=>{
             const [action,type,condition] = quest.tracker.split('.');
             if(action!=='craft') return;
 
-            console.log(`craft ${type.red} ${item[type]} == ${condition?.blue} ? ${((item[type] === condition)+"").inverse}`);
             if(item[type] === condition){
                 await Progression.updateProgress(userID,quest._id,amount);
             }
@@ -193,14 +208,14 @@ const init = ()=>{
 
 
 
-    Progression.on("QUEST_COMPLETED",(event,quest,opts)=>{
+    Progression.on("QUEST_COMPLETED", async (event,quest,opts)=>{
         const {msg,userQuests} = opts;
         
         //award rewards;
-        msg.channel.send("Quest completed msg `"+quest.id+"`")
+        msg.channel.send( await questCompletedMsg(quest,msg.author.id) )
             .catch(()=>{
-                PLX.getDMChannel(msg.author.id).then(DM=>
-                    DM.createMessage("Dm Quest completed msg")
+                PLX.getDMChannel(msg.author.id).then( async DM=>
+                    DM.createMessage( await questCompletedMsg(quest,msg.author.id) )
                 ).catchReturn(0);
             });
         if(userQuests?.every(q=>q.completed)){
@@ -210,6 +225,22 @@ const init = ()=>{
         
         //notify user
     })
+}
+
+async function questCompletedMsg(userQuest,userID){
+    
+    const quest = JSON.parse(JSON.stringify(await DB.quests.get(userQuest.id)));
+    
+    const embed = {};
+    embed.description = `${_emoji('yep')} \`COMPLETED\` **${quest.INSTRUCTION}**
+Rewards:\n${[
+        (quest.rewards?.exp ? `${_emoji('EXP')}**${quest.rewards.exp}**  ` : ""),
+        (quest.rewards?.RBN ? `${_emoji('RBN')}**${quest.rewards.RBN}**  ` : ""),
+        (quest.rewards?.SPH ? `${_emoji('SPH')}**${quest.rewards.SPH}**  ` : "")
+    ].filter(e => !!e).join('\u2002•\u2002')}
+    `;
+    console.log('returning',embed.description)
+    return {embed};
 }
 
 module.exports = {ProgressionManager,init};
