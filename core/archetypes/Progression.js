@@ -232,6 +232,11 @@ async function questCompletedMsg(userQuest,userID){
     
     const quest =  await DB.quests.get(userQuest.id);
     const embed = {};
+    await DB.users.set(userID, {$inc: {
+        "modules.exp": quest.rewards?.exp || 0
+        "modules.RBN": quest.rewards?.RBN || 0
+        "modules.SPH": quest.rewards?.SPH || 0
+    }});
     const createdAt = new Date(parseInt(userQuest._id.toString().substring(0,8),16) *1000 ).getTime();
     const completion = moment.utc(createdAt).from(Date.now(),true);
 
