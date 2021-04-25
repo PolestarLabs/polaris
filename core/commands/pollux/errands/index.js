@@ -43,7 +43,7 @@ const init = async function (msg,args){
     const embed = {};    
     
     embed.description = "**Errands Pool**" + ` [${userErrands.filter(e=>e.completed).length}/${Math.min(5,userErrands.length)}]`+
-    "*Complete all of them for an extra bonus*";
+    "\n*Complete all of them for an extra bonus*";
 
     const parseQuest = ( errand ) => {
         return parseQuestItem(errandsData, errand);
