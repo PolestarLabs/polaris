@@ -35,7 +35,7 @@ class UserProfileModel {
     this.rubines = userDBData.modules.RBN || 0;
     this.sapphires = userDBData.modules.SPH || 0;
     this.medals = userDBData.modules.medals || [];
-    this.marriage = userDBData.featuredMarriage || null;
+    this.marriage = userDBData.marriageData || null;
     this.commend =  0;
     this.countryFlag = userDBData.personal?.country || null;
     this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
