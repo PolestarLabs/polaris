@@ -23,7 +23,7 @@ const ReactionMenu = function ReactionMenu(menu, msg, choices, options = {}) {
   return new Promise((resolve) => {
     const time = options.time || 10000;
     const embed = options.embed || menu.embeds?.[0] || false;
-    const avoidEdit = options.avoidEdit || true;
+    const avoidEdit = options.avoidEdit ?? true;
     const strings = options.strings || {};
     strings.timeout = strings.timeout || "TIMEOUT";
 
@@ -34,6 +34,7 @@ const ReactionMenu = function ReactionMenu(menu, msg, choices, options = {}) {
         time,
       }).catch(() => {
         m.removeReactions().catch(() => null);
+        console.log({embed,avoidEdit})
         if (embed && !avoidEdit) {
           embed.color = 16499716;
           embed.footer = { text: strings.timeout };
