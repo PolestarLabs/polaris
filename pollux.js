@@ -291,11 +291,11 @@ PLX.setAvatar = async (url) => {
 
 require("./core/utilities/SelfAPI.js");
 
-PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
-PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX.token } });
+PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.put(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX._token } });
+PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX._token } });
 PLX.reply = (msg, content, ping = false) => {
   const payload = {
-    replied_user: ping,
+    allowed_mentions: {replied_user: ping},
     message_reference: {
       channel_id: msg.channel.id,
       guild_id: msg.guild.id,
@@ -305,7 +305,7 @@ PLX.reply = (msg, content, ping = false) => {
   if (typeof content === "string") payload.content = content;
   else Object.assign(payload, content);
 
-  return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, { headers: { Authorization: PLX.token } });
+  return axios.post(`https://discord.com/api/v8/channels/${msg.channel.id}/messages`, payload, { headers: { Authorization: PLX._token } });
 };
 
 function postConnect() {
