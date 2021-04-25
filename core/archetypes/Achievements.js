@@ -61,7 +61,7 @@ class AchievementsManager extends EventEmitter {
       const res = ACHIEVEMENTS.map((achiev) => {
 
         if (!achiev?.condition) return;
-        console.log({achiev})
+
         const SCOPES = {user,statistics};
         const isRevealed = userData.modules.level >= achiev.reveal_level;
         
