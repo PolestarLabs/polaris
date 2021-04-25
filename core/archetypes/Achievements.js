@@ -1,6 +1,6 @@
 // @ts-nocheck
 const { EventEmitter } = require("events");
-let ACHIEVEMENTS = DB.achievements.find({}).lean().then(a=> ACHIEVEMENTS = a);
+let ACHIEVEMENTS = DB.achievements.find({}).noCache().lean().then(a=> ACHIEVEMENTS = a);
 
 
 class AchievementsManager extends EventEmitter {
@@ -51,39 +51,67 @@ class AchievementsManager extends EventEmitter {
     const {debug,filter} = opts;
     return new Promise( async (resolve, reject) => {
       
-      if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.get(userData.id || userData);
+      if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.findOne( {id: userData.id || userData} ).noCache().lean();
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
       const user = userData;
-      const statistics = (await DB.control.get(userData.id)).data.statistics;
+      const statistics = (await DB.control.findOne({id:userData.id}).noCache()).data.statistics;
 
       console.log(`Achievements Check [${userData?.id||userData}]`.gray);
       
       const res = ACHIEVEMENTS.map((achiev) => {
 
-        const revealed = userData.modules.level >= achiev.reveal_level
-          && (this.has(achiev.id,userData) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
+        if (!achiev?.condition) return;
+        console.log({achiev})
+        const SCOPES = {user,statistics};
+        const isRevealed = userData.modules.level >= achiev.reveal_level;
+        
+        const [scope,category,unit,ticker] = achiev?.condition?.split('.') || [];
+        let checkedValue = achiev.target;
+
+        let tracker = SCOPES?.[scope]?.[category]?.[unit]?.[ticker];
+        tracker ??= SCOPES?.[scope]?.[category]?.[unit];
+        tracker ??= SCOPES?.[scope]?.[category];
+        //tracker ??= SCOPES?.[scope];
+
+        
+        let conditionMet = false; 
+        if (typeof Number(checkedValue) === 'number') checkedValue = Number(checkedValue), conditionMet = tracker >= checkedValue;
+        if (typeof checkedValue === 'string') conditionMet = checkedValue.includes(conditionMet);
+        
+        console.log("CONDITION: ",achiev?.condition)
+        console.table({tracker, scope, category,unit,ticker,checkedValue} )
+
+        const C1 = conditionMet;
+
+        //  && (this.has(achiev.id,userData) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
         //&& (this.has(userData.id, achiev.achiev_requisites) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval
-        const C1 = eval(`try{${achiev.condition}}catch(err){false}`); // eslint-disable-line no-eval
+        //const C1 = eval(`try{${achiev.condition}}catch(err){false}`); // eslint-disable-line no-eval
         let C2;
         if (achiev.advanced_conditions?.length > 0) {
-          C2 = achiev.advanced_conditions.every((acv) => eval(`try{${acv}}catch(err){false}`)); // eslint-disable-line no-eval
+         // C2 = achiev.advanced_conditions.every((acv) => eval(`try{${acv}}catch(err){false}`)); // eslint-disable-line no-eval
         } else C2 = true;
+        C2=true;
         
         const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
+
         const switcher = (c) => (c ? "✔️" : "❌");
 
-        if (awardRightAway && C1 && C2 && !awarded) this.emit("award", achiev.id, user.id,opts);
-        if (debug) {
-          if(!filter || awarded) return `${achiev.id.padEnd(20, " ")} 👁:${switcher(revealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+        //if (awardRightAway && C1 && C2 && !awarded) this.emit("award", achiev.id, user.id,opts);
+        if (debug == 2){
+           return `//${isRevealed ? achiev.name.padEnd(40, " ") : "".padEnd(achiev.name.length,"•").padEnd(40," ") }\n   Lv:${(achiev.reveal_level+"").padStart(3," ")} 🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
+        } else if (debug) {
+          if(!filter || awarded) return `${achiev.id.padEnd(20, " ")} Lv:${(achiev.reveal_level+"").padStart(3," ")}  👁:${switcher(isRevealed)}  🔒:${switcher((C1 && C2))} 🏅:${switcher(awarded)} `;
           else return null;
         };
 
         return {
-          achievement: achiev.id, revealed, unlocked: (C1 && C2), awarded, progress: this.progress(achiev.id, userData, statistics),
+          achievement: achiev.id, revealed: isRevealed, unlocked: (C1 && C2), awarded, progress: this.progress(achiev.id, userData, statistics),
         };
 
       });
-      
+      if (debug){
+        return resolve(res.filter(x=>x).join('\n'));
+      }
       return resolve(res.filter(x=>x));
     });
   }
@@ -98,7 +126,8 @@ async function init(){
 
   Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
   
-    if(uID !="88120564400553984") return;
+    //if(uID !="88120564400553984") return;
+    if( !options?.msg?.guild || options.msg.guild != '789382326680551455' ) return;
     //FIXME Temporary switch, must be uncommented later;
     if (await Achievements.has(achievement,uID)) return null;
     
