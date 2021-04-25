@@ -157,42 +157,42 @@ module.exports = {
       emoji: _emoji("LOOTBOX").reaction,
       type: "edit",
       response: require("./lootbox.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: _emoji("BOOSTER").reaction,
       type: "edit",
       response: require("./boosterpack.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: _emoji("KEY").reaction,
       type: "edit",
       response: require("./key.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: _emoji("MATERIAL").reaction,
       type: "edit",
       response: require("./material.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: _emoji("CONSUMABLE").reaction,
       type: "edit",
       response: require("./consumable.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: _emoji("JUNK").reaction,
       type: "edit",
       response: require("./junk.js").init,
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     }, {
       emoji: "❌",
       type: "cancel",
-      filter: (msg, emj, { id: uid }) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
+      filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     },
   ],
