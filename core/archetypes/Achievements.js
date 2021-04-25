@@ -78,9 +78,6 @@ class AchievementsManager extends EventEmitter {
         if (typeof Number(checkedValue) === 'number') checkedValue = Number(checkedValue), conditionMet = tracker >= checkedValue;
         if (typeof checkedValue === 'string') conditionMet = checkedValue.includes(conditionMet);
         
-        console.log("CONDITION: ",achiev?.condition)
-        console.table({tracker, scope, category,unit,ticker,checkedValue} )
-
         const C1 = conditionMet;
 
         //  && (this.has(achiev.id,userData) || true) && !!eval(achiev.reveal_requisites); // eslint-disable-line no-eval

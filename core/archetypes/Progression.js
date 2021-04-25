@@ -149,8 +149,7 @@ const init = ()=>{
         if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
         await Progression.checkStatus(msg.author.id,msg);
 
-        //quests.
- 
+        //quests. 
 
     });
     
