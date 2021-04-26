@@ -182,8 +182,9 @@ const init = ()=>{
                 await Progression.updateProgress(userID,quest._id,amount);
             }
         }));
+        console.log({msg:!!msg},'craft')
         if(!msg) return;
-        await Progression.checkStatus(msg.author.id,msg);    
+        //await Progression.checkStatus(msg.author.id,msg);
     });
     
     
@@ -210,18 +211,25 @@ const init = ()=>{
 
 
     Progression.on("QUEST_COMPLETED", async (event,quest,opts)=>{
+        console.log("COMPLETED".green)
         const {msg,userQuests} = opts;
         moment.locale(msg.lang?.[0]||'en');
         //award rewards;
         msg.channel.send( await questCompletedMsg(quest,msg.author.id) )
-            .catch(()=>{
+            .catch((err)=>{
+                console.error(err)
                 PLX.getDMChannel(msg.author.id).then( async DM=>
-                    DM.createMessage( await questCompletedMsg(quest,msg.author.id) )
+                    DM.createMessage( await questCompletedMsg(quest,msg.author.id) ).catch(console.error)
                 ).catchReturn(0);
             });
         if(userQuests?.every(q=>q.completed)){
             //award extra bonus
-            msg.channel.send("Extra bonus msg `all quests`")
+            msg.channel.send("Extra bonus: `All Quests Completed` +100 EXP");
+            await DB.users.set(userID, {$inc: {
+                "modules.exp": 100,
+                "modules.SPH": 0
+            }});
+
         }
         
         //notify user
@@ -232,15 +240,16 @@ async function questCompletedMsg(userQuest,userID){
     
     const quest =  await DB.quests.get(userQuest.id);
     const embed = {};
+    console.log("QCOMPLETE")
     await DB.users.set(userID, {$inc: {
-        "modules.exp": quest.rewards?.exp || 0
-        "modules.RBN": quest.rewards?.RBN || 0
+        "modules.exp": quest.rewards?.exp || 0,
+        "modules.RBN": quest.rewards?.RBN || 0,
         "modules.SPH": quest.rewards?.SPH || 0
     }});
     const createdAt = new Date(parseInt(userQuest._id.toString().substring(0,8),16) *1000 ).getTime();
     const completion = moment.utc(createdAt).from(Date.now(),true);
 
-    embed.footer = `Completed in: ${completion}`;
+    embed.footer = {text:`Completed in: ${completion}`};
     embed.timestamp = new Date();
 
     embed.description = `${_emoji('yep')} \`COMPLETED\` **${quest.name}**
