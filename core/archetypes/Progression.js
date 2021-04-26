@@ -98,7 +98,7 @@ class ProgressionManager extends EventEmitter {
 
     async available(userID){
         const userData = await DB.users.findOne({id:userID}).noCache().lean();
-            return (await DB.quests.find({reveal_level: {$gte: userData.modules.level} }).lean());
+            return (await DB.quests.find({reveal_level: {$lte: userData.modules.level} }).lean());
     }
     async updateQuestTracker(userID,tracker,value=1,options){
 
