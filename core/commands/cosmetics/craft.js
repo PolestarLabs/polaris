@@ -167,7 +167,7 @@ const init = async (msg, args) => {
         embed.description = "";
         embed.footer = { text: $t("responses.crafting.crafted", P) };
 
-        Progression.emit(`craft.item`,{userID: msg.author.id, item: craftedItem, amount  });
+        Progression.emit(`craft.item`,{userID: msg.author.id, item: craftedItem, amount,msg  });
 
         // @ts-ignore
         return embedmsg.edit({ embed });
