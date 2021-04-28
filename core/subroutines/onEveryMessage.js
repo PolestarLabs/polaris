@@ -164,9 +164,15 @@ async function globalLevelUp(msg,servData){
         servData = null;
   
         // delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
-        msg.author.getDMChannel().then((/** @type {{ createMessage: (arg0: string) => void; }} */ dmChan) => {
+        msg.author.getDMChannel().then(async dmChan => {
           if (!userData?.switches || userData.switches?.LVUPDMoptout === true) return;
-          dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`);
+          
+          if ( await PLX.redis.aget("noDMs."+userData.id) ) return;
+          
+          dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch(err=>{
+            PLX.redis.set("noDMs."+userData.id,true);
+            PLX.redis.expire("noDMs."+userData.id, 15*60);
+          });
         });
         // require("./modules/dev/levelUp_infra.js").init(msg);
       }
