@@ -78,6 +78,8 @@ const init = async function (message) {
     const theyRolled = $t("games.dice.userRolled", P);
     const neutralRolled = $t("games.dice.neutralRolled", P);
 
+    ProgressionManager.emit("play.roll.d"+diceFaces,{value: dicesRolled.length ,msg, userID: pl.id});
+
     const dicetex = `${DICE_EMOTES[diceFaces] || DICE_EMOTES.any}  ${(SINGLEROLL || SIMPLEROLL) ? theyRolled : neutralRolled}`;
     let diceStreak = [];
     let rollTotal = 0;
