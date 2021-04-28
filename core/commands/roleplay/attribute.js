@@ -21,6 +21,9 @@ const init = async function (message) {
   if (["add", "set"].includes(action)) {
     if (vars && vars.length === 25) return message.reply("Max Attributes Reached (25)");
     if (tag === "all") return message.reply("`all` is a reserved tag!");
+    
+    ProgressionManager.emit("command.attributes.edit",{ msg, userID: pl.id});
+
     if (vars && vars.find((ex) => ex.tag === tag)) {
       await DB.users.set({ id: message.author.id, "switches.variables.tag": tag }, { $set: { "switches.variables.$.value": value } });
     } else {
