@@ -223,7 +223,7 @@ const init = async (msg, args) => {
   await msg.channel.send("Russian Roulette? You probably already know the rules, so let's get started."
     + `\nIf you survive this one, you're going to receive **${game.nextValue} rubines**.\n`
     + "Use `shoot` to proceed (if you get shot, you'll lose your money).");
-    ProgressionManager.emit("play.russianroulette.solo",{msg, userID: pl.id});
+    ProgressionManager.emit("play.russianroulette.solo",{msg, userID: msg.author.id});
   return startGameCollector(game, msg, startGameCollector);
 };
 
