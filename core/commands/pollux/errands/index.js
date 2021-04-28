@@ -3,7 +3,7 @@ const { TimedUsage } = require("@polestar/timed-usage");
 const moment = require("moment");
 //const Progression = require("../../archetypes/Progression.js");
 
-const INTERVAL = 8 * 60 * 60e3 // 8 Hours
+const INTERVAL = 60e3 * 5 //8 * 60 * 60e3 // 8 Hours
 
 
 const init = async function (msg,args){
@@ -21,7 +21,7 @@ const init = async function (msg,args){
 
     if(newErrand.available){
         let availableErrands = await Progression.available(msg.author.id);
-        availableErrands = shuffle(availableErrands.filter(e=> !userErrands.map(x=>x.id).includes(e.id)));
+        availableErrands = JSON.parse(JSON.stringify(shuffle(availableErrands.filter(e=> !userErrands.map(x=>x.id).includes(e.id)))));
 
 
         if(userErrands.length >= 5 && completed.length){
