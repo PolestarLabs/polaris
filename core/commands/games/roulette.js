@@ -242,6 +242,11 @@ const init = async (msg) => {
 
     let value;
     if (validatedResults.length) {
+      const uniqueUsers = validatedResults.map(x=>x.userID).filter((v,i,a)=> a.indexOf(v)===i);
+      uniqueUsers.forEach(userID=>{
+        Progression.emit("play.roulette.lose",{userID,msg,value: uniqueUsers.length});
+      });
+        
       value = validatedResults.map((result) => {
         let resultStrings;
         if (result.invalid) {
