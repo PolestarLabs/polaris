@@ -12,6 +12,11 @@ const init = async function init(msg, args) {
   if (!(TargetA && TargetB)) return $t("responses.ship.needTupipo", { lngs: msg.lang });
   if (TargetA.id === TargetB.id) return $t("responses.ship.need2diffpipo", { lngs: msg.lang });
 
+
+  if ([TargetA,TargetB].includes(msg.author.id)) ProgressionManager.emit("command.ship.self",{ msg, userID: pl.id});  
+  else ProgressionManager.emit("command.ship.success",{ msg, userID: pl.id});
+
+
   const [randPic, mainframe, aviA, aviB] = await Promise.all([
     Picto.getCanvas(`${paths.CDN}/build/ship/${Math.round(rand / 10)}.png`),
     Picto.getCanvas(`${paths.CDN}/build/ship/mainframe.png`),
