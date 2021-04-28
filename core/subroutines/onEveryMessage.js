@@ -19,16 +19,12 @@ async function levelChecks(msg) {
   if (msg.guild.id === "110373943822540800") return;
 
   let servData = await DB.servers.get(msg.guild.id);
-  if (!servData) return; 
+  if (!servData) return;
 
   if (servData.switches?.chLvlUpOff?.includes(msg.channel.id)) {
     servData = null;
     return;
   }
-
-  
-  
-
 
 
   const _FACTOR = servData.modules.UPFACTOR || 0.5;
@@ -97,7 +93,7 @@ async function levelChecks(msg) {
   }
 
   if (servData.modules.LVUP === true) {
-    //globalLevelUp(msg,servData)
+    globalLevelUp(msg,servData)
   }
 
  
@@ -105,8 +101,8 @@ async function levelChecks(msg) {
 }
 
 module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { type: number; nsfw: any; }; content: string; attachments: any[]; }} */ msg) => {
-  if (!msg.guild) return;
-  if (msg.channel.type === 1) return;
+  if (!msg.guild) return console.log('noguild');
+  if (msg.channel.type !== 0) return console.log('channel type nonzero');
 
   if (msg.guild.imagetracker && !msg.channel.nsfw) {
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
@@ -115,13 +111,13 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
     }
   }
 
-  PLX.execQueue = PLX.execQueue.filter((itm) => itm.constructor !== Promise);
+  PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise);
   PLX.execQueue.push(
-    Promise.all([
+  await Promise.all([
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
-    ]).timeout(15000).catch(() => null),
+    ]).then(x=> console.log('all promises ok') ).timeout(15000).catch((err) => console.error(err)),
   );
 };
 
@@ -138,8 +134,13 @@ async function globalLevelUp(msg,servData){
         // await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
       }
       if (curLevelG > userData.modules.level) {
-        await DB.userDB.set(msg.author.id, { $set: { "modules.level": curLevelG } });
-        console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).orange, msg.author.id);
+        await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
+        
+        setTimeout(()=> 
+          msg.channel.send({content: `Level Up >> ${curLevelG}`, messageReferenceID: msg.id})
+        , 1000);
+        
+        console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).yellow, msg.author.id);
   
         /** @type {string} */
         let polizei;
