@@ -54,7 +54,7 @@ class AchievementsManager extends EventEmitter {
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.findOne( {id: userData.id || userData} ).noCache().lean();
       if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
       const user = userData;
-      const statistics = (await DB.control.findOne({id:userData.id}).noCache()).data.statistics;
+      const statistics = (await DB.control.findOne({id:userData.id}).noCache())?.data?.statistics;
 
       console.log(`Achievements Check [${userData?.id||userData}]`.gray);
       
