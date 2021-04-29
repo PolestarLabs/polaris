@@ -78,6 +78,7 @@ async function levelChecks(msg) {
       const roleStack = servData.modules.autoRoleStack !== false;
 
       for (let i = 0; i < levels.length; i += 1) {
+        if(!AUTOS || !AUTOS.length) return;
         msg.member.addRole(AUTOS.find((/** @type {number[]} */ r) => r[1] === curLevelLocal)[0]).catch(() => "noperms");
         if (roleStack === true) {
           const autorole = AUTOS.find((/** @type {number[]} */ r) => r[1] <= curLevelLocal);
@@ -110,7 +111,7 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
       /* Do Stuff when there is image */
     }
   }
-
+  
   PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise);
   PLX.execQueue.push(
   await Promise.all([
@@ -136,9 +137,13 @@ async function globalLevelUp(msg,servData){
       if (curLevelG > userData.modules.level) {
         await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
         
-        setTimeout(()=> 
-          msg.channel.send({content: `Level Up >> ${curLevelG}`, messageReferenceID: msg.id})
-        , 1000);
+        
+        await msg.channel.send({
+          messageReferenceID:msg.id
+        },{
+          file: await resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`),
+          name: "levelUp.gif"
+        });       
         
         console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).yellow, msg.author.id);
   
