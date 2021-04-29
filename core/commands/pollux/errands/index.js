@@ -30,7 +30,8 @@ const init = async function (msg,args){
         if(userErrands.length - completed.length < 5 ){
             await Progression.assign(availableErrands[0].id,msg.author.id);
             await newErrand.process();
-            msg.channel.send(`⭐ **New Errand Available:** \`#${availableErrands[0].id}\` ${availableErrands[0].INSTRUCTION || "UNK"}`);
+            await msg.channel.send(`⭐ **New Errand Available:** \`#${availableErrands[0].id}\` ${availableErrands[0].INSTRUCTION || "UNK"}`);
+            userErrands = await Progression.getUserQuests(msg.author.id);
         }
 
        
