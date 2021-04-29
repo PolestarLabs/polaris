@@ -128,6 +128,19 @@ const dbConnectionData = {
   },
 };
 
+const vanillaConnection = {
+  hook,
+  url: cfg.vanillaDB,
+  options: {
+    useNewUrlParser: true,
+    keepAlive: true,
+    connectTimeoutMS: 8000,
+    useUnifiedTopology: true,
+    promiseLibrary: global.Promise,
+    poolSize: 16,
+  },
+};
+
 DBSchema(dbConnectionData, {
   redis: {
     host: "127.0.0.1",
@@ -135,6 +148,7 @@ DBSchema(dbConnectionData, {
   },
 }).then((Connection) => {
   global.DB = Connection;
+  
   try {
     (require("./core/archetypes/Achievements.js")).init();
     (require("./core/archetypes/Progression.js")).init();
@@ -150,6 +164,13 @@ DBSchema(dbConnectionData, {
 }).catch((err) => {
   console.error();
 });
+
+
+DBSchema(vanillaConnection).then(vConnection=>{
+  global.vDB = vConnection;
+  console.log("•".yellow,"Connected to Vanilla DB")
+})
+
 
 // Translation Engine ------------- <
 global.translateEngineStart = () => {
