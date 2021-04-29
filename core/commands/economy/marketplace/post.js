@@ -184,7 +184,7 @@ const init = async (msg, args) => {
         console.log(listingPOSTRequest.data)
         let entryId = listingPOSTRequest.data.payload?.id ||  listingPOSTRequest.data.payload.PAYLOAD.id;
         
-        ProgressionManager.emit("action.market.post",{ msg, userID: pl.id});
+        Progression.emit("action.market.post",{ msg, userID: pl.id});
         
         submitMessage.edit(`${_emoji("yep")} **Done!** You can find your entry here:\n`
         + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);

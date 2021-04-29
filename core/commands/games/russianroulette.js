@@ -1,6 +1,4 @@
 /* eslint-disable no-await-in-loop */
-const { global } = DB.miscDB;
-const { ProgressionManager } = require("../../archetypes/Progression.js");
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 const BOARD = require("../../archetypes/Soundboard.js");
 
@@ -78,7 +76,7 @@ const startPlayerCollector = async (msg) => {
     time: 20e3,
   });
   verifiedPlayers?.forEach(pl=>{
-    ProgressionManager.emit("play.russianroulette.friends",{valueSet: verifiedPlayers.length, msg, userID: pl.id})
+    Progression.emit("play.russianroulette.friends",{valueSet: verifiedPlayers.length, msg, userID: pl.id})
   })
   return verifiedPlayers;
 };
@@ -223,7 +221,7 @@ const init = async (msg, args) => {
   await msg.channel.send("Russian Roulette? You probably already know the rules, so let's get started."
     + `\nIf you survive this one, you're going to receive **${game.nextValue} rubines**.\n`
     + "Use `shoot` to proceed (if you get shot, you'll lose your money).");
-    ProgressionManager.emit("play.russianroulette.solo",{msg, userID: msg.author.id});
+    Progression.emit("play.russianroulette.solo",{msg, userID: msg.author.id});
   return startGameCollector(game, msg, startGameCollector);
 };
 
