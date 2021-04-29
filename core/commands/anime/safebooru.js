@@ -13,6 +13,7 @@ function addReactions(ms, save) {
 
       if (reaction.emoji.name === "⭐") {
         DB.usercols.set(reaction.author.id, { $addToSet: { "collections.boorusave": save } });
+        Progression.emit("action.gallery.save",{msg:ms,userID:reaction.author.id,value:1});
         ms.removeReaction("⭐", reaction.author.id).catch(() => null);
         return true;
       }
