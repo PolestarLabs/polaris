@@ -20,8 +20,8 @@ const init = async (msg) => {
   const stk1 = getRandomSticker(collection);
   if (!stk1) return "Collection does not exist!";
   const stk2 = getRandomSticker(collection, stk1.id);
-  const stk1new = userData.modules.stickerInventory.includes(stk1.id);
-  const stk2new = userData.modules.stickerInventory.includes(stk2.id);
+  const stk1new = !userData.modules.stickerInventory.includes(stk1.id);
+  const stk2new = !userData.modules.stickerInventory.includes(stk2.id);
 
   const embed = new Embed();
 
@@ -31,8 +31,8 @@ const init = async (msg) => {
   embed.author($t("interface.booster.title", P));
   embed.color = 0x36393f;
   embed.description = `${"------------------------------------------------\n"
-  + `${stk1.new ? newEmoji : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
-  + `${stk2.new ? newEmoji : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
+  + `${stk1new ? newEmoji : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
+  + `${stk2new ? newEmoji : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
   + "------------------------------------------------\n"}${
     $t("interface.booster.checkStickersAt", P)}`;
 
