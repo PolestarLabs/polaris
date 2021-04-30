@@ -13,8 +13,8 @@ const init = async function init(msg, args) {
   if (TargetA.id === TargetB.id) return $t("responses.ship.need2diffpipo", { lngs: msg.lang });
 
 
-  if ([TargetA,TargetB].includes(msg.author.id)) Progression.emit("command.ship.self",{ msg, userID: pl.id});  
-  else Progression.emit("command.ship.success",{ msg, userID: pl.id});
+  if ([TargetA,TargetB].includes(msg.author.id)) Progression.emit("command.ship.self",{ msg, userID: msg.author.id});  
+  else Progression.emit("command.ship.success",{ msg, userID: msg.author.id});
 
 
   const [randPic, mainframe, aviA, aviB] = await Promise.all([
