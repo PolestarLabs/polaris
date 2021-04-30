@@ -25,7 +25,7 @@ module.exports = {
   pub: true,
   cmd: "clear",
   perms: 3,
-  cat: "mod",
+  cat: "moderation",
   botPerms: ["manageMessages"],
   aliases: ["burn"],
 };

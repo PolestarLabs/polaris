@@ -256,6 +256,6 @@ module.exports = {
   cmd,
   perms: 3,
   init,
-  cat: "mod",
+  cat: "moderation",
   botPerms: ["manageChannels", "manageRoles"],
 };

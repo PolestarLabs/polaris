@@ -99,7 +99,7 @@ module.exports = {
   pub: true,
   cmd: "kick",
   perms: 2,
-  cat: "mod",
+  cat: "moderation",
   botPerms: ["kickMembers"],
   aliases: [],
 };

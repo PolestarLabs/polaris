@@ -110,7 +110,7 @@ module.exports = {
   pub: true,
   cmd: "reactionroles",
   perms: 3,
-  cat: "mod",
+  cat: "moderation",
   botPerms: ["manageRoles", "manageMessages"],
   aliases: ["rrl"],
 };

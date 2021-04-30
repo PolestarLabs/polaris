@@ -96,7 +96,7 @@ module.exports = {
   cmd: "purge",
   argsRequired: true,
   perms: 3,
-  cat: "mod",
+  cat: "moderation",
   botPerms: ["manageMessages"],
   aliases: ["prune"],
 };

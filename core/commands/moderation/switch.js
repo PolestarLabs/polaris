@@ -394,7 +394,7 @@ module.exports = {
   pub: true,
   cmd: "switch",
   perms: 2,
-  cat: "mod",
+  cat: "moderation",
   aliases: [],
   botPerms: ["manageMessages"],
   guildOnly: true,
