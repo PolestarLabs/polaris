@@ -118,7 +118,7 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
-    ]).then(x=> console.log('all promises ok') ).timeout(15000).catch((err) => console.error(err)),
+    ]).then(x=>  true ).timeout(15000).catch((err) => console.error(err)),
   );
 };
 
