@@ -5,7 +5,7 @@ const {setImmediate} = require("timers/promises");
 class ProgressionManager extends EventEmitter {
     constructor(){
         super();
-        this.userQuestsCache = new Map();
+        this.userCheckQueue = new Map();
         this.on("*", async (event,opts)=>{
 
             let {value,msg,userID} = opts;
@@ -26,7 +26,7 @@ class ProgressionManager extends EventEmitter {
             if(!value && !value?.content && !msg?.content) return;
             if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
             
-            await wait(2);            
+            await wait(5);            
             //console.log({event,userID})
             this.checkStatusAll(userID,msg);
 
@@ -133,32 +133,31 @@ class ProgressionManager extends EventEmitter {
     }
 
     async checkStatusAll(userID,msg){
-        console.log(' TEST ALL '.bgBlue)
 
-        if (this.userQuestsCache.get(userID)) return;
-        this.userQuestsCache.set(userID,true);
+        if (this.userCheckQueue.get(userID) === true) return;
+        this.userCheckQueue.set(userID,true);
 
         let userQuests = await this.getUserQuests(userID);
         
-        if(!userQuests) return [];
-
-        for (let i in userQuests) {
-            
-            let quest = userQuests[i];
-            
-            await setImmediate(await wait(1),{ref:false});
-            
-            
-            if(quest.progress >= quest.target) {
-                await DB.users.updateOne({id:userID,"quests._id":quest._id},{$set:{'quests.$.completed':true}},{new:!0});
-                if(msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
-            };
-            if(quest.progress && !quest.target){
-                await DB.users.updateOne({id:userID,"quests._id":quest._id},{$set:{'quests.$.completed':true}},{new:!0});
-                if(msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
+        if(userQuests){
+            for (let i in userQuests) {
+                
+                let quest = userQuests[i];
+                
+                await setImmediate(await wait(1),{ref:false});
+                
+                
+                if(quest.progress >= quest.target) {
+                    await DB.users.updateOne({id:userID,"quests._id":quest._id},{$set:{'quests.$.completed':true}},{new:!0});
+                    if(msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
+                };
+                if(quest.progress && !quest.target){
+                    await DB.users.updateOne({id:userID,"quests._id":quest._id},{$set:{'quests.$.completed':true}},{new:!0});
+                    if(msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, {msg,userQuests});
+                }
             }
         };
-        this.userQuestsCache.set(userID,false);
+        this.userCheckQueue.set(userID,false);
         return userQuests;
     }
     async checkStatusOne(questID,userID,msg){
