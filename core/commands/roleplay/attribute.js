@@ -22,7 +22,7 @@ const init = async function (message) {
     if (vars && vars.length === 25) return message.reply("Max Attributes Reached (25)");
     if (tag === "all") return message.reply("`all` is a reserved tag!");
     
-    Progression.emit("command.attributes.edit",{ msg, userID: pl.id});
+    Progression.emit("command.attributes.edit",{ msg:message, userID: message.author.id});
 
     if (vars && vars.find((ex) => ex.tag === tag)) {
       await DB.users.set({ id: message.author.id, "switches.variables.tag": tag }, { $set: { "switches.variables.$.value": value } });
@@ -71,4 +71,5 @@ module.exports = {
   perms: 3,
   init,
   cat: "roleplay",
+  aliases: ["attributes","attr"]
 };
