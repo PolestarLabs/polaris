@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(1800).then(([svData, userData]) => {
+  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(2800).then(([svData, userData]) => {
     console.log(svData.name, guild.id, guild.name);
     if (!svData?.modules.GREET.enabled) return console.log({ XXX: svData.modules }, "GMA", svData?.modules.GREET.enabled);
 
@@ -55,5 +55,5 @@ module.exports = async (guild, member) => {
         if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch((err) => console.error(err));
+  }).catch((err)  );
 };

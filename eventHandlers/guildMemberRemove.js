@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(800).then(([svData, userData]) => {
+  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(1800).then(([svData, userData]) => {
     if (!svData?.modules.FWELL.enabled) return;
 
     const fwellTimer = svData.modules.FWELL.timer;
