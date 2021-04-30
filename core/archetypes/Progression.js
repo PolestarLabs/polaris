@@ -112,10 +112,8 @@ class ProgressionManager extends EventEmitter {
     }
     async updateProgress(userID,questUniqueID,value=1){
 
-        let updateAttempt = await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
-
+        let updateAttempt = await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});            
         const userData = await DB.users.findOne({id:userID}).noCache();
-        //console.log({finalQuests: !!userData?.quests})
         this.userQuestsCache.set(userID,userData.quests);
         return userData.quests;
     }
@@ -139,8 +137,13 @@ class ProgressionManager extends EventEmitter {
             
 
             //DEBUG
+            
+            if (msg.channel.id ==='800860718492155984'){
+
+              //  msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
+            }
+            
             if(msg.content.includes('-dbg')){    
-                msg.channel.send( "```js\n"+JSON.stringify({quest},0,2)+"```" );
                 //msg.channel.send( "```js\n"+JSON.stringify({userQuests},0,2)+"```" );
             }
             if(quest.progress >= quest.target) {
@@ -188,17 +191,16 @@ class ProgressionManager extends EventEmitter {
             return (await DB.quests.find({reveal_level: {$lte: userData.modules.level} }).lean());
     }
     async updateQuestTracker(userID,eventTracker,value=1,options){
-
         
         let userQuests = await this.getUserQuests(userID);
 
-
         if(!userQuests) return [];
 
-        function processQuest(parent,q){           
+        function processQuest(parent,q){
             if(typeof options?.valueSet == 'number'){
                 return parent.overrideProgress(userID, q._id, options.valueSet);
             }else{
+                //console.table({userID ,questUniqueID: q._id.toString() ,value})
                 return parent.updateProgress(userID, q._id, value);
             }
         }
