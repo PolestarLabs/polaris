@@ -794,12 +794,12 @@ const init       = async (msg, args) => {
         if (winnings > 0) {
           Progression.emit("play.blackjack.win",{msg, userID:msg.author.id});
           Progression.emit("streak.blackjack.win",{value: 1, msg, userID:msg.author.id});
-          await ECO.receive(msg.author.id, winnings, "blackjack", "RBN");
+          await ECO.receive(msg.author.id, winnings, "blackjack", "RBN", {progressionOptions:{msg}});
         }
         else {
           Progression.emit("play.blackjack.lose",{msg, userID:msg.author.id});
           Progression.emit("streak.blackjack.win",{valueSet: 0, msg, userID:msg.author.id});
-          await ECO.pay(msg.author.id, Math.abs(winnings), "blackjack", "RBN");
+          await ECO.pay(msg.author.id, Math.abs(winnings), "blackjack", "RBN", {progressionOptions:{msg}, disableFundsCheck:true });
         }
       }else{
         Progression.emit("streak.blackjack.win",{valueSet: 0, msg, userID:msg.author.id});
