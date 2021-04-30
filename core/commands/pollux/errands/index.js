@@ -1,4 +1,5 @@
 const {FORFEIT,parseQuestItem} = require('./_meta.js');
+
 const { TimedUsage } = require("@polestar/timed-usage");
 const moment = require("moment");
 //const Progression = require("../../archetypes/Progression.js");
@@ -9,15 +10,19 @@ const INTERVAL = 60e3 * 5 //8 * 60 * 60e3 // 8 Hours
 const init = async function (msg,args){
 
     moment.locale(msg.lang[0])
-
-    const newErrand = await new TimedUsage( "errands", { day: INTERVAL } ).loadUser(msg.author);
-    const newForfeit = await new TimedUsage( "errandForfeit", { day: FORFEIT } ).loadUser(msg.author);
     let userErrands = await Progression.getUserQuests(msg.author.id);
     let completed = userErrands.filter(e=> e.completed);
+
+    const DYN_TIMER = (userErrands.length - completed.length) * 10 * 60e3;
+
+    const newErrand = await new TimedUsage( "errands", { day: DYN_TIMER } ).loadUser(msg.author);
+    const newForfeit = await new TimedUsage( "errandForfeit", { day: FORFEIT } ).loadUser(msg.author);
 
     console.log(userErrands.length,"availableErrands") // 3
     console.log(completed.length,"completed") // 1 
     console.log(  newErrand.available ," newErrand.available ")// false
+
+    Progression.checkStatusAll(msg.author.id,msg);
 
     if(newErrand.available){
         let availableErrands = await Progression.available(msg.author.id);
@@ -30,7 +35,9 @@ const init = async function (msg,args){
         if(userErrands.length - completed.length < 5 ){
             await Progression.assign(availableErrands[0].id,msg.author.id);
             await newErrand.process();
-            await msg.channel.send(`⭐ **New Errand Available:** \`#${availableErrands[0].id}\` ${availableErrands[0].INSTRUCTION || "UNK"}`);
+            wait(2).then(_=>{
+                msg.channel.send(`⭐ **New Errand Available:** \`#${availableErrands[0].id}\` ${availableErrands[0].INSTRUCTION || "UNK"}`);
+            });
             userErrands = await Progression.getUserQuests(msg.author.id);
         }
 
@@ -66,6 +73,7 @@ const init = async function (msg,args){
 
     //TRANSLATE[epic=translations] Errand Cooldown
     embed.footer =  {
+        icon_url: `https://cdn.discordapp.com/emojis/${_emoji( newErrand.available ? 'ONL' : 'AWY' ).id}.png`,
         text: 
             newErrand.available 
             ? `A new Errand is available now. You can have 5 active errands at a time`
