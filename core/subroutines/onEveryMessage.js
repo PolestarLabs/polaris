@@ -124,19 +124,19 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
 
 /**
  * @param {{ author: { id: any; tag: any; getDMChannel: () => Promise<any>; }; }} msg
- * @param {null} servData
  */
-async function globalLevelUp(msg,servData){
+async function globalLevelUp(msg){
       /// ======= [GLOBAL LVUP] ========///
+      await wait(2);
       let { curLevelG, userData } = await checkGlobalLevel(msg);
       if (curLevelG < userData.modules.level) {
         return;
         // console.log("DELEVEL");
         // await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
-      }
-      if (curLevelG > userData.modules.level) {
+      }else if (curLevelG > userData.modules.level) {
         await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
-        
+
+        await wait(2);
         
         await msg.channel.send({
           messageReferenceID:msg.id
@@ -187,7 +187,7 @@ async function globalLevelUp(msg,servData){
  * @param {{ author: { id: any; }; }} msg
  */
 async function checkGlobalLevel(msg) {
-  let userData = await DB.users.getFull({ id: msg.author.id });
+  let userData = await DB.users.findOne({ id: msg.author.id }).noCache();
   const _CURVE = 0.0427899;
   const curLevelG = Math.floor(_CURVE * Math.sqrt(userData.modules.exp));
   // let forNext_G = Math.trunc(Math.pow((userData.modules.level + 1) / _CURVE, 2));
