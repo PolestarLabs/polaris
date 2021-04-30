@@ -3,6 +3,7 @@ const EventEmitter = require('events');
 const {createWriteStream} = require('fs');
 const fs =  require('fs');
 const cacheDir = "/home/pollux/polaris/gifcache"
+const {setImmediate} = require("timers/promises");
 
 class Animation extends EventEmitter {
     constructor(options){
@@ -40,16 +41,16 @@ class Animation extends EventEmitter {
         });
     }
 
-    generate(fun){
+    async generate(fun){
         if (this.cacheAbort) return false;
-        return Promise.all( [...Array(this.lastFrame).keys()].map(async (frameNumber,i)=>{
-            console.log({frameNumber})
-            let frame = fun(frameNumber);
-            await this.gif.addFrame(frame.getImageData(0, 0, this.options.w, this.options.h).data);
-            if (i == this.lastFrame) this.gif.finish();
-        })).then(done=>{
-            this.gif.finish();
-        })
+        let currentFrame = 0;      
+        while( this.lastFrame > currentFrame++ ){
+            console.log({currentFrame})
+            let frame = await setImmediate( fun(currentFrame), {ref:false});
+            this.gif.addFrame(frame.getImageData(0, 0, this.options.w, this.options.h).data);
+            await setImmediate();
+        }        
+        this.gif.finish();         
     }
 
 }
