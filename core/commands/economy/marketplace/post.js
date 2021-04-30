@@ -176,7 +176,7 @@ const init = async (msg, args) => {
       console.log('pre axios')
       console.log(`${paths.DASH}/api/marketplace`)
       let submitMessage = await msg.channel.send(`${_emoji('loading')} Submitting Listing...`);
-      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err=> console.log(error) && null);
+      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err=> console.log(err) && null);
 
       console.log('axios'.green,listingPOSTRequest.ok)
 
@@ -184,7 +184,7 @@ const init = async (msg, args) => {
         console.log(listingPOSTRequest.data)
         let entryId = listingPOSTRequest.data.payload?.id ||  listingPOSTRequest.data.payload.PAYLOAD.id;
         
-        Progression.emit("action.market.post",{ msg, userID: pl.id});
+        Progression.emit("action.market.post",{ value: 1, msg, userID: msg.author.id});
         
         submitMessage.edit(`${_emoji("yep")} **Done!** You can find your entry here:\n`
         + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
