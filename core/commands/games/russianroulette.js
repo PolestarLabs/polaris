@@ -75,8 +75,8 @@ const startPlayerCollector = async (msg) => {
   await msg.channel.awaitMessages(filter, {
     time: 20e3,
   });
-  verifiedPlayers?.forEach(pl=>{
-    Progression.emit("play.russianroulette.friends",{valueSet: verifiedPlayers.length, msg, userID: pl.id})
+  verifiedPlayers?.forEach(player=>{
+    Progression.emit("play.russianroulette.friends",{valueSet: verifiedPlayers.length, msg, userID: player.id})
   })
   return verifiedPlayers;
 };
