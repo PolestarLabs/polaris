@@ -168,7 +168,7 @@ DBSchema(dbConnectionData, {
 
 DBSchema(vanillaConnection).then(vConnection=>{
   global.vDB = vConnection;
-  console.log("•".yellow,"Connected to Vanilla DB")
+  console.log("•".yellow," Connected to Vanilla DB".blue)
 })
 
 
