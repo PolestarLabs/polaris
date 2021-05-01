@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "***Trick or Treat!***  You got **{{qtd}}** candies from this Server's stash!",
     "treatRefresh": "No no no! You already got your candies, shoo!\nYou can come back in **{{remaining}}**",
-    "current_event": "Hey~ Did you know there is a global **Halloween Event** going on? :jack_o_lantern:\nIn this event you can get some cool and __exclusive__ pretty stuff for your `p!profile` card!\nAvailable only during this event, which will be running until **November 5th**\nMore info at <http://pollux.fun/events/haloween> *(page in english)*\n*Contact your Server Owner to check if this server is participating*",
+    "current_event": "Hey~ Did you know there is a global **Halloween Event** going on? :jack_o_lantern:\nIn this event you can get some cool and __exclusive__ pretty stuff for your `p!profile` card!\nAvailable only during this event, which will be running until **November 5th**\nMore info at <http://pollux.gg/events/haloween> *(page in english)*\n*Contact your Server Owner to check if this server is participating*",
     "newAccOut": ":warning: Sorry, new accounts cannot participate. Perhaps you can join the next one.",
     "nextThis": "You can Trick or Treat here again at:",
     "candiesCheck": "You collected **{{amt}}** candies so far. Keep knocking at servers to get more!",
@@ -136,7 +136,7 @@
     "egghuntfail": "*But couldn't find a single thing*",
     "egghuntsuccess": "Great! There's an egg here! Let's see...",
     "egghuntsuccess2": "{{rarity_emoji}} {{user}} found a **{{rarity}} Egg**!",
-    "egghuntsuccess3": "You have a total of **{{X}}** eggs with you.\n**{{Y}}** of them are unique.\n\nMore info at: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+    "egghuntsuccess3": "You have a total of **{{X}}** eggs with you.\n**{{Y}}** of them are unique.\n\nMore info at: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
     "delaytrade": "Hold on! You can trade eggs again in {{remaining}} ",
     "wanttrade": "{{user}} wants to trade **{{tradingEgg}}** with you.",
     "wanttrade2": "*To accept it, type `accept` followed by the ID of the Egg you're sending back.*\n\nE.g. `accept C1` to give a [**C1**] Egg in exchange for this [**{{eggcode}}**] Egg",

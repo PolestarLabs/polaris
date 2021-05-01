@@ -354,7 +354,7 @@
         "ban": "`{{prefix}}ban @someguy [reason]`\nBans @someguy dal Server, Puoi anche aggiungere un motivo.",
         "speakAvailable": "Le lingue disponibili sono:",
         "autorole": "`{{prefix}}autorole [aggiungi <unk> rem <unk> list] [한<unk> @role]` \n\n`{{prefix}}autorole add Games` Permette il ruolo **Games** come auto-assegnabile.\n`{{prefix}}autorole rem Games` Rimuove il ruolo **Games** da lista.\n`{{prefix}}autorole list` Mostra l'elenco e i comandi per ogni Self-Assignable Role\n\n Digita il nome del Ruolo esattamente come registrato, case sensitive. O solo @mention",
-        "background": "`{{prefix}}background [Imagecode]`\n\n :warning: **IMPORTANTE:** \n*Imagecode* __are not links__, are codes obtained from http://www.pollux.fun/bgshop. \n\nEsempio: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [Imagecode]`\n\n :warning: **IMPORTANTE:** \n*Imagecode* __are not links__, are codes obtained from http://www.pollux.gg/bgshop. \n\nEsempio: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}cinese [text]`",
@@ -415,7 +415,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nPuoi anche scegliere da quale curatore vuoi vedere le scelte! Basta digitare il loro nome dopo il comando come `{{prefix}}lewd pollyanna` per esempio, per vedere solo cose curate da **Pollyanna**.\n\n Il nostro team curatore attuale è:\n {{squad}}",
         "marry": "Il matrimonio si basa direttamente su `{{prefix}}craft`, poiché hai bisogno di un anello prima di poter proporre.\n\nPer sposare la tua persona cara, fai{{prefix}}sposa @user [ring]`. Ci sono 4 livelli di anelli di nozze, ognuno fatto di una gemma diversa, per mostrare quanto fantasia il vostro matrimonio è. In futuro, gli anelli di rango superiore forniranno alla coppia più Punti Amore che saranno in grado di spendere insieme.\n\nEsempio di utilizzo: `{{prefix}}sposa @someone rubine` per proporre con un anello Rubine.\n\nRichiede Embed, Gestisci Messaggi e Permessi di Reazione",
-        "craft": "`{{prefix}}craft [item code]`\n Puoi trovare il codice item e tutte le informazioni su http://pollux.fun/crafting.\n\nPer creare un oggetto devi possedere tutti i materiali necessari, alcuni materiali devono essere realizzati per essere disponibili, quelli non sono autocrafted quando si fa un articolo di livello superiore.",
+        "craft": "`{{prefix}}craft [item code]`\n Puoi trovare il codice item e tutte le informazioni su http://pollux.gg/crafting.\n\nPer creare un oggetto devi possedere tutti i materiali necessari, alcuni materiali devono essere realizzati per essere disponibili, quelli non sono autocrafted quando si fa un articolo di livello superiore.",
         "divorce": "`{{prefix}}divorzio` Per mostrare a tutti che sei sposato. se questa è una persona o un intero harem!\n`{{prefix}}divorzio [@user <unk> <unk> Discord ID]` Per divorziare quella persona"
     },
     "logs": {

@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "***Csokit vagy Csalunk!*** **{{qtd}}** cukorkát kaptál a szerver ládájából~",
     "treatRefresh": "Nem, nem, nem! Már megkaptad a cukorkáidat, wooo! Gyere vissza **{{remaining}}** múlva.",
-    "current_event": "Hey~ Tudtad, hogy épp most zajlik a **Halloween Event**? :jack_o_lantern:\nHa játszol, szert tehetsz néhány menő __és exklúzív__ cuccra, amit felhasználhatsz a `p!profile` kátyádnál!\nEzek csak ezen az eventen érhetőek el, egészen **november 5-ig**\nTovábbi információkat találsz a <http://pollux.fun/events/haloween> oldalon *(az oldal angol nyelvű)*\n*Kérdezd meg a szerver tulajdonosától, hogy a szerver részt vesz-e az eseményen*",
+    "current_event": "Hey~ Tudtad, hogy épp most zajlik a **Halloween Event**? :jack_o_lantern:\nHa játszol, szert tehetsz néhány menő __és exklúzív__ cuccra, amit felhasználhatsz a `p!profile` kátyádnál!\nEzek csak ezen az eventen érhetőek el, egészen **november 5-ig**\nTovábbi információkat találsz a <http://pollux.gg/events/haloween> oldalon *(az oldal angol nyelvű)*\n*Kérdezd meg a szerver tulajdonosától, hogy a szerver részt vesz-e az eseményen*",
     "newAccOut": ":warning: Bocsi, de új felhasználok nem csatlakozhatnak az eseményhez. De a következőnél várlak!",
     "nextThis": "Legközelebbi időpont, amikor megkérdezheted, hogy \"Csokit vagy Csalunk\":",
     "candiesCheck": "Eddig **{{atm}}** cukrot gyűjtöttél össze. Kopogtass még a szervereken, hogy többet szerezhess!",

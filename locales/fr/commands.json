@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @n'importequi <reason>`\nBannit @n'importequi du serveur, la raison est optionnelle.",
 		"speakAvailable": "Les langues disponibles sont les suivantes:",
 		"autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` Autorise le rôle **Games** à être auto-assignable.\n`{{prefix}}autorole rem Games` Supprime le rôle **Games** de la liste.\n`{{prefix}}autorole list` Montre la liste des commandes pour chaque rôle auto-assignable\n\n Ecris le nom du rôle EXACTEMENT, c'est sensible à la casse! Ou utilises le @ pour le mentionner, c'est plus simple~ !",
-		"background": "`{{prefix}}background [Imagecode]`\n\n⚠ IMPORTANT: \nLes Imagecode ne sont pas des liens, ce sont des codes obtenus depuis http://beta.pollux.fun/\n\nExample: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{prefix}}background [Imagecode]`\n\n⚠ IMPORTANT: \nLes Imagecode ne sont pas des liens, ce sont des codes obtenus depuis http://beta.pollux.gg/\n\nExample: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "`{{prefix}}bye [msg|timer] [message|secondes]` \n\n`{{prefix}}bye msg Aurevoir %user% !`\n Change le message en \"Aurevoir @User !\"\n\n`{{prefix}}bye timer 10`\n Ajoute un temps d'auto-suppression du message, 0 le garde pour toujours.\n\n`{{prefix}}bye`\nSans paramètres, cette commande activera ou désactivera simplement l'émission de messages.\n\n**Infos**:\n`%user%` Mentionne l'utilisateur.\n`%username%` Ecris le pseudo de la personne, sans mentionner.",
 		"welcome": "",
 		"chinese": "`{{prefix}}chinese [texte]`",

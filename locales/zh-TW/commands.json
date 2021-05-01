@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @某某人 [原因]`\n在伺服器中Ban掉@某某人，原因可以不用填，那只是方便你管理用的",
 		"speakAvailable": "目前可使用的語言有：",
 		"autorole": "`{{prefix}}autorole [add | rem | list] [身分組| @身分組]` \n\n`{{prefix}}autorole add Games` 允許用戶自行增加**Games**身分組\n`{{prefix}}autorole rem Games` 不允許用戶自行增加**Games**身分組\n`{{prefix}}autorole list` 顯示指令列表及可自行增加的身分組\n\n身分組有分大小寫，不然直接@提及也可以",
-		"background": "`{{prefix}}background [圖片編號]`\n\n :warning: **注意：** \n*圖片編號* __不是連結__，而是從http://www.pollux.fun/bgshop 取得的編號 \n\n例如：`{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{prefix}}background [圖片編號]`\n\n :warning: **注意：** \n*圖片編號* __不是連結__，而是從http://www.pollux.gg/bgshop 取得的編號 \n\n例如：`{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "",
 		"welcome": "",
 		"chinese": "`{{prefix}}chinese [文字]`",

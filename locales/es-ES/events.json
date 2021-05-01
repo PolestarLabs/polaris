@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "***¡Truco o trato!*** ¡Tienes **{{qtd}}** Dulces del alijo de este servidor!",
     "treatRefresh": "¡No no no! Ya tienes tus dulces, shoo!\nPuede volver a aparecer en **{{remaining}}**",
-    "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.fun/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
+    "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.gg/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
     "newAccOut": ":warning: Lo siento, las nuevas cuentas no pueden participar. Quizás puedas unirte al siguiente.",
     "nextThis": "Puedes hacer Truco o Trato aquí de nuevo en:",
     "candiesCheck": "Has recogido ** {{amt}} ** Dulces hasta el momento. ¡Sigue llamando a los servidores para obtener más!",
@@ -136,7 +136,7 @@
     "egghuntfail": "*Pero no pudo encontrar nada*",
     "egghuntsuccess": "¡Genial! ¡Aquí hay un huevo! Vamos a ver...",
     "egghuntsuccess2": "{{rarity_emoji}} ¡ {{user}} encontró un **Huevo {{rarity}}**!",
-    "egghuntsuccess3": "Tienes un total de **{{X}}** huevos contigo.\n**{{Y}}** de ellos son únicos.\n\nMas info en: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+    "egghuntsuccess3": "Tienes un total de **{{X}}** huevos contigo.\n**{{Y}}** de ellos son únicos.\n\nMas info en: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
     "delaytrade": "¡Espera! Puedes intercambiar huevos de nuevo en {{remaining}} ",
     "wanttrade": "{{user}} quiere intercambiar **{{tradingEgg}}** contigo.",
     "wanttrade2": "*Para aceptarlo, escribe `accept` seguido del ID del Huevo que mandarás de vuelta.*\n\nE.j. `accept C1` para dar un Huevo [**C1**] a cambio de este Huevo [**{{eggcode}}**]",

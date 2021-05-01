@@ -355,7 +355,7 @@
         "ban": "`{{prefix}}ban @someguy [理由]`\nサーバからの@someguyを禁止します。理由はオプションです。",
         "speakAvailable": "使用可能な言語は次のとおりです。",
         "autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` **ゲーム** ロールを自己割り当て可能にします。\n`{{prefix}}autorole rem Games` ロール **ゲーム** をリストから削除します。\n`{{prefix}}autorole list` 各自己割り当て可能ロールのリストとコマンドを表示します。\nロール名は、大文字と小文字を区別して正確に登録してください。 または単に@言及 する",
-        "background": "`{{prefix}}background [イメージコード]`\n :warning: **重要:** \n*イメージコード* __はリンクではありません__, それらはhttp://www.pollux.fun/bgshopから入手したコードです。\n\n例: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [イメージコード]`\n :warning: **重要:** \n*イメージコード* __はリンクではありません__, それらはhttp://www.pollux.gg/bgshopから入手したコードです。\n\n例: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "`{{prefix}}bye [msg|timer] [mensagem|segundos]` \n\n`{{prefix}}bye msg Goodbye %user% !`\nメッセージを「Goodbye @User！」に変更します。\n\n`{{prefix}}bye timer 10`\n自動削除の時間を秒単位で設定します。永久に保持するには0を設定します。\n\n`{{prefix}}bye`\nパラメータを指定しない場合、このコマンドはメッセージの送信のオンとオフを切り替えます。\n\n**ワイルドカード**：\n`%user%` ユーザーに言及します。\n`%username%` ユーザーの名前を、言及なしで出力します。",
         "welcome": "`{{prefix}}welcome [msg|timer] [mensagem|segundos]` \n\n`{{prefix}}welcomemsg Welcome %user% !`\nメッセージを「Welcome @User！」に変更します。\n\n`{{prefix}}welcome timer 10`\n自動削除の時間を秒単位で設定します。永久に保持するには0を設定します。\n\n`{{prefix}}welcome`\nパラメータを指定しない場合、このコマンドはメッセージの送信のオンとオフを切り替えます。\n\n**ワイルドカード**：\n`%user%` ユーザーに言及します。\n`%username%` ユーザーの名前を、言及なしで出力します。",
         "chinese": "`{{prefix}}chinese [テキスト]`",

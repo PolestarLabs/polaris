@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "***Des bonbons ou un sort!***  Tu viens de récolter **{{qtd}}** bonbons dans la planque de ce serveur!",
     "treatRefresh": "Eh oh t'as déjà eu des bonbons! Ouste! Reviens dans **{{remaining}}**",
-    "current_event": "Hey~ Tu savais qu'il y a un **événement d'Halloween** en ce moment? :jack_o_lantern:\nDans cet event tu peux avoir des items exclusifs pour décorer ton profil!\nCet événement est disponible jusqu'au **5 Novembre**!\nPlus d'infos sur: <http://pollux.fun/events/haloween> *(page en anglais)*\n*Contacte le gérant de ton serveur pour savoir si ce dernier participe à l'event*",
+    "current_event": "Hey~ Tu savais qu'il y a un **événement d'Halloween** en ce moment? :jack_o_lantern:\nDans cet event tu peux avoir des items exclusifs pour décorer ton profil!\nCet événement est disponible jusqu'au **5 Novembre**!\nPlus d'infos sur: <http://pollux.gg/events/haloween> *(page en anglais)*\n*Contacte le gérant de ton serveur pour savoir si ce dernier participe à l'event*",
     "newAccOut": ":warning: Désolé, les comptes nouveaux ne peuvent pas participer. Joigne-moi dans un autre événement~",
     "nextThis": "",
     "candiesCheck": "",

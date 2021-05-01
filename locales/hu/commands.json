@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @valaki [ok]`\nBannolja @valaki-t a szerverről, ennek az okát is megadhatod.",
 		"speakAvailable": "Elérhető nyelvek:",
 		"autorole": "",
-		"background": "`{{prefix}}background [kép kódja]`\n\n :warning: **FONTOS:** \nA *képnek kódjai* vannak __nem linkjei__, ezeket megszerezheted a következő liken: http://www.pollux.fun/bgshop. \n\nPéldául: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{prefix}}background [kép kódja]`\n\n :warning: **FONTOS:** \nA *képnek kódjai* vannak __nem linkjei__, ezeket megszerezheted a következő liken: http://www.pollux.gg/bgshop. \n\nPéldául: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "",
 		"welcome": "",
 		"chinese": "`{{prefix}}chinese [szöveg]`",

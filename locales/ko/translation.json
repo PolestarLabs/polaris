@@ -355,7 +355,7 @@
         "ban": "`{{prefix}}ban @someguy [이유]`\n서버에서 누군가를 쫓아 내십시오. 이유를 추가 할 수도 있습니다.",
         "speakAvailable": "사용 가능한 언어는 다음과 같습니다.",
         "autorole": "`{{prefix}} autorole [add | rem | list] [Role| @role]`\n\n`{{prefix}}autorole add Games` **Games** 역할은 스스로 할당 할 수 있습니다.\n{{{prefix}}autorole rem Games` **Games** 목록의 역할을 제거합니다..\n`{{prefix}}autorole list` 각 자체 할당 가능 역할에 대한 목록 및 명령을 표시합니다.\n\n  대소 문자를 구별하여 정확하게 역할 이름을 입력하십시오. 아니면 단지 @mention 그것",
-        "background": "`{{prefix}}background [이미지 코드]`\n\n :warning: **중대한:** \n*Imagecode* __링크가 아닙니다.__, 에서 얻은 코드http://www.pollux.fun/bgshop. \n\n예: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [이미지 코드]`\n\n :warning: **중대한:** \n*Imagecode* __링크가 아닙니다.__, 에서 얻은 코드http://www.pollux.gg/bgshop. \n\n예: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "`{{prefix}}bye [msg|timer] [mensagem|segundos]` \n\n`{{prefix}}bye msg Goodbye %user% !`\n메시지를 \"Goodbye @User!\"로 변경합니다.\n\n`{{prefix}}bye timer 10`\n자동 삭제 시간을 초 단위로 설정하십시오. 영원히 유지하려면 0을 설정하십시오.\n\n`{{prefix}}bye`\n매개 변수가 없으면이 명령은 메시지의 방출을 켜거나 끕니다.\n\n**와일드 카드**:\n`%user%` 사용자에게 핑.\n`%username%` 언급없이 사용자의 이름을 출력합니다..",
         "welcome": "`{{prefix}}bye [msg|timer] [mensagem|segundos]` \n\n`{{prefix}}bye msg Welcome %user% !`\n메시지를 \"Welcome @User!\"로 변경합니다.\n\n`{{prefix}}welcome timer 10`\n자동 삭제 시간을 초 단위로 설정하십시오. 영원히 유지하려면 0을 설정하십시오.\n\n`{{prefix}}welcome`\n매개 변수가 없으면이 명령은 시작 메시지를 표시하거나 숨 깁니다.\n\n**와일드 카드**:\n`%user%` 사용자에게 핑.\n`%username%` 언급없이 사용자의 이름을 출력합니다..",
         "chinese": "`{{prefix}}chinese [본문]`\n",

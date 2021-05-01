@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @someguy [motiv]`\nInterzice acessul @someguy pe server, motivul este optional, pentru nevoile avansate de moderare.\n",
 		"speakAvailable": "Limbile disponibile sunt:",
 		"autorole": "`{{prefix}}autorol [add | rem | list] [Rolul | @role]`\n\n`{{prefix}}autorole add Jocuri` Permite jocului **Jocuri** ca auto-asignabil.\n`{{prefix}}autorole rem Jocuri` Indeparteaza rolul **Jocuri** da lista.\n`{{prefix}}autorole list` Afiseaza lista si comenzile pentru fiecare rolu de auto-atribuire\n\n Tastati numele Rolului exact asa cum este inregistrat, sensibil la minuscule.\nSau doar @mention it",
-		"background": "`{{prefix}}background [Codimagine]`\n\n :warning: **IMPORTANT:**\n*Codimagine* __ nu sunt link-uri, sunt coduri obtinute de la http://www.pollux.fun/bgshop.\n\nExemplu: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`\n",
+		"background": "`{{prefix}}background [Codimagine]`\n\n :warning: **IMPORTANT:**\n*Codimagine* __ nu sunt link-uri, sunt coduri obtinute de la http://www.pollux.gg/bgshop.\n\nExemplu: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`\n",
 		"bye": "",
 		"welcome": "",
 		"chinese": "",

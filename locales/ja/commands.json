@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @someguy [理由]`\nサーバからの@someguyを禁止します。理由はオプションです。",
 		"speakAvailable": "使用可能な言語は次のとおりです。",
 		"autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` **ゲーム** ロールを自己割り当て可能にします。\n`{{prefix}}autorole rem Games` ロール **ゲーム** をリストから削除します。\n`{{prefix}}autorole list` 各自己割り当て可能ロールのリストとコマンドを表示します。\nロール名は、大文字と小文字を区別して正確に登録してください。 または単に@言及 する",
-		"background": "`{{prefix}}background [イメージコード]`\n :warning: **重要:** \n*イメージコード* __はリンクではありません__, それらはhttp://www.pollux.fun/bgshopから入手したコードです。\n\n例: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{prefix}}background [イメージコード]`\n :warning: **重要:** \n*イメージコード* __はリンクではありません__, それらはhttp://www.pollux.gg/bgshopから入手したコードです。\n\n例: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "",
 		"welcome": "",
 		"chinese": "`{{prefix}}chinese [テキスト]`",

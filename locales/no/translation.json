@@ -354,7 +354,7 @@
         "ban": "`{{prefix}}ban @someguy [reason]`\nBans @someguy fra tjeneren, Du kan også legge til en grunn.",
         "speakAvailable": "Tilgjengelige språk er:",
         "autorole": "`{{prefix}}autorol [legg til εrem φ list] [Roleε@role]` \n\n`{{prefix}}autorole add Games` Gir tilgang til **spillet** Rolle som selvtilordnet.\n`{{prefix}}autorole rem Games` Fjerner rollen **Spiller** da lista.\n`{{prefix}}autorollisten` viser listen og kommandoer for hver Rolle Tilknytt rolle\n\n Skriv rollenavn nøyaktig som registrert, case sensitive. Eller bare @mention",
-        "background": "`{{prefix}}bakgrunn [Imagecode]\n\n :warning: **VIKTIG:** \n*Imagecode* __are not links__, are codes obtained from http://www.pollux.fun/bgshop. \n\nEksempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}bakgrunn [Imagecode]\n\n :warning: **VIKTIG:** \n*Imagecode* __are not links__, are codes obtained from http://www.pollux.gg/bgshop. \n\nEksempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}kinesisk [text]`",
@@ -415,7 +415,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nDu kan også velge fra hvilken kurator du vil se plukkene fra! Bare skriv inn navnet deres etter kommandoen som `{{prefix}}lewd pollyanna` for eksempel, for å se kun ting kurert av **Pollyanna**.\n\n Vår nåværende kurator tropp er:\n {{squad}}",
         "marry": "Gangen er avhengig av `{{prefix}}håndverk`, siden du må ringe før du kan fortegne.\n\nFor å gifte seg med din kjære, gjør `{{prefix}}marry @user [ring]`. Det er 4 ruter av bryllinger, hver av dem laget av en annen edelstein, for å vise hvor fancy ekteskapet ditt er. I fremtiden vil høyere rangeringringer gi noen flere kjærlighets poeng som de vil kunne bruke sammen.\n\nEksempel bruk: `{{prefix}}marry @noen butie` for å foreslå med Rubin ring.\n\nKrever Innebygget, Administrer meldinger og reaksjonstillatelser",
-        "craft": "`{{prefix}}håndverk [itemcode]`\n Du kan finne gjenstandskoden og all informasjon på http://pollux.fun/crafting.\n\nFor å lage en gjenstand må du eier alle påkrevde materialer. Noen materialer må lages slik at de er tilgjengelige, de må ikke autolages når de gjør en enhet med høyere nivå.",
+        "craft": "`{{prefix}}håndverk [itemcode]`\n Du kan finne gjenstandskoden og all informasjon på http://pollux.gg/crafting.\n\nFor å lage en gjenstand må du eier alle påkrevde materialer. Noen materialer må lages slik at de er tilgjengelige, de må ikke autolages når de gjør en enhet med høyere nivå.",
         "divorce": "`{{prefix}}skilsmissbakgrunn` For å vise alle du er gift med. uansett om det er en person eller en hel hare!\n`{{prefix}}skilsmisse [@user þDiscord ID]` For å skille den personen"
     },
     "logs": {

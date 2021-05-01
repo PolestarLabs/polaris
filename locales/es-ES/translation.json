@@ -354,7 +354,7 @@
         "ban": "`{{prefix}}ban @alguien <razón>`\nBanea @alguien del servidor; también puedes añadir una razón.",
         "speakAvailable": "Los Idiomas disponibles son:",
         "autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` Permite que el Rol **Juegos** sea auto-asignable.\n`{{prefix}}autorole rem Games` Quita el Rol **Juegos** de la lista.\n`{{prefix}}autorole list` Muestra la lista y los comandos para cada Rol auto-asignable\n\nEscribe el nombre del Rol exactamente como está registrado, con sensibilidad a mayúsculas, o simplemente @mencionalo",
-        "background": "`{{prefix}}background [códigodelaimagen]`\n\n:advertencia: **IMPORTANTE:** \nEl *códigodelaimagen* __no puede ser un link__, sino un código obtenido en http://krypt.pollux.fun/\nLa tienda de Fondos está aun en desarrollo, así por ahora esta es la forma de hacer que funcione. Sé que es una mierda.\n\nEjemplo: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [códigodelaimagen]`\n\n:advertencia: **IMPORTANTE:** \nEl *códigodelaimagen* __no puede ser un link__, sino un código obtenido en http://krypt.pollux.gg/\nLa tienda de Fondos está aun en desarrollo, así por ahora esta es la forma de hacer que funcione. Sé que es una mierda.\n\nEjemplo: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}chino [texto]`",
@@ -415,7 +415,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\n¡También puedes escoger de qué selección quieres que sean las imágenes escogidas! Tan solo escribe su nombre después del comando, como `{{prefix}}lewd pollyanna` por ejemplo, para ver sólo contenido escogido por **Pollyanna**.\n\n Nuestro equipo de Seleccionadores actual es:\n {{squad}}",
         "marry": "Casarse depende directamente de `{{prefix}}craft`, ya que necesitas un anillo antes de poder declararte.\n\nPara casarte con tu amado o amada, haz `{{prefix}}marry @usuario [ring]`. Hay 4 rangos de anillos de boda, cada uno hecho de diferentes gemas, para alardear de tu elegante matrimonio. En el futuro, anillos de mas alto rango proveerán a la pareja de mas Love Points que podrán usar juntos.\n\nEjemplo de uso: `{{prefix}}marry @alguien rubine` para declararte con un anillo de Rubine.\n\nRequiere Permisos de Embed, Manage Messages y Reaction.",
-        "craft": "`{{prefix}}craft [código del item]`\nPuedes ver el código del objeto y toda su información en http://pollux.fun/crafting.\n\nPara Crear un objeto necesitas primero todos los materiales requeridos. Recuerda que algunos materiales necesitan a su vez crearse para estar disponibles, puesto que no aparecen automáticamente cuando creas un objeto de rango alto.",
+        "craft": "`{{prefix}}craft [código del item]`\nPuedes ver el código del objeto y toda su información en http://pollux.gg/crafting.\n\nPara Crear un objeto necesitas primero todos los materiales requeridos. Recuerda que algunos materiales necesitan a su vez crearse para estar disponibles, puesto que no aparecen automáticamente cuando creas un objeto de rango alto.",
         "divorce": "`{{prefix}}divorce` ¡Para mostrar a todo el mundo con quien te has casado, ya sea una persona o todo un harén!\n`{{prefix}}divorce [@usuario || Discord ID]` Para divorciarte de esa persona."
     },
     "logs": {
@@ -723,7 +723,7 @@
         "next": "Disponible de nuevo en este servidor en {{remain}}",
         "treat": "***¡Truco o trato!*** ¡Tienes **{{qtd}}** Dulces del alijo de este servidor!",
         "treatRefresh": "¡No no no! Ya tienes tus dulces, shoo!\nPuede volver a aparecer en **{{remaining}}**",
-        "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.fun/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
+        "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.gg/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
         "newAccOut": ":warning: Lo siento, las nuevas cuentas no pueden participar. Quizás puedas unirte al siguiente.",
         "newServer": "Los Servidores nuevos no pueden participar en este evento. Ponte en contacto con el Desarrollador o únete al Servidor de Soporte si deseas participar en el evento con este Servidor.",
         "newJoin": "",

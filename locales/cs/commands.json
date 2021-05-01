@@ -211,7 +211,7 @@
 		"ban": "`{{prefix}}ban @někdo <důvod>`\nZabanuje `@někdo` ze serveru, důvod je dobrovolný, pro případy více rozšířených moderačních potřeb.",
 		"speakAvailable": "Dostupné jazyky jsou:",
 		"autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]`\n\n`{{prefix}}autorole add Hry` Nastaví roli **Hry** jako samo-přiřaditelnou.\n`{{prefix}}autorole rem Hry` Vymaže roli **Hry** ze samo-přiřaditelných.\n`{{prefix}}autorole list` Ukáže seznam a příkazy pro jednotlivé samo-přiřaditelné role\n\nNapiš jméno role přesně jako je registrováno, velké a malé písmena. Nebo ho prostě @zmiň.",
-		"background": "`{{prefix}}background [Imagecode]`\n\n :warning: **DŮLEŽITÉ:** \n*Imagecode* __není odkaz__, jsou to kódy dostupné na http://beta.pollux.fun/bgshop. \n\nPříklad: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{prefix}}background [Imagecode]`\n\n :warning: **DŮLEŽITÉ:** \n*Imagecode* __není odkaz__, jsou to kódy dostupné na http://beta.pollux.gg/bgshop. \n\nPříklad: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "",
 		"welcome": "",
 		"chinese": "",

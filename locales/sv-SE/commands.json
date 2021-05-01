@@ -165,7 +165,7 @@
         "ban": "`{{prefix}}ban @någon [skäl]`\nBannar @någon från servern, du kan även lägga till en anledning.",
         "speakAvailable": "Tillgängliga språk är:",
         "autorole": "",
-        "background": "`{{prefix}}background [Bildkod]`\n\n :warning: **VIKTIGT:** \n*Bildkod* __Är inte länkar__, de är koder som du hittar här http://www.pollux.fun/bgshop. \n\nExempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [Bildkod]`\n\n :warning: **VIKTIGT:** \n*Bildkod* __Är inte länkar__, de är koder som du hittar här http://www.pollux.gg/bgshop. \n\nExempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "",

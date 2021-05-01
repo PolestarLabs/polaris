@@ -211,7 +211,7 @@
 		"ban": "`{{Prefix}}ban @someguy [прычына]`\nБанит @кагосьці з сервера, вы таксама можаце дадаць прычыну.",
 		"speakAvailable": "Даступныя мовы:",
 		"autorole": "`{{Prefix}}autorole [add | rem | list] [Role | @role] `\n\n`{{Prefix}}autorole add Games` Дазволіць ролі **Гульні** быць само прызначанай.\n`{{Prefix}}autorole rem Games` Выдаліць ролю **Гульні** з спісу.\n`{{Prefix}}autorole list` Паказаць спіс і каманды для кожнай само прызначанай ролі\n\n  Напішыце назву ролі рыхт - у - рыхт, з улікам рэгістра. Ці проста @згадайце яе",
-		"background": "`{{Prefix}}background [Спасылка на малюнак]`\n\n  :Warning: **ВАЖНА:**\n*Imagecode* __это ня ссылки__, гэта коды, якія могуць быць атрыманы з сайта http://www.pollux.fun/bgshop.\n\nПрыклад: `{{prefix}}background\nIlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+		"background": "`{{Prefix}}background [Спасылка на малюнак]`\n\n  :Warning: **ВАЖНА:**\n*Imagecode* __это ня ссылки__, гэта коды, якія могуць быць атрыманы з сайта http://www.pollux.gg/bgshop.\n\nПрыклад: `{{prefix}}background\nIlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
 		"bye": "",
 		"welcome": "",
 		"chinese": "`{{Prefix}}chinese [тэкст]`",

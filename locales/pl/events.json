@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "*** Cukierek albo psikus! *** Dostałeś ** {{qtd}} ** słodyczy ze skrytki tego Serwera!",
     "treatRefresh": "Nie nie nie! Masz już swoje cukierki, sio!\nMożesz wrócić za {{else}} **",
-    "current_event": "Hej~  Czy wiesz, że trwa globalne **Halloweenowe Wydarzenie**? :jack_o_lantern:\nW tym wydarzeniu możesz zdobyć fajne i ekskluzywne ładne rzeczy na `p!profile` karcie!\nDostępne tylko podczas tego wydarzenia, które potrwa do 5 listopada** \nWięcej informacji na <http://pollux.fun/events/haloween> *(strona po angielsku)*\n*Skontaktuj się z Właścicielem tego Serwera aby dowiedzieć się, czy serwer bierze udział w wydarzeniu*",
+    "current_event": "Hej~  Czy wiesz, że trwa globalne **Halloweenowe Wydarzenie**? :jack_o_lantern:\nW tym wydarzeniu możesz zdobyć fajne i ekskluzywne ładne rzeczy na `p!profile` karcie!\nDostępne tylko podczas tego wydarzenia, które potrwa do 5 listopada** \nWięcej informacji na <http://pollux.gg/events/haloween> *(strona po angielsku)*\n*Skontaktuj się z Właścicielem tego Serwera aby dowiedzieć się, czy serwer bierze udział w wydarzeniu*",
     "newAccOut": ":warning: Przepraszamy, nowe konta nie mogą brać udziału. Być może będziesz mógł dołączyć do następnego.",
     "nextThis": "Może zbierać cukierki ponownie za:",
     "candiesCheck": "Jak dotąd zebrałeś **{{amt}}** cukierków. Pukaj na serwery nadal, aby uzyskać więcej!",
@@ -136,7 +136,7 @@
     "egghuntfail": "*Lecz niczego nie znalazł*",
     "egghuntsuccess": "Super! Mamy jajko! Spójrzmy...",
     "egghuntsuccess2": "{{rarity_emoji}} {{user}} znalazł **{{rarity}} Jajko**!",
-    "egghuntsuccess3": "Masz **{{X}}** jajek.\n**{{Y}}** jest unikatowych.\nWięc informacji na: [Pollux Easter Event 2018](https://pollux.fun/events/easter2018)",
+    "egghuntsuccess3": "Masz **{{X}}** jajek.\n**{{Y}}** jest unikatowych.\nWięc informacji na: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
     "delaytrade": "Prr! Możesz dopiero wymienić się za: {{remaining} ",
     "wanttrade": "{{user}} chce się wymienić się z tobą swoim **{{tradingEgg}}**.",
     "wanttrade2": "Aby akceptować napisz  `accept` a następnie identyfikator wysłanego jaja.*\n\nNp.: `accept C1`, aby dać Jajko [**C1**] w zamian za Jajko [**{{eggcode}}**]",

@@ -139,7 +139,7 @@
         "ban": "`{{prefix}}ban @someguy [razão]`\nBane @someguy do Servidor, Podes também adicionar uma razão.",
         "speakAvailable": "As linguas disponíveis são:",
         "autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` Ativa o Cargo **Games** com Auto-Atribuível.\n`{{prefix}}autorole rem Games` Remove o Cargo **Games** da lista.\n`{{prefix}}autorole list` Mostra a lista e comandos de cada Cargo Auto-Atribuível\n\n Escreve o nome do Cargo exatamente como registrado, maiúsculas e minúsculas. Ou apenas @menciona",
-        "background": "\n `{{prefix}}background [código da imagem]`\n\n :warning: **IMPORTANTE:** \n*Os códigos* __não são links__, São códigos obtidos de http://www.pollux.fun/bgshop. \n\nExemplo: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "\n `{{prefix}}background [código da imagem]`\n\n :warning: **IMPORTANTE:** \n*Os códigos* __não são links__, São códigos obtidos de http://www.pollux.gg/bgshop. \n\nExemplo: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}chinese [texto]`",

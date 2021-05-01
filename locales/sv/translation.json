@@ -354,7 +354,7 @@
         "ban": "`{{prefix}}ban @någon [skäl]`\nBannar @någon från servern, du kan även lägga till en anledning.",
         "speakAvailable": "Tillgängliga språk är:",
         "autorole": "`{{prefix}}autorole [add <unk> rem <unk> list] [Role<unk> @role]` \n\n`{{prefix}}autorole add Games` Tillåter **spel** Roll som självtilldelningsbar.\n`{{prefix}}autorole rem spel` Tar bort rollen **Spel** da lista.\n`{{prefix}}autorole list` Visar listan och kommandon för varje självtilldelningsbar roll\n\n Skriv namnet exakt som registrerad, skiftlägeskänslig. Eller bara @nämn det",
-        "background": "`{{prefix}}background [Bildkod]`\n\n :warning: **VIKTIGT:** \n*Bildkod* __Är inte länkar__, de är koder som du hittar här http://www.pollux.fun/bgshop. \n\nExempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}background [Bildkod]`\n\n :warning: **VIKTIGT:** \n*Bildkod* __Är inte länkar__, de är koder som du hittar här http://www.pollux.gg/bgshop. \n\nExempel: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}kinesiska [text]`",
@@ -415,7 +415,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nDu kan också välja mellan vilken curator du vill se plocken från! Skriv bara deras namn efter kommandot som `{{prefix}}lewd pollyanna` till exempel, för att se endast saker kurerade av **Pollyanna**.\n\n Vår nuvarande kuratortrupp är:\n {{squad}}",
         "marry": "Giftemål bygger på `{{prefix}}craft`, eftersom du måste ha en ring innan du kan fria.\n\nFör att gifta dig med din älskade, skriv `{{prefix}}marry @någon [ring]`. Det finns  4 olika typer av bröllopsringar, var och en är gjord utav olika ädelstenar värda olika mycket, för att visa upp hur fint erat äktenskap är. I framtiden, kommer mer värda ringar ge paret mer Love Points som dom kommer kunna spendera tillsamans\n\nExempelvis: `{{prefix}}marry @någon rubine` För att fria med en rubin ring.\n\nKräver Embed, hantera meddelanden och reaktionsbehörigheter.",
-        "craft": "`{{prefix}}craft [item code]`\n Du kan hitta artikelkoden och all information på http://pollux.fun/crafting.\n\nFör att tillverka ett föremål måste du äga alla nödvändiga material, vissa material måste tillverkas för att vara tillgängliga, de är inte autofokuserade när du gör en högre nivå objekt.",
+        "craft": "`{{prefix}}craft [item code]`\n Du kan hitta artikelkoden och all information på http://pollux.gg/crafting.\n\nFör att tillverka ett föremål måste du äga alla nödvändiga material, vissa material måste tillverkas för att vara tillgängliga, de är inte autofokuserade när du gör en högre nivå objekt.",
         "divorce": "`{{prefix}}skilsmässa` För att visa alla du är gift med. om det är en person eller ett helt harem!\n`{{prefix}}skilsmässa [@user <unk> Discord ID]` Att skilja den personen"
     },
     "logs": {

@@ -80,7 +80,7 @@
   "halloween17": {
     "treat": "***Süßes oder Saures*** Du hast **{{qtd}}** Süßigkeiten von der Serverbank bekommen.",
     "treatRefresh": "NEIN NEIN NEIN! Du hast dein Süßigkeiten schon bekommen.\nKomme in **{{remaining}}** wieder.",
-    "current_event": "Hey~ Wusstest Du, dass gerade ein globales **Halloween Event** stattfindet? :jack_o_latern: In diesem Event, kannst du _exklusive_ und ziemlich coole Sachen für dein `p!profile` sammeln! Dies funktioniert nur in diesem Event, welches bis zum **5. November** andauert.\nMehr Informationen findest du auf:\n<http://pollux.fun/events/haloween> *(Seite ist in Englisch)*\n*Kontaktiere deinen Server Besitzer, um zu prüfen, ob euer Server teilnimmt*",
+    "current_event": "Hey~ Wusstest Du, dass gerade ein globales **Halloween Event** stattfindet? :jack_o_latern: In diesem Event, kannst du _exklusive_ und ziemlich coole Sachen für dein `p!profile` sammeln! Dies funktioniert nur in diesem Event, welches bis zum **5. November** andauert.\nMehr Informationen findest du auf:\n<http://pollux.gg/events/haloween> *(Seite ist in Englisch)*\n*Kontaktiere deinen Server Besitzer, um zu prüfen, ob euer Server teilnimmt*",
     "newAccOut": ":warning: Sorry, neue Accounts können nicht teilnehmen. Probiere es im nächsten Event!~",
     "nextThis": "Du kannst wieder Süßes oder Saures abholen in:",
     "candiesCheck": "Du hast bereits **{{amt}}** Süßigkeiten gesammelt. Mach weiter so!",

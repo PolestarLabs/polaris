@@ -354,7 +354,7 @@
         "ban": "`{{prefix}}verbant @someguy [reason]`\nBans @someguy van de Server, u kunt ook een reden toevoegen.",
         "speakAvailable": "Beschikbare talen zijn:",
         "autorole": "'{{prefix}}autorole [voeg rm ½ lijst toe] [Role→@role]` \n\n`{{prefix}}autorole add Games` staat de **Games** rol toe als zelf toewijsbaar.\n`{{prefix}}autorole rem Games` Verwijdert de rol **Games** da lista.\n`{{prefix}}automatische lijst met commando's toont de lijst en commando's voor elke zelftoewijzbare rol\n\n Typ de naam van de rol precies als geregistreerd, hoofdlettergevoelig. Of gewoon @mention het",
-        "background": "`{{prefix}}achtergrond [Imagecode]`\n\n :warning: **BELANGRIJK:** \n*Imagecode* __zijn geen links__, zijn codes verkregen van http://www.pollux.fun/bgshop. \n\nVoorbeeld: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "`{{prefix}}achtergrond [Imagecode]`\n\n :warning: **BELANGRIJK:** \n*Imagecode* __zijn geen links__, zijn codes verkregen van http://www.pollux.gg/bgshop. \n\nVoorbeeld: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}Chinees [text]`",
@@ -415,7 +415,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nJe kan ook kiezen uit welke curator je de prikkers wilt zien! Typ gewoon hun naam na het commando zoals `{{prefix}}lewd pollyanna` om alleen dingen te zien die worden vervloekt door **Pollyanna**.\n\n Ons huidige curator team is:\n {{squad}}",
         "marry": "Het huwelijk is direct afhankelijk van `{{prefix}}craft`, omdat je een ring nodig hebt voordat je kunt voorstellen.\n\nOm met je geliefde te trouwen, doe `{{prefix}}trouwt met @user [ring]`. Er zijn 4 trouwringen, elk gemaakt van een andere edelsteen, om te laten zien hoe mooi je huwelijk is. In de toekomst zullen hogere rangen de paar liefdepunten die ze samen zullen kunnen uitgeven.\n\nVoorbeeld gebruik: `{{prefix}}marry @someone rubine` om voor te stellen met een Rubine ring.\n\nVereist Embed, Beheer Berichten en Reactie Rechten",
-        "craft": "`{{prefix}}maakt [item code]`\n Je kunt de item code en alle informatie vinden op http://pollux.fun/crafting.\n\nOm een voorwerp te maken moet je alle vereiste materialen bezitten, sommige materialen moeten gemaakt worden om beschikbaar te zijn, deze worden niet autocraft bij het doen van een hoger item.",
+        "craft": "`{{prefix}}maakt [item code]`\n Je kunt de item code en alle informatie vinden op http://pollux.gg/crafting.\n\nOm een voorwerp te maken moet je alle vereiste materialen bezitten, sommige materialen moeten gemaakt worden om beschikbaar te zijn, deze worden niet autocraft bij het doen van een hoger item.",
         "divorce": "`{{prefix}}scheiden ` Om te laten zien aan wie je getrouwd bent. of dat één persoon is of een hele hare!\n`{{prefix}}scheiden [@user Combce Discord ID]` om die persoon te scheiden"
     },
     "logs": {
