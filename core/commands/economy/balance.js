@@ -38,13 +38,13 @@ const init = async (msg) => {
       othPart = (await PLX.getTarget(x.from, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
       return `↔ \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
-        + `*\`${x.type}\`* from [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+        + `*\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id}) \`${othPart.id}\` `;
     }
     if (x.from === TARGETDATA.id && x.to !== POLid) {
       othPart = (await PLX.getTarget(x.to, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
       return `↔  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
-        + `*\`${x.type}\`* to [${othPart?.tag}](http://pollux.fun/p/${othPart?.id}) \`${othPart.id}\` `;
+        + `*\`${x.type}\`* to [${othPart?.tag}](${paths.DASH}/p/${othPart?.id}) \`${othPart.id}\` `;
     }
     if (x.to === POLid) return `📤  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
     if (x.from === POLid) return `📥  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
