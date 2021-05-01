@@ -188,7 +188,8 @@ const init = async (msg) => {
   const Target = ((await (PLX.resolveMember(msg.guild, msg.args[0]).catch((e) => null)) || (await PLX.resolveUser(msg.args[0]).catch((e) => console.error(e))))) || msg.member;
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
-  let Target_Database = await DB.users.findOne({ id: Target.id }).populate('marriageData').lean();
+  let Target_Database = await DB.users.findOne({ id: Target.id });
+  if( Target_Database.featuredMarriage?.length ) Target_Database = Target_Database.populate('marriageData');
 
   if (Target_Database) Target_Database.type = "udata";
   const PFLD = Target_Database.switches?.profiled || false;
