@@ -35,7 +35,7 @@ const init = async function (msg) {
     P.pplcount = targetData.whoIn.length + 1;
 
     const embed = new Embed()
-      .thumbnail("https://pollux.fun/build/rank.png")
+      .thumbnail(`${paths.DASH}/build/rank.png`)
       .color("#3b9ea5")
       .timestamp(new Date())
       .description(`

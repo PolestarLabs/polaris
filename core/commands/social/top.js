@@ -85,7 +85,7 @@ const topCommend = async (m) => {
   console.log(listCommend)
 
   const embed = {
-    thumbnail: { url: "https://pollux.fun/build/rank.png" },
+    thumbnail: { url: `${paths.DASH}/build/rank.png` },
     color: 0x3b9ea5,
     description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankIn}** (${ myCommends.totalIn }) \u2003 | \u2003  ${_emoji("plxcoin")}**#${myRankOut}** (${ myCommends.totalOut })`,
     fields: [

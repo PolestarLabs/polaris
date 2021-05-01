@@ -29,7 +29,7 @@ exports.run = function run(cmd, m, third, extras) {
   emb.author($t("help.commUsage", {
     lngs: m.lang,
     comm: m.prefix + cmd,
-  }), PLX.user.displayAvatarURL, "http://Pollux.fun/commands");
+  }), PLX.user.displayAvatarURL, `${paths.DASH}/commands`);
 
   emb.description(`${$t([`commands:help.${cmd}`, "commands:meta.notDocumented"], {
     lngs: m.lang,

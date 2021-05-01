@@ -11,7 +11,7 @@ const init = async function (msg) {
 
   const embed = new Embed()
     .image(Target.avatarURL)
-    .author(Target.tag, null, `https://pollux.fun/p/${Target.id}`)
+    .author(Target.tag, null, `${paths.DASH}/p/${Target.id}`)
     .color(await (Picto.avgColor(Target.avatarURL)));
 
   msg.channel.send({ embed }).catch((err) => msg.channel.send("`ERROR:: Could not send Avatar"));
