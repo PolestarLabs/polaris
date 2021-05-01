@@ -218,7 +218,7 @@
 		"clear": "`{{prefix}}clear X`\n**Atentie** X trebuie sa fie __Mai mare decat 1__ si __ Mai mica de 101__.\nMatematica de baza, stiu ca poti obtine acest lucru!\n",
 		"color": "",
 		"equip": "`{{prefix}}equip`\nSi apoi faceti clic pe reactii pentru a naviga, asigurati-va ca le lasa sa se incarce inainte de a da click-click '\n",
-		"fausto": "`{{Prefix}}faustão`\n Necesita permisiunea MANAGE WEBHOOKS pentru a functiona.",
+		"fausto": "`{{prefix}}faustão`\n Necesita permisiunea MANAGE WEBHOOKS pentru a functiona.",
 		"favcolor": "",
 		"fortunecookie": "`{{prefix}}fortunecookie` (Aceasta comanda are unele probleme)",
 		"menu": "[Intrerupt]",
