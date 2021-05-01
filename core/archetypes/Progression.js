@@ -26,7 +26,7 @@ class ProgressionManager extends EventEmitter {
             if(!value && !value?.content && !msg?.content) return;
             if (isPartOfAchievement(event)) Achievements.check(msg.author.id,true,{msg:msg||value});
             
-            await wait(5);            
+            await wait(1);            
             //console.log({event,userID})
             this.checkStatusAll(userID,msg);
 
@@ -101,7 +101,7 @@ class ProgressionManager extends EventEmitter {
     emit(event, ...args){
         const [action,type,condition] = event.split('.');
 
-        hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([args[0].userID,args[0].value,args[0].setValue])}\`\`\``)
+        //hook.info("**PROGRESSION EVENT:** "+ `\`${event}\` - \`\`\`${ JSON.stringify([args[0].userID,args[0].value,args[0].setValue])}\`\`\``)
         super.emit('*',event,...args); // Catch-all
         super.emit(action,event, ...args); // emit top-level
         if (type) super.emit(`${action}.${type}`, event, ...args); // emit specific
@@ -134,8 +134,10 @@ class ProgressionManager extends EventEmitter {
 
     async checkStatusAll(userID,msg){
 
-        if (this.userCheckQueue.get(userID) === true) return;
+        console.log("ENTER ALL".yellow)
+        //if (this.userCheckQueue.get(userID) === true) return console.log('rejected'.red);
         this.userCheckQueue.set(userID,true);
+         console.log('entering'.green);
 
         let userQuests = await this.getUserQuests(userID);
         
@@ -144,7 +146,9 @@ class ProgressionManager extends EventEmitter {
                 
                 let quest = userQuests[i];
                 
-                await setImmediate(await wait(1),{ref:false});
+                console.log('quest #',i)
+                await setImmediate( 0 ,{ref:false});
+                console.log('post immed'.gray)
                 
                 
                 if(quest.progress >= quest.target) {
@@ -158,6 +162,7 @@ class ProgressionManager extends EventEmitter {
             }
         };
         this.userCheckQueue.set(userID,false);
+        console.log('•••exit'.blue);
         return userQuests;
     }
     async checkStatusOne(questID,userID,msg){
@@ -268,6 +273,7 @@ async function isPartOfAchievement(param,value,options){
 
 const init = ()=>{
     global.Progression = new ProgressionManager();
+    return global.Progression;
 }
 
 async function questCompletedMsg(userQuest,userID){
