@@ -13,7 +13,7 @@ const init = async function (msg,args){
     let userErrands = await Progression.getUserQuests(msg.author.id);
     let completed = userErrands.filter(e=> e.completed);
 
-    const DYN_TIMER = (userErrands.length - completed.length) * 10 * 60e3;
+    const DYN_TIMER = Math.max(userErrands.length - completed.length, 1) * 10 * 60e3;
 
     const newErrand = await new TimedUsage( "errands", { day: DYN_TIMER } ).loadUser(msg.author);
     const newForfeit = await new TimedUsage( "errandForfeit", { day: FORFEIT } ).loadUser(msg.author);
