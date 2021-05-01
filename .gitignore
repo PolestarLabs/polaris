@@ -20,3 +20,4 @@ core/commands/_botStaff/eval.js
 config_events.json
 shell.js
 eval.js
+package-lock.json
