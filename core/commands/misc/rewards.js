@@ -359,13 +359,13 @@ const init = async function (message) {
     }
   }
 
-  if (STATUS === "expired") return message.reply("Your rewards period seems to have expired. Thanks for supporting up to this point~\n If you wish to continue supporting, consider donating on Patreon <https://pollux.fun/patreon>.");
+  if (STATUS === "expired") return message.reply("Your rewards period seems to have expired. Thanks for supporting up to this point~\n If you wish to continue supporting, consider donating on Patreon <https://pollux.gg/patreon>.");
 
   const T = tier;
   const pushmo = T.stickers;
   const stickernames = await DB.cosmetics.find({ id: { $in: pushmo }, type: "sticker" }, { name: 1, _id: 0 });
   const tiere = T.boxes[0].name.replace("lootbox_", "").replace("_O", "");
-  embed.thumbnail(`https://pollux.fun/build/${T.title}.png`);
+  embed.thumbnail(`https://pollux.gg/build/${T.title}.png`);
   embed.description(`
 **${capitalize(T.title) + (T.legacy ? " Legacy" : "")}** ${STATUS === 0 ? "(Last Month)" : typeof STATUS === "number" ? `(${STATUS} Months Left)` : ""}
 
@@ -380,7 +380,7 @@ ${stickernames.map((f) => f.name).join(" • ")}
   embed.footer(message.author.tag, message.author.avatarURL);
   const ts = new Date();
   embed.timestamp(ts);
-  // embed.setImage('https://pollux.fun/stickers/'+STICKERS[STICKERS.length-1]+'.png')
+  // embed.setImage('https://pollux.gg/stickers/'+STICKERS[STICKERS.length-1]+'.png')
 
   const querystring = queryGen(T);
 
