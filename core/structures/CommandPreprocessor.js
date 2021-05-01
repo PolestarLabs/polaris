@@ -2,6 +2,7 @@ const { performance } = require("perf_hooks");
 // const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require("fs").readdir);
 const cfg = require("../../config.json");
+const { argsReqed } = require("../commands/utility/brackets");
 
 const runtimeOutput = (rtm) => {
   if (rtm * 1000 < 1000) return `${Math.floor(rtm * 1000)}μs `;
@@ -113,14 +114,21 @@ const DEFAULT_CMD_OPTS = {
       commandRoutine.updateMeta(m, m.command);
       return undefined;
     },
-    postCommand: (m) => {
+    postCommand: (m,a,res)=>{
+       
+    },
+    postExecution: (m,a,status) => {
+
+      if (!status) return;
+      if (m.command.argsRequired && !a.length) return;
+      
       Progression.emit(`command.${m.command.label}`, { msg: m });
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
       if (m.content.includes("--bmk")) {
         m.channel.send({
           embed: {
-            description: `⏱ ${runtimeOutput(performance.now() - m.runtime)}`, color: 0x3355cc,
+            description: `⏱ ${runtimeOutput(performance.now() - m.runtime)}`, color: status ? 0x3355cc : 0xFF0000,
           },
         });
       }
