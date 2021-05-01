@@ -105,6 +105,15 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
   if (!msg.guild) return console.log('noguild');
   if (msg.channel.type !== 0) return console.log('channel type nonzero');
 
+  
+  if (msg.guild.customResponses){
+    activateResponse(msg)
+  }else{
+    let gResps = (await DB.responses.find({server: msg.guild.id}).noCache()) || [];
+    msg.guild.customResponses = gResps;
+    activateResponse(msg)
+  }
+
   if (msg.guild.imagetracker && !msg.channel.nsfw) {
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
     if (msg.attachments?.[0] || hasImageURL) {
@@ -218,3 +227,12 @@ function EXPtoLEVEL(LEVEL){
 }
 
 */
+
+const {executeCustomResponse}  = require('../commands/fun/responses.js');
+
+function activateResponse(msg){
+  const response = msg.guild.customResponses.find(res=> res.trigger === msg.content);
+    if ( response ){
+      executeCustomResponse(response,msg);
+    }
+}
