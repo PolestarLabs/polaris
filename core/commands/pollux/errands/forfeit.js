@@ -1,8 +1,8 @@
-const {FORFEIT,parseQuestItem} = require('./_meta.js');
+const { FORFEIT, parseQuestItem } = require("./_meta.js");
 const { TimedUsage } = require("@polestar/timed-usage");
 const moment = require("moment");
-const ReactionMenu = require('../../../structures/ReactionMenu.js');
-const ECO = require('../../../archetypes/Economy.js')
+const ReactionMenu = require("../../../structures/ReactionMenu.js");
+const ECO = require("../../../archetypes/Economy.js");
 
 const init = async function (msg,args){
 
@@ -23,8 +23,8 @@ const init = async function (msg,args){
 
         const embed = {fields:[]};
         embed.description = `**Forfeit Errands**
-Forfeiting an Errand costs ${_emoji('SPH')} **1** Sapphire.
-${ userData.modules.SPH >= 1 
+Forfeiting an Errand costs ${_emoji('SPH')} **5** Sapphire.
+${ userData.modules.SPH >= 5 
     ? "Choose one errand to forfeit:"
     : _emoji('nope')+"You don't have enough Sapphires for this" }
         `
@@ -35,7 +35,7 @@ ${ userData.modules.SPH >= 1
             field.name = field.name.replace(/<:[A-z]+:[0-9]+>/, _emoji("swp_"+(i+1)) )
         })
         const menu = await msg.channel.send({embed, messageReferenceID:msg.id});
-        if (userData.modules.SPH < 1) return;
+        if (userData.modules.SPH < 5) return;
         
         let res = await ReactionMenu(
             menu,
@@ -50,9 +50,9 @@ ${ userData.modules.SPH >= 1
         if (res?.id === _emoji('nope').id ){
             return null;
         }else{
-            const selected = res.index; 
+            const selected = res.index;
             
-            await ECO.pay(msg.author,1,"errand_forfeit","SPH");
+            await ECO.pay(msg.author,5,"errand_forfeit","SPH");
             await Progression.remove(notCompleted[selected].id,msg.author.id);
             await newForfeit.process();
 
