@@ -4,7 +4,7 @@ const Drops = require("./boxDrops").lootbox;
  * @param {{ author: { id: any; }; guild: { id: any; }; }} msg
  */
 async function incrementLocal(msg) {
-  DB.localranks.get({ user: msg.author.id, server: msg.guild.id }).then(async (/** @type {any} */ data) => {
+  DB.localranks.get({ user: msg.author.id, server: msg.guild.id }).then(async (data) => {
     if (!data) await DB.localranks.new({ U: msg.author, S: msg.guild });
     await DB.localranks.incrementExp({ U: msg.author.id, S: msg.guild.id });
   });
@@ -14,11 +14,14 @@ async function incrementLocal(msg) {
  * @param {{ author: { bot: any; id: any; avatarURL: any; tag: any; }; guild: { id: string; }; channel: { id: any; send: (arg0: { embed: { color: number; description: string; footer: { icon_url: any; text: any; }; }; }) => void; }; member: { addRole: (arg0: any) => Promise<any>; removeRole: (arg0: any) => Promise<any>; }; }} msg
  */
 async function levelChecks(msg) {
+
+
+
   if (msg.author.bot) return;
   
   if (msg.guild.id === "110373943822540800") return;
 
-  let servData = await DB.servers.get(msg.guild.id);
+  let servData = await DB.servers.findOne({id:msg.guild.id}).noCache();
   if (!servData) return;
 
   if (servData.switches?.chLvlUpOff?.includes(msg.channel.id)) {
@@ -29,7 +32,7 @@ async function levelChecks(msg) {
 
   const _FACTOR = servData.modules.UPFACTOR || 0.5;
 
-  const LOCAL_RANK = (await DB.localranks.get({ user: msg.author.id, server: msg.guild.id }))
+  const LOCAL_RANK = (await DB.localranks.findOne({ user: msg.author.id, server: msg.guild.id }).noCache())
                     || {
                       user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
                     };
@@ -37,6 +40,8 @@ async function levelChecks(msg) {
 
   const curLevelLocal = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
   // let forNext_local = Math.trunc(Math.pow(((LOCAL_RANK.level||0) + 1) / _FACTOR, 2));
+
+  console.log({curLevelLocal,UID: msg.author.id,LOCAL_RANK});
 
   if (!servData.switches?.chExpOff?.includes(msg.channel.id)) {
     incrementLocal(msg);
@@ -54,15 +59,24 @@ async function levelChecks(msg) {
 
   //TODO[epic=anyone] Add level up image
   if (curLevelLocal > LOCAL_RANK.level) {
+   
     await DB.localranks.set({ user: msg.author.id, server: msg.guild.id }, { $set: { level: curLevelLocal } });
 
+    console.log({
+      "!!servData.modules.LVUP_local": !!servData.modules.LVUP_local,
+      "!servData.switches?.chLvlUpOff?.includes(msg.channel.id)": !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
+      ,servData
+    });
+
+    const lvupText =  (servData._doc||servData).modules?.LVUP_text?.replaceAll('%lv%',curLevelLocal);
+
     if (
-      servData.modules.LVUP_local
+      !!servData.modules.LVUP_local
         && !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
     ) {
       const embed = {
         color: 0x6699FF,
-        description: `:tada: **Level Up!** >> ${curLevelLocal}`,
+        description: lvupText || `:tada: **Level Up!** >> ${curLevelLocal}`,
         footer: { icon_url: msg.author.avatarURL, text: msg.author.tag },
       };
       msg.channel.send({ embed });
@@ -71,20 +85,20 @@ async function levelChecks(msg) {
     if (servData.modules.AUTOROLES) {
       // ADD AUTOROLES
       const AUTOS = servData.modules.AUTOROLES;
-      const sorting = function sorting(/** @type {number[]} */ a, /** @type {number[]} */ b) { return b[1] - a[1]; };
+      const sorting = function sorting( a, b ) { return b[1] - a[1]; };
       AUTOS.sort(sorting);
-      const levels = AUTOS.map((/** @type {any[]} */ r) => r[1]);
+      const levels = AUTOS.map((r) => r[1]);
 
       const roleStack = servData.modules.autoRoleStack !== false;
 
       for (let i = 0; i < levels.length; i += 1) {
         if(!AUTOS || !AUTOS.length) return;
-        msg.member.addRole(AUTOS.find((/** @type {number[]} */ r) => r[1] === curLevelLocal)[0]).catch(() => "noperms");
+        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() => "noperms");
         if (roleStack === true) {
-          const autorole = AUTOS.find((/** @type {number[]} */ r) => r[1] <= curLevelLocal);
+          const autorole = AUTOS.find((r) => r[1] <= curLevelLocal);
           if (autorole) msg.member.addRole(autorole[0]).catch(() => "noperms");
         } else if (roleStack === false) {
-          const autorole = AUTOS.find((/** @type {number[]} */ r) => r[1] !== curLevelLocal);
+          const autorole = AUTOS.find((r) => r[1] !== curLevelLocal);
           if (autorole) msg.member.removeRole(autorole[0]).catch(() => "noperms");
         }
       }
@@ -101,7 +115,7 @@ async function levelChecks(msg) {
   servData = null;
 }
 
-module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { type: number; nsfw: any; }; content: string; attachments: any[]; }} */ msg) => {
+module.exports = async (msg) => {
   if (!msg.guild) return console.log('noguild');
   if (msg.channel.type !== 0) return console.log('channel type nonzero');
 
@@ -127,7 +141,7 @@ module.exports = async (/** @type {{ guild: { imagetracker: any; }; channel: { t
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
-    ]).then(x=>  true ).timeout(15000).catch((err) => console.error(err)),
+    ]).then(x=>  true ).timeout(25000).catch((err) => console.error(err)),
   );
 };
 
