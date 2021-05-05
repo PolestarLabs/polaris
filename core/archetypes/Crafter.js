@@ -440,7 +440,12 @@ class Crafter extends EventEmitter {
      * @memberof Crafter
      */
     static getItem(name) {
+      
       console.log(allItemsCode.get(name),'item by code'.red)
+      console.log(allItems.get(name),'just get'.red)
+      console.log(allItemsName.get(name),'item by name'.red)
+      
+      
       return (allItems.get(name) || allItems.get(allItemsCode.get(name)) || allItems.get(allItemsName.get(name)) || null);
     }
 
@@ -454,10 +459,27 @@ class Crafter extends EventEmitter {
      */
     static searchItems(search) {
       if (!search) throw new Error("Need a string to search for");
-      const entries = allItems.entries();
-      const items = [];
+      //const entries = allItems.entries();
+      //const items = [];
+      const searchRegex = new RegExp(`.*${search}.*`,'i');
       
+      return DB.items.find({
+        $and:[
+          {
+            crafted: true
+          },
+          {
+            $or:[
+              {'name': searchRegex },
+              {'id': searchRegex },
+              {'code': searchRegex },
+            ]
+          }
+        ]
+      });
+
       // calc diff and add if <5
+      /*
       for (const entry of entries) {
         const itm = entry[1];
 
@@ -479,7 +501,7 @@ class Crafter extends EventEmitter {
 
        
         if (itm.diffScore < 5) items.push(itm);
-      }
+      }/*/
       // sort and return
       items.sort((a, b) => a.diffScore - b.diffScore);
       return items;
