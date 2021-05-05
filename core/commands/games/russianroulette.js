@@ -90,17 +90,17 @@ const playerRoulette = async (player, game) => {
 };
 
 const handlePlayers = async (msg, players, game, gameFrame) => {
-  let voiceChannel = msg.member.voiceState.channelID;
-  voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+  //let voiceChannel = msg.member.voiceState.channelID;
+  //voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
   let dead = null;
   for (const index in players) { // eslint-disable-line guard-for-in
     await wait(1);
-    if (voiceChannel) voiceChannel.stopPlaying();
+    //if (voiceChannel) voiceChannel.stopPlaying();
     const player = players[index];
 
     // No one is dead so far
     gameFrame.embed.description += `${player.name}'s turn.... `;
-    if (voiceChannel) voiceChannel.play(click);
+    //if (voiceChannel) voiceChannel.play(click);
     // gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
     await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
     const died = await playerRoulette(player, game);
@@ -125,11 +125,11 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
     // await wait(1);
     // if (game.voiceChannel) game.voiceChannel.stopPlaying();
 
-    if (voiceChannel) voiceChannel.stopPlaying();
+    //if (voiceChannel) voiceChannel.stopPlaying();
     await msg.edit(gameFrame);
     if (died) {
-      if (voiceChannel) voiceChannel.play(awp);
-    } else if (voiceChannel) voiceChannel.play(clickNoAmmo);
+      //if (voiceChannel) voiceChannel.play(awp);
+    } //else if (voiceChannel) voiceChannel.play(clickNoAmmo);
 
     if (died) break;
   }
@@ -139,9 +139,9 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 const newRound = async (msg, players, round = 0) => {
   // Initialise game
-  let voiceChannel = msg.member.voiceState.channelID;
-  voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
-  if (voiceChannel) voiceChannel.play(gunRoll);
+  //let voiceChannel = msg.member.voiceState.channelID;
+  //voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+  //if (voiceChannel) voiceChannel.play(gunRoll);
   await wait(2);
 
   const value = players.map((a) => a.money).reduce((a, b) => a + b);
@@ -170,7 +170,7 @@ const newRound = async (msg, players, round = 0) => {
     gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
 
     const plxMessage = await msg.channel.send(gameFrame);
-    if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
+    //if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
     return;
   }
   // There are more people in the game
