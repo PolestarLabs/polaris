@@ -67,7 +67,9 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 	//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
 	let dead = null;
 	for (const index in players) { // eslint-disable-line guard-for-in
+		
 		await wait(1);
+		
 		//if (voiceChannel) voiceChannel.stopPlaying();
 		const player = players[index];
 
@@ -75,10 +77,23 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 		gameFrame.embed.description += `${player.name}'s turn.... `;
 		//if (voiceChannel) voiceChannel.play(click);
 		// gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
-		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
+		console.log('pre-die')
 		const died = await playerRoulette(player, game);
+		console.log('post-die')
+		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
+		await msg.addReaction('Gun:338331025300127745');
 
-		await wait(4);
+		console.log('pre-race')
+		await Promise.race([
+			msg.channel.awaitMessages(m=>m.author.id === player.id,{time:10e3, maxMatches:1}),
+			msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
+			( player.isBot ? wait( randomize(2,5) ) : wait(8))
+		]);
+		console.log('post-race')
+		
+		
+
+		
 
 		// Fire. Check if they're dead
 
@@ -196,6 +211,7 @@ const init = async (msg, args) => {
                 id: joinMsg.author.id,
                 name: joinMsg.author.username,
                 money: parseInt(joinMsg.content.split(" ")[1]),
+					 isBot: joinMsg.author.bot
             })
 				poolMsg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
 				+ `**Players**\n${verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`)
