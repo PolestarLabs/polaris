@@ -41,10 +41,10 @@ const startGameCollector = async (game, msg, cb) => {
 
 	const message = await msg.channel.send("Let's see if you're going to die now...");
 	if (result.lost) {
-		await ECO.pay(msg.author.id, BET, "gambling_russroll");
+		await ECO.pay(msg.author.id, BET, "russianroulette.gambling");
 		return message.edit("BOOM! Someone got shot...\nYou lost your money. RIP.");
 	} if (result.won) {
-		await ECO.receive(msg.author.id, game.currentPayout - BET, "gambling_russroll");
+		await ECO.receive(msg.author.id, game.currentPayout - BET, "russianroulette.win");
 		return message.edit(`**no bullet noise**\nYou came out alive of the game...\nI added **${game.currentPayout}** rubines to your account.`);
 	}
 
@@ -58,7 +58,6 @@ const startGameCollector = async (game, msg, cb) => {
 // Does member die?
 const playerRoulette = async (player, game) => {
 	const rst = game.handleInput("shoot");
-	if (rst.lost) await ECO.pay(player.id, player.money, "gambling_russroll");
 	return !!rst.lost;
 };
 
@@ -75,24 +74,13 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 		// No one is dead so far
 		gameFrame.embed.description += `${player.name}'s turn.... `;
+		gameFrame.embed.footer = {text: `Say "shoot" or click the gun to fire! (8s)` }
 		//if (voiceChannel) voiceChannel.play(click);
 		// gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
-		console.log('pre-die')
-		const died = await playerRoulette(player, game);
-		console.log('post-die')
+		const died = player.isBot || await playerRoulette(player, game);
 		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
-		await msg.addReaction('Gun:338331025300127745');
 
-		console.log('pre-race')
-		await Promise.race([
-			msg.channel.awaitMessages(m=>m.author.id === player.id,{time:10e3, maxMatches:1}),
-			msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
-			( player.isBot ? wait( randomize(2,5) ) : wait(8))
-		]);
-		console.log('post-race')
-		
-		
-
+		await userShoot(msg,player);
 		
 
 		// Fire. Check if they're dead
@@ -115,17 +103,19 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 		//if (voiceChannel) voiceChannel.stopPlaying();
 		await msg.edit(gameFrame);
+
 		if (died) {
 			//if (voiceChannel) voiceChannel.play(awp);
 		} //else if (voiceChannel) voiceChannel.play(clickNoAmmo);
 
 		if (died) break;
 	}
+	await wait(3);
 	// End of round
 	return dead;
 };
 
-const newRound = async (msg, players, round = 0) => {
+const newRound = async (msg, players, round = 1, initialMessage, hasBots) => {
 	// Initialise game
 	//let voiceChannel = msg.member.voiceState.channelID;
 	//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
@@ -146,18 +136,96 @@ const newRound = async (msg, players, round = 0) => {
 	// Actual rounds
 	const message = await msg.channel.send(gameFrame);
 	const diedInRound = await handlePlayers(message, players, game, gameFrame);
-	message.deleteAfter(2e3);
+	await message.deleteAfter(5).catchReturn();
 
 	// Is there 1 person left?
 	if (players.length === 1) { // This person wins
-		await ECO.receive(players[0].id, value, "gambling_russroll");
+		
+		const player = players[0];
+		initialMessage.delete().catchReturn();
+		gameFrame.embed.footer = {};
 
-		gameFrame.embed.title = "Show is over, kids!";
-		gameFrame.embed.description = `${players[0].name} stands victorious!`;
-		gameFrame.embed.color = 0x608a6d;
-		gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
+		await wait(3);
+		
+		
+		if (player.isBot){
+			gameFrame.embed.title = "Did y'all lose to a **bot**???";
+			gameFrame.embed.description = `${player.name} stands victorious! You guys suck...`;
+			gameFrame.embed.color = 0x608a6d;
+			gameFrame.embed.image.url = "http://1.bp.blogspot.com/-n7NmKmr60ts/U4JaTVi5pbI/AAAAAAAAH30/0OuS6MUxyN8/s1600/Robocop+7.gif";
+			
+			return await msg.channel.send(gameFrame);
+			
+		}else{
+						
+			if (hasBots){
+				if (value) await ECO.receive(players[0].id, value, "russianroulette.win");				
+				return msg.channel.send({
+					content: "Matches with bot participants aren't eligible for Winner's Gambit.",
+					embed:{
+						description: `${player.name} stands victorious!\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`,
+						color: 0x32437d,
+						image: {
+							url: `${paths.CDN}/build/games/russian_roulette/win_.gif`
+						}
+					}
+				});
+			}
+			
+			const challengeFrame = {
+				content: `<@${player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`,
+				embed: {
+					description: `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`
+				}
+			};
 
-		const plxMessage = await msg.channel.send(gameFrame);
+			const challenge = await msg.channel.send(challengeFrame);
+			await challenge.addReaction("Gun:338331025300127745");
+			await challenge.addReaction(_emoji('nope').reaction);
+
+			const playerResponse = await challenge.awaitReactions(rea=> rea.userID === player.id && ['338331025300127745',_emoji('nope').id].includes(rea.emoji.id), {time:10e3, maxMatches:1}).catch(e=>[]);
+			if (playerResponse[0]?.emoji?.id === '338331025300127745'){
+				challengeFrame.embed.description = `Looks like ${player.name} is shooting one last time! Let's see...`
+				challengeFrame.embed.image = { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` };
+				await challenge.edit(challengeFrame);
+
+				await wait(2);
+
+				challengeFrame.embed.description += `\n\nAnytime now...  `
+				await challenge.edit(challengeFrame);
+			}else{
+				challengeFrame.embed.image = {};
+				challengeFrame.embed.description = `Looks like ${player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`
+				challenge.removeReactions();
+				await challenge.edit(challengeFrame);
+				
+				if (!value) return;
+				return await ECO.receive(player.id, value, "russianroulette.win");
+			}
+
+			await challenge.removeReactions();
+			await userShoot(challenge,player);
+
+			const died = await playerRoulette(player, game);
+			if (died) { // Person died
+				challengeFrame.embed.description += `BOOM! Oh sh*t *he's dead, Jim.*`;
+				challengeFrame.embed.color = 0x521723;
+				challengeFrame.embed.image.url = "https://media1.tenor.com/images/d2fcf092a1223a8060639182c5e85616/tenor.gif" //`${paths.CDN}/build/games/russian_roulette/shot_.gif`;
+			} else { // Person did not die
+				challengeFrame.embed.description = `${player.name} stands victorious like an absolute champion!\n\n • ${_emoji('RBN')} **${~~(value*1.5)}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
+				challengeFrame.embed.color = 0x32437d;
+				challengeFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
+			}
+			
+			challenge.removeReactions();
+			await challenge.edit(challengeFrame);
+		
+			Progression?.emit("action.gambit",{userID: player.id, msg});
+			if (!value) return;
+			if (!died) await ECO.receive(players[0].id, ~~(value * 1.5), "russianroulette.gambit");
+		}
+		
+
 		//if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
 		return;
 	}
@@ -182,6 +250,8 @@ const init = async (msg, args) => {
 		const poolMsg = await msg.channel.send("**Total of rubines in the pool:** 0 rubines\n**Players**\n---")
 		
 		const verifiedPlayers = [];
+		let hasBots = false;
+		let minBet = 0;
 
 		const filter = (m) =>
 			(
@@ -199,20 +269,29 @@ const init = async (msg, args) => {
 
 		//await msg.channel.awaitMessages(filter, {time: 60e3});
 		const playerCollector = msg.channel.createMessageCollector(filter, { time: 60e3 });
-
+	
 		playerCollector.on('message', async joinMsg => {
 
 			if (joinMsg.content === 'stop') return playerCollector.stop('abort');
 			if (joinMsg.content === 'start') return playerCollector.stop('force_start');
+			
+			let userBet = parseInt(joinMsg.content.split(" ")[1]);
 
-			const playerCanAfford = await ECO.checkFunds(joinMsg.author.id, parseInt(joinMsg.content.split(" ")[1]));
+			if ( (minBet * .8) > userBet) return joinMsg.reply("Your bet can't be less than 20% under the average bet");
+			const playerCanAfford = await ECO.checkFunds(joinMsg.author.id, userBet);			
+			
          if (playerCanAfford){
+								
 				verifiedPlayers.push({
                 id: joinMsg.author.id,
                 name: joinMsg.author.username,
-                money: parseInt(joinMsg.content.split(" ")[1]),
+                money: joinMsg.author.bot ? 0 : userBet,
 					 isBot: joinMsg.author.bot
-            })
+            });
+
+				minBet = verifiedPlayers.reduce((a,b)=> a + b.money, 0) / verifiedPlayers.length;
+
+				if (joinMsg.author.bot) hasBots = true;
 				poolMsg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
 				+ `**Players**\n${verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`)
 			}else{
@@ -240,13 +319,16 @@ const init = async (msg, args) => {
 			if (verifiedPlayers.length === 0)
 				return msg.channel.send("No one joined. I'm not playing this alone.");
 
-			await msg.channel.send({
+			const initialMessage = await msg.channel.send({
 				embed: {
 					description: `**Time's up!** Let's get started.\nPlayers: \`\`\`${verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``,
 					image: { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` },
 				},
 			});
-			return newRound(msg, shuffle(verifiedPlayers), 0);
+			await Promise.all(verifiedPlayers.map(plyr=>{
+				return ECO.pay(plyr.id, plyr.money, "russianroulette.gambling");
+			}));
+			return newRound(msg, shuffle(verifiedPlayers), 0, initialMessage, hasBots);
 		});
 
 		return;
@@ -284,3 +366,14 @@ module.exports = {
 	botPerms: ["attachFiles", "embedLinks", "manageMessages"],
 	aliases: ["rr", "roletarussa"],
 };
+
+
+async function userShoot(msg,player){
+	await msg.addReaction('Gun:338331025300127745');
+	return Promise.race([
+		msg.channel.awaitMessages(m=>m.author.id === player.id && ['bang','shoot','boom','pew'].includes(m.content),{time:10e3, maxMatches:1}),
+		msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
+		( player.isBot ? wait( randomize(1,5) ) : wait(8))
+	]);
+}
+
