@@ -1,4 +1,4 @@
-//STRINGS = (P){
+const STRINGS = (P) => {
 	const v = {};
 	v.singleplayer_no_bet =
 		 "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.";
@@ -7,22 +7,22 @@
 	v.max_bet = "You can't put more than 5000 RBN at stake";
 	v.singleplayer_instructions = 
 		"Russian Roulette? You probably already know the rules, so let's get started."
-		+ `\nIf you survive this one, you're going to receive **${Game.nextValue} rubines**.\n`
+		+ `\nIf you survive this one, you're going to receive **${P.Game.nextValue} rubines**.\n`
 		+ "Use `shoot` to proceed (if you get shot, you'll lose your money)."
 
 	v.singleplayer_timeout = "you haven't said your action in 30 seconds! Stopping the game.";
-	v.singleplayer_quit = `You're a quitter!\n I added **${Game.currentPayout} rubines** to your account. Sigh.`;
+	v.singleplayer_quit = `You're a quitter!\n I added **${P.Game.currentPayout} rubines** to your account. Sigh.`;
 	v.singleplayer_pre_message = "Let's see if you're going to die now...";
 	v.singleplayer_ded = "BOOM! Someone got shot...\nYou lost your money. RIP.";
-	v.singleplayer_no_bullet_final = `**no bullet noise**\nYou came out alive of the game...\nI added **${Game.currentPayout}** rubines to your account.`
+	v.singleplayer_no_bullet_final = `**no bullet noise**\nYou came out alive of the game...\nI added **${P.Game.currentPayout}** rubines to your account.`
 	v.singleplayer_no_bullet_full = 
-		`**no bullet noise**\nNo bullet this time (${result.rounds} rounds remaining)...\n`
-		+ `You currently have **${Game.currentPayout} rubines.**\n`
+		`**no bullet noise**\nNo bullet this time (${P.result.rounds} rounds remaining)...\n`
+		+ `You currently have **${P.Game.currentPayout} rubines.**\n`
 		+ "Use `shoot` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\n"
 		+ "Use `stop` to stop here and get your money.";
 	v.footer_instruction =  `Say "shoot" or click the gun to fire! (8s)`;
-	v.mp_player_turn = `${player.name}'s turn.... `;
-	v.mp_ded = `BOOM! ${player.name} is dead.`;
+	v.mp_player_turn = `${P.player.name}'s turn.... `;
+	v.mp_ded = `BOOM! ${P.player.name} is dead.`;
 	v.mp_no_bullet = "*no bullet noise*\n";
 	v.mp_intro = 
 		"Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
@@ -31,33 +31,34 @@
 	v.mp_pool = "**Total of rubines in the pool:** 0 rubines\n**Players**\n---";
 	v.mp_no_20_under = "Your bet can't be less than 20% under the average bet";
 	v.mp_pool_tally = 
-		`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-		+ `**Players**\n${verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
+		`**Total of rubines in the pool**: ${P.verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
+		+ `**Players**\n${P.verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
 	v.mp_no_funds = "No Funds";
 	v.mp_abort_player = "Game cancelled by the creator.";
 	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
 	v.mp_no_players = "No one joined. I'm not playing this alone.";
-	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``;
-	v.round_no = `**Round ${round}**\n`;
+	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${P.verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``;
+	v.round_no = `**Round ${P.round}**\n`;
 	v.bot_shame = "Did y'all lose to a **bot**???";
-	v.bot_megashame = `${player.name} stands victorious! You guys suck...`;
+	v.bot_megashame = `${P.player.name} stands victorious! You guys suck...`;
 	v.bot_no_gambit = "Matches with bot participants aren't eligible for Winner's Gambit.";
 	
-	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(value*1.5)}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
-	v.victor = `${player.name} stands victorious!\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`
-	v.victor_gambit = `${player.name} stands victorious like an absolute champion!`;
+	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(P.value*1.5)}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
+	v.victor = `${P.player.name} stands victorious!\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`
+	v.victor_gambit = `${P.player.name} stands victorious like an absolute champion!`;
 	
-	v.gambit = `<@${player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
+	v.gambit = `<@${P.player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
 	v.gambit_prompt = `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`;
-	v.gambit_pre = `Looks like ${player.name} is shooting one last time! Let's see...`;
+	v.gambit_pre = `Looks like ${P.player.name} is shooting one last time! Let's see...`;
 	v.gambit_anytime = "Anytime now...";
-	v.gambit_refuse = `Looks like ${player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
+	v.gambit_refuse = `Looks like ${P.player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
 	v.hes_ded_jim = `BOOM! Oh sh*t *he's dead, Jim.*`;
 
 	v.mp_round_end = "End of the round!";
-	v.mp_round_results =  `**Results:**\n${diedInRound ? `${diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
+	v.mp_round_results =  `**Results:**\n${P.diedInRound ? `${P.diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
 
-//}
+	return v;
+}
 
 
 
@@ -79,6 +80,8 @@ const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 
 const startSinglePlayer = (msg,args) => {
 
+	let v = STRINGS({lngs:msg.lang});
+
 	const BET = parseInt(args[0]);
 
 	if (!BET) {
@@ -91,6 +94,7 @@ const startSinglePlayer = (msg,args) => {
 	if (!hasFunds) return msg.reply(v.singleplayer_no_funds);
 
 	const Game = new RussianRoulette(msg, BET);
+	v = STRINGS({lngs:msg.lang, Game});
 
 	await msg.channel.send(v.singleplayer_instructions);
 	Progression.emit("play.russianroulette.solo", { msg, userID: msg.author.id });
@@ -122,6 +126,7 @@ const startSinglePlayer = (msg,args) => {
 			return gameMessage.edit(v.singleplayer_no_bullet_final);
 		}
 
+		v = STRINGS({lngs:msg.lang, Game, result});
 		await gameMessage.edit(v.singleplayer_no_bullet_full);
 
 		return startGameCollector();
@@ -136,7 +141,9 @@ const playerRoulette = async (player, game) => {
 	return !!rst.lost;
 };
 
-const handlePlayers = async (msg, players, game, gameFrame) => {
+const handlePlayers = async (msg, players, Game, gameFrame) => {
+
+	let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players});
 	//let voiceChannel = msg.member.voiceState.channelID;
 	//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
 	let deadInThisRound = null;
@@ -146,13 +153,15 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 
 		//if (voiceChannel) voiceChannel.stopPlaying();
 		const player = players[index];
+		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, player});
 
 		// No one is dead so far
+
 		gameFrame.embed.description += v.mp_player_turn;
 		gameFrame.embed.footer = {text: v.footer_instruction }
 		//if (voiceChannel) voiceChannel.play(click);
 		// gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
-		const died = player.isBot || await playerRoulette(player, game);
+		const died = player.isBot || await playerRoulette(player, Game);
 		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
 
 		await userShoot(msg,player);
@@ -222,6 +231,9 @@ module.exports = {
 
 
 async function startMultiplayerGame(msg) {
+
+	let v = STRINGS({lngs:msg.lang});
+
 	await msg.channel.send(v.mp_intro);
 	const poolMsg = await msg.channel.send(v.mp_pool);
 
@@ -267,9 +279,10 @@ async function startMultiplayerGame(msg) {
 
 			minBet = verifiedPlayers.reduce((a, b) => a + b.money, 0) / verifiedPlayers.length;
 
-			if (joinMsg.author.bot)
-				hasBots = true;
-			poolMsg.edit();
+			if (joinMsg.author.bot) hasBots = true;
+			
+			v = STRINGS({lngs:msg.lang, players, verifiedPlayers:players});
+			poolMsg.edit(v.mp_pool_tally);
 		} else {
 			joinMsg.reply(v.mp_no_funds).then(m=> m.deleteAfter(5) && joinMsg.deleteAfter(5).catchReturn() );
 		}
@@ -317,8 +330,12 @@ async function startMultiplayerGame(msg) {
 		//if (voiceChannel) voiceChannel.play(gunRoll);
 		await wait(2);
 
+		
 		const value = players.map((a) => a.money).reduce((a, b) => a + b);
-		const game = new RussianRoulette(null, 0);
+		const Game = new RussianRoulette(null, 0);
+
+		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value});
+
 		const gameFrame = {
 			embed: {
 				title: v.round_no,
@@ -330,7 +347,7 @@ async function startMultiplayerGame(msg) {
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
-		const diedInRound = await handlePlayers(gameMessage, players, game, gameFrame);
+		const diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
 		await gameMessage.deleteAfter(5).catchReturn();
 
 		// Is there 1 person left?
@@ -339,6 +356,8 @@ async function startMultiplayerGame(msg) {
 			const player = players[0];
 			initialMessage.delete().catchReturn();
 			gameFrame.embed.footer = {};
+
+			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value});
 
 			await wait(3);
 
@@ -400,7 +419,7 @@ async function startMultiplayerGame(msg) {
 				await challenge.removeReactions();
 				await userShoot(challenge,player);
 
-				const died = await playerRoulette(player, game);
+				const died = await playerRoulette(player, Game);
 				if (died) { // Person died
 					challengeFrame.embed.description += v.hes_ded_jim;
 					challengeFrame.embed.color = 0x521723;
