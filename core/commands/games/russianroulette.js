@@ -1,6 +1,7 @@
 //STRINGS = (P){
 	const v = {};
-	v.singleplayer_no_bet = "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.";
+	v.singleplayer_no_bet =
+		 "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.";
 	v.singleplayer_no_funds = "you don't have all this money to waste with russian roulette.";
 	v.min_bet = "You gotta bet at very least 100 RBN on thir";
 	v.max_bet = "You can't put more than 5000 RBN at stake";
@@ -20,7 +21,41 @@
 		+ "Use `shoot` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\n"
 		+ "Use `stop` to stop here and get your money.";
 	v.footer_instruction =  `Say "shoot" or click the gun to fire! (8s)`;
+	v.mp_player_turn = `${player.name}'s turn.... `;
+	v.mp_ded = `BOOM! ${player.name} is dead.`;
+	v.mp_no_bullet = "*no bullet noise*\n";
+	v.mp_intro = 
+		"Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
+		+ "**The match starts in __20 seconds__.**";
 
+	v.mp_pool = "**Total of rubines in the pool:** 0 rubines\n**Players**\n---";
+	v.mp_no_20_under = "Your bet can't be less than 20% under the average bet";
+	v.mp_pool_tally = 
+		`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
+		+ `**Players**\n${verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
+	v.mp_no_funds = "No Funds";
+	v.mp_abort_player = "Game cancelled by the creator.";
+	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
+	v.mp_no_players = "No one joined. I'm not playing this alone.";
+	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``;
+	v.round_no = `**Round ${round}**\n`;
+	v.bot_shame = "Did y'all lose to a **bot**???";
+	v.bot_megashame = `${player.name} stands victorious! You guys suck...`;
+	v.bot_no_gambit = "Matches with bot participants aren't eligible for Winner's Gambit.";
+	
+	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(value*1.5)}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
+	v.victor = `${player.name} stands victorious!\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`
+	v.victor_gambit = `${player.name} stands victorious like an absolute champion!`;
+	
+	v.gambit = `<@${player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
+	v.gambit_prompt = `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`;
+	v.gambit_pre = `Looks like ${player.name} is shooting one last time! Let's see...`;
+	v.gambit_anytime = "Anytime now...";
+	v.gambit_refuse = `Looks like ${player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
+	v.hes_ded_jim = `BOOM! Oh sh*t *he's dead, Jim.*`;
+
+	v.mp_round_end = "End of the round!";
+	v.mp_round_results =  `**Results:**\n${diedInRound ? `${diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
 
 //}
 
@@ -128,11 +163,11 @@ const handlePlayers = async (msg, players, game, gameFrame) => {
 		if (died) { // Person died
 			deadInThisRound = player; // This is the person who died
 			players.splice(index, 1); //  Person should be removed from array
-			gameFrame.embed.description += `BOOM! ${player.name} is dead.`;
+			gameFrame.embed.description += v.mp_ded;
 			gameFrame.embed.color = 0x521723;
 			gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/shot_.gif`;
 		} else { // Person did not die
-			gameFrame.embed.description += "*no bullet noise*\n";
+			gameFrame.embed.description += v.mp_no_bullet;
 			gameFrame.embed.color = 0x32437d;
 			gameFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/blank_.gif`;
 		}
@@ -187,9 +222,8 @@ module.exports = {
 
 
 async function startMultiplayerGame(msg) {
-	await msg.channel.send("Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
-		+ "**The match starts in __20 seconds__.**");
-	const poolMsg = await msg.channel.send("**Total of rubines in the pool:** 0 rubines\n**Players**\n---");
+	await msg.channel.send(v.mp_intro);
+	const poolMsg = await msg.channel.send(v.mp_pool);
 
 	const verifiedPlayers = [];
 	let hasBots = false;
@@ -219,7 +253,7 @@ async function startMultiplayerGame(msg) {
 		let userBet = parseInt(joinMsg.content.split(" ")[1]);
 
 		if ((minBet * .8) > userBet)
-			return joinMsg.reply("Your bet can't be less than 20% under the average bet");
+			return joinMsg.reply(v.mp_no_20_under);
 		const playerCanAfford = await ECO.checkFunds(joinMsg.author.id, userBet);
 
 		if (playerCanAfford) {
@@ -235,10 +269,9 @@ async function startMultiplayerGame(msg) {
 
 			if (joinMsg.author.bot)
 				hasBots = true;
-			poolMsg.edit(`**Total of rubines in the pool**: ${verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-				+ `**Players**\n${verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`);
+			poolMsg.edit();
 		} else {
-			joinMsg.reply('No funds');
+			joinMsg.reply(v.mp_no_funds).then(m=> m.deleteAfter(5) && joinMsg.deleteAfter(5).catchReturn() );
 		}
 
 	});
@@ -247,7 +280,7 @@ async function startMultiplayerGame(msg) {
 		console.log({ reason }, 'stopCollectorRRoulette');
 
 		if (reason === 'abort')
-			return msg.channel.send("Game cancelled by the creator.");
+			return msg.channel.send(v.mp_abort_player);
 
 		verifiedPlayers?.forEach(player => {
 			Progression.emit("play.russianroulette.friends", {
@@ -258,16 +291,16 @@ async function startMultiplayerGame(msg) {
 		});
 
 		if (verifiedPlayers.length === 1) {
-			msg.channel.send("Looks like only one person is gonna play. Switching to singleplayer mode...");
+			msg.channel.send(v.switch_to_singleplayer);
 			return startSinglePlayer();
 		}
 
 		if (verifiedPlayers.length === 0)
-			return msg.channel.send("No one joined. I'm not playing this alone.");
+			return msg.channel.send(v.mp_no_players);
 
 		const initialMessage = await msg.channel.send({
 			embed: {
-				description: `**Time's up!** Let's get started.\nPlayers: \`\`\`${verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``,
+				description: v.mp_players_list,
 				image: { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` },
 			},
 		});
@@ -288,7 +321,7 @@ async function startMultiplayerGame(msg) {
 		const game = new RussianRoulette(null, 0);
 		const gameFrame = {
 			embed: {
-				title: `**Round ${round}**\n`,
+				title: v.round_no,
 				description: "",
 				image: { url: "" },
 				color: 0x2b2b3b,
@@ -310,8 +343,8 @@ async function startMultiplayerGame(msg) {
 			await wait(3);
 
 			if (player.isBot){
-				gameFrame.embed.title = "Did y'all lose to a **bot**???";
-				gameFrame.embed.description = `${player.name} stands victorious! You guys suck...`;
+				gameFrame.embed.title = v.bot_shame;
+				gameFrame.embed.description = v.bot_megashame;
 				gameFrame.embed.color = 0x608a6d;
 				gameFrame.embed.image.url = "http://1.bp.blogspot.com/-n7NmKmr60ts/U4JaTVi5pbI/AAAAAAAAH30/0OuS6MUxyN8/s1600/Robocop+7.gif";
 
@@ -322,9 +355,9 @@ async function startMultiplayerGame(msg) {
 				if (hasBots){
 					if (value) await ECO.receive(players[0].id, value, "russianroulette.win");
 					return msg.channel.send({
-						content: "Matches with bot participants aren't eligible for Winner's Gambit.",
+						content: v.bot_no_gambit,
 						embed:{
-							description: `${player.name} stands victorious!\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`,
+							description: v.victor,
 							color: 0x32437d,
 							image: {
 								url: `${paths.CDN}/build/games/russian_roulette/win_.gif`
@@ -334,9 +367,9 @@ async function startMultiplayerGame(msg) {
 				}
 
 				const challengeFrame = {
-					content: `<@${player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`,
+					content: v.gambit,
 					embed: {
-						description: `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`
+						description: v.gambit_prompt
 					}
 				};
 
@@ -346,17 +379,17 @@ async function startMultiplayerGame(msg) {
 
 				const playerResponse = await challenge.awaitReactions(rea=> rea.userID === player.id && ['338331025300127745',_emoji('nope').id].includes(rea.emoji.id), {time:10e3, maxMatches:1}).catch(_e=>[]);
 				if (playerResponse[0]?.emoji?.id === '338331025300127745'){
-					challengeFrame.embed.description = `Looks like ${player.name} is shooting one last time! Let's see...`
+					challengeFrame.embed.description = v.gambit_pre
 					challengeFrame.embed.image = { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` };
 					await challenge.edit(challengeFrame);
 
 					await wait(2);
 
-					challengeFrame.embed.description += `\n\nAnytime now...  `
+					challengeFrame.embed.description += `\n\n${v.gambit_anytime}  `
 					await challenge.edit(challengeFrame);
 				}else{
 					challengeFrame.embed.image = {};
-					challengeFrame.embed.description = `Looks like ${player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${value}** ${$t('keywords.RBN',{count:value})} added to your balance!`
+					challengeFrame.embed.description = v.gambit_refuse;
 					challenge.removeReactions();
 					await challenge.edit(challengeFrame);
 
@@ -369,11 +402,11 @@ async function startMultiplayerGame(msg) {
 
 				const died = await playerRoulette(player, game);
 				if (died) { // Person died
-					challengeFrame.embed.description += `BOOM! Oh sh*t *he's dead, Jim.*`;
+					challengeFrame.embed.description += v.hes_ded_jim;
 					challengeFrame.embed.color = 0x521723;
 					challengeFrame.embed.image.url = "https://media1.tenor.com/images/d2fcf092a1223a8060639182c5e85616/tenor.gif" //`${paths.CDN}/build/games/russian_roulette/shot_.gif`;
 				} else { // Person did not die
-					challengeFrame.embed.description = `${player.name} stands victorious like an absolute champion!\n\n • ${_emoji('RBN')} **${~~(value*1.5)}** ${$t('keywords.RBN',{count:value})} added to your balance!`;
+					challengeFrame.embed.description = v.victor_gambit;
 					challengeFrame.embed.color = 0x32437d;
 					challengeFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
 				}
@@ -393,8 +426,8 @@ async function startMultiplayerGame(msg) {
 		// There are more people in the game
 		msg.channel.send({
 			embed: {
-				title: "End of the round!",
-				description: `**Results:**\n${diedInRound ? `${diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`,
+				title: v.mp_round_end,
+				description: v.mp_round_results,
 				thumbnail: { url: `${paths.CDN}/build/games/russian_roulette/miniload.gif` },
 			},
 		}).then((m) => m.deleteAfter(2e3));
