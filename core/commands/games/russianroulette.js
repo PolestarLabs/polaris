@@ -171,7 +171,7 @@ const init = async (msg, args) => {
 		const filter = (m) =>
 			(
 				m.content.toLowerCase().startsWith("join ")
-				&& !m.author.bot // NOTE: could be turned into a feature though
+				//&& !m.author.bot // NOTE: could be turned into a feature though
 				&& !verifiedPlayers.filter((a) => a.id === m.author.id)[0]
 				&& !Number.isNaN(m.content.split(" ")[1])
 				&& parseInt(m.content.split(" ")[1]) > 0
