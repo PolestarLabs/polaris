@@ -22,9 +22,9 @@
     "cheerio": "^1.0.0-rc.2",
     "chrono-node": "github:Mitchell3514/chrono#ff42f01c662073c9cb9c3d88f84d1754097f9581",
     "cron": "^1.5.1",
+    "discord-slash": "^1.2.2",
     "eris": "^0.15.0",
     "eris-additions": "github:PolestarLabs/eris-additions-plus",
-    
     "fast-diff": "^1.2.0",
     "gif-encoder": "^0.7.2",
     "i18next": "^12.0.0",

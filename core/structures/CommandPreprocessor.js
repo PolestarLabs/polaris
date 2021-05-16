@@ -3,6 +3,7 @@ const { performance } = require("perf_hooks");
 const readdirAsync = Promise.promisify(require("fs").readdir);
 const cfg = require("../../config.json");
 const { argsReqed } = require("../commands/utility/brackets");
+const axios = require("axios");
 
 const runtimeOutput = (rtm) => {
   if (rtm * 1000 < 1000) return `${Math.floor(rtm * 1000)}μs `;
@@ -241,6 +242,22 @@ const registerOne = (folder, _cmd) => {
       });
     }
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
+
+    if(commandFile.slashOptions){
+      axios.post(
+        `https://discord.com/api/v9/applications/${PLX.user.id}/guilds/789382326680551455/commands`, 
+        {
+          name:    commandFile.cmd,
+          //type: cmd.type || 4,
+          description: commandFile.slashOptions.description,
+          options: commandFile.slashOptions.options,
+          choices: commandFile.slashOptions.choices,
+        },
+        {headers: { Authorization: PLX._token }}
+      ).catch(console.error);
+      
+    }
+
     return { pass: true, cmd: _cmd, hidden: !commandFile.pub };
   } catch (e) {
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
