@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 const init = async function (msg, args, resolve) {
-  const USERDATA = await DB.users.get(msg.author.id);
+  const USERDATA = await vDB.users.get(msg.author.id);
 
   const MRG = USERDATA.married;
 
@@ -65,12 +65,14 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
   };
   const marriageBox = await msg.channel.send({ embed: marriageEmbed });
 
-  const Collector = msg.channel.createMessageCollector((m) => m.author.id === msg.author.id && (Math.abs(Number(m.content) ?? 999) < newMARRIAGES.length || m.content === "ok"), { time: 12e4 });
+
+  const Collector = msg.channel.createMessageCollector((m) => m.author.id === msg.author.id && (Math.abs(Number(m.content) ?? 999) < newMARRIAGES.length || m.content === "ok"), { time: 120000 });
 
   let imported = 0;
   let last;
   const transferlist = [];
   Collector.on("message", async (m) => {
+    console.log("hey message",m.author.id,"msg:",msg.author.id)
     m?.delete();
     last?.delete();
     let finalMessage = "";
@@ -98,9 +100,11 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
       finalMessage += ("\n***Next imports will cost you 5 Sapphires each***");
     }
     last = await msg.channel.send(finalMessage);
+    console.log(newMARRIAGES, x.transferred)
     if (!newMARRIAGES.find((x) => !x.transferred)) return Collector.stop();
   });
-  Collector.on("end", async (m) => {
+  Collector.on("end", async (m,r) => {
+    console.log({m,r})
     last?.delete();
     const res = await marriageBox.edit({
       embed: {
@@ -114,7 +118,10 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
     });
     if (typeof resolve === "function") resolve({ res, cost: 5 * Math.max(imported - 3, 0) || 0, imported });
   });
+
+  await wait(5);
   if (!newMARRIAGES.find((x) => !x.transferred)) return Collector.stop();
+  
 };
 module.exports = {
   init,
