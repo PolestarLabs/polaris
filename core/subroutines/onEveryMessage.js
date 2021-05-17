@@ -41,7 +41,6 @@ async function levelChecks(msg) {
   const curLevelLocal = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
   // let forNext_local = Math.trunc(Math.pow(((LOCAL_RANK.level||0) + 1) / _FACTOR, 2));
 
-  console.log({curLevelLocal,UID: msg.author.id,LOCAL_RANK});
 
   if (!servData.switches?.chExpOff?.includes(msg.channel.id)) {
     incrementLocal(msg);
