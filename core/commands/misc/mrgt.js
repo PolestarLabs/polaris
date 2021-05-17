@@ -72,7 +72,6 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
   let last;
   const transferlist = [];
   Collector.on("message", async (m) => {
-    console.log("hey message",m.author.id,"msg:",msg.author.id)
     m?.delete();
     last?.delete();
     let finalMessage = "";
@@ -116,12 +115,12 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
     `,
       },
     });
-    if (typeof resolve === "function") resolve({ res, cost: 5 * Math.max(imported - 3, 0) || 0, imported });
+    if (typeof resolve === "function") resolve({ res, cost: 5 * Math.max(imported - 3, 0) || 0, imported, size: MRG.length });
   });
 
   await wait(5);
   if (!newMARRIAGES.find((x) => !x.transferred)) return Collector.stop();
-  
+
 };
 module.exports = {
   init,
