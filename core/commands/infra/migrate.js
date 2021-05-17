@@ -25,8 +25,10 @@ const init = async function (msg, args) {
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
 
-  const userData_OLD = await vDB.users.get(msg.author.id);
-  const userData_NEW = await DB.users.get(msg.author.id);
+  const userData_OLD = await vDB.users.findOne({id:msg.author.id}).noCache().lean();
+  const userData_NEW = await DB.users.findOne({id:msg.author.id}).noCache().lean();
+
+  if (userData_NEW.migrated) return msg.reply(`${_emoji('nope')} • Your account has already been migrated!`);
 
   // SECTION SLIDE 1 ----------------------------------------------------------
 
@@ -73,6 +75,8 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
   // SECTION SLIDE 2 ----------------------------------------------------------
 
   embed.color = 0x2b2b3F;
+  let exceedingBoxBonus = 0;
+  let marriage_message = null;
 
   const TASKLIST = {
     
@@ -117,10 +121,11 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             msg.channel.send("Something went wrong with your migration process. Please try again.");
             return false;      
           }
-
-          console.log('postmarry', {marriage_transfer_res});
-
-          await DB.users.set(msg.author.id, { $inc: { "modules.SPH": -1 * marriage_transfer_res.cost || 0 } });
+          
+          const {size,imported,cost} = marriage_transfer_res;
+          await DB.users.set(msg.author.id, { $inc: { "modules.SPH": -1 * cost || 0 } });
+          this.name += ` (${imported}/${size} - ${_emoji('SPH')}**-${cost}**)`;
+          marriage_message = marriage_transfer_res.res;
 
           return true;
         } 
@@ -140,6 +145,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             
             if (currItem) {
               if (currItem.id.includes("lootbox") && currItem.count < 10) currItem.count++;
+              else if (currItem.id.includes("lootbox") && currItem.count >= 10) exceedingBoxBonus++ ;
             } else newInventory.push({ id: item, count: 1 });
           });
           
@@ -154,7 +160,22 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: true,
         status: "pending",
         action: async function(){
-          return false;
+          /*
+          const updatedUserDB = DB.users.findOne({id:msg.author.id}).noCache().lean();
+          let boxes = updatedUserDB.modules.inventory.filter(item=>item.id.includes('lootbox'));
+
+          let bulk = await DB.users.bulkWrite(boxes.map(q=> ({
+            updateOne: { 
+              filter: { id: msg.author.id, "modules.inventory.id": q.id },
+              update: { $set: { "modules.inventory.$.count": Math.min(q.count,10) } }
+            }
+          }))).catch(err=>null);
+          console.log(bulk);
+          return !!bulk;
+          */
+          this.name += ` (+${_emoji('PSM') + exceedingBoxBonus})`;
+          await DB.users.set(msg.author.id, {$set: {"modules.PSM": exceedingBoxBonus} });
+          return true;
         }
       },
       {
@@ -179,6 +200,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
                   "modules.SPH": saph,
                 },
           });
+          this.name += ` (${_emoji('RBN')}×**${newRubines}** ${_emoji('SPH')}×**${saph}** ${_emoji('JDE')}×**${jades}**)`;
           
           return true;
         }
@@ -197,7 +219,20 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: false,
         status: "pending",
         action: async function(){
-          await wait (10);          
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
+          await wait (1);
+          this.name += ".";
           return true;
         }
       },
@@ -206,8 +241,9 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: false,
         status: "pending",
         action: async function(){
-          await wait (10);
-          return true;
+          await wait (2);
+          let result = await DB.users.set(msg.author.id,{$addToSet: {'modules.skinInventory':'casino_touhou-classic' } }).catch(err=>null);
+          return !!result;
         }
       },
       {
@@ -223,14 +259,24 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: true,
         status: "pending",
         action: async function(){
-          return true;
-
+          
           const myBGs = userData_OLD.modules.bgInventory;
           const myBGsFULL = await DB.cosmetics.find({ code: { $in: myBGs } }).lean();
-
+          this.name += ` (${myBGsFULL.length}/${myBGs.length} found)`
+          return false;
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
         }
       },
+      {
+        name: `Freezing Global Ranks`,
+        wait: true,
+        status: "pending",
+        action: async function(){
+          await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
+          await DB.users.set(msg.author.id,{$set: {"counters.legacy.globalLV": userData_OLD.modules.level , "counters.legacy.globalXP": userData_OLD.modules.exp} });
+          return true;
+        }
+      }
     ],
   };
 
@@ -240,6 +286,7 @@ console.log({totalActions})
   for (let i = 0; i < totalActions; i++) {
 
     embed.description = TASKLIST.printList();
+    embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦" + TASKLIST.printProgress() };
     await prompt.edit({embed});
 
 
@@ -251,7 +298,6 @@ console.log({totalActions})
       TASKLIST.items[i].action().then(r=>postTask(r,i));
     }
 
-    embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦" + TASKLIST.printProgress() };
     embed.description = TASKLIST.printList();
     await prompt.edit({embed});
     await wait(2);
@@ -262,15 +308,17 @@ console.log({totalActions})
     if (result) TASKLIST.complete(i);
     else TASKLIST.notcomplete(i);
     
-    console.log('action result: ',result,"\n-------");
-    
     await wait(1);
-    console.log('posttask')
     actionsDone++;
     console.log({actionsDone,totalActions,name: TASKLIST.items[i].name})
 
     if (actionsDone >= totalActions){
+      if (marriage_message) marriage_message.delete().catchReturn();
+      await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
+      await DB.users.set(msg.author.id,{$set: {"migrated": true} });
 
+      embed.title = "Transfer complete!";
+      embed.color = 0x22AA66;
       embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦" + TASKLIST.printProgress() };
       embed.description = TASKLIST.printList();
       await prompt.edit({embed});
