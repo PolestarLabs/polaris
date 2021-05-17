@@ -78,7 +78,7 @@ const clickNoAmmo = `${appRoot}/../assets/sound/noammo.mp3`;
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 
-const startSinglePlayer = (msg,args) => {
+const startSinglePlayer = async (msg,args) => {
 
 	let v = STRINGS({lngs:msg.lang});
 
