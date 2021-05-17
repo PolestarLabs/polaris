@@ -1,6 +1,6 @@
 const init = async function (msg){
 
-    const userData = await DB.users.get(msg.author.id);
+    const userData = (await DB.users.findOne({id:msg.author.id}).noCache())._doc;
     const vanillaUserData = (await vDB.users.findOne({id: msg.author.id}).noCache())._doc;
 
     console.log({vanillaUserData,userData})
