@@ -28,7 +28,7 @@ class ProgressionManager extends EventEmitter {
             
             await wait(1);            
             //console.log({event,userID})
-            this.checkStatusAll(userID,msg);
+            //this.checkStatusAll(userID,msg);
 
             //await this.checkStatus(msg.author.id,msg);
             //quests. 
@@ -43,7 +43,7 @@ class ProgressionManager extends EventEmitter {
                 if(action!=='craft') return;
     
                 if(item[type] === condition){
-                    await this.updateProgress(userID,quest._id,amount);
+                    await this.updateProgress(userID,quest._id,amount,msg);
                 }
                 if(!msg) return;
                 this.checkStatusOne(quest._id,userID,msg);
@@ -119,12 +119,14 @@ class ProgressionManager extends EventEmitter {
         return quests;
     }
 
-    async updateProgress(userID,questUniqueID,value=1){
+    async updateProgress(userID,questUniqueID,value=1,msg){
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$inc:{'quests.$.progress':value}},{new:!0});
+        if (msg) this.checkStatusOne(questUniqueID,userID,msg);
     }
 
-    async overrideProgress(userID,questUniqueID,value=0){        
+    async overrideProgress(userID,questUniqueID,value=0,msg){        
         await DB.users.updateOne({id:userID,"quests._id":questUniqueID},{$set:{'quests.$.progress':value}},{new:!0});
+        if (msg) this.checkStatusOne(questUniqueID,userID,msg);
     }
 
     async updateAll(userID,quests){
@@ -256,9 +258,9 @@ class ProgressionManager extends EventEmitter {
 
         function processQuest(parent,q){
             if(typeof options?.valueSet == 'number')
-                return parent.overrideProgress(userID, q._id, options.valueSet);
+                return parent.overrideProgress(userID, q._id, options.valueSet, options.msg);
             else        
-                return parent.updateProgress(userID, q._id, value);
+                return parent.updateProgress(userID, q._id, value, options.msg);
         }
     }
 
