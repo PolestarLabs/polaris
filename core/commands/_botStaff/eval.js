@@ -11,7 +11,13 @@ const clean = (text) => {
     .replace(DB.native.port, "[REDACTED]")
     .replace(DB.native.pass, "[REDACTED]")
     .replace(/[\w\d]{24}\.[\w\d]{6}\.[\w\d-_]{27}/g, "[OWO WHAT IS THIS]")
-    : JSON.stringify(text, null, 2)).slice(0, 1800);
+    : JSON.stringify(text, null, 2));
+
+  if (output.length > 1200) {
+    let partial = output.slice(0, 1200);
+    let full =  output;
+    return {full,partial};    
+  }
   return output;
 };
 
@@ -47,7 +53,7 @@ const init = async (msg) => {
   if (code === "process.exit()") {
     const output = `<:maybe:476214608592633866>${invisibar}\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
     const embed = { description: output };
-    msg.channel.createMessage({ embed }).then(async () => {
+    await msg.channel.createMessage({ embed }).then(async () => {
       await wait(1);
       process.exit(1);
     });
@@ -68,14 +74,16 @@ const init = async (msg) => {
         depth: 0 + depthParam,
       });
     }
-    const output = `<:yep:339398829050953728> ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${clean(evaled)}\`\`\``;
+    const out = clean(evaled);
+    const output = `<:yep:339398829050953728> ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${out.full ? "// Check output file" : out}\`\`\``;
     const embed = { description: output };
     embed.color = 0x2bce64;
-    return msg.channel.createMessage({ embed });
+    return msg.channel.createMessage({ embed }, (out.full ? {name: "output.js", file: out.full  } : undefined) );
   } catch (e) {
     runtime = performance.now() - runtime;
-    const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${clean(e.stack || [])
-      .split("\n")[1]}\`\`\`*`;
+    const out = clean(e.stack || []);
+    const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${ 
+      (out.full ? out.partial : out).split("\n")[1]}\`\`\`*`;
     const embed =  { description: output };
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
