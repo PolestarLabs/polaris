@@ -7,22 +7,22 @@ const STRINGS = (P) => {
 	v.max_bet = "You can't put more than 5000 RBN at stake";
 	v.singleplayer_instructions = 
 		"Russian Roulette? You probably already know the rules, so let's get started."
-		+ `\nIf you survive this one, you're going to receive **${P.Game.nextValue} rubines**.\n`
+		+ `\nIf you survive this one, you're going to receive **${P.Game?.nextValue} rubines**.\n`
 		+ "Use `shoot` to proceed (if you get shot, you'll lose your money)."
 
 	v.singleplayer_timeout = "you haven't said your action in 30 seconds! Stopping the game.";
-	v.singleplayer_quit = `You're a quitter!\n I added **${P.Game.currentPayout} rubines** to your account. Sigh.`;
+	v.singleplayer_quit = `You're a quitter!\n I added **${P.Game?.currentPayout} rubines** to your account. Sigh.`;
 	v.singleplayer_pre_message = "Let's see if you're going to die now...";
 	v.singleplayer_ded = "BOOM! Someone got shot...\nYou lost your money. RIP.";
-	v.singleplayer_no_bullet_final = `**no bullet noise**\nYou came out alive of the game...\nI added **${P.Game.currentPayout}** rubines to your account.`
+	v.singleplayer_no_bullet_final = `**no bullet noise**\nYou came out alive of the game...\nI added **${P.Game?.currentPayout}** rubines to your account.`
 	v.singleplayer_no_bullet_full = 
-		`**no bullet noise**\nNo bullet this time (${P.result.rounds} rounds remaining)...\n`
-		+ `You currently have **${P.Game.currentPayout} rubines.**\n`
+		`**no bullet noise**\nNo bullet this time (${P.result?.rounds} rounds remaining)...\n`
+		+ `You currently have **${P.Game?.currentPayout} rubines.**\n`
 		+ "Use `shoot` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\n"
 		+ "Use `stop` to stop here and get your money.";
 	v.footer_instruction =  `Say "shoot" or click the gun to fire! (8s)`;
-	v.mp_player_turn = `${P.player.name}'s turn.... `;
-	v.mp_ded = `BOOM! ${P.player.name} is dead.`;
+	v.mp_player_turn = `${P.player?.name}'s turn.... `;
+	v.mp_ded = `BOOM! ${P.player?.name} is dead.`;
 	v.mp_no_bullet = "*no bullet noise*\n";
 	v.mp_intro = 
 		"Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
@@ -31,8 +31,8 @@ const STRINGS = (P) => {
 	v.mp_pool = "**Total of rubines in the pool:** 0 rubines\n**Players**\n---";
 	v.mp_no_20_under = "Your bet can't be less than 20% under the average bet";
 	v.mp_pool_tally = 
-		`**Total of rubines in the pool**: ${P.verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-		+ `**Players**\n${P.verifiedPlayers.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
+		`**Total of rubines in the pool**: ${P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
+		+ `**Players**\n${P.verifiedPlayers?.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
 	v.mp_no_funds = "No Funds";
 	v.mp_abort_player = "Game cancelled by the creator.";
 	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
@@ -44,18 +44,18 @@ const STRINGS = (P) => {
 	v.bot_no_gambit = "Matches with bot participants aren't eligible for Winner's Gambit.";
 	
 	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(P.value*1.5)}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
-	v.victor = `${P.player.name} stands victorious!\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`
-	v.victor_gambit = `${P.player.name} stands victorious like an absolute champion!`;
+	v.victor = `${P.player?.name} stands victorious!\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`
+	v.victor_gambit = `${P.player?.name} stands victorious like an absolute champion!`;
 	
 	v.gambit = `<@${P.player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
 	v.gambit_prompt = `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`;
-	v.gambit_pre = `Looks like ${P.player.name} is shooting one last time! Let's see...`;
+	v.gambit_pre = `Looks like ${P.player?.name} is shooting one last time! Let's see...`;
 	v.gambit_anytime = "Anytime now...";
-	v.gambit_refuse = `Looks like ${P.player.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
+	v.gambit_refuse = `Looks like ${P.player?.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
 	v.hes_ded_jim = `BOOM! Oh sh*t *he's dead, Jim.*`;
 
 	v.mp_round_end = "End of the round!";
-	v.mp_round_results =  `**Results:**\n${P.diedInRound ? `${P.diedInRound.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
+	v.mp_round_results =  `**Results:**\n${P.diedInRound ? `${P.diedInRound?.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
 
 	return v;
 }
