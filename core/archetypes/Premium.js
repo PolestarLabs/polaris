@@ -288,8 +288,34 @@ const PREMIUM_PACKS = DB.items.find({type: "boosterpack", GROUP:"plx_collection"
 async function processRewards( userID, {mansionMember, dry_run= false} ){
     const userData = await DB.users.findOne({id:userID}).noCache();
 
-    const tierPrizes = getTierBonus(userData.donator);
+    const currentTier = userData.donator;
+    const tierPrizes = getTierBonus(currentTier);
 
+    const tierStreak = userData.counters?.prime_streak?.[currentTier] || 1;
+    if (tierStreak === 1)  await DB.users.set(userID,{$set: {[`counters.prime_streak.${currentTier}`]: 1}});
+    const totalStreak = userData.counters?.prime_streak?.total || 1;
+    if (totalStreak === 1)  await DB.users.set(userID,{$set: {"counters.prime_streak.total": 1}});
+    
+    const bulkWriteQuery = [];
+
+    const isBooster = true; //FIXME
+
+
+    const regularQuery = {
+        $inc: {
+            "modules.JDE": tierPrizes.monthly_jde,
+            "modules.SPH": tierPrizes.monthly_sph + (tierStreak == 1 ? tierPrizes.immediate_sph : 0),
+            "eventGoodie": tierPrizes.monthly_event_tkn,            
+        },
+        $addToSet: {
+            "modules.flairsInventory": currentTier
+        }
+    };
+    
+    tierPrizes?.box_bonus?.forEach(boostBox=> bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`,boostBox.n)));
+
+    const stickersReport = [];
+    const packsReport = [];
     if (tierPrizes.sticker_prize){
 
         const ownedStickers = userData.modules.stickerInventory;
@@ -298,15 +324,13 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
         const availableStickerList = stickerList.filter(stk=> !ownedStickers.includes(stk.id) );
         const availablePacks = packsList.filter(pkg=> !pkg.name.includes(RUNNING_YEAR) );
 
-        let awardedStickers = [];
-
         const lasts = []
         if (tierPrizes.sticker_prize.LAST > 0){
             let adds = tierPrizes.sticker_prize.LAST;
             while (adds-- > 0){
-                let toPush = availableStickerList.pop().id;
-                awardedStickers.push(toPush);
-                lasts.push(toPush);
+                let toPush = availableStickerList.pop();
+                stickersReport.push(toPush);
+                lasts.push(toPush.id);
             }
         }
 
@@ -316,9 +340,9 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
             let availableRandomStickers = shuffle(availableStickerList);
             while (adds-- > 0){
                 availableRandomStickers = shuffle(availableRandomStickers);
-                let toPush = availableRandomStickers.pop().id;
-                awardedStickers.push(toPush);
-                randoms.push(toPush);
+                let toPush = availableRandomStickers.pop();
+                stickersReport.push(toPush);
+                randoms.push(toPush.id);
             }
         }
 
@@ -326,40 +350,90 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
         if (tierPrizes.sticker_prize.PACK > 0){
             let adds = tierPrizes.sticker_prize.PACK;
             while (adds-- > 0){
-                console.log('hi')
-                let query = {
-                    updateOne: { 
-                        filter: { id: userID, "modules.inventory.id": shuffle(availablePacks)[0].id },
-                        update: { $inc: { "modules.inventory.$.count": 1 } }
-                    }
-                };
+                const toAdd = shuffle(availablePacks)[0];
+                packsReport.push(toAdd);
+                let query = createAddItemQuery(toAdd.id);
                 packQueries.push(query);
             }
         }
-        const bulkWriteQuery = [
+        bulkWriteQuery.push(...[
             {updateOne: { 
                 filter: {id: userID},
-                update: {
+                update: {                   
                     $addToSet: {
-                        "modules.stickerInventory": {$each: awardedStickers }
+                        "modules.stickerInventory": {$each: [...lasts,...randoms] }
                     }
                 }
             }},
             ...packQueries
-        ];
+        ]);
+        console.log(bulkWriteQuery)
+    }
 
-        if (dry_run){
-            let data = {
-                tier: userData.donator,
-                stk_prizes: tierPrizes.sticker_prize
-            }
-            return {data,bulkWriteQuery,randoms,lasts};
-        } 
+    if (isBooster){
+        regularQuery.$inc["modules.PSM"] = tierPrizes.booster_bonus_psm;
+        let boxes = tierPrizes.booster_bonus_box || []; // [{n:10,t:'SR'}]
+        boxes.forEach(boostBox=> bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`,boostBox.n)));
+    };
 
-        //await DB.users.bulkWrite(bulkWriteQuery);
+    if (tierStreak >= 3){
+        regularQuery.$addToSet["modules.medalInventory"] =  currentTier;
     }
     
+    const report = {
+        SPH: regularQuery.$inc["modules.SPH"],
+        JDE: regularQuery.$inc["modules.JDE"],
+        BOX: tierPrizes.box_bonus,
 
+        EVT: regularQuery.$inc.eventGoodie,
+
+        //Booster
+        BPSM: tierPrizes.booster_bonus_psm,
+        BBOX: tierPrizes.booster_bonus_box,
+
+        STICKERS: stickersReport,
+        PACKS: packsReport,
+        FEAT_STICKER: stickersReport[0],
+
+        STREAK: totalStreak,
+        ASTIER: tierStreak,
+
+        PRIME_COUNT: tierPrizes.prime_servers
+        
+    }
+
+    if (dry_run){
+        let data = {
+            tier: userData.donator,
+            info: tierPrizes,
+            tierStreak,
+            totalStreak,
+            immediate: tierStreak == 1
+        }
+        if (dry_run===2) return (report);
+        return {data,bulkWriteQuery,regularQuery};
+    }
+    
+    //await DB.users.bulkWrite(bulkWriteQuery);
+    
+    //await DB.users.set(userID,regularQuery);
+
+    
+
+    function createAddItemQuery(toAdd,count=1) {
+        return userData.modules.inventory.find(it => it.id === toAdd)
+            ? {
+                updateOne: {
+                    filter: { id: userID, "modules.inventory.id": toAdd },
+                    update: { $inc: { "modules.inventory.$.count": count } }
+                }
+            } : {
+                updateOne: {
+                    filter: { id: userID },
+                    update: { $addToSet: { "modules.inventory": { id: toAdd, count: count } } }
+                }
+            };
+    }
 
 };
 
