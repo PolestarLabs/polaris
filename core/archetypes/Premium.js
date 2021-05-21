@@ -429,14 +429,12 @@ async function processRewards( userID, options){
             "counters.prime_info.canReallocate" : tierPrizes.prime_reallocation
         },
         $inc: {
-            "modules.JDE": tierPrizes.monthly_jde,
-            "modules.SPH": tierPrizes.monthly_sph + (tierStreak == 1 ? tierPrizes.immediate_sph : 0),
             "eventGoodie": tierPrizes.monthly_event_tkn,            
         },
         $addToSet: {
             "modules.flairsInventory": currentTier
         }
-    };
+    };    
     
     tierPrizes?.box_bonus?.forEach(boostBox=> bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`,boostBox.n)));
 
@@ -544,10 +542,15 @@ async function processRewards( userID, options){
         return {data,bulkWriteQuery,regularQuery,report};
     }
     
+    let amts = [tierPrizes.monthly_jde, tierPrizes.monthly_sph];
+    let currs = ["JDE","SPH"]
+    if (tierStreak == 1) amts.push(tierPrizes.immediate_sph) && currs.push("SPH");
+    
     const q1 = await DB.users.bulkWrite(bulkWriteQuery).catchReturn();
     const q2 = await DB.users.set(userID,regularQuery).catchReturn();
+    const q3 = await ECO.receive(message.author, amts, "dono_rewards", currs,{details:{tier: currentTier , month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR}});
 
-    return {report,success: !!q1 && !!q2};
+    return {report,success: !!q1 && !!q2 && !!q3};
 
     function createAddItemQuery(toAdd,count=1) {
         return userData.modules.inventory.find(it => it.id === toAdd)
