@@ -624,7 +624,7 @@ function getTierBonus(tier){
 
 module.exports = {
     getDailyBonus, getTier, tierInfo: PREMIUM_INFO, processRewards, shiftCountdownRoles, checkPrimeStatus,
-
+    PREMIUM_STICKERS,
     GRACE_WARNING_DAY,
     GRACE_TURNING_DAY,
     RUNNING_MONTH_LONG,
