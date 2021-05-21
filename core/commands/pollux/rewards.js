@@ -12,6 +12,8 @@ const init = async function (msg){
     //-----------------------------------------------------------------------
     const canvas = Picto.new(780,385);
     const ctx = canvas.getContext('2d');
+
+    if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = [...(await Premium.PREMIUM_STICKERS)].pop();
     
     const [base,overlay,sticker,tierIcon] = await Promise.all([
         Picto.getCanvas(`${paths.CDN}/build/rewards/basse.png`),
@@ -37,7 +39,7 @@ const init = async function (msg){
 
     const embed = {
         title: `${_emoji(PROCESS_RWD.data.tier)} ${capitalize(Premium.RUNNING_MONTH_LONG)} Rewards`,
-        description:`${interTier?"***Tier Upgrade:** You've claimed rewards of a different tier this month, your reward will be adjusted accordingly*":"\u200b"}`,
+        description:`${interTier?`***Tier ${primeStatus.STATUS}:** You've claimed rewards of a different tier this month, your reward will be adjusted accordingly*`:"\u200b"}`,
         fields: [],
         image: { url: "attachment://rewards.png" },
         footer: { icon_url: msg.author.avatarURL, text: msg.author.tag },
@@ -64,17 +66,6 @@ const init = async function (msg){
  
     embed.fields.push({ name: "\u200b", value: "\u200b", inline: true });
  
-
-    embed.fields.push({
-        name: "Extra Booster Bonus",
-        value: `${_emoji("PSM")}**${REPORT.BPSM}**
-        ${_emoji("loot")} Boxes: ${
-            REPORT.BBOX.map(box=> 
-                `**${box.n}**  ${_emoji(box.t)}`
-            ).join(' | ')}`,
-        inline: false
-    })
-
     let STICKERS_LIST = REPORT.STICKERS.map(s=>` • ${s.name}`);
     if ( STICKERS_LIST.length > 3 ) {
         let others =  STICKERS_LIST.length -3; 
@@ -83,7 +74,8 @@ const init = async function (msg){
     } 
     embed.fields.push({
         name: "Stickers",
-        value: `
+        value: 
+        !STICKERS_LIST.length ? " -- *No new Stickers* --" : `
         ${STICKERS_LIST.join('\n')}
         `,
         inline: true
@@ -96,8 +88,8 @@ const init = async function (msg){
         PACKS_LIST.push(`... +${others} items.`)
     } 
     embed.fields.push({
-        name: "Boosters",
-        value: `
+        name: "Boosters",       
+        value: !PACKS_LIST.length  ? " -- *None* --" : `
         ${PACKS_LIST.join('\n')}
         `,
         inline: true
@@ -113,12 +105,34 @@ const init = async function (msg){
     */
 
     embed.fields.push({
-        name: "Extras",
+        name: "\u200b",
         value: `
-        **Streak:** ${REPORT.STREAK}
+        ${_emoji("TIME3")} **Streak:** ${REPORT.STREAK} (${REPORT.AS_TIER} as ${capitalize(PROCESS_RWD.data.tier)})
+        ${REPORT.HAS_MEDAL 
+            ? _emoji("yep")
+            : _emoji("maybe")
+        } **Medal:** ${ REPORT.AS_TIER < 3 ? `Tier Medal will be awarded at the 3rd month. (${REPORT.AS_TIER}/3)` : REPORT.AWARD_MEDAL ? `**${capitalize(PROCESS_RWD.data.tier)} Medal Added!**` : "*Medal has already been awarded.*" }
+        ${REPORT.HAS_FLAIR 
+            ? _emoji("yep") + ` **Flair:** ${capitalize(PROCESS_RWD.data.tier)}\n` 
+            :" "
+        }${_emoji("gradeSSS")} **Prime Servers:** ${REPORT.PRIME_COUNT}
         `,
         inline: false
     })
+
+    if (REPORT.IS_BOOSTER) {
+        embed.fields.push({
+            name: "Server Booster Bonus",
+            value: `${_emoji("PSM")} Prisms: **${REPORT.BPSM}**` +
+            (REPORT.BBOX.length ? 
+            `${_emoji("loot")} Boxes: ${
+                REPORT.BBOX.map(box=> 
+                    `**${box.n}**  ${_emoji(box.t)}`
+                ).join(' | ')}`
+            : ""),
+            inline: false
+        })
+    }
 
     msg.channel.send({embed},{file: canvas.toBuffer(), name:"rewards.png"})
 
