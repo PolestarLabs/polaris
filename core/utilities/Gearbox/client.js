@@ -36,13 +36,14 @@ module.exports = {
       let memberObject;
       if (isID) {
         if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
-        memberObject = MEMBERS_CACHE.get(guildID+":"+ID) || await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
+        //memberObject = MEMBERS_CACHE.get(guildID+":"+ID) || await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
+        memberObject = await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
       } else if (softMatch) {
         if (enforceDB) return Promise.reject("CANNOT SOFTMATCH WITH ENFORCEDB");
         [memberObject] = await PLX.searchGuildMembers(guildID, user, 1).catch((err) => [null]);
       }
       if (!memberObject) return Promise.reject("MEMBER NOT FOUND");
-      MEMBERS_CACHE.set(guildID+":"+memberObject.id,memberObject);
+      //MEMBERS_CACHE.set(guildID+":"+memberObject.id,memberObject);
       return Promise.resolve(memberObject);
     }
     return Promise.reject("USER MUST BE A STRING");
