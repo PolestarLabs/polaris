@@ -1,10 +1,30 @@
 // @ts-nocheck
+const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
+
 const RUNNING_YEAR = new Date().getUTCFullYear();
 const RUNNING_MONTH = new Date().getUTCMonth();
 const RUNNING_MONTH_SHORT = new Date().toLocaleString('en', { month: 'short' }).toLowerCase();
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
+const VERIFICATION_ROLE = "421181998439333901";
+
+
+const STAFF_II = ["397086924319227914","615972092860432385"];
+const STAFF_I = ["397091492356685824","278985289605578752"];
+const OFFICIAL_GUILD = "277391723322408960"; 
+
+const REMAINING_8  = "556245821599776802";
+const REMAINING_7  = "556245809876959264";
+const REMAINING_6  = "418887056262037505";
+const REMAINING_5  = "418887120896393217";
+const REMAINING_4  = "418887153662164996";
+const REMAINING_3  = "418887192790958090";
+const REMAINING_2  = "418887224642502668";
+const REMAINING_1  = "418887258699988992";
+const EXPIRED_0    = "544641663348506673";
+const PREMIUM_COUNTDOWN = [REMAINING_8, REMAINING_7, REMAINING_6, REMAINING_5, REMAINING_4, REMAINING_3, REMAINING_2, REMAINING_1, EXPIRED_0];
+
 
 const PREMIUM_INFO = {
     neutrino: {
@@ -284,12 +304,114 @@ const PREMIUM_INFO = {
 const PREMIUM_STICKERS = DB.cosmetics.find({public: true, GROUP:"plx_collection"}).noCache().lean();
 const PREMIUM_PACKS = DB.items.find({type: "boosterpack", GROUP:"plx_collection"}).noCache().lean();
 
+function REWARDS_ROLLOUT(){ return new Date(`${RUNNING_MONTH+1}/${TURNING_DAY}/${RUNNING_YEAR}`) };
 
-async function processRewards( userID, {mansionMember, dry_run= false} ){
+async function shiftCountdownRoles(Member){
+    let STATUS = "unknown";
+    let i = PREMIUM_COUNTDOWN.length;
+
+    while ( --i ){
+        let roleID = PREMIUM_COUNTDOWN[i];
+        let nextRoleID = PREMIUM_COUNTDOWN[i+1];
+        if(!roleID) break;
+        
+        if(Member.roles.includes(roleID)){
+            console.log({roleID,nextRoleID,i})
+            if(!nextRoleID) {
+              STATUS = "expired";
+              continue;
+            };
+            await PLX.addGuildMemberRole(Member.guild.id,Member.id,nextRoleID).timeout(5e3).catchReturn();
+            await PLX.removeGuildMemberRole(Member.guild.id,Member.id,roleID).timeout(5e3).catchReturn();
+
+            STATUS = PREMIUM_COUNTDOWN.length - i - 2;
+            break;
+        }
+    }
+
+    return STATUS;       
+}
+
+function isStaff(member){
+    return member.roles.some(role=> STAFF_II.includes(role)) ? 2 : member.roles.some(role=> STAFF_I.includes(role)) ? 1 : 0;
+}
+function tierLevel(tier){
+    return Object.keys(PREMIUM_INFO).indexOf(tier);
+}
+
+function tierDiff(oldTier,newTier){    
+    console.log({oldTier,newTier})
+    return {
+        monthly_sph: Math.max(-oldTier.monthly_sph + newTier.monthly_sph, 0),
+        immediate_sph: Math.max(-oldTier.immediate_sph + newTier.immediate_sph, 0),
+        box_bonus: [{
+            n: (oldTier.box_bonus[0]?.n || 0) * -1,
+            t: (oldTier.box_bonus[0]?.t || 'C')
+        },{
+            n: (newTier.box_bonus[0]?.n || 0),
+            t: (newTier.box_bonus[0]?.t || 'C')
+        }],
+        monthly_jde: Math.max(-oldTier.monthly_jde - newTier.monthly_jde, 0),
+        monthly_event_tkn: Math.max(-oldTier.monthly_event_tkn + newTier.monthly_event_tkn, 0),
+        booster_bonus_box: [],
+        booster_bonus_psm: Math.max(-oldTier.booster_bonus_psm + newTier.booster_bonus_psm, 0),
+        sticker_prize: {
+            LAST:  Math.max( (-oldTier.sticker_prize?.LAST||0)      + (newTier.sticker_prize?.LAST || 0) , 0),
+            RANDOM:  Math.max( (-oldTier.sticker_prize?.RANDOM||0)  + (newTier.sticker_prize?.RANDOM || 0) , 0),
+            PACK:  Math.max( (-oldTier.sticker_prize?.PACK||0)      + (newTier.sticker_prize?.PACK || 0) , 0),
+        },
+        prime_servers: newTier.prime_servers,
+        prime_reallocation: newTier.prime_reallocation,
+        custom_background: newTier.custom_background,
+        custom_handle: newTier.custom_handle,
+        custom_shop: newTier.custom_shop,
+    }
+}
+
+async function checkPrimeStatus(mansionMember){
+
+    if (mansionMember.guild.id != OFFICIAL_GUILD) return Promise.reject("mansion-only");
+    if (CURRENT_VALID_MONTH < RUNNING_MONTH) return Promise.reject("waiting");
+
+    const userData = await DB.users.findOne({id:mansionMember.id}).noCache();
+
+    const premiumRoles = mansionMember.roles.filter(roleID=> Object.values(PREMIUM_INFO).find(tier=> tier.roleID === roleID) );
+    const highestPremiumRoleTier = Object.keys(PREMIUM_INFO).find((tier)=> premiumRoles.includes(PREMIUM_INFO[tier].roleID) );
+    const roleVerified = mansionMember.roles.includes(VERIFICATION_ROLE);
+    const rewardsLastClaimed = userData.counters?.prime_info?.lastClaimed || 0;
+
+    if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");    
+
+    const currentTier = userData.donator;
+    const tierPrizes = getTierBonus(currentTier);
+    const isActiveUnderTier = mansionMember.roles.includes(tierPrizes.roleID);
+
+    let STATUS = "ok";
+    console.log({premiumRoles,highestPremiumRoleTier})
+    
+    let interTier;
+    if ( new Date(rewardsLastClaimed) > REWARDS_ROLLOUT() ){
+        if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier){
+            interTier = tierDiff(PREMIUM_INFO[currentTier],PREMIUM_INFO[highestPremiumRoleTier]);
+            console.log(tierLevel(currentTier),tierLevel(highestPremiumRoleTier))
+            STATUS = tierLevel(currentTier) > tierLevel(highestPremiumRoleTier) ? "upgrade" : "downgrade";
+        }else{
+            return Promise.reject("already-claimed");
+        }
+    }
+    
+    return {STATUS,interTier}
+
+}
+async function processRewards( userID, options){
+    
+    const{mansionMember, dry_run, interTier} = options || {};
     const userData = await DB.users.findOne({id:userID}).noCache();
 
     const currentTier = userData.donator;
     const tierPrizes = getTierBonus(currentTier);
+
+    if (interTier) Object.assign(tierPrizes,interTier);
 
     const tierStreak = userData.counters?.prime_streak?.[currentTier] || 1;
     if (tierStreak === 1)  await DB.users.set(userID,{$set: {[`counters.prime_streak.${currentTier}`]: 1}});
@@ -298,10 +420,14 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
     
     const bulkWriteQuery = [];
 
-    const isBooster = true; //FIXME
-
+    const isBooster = mansionMember?.premiumSince;
 
     const regularQuery = {
+        $set: {
+            "counters.prime_info.lastClaimed" : Date.now(),
+            "counters.prime_info.maxServers" : tierPrizes.prime_servers,
+            "counters.prime_info.canReallocate" : tierPrizes.prime_reallocation
+        },
         $inc: {
             "modules.JDE": tierPrizes.monthly_jde,
             "modules.SPH": tierPrizes.monthly_sph + (tierStreak == 1 ? tierPrizes.immediate_sph : 0),
@@ -388,6 +514,7 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
         EVT: regularQuery.$inc.eventGoodie,
 
         //Booster
+        IS_BOOSTER: isBooster,
         BPSM: tierPrizes.booster_bonus_psm,
         BBOX: tierPrizes.booster_bonus_box,
 
@@ -396,7 +523,10 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
         FEAT_STICKER: stickersReport[0],
 
         STREAK: totalStreak,
-        ASTIER: tierStreak,
+        AS_TIER: tierStreak,
+        HAS_FLAIR: userData.modules.flairsInventory.includes(currentTier),
+        HAS_MEDAL: userData.modules.medalInventory.includes(currentTier),
+        AWARD_MEDAL: tierStreak >= 3 && !userData.modules.medalInventory.includes(currentTier),
 
         PRIME_COUNT: tierPrizes.prime_servers
         
@@ -411,14 +541,13 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
             immediate: tierStreak == 1
         }
         if (dry_run===2) return (report);
-        return {data,bulkWriteQuery,regularQuery};
+        return {data,bulkWriteQuery,regularQuery,report};
     }
     
-    //await DB.users.bulkWrite(bulkWriteQuery);
-    
-    //await DB.users.set(userID,regularQuery);
+    const q1 = await DB.users.bulkWrite(bulkWriteQuery).catchReturn();
+    const q2 = await DB.users.set(userID,regularQuery).catchReturn();
 
-    
+    return {report,success: !!q1 && !!q2};
 
     function createAddItemQuery(toAdd,count=1) {
         return userData.modules.inventory.find(it => it.id === toAdd)
@@ -436,7 +565,6 @@ async function processRewards( userID, {mansionMember, dry_run= false} ){
     }
 
 };
-
 
 const baseline = 125;
 
@@ -484,5 +612,6 @@ function getTierBonus(tier){
 }
 
 module.exports = {
-    getDailyBonus, getTier, tierInfo: PREMIUM_INFO, processRewards
+    getDailyBonus, getTier, tierInfo: PREMIUM_INFO, processRewards, shiftCountdownRoles, checkPrimeStatus,
+    GRACE_WARNING_DAY, GRACE_TURNING_DAY
 }
