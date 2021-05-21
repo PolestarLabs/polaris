@@ -4,6 +4,7 @@ const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
 const RUNNING_YEAR = new Date().getUTCFullYear();
 const RUNNING_MONTH = new Date().getUTCMonth();
 const RUNNING_MONTH_SHORT = new Date().toLocaleString('en', { month: 'short' }).toLowerCase();
+const RUNNING_MONTH_LONG = new Date().toLocaleString('en', { month: 'long' }).toLowerCase();
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
@@ -370,7 +371,7 @@ function tierDiff(oldTier,newTier){
 
 async function checkPrimeStatus(mansionMember){
 
-    if (mansionMember.guild.id != OFFICIAL_GUILD) return Promise.reject("mansion-only");
+    if (mansionMember.guild.id != OFFICIAL_GUILD) mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,mansionMember.id,{enforceDB: true, softMatch:false});
     if (CURRENT_VALID_MONTH < RUNNING_MONTH) return Promise.reject("waiting");
 
     const userData = await DB.users.findOne({id:mansionMember.id}).noCache();
@@ -395,6 +396,8 @@ async function checkPrimeStatus(mansionMember){
             interTier = tierDiff(PREMIUM_INFO[currentTier],PREMIUM_INFO[highestPremiumRoleTier]);
             console.log(tierLevel(currentTier),tierLevel(highestPremiumRoleTier))
             STATUS = tierLevel(currentTier) > tierLevel(highestPremiumRoleTier) ? "upgrade" : "downgrade";
+            interTier.from = currentTier;
+            interTier.to = highestPremiumRoleTier;
         }else{
             return Promise.reject("already-claimed");
         }
@@ -405,13 +408,18 @@ async function checkPrimeStatus(mansionMember){
 }
 async function processRewards( userID, options){
     
-    const{mansionMember, dry_run, interTier} = options || {};
+    const{dry_run, interTier} = options || {};
+    const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,userID,{enforceDB: true, softMatch:false});
+    
     const userData = await DB.users.findOne({id:userID}).noCache();
 
-    const currentTier = userData.donator;
-    const tierPrizes = getTierBonus(currentTier);
+    let currentTier = userData.donator;
+    const tierPrizes = Object.assign({}, getTierBonus(currentTier));
 
-    if (interTier) Object.assign(tierPrizes,interTier);
+    if (interTier) {
+        Object.assign(tierPrizes,interTier);
+        currentTier = interTier.to;
+    }
 
     const tierStreak = userData.counters?.prime_streak?.[currentTier] || 1;
     if (tierStreak === 1)  await DB.users.set(userID,{$set: {[`counters.prime_streak.${currentTier}`]: 1}});
@@ -503,10 +511,14 @@ async function processRewards( userID, options){
     if (tierStreak >= 3){
         regularQuery.$addToSet["modules.medalInventory"] =  currentTier;
     }
-    
+        
+    let amts = [tierPrizes.monthly_jde, tierPrizes.monthly_sph];
+    let currs = ["JDE","SPH"]
+    if (tierStreak == 1) amts.push(tierPrizes.immediate_sph) && currs.push("SPH");
+
     const report = {
-        SPH: regularQuery.$inc["modules.SPH"],
-        JDE: regularQuery.$inc["modules.JDE"],
+        SPH: amts[1] + (amts[2]||0),
+        JDE: amts[0],
         BOX: tierPrizes.box_bonus,
 
         EVT: regularQuery.$inc.eventGoodie,
@@ -532,7 +544,7 @@ async function processRewards( userID, options){
 
     if (dry_run){
         let data = {
-            tier: userData.donator,
+            tier: currentTier,
             info: tierPrizes,
             tierStreak,
             totalStreak,
@@ -541,10 +553,6 @@ async function processRewards( userID, options){
         if (dry_run===2) return (report);
         return {data,bulkWriteQuery,regularQuery,report};
     }
-    
-    let amts = [tierPrizes.monthly_jde, tierPrizes.monthly_sph];
-    let currs = ["JDE","SPH"]
-    if (tierStreak == 1) amts.push(tierPrizes.immediate_sph) && currs.push("SPH");
     
     const q1 = await DB.users.bulkWrite(bulkWriteQuery).catchReturn();
     const q2 = await DB.users.set(userID,regularQuery).catchReturn();
@@ -616,5 +624,14 @@ function getTierBonus(tier){
 
 module.exports = {
     getDailyBonus, getTier, tierInfo: PREMIUM_INFO, processRewards, shiftCountdownRoles, checkPrimeStatus,
-    GRACE_WARNING_DAY, GRACE_TURNING_DAY
+
+    GRACE_WARNING_DAY,
+    GRACE_TURNING_DAY,
+    RUNNING_MONTH_LONG,
+    RUNNING_YEAR,
+    RUNNING_MONTH,
+    RUNNING_MONTH_LONG,
+    TURNING_DAY,
+    VERIFICATION_ROLE,
+    OFFICIAL_GUILD
 }
