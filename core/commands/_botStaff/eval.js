@@ -83,12 +83,12 @@ const init = async (msg) => {
     runtime = performance.now() - runtime;
     const out = clean(e.stack || []);
     const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${ 
-      (out.full ? out.partial : out).split("\n")[1]}\`\`\`*`;
+      (out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
     const embed =  { description: output };
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
     console.error(e);
-    return msg.channel.createMessage({ embed });
+    return msg.channel.createMessage({ embed }, (out.full ? {name: "error.js", file: out.full  } : undefined) );
   }
 };
  
