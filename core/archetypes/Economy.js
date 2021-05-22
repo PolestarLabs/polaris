@@ -294,7 +294,7 @@ function receive(user, amt, type = "OTHER", currency = "RBN", options = {}) {
  * @throws {Error} Invalid arguments.
  * @throws {Error} Not enough funds.
  */
-function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false, disableFundsCheck = false, fields = {}, progressionOptions = {} } = {}) {
+async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = "TRANSFER", symbol = ">", { allowZero = false, disableFundsCheck = false, fields = {}, progressionOptions = {} } = {}) {
   if (!(userFrom && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number" && !amt?.length) throw new TypeError("Type of amount should be number.");
 
@@ -303,61 +303,60 @@ function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subtype = 
   if (typeof userTo === "object") userTo = userTo.id;
 
   // Checks
-  return checkFunds(userFrom, amt, curr).then(hasFunds => {
-    if (!hasFunds && !disableFundsCheck) return Promise.reject({ reason: "NO FUNDS" });
+  const hasFunds = await checkFunds(userFrom, amt, curr);
+  if (!hasFunds && !disableFundsCheck) return Promise.reject({ reason: "NO FUNDS" });
 
-    // Argument validation
-    curr = parseCurrencies(curr);
-    if (typeof amt === "number" || typeof curr === "string") {
-      if (!(typeof amt === "number" && typeof curr === "string")) throw new Error("amt & curr need to be a single number & string or equal length arrays.");
-      amt = [amt];
-      curr = [curr];
-    } else if (amt.length !== curr.length) throw new Error("amt & curr arrays need to be equal length");
+  // Argument validation
+  curr = parseCurrencies(curr);
+  if (typeof amt === "number" || typeof curr === "string") {
+    if (!(typeof amt === "number" && typeof curr === "string")) return Promise.reject("amt & curr need to be a single number & string or equal length arrays.");
+    amt = [amt];
+    curr = [curr];
+  } else if (amt.length !== curr.length) return Promise.reject("amt & curr arrays need to be equal length");
 
-    /** @type {number} */
-    
-    let incomeType;
-    if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) > -1) {
-      curr.forEach((CURR, i) => {
-        Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), options: progressionOptions });
-      });
-    }
+  /** @type {number} */
+  
+  let incomeType;
+  if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) > -1) {
+    curr.forEach((CURR, i) => {
+      Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), options: progressionOptions });
+    });
+  }
 
-    // Setup v1.0
-    /** @type {{[index: string]: number}} */
-    const fromUpdate = {};
-    /** @type {{[index: string]: number}} */
-    const toUpdate = {};
-    /** @type {Transaction[]} */
-    const payloads = [];
+  // Setup v1.0
+  /** @type {{[index: string]: number}} */
+  const fromUpdate = {};
+  /** @type {{[index: string]: number}} */
+  const toUpdate = {};
+  /** @type {Transaction[]} */
+  const payloads = [];
 
-    // Fill DB calls
-    for (let i in curr) {
-      let absAmount = Math.abs(amt[i]);
-      if (typeof absAmount !== "number") throw new TypeError("Amounts should be of type number.");
-      if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
-      fromUpdate[`modules.${curr[i]}`] = -absAmount;
-      toUpdate[`modules.${curr[i]}`] = absAmount;
-      payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol, fields));
-    }
+  // Fill DB calls
+  for (let i in curr) {
+    let absAmount = Math.abs(amt[i]);
+    if (typeof absAmount !== "number") return Promise.reject( new TypeError("Amounts should be of type number.") );
+    if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
+    fromUpdate[`modules.${curr[i]}`] = -absAmount;
+    toUpdate[`modules.${curr[i]}`] = absAmount;
+    payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol, fields));
+  }
 
-    // If every amt was zero
-    if (!payloads.length) return Promise.resolve(null);
+  // If every amt was zero
+  if (!payloads.length) return Promise.resolve( true ); // Return true signaling success even if zero
 
-    // Setup v2.0
-    const toWrite = [
-      { updateOne: { filter: { id: userFrom }, update: { $inc: fromUpdate } } },
-      { updateOne: { filter: { id: userTo }, update: { $inc: toUpdate } } },
-    ];
+  // Setup v2.0
+  const toWrite = [
+    { updateOne: { filter: { id: userFrom }, update: { $inc: fromUpdate } } },
+    { updateOne: { filter: { id: userTo }, update: { $inc: toUpdate } } },
+  ];
 
-    // Finish with DB updates & inserts.
-    return DB.users.bulkWrite(toWrite)
-      .then(() => DB.audits.collection.insertMany(payloads))
-      .then(() => {
-        payloads.forEach(logTransaction)
-        return payloads.length === 1 ? payloads[0] : payloads;
-      });
-  });
+  // Finish with DB updates & inserts.
+  await DB.users.bulkWrite(toWrite);
+  await DB.audits.collection.insertMany(payloads);
+  payloads.forEach(logTransaction)
+  
+  return payloads.length === 1 ? payloads[0] : payloads;
+      
 }
 
 /**
