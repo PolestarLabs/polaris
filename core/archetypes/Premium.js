@@ -1,3 +1,4 @@
+const ECO = require('./Economy');
 // @ts-nocheck
 const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
 
@@ -556,9 +557,9 @@ async function processRewards( userID, options){
     
     const q1 = await DB.users.bulkWrite(bulkWriteQuery).catchReturn();
     const q2 = await DB.users.set(userID,regularQuery).catchReturn();
-    const q3 = await ECO.receive(message.author, amts, "dono_rewards", currs,{details:{tier: currentTier , month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR}});
+    const q3 = await ECO.receive(userID, amts, "dono_rewards", currs,{details:{tier: currentTier , month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR}});
 
-    return {report,success: !!q1 && !!q2 && !!q3};
+    return {report,success: !!q1 && !!q2 && !!q3, break: {q1,q2,q3}};
 
     function createAddItemQuery(toAdd,count=1) {
         return userData.modules.inventory.find(it => it.id === toAdd)
