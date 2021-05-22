@@ -1,13 +1,14 @@
 const Picto = require('../../utilities/Picto');
 const Premium = require('../../archetypes/Premium');
 
-const init = async function (msg){
+const init = async function (msg,args){
 
     let primeStatus = await Premium.checkPrimeStatus(msg.member);
     ;console.log( {primeStatus} );
     const {interTier} = primeStatus;
-    let PROCESS_RWD = await Premium.processRewards(msg.author.id, { interTier, mansionMember: msg.member, dry_run: 1 });
+    let PROCESS_RWD = await Premium.processRewards(msg.author.id, { interTier, mansionMember: msg.member, dry_run: args[0]=="--dry-run" ? args[1] : false });
     const REPORT = PROCESS_RWD.report;
+    ;console.log( {PROCESS_RWD} );
 
     //-----------------------------------------------------------------------
     const canvas = Picto.new(780,385);
