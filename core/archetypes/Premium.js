@@ -380,11 +380,11 @@ async function checkPrimeStatus(mansionMember){
     const premiumRoles = mansionMember.roles.filter(roleID=> Object.values(PREMIUM_INFO).find(tier=> tier.roleID === roleID) );
     const highestPremiumRoleTier = Object.keys(PREMIUM_INFO).find((tier)=> premiumRoles.includes(PREMIUM_INFO[tier].roleID) );
     const roleVerified = mansionMember.roles.includes(VERIFICATION_ROLE);
-    const rewardsLastClaimed = userData.counters?.prime_info?.lastClaimed || 0;
+    const rewardsLastClaimed = userData.prime?.lastClaimed || 0;
 
     if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");
 
-    const currentTier = userData.donator;
+    const currentTier = userData.prime?.tier;
     const tierPrizes = getTierBonus(currentTier);
     const isActiveUnderTier = mansionMember.roles.includes(tierPrizes.roleID);
 
@@ -414,7 +414,7 @@ async function processRewards( userID, options){
     
     const userData = await DB.users.findOne({id:userID}).noCache();
 
-    let currentTier = userData.donator;
+    let currentTier = userData.prime?.tier;
     const tierPrizes = Object.assign({}, getTierBonus(currentTier));
 
     if (interTier) {
@@ -433,10 +433,14 @@ async function processRewards( userID, options){
 
     const regularQuery = {
         $set: {
-            "donator": currentTier,
-            "counters.prime_info.lastClaimed" : Date.now(),
-            "counters.prime_info.maxServers" : tierPrizes.prime_servers,
-            "counters.prime_info.canReallocate" : tierPrizes.prime_reallocation
+            "donator": currentTier, // LEGACY
+            "prime.lastClaimed" : Date.now(),
+            "prime.tier" : currentTier,
+            "prime.maxServers" : tierPrizes.prime_servers,
+            "prime.canReallocate" : tierPrizes.prime_reallocation,
+            "prime.custom_background" : tierPrizes.custom_background,
+            "prime.custom_handle" : tierPrizes.custom_handle,
+            "prime.custom_shop" : tierPrizes.custom_shop,
         },
         $inc: {
             "eventGoodie": tierPrizes.monthly_event_tkn,            
@@ -609,7 +613,7 @@ const DAILY_GETS = {
 
 async function getTier(userID) {
     const usr = await DB.users.get(userID);
-    const tier = usr.donator;
+    const tier = usr.prime?.tier || usr.donator; // LEGACY SUPPORT
     return tier?.toLowerCase() || null;
     // return false;
 }
