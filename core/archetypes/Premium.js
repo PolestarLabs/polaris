@@ -432,7 +432,7 @@ async function checkPrimeStatus(mansionMember){
 }
 async function processRewards( userID, options){
     
-    const{dry_run, interTier} = options || {};
+    const{dry_run, interTier, isStaff} = options || {};
     const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,userID,{enforceDB: true, softMatch:false});
     
     const userData = await DB.users.findOne({id:userID}).noCache();
@@ -462,10 +462,10 @@ async function processRewards( userID, options){
             "prime.lastClaimed" : Date.now(),
             "prime.tier" : currentTier,
             "prime.active" : true,
-            "prime.maxServers" : tierPrizes.prime_servers,
-            "prime.canReallocate" : tierPrizes.prime_reallocation,
-            "prime.custom_background" : tierPrizes.custom_background,
-            "prime.custom_handle" : tierPrizes.custom_handle,
+            "prime.maxServers" : tierPrizes.prime_servers || isStaff ? 1 : 0,
+            "prime.canReallocate" : tierPrizes.prime_reallocation || isStaff,
+            "prime.custom_background" : tierPrizes.custom_background || isStaff,
+            "prime.custom_handle" : tierPrizes.custom_handle || isStaff,
             "prime.custom_shop" : tierPrizes.custom_shop,
         },
         $inc: {
