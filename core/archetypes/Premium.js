@@ -1,16 +1,18 @@
 const ECO = require('./Economy');
 // @ts-nocheck
-const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
 
-const RUNNING_YEAR = new Date().getUTCFullYear();
 const RUNNING_MONTH = new Date().getUTCMonth();
 const RUNNING_MONTH_SHORT = new Date().toLocaleString('en', { month: 'short' }).toLowerCase();
 const RUNNING_MONTH_LONG = new Date().toLocaleString('en', { month: 'long' }).toLowerCase();
+const RUNNING_YEAR = new Date().getUTCFullYear();
+
+const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
+
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
-const VERIFICATION_ROLE = "421181998439333901";
 
+const VERIFICATION_ROLE = "421181998439333901";
 
 const STAFF_II = ["397086924319227914","615972092860432385"];
 const STAFF_I = ["397091492356685824","278985289605578752"];
@@ -306,7 +308,9 @@ const PREMIUM_INFO = {
 const PREMIUM_STICKERS = DB.cosmetics.find({public: true, GROUP:"plx_collection"}).noCache().lean();
 const PREMIUM_PACKS = DB.items.find({type: "boosterpack", GROUP:"plx_collection"}).noCache().lean();
 
-function REWARDS_ROLLOUT(){ return new Date(`${RUNNING_MONTH+1}/${TURNING_DAY}/${RUNNING_YEAR}`) };
+function REWARDS_ROLLOUT(){ 
+    return new Date(global.PRIME_ROLLOUT_OVERRIDE || `${RUNNING_MONTH+1}/${TURNING_DAY}/${RUNNING_YEAR}`) 
+};
 
 async function shiftCountdownRoles(Member){
     let STATUS = "unknown";
@@ -436,6 +440,7 @@ async function processRewards( userID, options){
             "donator": currentTier, // LEGACY
             "prime.lastClaimed" : Date.now(),
             "prime.tier" : currentTier,
+            "prime.active" : true,
             "prime.maxServers" : tierPrizes.prime_servers,
             "prime.canReallocate" : tierPrizes.prime_reallocation,
             "prime.custom_background" : tierPrizes.custom_background,
@@ -633,12 +638,12 @@ module.exports = {
     PREMIUM_STICKERS,
     GRACE_WARNING_DAY,
     GRACE_TURNING_DAY,
+    RUNNING_MONTH_SHORT,
     RUNNING_MONTH_LONG,
     RUNNING_YEAR,
     RUNNING_MONTH,
-    RUNNING_MONTH_LONG,
     TURNING_DAY,
     VERIFICATION_ROLE,
     OFFICIAL_GUILD,
-    REWARDS_ROLLOUT
+    REWARDS_ROLLOUT,
 }
