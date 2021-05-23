@@ -3,12 +3,23 @@ const Premium = require('../../archetypes/Premium');
 
 const init = async function (msg,args){
 
-    let primeStatus = await Premium.checkPrimeStatus(msg.member);
-    ;console.log( {primeStatus} );
+    const primeStatus = await Premium.checkPrimeStatus(msg.member).catch(err=> ({STATUS:"error",err}));
+
+    if (primeStatus.STATUS === "error"){
+        //waiting
+        //unverified
+        //already-claimed
+        if (primeStatus.err === "waiting") 
+            return msg.reply({embed:{description: `*Rewards for **${Premium.RUNNING_MONTH_LONG}** are not yet released.`}});
+        if (primeStatus.err === "unverified") 
+            return msg.reply({embed:{description: `*Verification failed: Check if you're missing the ✅ Role*.`}});
+        if (primeStatus.err === "already-claimed") 
+            return msg.reply({embed:{description: `*You already claimed rewards for this month.*`}});
+    }
+
     const {interTier} = primeStatus;
     let PROCESS_RWD = await Premium.processRewards(msg.author.id, { interTier, mansionMember: msg.member, dry_run: args[0]=="--dry-run" ? args[1] : false });
     const REPORT = PROCESS_RWD.report;
-    ;console.log( {PROCESS_RWD} );
 
     //-----------------------------------------------------------------------
     const canvas = Picto.new(780,385);
