@@ -394,10 +394,9 @@ async function checkPrimeStatus(mansionMember){
     let interTier;
     if ( new Date(rewardsLastClaimed) > REWARDS_ROLLOUT() ){
         if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier){
-            console.log({currentTier,highestPremiumRoleTier})
             interTier = tierDiff(PREMIUM_INFO[currentTier],PREMIUM_INFO[highestPremiumRoleTier]);
-            console.log(tierLevel(currentTier),tierLevel(highestPremiumRoleTier))
             STATUS = tierLevel(currentTier) > tierLevel(highestPremiumRoleTier) ? "upgrade" : "downgrade";
+            if (STATUS === "downgrade") return Promise.reject("dongrading");
             interTier.from = currentTier;
             interTier.to = highestPremiumRoleTier;
         }else{
