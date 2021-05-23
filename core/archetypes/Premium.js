@@ -427,14 +427,14 @@ async function checkPrimeStatus(mansionMember){
         }
     }
 
-    if (!currentTier) STATUS = "not-prime";
+    if (!currentTier || !userData) STATUS = "not-prime";
     
     return {STATUS,interTier,currentTier, isStaff: isStaffMember, isLegacy}
 
 }
 async function processRewards( userID, options){
     
-    const{dry_run, interTier, isStaff: isStaffMember} = options || {};
+    const{dry_run, interTier, isStaff: isStaffMember, isLegacy} = options || {};
     const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,userID,{enforceDB: true, softMatch:false});
     
     const userData = await DB.users.findOne({id:userID}).noCache();

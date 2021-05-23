@@ -52,7 +52,7 @@ const init = async function (msg,args){
         Picto.getCanvas(`${paths.CDN}/stickers/${REPORT.FEAT_STICKER.id}.png`),
         Picto.getCanvas(`${paths.CDN}/images/donate/icony/${PROCESS_RWD.data.tier}-small.png`),
     ]);
-    const tierName = Picto.tag(ctx,capitalize(PROCESS_RWD.data.tier), "600 36px 'AvenirNextRoundedW01-Bold'", "#CCD",{style:"#2b2b3b",line:8});
+    const tierName = Picto.tag(ctx,capitalize(PROCESS_RWD.data.tier)+(isLegacy?"+":"")+(isStaff?"+":""), "600 36px 'AvenirNextRoundedW01-Bold'", (isStaff?"#ADF":isLegacy?"#FDA":"#CCD"),{style:"#2b2b3b",line:8});
     const stickerName = Picto.tag(ctx,REPORT.FEAT_STICKER.name, "500 30px 'AvenirNextRoundedW01-Bold'", "#FFF",{style:"#2b2b3b",line:8});
 
     ctx.globalAlpha = .7;
@@ -147,6 +147,8 @@ const init = async function (msg,args){
             ? _emoji("yep") + ` **Flair:** ${capitalize(PROCESS_RWD.data.tier)}\n` 
             :" "
         }${_emoji("gradeSSS")} **Prime Servers:** ${REPORT.PRIME_COUNT}
+        ${isStaff ? "⚙️ Pollux Staff" : ""}
+        ${isLegacy ? "💠 Legacy Supporter" : ""}
         `,
         inline: false
     })
