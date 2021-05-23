@@ -373,7 +373,7 @@ function tierDiff(oldTier,newTier){
 async function checkPrimeStatus(mansionMember){
 
     if (mansionMember.guild.id != OFFICIAL_GUILD) mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,mansionMember.id,{enforceDB: true, softMatch:false});
-    if (CURRENT_VALID_MONTH < RUNNING_MONTH) return Promise.reject("waiting");
+    if (CURRENT_VALID_MONTH !== RUNNING_MONTH) return Promise.reject("waiting");
 
     const userData = await DB.users.findOne({id:mansionMember.id}).noCache();
 
@@ -382,7 +382,7 @@ async function checkPrimeStatus(mansionMember){
     const roleVerified = mansionMember.roles.includes(VERIFICATION_ROLE);
     const rewardsLastClaimed = userData.counters?.prime_info?.lastClaimed || 0;
 
-    if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");    
+    if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");
 
     const currentTier = userData.donator;
     const tierPrizes = getTierBonus(currentTier);
@@ -394,6 +394,7 @@ async function checkPrimeStatus(mansionMember){
     let interTier;
     if ( new Date(rewardsLastClaimed) > REWARDS_ROLLOUT() ){
         if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier){
+            console.log({currentTier,highestPremiumRoleTier})
             interTier = tierDiff(PREMIUM_INFO[currentTier],PREMIUM_INFO[highestPremiumRoleTier]);
             console.log(tierLevel(currentTier),tierLevel(highestPremiumRoleTier))
             STATUS = tierLevel(currentTier) > tierLevel(highestPremiumRoleTier) ? "upgrade" : "downgrade";
@@ -433,6 +434,7 @@ async function processRewards( userID, options){
 
     const regularQuery = {
         $set: {
+            "donator": currentTier,
             "counters.prime_info.lastClaimed" : Date.now(),
             "counters.prime_info.maxServers" : tierPrizes.prime_servers,
             "counters.prime_info.canReallocate" : tierPrizes.prime_reallocation
@@ -543,14 +545,14 @@ async function processRewards( userID, options){
         
     }
 
-    if (dry_run){
-        let data = {
-            tier: currentTier,
-            info: tierPrizes,
-            tierStreak,
-            totalStreak,
-            immediate: tierStreak == 1
-        }
+    const data = {
+        tier: currentTier,
+        info: tierPrizes,
+        tierStreak,
+        totalStreak,
+        immediate: tierStreak == 1
+    }
+    if (dry_run){        
         if (dry_run===2) return (report);
         return {data,bulkWriteQuery,regularQuery,report};
     }
@@ -559,7 +561,7 @@ async function processRewards( userID, options){
     const q2 = await DB.users.set(userID,regularQuery).catchReturn();
     const q3 = await ECO.receive(userID, amts, "dono_rewards", currs,{details:{tier: currentTier , month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR}});
 
-    return {report,success: !!q1 && !!q2 && !!q3, break: {q1,q2,q3}};
+    return {data,report,success: !!q1 && !!q2 && !!q3, qBreakdown: {q1,q2,q3}};
 
     function createAddItemQuery(toAdd,count=1) {
         return userData.modules.inventory.find(it => it.id === toAdd)
@@ -634,5 +636,6 @@ module.exports = {
     RUNNING_MONTH_LONG,
     TURNING_DAY,
     VERIFICATION_ROLE,
-    OFFICIAL_GUILD
+    OFFICIAL_GUILD,
+    REWARDS_ROLLOUT
 }
