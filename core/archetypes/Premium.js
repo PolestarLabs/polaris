@@ -344,6 +344,9 @@ function isStaff(member){
 function tierLevel(tier){
     return Object.keys(PREMIUM_INFO).indexOf(tier);
 }
+function tierFromLevel(level){
+    return Object.keys(PREMIUM_INFO)[level];
+}
 
 function tierDiff(oldTier,newTier){    
     console.log({oldTier,newTier})
@@ -386,15 +389,29 @@ async function checkPrimeStatus(mansionMember){
     const roleVerified = mansionMember.roles.includes(VERIFICATION_ROLE);
     const rewardsLastClaimed = userData.prime?.lastClaimed || 0;
 
-    if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");
+    const staffLevel = isStaff(mansionMember);
 
-    const currentTier = userData.prime?.tier || highestPremiumRoleTier;
-    const tierPrizes = getTierBonus(currentTier);
-    const isActiveUnderTier = mansionMember.roles.includes(tierPrizes.roleID);
+    if (!roleVerified && !staffLevel) return Promise.reject("unverified");
+    let currentTier = userData.prime?.tier || highestPremiumRoleTier;
+
+    let isStaff = false;
+    if (staffLevel){
+        isStaff = true;
+        let designatedTier;
+        if (staffLevel === 2) designatedTier = "carbon";
+        if (staffLevel === 1) designatedTier = "aluminium";
+        // if up to palladium, add +1
+        if (currentTier && tierLevel(currentTier) > 5){
+            designatedTier = tierFromLevel( tierLevel(currentTier) - 1 );
+        }
+        currentTier = designatedTier;
+    }
+
+    //const tierPrizes = getTierBonus(currentTier);
+    //const isActiveUnderTier = mansionMember.roles.includes(tierPrizes.roleID);
 
     let STATUS = "ok";
-    console.log({premiumRoles,highestPremiumRoleTier})
-    
+
     let interTier;
     if ( new Date(rewardsLastClaimed) > REWARDS_ROLLOUT() ){
         if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier){
@@ -407,8 +424,10 @@ async function checkPrimeStatus(mansionMember){
             return Promise.reject("already-claimed");
         }
     }
+
+    if (!currentTier) STATUS = "not-prime";
     
-    return {STATUS,interTier,currentTier}
+    return {STATUS,interTier,currentTier, isStaff}
 
 }
 async function processRewards( userID, options){
