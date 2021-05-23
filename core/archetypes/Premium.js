@@ -183,7 +183,7 @@ const PREMIUM_INFO = {
         sticker_prize: {
             LAST: 1,
             RANDOM: 1,
-            PACK: 1
+            PACK: 0
         },
         prime_servers: 2,
         prime_reallocation: true,
@@ -207,7 +207,7 @@ const PREMIUM_INFO = {
         sticker_prize: {
             LAST: 1,
             RANDOM: 1,
-            PACK: 1
+            PACK: 0
         },
         prime_servers: 2,
         prime_reallocation: true,
@@ -230,8 +230,8 @@ const PREMIUM_INFO = {
         booster_bonus_psm: 30,
         sticker_prize: {
             LAST: 1,
-            RANDOM: 1,
-            PACK: 1
+            RANDOM: 0,
+            PACK: 0
         },
         prime_servers: 1,
         prime_reallocation: true,
@@ -252,7 +252,7 @@ const PREMIUM_INFO = {
         booster_bonus_psm: 30,
         sticker_prize: {
             LAST: 1,
-            RANDOM: 1,
+            RANDOM: 0,
             PACK: 0
         },
         prime_servers: 1,
