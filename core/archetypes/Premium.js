@@ -379,7 +379,7 @@ async function checkPrimeStatus(mansionMember){
     if (mansionMember.guild.id != OFFICIAL_GUILD) mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,mansionMember.id,{enforceDB: true, softMatch:false});
     if (CURRENT_VALID_MONTH !== RUNNING_MONTH) return Promise.reject("waiting");
 
-    const userData = await DB.users.findOne({id:mansionMember.id}).noCache();
+    const userData = (await DB.users.findOne({id:mansionMember.id}).noCache())?._doc;
 
     const premiumRoles = mansionMember.roles.filter(roleID=> Object.values(PREMIUM_INFO).find(tier=> tier.roleID === roleID) );
     const highestPremiumRoleTier = Object.keys(PREMIUM_INFO).find((tier)=> premiumRoles.includes(PREMIUM_INFO[tier].roleID) );
