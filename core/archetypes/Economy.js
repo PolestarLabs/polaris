@@ -224,6 +224,7 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {object} [fields={}] Custom fields added to the Payload
  * @return {Transaction} The payload generated.
  */
+let arbitraryIncrementer = 0;
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
   if (!(userFrom && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
@@ -240,7 +241,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     from: userFrom,
     to: userTo,
     timestamp: now,
-    transactionId: `${curr}${now.toString(32).toUpperCase()}`,
+    transactionId: `${curr}${(now + randomize(-1000,1000) + arbitraryIncrementer++ ).toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
 
