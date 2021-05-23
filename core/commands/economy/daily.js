@@ -5,6 +5,7 @@ const { TimedUsage, Daily } = require("@polestar/timed-usage");
 
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
+const Premium = require("../../archetypes/Premium");
 
 const _ASSETS = `${paths.CDN}/build/daily/`;
 
@@ -56,7 +57,7 @@ const init = async (msg) => {
 
   const [userData, dailyPLXMember] = await Promise.all([
     DB.users.getFull(msg.author.id),
-    PLX.getRESTGuildMember("277391723322408960", msg.author.id).catch(() => null),
+    PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
