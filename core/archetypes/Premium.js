@@ -388,7 +388,7 @@ async function checkPrimeStatus(mansionMember){
 
     if (!roleVerified && !isStaff(mansionMember)) return Promise.reject("unverified");
 
-    const currentTier = userData.prime?.tier;
+    const currentTier = userData.prime?.tier || highestPremiumRoleTier;
     const tierPrizes = getTierBonus(currentTier);
     const isActiveUnderTier = mansionMember.roles.includes(tierPrizes.roleID);
 
@@ -418,7 +418,7 @@ async function processRewards( userID, options){
     
     const userData = await DB.users.findOne({id:userID}).noCache();
 
-    let currentTier = userData.prime?.tier;
+    let currentTier = userData.prime?.tier || userData.donator;
     const tierPrizes = Object.assign({}, getTierBonus(currentTier));
 
     if (interTier) {
