@@ -408,7 +408,7 @@ async function checkPrimeStatus(mansionMember){
         }
     }
     
-    return {STATUS,interTier}
+    return {STATUS,interTier,currentTier}
 
 }
 async function processRewards( userID, options){
@@ -418,13 +418,15 @@ async function processRewards( userID, options){
     
     const userData = await DB.users.findOne({id:userID}).noCache();
 
-    let currentTier = userData.prime?.tier || userData.donator;
+    let currentTier = userData.prime?.tier || userData.donator || options?.currentTier;
     const tierPrizes = Object.assign({}, getTierBonus(currentTier));
 
     if (interTier) {
         Object.assign(tierPrizes,interTier);
         currentTier = interTier.to;
     }
+
+    if (!currentTier) return Promise.reject("NO TIER REGISTERED");
 
     const tierStreak = userData.counters?.prime_streak?.[currentTier] || 1;
     if (tierStreak === 1)  await DB.users.set(userID,{$set: {[`counters.prime_streak.${currentTier}`]: 1}});

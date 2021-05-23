@@ -19,8 +19,8 @@ const init = async function (msg,args){
             return msg.reply({embed:{description: `*You have downgraded your subscription. Rewards will update next month.*`}});
     }
 
-    const {interTier} = primeStatus;
-    let PROCESS_RWD = await Premium.processRewards(msg.author.id, { interTier, mansionMember: msg.member, dry_run: args[0]=="--dry-run" ? args[1]||true : false });
+    const {interTier,currentTier} = primeStatus;
+    let PROCESS_RWD = await Premium.processRewards(msg.author.id, { currentTier, interTier, mansionMember: msg.member, dry_run: args[0]=="--dry-run" ? args[1]||true : false });
     if (args[0]=="--dry-run"){
         return msg.channel.send("",{file:JSON.stringify(PROCESS_RWD,0,2),name:"dry-run.js"});
     }
