@@ -15,6 +15,8 @@ const init = async function (msg,args){
             return msg.reply({embed:{description: `*Verification failed: Check if you're missing the ✅ Role*.`}});
         if (primeStatus.err === "already-claimed") 
             return msg.reply({embed:{description: `*You already claimed rewards for this month.*`}});
+        if (primeStatus.err === "dongrading") 
+            return msg.reply({embed:{description: `*You have downgraded your subscription. Rewards will update next month.*`}});
     }
 
     const {interTier} = primeStatus;
