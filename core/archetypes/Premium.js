@@ -396,9 +396,9 @@ async function checkPrimeStatus(mansionMember){
     if (!roleVerified && !staffLevel) return Promise.reject("unverified");
     let currentTier = userData.prime?.tier || highestPremiumRoleTier;
 
-    let isStaff = false;
+    let isStaffMember = false;
     if (staffLevel){
-        isStaff = true;
+        isStaffMember = true;
         let designatedTier;
         if (staffLevel === 2) designatedTier = "carbon";
         if (staffLevel === 1) designatedTier = "aluminium";
@@ -429,12 +429,12 @@ async function checkPrimeStatus(mansionMember){
 
     if (!currentTier) STATUS = "not-prime";
     
-    return {STATUS,interTier,currentTier, isStaff,isLegacy}
+    return {STATUS,interTier,currentTier, isStaff: isStaffMember, isLegacy}
 
 }
 async function processRewards( userID, options){
     
-    const{dry_run, interTier, isStaff} = options || {};
+    const{dry_run, interTier, isStaff: isStaffMember} = options || {};
     const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD,userID,{enforceDB: true, softMatch:false});
     
     const userData = await DB.users.findOne({id:userID}).noCache();
@@ -464,10 +464,10 @@ async function processRewards( userID, options){
             "prime.lastClaimed" : Date.now(),
             "prime.tier" : currentTier,
             "prime.active" : true,
-            "prime.maxServers" : (tierPrizes.prime_servers || isStaff ? 1 : 0) + (isLegacy ? 1 : 0),
-            "prime.canReallocate" : tierPrizes.prime_reallocation || isStaff || isLegacy,
-            "prime.custom_background" : tierPrizes.custom_background || isStaff || isLegacy,
-            "prime.custom_handle" : tierPrizes.custom_handle || isStaff || isLegacy,
+            "prime.maxServers" : (tierPrizes.prime_servers || isStaffMember ? 1 : 0) + (isLegacy ? 1 : 0),
+            "prime.canReallocate" : tierPrizes.prime_reallocation || isStaffMember || isLegacy,
+            "prime.custom_background" : tierPrizes.custom_background || isStaffMember || isLegacy,
+            "prime.custom_handle" : tierPrizes.custom_handle || isStaffMember || isLegacy,
             "prime.custom_shop" : tierPrizes.custom_shop,
         },
         $inc: {
