@@ -53,6 +53,7 @@ async function levelChecks(msg) {
   /// =======  [LOCAL LVUP] ========///
   if (curLevelLocal < LOCAL_RANK.level) {
     // console.log("DELEVEL");
+    delete LOCAL_RANK.__v;
     await DB.localranks.set({ server: msg.guild.id, user: msg.author.id }, { $set: LOCAL_RANK });
   }
 
