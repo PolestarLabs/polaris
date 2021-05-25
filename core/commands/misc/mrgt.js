@@ -68,7 +68,11 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 
   const Collector = msg.channel.createMessageCollector((m) => m.author.id === msg.author.id && (Math.abs(Number(m.content) ?? 999) < newMARRIAGES.length || m.content === "ok"), { time: 120000 });
 
-  let imported = 0;
+  let preImport = (await DB.relationships.find({ users: [msg.author.id], type: 'marriage' })).filter(existentNewMrg=>{
+    return MRG.find(m=> m._id == existentNewMrg._id );
+  });
+
+  let imported = preImport.length || 0;
   let last;
   const transferlist = [];
   Collector.on("message", async (m) => {
@@ -109,13 +113,19 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
       embed: {
         description: `
     **Complete!**
-    Marriages transferred: **${imported}**
+    Marriages transferred: **${imported ||  newMARRIAGES.filter(x=>x.transferred).length }**
 > ${transferlist.join(" | ")}
     Cost: **${5 * Math.max(imported - 3, 0) || "Free"}**
     `,
       },
     });
-    if (typeof resolve === "function") resolve({ res, cost: 5 * Math.max(imported - 3, 0) || 0, imported, size: MRG.length });
+    
+    if (typeof resolve === "function") resolve({
+      res,
+      cost: 5 * Math.max(imported - 3, 0) || 0,
+      imported: imported || newMARRIAGES.filter(x=>x.transferred).length ,
+      size: MRG.length
+    });
   });
 
   await wait(5);

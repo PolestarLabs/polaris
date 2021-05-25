@@ -24,9 +24,15 @@ const init = async function (msg, args) {
   const embed = {};
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
+  const mansionMember = await PLX.resolveMember("277391723322408960",msg.author.id,{softMatch:false});
+  if ( !mansionMember.roles.includes('278985430844833792') && !mansionMember.roles.includes('278985430844833792') ){
+    return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
+  }
+
 
   const userData_OLD = await vDB.users.findOne({id:msg.author.id}).noCache().lean();
   const userData_NEW = await DB.users.findOne({id:msg.author.id}).noCache().lean();
+  
 
   if (userData_NEW.migrated) return msg.reply(`${_emoji('nope')} • Your account has already been migrated!`);
 
@@ -272,11 +278,26 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: true,
         status: "pending",
         action: async function(){
-          await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
+          //await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
           await DB.users.set(msg.author.id,{$set: {"counters.legacy.globalLV": userData_OLD.modules.level , "counters.legacy.globalXP": userData_OLD.modules.exp} });
           return true;
         }
-      }
+      },
+      {
+        name: "Migrating Donation Streaks (if any)",
+        wait: true,
+        status: "pending",
+        action: async function(){
+          const oldDonoTier = userData_OLD.donator;
+          const oldDonoStreak = userData_OLD.switches.donateStreak;
+
+          await DB.users.set(msg.author.id,{$set: { "prime.tier":oldDonoTier, "counters.prime_streak":oldDonoStreak  } });
+          
+          this.name = this.name.replace( "(if any)", `(**${oldDonoTier}** and ${Object.keys(oldDonoStreak).length} more tier(s) found)` );
+          return true;
+          // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
+        }
+      },
     ],
   };
 
@@ -314,8 +335,8 @@ console.log({totalActions})
 
     if (actionsDone >= totalActions){
       if (marriage_message) marriage_message.delete().catchReturn();
-      await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
-      await DB.users.set(msg.author.id,{$set: {"migrated": true} });
+      //await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
+      //await DB.users.set(msg.author.id,{$set: {"migrated": true} });
 
       embed.title = "Transfer complete!";
       embed.color = 0x22AA66;
@@ -334,7 +355,7 @@ console.log({totalActions})
           thumbnail: { url: "https://cdn.discordapp.com/emojis/446901835865784321.png" },
           description: `
           ***Food Items** are used to recover **Stamina**, which is consumed to perform certain actions.
-          Try using \`${msg.prefix}food info\` to learn more!*`,
+          ~~Try using \`${msg.prefix}food info\` to learn more!~~ **SOON**™️`,
         },
       });
     };
