@@ -298,6 +298,26 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
         }
       },
+      {
+        name: "Copying over your profile configuration",
+        wait: true,
+        status: "pending",
+        action: async function(){
+         
+
+          await DB.users.set(msg.author.id,{$set: {
+             "modules.bgID": userData_OLD.modules.bgID,
+             "modules.medals": userData_OLD.modules.medals,
+             "modules.sticker": userData_OLD.modules.sticker,
+             "modules.flair": userData_OLD.modules.flair,
+             "modules.tagline": userData_OLD.modules.tagline,
+             "modules.persotext": userData_OLD.modules.persotext,
+             "modules.favcolor": userData_OLD.modules.favcolor,
+          } });          
+          return true;
+          // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
+        }
+      },
     ],
   };
 
