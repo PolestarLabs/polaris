@@ -166,7 +166,7 @@ DBSchema(dbConnectionData, {
 });
 
 
-DBSchema(vanillaConnection).then(vConnection=>{
+DBSchema(vanillaConnection,{redis: null}).then(vConnection=>{
   global.vDB = vConnection;
   console.log("•".yellow," Connected to Vanilla DB".blue)
 })
