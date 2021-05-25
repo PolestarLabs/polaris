@@ -46,7 +46,7 @@ class Lootbox {
     this.color = COLORS[this.rarity];
     this.id = options.id || "unknown";
     this.event = options.event || false;
-    this.#size = options.size || 3;
+    this.#size = options.meta?.size || 3;
     this.#filter = options.filter;
 
     const rarArray = Lootbox._shuffle(rarPILE).slice(0, this.#size - 1).concat(rar);
