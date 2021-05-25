@@ -309,7 +309,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
              "modules.bgID": userData_OLD.modules.bgID,
              "modules.medals": userData_OLD.modules.medals,
              "modules.sticker": userData_OLD.modules.sticker,
-             "modules.flair": userData_OLD.modules.flair,
+             "modules.flair": userData_OLD.modules.flairTop,
              "modules.tagline": userData_OLD.modules.tagline,
              "modules.persotext": userData_OLD.modules.persotext,
              "modules.favcolor": userData_OLD.modules.favcolor,
@@ -378,6 +378,10 @@ console.log({totalActions})
           ~~Try using \`${msg.prefix}food info\` to learn more!~~ **SOON**™️`,
         },
       });
+
+      let neodata = await DB.users.get(msg.author.id);
+      console.log({neodata})
+
     };
   }
 
