@@ -2,7 +2,6 @@ const { performance } = require("perf_hooks");
 // const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require("fs").readdir);
 const cfg = require("../../config.json");
-const { argsReqed } = require("../commands/utility/brackets");
 
 const runtimeOutput = (rtm) => {
   if (rtm * 1000 < 1000) return `${Math.floor(rtm * 1000)}μs `;
@@ -200,6 +199,13 @@ ${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
 
 function QUEUED_COMMAND(commandFile) {
   return (...args) => {
+    if (PLX.maintenance){
+      if ( args[0]?.guild.id == "277391723322408960" && args[0]?.channel.id != "488142034776096772") {
+        console.log('nope'.red)
+        return args[0]?.reply( ('🔧') + " • Maintenance ongoing.");
+      }
+      if (   ![cfg.STAFF_GUILD, cfg.OFFICIAL_GUILD].includes(args[0]?.guild.id) ) return args[0]?.reply( ('🔧') + " • Maintenance ongoing.");
+    }
     if (PLX.restarting) {
       return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
     }
