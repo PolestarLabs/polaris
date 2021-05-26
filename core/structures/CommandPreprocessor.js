@@ -198,6 +198,17 @@ ${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
   hidden: false,
 };
 
+function QUEUED_COMMAND(commandFile) {
+  return (...args) => {
+    if (PLX.restarting) {
+      return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
+    }
+    const execCommand = commandFile?.init(...args) || commandFile?.gen(...args);
+    PLX.execQueue.push(new Promise((res) => execCommand.then(res)));
+    return execCommand;
+  };
+}
+
 const registerOne = (folder, _cmd) => {
   try {
     delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))];
@@ -208,15 +219,7 @@ const registerOne = (folder, _cmd) => {
     if(commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
-    const CMD = PLX.registerCommand(_cmd, (...args) => {
-      if (PLX.restarting) {
-        CMD.cooldown = 10e3;
-        return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
-      }
-      const execCommand = commandFile.init(...args);
-      PLX.execQueue.push( new Promise((res)=> execCommand.then(res) ));
-      return execCommand;
-    }, commandFile)
+    const CMD = PLX.registerCommand(_cmd, QUEUED_COMMAND(commandFile), commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
@@ -232,7 +235,7 @@ const registerOne = (folder, _cmd) => {
         delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`)];
         const subCfile = require(`${CMD_FOLDER}/${folder}/${_cmd}/${sub}`);
 
-        CMD.registerSubcommand(sub, subCfile.init, subCfile);
+        CMD.registerSubcommand(sub, QUEUED_COMMAND(subCfile), subCfile);
       });
     }
     if (commandFile.teleSubs) {
@@ -240,12 +243,12 @@ const registerOne = (folder, _cmd) => {
         delete require.cache[require.resolve(`${CMD_FOLDER}/${TELE.path}`)];
         const subCfile = require(`${CMD_FOLDER}/${TELE.path}`);
 
-        CMD.registerSubcommand(TELE.label, (msg, args) => subCfile.init(msg, args, TELE.pass), subCfile);
+        CMD.registerSubcommand(TELE.label, (msg, args) => QUEUED_COMMAND(subCfile)(msg, args, TELE.pass), subCfile);
       });
     }
     if (commandFile.autoSubs) {
       commandFile.autoSubs.forEach((AUTOSUB) => {
-        CMD.registerSubcommand(AUTOSUB.label, AUTOSUB.gen, AUTOSUB.options);
+        CMD.registerSubcommand(AUTOSUB.label, QUEUED_COMMAND(AUTOSUB), AUTOSUB.options);
       });
     }
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
@@ -301,3 +304,5 @@ module.exports = {
   DEFAULT_CMD_OPTS,
   PERMS_CALC,
 };
+
+
