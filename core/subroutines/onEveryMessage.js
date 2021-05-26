@@ -151,7 +151,8 @@ module.exports = async (msg) => {
 async function globalLevelUp(msg){
       /// ======= [GLOBAL LVUP] ========///
       await wait(2);
-      let { curLevelG, userData } = await checkGlobalLevel(msg);
+      let { curLevelG, userData } = (await checkGlobalLevel(msg)) || {};
+      if (!curLevelG || !userData) return;
       if (curLevelG < userData.modules.level) {
         return;
         // console.log("DELEVEL");
@@ -211,6 +212,7 @@ async function globalLevelUp(msg){
  */
 async function checkGlobalLevel(msg) {
   let userData = await DB.users.findOne({ id: msg.author.id }).noCache();
+  if (!userData) return;
   const _CURVE = 0.0427899;
   const curLevelG = Math.floor(_CURVE * Math.sqrt(userData.modules.exp));
   // let forNext_G = Math.trunc(Math.pow((userData.modules.level + 1) / _CURVE, 2));
