@@ -135,9 +135,9 @@ module.exports = async (msg) => {
     }
   }
   
-  PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise);
+  PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise && itm.isFulfilled() !== true);
   PLX.execQueue.push(
-  await Promise.all([
+    Promise.all([
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
