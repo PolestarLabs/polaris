@@ -3,12 +3,12 @@
 // const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events");
 
-function eventChecks(svDATA) {
-  if (!svDATA.event) return 1;
-  if (!svDATA.event.enabled) return 1;
-  if (!svDATA.event.channel) return 1;
-  if (!svDATA.event.iterations) return 1;
-  const I = Math.round(svDATA.event.iterations);
+function eventChecks(event) {
+  if (!event) return 1;
+  if (!event.enabled) return 1;
+  if (!event.channel) return 1;
+  if (!event.iterations) return 1;
+  const I = Math.round(event.iterations);
   return I || 1;
 }
 
@@ -45,8 +45,14 @@ module.exports = {
     const CHN = trigger.channel;
     
     //FIXME This is pooling the DB on every message
-    const serverDATA = await DB.servers.findOne({ id: SVR.id }, { "modules.LOCALRANK": 0 }).lean().exec();
-    if (serverDATA.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
+    if (!trigger.guild.switches || !trigger.guild.event){
+      const serverDATA = await DB.servers.findOne({ id: SVR.id }, { "modules.LOCALRANK": 0 }).lean().exec();
+      if (!serverDATA) return;
+      trigger.guild.switches = serverDATA.switches;
+      trigger.guild.event = serverDATA.event || {};
+      setTimeout(()=>trigger.guild.switches = false, 60e3 * 60)
+    }
+    if (trigger.guild.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
 
     const prerf = trigger.prefix
     const _DROPMIN = 1;
@@ -75,7 +81,7 @@ module.exports = {
     let BOX = { id: "lootbox_C_O", text: v.dropLoot, pic: "chest.png" };
     // console.log(droprate)
 
-    const iterations = eventChecks(serverDATA);
+    const iterations = eventChecks(trigger.guild.event);
     for (i = 0; i < iterations / 5; i += 1) {
       droprate = randomize(_DROPMIN, _DROPMAX);
       if (droprate === 777) break;
