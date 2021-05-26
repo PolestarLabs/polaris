@@ -208,7 +208,15 @@ const registerOne = (folder, _cmd) => {
     if(commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
-    const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile);
+    const CMD = PLX.registerCommand(_cmd, (...args) => {
+      if (PLX.restarting) {
+        CMD.cooldown = 10e3;
+        return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
+      }
+      const execCommand = commandFile.init(...args);
+      PLX.execQueue.push( new Promise((res)=> execCommand.then(res) ));
+      return execCommand;
+    }, commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
