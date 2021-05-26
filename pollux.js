@@ -234,11 +234,13 @@ PLX.once("ready", async () => {
     console.log("• ".blue, "Blacklist Loaded!");
   }).catch(console.error);
 
+  PLX.eventHandlerFunctions = {};
   readdirAsync("./eventHandlers/").then((files) => {
     files.forEach((file) => {
       const eventor = require(`./eventHandlers/${file}`);
       const eventide = file.split(".")[0];
-      PLX.on(eventide, (...args) => eventor(...args));
+      PLX.eventHandlerFunctions[eventide] =  (...args) => eventor(...args);
+      PLX.on(eventide, PLX.eventHandlerFunctions[eventide]);
     });
   }).catch(console.error);
 
@@ -279,15 +281,17 @@ PLX.on("shardDisconnect", (err, shard) => {
 //      AUX SIDE FUNCTIONS
 //= ======================================//
 
-PLX.softKill = () => {
+PLX.softKill = (msg) => {
   console.log("Soft killing".bgBlue);
   PLX.restarting = true;
-  // PLX.removeListener('messageCreate')
-
-  Promise.all(PLX.execQueue).then(() => {
+  PLX.removeListener('messageCreate', PLX.eventHandlerFunctions.messageCreate);
+  
+  Promise.all(PLX.execQueue).then(async () => {
+    if (msg) await msg.reply(_emoji('yep') + " Queue consumed. Rebooting now..." );
     PLX.disconnect({ reconnect: false });
     process.exit(0);
-  }).catch((error) => {
+  }).timeout(30e3).catch(async (error) => {
+    if (msg) await msg.reply(_emoji('nope') + " Queue errored or timed out. Hard-rebooting now..." );
     console.error(error);
     process.exit(1);
   });
