@@ -1,4 +1,4 @@
-process.env.UV_THREADPOOL_SIZE = 64;
+process.env.UV_THREADPOOL_SIZE = 128;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
 
@@ -8,7 +8,12 @@ console.log(require("./resources/asciiPollux.js").ascii());
 global.Promise = require("bluebird");
 global.clusterNames = require("./resources/lists/clusters.json");
 
-global.Sentry          = require("@sentry/node");
+const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
+const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
+const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
+const isPRIME             = process.env.PRIME;
+
+global.Sentry         = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
@@ -36,9 +41,6 @@ Eris.Embed.prototype.setColor = function setColor(color) {
   return this;
 };
 
-const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
-const CLUSTER_ID = parseInt(process.env.CLUSTER_ID, 10) || 0;
-const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
 
 Sentry.init({ 
   dsn: cfg.sentryDSN,
@@ -54,7 +56,7 @@ console.table({
   TOTAL_SHARDS,
 });
 
-global.PLX = new Eris.CommandClient(cfg.token, {
+global.PLX = new Eris.CommandClient( isPRIME ? cfg.token_prime : cfg.token, {
   maxShards: TOTAL_SHARDS,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID),
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
@@ -81,7 +83,9 @@ global.MARKET_TOKEN = cfg["pollux-api-token"];
 PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+PLX.isPRIME = isPRIME;
+
+PLX.cluster = isPRIME ? {id: 0, name: "Polaris Prime"} : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 global.hook = new WebhookDigester(PLX);
 
