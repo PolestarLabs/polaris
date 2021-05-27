@@ -23,12 +23,12 @@
 
 module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
   options = options || {};
-  const embed = options.embed || promptMessage.embeds?.[0] ?? false;
-  const avoidEdit = options.avoidEdit || !embed ?? false;
-  const useButtons = options?.useButtons ?? true 
-  const clearReacts = options.clearReacts ?? true;
+  const embed = options.embed || promptMessage.embeds?.[0] || false;
+  const avoidEdit = options.avoidEdit || !embed || false;
+  const useButtons = typeof options?.useButtons === "boolean" ? options?.useButtons : true;
+  const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
   const time = options.time || 15000;
-  const deleteFields = options.deleteFields ?? true;
+  const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
   strings.cancel = `❌${strings.cancel || ""}`;
