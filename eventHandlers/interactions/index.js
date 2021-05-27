@@ -11,7 +11,7 @@ module.exports = async function(payload){
         id: payload.d.id,
         guild: message.guild,
         channel: message.channel,
-        member: message.member,
+        member: payload.d.member,
         token: payload.d.token,
         type: interaction_type,
         ack: function(){
