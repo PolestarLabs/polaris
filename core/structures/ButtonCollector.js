@@ -31,7 +31,7 @@ class ButtonCollector extends EventEmitter {
     if (!this.filter || this.filter(buttonPress)) {
       if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(buttonPress);
-      this.emit("click", data.custom_id );
+      this.emit("click", buttonPress );
       if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
       return true;
