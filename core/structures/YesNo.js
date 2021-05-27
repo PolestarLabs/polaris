@@ -23,11 +23,12 @@
 
 module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
   options = options || {};
-  const embed = options.embed || promptMessage.embeds?.[0] || false;
-  const avoidEdit = options.avoidEdit || !embed || false;
-  const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
+  const embed = options.embed || promptMessage.embeds?.[0] ?? false;
+  const avoidEdit = options.avoidEdit || !embed ?? false;
+  const useButtons = options?.useButtons ?? true 
+  const clearReacts = options.clearReacts ?? true;
   const time = options.time || 15000;
-  const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
+  const deleteFields = options.deleteFields ?? true;
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
   strings.cancel = `❌${strings.cancel || ""}`;
@@ -42,29 +43,59 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     id: _emoji("nope").id,
   };
 
-  await promptMessage.addReaction(YA.r);
-  promptMessage.addReaction(NA.r);
+  let responses = [];
 
-  const reas = await promptMessage.awaitReactions({
-    maxMatches: 1,
-    authorOnly: options.approver || commandMessage.author.id,
-    time,
-  }).catch((err) => {
-    console.error(err);
-    if (clearReacts) promptMessage.removeReactions().catch(() => null);
-    if (embed && !avoidEdit) {
-      embed.color = 16499716;
-      if (deleteFields === true) embed.fields = [];
-      embed.footer = { text: strings.timeout };
+  if (useButtons) {
+    await promptMessage.edit({
+      content: promptMessage.content,
+      components: [{type: 1, components: [
+          { type: 2, style: 3, emoji: {id: _emoji('yep').id }, label: "Yep", custom_id: "yep" },
+          { type: 2, style: 4, emoji: {id: _emoji('nope').id }, label: "Nope", custom_id: "nope" },
+      ]}]      
+    });
+    responses = await promptMessage.awaitButtonClick({
+      maxMatches: 1,
+      authorOnly: options.approver || commandMessage.author.id,
+      time,
+    }).catch((err) => {
+      console.error(err);
+      return respondError();
+    });
+  }else{
+    await promptMessage.addReaction(YA.r);
+    promptMessage.addReaction(NA.r);
+    responses = await promptMessage.awaitReactions({
+      maxMatches: 1,
+      authorOnly: options.approver || commandMessage.author.id,
+      time,
+    }).catch((err) => {
+      console.error(err);
+      return respondError();
+    });
+  }
 
-      promptMessage.edit({ embed });
-    }
-    if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
-    if (timeoutFunction) return timeoutFunction;
-    return null;
-  });
 
-  if (!reas?.length) return null;
+
+  if (!responses?.length) return null;
+
+  console.log({responses})
+
+  if (
+    (responses.length === 1 && responses[0]?.emoji?.id === NA.id) ||
+    (responses[0].id === "nope") 
+  ) {
+    return cancellation();
+  }
+
+  if (
+    (responses.length === 1 && responses[0]?.emoji?.id === YA.id) ||
+    (responses[0].id === "yep") 
+  ) {
+    return respondPositive();
+  }
+  return null;
+
+
 
   function cancellation() {
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
@@ -79,12 +110,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (noFunction) return noFunction;
     if (!noFunction) return false;
   }
-
-  if (reas.length === 1 && reas[0].emoji.id === NA.id) {
-    return cancellation();
-  }
-
-  if (reas.length === 1 && reas[0].emoji.id === YA.id) {
+  function respondPositive(){
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 1234499;
@@ -96,5 +122,19 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (yesFunction) return yesFunction;
     if (!yesFunction) return true;
   }
-  return null;
+
+  function respondError(){
+    if (clearReacts) promptMessage.removeReactions().catch(() => null);
+    if (embed && !avoidEdit) {
+      embed.color = 16499716;
+      if (deleteFields === true) embed.fields = [];
+      embed.footer = { text: strings.timeout };
+
+      promptMessage.edit({ embed });
+    }
+    if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
+    if (timeoutFunction) return timeoutFunction;
+    return null;
+  }
+
 };
