@@ -25,6 +25,7 @@ const cfg             = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
+require("./core/structures/ButtonCollector.js")(ERIS);
 
 const runtime         = performance.now();
 global.appRoot = path.resolve(__dirname);
@@ -225,6 +226,16 @@ translateEngineStart();
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 
 PLX.once("ready", async () => {
+
+  PLX.on("rawREST", payload => {
+    //if (PLX.logRaw) console.log(`${" RAW RE ".bgMagenta} }`, require('util').inspect(payload,0,2,1));
+  })
+  PLX.on("rawWS" , payload => {
+    if (payload.t === "INTERACTION_CREATE"){
+      require(`./eventHandlers/interactions`)(payload);
+    }
+    if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload,0,2,1));
+  })
   
 
   console.log(" READY ".bold.bgCyan);
