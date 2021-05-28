@@ -209,7 +209,8 @@ function QUEUED_COMMAND(commandFile) {
     if (PLX.restarting) {
       return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
     }
-    const execCommand = commandFile?.init(...args) || commandFile?.gen(...args);
+    console.log({commandFile})
+    const execCommand = commandFile.init ? commandFile.init(...args) : commandFile.gen(...args);
     PLX.execQueue.push(new Promise((res) => execCommand.then(res)));
     return execCommand;
   };
