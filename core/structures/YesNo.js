@@ -23,12 +23,35 @@
 
 module.exports = async function yesNo(promptMessage, commandMessage, yesFunction = false, noFunction = false, timeoutFunction = false, options) {
   options = options || {};
+
+  if (typeof yesFunction === 'object' && !noFunction && !timeoutFunction) options = yesFunction;
+
+  noFunction = options?.noFunction || noFunction;
+  timeoutFunction = options?.timeoutFunction || timeoutFunction;
+
   const embed = options.embed || promptMessage.embeds?.[0] || false;
   const avoidEdit = options.avoidEdit || !embed || false;
   const useButtons = typeof options?.useButtons === "boolean" ? options?.useButtons : true;
   const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
   const time = options.time || 15000;
   const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
+  const buttonSettings =  Object.assign({
+    yep:   {
+      type: 2,
+      style: 3,
+      emoji: {id: _emoji('yep').id },
+      label: $t( ["terms.yep","Yep"],{lngs: commandMessage.lang}) ,
+      custom_id: "yep" 
+    },
+    nope:  {
+      type: 2,
+      style: 4,
+      emoji: {id: _emoji('nope').id },
+      label: $t( ["terms.nope","Nope"],{lngs: commandMessage.lang}) ,
+      custom_id: "nope" 
+    },
+  }, (options.buttonSettings || {}) );
+
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
   strings.cancel = `❌${strings.cancel || ""}`;
@@ -49,8 +72,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     await promptMessage.edit({
       content: promptMessage.content,
       components: [{type: 1, components: [
-          { type: 2, style: 3, emoji: {id: _emoji('yep').id }, label: "Yep", custom_id: "yep" },
-          { type: 2, style: 4, emoji: {id: _emoji('nope').id }, label: "Nope", custom_id: "nope" },
+          buttonSettings.yep, buttonSettings.nope
       ]}]      
     });
     responses = await promptMessage.awaitButtonClick({
