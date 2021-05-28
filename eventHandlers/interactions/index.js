@@ -2,7 +2,6 @@ const Eris = require('eris');
 const axios = require('axios');
 
 module.exports = async function(payload){
-    console.log({payload})
     let message = new Eris.Message(payload.d.message, PLX);
     const interaction_type = payload.d.type; //3= button
 
@@ -24,14 +23,14 @@ module.exports = async function(payload){
                 "type": 5
             });
         },
-        updateMessage: function(payload){
+        updateMessage: function(data){
             if (this.type === 3) return null;
-            const response = payload;
+            const response = {data};
             response.type = 7;
             PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response);
         },
-        reply: function(payload){
-            const response = payload;
+        reply: function(data){
+            const response = {data};
             response.type = 4;
             PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response);
         },
