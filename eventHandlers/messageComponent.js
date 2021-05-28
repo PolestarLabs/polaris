@@ -10,7 +10,7 @@ module.exports = async ( interaction, data) => {
                 {
                     type: 2,
                     style:5,
-                    url: `${paths.DASH}/dash/gallery}`,
+                    url: `${paths.DASH}/dash/boorusave}`,
                     label: "See Galery"
                 }
             ]}]
