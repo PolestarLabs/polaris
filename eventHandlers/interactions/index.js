@@ -7,6 +7,7 @@ module.exports = async function(payload){
 
     const interaction = {
         message,
+        messageRaw: payload.d.message,
         id: payload.d.id,
         guild: message.guild,
         channel: message.channel,
