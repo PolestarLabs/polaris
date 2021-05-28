@@ -7,26 +7,38 @@ function addReactions(ms, save) {
   ms.addReaction("💖").catch(() => null);
   ms.addReaction("😠").catch(() => null);
   if (save) {
-    ms.addReaction("⭐").catch(() => null);
+    ms.edit({
+      content: ms.content,
+      components: [
+        {type:1, components:[{
+          type: 2,
+          style: 2,
+          label: "Save to Gallery",
+          custom_id: "booruSave",
+          emoji: {name:"⭐"}
+        }]}
+      ]
+    });
+    //ms.addReaction("⭐").catch(() => null);
     ms.awaitReactions((reaction) => {
-      if (reaction.author.id === PLX.user.id) return false;
+      if (reaction.userID === PLX.user.id) return false;
 
-      if (reaction.emoji.name === "⭐") {
+      if (reaction.id === "booruSave") {
         DB.usercols.set(reaction.author.id, { $addToSet: { "collections.boorusave": save } });
-        Progression.emit("action.gallery.save",{msg:ms,userID:reaction.author.id,value:1});
-        ms.removeReaction("⭐", reaction.author.id).catch(() => null);
+        Progression.emit("action.gallery.save",{msg:ms,userID:reaction.userID,value:1});
+        //ms.removeReaction("⭐", reaction.author.id).catch(() => null);
         return true;
       }
       return false;
     }, { time: 15000 }).catch((e) => {
       console.error(e);
-      ms.removeReaction("⭐");
+      //ms.removeReaction("⭐");
     }).then((reas) => {
       if (!reas?.length) return;
 
-      const savers = reas.map((rea) => rea.author.username);
+      const savers = reas.map((rea) => rea.member.user.username);
       ms.channel.send(`Saved by ${savers.join(",")}`);
-      ms.removeReaction("⭐");
+      //ms.removeReaction("⭐");
     });
   }
 }
@@ -118,7 +130,6 @@ const init = async (msg, args, ext) => {
         saved: Date.now(),
         tags: enhancedRes.tag_string,
         nsfw: ext && ext.nsfw,
-
       });
     });
   } else if (res) {
