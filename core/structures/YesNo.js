@@ -79,6 +79,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
       ]}]      
     });
     responses = await promptMessage.awaitButtonClick({
+      removeButtons: options.removeButtons || false,
       maxMatches: 1,
       authorOnly: options.approver || commandMessage.author.id,
       time,
@@ -154,9 +155,15 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
       embed.color = 16499716;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.timeout };
-
-      promptMessage.edit({ embed });
+      promptMessage.edit({embed});
     }
+    promptMessage.edit({
+      content: promptMessage.content,
+      components: [{type: 1, components: [
+          Object.assign({disabled:true},buttonSettings.yep),
+          Object.assign({disabled:true},buttonSettings.nope)
+      ]}]      
+    });
     if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
     if (timeoutFunction) return timeoutFunction;
     return null;
