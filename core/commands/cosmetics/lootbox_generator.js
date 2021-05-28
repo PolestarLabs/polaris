@@ -1,3 +1,8 @@
+const BUTTONS = {
+  keep: {type:2, custom_id: 'keep', label: "Keep", style: 1, emoji: {name: "⭐"}},
+  reroll: {type:2, custom_id: 'reroll', label: "Reroll", style: 4, emoji: {name: "🔁"}},
+}
+
 // TRANSLATE[epic=translations] lootbox
 
 const Canvas = require("canvas");
@@ -109,28 +114,25 @@ const init = async (msg, args) => {
     await preRoll.then((pR) => pR.deleteAfter(1500).catch((e) => null));
     const message = await msg.channel.send(...firstRoll);
 
-    message.addReaction("⭐").catch((e) => null);
-    if (canReroll) message.addReaction("🔁").catch((e) => null);
 
-    return message.awaitReactions((reaction) => {
-      if (reaction.author.id !== msg.author.id) return false;
-      if (reaction.emoji.name === "🔁") {
+    return message.awaitButtonClick((interaction) => {
+      console.log({interaction})
+      if (interaction.userID !== msg.author.id) return false;
+      if (interaction.id === "reroll") {
         return canReroll;
-      } if (reaction.emoji.name === "⭐") return true;
+      } if (interaction.id === "keep") return true;
     }, { time: 15000, maxMatches: 1 }).catch((e) => {
-      console.error(e);
-      message.removeReaction("🔁");
-    }).then(async (reas) => {
-      const choice = reas?.[0];
-
-      if (choice?.emoji.name === "🔁") {
+      console.error(e);      
+    }).then(async (inter) => {
+      const choice = inter?.[0];
+      console.log({choice})
+      if (choice?.id === "reroll") {
         message.delete();
         currentRoll++;
         Progression.emit("lootbox.reroll",{msg,value:1,userID:msg.author.id});
         return process();
       }
-
-      message.removeReactions().catch((e) => null);
+      
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
@@ -138,12 +140,20 @@ const init = async (msg, args) => {
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         // FIXME [epic=flicky] Boosterpacks not being added
         Promise.all(lootbox.content.map(async (item) => await getPrize(item, USERDATA))),
+       
       ]);
 
       Progression.emit("lootbox.open",{msg,value:1,userID:msg.author.id});
 
       LootingUsers.delete(msg.author.id);
 
+      firstRoll[0].components = [
+        {type:1, components: [
+          Object.assign({disabled: true},BUTTONS.keep),
+          Object.assign({disabled: true},BUTTONS.reroll)
+        ]}
+      ];
+      
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
 >>> ${lootbox.content.map((x) => {
@@ -387,6 +397,12 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   P.count = totalRerolls - currentRoll;
   P.x_frags = `${_emoji("COS")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
   return [{
+    components:[
+      {type:1, components: [
+        BUTTONS.keep,
+        Object.assign({disabled: !canReroll},BUTTONS.reroll)
+      ]}
+    ],
     embed: {
       title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
       description: `
