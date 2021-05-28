@@ -489,7 +489,7 @@ async function ProcessHand(currentHand) {
           time: 30e3,
           }),
       //scene_msg.awaitButtonClick((int)=>int.userID === msg.author.id)
-      scene_msg.awaitButtonClick((int)=>true,{
+      scene_msg.awaitButtonClick((int)=>int.userID === msg.author.id,{
           maxMatches: 1,
           time: 30e3,
       })
