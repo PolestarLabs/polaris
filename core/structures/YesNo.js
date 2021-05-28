@@ -35,7 +35,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   const clearReacts = typeof options.clearReacts === "undefined" || options.clearReacts;
   const time = options.time || 15000;
   const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
-  const buttonSettings =  Object.assign({
+  const buttonSettings = {
     yep:   {
       type: 2,
       style: 3,
@@ -50,7 +50,9 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
       label: $t( ["terms.nope","Nope"],{lngs: commandMessage.lang}) ,
       custom_id: "nope" 
     },
-  }, (options.buttonSettings || {}) );
+  };
+  Object.assign(buttonSettings.yep, options.buttonSettings.yep);
+  Object.assign(buttonSettings.nope, options.buttonSettings.nope);
 
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
@@ -69,6 +71,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   let responses = [];
 
   if (useButtons) {
+    console.log({buttonSettings})
     await promptMessage.edit({
       content: promptMessage.content,
       components: [{type: 1, components: [
