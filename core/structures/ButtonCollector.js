@@ -43,7 +43,7 @@ class ButtonCollector extends EventEmitter {
     if (this.ended) return;
     this.ended = true;
     this.bot.removeListener("messageComponent", this.listener);
-    this.message.edit({content: this.message.content, components:[]}).catch(err=>null)
+    if (!this.options.removeButtons) this.message.edit({content: this.message.content, components:[]}).catch(err=>null)
     this.emit("end", this.collected, reason);
   }
 }
