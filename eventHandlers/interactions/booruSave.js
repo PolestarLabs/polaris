@@ -7,7 +7,7 @@ module.exports = async (interaction, data)=>{
             tags: emb.fields.tags ? emb.fields.tags.replaceAll(/[\[\]\`]/,"") : "",
             nsfw: emb.color == 16731205,
         }
-        let res = await DB.usercols.set(interaction.userID, { $addToSet: { "collections.boorusave": save } });
+        let res = await DB.usercols.set({id: interaction.userID}, { $addToSet: { "collections.boorusave": save } });
         console.log({res})
         if (res?.nModified !== 1) return;
 
