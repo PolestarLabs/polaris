@@ -252,10 +252,12 @@ PLX.once("ready", async () => {
   PLX.eventHandlerFunctions = {};
   readdirAsync("./eventHandlers/").then((files) => {
     files.forEach((file) => {
-      const eventor = require(`./eventHandlers/${file}`);
       const eventide = file.split(".")[0];
-      PLX.eventHandlerFunctions[eventide] =  (...args) => eventor(...args);
-      PLX.on(eventide, PLX.eventHandlerFunctions[eventide]);
+      PLX.on(eventide, (...args) => {
+        const eventor = require(`./eventHandlers/${file}`);
+        PLX.eventHandlerFunctions[eventide] =  eventor;
+        return eventor(...args);
+      });
     });
   }).catch(console.error);
 
