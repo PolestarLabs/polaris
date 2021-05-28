@@ -1,48 +1,6 @@
 const ax = require("axios");
 const BOORU = require("../../utilities/BooruGetter");
 
-function addReactions(ms, save) {
-  ms.addReaction("👍").catch(() => null);
-  ms.addReaction("👎").catch(() => null);
-  ms.addReaction("💖").catch(() => null);
-  ms.addReaction("😠").catch(() => null);
-  if (save) {
-    ms.edit({
-      content: ms.content,
-      components: [
-        {type:1, components:[{
-          type: 2,
-          style: 2,
-          label: "Save to Gallery",
-          custom_id: "booruSave",
-          emoji: {name:"⭐"}
-        }]}
-      ]
-    });
-    //ms.addReaction("⭐").catch(() => null);
-    ms.awaitReactions((reaction) => {
-      if (reaction.userID === PLX.user.id) return false;
-
-      if (reaction.id === "booruSave") {
-        DB.usercols.set(reaction.author.id, { $addToSet: { "collections.boorusave": save } });
-        Progression.emit("action.gallery.save",{msg:ms,userID:reaction.userID,value:1});
-        //ms.removeReaction("⭐", reaction.author.id).catch(() => null);
-        return true;
-      }
-      return false;
-    }, { time: 15000 }).catch((e) => {
-      console.error(e);
-      //ms.removeReaction("⭐");
-    }).then((reas) => {
-      if (!reas?.length) return;
-
-      const savers = reas.map((rea) => rea.member.user.username);
-      ms.channel.send(`Saved by ${savers.join(",")}`);
-      //ms.removeReaction("⭐");
-    });
-  }
-}
-
 const init = async (msg, args, ext) => {
   const QUALITY_CONTROL = `+score:>0${msg.channel.nsfw ? "" : "+-rating:questionable"}`;
 
@@ -124,13 +82,22 @@ const init = async (msg, args, ext) => {
         true,
       );
     }
-    msg.channel.send({ embed }).then((ms) => {
-      addReactions(ms, {
-        url: (enhancedRes.large_file_url || enhancedRes.file_url),
-        saved: Date.now(),
-        tags: enhancedRes.tag_string,
-        nsfw: ext && ext.nsfw,
-      });
+    msg.channel.send({ 
+      embed,
+      components: [
+        {type:1, components:[{
+          type: 2,
+          style: 2,
+          label: "Save to Gallery",
+          custom_id: "booruSave",
+          emoji: {name:"⭐"}
+        }]}
+      ]      
+    }).then((ms) => {
+      ms.addReaction("👍").catch(() => null);
+      ms.addReaction("👎").catch(() => null);
+      ms.addReaction("💖").catch(() => null);
+      ms.addReaction("😠").catch(() => null);
     });
   } else if (res) {
     embed.image(res.file_url);
