@@ -45,7 +45,7 @@ Eris.Embed.prototype.setColor = function setColor(color) {
 // TEMP
 
 Eris.Message.prototype.getComponents = async function(){
-  this.components = ( await this._client.requestHandler.request("GET","/channels/488142034776096772/messages/848157603330260992",true)).components || [];
+  this.components = ( await this._client.requestHandler.request("GET",`/channels/${this.channel.id}/messages/${this.id}`,true)).components || [];
   return this.components;
 }
 Eris.Message.prototype.setButtons = function(buttons){
@@ -74,14 +74,22 @@ Eris.Message.prototype.setButtons = function(buttons){
   })
 }
 Eris.Message.prototype.removeButtons = async function(buttonIDs){
-  let currentComps = this.getComponents();
+  let currentComps = await this.getComponents();
   let newComps = currentComps.map(row=> {
     row.components = row.components.filter(btn=> !buttonIDs.includes(btn.custom_id));
     return row;
   });
   return this.edit({content:this.content, components: newComps})
 }
-
+Eris.Message.prototype.addButtons = async function(buttons,row=0){
+  let currentComps = await this.getComponents();  
+  
+  newButtons = currentComps.map(row=> row.components||[]);
+  if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
+  else newButtons[newButtons.length] = [...buttons];
+console.log(JSON.stringify(newButtons,0,2))
+  return this.setButtons(newButtons)
+}
 
 
 
