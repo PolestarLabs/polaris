@@ -51,8 +51,8 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
       custom_id: "nope" 
     },
   };
-  Object.assign(buttonSettings.yep, options.buttonSettings.yep);
-  Object.assign(buttonSettings.nope, options.buttonSettings.nope);
+  Object.assign(buttonSettings.yep, options.buttonSettings?.yep || {});
+  Object.assign(buttonSettings.nope, options.buttonSettings?.nope || {});
 
   const strings = options.strings || {};
   strings.confirm = `✔️${strings.confirm || ""}`;
