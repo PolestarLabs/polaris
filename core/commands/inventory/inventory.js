@@ -1,5 +1,3 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
 const Picto = require("../../utilities/Picto");
 
 const INVOKERS   = new Map();
@@ -226,36 +224,3 @@ module.exports = {
   reactionButtonTimeout: 30e3,
   postCommand: (m, a, r) => setTimeout(() => INVOKERS.delete(m.author.id), 32e3),
 };
-
-
-PLX.on("inventoryButton", async(int,data)=>{
-  console.log({data})
-  let destination;
-  if (data.custom_id.includes("LOOTBOX") ) destination = require("./lootbox.js").init;
-  if (data.custom_id.includes("BOOSTER") ) destination = require("./boosterpack.js").init;
-  if (data.custom_id.includes("KEY") ) destination = require("./key.js").init;
-  if (data.custom_id.includes("MATERIAL") ) destination = require("./material.js").init;
-  if (data.custom_id.includes("CONSUMABLE") ) destination = require("./consumable.js").init;
-  if (data.custom_id.includes("JUNK") ) destination = require("./junk.js").init;
-
-  const fakeMsg = Object.assign({}, int.message, {
-    author: await PLX.resolveUser(int.userID)
-  })
-let args = [];
-args[10] = int.userID;
-  const payload = await destination(fakeMsg,args ,int.userID);
-
-  console.log({payload})
-  int.ack();
-  let stashComponents;
-  if (payload.components) {
-    stashComponents = payload.components;
-    payload.components = undefined;
-  }
-
-  int.message.edit( payload ).then(m=>{
-    if (stashComponents) m.addButtons(stashComponents[0].components,2);
-    else int.message.removeComponentRow(2);
-  });
-
-})
