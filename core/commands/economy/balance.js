@@ -34,13 +34,13 @@ const init = async (msg) => {
 
     const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
     if (x.type === "SEND") x.type = "TRANSFER";
-    if (x.to === TARGETDATA.id && x.from !== POLid) {
+    if (x.from && x.to === TARGETDATA.id && x.from !== POLid) {
       othPart = (await PLX.getTarget(x.from, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
       return `↔ \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
         + `*\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id}) \`${othPart.id}\` `;
     }
-    if (x.from === TARGETDATA.id && x.to !== POLid) {
+    if (x.to && x.from === TARGETDATA.id && x.to !== POLid) {
       othPart = (await PLX.getTarget(x.to, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
       return `↔  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
