@@ -116,8 +116,8 @@ const init = async (msg, args) => {
 
 
     return message.awaitButtonClick((interaction) => {
-      console.log({interaction})
-      if (interaction.userID !== msg.author.id) return false;
+
+      if (interaction.userID !== msg.author.id && msg.author.id !== PLX.user.id ) return false;
       if (interaction.id === "reroll") {
         return canReroll;
       } if (interaction.id === "keep") return true;
