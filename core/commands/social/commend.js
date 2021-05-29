@@ -42,7 +42,8 @@ const init = async function (msg) {
             ${$t("responses.commend.give", P)}
             ${$t("responses.commend.totals", P)}
             `);
-    console.log(embed);
+
+    Progression.emit("command.commend.commit", {msg,userID:msg.author.id})
     msg.channel.send({ embed });
   };
 
