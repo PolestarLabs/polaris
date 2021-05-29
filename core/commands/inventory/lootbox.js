@@ -28,7 +28,7 @@ const init = async function (msg, args, reactionMember) {
 
   console.log({ userID: reactionUserID, args10: args[10]?.id || args[10] }, "init");
 
-  if (reactionUserID && args[10]?.id != reactionUserID) return "Only the owner can see inside";
+  if (reactionUserID && args[10]?.id != reactionUserID && reactionUserID !== msg.author.id ) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
   const userInventory = new INVENTORY(reactionUserID || msg.author.id, "box");
@@ -49,7 +49,7 @@ const init = async function (msg, args, reactionMember) {
           type: 2,
           style: 2,
           emoji: {id: _emoji(rar).id },
-          label: rar,
+          label: $t(`keywords.${rar}`,{lngs: msg.lang}),
           custom_id: `openBox:${rar}:${msg.author.id}:${msg.lang[0]}`,
           disabled: !Inventory.some(i=> i.rarity === rar)
         }

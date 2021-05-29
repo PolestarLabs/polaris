@@ -5,7 +5,7 @@ const INVENTORY = require("../../archetypes/Inventory");
 const init = async function (msg, args, reactionMember) {
   const reactionUserID = reactionMember?.id || reactionMember;
 
-  if (reactionUserID && (args[10] || {}).id != reactionUserID) return "Only the owner can see inside";
+  if (reactionUserID && args[10]?.id != reactionUserID && reactionUserID !== msg.author.id ) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
   const P =  { lngs: msg.lang };
