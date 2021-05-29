@@ -17,8 +17,8 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-    interaction.ack();
     if (interaction.message.id !== this.message.id) return false;
+    interaction.ack();
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
       if (this.options.authorOnly !== userID) return false; 
