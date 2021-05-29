@@ -129,7 +129,31 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, Picto.tag(ctx, a_bpk, "100 24pt 'Panton Light'", "#FFF"), XYZ.BPK.x - 200, XYZ.BPK.y, XYZ.BPK.w, "left");
   Picto.setAndDraw(ctx, Picto.tag(ctx, a_lbx, "100 24pt 'Panton Light'", "#FFF"), XYZ.LBX.x - 200, XYZ.LBX.y, XYZ.LBX.w, "left");
 
-  menumes = await msg.channel.send("", file(canvas.toBuffer(), "inventory.png"));
+
+  const inventoryButtons = [
+    [
+      { style: 2, label: ""??"MATERIAL", custom_id: `invButton:MATERIAL:${msg.author.id}`, emoji: {id: _emoji("MATERIAL").id}},
+      { style: 2, label: ""??"CONSUMABLE", custom_id: `invButton:CONSUMABLE:${msg.author.id}`, emoji: {id: _emoji("CONSUMABLE").id}},
+      { style: 2, label: ""??"JUNK", custom_id: `invButton:JUNK:${msg.author.id}`, emoji: {id: _emoji("JUNK").id}},
+      { style: 2, label: ""??"LOOTBOX", custom_id: `invButton:LOOTBOX:${msg.author.id}`, emoji: {id: _emoji("LOOTBOX").id}},
+      { style: 2, label: ""??"BOOSTER", custom_id: `invButton:BOOSTER:${msg.author.id}`, emoji: {id: _emoji("BOOSTER").id}},
+    ],[
+      { style: 2, label: ""??"KEY", custom_id: `invButton:KEY:${msg.author.id}`, emoji: {id: _emoji("KEY").id}},
+    //],[
+      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 4, label: ""??"CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: {id: _emoji("nope").id}},
+    ]
+  ];
+
+  let invbuts = await msg.setButtons(inventoryButtons,1);
+  console.log({invbuts});
+  
+
+  menumes = await msg.channel.send({
+    components: msg.setButtons(inventoryButtons,1)
+  }, file(canvas.toBuffer(), "inventory.png"));
   menumes.target = Target;
   args[10] = userData;
   args[11] = msg.prefix;
@@ -144,6 +168,8 @@ const init = async (msg, args) => {
   // menumes.addReaction(_emoji("JUNK").replace(/(\<:|\>)/g,'') )
 };
 
+
+
 module.exports = {
   init,
   pub: true,
@@ -152,6 +178,7 @@ module.exports = {
   cat: "inventory",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["inv"],
+  /*
   reactionButtons: [
     {
       emoji: _emoji("LOOTBOX").reaction,
@@ -195,7 +222,40 @@ module.exports = {
       filter: (msg, emj, uid) => INVOKERS.get(uid) === msg.id && msg.removeReaction(emj, uid),
 
     },
-  ],
+  ],*/
   reactionButtonTimeout: 30e3,
   postCommand: (m, a, r) => setTimeout(() => INVOKERS.delete(m.author.id), 32e3),
 };
+
+
+PLX.on("inventoryButton", async(int,data)=>{
+  console.log({data})
+  let destination;
+  if (data.custom_id.includes("LOOTBOX") ) destination = require("./lootbox.js").init;
+  if (data.custom_id.includes("BOOSTER") ) destination = require("./boosterpack.js").init;
+  if (data.custom_id.includes("KEY") ) destination = require("./key.js").init;
+  if (data.custom_id.includes("MATERIAL") ) destination = require("./material.js").init;
+  if (data.custom_id.includes("CONSUMABLE") ) destination = require("./consumable.js").init;
+  if (data.custom_id.includes("JUNK") ) destination = require("./junk.js").init;
+
+  const fakeMsg = Object.assign({}, int.message, {
+    author: await PLX.resolveUser(int.userID)
+  })
+let args = [];
+args[10] = int.userID;
+  const payload = await destination(fakeMsg,args ,int.userID);
+
+  console.log({payload})
+  int.ack();
+  let stashComponents;
+  if (payload.components) {
+    stashComponents = payload.components;
+    payload.components = undefined;
+  }
+
+  int.message.edit( payload ).then(m=>{
+    if (stashComponents) m.addButtons(stashComponents[0].components,2);
+    else int.message.removeComponentRow(2);
+  });
+
+})
