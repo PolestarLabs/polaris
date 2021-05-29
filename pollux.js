@@ -48,7 +48,7 @@ Eris.Message.prototype.getComponents = async function(){
   this.components = ( await this._client.requestHandler.request("GET","/channels/488142034776096772/messages/848157603330260992",true)).components || [];
   return this.components;
 }
-Eris.Message.prototype.addButtons = function(buttons){
+Eris.Message.prototype.setButtons = function(buttons){
   if (buttons.length > 5) return Promise.reject("Max 5 Rows");
   if ( buttons.some(b=>b.length>5) )  return Promise.reject("Max 5 Buttons");
 
