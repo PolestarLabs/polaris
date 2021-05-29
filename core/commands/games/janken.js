@@ -25,21 +25,30 @@ const init = async function (msg,args){
     const rpsComponents = [
         {
             type:2,
-            style: 1,
+            style: 2,
             label: "Rock",
-            custom_id: "rock"
+            custom_id: "rock",
+            emoji: {
+                name:"🪨"
+            }
         },
         {
             type:2,
-            style: 1,
+            style: 2,
             label: "Paper",
-            custom_id: "paper"
+            custom_id: "paper",
+            emoji: {
+                name:"🧻"
+            }
         },
         {
             type:2,
-            style: 1,
+            style: 2,
             label: "Scissors",
-            custom_id: "scissors"
+            custom_id: "scissors",
+            emoji: {
+                name:"✂"
+            }
         }
     ];
 
@@ -149,8 +158,8 @@ const init = async function (msg,args){
 
 function getWinner(res){
     if (res[0].id === "rock" && res[1].id === "rock") return -1;
-    if (res[0].id === "paper" && res[1].id === "rock") return 1;
-    if (res[0].id === "scissors" && res[1].id === "rock") return 0;
+    if (res[0].id === "paper" && res[1].id === "rock") return 0;
+    if (res[0].id === "scissors" && res[1].id === "rock") return 1;
 
     if (res[0].id === "rock" && res[1].id === "paper") return 1;
     if (res[0].id === "paper" && res[1].id === "paper") return -1;
