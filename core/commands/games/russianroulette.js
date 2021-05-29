@@ -37,7 +37,7 @@ const STRINGS = (P) => {
 	v.mp_abort_player = "Game cancelled by the creator.";
 	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
 	v.mp_no_players = "No one joined. I'm not playing this alone.";
-	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${P.verifiedPlayers.map((a) => a.name).join(", ")}\`\`\``;
+	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
 	v.round_no = `**Round ${P.round}**\n`;
 	v.bot_shame = "Did y'all lose to a **bot**???";
 	v.bot_megashame = `${P.player.name} stands victorious! You guys suck...`;
