@@ -17,7 +17,7 @@ const play = async (msg, SOUND, options) => {
       if (playingMessage) msg.channel.send(playingMessage);
 
       voiceChannel.on("end", () => {
-        if (!voiceChannel.dontLeave) {
+        if (!voiceChannel.dontLeave && !options?.dontLeave) {
           if (exitMessage) msg.channel.send(exitMessage);
           PLX.leaveVoiceChannel(msg.member.voiceState.channelID);
         }
