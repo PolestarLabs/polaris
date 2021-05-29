@@ -2,7 +2,6 @@ const Eris = require('eris');
 const axios = require('axios');
 
 module.exports = async function(payload){
-    console.log(payload.d)
 
     let message;
     try{
@@ -15,7 +14,8 @@ module.exports = async function(payload){
         message.channel = await PLX.getChannel(payload.d.channel_id);
         message.reply = message.channel.createMessage
     }
-    const interaction_type = payload.d.type; //3= button
+    const interaction_type = payload.d.type; //3= component
+    const component_type = payload.d.data.component_type; // 2 button 3 drop down
 
     const interaction = {
         message,
