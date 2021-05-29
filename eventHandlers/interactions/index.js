@@ -2,7 +2,19 @@ const Eris = require('eris');
 const axios = require('axios');
 
 module.exports = async function(payload){
-    let message = new Eris.Message(payload.d.message, PLX);
+    console.log(payload.d)
+
+    let message;
+    try{
+       message  = new Eris.Message(payload.d.message, PLX);
+    }catch(err){
+        message  = payload.d.message;
+        message.author = payload.d.member.user;
+        message.member = payload.d.member;
+        message.guild = PLX.guilds.find(g=>g.id === payload.d.guild_id);
+        message.channel = await PLX.getChannel(payload.d.channel_id);
+        message.reply = message.channel.createMessage
+    }
     const interaction_type = payload.d.type; //3= button
 
     const interaction = {
