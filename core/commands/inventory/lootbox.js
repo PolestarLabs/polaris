@@ -4,6 +4,23 @@ const GENERATOR = require("../cosmetics/lootbox_generator.js");
 const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
+
+const createInventoryEmbed = function createInventoryEmbed (Inventory, {author, lang="en", prefix="p!"} ) {
+  const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
+  embed.description = Inventory.length > 0
+    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${prefix}open box ${i.rarity}\``).join("\n")
+    : `*${rand$t("responses.inventory.emptyJokes", { lngs: lang })}*`;
+
+  embed.footer = {
+    text: author.tag,
+    icon_url: author.avatarURL,
+  };
+
+  return embed;
+}
+
+
+
 const init = async function (msg, args, reactionMember) {
   const reactionUserID = reactionMember?.id || reactionMember;
 
@@ -17,21 +34,28 @@ const init = async function (msg, args, reactionMember) {
   const userInventory = new INVENTORY(reactionUserID || msg.author.id, "box");
   const Inventory = await userInventory.listItems(args[10]);
 
-  const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
-  embed.description = Inventory.length > 0
-    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${msg.prefix || args[11]}open box ${i.rarity}\``).join("\n")
-    : `*${rand$t("responses.inventory.emptyJokes", { lngs: msg.lang })}*`;
+  const embed = createInventoryEmbed(Inventory, msg)
 
   args[0] = msg;
   args[1] = Inventory.map((i) => i.rarity);
   INV_STATUS.set(reactionUserID || msg.author.id, args[1]);
 
-  embed.footer = {
-    text: (args[12] || msg).author.tag,
-    icon_url: (args[12] || msg).author.avatarURL,
+  const response = { 
+    content: `${_emoji("LOOTBOX")} ${$t("responses.inventory.browsingBox", { lngs: msg.lang })}`,
+    embed,
+    components:[{type:1,components: 
+      ["C","U","R","SR","UR"].map(rar=>{
+        return {
+          type: 2,
+          style: 2,
+          emoji: {id: _emoji(rar).id },
+          label: rar,
+          custom_id: `openBox:${rar}:${msg.author.id}:${msg.lang[0]}`,
+          disabled: !Inventory.some(i=> i.rarity === rar)
+        }
+      })
+    }]
   };
-
-  const response = { content: `${_emoji("LOOTBOX")} ${$t("responses.inventory.browsingBox", { lngs: msg.lang })}`, embed };
 
   if (reactionUserID) return response;
   const res = await msg.channel.send(response);
@@ -86,6 +110,6 @@ module.exports = {
       },
     },
   ],
-  reactionButtons: ["C", "U", "R", "SR", "UR"].map(reactionOption),
-
+  //reactionButtons: ["C", "U", "R", "SR", "UR"].map(reactionOption),
+  createInventoryEmbed
 };
