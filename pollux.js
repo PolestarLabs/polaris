@@ -48,29 +48,35 @@ Eris.Message.prototype.getComponents = async function(){
   this.components = ( await this._client.requestHandler.request("GET",`/channels/${this.channel.id}/messages/${this.id}`,true)).components || [];
   return this.components;
 }
-Eris.Message.prototype.setButtons = function(buttons){
+Eris.Message.prototype.setButtons = function(buttons,dry){
   if (buttons.length > 5) return Promise.reject("Max 5 Rows");
   if ( buttons.some(b=>b.length>5) )  return Promise.reject("Max 5 Buttons");
 
   if (!buttons[0].length) buttons = [buttons];
 
+  const components = buttons.map(row=>{
+    return {
+      type: 1,
+      components: row.map((btn,i)=>{
+        return {
+          type: 2,
+          label: btn.label,
+          custom_id: btn.custom_id || `button-${this.id}-${i}`,
+          style: btn.style || 2,
+          disabled: btn.disabled,
+          emoji: btn.emoji
+        }
+      })
+    }
+  });
+
+  console.log({dry})
+  if (dry) return components;
+  console.log('past drycheck')
+
   return this.edit({
     content: this.content,
-    components: buttons.map(row=>{
-      return {
-        type: 1,
-        components: row.map((btn,i)=>{
-          return {
-            type: 2,
-            label: btn.label,
-            custom_id: btn.custom_id || `button-${this.id}-${i}`,
-            style: btn.style || 2,
-            disabled: btn.disabled,
-            emoji: btn.emoji
-          }
-        })
-      }
-    })
+    components
   })
 }
 Eris.Message.prototype.removeButtons = async function(buttonIDs){
@@ -78,7 +84,15 @@ Eris.Message.prototype.removeButtons = async function(buttonIDs){
   let newComps = currentComps.map(row=> {
     row.components = row.components.filter(btn=> !buttonIDs.includes(btn.custom_id));
     return row;
-  });
+  }).filter(row=> row.components.length );
+  
+  return this.edit({content:this.content, components: newComps})
+}
+Eris.Message.prototype.removeComponentRow = async function(row){
+  let currentComps = await this.getComponents();
+  currentComps[row] = null;
+  let newComps = currentComps.filter(c=>!!c);
+  
   return this.edit({content:this.content, components: newComps})
 }
 Eris.Message.prototype.addButtons = async function(buttons,row=0){
@@ -87,11 +101,27 @@ Eris.Message.prototype.addButtons = async function(buttons,row=0){
   newButtons = currentComps.map(row=> row.components||[]);
   if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
   else newButtons[newButtons.length] = [...buttons];
-console.log(JSON.stringify(newButtons,0,2))
+  
   return this.setButtons(newButtons)
 }
 
+Eris.Message.prototype.disableButtons = async function(buttonIDs){
+  let currentComps = await this.getComponents();
+  let newComps = currentComps.map(row=> {
+    row.components.forEach(btn=> buttonIDs.includes(btn.custom_id) ? btn.disabled = true : null );
+    return row;
+  })  
+  return this.edit({content:this.content, components: newComps})
+}
 
+Eris.Message.prototype.enableButtons = async function(buttonIDs){
+  let currentComps = await this.getComponents();
+  let newComps = currentComps.map(row=> {
+    row.components.forEach(btn=> buttonIDs.includes(btn.custom_id) ? btn.disabled = false : null );
+    return row;
+  })  
+  return this.edit({content:this.content, components: newComps})
+}
 
 
 Sentry.init({ 
