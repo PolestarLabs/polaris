@@ -42,6 +42,49 @@ Eris.Embed.prototype.setColor = function setColor(color) {
   return this;
 };
 
+// TEMP
+
+Eris.Message.prototype.getComponents = async function(){
+  this.components = ( await this._client.requestHandler.request("GET","/channels/488142034776096772/messages/848157603330260992",true)).components || [];
+  return this.components;
+}
+Eris.Message.prototype.addButtons = function(buttons){
+  if (buttons.length > 5) return Promise.reject("Max 5 Rows");
+  if ( buttons.some(b=>b.length>5) )  return Promise.reject("Max 5 Buttons");
+
+  if (!buttons[0].length) buttons = [buttons];
+
+  return this.edit({
+    content: this.content,
+    components: buttons.map(row=>{
+      return {
+        type: 1,
+        components: row.map((btn,i)=>{
+          return {
+            type: 2,
+            label: btn.label,
+            custom_id: btn.custom_id || `button-${this.id}-${i}`,
+            style: btn.style || 2,
+            disabled: btn.disabled,
+            emoji: btn.emoji
+          }
+        })
+      }
+    })
+  })
+}
+Eris.Message.prototype.removeButtons = async function(buttonIDs){
+  let currentComps = this.getComponents();
+  let newComps = currentComps.map(row=> {
+    row.components = row.components.filter(btn=> !buttonIDs.includes(btn.custom_id));
+    return row;
+  });
+  return this.edit({content:this.content, components: newComps})
+}
+
+
+
+
 
 Sentry.init({ 
   dsn: cfg.sentryDSN,
