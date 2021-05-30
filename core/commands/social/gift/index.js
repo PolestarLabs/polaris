@@ -1,6 +1,6 @@
 module.exports = {
   init: "Gift",
-  pub: true,
+  pub: false,
   cmd: "gift",
   perms: 3,
   cat: "social",
