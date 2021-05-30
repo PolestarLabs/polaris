@@ -17,8 +17,7 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-    if (interaction.message.id !== this.message.id) return false;
-    interaction.ack();
+    if (interaction.message.id !== this.message.id) return false;    
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
       if (this.options.authorOnly !== userID) return false; 
@@ -34,7 +33,15 @@ class ButtonCollector extends EventEmitter {
       this.emit("click", buttonPress );
       if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
+      interaction.ack();
       return true;
+    }else{
+      if (!this.filter(buttonPress)){
+        interaction.reply({
+          content:"You were not supposed to be clicking here. Shoo!",
+          flags: 64
+        });
+      }
     }
     return false;
   }
