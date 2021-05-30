@@ -160,7 +160,7 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 		gameFrame.embed.footer = {text: v.footer_instruction }
 		//if (voiceChannel) voiceChannel.play(click);
 		// gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
-		const died = player.isBot || await playerRoulette(player, Game);
+		const died = await playerRoulette(player, Game);
 		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
 
 		await userShoot(msg,player);
