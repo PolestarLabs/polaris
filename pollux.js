@@ -108,7 +108,7 @@ Eris.Message.prototype.addButtons = async function(buttons,row=0){
 Eris.Message.prototype.disableButtons = async function(buttonIDs){
   let currentComps = await this.getComponents();
   let newComps = currentComps.map(row=> {
-    row.components.forEach(btn=> buttonIDs.includes(btn.custom_id) ? btn.disabled = true : null );
+    row.components.forEach(btn=> buttonIDs === "all" || buttonIDs.includes(btn.custom_id) ? btn.disabled = true : null );
     return row;
   })  
   return this.edit({content:this.content, components: newComps})
@@ -117,9 +117,31 @@ Eris.Message.prototype.disableButtons = async function(buttonIDs){
 Eris.Message.prototype.enableButtons = async function(buttonIDs){
   let currentComps = await this.getComponents();
   let newComps = currentComps.map(row=> {
-    row.components.forEach(btn=> buttonIDs.includes(btn.custom_id) ? btn.disabled = false : null );
+    row.components.forEach(btn=> buttonIDs === "all" || buttonIDs.includes(btn.custom_id) ? btn.disabled = false : null );
     return row;
   })  
+  return this.edit({content:this.content, components: newComps})
+}
+Eris.Message.prototype.updateButtons = async function(btnData){
+  console.log("-------BUTTON UPDATE-------------------------".yellow)
+  let currentComps = await this.getComponents();
+  let newComps = currentComps.map((row,i)=> {
+    row.components.forEach((btn,ii)=> {
+      console.log(`ROW ${i}, BUTTON ${ii}`.gray)
+      console.log("BTN".red,btn)
+      const matchButton = btnData.find(b=>btn.custom_id.match(b.custom_id));
+      console.log("matchButton".yellow,matchButton)
+      
+      if (matchButton){
+        let oldname = btn.custom_id;
+        Object.assign(btn,matchButton);
+        btn.custom_id = oldname;
+        console.log("NEWBTN".green,btn)
+      }
+    });
+    return row;
+  })  
+  console.log("-------BUTTON UPDATE END-------------------------\n\n.".gray)
   return this.edit({content:this.content, components: newComps})
 }
 
