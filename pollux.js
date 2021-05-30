@@ -300,7 +300,7 @@ global.translateEngineStart = () => {
       returnEmptyString: false,
       preload: list,
       load: "currentOnly",
-      ns: ["bot_strings", "events", "commands", "website", "items", "translation"],
+      ns: ["bot_strings", "events", "commands", "website", "items", "translation", "games"],
       defaultNS: "bot_strings",
       fallbackNS: "translation",
       interpolation: {
