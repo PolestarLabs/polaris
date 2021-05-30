@@ -65,6 +65,7 @@
         "colorChange": "Deine Lieblingsfarbe wurde gespeichert!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "Halt, Halt, Halt. So benutzt du diesen Command leider falsch. Es wird eigentlich für {{usage}} genutzt. Beispielsweise: {{example}}",
         "disabledModule": ":no_entry_sign: Unser Lord und Meister hat {{module}} für verboten erklärt. Echt schade...",
         "genericInvalid": "Schade, Falsches Kommando ;~;",

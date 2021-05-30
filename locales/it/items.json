@@ -1,330 +1,345 @@
 {
     "anime_booster": {
-        "name": ""
+        "name": "Anime Generic VOL.1"
     },
     "broken_excavator": {
-        "name": ""
+        "name": "Backhoe Rotto"
     },
     "commendtoken": {
-        "name": "",
+        "name": "Token Di Commendazione",
         "description": ""
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": ""
+        "name": "Anello Splendore Della Giada",
+        "description": "Come verde come la vostra comitatologia con amore."
     },
     "complete_ring_rubine": {
-        "name": "",
-        "description": ""
+        "name": "Anello Di Rubino Magnifico",
+        "description": "Le rose sono rosse, le viole sono blu, questo anello è anche rosso e bello come te!"
     },
     "complete_ring_sapphire": {
-        "name": "",
-        "description": ""
+        "name": "Anello Di Sapphire Lussuoso",
+        "description": "Il primo passo verso l'impegno è rinunciare a una gemma rara per la persona cara - congratulazioni! "
     },
     "complete_ring_stardust": {
-        "name": "",
+        "name": "Anello Di Stardust Opulente",
         "description": ""
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Frammento Cosmo",
+        "description": "Ghiaia lucida utilizzata per cot Frammenti Cosmo"
     },
     "cosmo_gem_C": {
-        "name": "",
-        "description": ""
+        "name": "Gemma Cosmo Comune",
+        "description": "Oh bene, almeno è lucente."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "Gemma Cosmo Rara",
+        "description": "Oh? Un po' costoso, vero?"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "Gemma Cosmo Super Rara",
+        "description": "Woah, questo è un piccolo gioiello speciale che hai trovato lì. Quanto vuoi per questo? Sei rubine? Otto?"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "Gemma Cosmo Non Comune",
+        "description": "Voglio dire, immagino che sia meglio di un comune."
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Ultra Rare Cosmo Gem",
+        "description": "Desideri su una stella... E finalmente ne hai uno."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "Overwatch di Daianpan",
+        "description": "Per favore non 4 DPS in un boosterpack del team"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "Doki Doki Literature Club",
+        "description": "Solo Monika"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "Doppio Gancio",
+        "description": "Un gancio a gancio, o se preferisci un gancio2"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "Backhoe Gravedging",
+        "description": "Per le persone che non vogliono sporcarsi le mani."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "Gancio",
+        "description": "Ultimo visto inseguire intorno a un piccolo ragazzo volante."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "D Iniziale",
+        "description": "Deja<unk> vu. Ho appena aperto questo booster prima."
     },
     "iwd1_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Stagione 1",
+        "description": "Internet Wrestling Discord Esclusivi Adesivi Adesivi. 2018"
     },
     "iwd2_booster": {
-        "name": "",
-        "description": ""
+        "name": "IWD - Stagione 2",
+        "description": "Internet Wrestling Discord Esclusivi Adesivi Adesivi. 2019"
     },
     "lootbox_C_C": {
-        "name": ""
+        "name": "Chibi Common Lootbox"
     },
     "lootbox_C_E": {
-        "name": ""
+        "name": "Lootbox Comune Epico"
     },
     "lootbox_C_event_1": {
-        "name": ""
+        "name": "Lootbox Di Halloween Comune"
     },
     "lootbox_C_event_2": {
-        "name": ""
+        "name": "Lootbox Di Natale Comune"
     },
     "lootbox_C_event_3": {
-        "name": ""
+        "name": "Lootbox Pasqua Comune"
     },
     "lootbox_C_event_s1": {
-        "name": ""
+        "name": "Common Summer Lootbox"
     },
     "lootbox_C_event_s2": {
-        "name": ""
+        "name": "Lootbox Inverno Comune"
     },
     "lootbox_C_event_s3": {
-        "name": ""
+        "name": "Solstizio Lootbox Comune"
     },
     "lootbox_C_O": {
-        "name": ""
+        "name": "Common Lootbox"
     },
     "lootbox_C_s1": {
-        "name": ""
+        "name": "Common Summer Lootbox"
     },
     "lootbox_C_s2": {
-        "name": ""
+        "name": "Lootbox Inverno Comune"
     },
     "lootbox_dev": {
-        "name": "",
-        "description": ""
+        "name": "Dev Box Regalo",
+        "description": "Starter Lootbox, un regalo del dev di Pollux per principianti. È garantito che abbia almeno un oggetto UR!"
     },
     "lootbox_EL": {
-        "name": "",
-        "description": ""
+        "name": "elBox",
+        "description": "Se apri questa casella il tuo inventario esploderà"
     },
     "lootbox_R_C": {
-        "name": ""
+        "name": "Chibi Rare Lootbox"
     },
     "lootbox_R_E": {
-        "name": ""
+        "name": "Lootbox Raro Epico"
     },
     "lootbox_R_event_1": {
-        "name": ""
+        "name": "Rare Halloween Lootbox"
     },
     "lootbox_R_event_2": {
-        "name": ""
+        "name": "Lootbox Natalizio Raro"
     },
     "lootbox_R_event_3": {
-        "name": ""
+        "name": "Lootbox Di Pasqua Rara"
     },
     "lootbox_R_event_s1": {
-        "name": ""
+        "name": "Lootbox Estate Rara"
     },
     "lootbox_R_event_s2": {
-        "name": ""
+        "name": "Raro Winter Lootbox"
     },
     "lootbox_R_event_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_R_O": {
-        "name": ""
+        "name": "Rare Lootbox"
     },
     "lootbox_R_s1": {
-        "name": ""
+        "name": "Lootbox Estate Rara"
     },
     "lootbox_R_s2": {
-        "name": ""
+        "name": "Raro Winter Lootbox"
     },
     "lootbox_R_s3": {
-        "name": ""
+        "name": "Rare Solstice Lootbox"
     },
     "lootbox_SR_C": {
-        "name": ""
+        "name": "Chibi Super Rare Lootbox"
     },
     "lootbox_SR_E": {
-        "name": ""
+        "name": "Epic Super Rare Lootbox"
     },
     "lootbox_SR_event_1": {
-        "name": ""
+        "name": "Super Raro Halloween Lootbox"
     },
     "lootbox_SR_event_2": {
-        "name": ""
+        "name": "Super Raro Christmas Lootbox"
     },
     "lootbox_SR_event_3": {
-        "name": ""
+        "name": "Super Raro Pasqua Lootbox"
     },
     "lootbox_SR_event_s1": {
-        "name": ""
+        "name": "Super Rare Summer Lootbox"
     },
     "lootbox_SR_event_s2": {
-        "name": ""
+        "name": "Super Raro Winter Lootbox"
     },
     "lootbox_SR_event_s3": {
-        "name": ""
+        "name": "Super Rare Solstizio Lootbox"
     },
     "lootbox_SR_O": {
-        "name": ""
+        "name": "Super Rare Lootbox"
     },
     "lootbox_SR_s1": {
-        "name": ""
+        "name": "Super Rare Summer Lootbox"
     },
     "lootbox_SR_s2": {
-        "name": ""
+        "name": "Super Raro Winter Lootbox"
     },
     "lootbox_SR_s3": {
-        "name": ""
+        "name": "Super Rare Solstizio Lootbox"
     },
     "lootbox_U_C": {
-        "name": ""
+        "name": "Chibi Uncommon Lootbox"
     },
     "lootbox_U_E": {
-        "name": ""
+        "name": "Lootbox Epico Non Comune"
     },
     "lootbox_U_event_1": {
-        "name": ""
+        "name": "Uncommon Halloween Lootbox"
     },
     "lootbox_U_event_2": {
-        "name": ""
+        "name": "Uncommon Christmas Lootbox"
     },
     "lootbox_U_event_3": {
-        "name": ""
+        "name": "Non Comune Pasqua Lootbox"
     },
     "lootbox_U_event_s1": {
-        "name": ""
+        "name": "Uncommon Summer Lootbox"
     },
     "lootbox_U_event_s2": {
-        "name": ""
+        "name": "Non Comune Winter Lootbox"
     },
     "lootbox_U_event_s3": {
-        "name": ""
+        "name": "Non Comune Solstizio Lootbox"
     },
     "lootbox_U_O": {
-        "name": ""
+        "name": "Lootbox Non Comune"
     },
     "lootbox_U_s1": {
-        "name": ""
+        "name": "Uncommon Summer Lootbox"
     },
     "lootbox_U_s2": {
-        "name": ""
+        "name": "Non Comune Winter Lootbox"
     },
     "lootbox_U_s3": {
-        "name": ""
+        "name": "Non Comune Solstizio Lootbox"
     },
     "lootbox_UR_C": {
-        "name": ""
+        "name": "Chibi Ultra Rare Lootbox"
     },
     "lootbox_UR_E": {
-        "name": ""
+        "name": "Epic Ultra Rare Lootbox"
     },
     "lootbox_UR_event_1": {
-        "name": ""
+        "name": "Ultra Rare Halloween Lootbox"
     },
     "lootbox_UR_event_2": {
-        "name": ""
+        "name": "Ultra Rare Christmas Lootbox"
     },
     "lootbox_UR_event_s1": {
-        "name": ""
+        "name": "Ultra Rare Summer Lootbox"
     },
     "lootbox_UR_event_s2": {
-        "name": ""
+        "name": "Ultra Rare Winter Lootbox"
     },
     "lootbox_UR_event_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "lootbox_UR_O": {
-        "name": ""
+        "name": "Ultra Rare Lootbox"
     },
     "lootbox_UR_s1": {
-        "name": ""
+        "name": "Ultra Rare Summer Lootbox"
     },
     "lootbox_UR_s2": {
-        "name": ""
+        "name": "Ultra Rare Winter Lootbox"
     },
     "lootbox_UR_s3": {
-        "name": ""
+        "name": "Ultra Rare Solstice Lootbox"
     },
     "nierauto_booster": {
-        "name": "",
-        "description": ""
+        "name": "NieR: Automata",
+        "description": "Il booster hai bisogno di 2B felice"
     },
     "p5_booster": {
-        "name": "",
-        "description": ""
+        "name": "Persona 5",
+        "description": "Non lo vedi mai in arrivo"
     },
     "padoru_booster": {
-        "name": "",
-        "description": ""
+        "name": "Collezione Padoru Ultimate",
+        "description": "Hashire mal yo e gimme i vostri Rubini"
     },
     "partial_ring": {
-        "name": "",
-        "description": ""
+        "name": "Anello Parziale",
+        "description": "Una banda rotonda di metallo utilizzata per creare un bellissimo anello di nozze"
     },
     "reel": {
-        "name": "",
-        "description": ""
+        "name": "Bobina Di Pesca",
+        "description": "Lo fai girare a destra ma non come un record. Sembra che debba essere attaccato da qualche parte."
     },
     "rod_c": {
-        "name": "",
-        "description": ""
+        "name": "Makeshift Canna Da Pesca",
+        "description": "Solo tira su il pesce, non complimenti."
     },
     "rod_r": {
-        "name": "",
-        "description": ""
+        "name": "Canne Da Pesca Decente",
+        "description": "Non è tecnicamente male, ma non è tecnicamente grande."
     },
     "rod_sr": {
-        "name": "",
-        "description": ""
+        "name": "Formidable Fishing Rod",
+        "description": "~Dicono che questa canna da pesca è stata fatta da Bob Ross~"
     },
     "rod_u": {
-        "name": "",
-        "description": ""
+        "name": "Canne Da Pesca Bambù",
+        "description": "Questo bastone di bambù è stato preso da un saggio giardino del monaco cinese."
     },
     "rod_ur": {
-        "name": "",
-        "description": ""
+        "name": "Canne Da Pesca Professionale",
+        "description": "Do. Non Interrompere. Questo. Uno."
     },
     "rope": {
-        "name": "",
-        "description": ""
+        "name": "Corda",
+        "description": "No, questo non è quello per cui pensate."
     },
     "shovel": {
-        "name": "",
-        "description": ""
+        "name": "Pala",
+        "description": "Utilizzato per scavare fori, sia fisici che metaforici."
     },
     "spoon": {
-        "name": "",
-        "description": ""
+        "name": "Cucchiaio",
+        "description": "Questo è un cucchiaio molto sexy, si prega di usarlo responsabilmente."
     },
     "spork": {
-        "name": "",
-        "description": ""
+        "name": "Spork",
+        "description": "Un cucchiaio, più una forchetta. È un Fooon!"
     },
     "stick": {
-        "name": "",
-        "description": ""
+        "name": "Bastone Semi-Inutile",
+        "description": "Il prezzo non è quello che importa, ma la sensazione coinvolta attraverso quanto impressionante questo bastone può essere"
     },
     "fork": {
-        "name": "",
-        "description": ""
+        "name": "Fork",
+        "description": "Con quattro volte la capacità di pugnalare di un coltello, ma metà dell'impatto, è il doppio del valore!"
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

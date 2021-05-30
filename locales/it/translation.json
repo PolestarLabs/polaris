@@ -65,6 +65,7 @@
         "colorChange": "Il tuo colore preferito è stato salvato!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Il nostro maestro ha dichiarato {{module}} proibito qui. È troppo male.",
         "genericInvalid": "Oh my, sembra che il comando non sia valido ;~;",

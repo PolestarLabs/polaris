@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Teehee. Dopo aver ottenuto il primo, non puoi più fermarti eh? Quindi, cosa mi stai dando in cambio di questo **Casket**?",

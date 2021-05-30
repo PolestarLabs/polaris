@@ -65,6 +65,7 @@
         "colorChange": "Twój ulubiony kolor został zapisany!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "Błędnie używasz tej komendy. Spróbuj {{usage}}. Np.: {{example}}",
         "disabledModule": ":no_entry_sign: Nasz mistrz mówi, że {{module}} jest tutaj zabroniony. To dosyć słabo z jego strony.",
         "genericInvalid": "Ojej, Wydaje mi się, że komenda jest nieprawidłowa ;~;",
@@ -780,7 +781,7 @@
         "egghuntfail": "*Lecz niczego nie znalazł*",
         "egghuntsuccess": "Super! Mamy jajko! Spójrzmy...",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} znalazł **{{rarity}} Jajko**!",
-        "egghuntsuccess3": "",
+        "egghuntsuccess3": "Masz **{{X}}** jajek.\n**{{Y}}** jest unikatowych.\nWięc informacji na: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
         "delaytrade": "Prr! Możesz dopiero wymienić się za: {{remaining}",
         "wanttrade": "{{user}} chce się wymienić się z tobą swoim **{{tradingEgg}}**.",
         "wanttrade2": "Aby akceptować napisz  `accept` a następnie identyfikator wysłanego jaja.*\n\nNp.: `accept C1`, aby dać Jajko [**C1**] w zamian za Jajko [**{{eggcode}}**]",

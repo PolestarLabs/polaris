@@ -3,15 +3,20 @@
         "RBN": "Rubin",
         "RBN_fullname": "Rubin Cevherleri",
         "RBN_plural": "Rubinler",
+        "rubines": "",
         "JDE": "Jade",
         "JDE_fullname": "Jadelerin Tozu",
         "JDE_plural": "Jadeler",
+        "jades": "",
         "SPH": "Şapir",
         "SPH_fullname": "Şapir Parçacıkları",
         "SPH_plural": "Şapirler",
+        "sapphires": "",
         "synthGems": "Sentezli Mücevherler",
         "cosmoFragment": "Kozmetik Parça",
         "cosmoFragment_plural": "Kozmetik Parçacıklar",
+        "COS": "Kozmetik Parça",
+        "COS_plural": "Kozmetik Parçacıklar",
         "C": "Sıradan",
         "U": "Olağandışı",
         "R": "Nadir",
@@ -31,12 +36,15 @@
         "material_plural": "Malzemeler",
         "boosterpack": "Hızlandırıcı",
         "boosterpack_plural": "Hızlandırıcılar",
-        "medal": "",
+        "medal": "Madalya",
         "medal_plural": "Madalyalar",
-        "sticker": "",
+        "sticker": "Çıkartma",
         "sticker_plural": "Çıkartmalar",
-        "background": "",
-        "background_plural": "Arka plan"
+        "background": "Arka plan",
+        "background_plural": "Arka plan",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "Transfer Reddedildi",
@@ -127,6 +135,7 @@
             "chooseAmod": "Bir modül seç, lütfen.",
             "kinNone": "Kimi atacağımı söylemen lazım. Tabii ki, onun yerine seni de atabilirim.",
             "kin404": "O kişiyi bulamıyorum. Gerçekten çıktı mı? Belki de hayâllerimizin bir parçasıdır.",
+            "target404": "",
             "unmutable": "Sen ne dersen de ben bu kişiyi susturmayacağım.",
             "unperm": "Bunu yapmak için iznim yok. Bir şey yapmamı istemeden gereken izinleri vermelisin belki de.",
             "noRoleHere": "Görünüşe göre bahsettiğin rol listede yok. Bana rolü düzgünce söylediğinden emin ol.",
@@ -144,21 +153,25 @@
             "noChannelGiven": "Aktiviteleri hangi kanala kayıt etmemi söylemen lazım.",
             "emojiError": "Bu Emoji'yi ekleyemedim. Tepki izinlerini ya da Emojilerin açık olup olmadığını kontrol et...",
             "insuperms": "{{imsorry}} İznin yoksa bunu senin için yapamam.",
-            "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme."
+            "not-a-NSFW-channel": "Bu kanal NSFW olarak ayarlanmamış. Sanat eserini bırakıp gitme.",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
+                "Dur azıcık, bir nefes alayım!",
+                "Makine değilim ben, lütfen biraz yavaşla!",
+                "Birkaç saniye sonra lütfen tekrar dene.",
+                "Lütfen biraz bekleyin.",
+                "Komutların suyunu çıkardın!",
+                "Aaa! Yavaşla!",
+                "Tamam, on parmağımda on marifet var da sakin ol biraz!",
                 "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                "",
-                ""
+                "İki dakika nefes alayım!",
+                "Canım, lütfen, tane tane söyle.",
+                "*Senpai fazla hızlısın uwu bu kadarını kaldıramıyorum uwu*"
             ]
         },
         "warnings": {
@@ -202,7 +215,7 @@
                 "yatta": [
                     "Yaşasın!",
                     "Oo eveet!",
-                    "İyi!",
+                    "Güzel!",
                     "Harika!",
                     "Güzel!",
                     "Müthiş!",
@@ -273,19 +286,23 @@
             "isEmpty": "Çıkarılacak bir şey yok ki!"
         },
         "discoin": {
-            "desc": "Rubinlerin gönderiliyor, %BOT% ulaştığı gibi cevap verecek.",
-            "intake": "Pollux **Rubinler** (RBN) Değiştirildi:",
-            "outtake": "%BOTNAME% **%CURRNAME%** ({{$}}) Ulaştırılacak:",
-            "remainder": "{{$}} için kalan limit",
-            "receiptCode": "İşlem iade kodu",
-            "amNaN": "Geçersiz miktar",
-            "invalidCurr": "Öyle bi' döviz yok ki!",
-            "invalidAmt": "O miktarı değiş-tokuş edemezsin! ",
-            "unverified": "Değiş-tokuş yapmak için onaylı değilsin.\nLütfen kendini [http://discoin.sidetrip.xyz/verify] adresinde onaylat",
-            "userLimit": "Bugünlük değiş-tokuş limitine ulaştın!",
-            "globalLimit": "Discoin limitine ulaştın, yarın tekrar dene.",
-            "takedis": "Rubinlerin hedefine ulaşamaması durumu için bu kodu yanında tut.",
-            "ex-succ": "Değiş-tokuş başarılı!"
+            "links": "İlgili bağlantılar:",
+            "list": "Para birimleri listesi",
+            "graphs": "Canlı grafikler",
+            "guide": "Kullanıcı kılavuzu",
+            "tax": "Vergi bilgisi",
+            "tax_desc": "Takas vergisi: **%{{exchange}}**\nGelir Vergisi: **%{{income}}**\nAktarım Vergisi: **%{{transfer}}**",
+            "discoin_desc": "Rubinlerin gönderiliyor, ulaştıkları an {{bot}} botundan bir cevap gelecek.",
+            "receipt": "Buyurun, işleminizin faturası:",
+            "receiptnoDM": "DM'den atamadım, işte faturan:",
+            "takedis": "Olur da Rubinlerin hedefine ulaşmazsa diye faturanı yanında tut.",
+            "invalidCurr": "O Döviz bizde yok! `{{prefix}}exchange` komutunu kullanarak mevcut tüm dövizleri görebilirsin.",
+            "debt": "Borcunu takaslayamazsın, en azından 1 Rubin takasla!",
+            "zero": "En az 1 Rubin takaslayınız.",
+            "perMin": "Minimum her bir işlem için {{perMin}} Rubindir.",
+            "perMax": "Sınır her bir işlem için {{perMax}} Rubindir.",
+            "dailyMax": "Günlük {{dailyMax}} Rubin sınırınıza ulaştınız.",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "Tamam, bu sunucuda bundan böyle {{LANGUAGE}} konuşacağım. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Senin kişisel yazını şu şekilde değiştirdim: {{pstext}}  profil kartındaki değişiklilleri görmek için `{{prefix}}profile` komutunu kullan. Eminim birileri sevecektir."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "Karşılığında ne vermek istiyorsun?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "{{user}} kişisinden boşanmayı onaylıyor musun? \n**ikinizden de** %EMJ%**5000 Rubin** boşanma vergisi alınacak! İkinizin de aşk puanı **yarıya** inecek!",
             "saidnope": "{{userB}} boşanmak istemiyor. %EMJ% **10000 Rubin** Ödeyerek boşanmaya zorlayabilirsin böylece nikâh memuru çağırıp bu işi çözmesini sağlayabilirim. Ama ikiniz de **bütün Aşk Puanlarınızı** kaybedeceksiniz!",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Buraya tıklayarak beni sunucuna davet et: [HERE]",
+            "selectIndex": "",
             "cancel": "Fikrini mi değiştirdin? Peki, görüşürüz o zaman~",
             "noFundsBalance": "Görünüşe göre bunu alamıyorsun, {{number}} Rubinin var.",
             "noFunds": "Yeteri kadar Rubinin yok.",
@@ -407,9 +439,24 @@
             "minus_rubines": "Bakiyenden %R $t(keywords.RBN_plural) alıyorum tamam mı~?"
         },
         "daily": {
-            "dailyGet": "{{emoji}} Günlük ödül olarak 100 Rubin kazandın!",
-            "dailyNope": "{{emoji}} Zaten günlük Rubinlerini almışsın, daha fazlasını **{{remaining}}** içerisinde alabilirsin.",
-            "dailyStreak": "{{emoji}} 10 kere üst üste günlük ödülünü topladığın için **+500 Rubin** aldın!"
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{emoji}} Zaten günlük Rubinlerini almışsın, daha fazlasını **{{remaining}}** içerisinde alabilirsin."
         },
         "toggle": {
             "disabledSer": "**{{module}}** modülü **Globally** devre dışı bırakıldı.",
@@ -443,7 +490,8 @@
             "cash1000": "Belki seni zenginden sayardım ama \"belki\" işte.",
             "cash5000": "SEN nasıl bu kadar zengin oldun?",
             "cash10000": "Banka falan mı soydun? Polisleri çağırayım mı?",
-            "cashInfinite": "Hile yapmamalısın biliyorsun di' mi"
+            "cashInfinite": "Hile yapmamalısın biliyorsun di' mi",
+            "balance": "Bakiye"
         },
         "greet": {
             "byeOFF": "Görüşürüz mesajını devre dışı mı bıraktın? Belki de en iyisi budur, görmüyorlar zaten.",
@@ -461,7 +509,7 @@
             "inChan": "Pekâlâ! Hoş geldin mesajları **{{channel}}** kanalında yayımlanacak "
         },
         "forFun": {
-            "thisShit": "",
+            "thisShit": "**Şu iğrençliğe** bakar mısın...",
             "saltLVL": "{{target}} kişisinin sinir seviyesi **{{amount}}%** kadar {{emoji}}",
             "booru404": "Üzgünüm, belirttiğin etiketlerle ilgili hiçbir şey bulamadım. Etiketlerin doğruluğundan emin ol.",
             "nsfw404": "Kusura bakma ama aradığın porno baya bi' değişik; hiçbir yerde bulamadım. Senin gibi birinden beklendiği gibi.",
@@ -493,12 +541,22 @@
             "noItem": "Övgü Jetonun olması lâzım, ve sende yok. Birilerini övebilmek için onlara ihtiyacın var.",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "`{{item_name}}` oluşturuluyor",
+            "craftedItem": "",
             "noitem": "Bu eşyayı bulamadım",
-            "noitemu": "Bu veya benzeri herhangi bir eşya bulamadım",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "Envanterinde eksik eşyalar var, bunu üretemiyorum.",
+            "materialAutocraft": "",
             "materialPresent": "Envanterinde tüm materyaller var, üretime devam?",
+            "materialPresentAuto": "",
             "didyoumean": "Bu eşyayı bulamadım. Bunlardan birini demek istemiş olabilirsin, belki?",
             "didyoumeanOne": "Orada bir terslik var... Aradığın şey bu mu, cnm?",
             "timeout": "Zaman doldu! Çok fazla düşündün, üretim ocağı soğudu.",
@@ -520,7 +578,8 @@
             "success": "**{{boxname}}** {{userB}} kullanıcısına Transfer edildi"
         },
         "give": {
-            "cooldown": "Bekle! {{remaining}} sonra tekrar transfer edebilirsin!"
+            "cooldown": "Bekle! {{remaining}} sonra tekrar transfer edebilirsin!",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "Bak, bu kutuyu orada göremiyorum ve eminim ki sen de göremiyorsun.",
@@ -565,24 +624,29 @@
     },
     "interface": {
         "generic": {
-            "deleted": "",
+            "deleted": "Silindi:",
             "cancel": "İptal Edildi!",
             "timeout": "Süre Doldu!",
             "cantAfford": "Yaa, buna paran yetmiyor... :(",
             "clicktoconfirm": "Onaylamak için ✔'e, iptal etmek için ✖'ya tıkla.",
             "confirmDelete": "Silmeyi onaylıyor musun?",
             "alotWentOn": "Bugün çok şeyler döndü...",
-            "alreadyOwnThis": "Hey, zaten sende bundan var!"
+            "alreadyOwnThis": "Hey, zaten sende bundan var!",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
-            "currentActive": "",
-            "noneToDelete": "",
-            "maxActive": "",
-            "errorWhen": "",
-            "errorTARDIS": "",
-            "reminderOk": "",
-            "reminderChannel": "",
-            "reminderDMs": ""
+            "currentActive": "Şu anki aktif hatırlatıcıların bunlar:",
+            "noneToDelete": "Silinecek hatırlatıcı yok!",
+            "maxActive": "Aynı anda sadece **{{count}}** aktif hatırlatıcın olabilir!",
+            "errorWhen": "Kusura bakma, kafam karıştı. *Ne zaman* hatırlatmamı istediğini anlamadım da.",
+            "errorTARDIS": "Özür dilerim, zaman yolcusu, Zaten unuttuğun şeyi geçmişe gidip sana hatırlatamam.",
+            "errorTooShort": "",
+            "reminderOk": "Tamamdır sana {{appointment}} hatırlatıcısını **(UTC) {{time}}** vaktinde {{location}} konumunda hatırlatacağım.",
+            "reminderOk_empty": "",
+            "reminderChannel": "{{channel}} kanalında",
+            "reminderDMs": "DM'lerinde"
         },
         "brackets": {
             "maxRR": "Roundrobin için maks limit: 16",
@@ -597,8 +661,8 @@
             "bracketX": "Çizelge {{AB}}"
         },
         "synthfrag": {
-            "magifrag": "",
-            "disenchant": "",
+            "magifrag": "Kozmetik Parçalanma",
+            "disenchant": "Bunu\n{{rarity_emoji}}{{itemType}}: {{itemName}}\n **{{count}} $t(keywords.cosmoFragment)** eşyasına büyülemek istediğinize emin misiniz",
             "cosmeticSynth": "Kozmetik Eşya Sentezi",
             "confirmSynth": "Bunu Sentezlememi mi istiyorsun?",
             "nogemsforThis": "Sentez için yeterince mücevherin yok gibi gözüküyor..."
@@ -710,80 +774,6 @@
             "end": "\n**Komutların tam listesi <https://pollux.gg/commands> adresine bulunabilir.**\n\n**<https://pollux.gg/partners>** Adresinde Partnerlerimize göz atın\n**<https://pollux.gg/fanart>** Adresinde fan artlarınızı göster ya da gönder\n**<https://pollux.gg/profile/me>** Adresinde Herkese açık profilini bak\n\n**Kozmetikler**\nArkaplan Dükkânı **https://pollux.gg/bgshop**\nMadalyon Dükkânı **https://pollux.gg/medalshop**\nÜretim Atölyesi **https://pollux.gg/crafting**\nKanlı canlı Stickerlar **<https://pollux.gg/stickers>** (Gerçek Hayat Stickerları için Destek Sunucumuza göz atın)\nEtkinlik Malumatı **<https://pollux.gg/events>**\n\nBeni **<https://patreon.com/Pollux>** ya da **<https://pollux.gg/donate>** adreslerinden destekle\nBeni Twitterdan takip et **<https://twitter.com/maidPollux>**\n\n\n---\n\n**Başka herhangi bir şey için, __Dashboard__'a göz at: <https://pollux.gg/dashboard>**\nYa da destek sunucuma katıl: **​ https://discord.gg/rEBCccS ​**\n**<https://pollux.gg/invite>** Adresinde beni sunucuna davet et\n"
         }
     },
-    "games": {
-        "flags": {
-            "title": "Bayrak Bilmece",
-            "youhave10": "Bu bayrağın hangi ülkeye ait olduğunu bilmek için 10 saniyen var. **HADİ!**",
-            "wellDone": "{{interjection}} **{{user}}** bildi! **{{country}}** ülkesinin bayrağı",
-            "noGuess": "{{interjectionB}} görünüşe göre kimse bilemedi... Bir sonraki sefere artık!"
-        },
-        "coinflip": {
-            "coinVictory": "{{interjection}} Kazandın! **{{prize}}** elde ettin $t(keywords.{{currency}}_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} Kaybettin gibi gözüküyor... bir sonraki sefere artık!"
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** zar attı:",
-            "userRolled": "**{{user}}** **`{{numDice}}`** attı...",
-            "neutralRolled": "**`{{numDice}}`** atıyor...",
-            "andGot": "ve ödül olarak **{{val}}** kazandı!",
-            "rollsWere": "Çekilenler bunlardı:",
-            "invalidRoll": "Geçersiz Atış Eşiği -- Sadece zar atılacak!",
-            "onlyRoll5": "Tek seferde sadece 5 farklı zar atabilirsin!",
-            "limit25": "Zar serisi 25 atışa kadar gösterilebilir.",
-            "noDiceRolled": "Bekle, atabileceğim zar yok, ne yaptığından emin değilsen `{{prefix}}roll help` kullan~",
-            "exceedLim": "Bu Atış Karakter Limitlerini aşıyor, atış değerlerini yok saymak için `-nostreak` kullanmayı dene"
-        },
-        "blackjack": {
-            "ongoing": "Başka bir oyuna başlamadan önce oynadığını bitir.",
-            "newgame": "Yirmibir demek? Kuralları zaten biliyor olman gerek, haydi, başlayalım. ",
-            "result": "Sonuç:",
-            "bust": "İflâs",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Bir tane daha kart çekmek için `hit` diye cevap ver,",
-            "stand": "Pas",
-            "split": "Elini ayırmak için, `split`",
-            "double": "Son bir kart çekip bahsini iki katına çıkarmak için, `double`",
-            "pass": "Ya da elini geçirmek için, `stand`",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "Bölüşüm Dağılımı:",
-            "switchdeck": "Şimdi **{{deckname}}** destesini kullanarak yirmibir oynayacağız!",
-            "switchdeckEgg": "Şimdi elimizle oynayacağız (hayır o anlamda değil.) {{deckname}} **destesiyle** yani. Ne fesat adamsın.",
-            "even": "Patladık gibi, al, rubinlerin senin olsun."
-        },
-        "slots": {
-            "takePrize": "Bunun için ödülün, **%$%** %emj%",
-            "_minor": "Hiç yoktan iyidir, di\" mi?",
-            "_mid": "İyi de değil kötü de değil",
-            "_major": "Çok yakındı!",
-            "_ultimate_1": "Harika! :heart:",
-            "_ultimate_2": "Çok şanslısın!! :heart:",
-            "_ultimate_3": "İnanabiliyor musun!? :heart:",
-            "kommunism": "Komünist Jackpot! Ödülün topluluğa dağıtıldı, yaptıklarının 3 katını kazanacaksın.",
-            "pollux_jackpot": "Aman aman, benden üç tane var. Belki de extradan bir şeyler hak ediyorsundur.",
-            "lucky": "Şanslı yedili, tebrikler.",
-            "jackpot": "Ödülüne ek olarak, 100 tane yüzük ve ekstra can kazandın",
-            "bonanza": "Çok fazla Rubin! Umarım bunların hepsini taşımamı planlamıyorsundur.",
-            "potato": "Patatesler... Muhtemelen senin için bunlardan bir şey yapabilirim.",
-            "zero_1": "Aman aman, görünüşe göre bütün Rubinlerin artık benim.",
-            "zero_2": "Bi' tane bile vuramadın mı? Tam bir utanç.",
-            "zero_3": "Belki tekrar denersen bir şeyler kazanırsın?"
-        },
-        "ceilingBet": "Bu oyunda **{{number}}** $t(keywords.RBN_plural)'den fazla bahis oynayamazsın.",
-        "tryAgain": "Tekrar?",
-        "alreadyPlaying": "Dur bakalım! Zaten oynuyoruz ya!"
-    },
     "loot": {
         "rareDrop": "Bunun ne olduğunu biliyor musun? **NADİR** bir define sandığı ",
         "suprareDrop": "{{interjection}} **SÜPER NADİR** bir Define Kutusu!",
@@ -796,7 +786,7 @@
             "Harika! Bak, ne bulduk!",
             "Bak, eminim bu define sandığına bir göz atmak istersiniz."
         ],
-        "duplicate": "",
+        "duplicate": "KOPYALA",
         "lootPick": "Sandığı kapmak için hepinizin **__20 Saniyesi__** var!\n`{{prefix}}pick` yaz ve alma şansını yakala!",
         "goesTo": "Süre doldu! Bakalım kutu kimin olacak.\n**Define sandığı bu kişilerin arasından seçilecek:**",
         "congrats": "Tebrikler! Sandık **Envanterine** eklendi. `{{prefix}}lootbox` komutunu kullanarak açabilirsin.",
@@ -817,11 +807,12 @@
         "contesting": "Bu sandık için girişimciler:",
         "eventDrop": "Ve daha fazlası! bu bir **ETKİNLİK KUTUSU** yani **'içinde güzel şeyler var'!**",
         "notThisbox": "Öyle bir kutun yok gibi `{{prefix}}lootbox` yazarak sahip olduğun sandıklara bir bak.",
-        "options_new": "",
-        "rerollRemain_new": "",
-        "rerollRemain_new_plural": "",
-        "hasDupes": "",
-        "allItemsAdded": ""
+        "options_new": "{{k_emoji}}Sakla | {{r_emoji}}Tekrar aç {{amt}}",
+        "options_nrr": "",
+        "rerollRemain_new": "Son **bir** kez tekrar açabilirsin!",
+        "rerollRemain_new_plural": "**{{count}}** kere daha tekrar açabilirsin!",
+        "hasDupes": "Kopyalanmış eşyalardan {{x_frags}}!",
+        "allItemsAdded": "Tüm eşyalar envanterine eklendi!"
     },
     "eastereggs": {
         "konodioda": "Pollux zannettin değil mi, **AMA BEN DİOYDUM**!",

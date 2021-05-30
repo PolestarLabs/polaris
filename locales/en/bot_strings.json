@@ -3,15 +3,20 @@
         "RBN": "Rubine",
         "RBN_fullname": "",
         "RBN_plural": "Rubines",
+        "rubines": "",
         "JDE": "Jade",
         "JDE_fullname": "Jade Dust",
         "JDE_plural": "Jades",
+        "jades": "",
         "SPH": "Sapphire",
         "SPH_fullname": "",
         "SPH_plural": "Sapphires",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "Common",
         "U": "Uncommon",
         "R": "Rare",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "Stickers",
         "background": "",
-        "background_plural": "Backgrounds"
+        "background_plural": "Backgrounds",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -119,7 +127,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "The following permissions are not present to proceed correctly:\n{{PERMSLIST}}",
-            "denied": "You are not authorized to use this. This command requires an Elevation Rank of {{rankNeed}}, your Rank is {{rankMe}}. Contact the Server Owner or a Mod.",
+            "denied": "",
             "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
             "genericInvalid": "Oh my, seems like that Command is Invalid ;~;",
             "prefixChng": "Alright, My prefix is now {{prefix}}, try it out using '{{prefix}}stats'. ",
@@ -127,6 +135,7 @@
             "chooseAmod": "Choose a module, would you.",
             "kinNone": "You need to tell me who I'm supposed to kick. Of course, I could always kick you instead.",
             "kin404": "I can't seem to find this person, did they already leave? Perhaps they were a part of your imagination.",
+            "target404": "",
             "unmutable": "",
             "unperm": "I don't have the Perms to do this. Perhaps you should give me the Perms before commanding me to do something.",
             "noRoleHere": "Seems that Role isn't listed. Make sure you are telling me the role name correctly.",
@@ -144,9 +153,13 @@
             "noChannelGiven": "You need to tell me which channel to log the activities to.",
             "emojiError": "",
             "insuperms": "{{imsorry}} I can't do that for you unless you have the permission to do so yourself.",
-            "not-a-NSFW-channel": "This channel isn't set as NSFW. Don't go leaving your \"artwork\" everywhere."
+            "not-a-NSFW-channel": "This channel isn't set as NSFW. Don't go leaving your \"artwork\" everywhere.",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -273,19 +286,23 @@
             "isEmpty": "There's nothing there to remove!"
         },
         "discoin": {
-            "desc": "Your Rubines are being sent, a response from %BOT% will come as soon as it arrives.",
-            "intake": "Pollux **Rubines** (RBN) Exchanged:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) to Receive:",
-            "remainder": "Remaining Limit for {{$}}",
-            "receiptCode": "Transaction Receipt Code",
-            "amNaN": "Invalid quantity",
-            "invalidCurr": "That Currency doesn't exist!",
-            "invalidAmt": "You can't exchange that amount! ",
-            "unverified": "You are not verified to make exchanges.\nPlease verify yourself at [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Your exchange limit for today has been reached!",
-            "globalLimit": "You've reached your Discoin limit, try again tomorrow.",
-            "takedis": "Keep this code in case your Rubines don't reach their destination.",
-            "ex-succ": "Exchange Successful!"
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
+            "takedis": "",
+            "invalidCurr": "",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "Okay, from now on I'll speak {{LANGUAGE}} in this server. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "I've changed your personal text to: {{pstext}}\nUse `{{prefix}}profile` to see the new line on your ProfileCard. I'm sure someone will enjoy it."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "What would you like to give in exchange?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "Do you agree to get divorced from {{user}}? A fee of %EMJ% **5000 Rubines** will be charged from **both** of you. Both of your LovePoints will be **halved** as well!",
             "saidnope": "{{userB}} doesn't want a divorce. You can force it by paying %EMJ%**10000 Rubines** so I can call in a lawyer to resolve this, but both of you will lose **all of your LovePoints** !",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Invite me to your by server clicking [HERE]",
+            "selectIndex": "",
             "cancel": "Changed your mind? Ok, see you later~",
             "noFundsBalance": "It seems you cannot afford this, your balance is {{number}} Rubines",
             "noFunds": "Not enough Rubines",
@@ -407,19 +439,34 @@
             "minus_rubines": "I'm taking %R $t(keywords.RBN_plural) from your balance okay~?"
         },
         "daily": {
-            "dailyGet": "{{emoji}} You've received 100 Rubines as your daily bonus!",
-            "dailyNope": "{{emoji}} Hmm? Seems you've already claimed your Rubines, you can get more in: **{{remaining}}**",
-            "dailyStreak": "{{emoji}} **+500 Rubines** for 10 days in a row!"
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": ""
         },
         "toggle": {
             "disabledSer": "The **{{module}}** module has been disabled **Globally**.",
-            "disabledChn": "The {{module}} module has been disabled in the channel <#{{channel}}>",
+            "disabledChn": "",
             "disabledComSer": "The **{{command}}** command has been disabled **Globally**",
-            "disabledComChn": "The **{{command}}** command has been disabled in <#{{channel}}>",
+            "disabledComChn": "",
             "enabledSer": "The **{{module}}** module has been enabled **Globally**",
-            "enabledChn": "The **{{module}}** module has been enabled in <#{{channel}}>",
+            "enabledChn": "",
             "enabledComSer": "The **{{command}}** command has been enabled **Globally**",
-            "enabledComChn": "The **{{command}}** command has been enabled in the channel <#{{channel}}>"
+            "enabledComChn": ""
         },
         "reput": {
             "noSelf": "No, I refuse to let you rep yourself.",
@@ -443,7 +490,8 @@
             "cash1000": "I'd almost consider you rich, almost.",
             "cash5000": "Oh? How did YOU get so rich?",
             "cash10000": "Did you steal from a bank? Should I call the cops?",
-            "cashInfinite": "You really shouldn't cheat you know."
+            "cashInfinite": "You really shouldn't cheat you know.",
+            "balance": ""
         },
         "greet": {
             "byeOFF": "You disabled the Farewell Message? Perhaps that's for the best, they wouldn't see it anyway.",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "Click ✔ to confirm your choice, ✖ to cancel.",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "Guess the Flag",
-            "youhave10": "You have 10 seconds to guess the country this flag belongs to. **GO!**",
-            "wellDone": "{{interjection}} **{{user}}** got it! This is the flag of **{{country}}**",
-            "noGuess": "{{interjectionB}} Looks like nobody guessed it... Better luck next time!"
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** rolled some dice:",
-            "userRolled": "**{{user}}** rolled **`{{numDice}}`**...",
-            "neutralRolled": "Rolling **`{{numDice}}`**...",
-            "andGot": "and got **{{val}}** as a result!",
-            "rollsWere": "Rolls were:",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": "This Roll exceeds Character Limits, try using `-nostreak` to omit roll values"
-        },
-        "blackjack": {
-            "ongoing": "You should really finish a game before trying to start another.",
-            "newgame": "Blackjack huh? You should already know the rules, so let's get started.",
-            "result": "Result:",
-            "bust": "Bust",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Respond with `hit` to draw one more card,",
-            "stand": "Stand",
-            "split": "`split` to Split your hand,",
-            "double": "`double` to double your bet and draw one last card,",
-            "pass": "or `stand` to pass.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": "Seems that we broke even, here, have your rubines back."
-        },
-        "slots": {
-            "takePrize": "Your prize for this is **%$%** %emj%",
-            "_minor": "Better than nothing huh?",
-            "_mid": "Not bad, not great though",
-            "_major": "So close!",
-            "_ultimate_1": "Amazing! :heart:",
-            "_ultimate_2": "You're so lucky!!! :heart:",
-            "_ultimate_3": "Can you believe this?! :heart:",
-            "kommunism": "Communist Jackpot! Your prize has been redistributed among the populous, you get 3x what they do.",
-            "pollux_jackpot": "Oh my, seems to be three of me. Perhaps you deserve something... extra.",
-            "lucky": "Lucky sevens, well done.",
-            "jackpot": "In addition to your prize, you have also gained 100 rings and an extra life",
-            "bonanza": "So many Rubines! Hope you don't plan on making me carry all these.",
-            "potato": "Potatoes... I can probably make something out of these for you.",
-            "zero_1": "Oh my, seems all your Rubines are mine now.",
-            "zero_2": "Not a single hit? That's a shame.",
-            "zero_3": "Perhaps if you try again you might win something?"
-        },
-        "ceilingBet": "You can't bet more than **{{number}}** $t(keywords.RBN_plural) in this game.",
-        "tryAgain": "Try again?",
-        "alreadyPlaying": "Hold up! We're already playing!"
-    },
     "loot": {
         "rareDrop": "Do you know what is this? It is a **RARE** Lootbox!",
         "suprareDrop": "{{interjection}} a **SUPER RARE** Lootbox!",
@@ -818,6 +808,7 @@
         "eventDrop": "And there is more! This box is an **EVENT BOX** which means: **'special goodies inside'!**",
         "notThisbox": "You don't seem to have that box. try `{{prefix}}lootbox` again and see the boxes you own.",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

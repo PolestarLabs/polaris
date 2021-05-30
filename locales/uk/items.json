@@ -7,7 +7,7 @@
     },
     "commendtoken": {
         "name": "Командний токен",
-        "description": "Що це? Альтруїзм?"
+        "description": ""
     },
     "complete_ring_jade": {
         "name": "Шалендорське нефритове кільце",
@@ -326,5 +326,20 @@
     "fork": {
         "name": "Fork",
         "description": "З швидкістю в чотири рази більше кроку ніж ножа, але й половина впливу, це вдвічі цінність!"
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Heheh. Bir kere aldın mı duramıyorsun demek he? Bu **Tabut** karşılığında bana ne veriyorsun bakayım?",
@@ -49,7 +70,7 @@
     },
     "caskets": {
       "tooManyGar": "",
-      "gotCasket": "1 Tabut kazdın! Bir sonraki Tabut 6 saat içinde mevcut olacak!",
+      "gotCasket": "1 Tabut kazdın! Bir sonraki Tabut 6 saat içinde hazır olacak!",
       "noCasket": "Açacak hiç Tabut'un yok... Git kaz biraz!",
       "hasCask": "",
       "hasCask_plural": "",

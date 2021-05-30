@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "Ton avatar indique que tu fais partie du **Pacte du crépuscule**",
+      "night": "Ton avatar indique que tu fais partie du **Pacte d'ombre**",
+      "inad": "Il ne semble pas être aligné avec aucun des pactes. Essaye `{{prefix}}eventavatar [umbral|dusk}` pour en choisir un!",
+      "fine": "Tout a l'air bien!",
+      "opos": "Il semble que ce soit le contraire de ce que t'as voulu.",
+      "diff": "Il n'appartient à aucune des pactes."
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Teehee. Après avoir obtenu le premier, tu ne peux plus arrêter, huh ? Alors, que me donnes-tu en échange pour ce **Cercueil**?",

@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Hehe. Jak zdobyłeś pierwszą rzecz to już nie umiesz się powstrzymać, hę? Więc co dasz mi w zamian za tą **Szkatułę**?",

@@ -65,6 +65,7 @@
         "colorChange": "Your favorite color has been saved!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Our master has declared {{module}} forbidden here. That's too bad.",
         "genericInvalid": "Oh my, seems like that Command is Invalid ;~;",
@@ -354,7 +355,7 @@
         "ban": "`{{prefix}}ban @someguy [reason]`\nBans @someguy from the Server, You can also add a reason.",
         "speakAvailable": "Available languages are:",
         "autorole": "`{{prefix}}autorole [add | rem | list] [Role| @role]` \n\n`{{prefix}}autorole add Games` Allows the **Games** Role as self-assignable.\n`{{prefix}}autorole rem Games` Removes the role **Games** from the list.\n`{{prefix}}autorole list` Shows the list and commands for each Self-Assignable Role\n\nType the Role name exactly as registered, case sensitive. Or just @mention it",
-        "background": "`{{prefix}}background [Imagecode]`\n\n:warning: **IMPORTANT:**\n*Imagecode* __are not links__, they are codes obtained from http://www.pollux.gg/bgshop.\n\nExample: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}chinese [text]`",
@@ -415,7 +416,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nYou can also choose from which curator you will want to see the picks from! Just type their name after the command like `{{prefix}}lewd pollyanna` for example, to see only stuff curated by **Pollyanna**.\n\nOur current curator squad is:\n{{squad}}",
         "marry": "Marriage relies directly on `{{prefix}}craft`, since you need a ring before you can propose.\n\nTo marry your loved one, do `{{prefix}}marry @user [ring]`. There are 4 tiers of wedding rings, each one made of a different gemstone, to show off how fancy your marriage is. In the future, higher rank rings will provide the couple more Love Points that they will be able to spend together.\n\nExample usage: `{{prefix}}marry @someone rubine` to propose with a Rubine ring.\n\nRequires Embed, Manage Messages and Reaction Permissions",
-        "craft": "`{{prefix}}craft [item code]`\nYou can find the item code and all information at http://pollux.gg/crafting.\n\nTo craft an item you need to own all required materials, some materials need to be crafted in order to be available, they are not autocrafted, when crafting a higher tier item.",
+        "craft": "",
         "divorce": "`{{prefix}}divorce` To show everyone you are married to, whether that is one person or a whole harem!\n`{{prefix}}divorce [@user || Discord ID]` To divorce that person"
     },
     "logs": {
@@ -723,7 +724,7 @@
         "next": "Available again in this Server at {{remain}}",
         "treat": "***Trick or Treat!***  You got **{{qtd}}** candies from this Server's stash!",
         "treatRefresh": "No no no! You already got your candies, shoo!\nYou can come back in **{{remaining}}**",
-        "current_event": "Hey~ Did you know there is a global **Halloween Event** going on? :jack_o_lantern:\nIn this event you can get some cool and __exclusive__ pretty stuff for your `p!profile` card!\nAvailable only during this event, which will be running until **November 5th**\nMore info at <http://pollux.gg/events/haloween> *(page in english)*\n*Contact your Server Owner to check if this server is participating*",
+        "current_event": "",
         "newAccOut": ":warning: Sorry, new accounts cannot participate. Perhaps you can join the next one.",
         "newServer": "New Servers cannot participate in this event. Contact the Developer or join the Support Server if you want to participate in the event with this Server.",
         "newJoin": "",

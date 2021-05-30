@@ -3,15 +3,20 @@
         "RBN": "Rubine",
         "RBN_fullname": "Rubine Gems",
         "RBN_plural": "Rubines",
+        "rubines": "",
         "JDE": "Jade",
         "JDE_fullname": "Jader støv",
         "JDE_plural": "Jades",
+        "jades": "",
         "SPH": "Sapphire",
         "SPH_fullname": "Safir Skår",
         "SPH_plural": "Sapphires",
+        "sapphires": "",
         "synthGems": "Syntese perler",
         "cosmoFragment": "Kosmo Fragment",
         "cosmoFragment_plural": "Kosmo Fragmenter",
+        "COS": "Kosmo Fragment",
+        "COS_plural": "Kosmo Fragmenter",
         "C": "Felles",
         "U": "Konjunktivitt.",
         "R": "Sjelden",
@@ -36,7 +41,10 @@
         "sticker": "Klistremerke",
         "sticker_plural": "Klistremerker",
         "background": "Bakgrunn",
-        "background_plural": "Bakgrunner"
+        "background_plural": "Bakgrunner",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "Overføring nektet",
@@ -127,6 +135,7 @@
             "chooseAmod": "Velg en modul.",
             "kinNone": "Du må fortelle meg hvem du skal sparke ut. Jeg kan, så klart sparke ut deg istedet. ",
             "kin404": "¨Finner ikke denne personen. Har de allerede dratt? Kanskje de bare var en del av din fantasi.",
+            "target404": "",
             "unmutable": "Uansett hva du sier at jeg kommer til å dempe denne personen.",
             "unperm": "Jeg har ikke tillatelse til å gjøre dette. Kanskje du skulle ha gitt meg disse tillatelsene før du kommanderer meg til å gjøre noe. ",
             "noRoleHere": "Ser ut som den rollen ikke er på listen. Sjekk at du har skrevet inn rollen riktig. ",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Du må fortelle meg hvilken kanal du skal logge aktivitetene til.",
             "emojiError": "Jeg kunne ikke legge til emoji. Sjekk reaksjonstillatelsene eller om emojien er gyldige...",
             "insuperms": "{{imsorry}} Jeg kan ikke gjøre det for deg hvis du ikke har tillatelse selv.",
-            "not-a-NSFW-channel": "Denne kanalen er ikke satt til NSFW. Ikke gå fra ditt \"kunstarbeid\" overalt."
+            "not-a-NSFW-channel": "Denne kanalen er ikke satt til NSFW. Ikke gå fra ditt \"kunstarbeid\" overalt.",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "Hang på, jeg trenger et minutt!",
                 "Jeg er ikke en skriver, treg ned!",
@@ -273,19 +286,23 @@
             "isEmpty": "Det er ingenting i stedet å fjerne!"
         },
         "discoin": {
-            "desc": "Rubinene blir sendt, et svar fra %BOT% kommer så snart det kommer.",
-            "intake": "Pollux **Rubiner** (RBN) byttet",
-            "outtake": "%BOTNAME%er **%CURRNAME%** ({{$}}) å motta:",
-            "remainder": "Gjenstående grense for {{$}}",
-            "receiptCode": "Transaksjons kvitteringskode",
-            "amNaN": "Ugyldig kvantitet",
-            "invalidCurr": "Den valutaen finnes ikke!",
-            "invalidAmt": "Du kan ikke bytte den mengden! ",
-            "unverified": "Du er ikke bekreftet for å gjøre endringer.\nKontroller deg selv på [http://discoin.sidetrip.xyz/verifiser]",
-            "userLimit": "Din valutamengde for i dag er nådd!",
-            "globalLimit": "Du har nådd din grenser for Discoins, prøv igjen i morgen.",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "Behold denne koden i tilfelle rubinene ikke når frem til målet.",
-            "ex-succ": "Utveksling vellykket!"
+            "invalidCurr": "Den valutaen finnes ikke!",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "Ok, fra nå av snakker jeg {{LANGUAGE}} på denne serveren. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Jeg har endret din personlige tekst til {{pstext}}\nBruk `{{prefix}}profile` for å se den nye teksten på ditt profilkort. Jeg er sikker på at noen vil like det....\n"
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "Hva vil du gi i utvekslingen?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "Aksepterer du å få skilsmisse fra {{user}}? En avgift på %EMJ% **5000 Rubiner** vil bli belastet for deg fra **begge** av deg. Begge dine kjærlighetspoeng vil bli **halvert ** også!",
             "saidnope": "{{userB}} vil ikke ha en skilsmisse. Du kan tvinge den til å betale %EMJ%**10000 Rubiner** så jeg kan ringe inn advokat for å løse dette. men begge vil du miste **alle dine LovePoints** !",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Inviter meg til å klikke på serveren din [HERE]",
+            "selectIndex": "",
             "cancel": "Endret sinne? Ok, se du sener~",
             "noFundsBalance": "Det ser ut som du ikke har råd nok til dette, du har {{number}} rubiner for øyeblikket",
             "noFunds": "Ikke nok Rubiner",
@@ -407,9 +439,24 @@
             "minus_rubines": "Jeg tar %R $t(nøkkelord.RBN_plural) fra din balanse okay~?"
         },
         "daily": {
-            "dailyGet": "{{emoji}} Du har fått 100 Rubiner som din daglige bonus! ",
-            "dailyNope": "{{emoji}} Hmm? Det set ut som du allerede har hentet dine Rubiner, du kan hente flere om **{{remaining}}",
-            "dailyStreak": "{{emoji}} **+500 Rubiner** i 10 dager med Dailies på rad!"
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{emoji}} Hmm? Det set ut som du allerede har hentet dine Rubiner, du kan hente flere om **{{remaining}}"
         },
         "toggle": {
             "disabledSer": "Modulen **{{module}}** har blitt avslått **Globally**",
@@ -443,7 +490,8 @@
             "cash1000": "Jeg anser deg nesten som rik, Nesten...",
             "cash5000": "ÅÅh? Hvordan ble DU så rik? ",
             "cash10000": "Har du stjålet fra en bank?? Skal jeg ringe politiet? ",
-            "cashInfinite": "Du burde virkelig ikke jukse vet du. "
+            "cashInfinite": "Du burde virkelig ikke jukse vet du. ",
+            "balance": "Saldo"
         },
         "greet": {
             "byeOFF": "Du skrudde av bie-meldingen? Kanskje det er for det best, de kunne ikke se det likevel.",
@@ -493,12 +541,22 @@
             "noItem": "Du trenger en kommando-Token, og du har ikke en. Du trenger dem for å pendle folk.",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "Lage `{{item_name}}`",
+            "craftedItem": "",
             "noitem": "Jeg kunne ikke finne dette elementet",
-            "noitemu": "Finner ikke dette elementet eller noe sånn det",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "Det mangler materialer i beholdningen din, jeg kan ikke lage dette.",
+            "materialAutocraft": "",
             "materialPresent": "Alle materialer kan brukes i beholdningen din, gå videre med lagingen?",
+            "materialPresentAuto": "",
             "didyoumean": "Jeg kunne ikke finne dette elementet. Ved en sjanse mener du en av disse?",
             "didyoumeanOne": "Det er noe som ikke stemmer... Er det du leter etter, m'ar'?",
             "timeout": "Tidsavbrudd! Du har tatt for mye å bestemme, lagingen av ovnen er nå kaldt.",
@@ -520,7 +578,8 @@
             "success": "**{{boxname}}** overført til {{userB}}"
         },
         "give": {
-            "cooldown": "Vent litt opp! Du kan overføre om {{remaining}}!"
+            "cooldown": "Vent litt opp! Du kan overføre om {{remaining}}!",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "Se, jeg kan ikke se denne boksen der og jeg er sikker på at du ikke klarer heller.",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "Klikk ✔ for å bekrefte ditt valg, ✖ for å avbryte.",
             "confirmDelete": "Bekreft sletting?",
             "alotWentOn": "Mye gikk på denne dagen...",
-            "alreadyOwnThis": "Hei, du eier allerede denne!"
+            "alreadyOwnThis": "Hei, du eier allerede denne!",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "Dette er dine aktive påminnelser:",
@@ -580,7 +642,9 @@
             "maxActive": "Du kan bare ha **{{count}}** aktive påminnelser om gangen!",
             "errorWhen": "Beklager, dette er forvirrende. Jeg forstår ikke * når* du ønsker meg å minne på det.",
             "errorTARDIS": "Jeg kan ikke gå til fortiden for å minne deg på hva du allerede glemte.",
+            "errorTooShort": "",
             "reminderOk": "Ok, jeg vil minne deg på {{appointment}} av **{{time}} (UTC)** {{location}}",
+            "reminderOk_empty": "",
             "reminderChannel": "hos {{channel}}",
             "reminderDMs": "i dine direkte meldinger"
         },
@@ -710,80 +774,6 @@
             "end": "\n**Den komplette listen over kommandoer kan du finne hos <https://pollux.gg/commands>\n\nSjekk ut våre partnere hos **<https://pollux.gg/partners>\nSe eller send fan-opprettet kunstverk på **<https://pollux.gg/fanart>**\nSe din offentlige profil på **<https://pollux.gg/profile/me>**\n\n**osmetikker**\nBakgrunnsseksjon **https://pollux. g/bgshop**\nMedal Butikk **(https://pollux.gg/medalshop**\narbeidsplass **https://pollux. g/laging**\nVirtuelle Stickere **<https://pollux.gg/stickers>** (for IRL stickers sjekk Support Server)\nHendelser informasjon **<https://pollux.gg/events>**\n\nStøtte meg på **<https://patreon.com/Pollux>** eller **<https://pollux.gg/donate>**\nFølg meg på Twitter **<https://twitter.com/maidPollux>**\n\n---\n\n**For noe annet kan du følge, sjekk __Dashboard__: <https://pollux.gg/dashboard>**\neller bli med i min brukerstøtteserver: **:/https://discord. g/rEBCccS ====**\nInviter meg til serveren din på **<https://pollux.gg/invite>**\n"
         }
     },
-    "games": {
-        "flags": {
-            "title": "Gjett flagget",
-            "youhave10": "Du har 10 sekunder på å gjette landet dette flagget tilhører. **GO!**",
-            "wellDone": "{{interjection}} **{{user}}** fikk det! Dette er flagget på **{{country}}**",
-            "noGuess": "{{interjectionB}} ser ut som ingen gjettet det... Bedre lykke neste gang!"
-        },
-        "coinflip": {
-            "coinVictory": "{{interjection}} Du vant! Du fikk **{{prize}}** $t(nøkkelord.{{currency}}_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} Du ser ut til å ha gått tapt...bedre lykke neste gang!"
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** rullet en ord:",
-            "userRolled": "**{{user}}** rullet **`{{numDice}}`**...",
-            "neutralRolled": "Ruller **`{{numDice}}`**...",
-            "andGot": "og fikk **{{val}}**!",
-            "rollsWere": "Rullene var:",
-            "invalidRoll": "Ugyldig rullesjel likning -- Bare terningen vil bli rullet!",
-            "onlyRoll5": "Du kan bare rulle 5 forskjellige matcher samtidig!",
-            "limit25": "Det kan vises «ice streak» med inntil 25 ruller.",
-            "noDiceRolled": "Vent, det er ingen dikter til meg å rulle, bruk `{{prefix}}roll help` hvis du ikke er sikker på hva du gjør~",
-            "exceedLim": "Denne Rollen overskrider karaktergrensene, prøv med `-nostreak` for å utelate rulleverdier"
-        },
-        "blackjack": {
-            "ongoing": "Du skal virkelig fullføre et spill før du prøver å starte et annet.",
-            "newgame": "Blackjack huh? Du burde allerede vite reglene, så la oss komme i gang.",
-            "result": "Resultat:",
-            "bust": "Støv",
-            "youwin": "Gratulerer! Du vår, *Denne gangen*.",
-            "youlose": "Å? Jeg har vant, for dårlig for deg~.",
-            "hit": "Svar på \"treff\" for å tegne ett nytt kort,",
-            "stand": "Stand",
-            "split": "'Split' for å dele opp hånden",
-            "double": "`double` for å doble bandet ditt og trekke ett siste kort,",
-            "pass": "eller \"stand\" til å passere.",
-            "surrender": "Overgivelse",
-            "insurance": "Forsikring",
-            "surrender_res": "Du surfet, det er et sjamme... Her er hvordan spillet mitt ville se ut hadde vi fortsatt:",
-            "joker": "Å nei! Joker! Du er så heldig~",
-            "blackjack_win": "En Blackjack? Det er ikke mulig! Tok jeg å telle kortene feil?",
-            "blackjack_lose": "BLACKJACK baby, i ansiktet til yo! \\❤",
-            "double_win": "Du var så dristig i dobbelt det. Gratulerer!",
-            "double_lose": "Dobbel forventning, dobbelt skuffelse.",
-            "insurance_lost": "Men din forsikring er min! Teehee~ Gimme disse {{insurance}} Rubinene.",
-            "insurance_win": "Men du hadde en forsikring lagt inn, så ta så {{insurance}} Rubiner tilbake.",
-            "surrender_helper": "Hvis du ikke føler deg trygg på at du kan \"surrender\" og bare miste halvparten av veddemålen din",
-            "insurance_helper": "Jeg har en åpen kurs i denne kampen, du kan legge til `forsikring` til spillet ditt for å beskytte deg mot en Blackjack",
-            "splitbreak": "Breakdown med splitting:",
-            "switchdeck": "Nå skal vi spille BlackJack med **{{deckname}}** dekk!",
-            "switchdeckEgg": "Nå skal vi spille BlackJack ved å bruke ordlisten - jeg mener **dekk** {{deckname}}!\nOMG jeg beklager det!",
-            "even": "Det ser ut til at vi knuste aften, her skal du ha dine navigeringer."
-        },
-        "slots": {
-            "takePrize": "Din premie for dette er **%$%** %emj%",
-            "_minor": "Bedre enn intet nav?",
-            "_mid": "Ikke dårlig, dårlig",
-            "_major": "Så nær!",
-            "_ultimate_1": "Utrolig! :heart:",
-            "_ultimate_2": "du er så heldig!!! :heart:",
-            "_ultimate_3": "kan du tro dette?! :heart:",
-            "kommunism": "Communist Jackpot! Premien din er blitt redistribuert blant de folkelige, du får 3 x hva de gjør.",
-            "pollux_jackpot": "Å nei, synes å være tre av meg. Kanskje du fortjener noe ekstra.",
-            "lucky": "Heldig sjuks, godt gjort.",
-            "jackpot": "I tillegg til premien, har du også tjent 100 ringer og et ekstra liv",
-            "bonanza": "Så mange Rubiner! Håper du ikke planlegger for at jeg skal bære alle disse.",
-            "potato": "Poteter... Jeg kan nok lage noe av dette for deg.",
-            "zero_1": "Å nei, virker som alle rubinene dine er mine nÃ¥.",
-            "zero_2": "Ikke et enkelt treff? Det er et sjamme.",
-            "zero_3": "Kanskje hvis du prøver igjen vinner du kanskje noe?"
-        },
-        "ceilingBet": "Du kan ikke vedde mer enn **{{number}}** $t(nøkkelord.RBN_plural) i dette spillet.",
-        "tryAgain": "Prøv på nytt?",
-        "alreadyPlaying": "Hold ut! Vi spiller allerede!"
-    },
     "loot": {
         "rareDrop": "Vet du hva som er dette? Det er en **GRATIS** Lootbox!",
         "suprareDrop": "{{interjection}} en **SUPER RABAT** Skyteboks!",
@@ -818,6 +808,7 @@
         "eventDrop": "Og det er mer! Denne boksen er en **EVENT BOX** som betyr: **'spesielle goder innside'!**",
         "notThisbox": "Du ser ikke ut til å ha den boksen. Prøv `{{prefix}}lootbox` igjen og se boksene du eier.",
         "options_new": "{{k_emoji}}Holde ° {{r_emoji}}Reroll {{amt}}",
+        "options_nrr": "",
         "rerollRemain_new": "Du kan nulle **en** forrige gang!",
         "rerollRemain_new_plural": "Du kan omdirigere **{{count}}flere ganger!",
         "hasDupes": "{{x_frags}} fra dupliserte elementer!",

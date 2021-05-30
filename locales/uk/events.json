@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Тіхе. Після того, як ти вперше зайдеш, ти вже не можеш зупинитися, га? Отже, що ти мені даю за **Каскет**?",
@@ -80,7 +101,7 @@
   "halloween17": {
     "treat": "---",
     "treatRefresh": "---",
-    "current_event": "---",
+    "current_event": "",
     "newAccOut": ":Warning: Вибачте, нові акаунти не можуть брати участь. Можливо наступного разу.",
     "nextThis": "---",
     "candiesCheck": "---",

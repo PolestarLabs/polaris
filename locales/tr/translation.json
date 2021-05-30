@@ -65,6 +65,7 @@
         "colorChange": "Favori Rengin Kaydedildi!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "O komut öyle kullanılmıyor. {{usage}} dene. Örneğin: {{example}}",
         "disabledModule": ":no_entry_sign: Efendimiz {{module}} komutunu burada yasakladı.",
         "genericInvalid": "Ayy, görünüşe göre bu komut geçersiz ;~;",
@@ -338,7 +339,7 @@
         "level": "Herhangi birisi için `{{prefix}}level @birisi ya da kendin için `{{prefix}}level`.",
         "personalTxt": "`{{prefix}}personaltxt [yazı]` Cidden zor değil mi?",
         "pick": "Bunu kendi kendine anlayabileceğinden eminim.",
-        "prefixSet": "`{{prefix}}prefixSet [prefix]` ve işin ağzına sıçmamaya çalış. Örneğin: `{{prefix}}prefixSet pol.`",
+        "prefixSet": "`{{prefix}}prefixSet [prefix]` ve işin içine etmemeye çalış. Örneğin: `{{prefix}}prefixSet pol.`",
         "profile": "Kendin profilin için `{{prefix}}profile` yaz; başkasının profili için `{{prefix}}profile @birisi` yaz.",
         "rank": "`{{prefix}}rank` = Global sıralaman, \n`{{prefix}}rank server` = Sunucudaki sıralaman",
         "cash": "`{{prefix}}cash` , `{{prefix}}Rubine` , `{{prefix}}$` Ayrıca başkasının ne kadar Rubini olduğunu görmek için onları @mentionlayabilirsin.",
@@ -780,7 +781,7 @@
         "egghuntfail": "*Ama hiçbir şey bulamadı*",
         "egghuntsuccess": "Harika! Yumurta var! Hadi bakalım...",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} **{{rarity}} Yumurta** buldu!",
-        "egghuntsuccess3": "",
+        "egghuntsuccess3": "Toplamda **{{X}}** yumurtan var.\n**{{Y}}** tanesi eşsiz.\n\nDaha fazla bilgi için: [Pollux Easter Event 2018]\n(https://pollux.gg/events/easter2018)",
         "delaytrade": "Sakin ol! {{remaining}} içerisinde tekrar takas yapabilirsin",
         "wanttrade": "{{user}} **{{tradingEgg}}** yumurtasını seninle takas yapmak istiyor.",
         "wanttrade2": "*Kabul etmek için, karşılığında göndereceğin yumurtanın kodundan önce gelmek üzere `accept` yaz.*\n\nÖrnek: [**{{eggcode}}**] yumurtası ile [**C1**] yumurtasını takas etmek için `accept C1` ",

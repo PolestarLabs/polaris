@@ -1,17 +1,17 @@
 {
     "anime_booster": {
-        "name": ""
+        "name": "アニメジェネリック VOL.1"
     },
     "broken_excavator": {
-        "name": ""
+        "name": "壊れたバックホー"
     },
     "commendtoken": {
-        "name": "",
+        "name": "コメントトークン",
         "description": ""
     },
     "complete_ring_jade": {
         "name": "",
-        "description": ""
+        "description": "愛を込めて、緑として。"
     },
     "complete_ring_rubine": {
         "name": "",
@@ -26,7 +26,7 @@
         "description": ""
     },
     "cosmo_fragment": {
-        "name": "",
+        "name": "コスモフラグメント",
         "description": ""
     },
     "cosmo_gem_C": {
@@ -55,10 +55,10 @@
     },
     "doki_booster": {
         "name": "",
-        "description": ""
+        "description": "ただのモニカ。"
     },
     "doublehook": {
-        "name": "",
+        "name": "ダブルフック",
         "description": ""
     },
     "excavator": {
@@ -66,15 +66,15 @@
         "description": ""
     },
     "hook": {
-        "name": "",
+        "name": "フック",
         "description": ""
     },
     "initd_booster": {
-        "name": "",
+        "name": "頭文字D",
         "description": ""
     },
     "iwd1_booster": {
-        "name": "",
+        "name": "IWD - シーズン 1",
         "description": ""
     },
     "iwd2_booster": {
@@ -326,5 +326,20 @@
     "fork": {
         "name": "",
         "description": ""
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

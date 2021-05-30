@@ -3,15 +3,20 @@
         "RBN": "紅寶石",
         "RBN_fullname": "",
         "RBN_plural": "紅寶石",
+        "rubines": "",
         "JDE": "玉",
         "JDE_fullname": "",
         "JDE_plural": "玉",
+        "jades": "",
         "SPH": "蓝宝石",
         "SPH_fullname": "",
         "SPH_plural": "蓝宝石",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "",
         "U": "",
         "R": "",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "貼紙",
         "background": "",
-        "background_plural": "背景"
+        "background_plural": "背景",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -45,7 +53,7 @@
         "thanks": "",
         "thanks_short": "",
         "thx": "",
-        "total": "",
+        "total": "總數",
         "amount": "數量",
         "overview": "瀏覽",
         "dashboard": "儀表板",
@@ -119,7 +127,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "以下權限無法正常執行：{{PERMSLIST}}",
-            "denied": "你沒有權限這麼做。這個指令需要{{rankNeed}}以上，你現在是{{rankMe}}。請聯絡管理員",
+            "denied": "",
             "disabledModule": ":no_entry_sign:我們的管理員已經宣布{{module}}在這裡被禁用了",
             "genericInvalid": "糟糕...錯誤的指令 ;~;",
             "prefixChng": "好的，現在我的指令前綴是{{prefix}}，用`{{prefix}}stats`來測試一下吧",
@@ -127,6 +135,7 @@
             "chooseAmod": "選個模組",
             "kinNone": "總之，在我踢你之前先我告訴我你叫我踢的人是誰",
             "kin404": "糟糕，我找不到這個人 :[ 他該不會早就被踢了吧?說不定他根本不存在?又說不定他只是你的幻覺?你確定都不是嗎？",
+            "target404": "",
             "unmutable": "",
             "unperm": "因為一些該死的原因，我他媽沒有權限可以做這件是，幹你他媽快點給我權限！",
             "noRoleHere": "這個身分組並不存在，請你回去再檢查個兩次",
@@ -144,9 +153,13 @@
             "noChannelGiven": "OK，所以我要把這些紀錄放到哪裡？總不能寫在你臉上吧？告訴我你要把紀錄放到哪個頻道",
             "emojiError": "",
             "insuperms": "",
-            "not-a-NSFW-channel": "騷年，先把這個頻道設成NSFW。"
+            "not-a-NSFW-channel": "騷年，先把這個頻道設成NSFW。",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -273,19 +286,23 @@
             "isEmpty": "沒有東西可以卸除！"
         },
         "discoin": {
-            "desc": "交易進行中，當交易完成後，你應該會收到一則來自%BOT%的私人訊息",
-            "intake": "轉換了Pollux **紅寶石** (RBN)：",
-            "outtake": "",
-            "remainder": "{{$}}剩下的轉換額度",
-            "receiptCode": "轉換的收據碼",
-            "amNaN": "不正確的數量",
-            "invalidCurr": "這種貨幣不存在",
-            "invalidAmt": "你不能轉換這樣的數量",
-            "unverified": "你必須先認證才能轉換幣值\n請在[http://discoin.sidetrip.xyz/verify]中進行認證",
-            "userLimit": "你今天的轉換數量已達上限",
-            "globalLimit": "今天銀行已經關門了，感謝你的支持",
-            "takedis": "留著這串收據碼以防萬一",
-            "ex-succ": "成功轉換"
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
+            "takedis": "",
+            "invalidCurr": "",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "都弄好了！ 你的個性簽名現在是：\n{{pstext}}\n用`{{prefix}}profile`來看你那~~不怎麼精美的~~名片上華麗的詞藻吧。顆顆~"
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "",
+            "selectIndex": "",
             "cancel": "",
             "noFundsBalance": "看來你付不起這樣物品，你只有{{number}}個紅寶石",
             "noFunds": "紅寶石不足",
@@ -407,19 +439,34 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{emoji}}你拿到了100紅寶石的每日獎勵～",
-            "dailyNope": "{{emoji}}喂！你已經拿過你的每日獎勵了，距離下次獎勵時間還有：**{{remaining}}**",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": ""
         },
         "toggle": {
             "disabledSer": "**{{module}}**模組已經被**全域**禁用",
-            "disabledChn": "已在#{{channel}}頻道禁用{{module}}模組",
+            "disabledChn": "",
             "disabledComSer": "**{{command}}**指令已被**全域**禁用",
-            "disabledComChn": "已在#{{channel}}頻道禁用**{{command}}**指令",
+            "disabledComChn": "",
             "enabledSer": "**{{module}}**模組已經被**全域**開放",
-            "enabledChn": "已在#{{channel}}頻道開放{{module}}模組",
+            "enabledChn": "",
             "enabledComSer": "**{{command}}**指令已被**全域**開放",
-            "enabledComChn": "已在#{{channel}}頻道開放**{{command}}**指令"
+            "enabledComChn": ""
         },
         "reput": {
             "noSelf": "Hey hey smart ass! You cannot rep yourself!",
@@ -443,7 +490,8 @@
             "cash1000": "你幾乎可以算是半個有錢人",
             "cash5000": "你真他媽有錢",
             "cash10000": "你是不是搶過幾間銀行？",
-            "cashInfinite": "你這個開後門的混帳"
+            "cashInfinite": "你這個開後門的混帳",
+            "balance": ""
         },
         "greet": {
             "byeOFF": "已禁用道別訊息",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -567,12 +626,15 @@
         "generic": {
             "deleted": "",
             "cancel": "",
-            "timeout": "",
+            "timeout": "超時!",
             "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "骰出了：",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "親愛的，我們已經玩到一半了",
-            "newgame": "該來玩21點了，我想你知道規則，我們就直接開始吧",
-            "result": "結果：",
-            "bust": "爆了",
-            "youwin": "",
-            "youlose": "",
-            "hit": "輸入`hit`來要牌",
-            "stand": "過",
-            "split": "輸入`split`來分牌",
-            "double": "",
-            "pass": "或是輸入`stand`來跳過",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "你得到的獎勵是**%$%** %emj%",
-            "_minor": "至少比什麼都沒有好吧 ;)",
-            "_mid": "不錯嘛！",
-            "_major": "就差那麼一點！",
-            "_ultimate_1": "真棒！:heart:",
-            "_ultimate_2": "你真是太幸運了！:heart:",
-            "_ultimate_3": "真是不敢相信！:heart:",
-            "kommunism": "KOMMUNIST JACKPOT!!! Your prize is 3x higher, and it was split by as much people as I could find!",
-            "pollux_jackpot": "",
-            "lucky": "幸運7～",
-            "jackpot": "In addition to your prize, you also have 100 rings and an extra life",
-            "bonanza": "Yay! Rubines Bonanza! Too much Rubines to carry!",
-            "potato": "馬鈴薯...不好不壞呢...",
-            "zero_1": "噢不！:(你連一個紅寶石都拿不回來...",
-            "zero_2": "太糟糕了...什麼都沒中...",
-            "zero_3": "下次會更好的，甜心，我相信你！;)"
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "你知道這是什麼嗎？這可是一個**稀有**箱子啊！",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "你沒有這種類型的箱子，試著用`{{prefix}}lootbox`來確認你的箱子",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

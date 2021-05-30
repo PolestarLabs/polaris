@@ -326,5 +326,20 @@
     "fork": {
         "name": "Fork",
         "description": "Met vier keer het stabatvermogen van een mes, maar de helft van de impact, is het dubbele van de waarde!"
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }
