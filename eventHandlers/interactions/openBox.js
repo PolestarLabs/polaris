@@ -36,12 +36,18 @@ module.exports = async (interaction, data)=>{
         await GENERATOR.init(fakeMsg, { boxID: selectedBox.id }).catch(console.error);
 
         Inventory = await userInventory.listItems();
-        const currentButtons = interaction.messageRaw.components[0]?.components;
+        //const currentButtons = interaction.messageRaw.components[0]?.components;
 
-        currentButtons.forEach(button=> button.disabled = !Inventory.find((bx) => bx.rarity === button.custom_id.split(':')[1] ) )
+        
+        await interaction.message.updateButtons( ["C","UR","SR","UR"].map(button=> {
+            return {
+                custom_id: new RegExp(`openBox:${button}:`),
+                disabled: !Inventory.find((bx) => bx.rarity === button ) 
+            }
+        }) );
         
         await interaction.message.edit({
             embed: createInventoryEmbed(Inventory,fakeMsg),
-            components: [{type:1,components: currentButtons}]
+            //components: [{type:1,components: currentButtons}]
         })
 }
