@@ -1,5 +1,7 @@
 const STRINGS = (P) => {
 	const v = {};
+	P.RBN_emoji = _emoji('RBN');
+
 	v.singleplayer_no_bet =
 		 "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.";
 	v.singleplayer_no_funds = "you don't have all this money to waste with russian roulette.";
@@ -25,14 +27,18 @@ const STRINGS = (P) => {
 	v.mp_ded = `BOOM! ${P.player?.name} is dead.`;
 	v.mp_no_bullet = "*no bullet noise*\n";
 	v.mp_intro = 
-		"Ok, multiplayer mode.\nTo join the match, just use `join <how many rubines you are using>`.\n"
+		"**Multiplayer Mode**\nTo join the match, send `join <AMOUNT>`.\nSend `start` to immediately start it."
 		+ "**The match starts in __20 seconds__.**";
 
 	v.mp_pool = "**Total of rubines in the pool:** 0 rubines\n**Players**\n---";
 	v.mp_no_20_under = "Your bet can't be less than 20% under the average bet";
+	console.log(P.verifiedPlayers )
+	console.log(P.verifiedPlayers?.map((a) => a.money))
 	v.mp_pool_tally = 
-		`**Total of rubines in the pool**: ${P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b)} rubines\n`
-		+ `**Players**\n${P.verifiedPlayers?.map((a) => ` •	 **${a.name}** - ${a.money} rubines\n`).join("")}`;
+		`Total of rubines in the pool: ${P.RBN_emoji} **${P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b)||0}** \n` +
+		`Minimum Bet: ${P.RBN_emoji} **${~~(P.minBet*.8)||0}**\n`
+	 
+
 	v.mp_no_funds = "No Funds";
 	v.mp_abort_player = "Game cancelled by the creator.";
 	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
@@ -40,14 +46,14 @@ const STRINGS = (P) => {
 	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
 	v.round_no = `**Round ${P.round}**\n`;
 	v.bot_shame = "Did y'all lose to a **bot**???";
-	v.bot_megashame = `${P.player.name} stands victorious! You guys suck...`;
+	v.bot_megashame = `${P.player?.name} stands victorious! You guys suck...`;
 	v.bot_no_gambit = "Matches with bot participants aren't eligible for Winner's Gambit.";
 	
 	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(P.value*1.5)}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
 	v.victor = `${P.player?.name} stands victorious!\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`
 	v.victor_gambit = `${P.player?.name} stands victorious like an absolute champion!`;
 	
-	v.gambit = `<@${P.player.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
+	v.gambit = `<@${P.player?.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
 	v.gambit_prompt = `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`;
 	v.gambit_pre = `Looks like ${P.player?.name} is shooting one last time! Let's see...`;
 	v.gambit_anytime = "Anytime now...";
@@ -235,9 +241,25 @@ async function startMultiplayerGame(msg) {
 	let v = STRINGS({lngs:msg.lang});
 
 	await msg.channel.send(v.mp_intro);
-	const poolMsg = await msg.channel.send(v.mp_pool);
-
 	const verifiedPlayers = [];
+	const poolEmbed = {
+		description: v.mp_pool_tally,
+		fields:[
+			{name:"Players", value: `${
+				verifiedPlayers?.map((a) => ` • <@${a.id}> - ${_emoji("RBN")} **${a.money}** \n`).join("") 
+				|| `${_emoji('loading') } Waiting...`
+			}`}
+		]
+	}
+	const poolMsg = await msg.channel.send({
+		embed:poolEmbed,
+		components: msg.setButtons( [
+			{label: "Start", emoji:{name:"🔫"},disabled:true,style:1,custom_id:`rrStart`},
+			{label: "Abort", emoji:{name:"🔫"},disabled:false,style:4,custom_id:`rrStop`},
+		] ,1) // 1 = dry-run
+	});
+
+	
 	let hasBots = false;
 	let minBet = 0;
 
@@ -254,13 +276,19 @@ async function startMultiplayerGame(msg) {
 
 	//await msg.channel.awaitMessages(filter, {time: 60e3});
 	const playerCollector = msg.channel.createMessageCollector(filter, { time: 60e3 });
+	const buttonCollector = poolMsg.createButtonCollector((i,d)=>i.userID===msg.author.id,{maxMatches: 1, time: 60e3});	
 
+	buttonCollector.on("click",(b)=> b.id === "rrStart" ? playerCollector.stop("force_start") : playerCollector.stop('abort') );
 	playerCollector.on('message', async (joinMsg) => {
 
-		if (joinMsg.content === 'stop')
+		if (joinMsg.content === 'stop'){
+			buttonCollector.stop('abort');
 			return playerCollector.stop('abort');
-		if (joinMsg.content === 'start')
+		}
+		if (joinMsg.content === 'start'){
+			buttonCollector.stop('force_start');
 			return playerCollector.stop('force_start');
+		}
 
 		let userBet = parseInt(joinMsg.content.split(" ")[1]);
 
@@ -277,12 +305,16 @@ async function startMultiplayerGame(msg) {
 				isBot: joinMsg.author.bot
 			});
 
-			minBet = verifiedPlayers.reduce((a, b) => a + b.money, 0) / verifiedPlayers.length;
+			minBet = ~~(verifiedPlayers.reduce((a, b) => a + b.money, 0) / verifiedPlayers.length);
 
 			if (joinMsg.author.bot) hasBots = true;
-			
-			v = STRINGS({lngs:msg.lang, players, verifiedPlayers:players});
-			poolMsg.edit(v.mp_pool_tally);
+				console.log({verifiedPlayers})
+			v = STRINGS({lngs:msg.lang, verifiedPlayers, minBet});
+
+			poolEmbed.description = v.mp_pool_tally;
+			poolEmbed.fields[0].value = `${verifiedPlayers?.map((a) => ` • <@${a.id}> - ${_emoji("RBN")} **${a.money}** \n`).join("") || '---'}`
+			poolMsg.edit({embed:poolEmbed});
+			if (verifiedPlayers.length > 1) poolMsg.enableButtons("all");
 		} else {
 			joinMsg.reply(v.mp_no_funds).then(m=> m.deleteAfter(5) && joinMsg.deleteAfter(5).catchReturn() );
 		}
@@ -292,8 +324,10 @@ async function startMultiplayerGame(msg) {
 
 		console.log({ reason }, 'stopCollectorRRoulette');
 
-		if (reason === 'abort')
-			return msg.channel.send(v.mp_abort_player);
+		if (reason === 'abort'){
+			  await poolMsg.edit({content: v.mp_abort_player, embed: null});
+			return msg.channel.send( v.mp_abort_player);
+		}
 
 		verifiedPlayers?.forEach(player => {
 			Progression.emit("play.russianroulette.friends", {
@@ -305,7 +339,7 @@ async function startMultiplayerGame(msg) {
 
 		if (verifiedPlayers.length === 1) {
 			msg.channel.send(v.switch_to_singleplayer);
-			return startSinglePlayer();
+			return startSinglePlayer(msg);
 		}
 
 		if (verifiedPlayers.length === 0)
@@ -456,11 +490,13 @@ async function startMultiplayerGame(msg) {
 }
 
 async function userShoot(msg,player){
-	await msg.addReaction('Gun:338331025300127745');
+	//await msg.addReaction('Gun:338331025300127745');
+	await msg.setButtons({emoji:{id:"338331025300127745"},label:"Fire!",custom_id:"shoot!",style:4});
 	return Promise.race([
 		msg.channel.awaitMessages(m=>m.author.id === player.id && ['bang','shoot','boom','pew'].includes(m.content),{time:10e3, maxMatches:1}),
 		msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
-		( player.isBot ? wait( randomize(1,5) ) : wait(8))
+		msg.awaitButtonClick(click=> click.userID === player.id && click.id === 'shoot!', {time:10e3, maxMatches:1}),
+		( player.isBot ? wait( randomize(11,15) ) : wait(8))
 	]);
 }
 
