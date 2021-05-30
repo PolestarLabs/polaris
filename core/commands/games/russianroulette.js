@@ -1,67 +1,60 @@
 const STRINGS = (P) => {
-	const v = {};
+	
 	P.RBN_emoji = _emoji('RBN');
-
-	v.singleplayer_no_bet =
-		 "you have to give me a number of how much rubines you are going to ~~waste~~ use, or you can use `multiplayer` to create a multiplayer game.";
-	v.singleplayer_no_funds = "you don't have all this money to waste with russian roulette.";
-	v.min_bet = "You gotta bet at very least 100 RBN on thir";
-	v.max_bet = "You can't put more than 5000 RBN at stake";
-	v.singleplayer_instructions = 
-		"Russian Roulette? You probably already know the rules, so let's get started."
-		+ `\nIf you survive this one, you're going to receive **${P.Game?.nextValue} rubines**.\n`
-		+ "Use `shoot` to proceed (if you get shot, you'll lose your money)."
-
-	v.singleplayer_timeout = "you haven't said your action in 30 seconds! Stopping the game.";
-	v.singleplayer_quit = `You're a quitter!\n I added **${P.Game?.currentPayout} rubines** to your account. Sigh.`;
-	v.singleplayer_pre_message = "Let's see if you're going to die now...";
-	v.singleplayer_ded = "BOOM! Someone got shot...\nYou lost your money. RIP.";
-	v.singleplayer_no_bullet_final = `**no bullet noise**\nYou came out alive of the game...\nI added **${P.Game?.currentPayout}** rubines to your account.`
-	v.singleplayer_no_bullet_full = 
-		`**no bullet noise**\nNo bullet this time (${P.result?.rounds} rounds remaining)...\n`
-		+ `You currently have **${P.Game?.currentPayout} rubines.**\n`
-		+ "Use `shoot` to test your luck one more time (if you don't get shot, I'm going to add more money to your current amount)\n"
-		+ "Use `stop` to stop here and get your money.";
-	v.footer_instruction =  `Say "shoot" or click the gun to fire! (8s)`;
-	v.mp_player_turn = `${P.player?.name}'s turn.... `;
-	v.mp_ded = `BOOM! ${P.player?.name} is dead.`;
-	v.mp_no_bullet = "*no bullet noise*\n";
-	v.mp_intro = 
-		"**Multiplayer Mode**\nTo join the match, send `join <AMOUNT>`.\nSend `start` to immediately start it."
-		+ "**The match starts in __20 seconds__.**";
-
-	v.mp_pool = "**Total of rubines in the pool:** 0 rubines\n**Players**\n---";
-	v.mp_no_20_under = "Your bet can't be less than 20% under the average bet";
-	console.log(P.verifiedPlayers )
-	console.log(P.verifiedPlayers?.map((a) => a.money))
-	v.mp_pool_tally = 
-		`Total of rubines in the pool: ${P.RBN_emoji} **${P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b)||0}** \n` +
-		`Minimum Bet: ${P.RBN_emoji} **${~~(P.minBet*.8)||0}**\n`
-	 
-
-	v.mp_no_funds = "No Funds";
-	v.mp_abort_player = "Game cancelled by the creator.";
-	v.switch_to_singleplayer = "Looks like only one person is gonna play. Switching to singleplayer mode...";
-	v.mp_no_players = "No one joined. I'm not playing this alone.";
-	v.mp_players_list = `**Time's up!** Let's get started.\nPlayers: \`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
-	v.round_no = `**Round ${P.round}**\n`;
-	v.bot_shame = "Did y'all lose to a **bot**???";
-	v.bot_megashame = `${P.player?.name} stands victorious! You guys suck...`;
-	v.bot_no_gambit = "Matches with bot participants aren't eligible for Winner's Gambit.";
+	P.emojiNope = _emoji('nope');
 	
-	v.victor_tokai = `\n\n • ${_emoji('RBN')} **${~~(P.value*1.5)}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
-	v.victor = `${P.player?.name} stands victorious!\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`
-	v.victor_gambit = `${P.player?.name} stands victorious like an absolute champion!`;
+	P.playersList = `\`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
+	P.totalBetTally = P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b) || 0;
+	P.tokaiValue = ~~(P.value*1.5);
+	P.minBet20 = ~~(P.minBet*.8)||0;
+	P.rubines = $t('keywords.RBN',{count:P.value});
+	P.died_in_round = P.diedInRound ? $t("games.rrlt.mp_round_results_died" , P) : $t("games.rrlt.mp_round_results_no_dead" , P);
 	
-	v.gambit = `<@${P.player?.id}> **Winner's Gambit:** Try one last time for a 150% prize?`;
-	v.gambit_prompt = `Click the <:Gun:338331025300127745> to accept. Otherwise click ${_emoji('nope')}`;
-	v.gambit_pre = `Looks like ${P.player?.name} is shooting one last time! Let's see...`;
-	v.gambit_anytime = "Anytime now...";
-	v.gambit_refuse = `Looks like ${P.player?.name} is a wuss. They're taking all your Rubines with them though.\n\n • ${_emoji('RBN')} **${P.value}** ${$t('keywords.RBN',{count:P.value})} added to your balance!`;
-	v.hes_ded_jim = `BOOM! Oh sh*t *he's dead, Jim.*`;
+	const v = {
+		singleplayer_no_bet: $t("games.rrlt.singleplayer_no_bet" , P),
+		singleplayer_no_funds: $t("games.rrlt.singleplayer_no_funds" , P),
+		min_bet: $t("games.rrlt.min_bet" , P),
+		max_bet: $t("games.rrlt.max_bet" , P),
+		singleplayer_instructions: $t("games.rrlt.singleplayer_instructions" , P),
+		singleplayer_timeout: $t("games.rrlt.singleplayer_timeout" , P),
+		singleplayer_quit: $t("games.rrlt.singleplayer_quit" , P),
+		singleplayer_pre_message: $t("games.rrlt.singleplayer_pre_message" , P),
+		singleplayer_ded: $t("games.rrlt.singleplayer_ded" , P),
+		singleplayer_no_bullet_final: $t("games.rrlt.singleplayer_no_bullet_final" , P),
+		singleplayer_no_bullet_full: $t("games.rrlt.singleplayer_no_bullet_full" , P),
+		footer_instruction: $t("games.rrlt.footer_instruction" , P),
+		mp_player_turn: $t("games.rrlt.mp_player_turn" , P),
+		mp_ded: $t("games.rrlt.mp_ded" , P),
+		mp_no_bullet: $t("games.rrlt.mp_no_bullet" , P),
+		mp_intro: $t("games.rrlt.mp_intro" , P),
+		mp_pool: $t("games.rrlt.mp_pool" , P),
+		mp_no_20_under: $t("games.rrlt.mp_no_20_under" , P),
+		mp_pool_tally: $t("games.rrlt.mp_pool_tally" , P), 		//FIXME
+		mp_no_funds: $t("games.rrlt.mp_no_funds" , P),
+		mp_abort_player: $t("games.rrlt.mp_abort_player" , P),
+		switch_to_singleplayer: $t("games.rrlt.switch_to_singleplayer" , P),
+		mp_no_players: $t("games.rrlt.mp_no_players" , P),
+		mp_players_list: $t("games.rrlt.mp_players_list" , P),
+		round_no: $t("games.rrlt.round_no" , P),
+		bot_shame: $t("games.rrlt.bot_shame" , P),
+		bot_megashame: $t("games.rrlt.bot_megashame" , P),
+		bot_no_gambit: $t("games.rrlt.bot_no_gambit" , P),
+		victor_tokai: $t("games.rrlt.victor_tokai" , P), 		//FIXME
+		victor: $t("games.rrlt.victor" , P),					//FIXME
+		victor_gambit: $t("games.rrlt.victor_gambit" , P),
+		gambit: $t("games.rrlt.gambit" , P),
+		gambit_prompt: $t("games.rrlt.gambit_prompt" , P),
+		gambit_pre: $t("games.rrlt.gambit_pre" , P),
+		gambit_anytime: $t("games.rrlt.gambit_anytime" , P),
+		gambit_refuse: $t("games.rrlt.gambit_refuse" , P),
+		hes_ded_jim: $t("games.rrlt.hes_ded_jim" , P),
+		mp_round_end: $t("games.rrlt.mp_round_end" , P),
+		mp_round_results: $t("games.rrlt.mp_round_results" , P),	//FIXME
+	};
 
-	v.mp_round_end = "End of the round!";
-	v.mp_round_results =  `**Results:**\n${P.diedInRound ? `${P.diedInRound?.name} was the loser. RIP.` : "No one died this time..."}\nStarting the next round.`;
+ 
+ 
+
 
 	return v;
 }
