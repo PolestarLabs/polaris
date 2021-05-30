@@ -3,15 +3,20 @@
         "RBN": "Rubin",
         "RBN_fullname": "",
         "RBN_plural": "Rubinok",
+        "rubines": "{{keywords.RBN_plural}}",
         "JDE": "",
         "JDE_fullname": "",
         "JDE_plural": "Jádék",
+        "jades": "{{keywords.JDE_plural}}",
         "SPH": "",
         "SPH_fullname": "",
         "SPH_plural": "",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "Gyakori",
         "U": "Rendkívüli",
         "R": "Ritka",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "Matricák",
         "background": "",
-        "background_plural": "Hátterek"
+        "background_plural": "Hátterek",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -45,7 +53,7 @@
         "thanks": "",
         "thanks_short": "",
         "thx": "",
-        "total": "",
+        "total": "Összesen",
         "amount": "Mennyiség",
         "overview": "Áttekintés",
         "dashboard": "",
@@ -70,25 +78,25 @@
         "bet": "Tét",
         "level": "Szint",
         "levelUp": "Szintet léptél!",
-        "price": "",
+        "price": "Ár",
         "droppable": "",
         "event": "",
         "discord": {
-            "message": "",
-            "message_plural": "",
-            "reaction": "",
-            "reaction_plural": "",
-            "role": "",
-            "role_plural": "",
+            "message": "Üzenet",
+            "message_plural": "Üzenetek",
+            "reaction": "Reakció",
+            "reaction_plural": "Reakciók",
+            "role": "Rang",
+            "role_plural": "Rangok",
             "server": "Szerver",
             "server_plural": "Szerver",
             "member": "Tag",
             "member_plural": "Tagok",
             "user": "Felhasználó",
             "user_plural": "Felhasználók",
-            "channel": "",
+            "channel": "Csatorna",
             "channel_plural": "Channelek",
-            "voice_channel": "",
+            "voice_channel": "Hangcsatorna",
             "private": "Privát üzenet"
         }
     },
@@ -127,6 +135,7 @@
             "chooseAmod": "Képes lennél végre egy modult választani?",
             "kinNone": "Először is mondd meg nekem a nevét annak, akit ki kéne kickelnem, veled tenném meg.",
             "kin404": "Hoppácska, nem találom őt :[ Nem ment már el? Lehet, hogy már elment? Bár az is meglehet, hogy csak a képzeleted szüleményei voltak.",
+            "target404": "",
             "unmutable": "",
             "unperm": "Nincs engedélyem ehhez. Nem gondolod, hogy engedélyt kellene ehhez adnod, mielőtt parancsolgatni kezdesz nekem.",
             "noRoleHere": "Ez a Role nincs a listán. Ügyelj arra, hogy helyesen írd le a role nevét.",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Meg kell mondanod, hogy melyik channelbe írjam a logokat.",
             "emojiError": "",
             "insuperms": "",
-            "not-a-NSFW-channel": "Ez a channel nem NSFW. Nem szórhatod szét csak úgy ezeket a \"művészi\" képeket!"
+            "not-a-NSFW-channel": "Ez a channel nem NSFW. Nem szórhatod szét csak úgy ezeket a \"művészi\" képeket!",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -234,7 +247,7 @@
                     "",
                     "",
                     "",
-                    "",
+                    "Neeee!",
                     ""
                 ]
             }
@@ -254,7 +267,7 @@
             "failure": ""
         },
         "equip": {
-            "getMoreBG": "",
+            "getMoreBG": "Szerezz még több hátteret",
             "NFSALE": "",
             "equipOwned": "",
             "buyThisBG": "",
@@ -273,19 +286,23 @@
             "isEmpty": "Nincs mit eltávolítani!"
         },
         "discoin": {
-            "desc": "A Rubinjaidat elküldtem, majd %BOT% fog egy üzenetet küldeni, ha megérkezett.",
-            "intake": "",
-            "outtake": "",
-            "remainder": "",
-            "receiptCode": "",
-            "amNaN": "",
-            "invalidCurr": "Ez a valuta nem létezik!",
-            "invalidAmt": "Ennyit nem tudsz átváltani!",
-            "unverified": "",
-            "userLimit": "",
-            "globalLimit": "",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "Tartsd meg ezt a kódot arra az esetre, ha a Rubinok nem érnének célt.",
-            "ex-succ": "Sikeres volt az átváltás!"
+            "invalidCurr": "Ez a valuta nem létezik!",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Megváltoztattam a személyes üzeneted erre: {{pstext}} \nHasználd a `{{prefix}}profile` parancsot, hogy megnézhesd ezt a ProfilKártyádon. Valakinek biztos tetszeni fog."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Ha megszeretnél hívni a szerveredre kattints [IDE]",
+            "selectIndex": "",
             "cancel": "",
             "noFundsBalance": "Úgy látszik, hogy ezt nem engedheted meg magadnak, a számládon csak {{number}} rubin van.",
             "noFunds": "Nincs elég rubinod",
@@ -407,9 +439,24 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{emoji}} 100 Rubint kaptál a napi bónuszodnak hála!",
-            "dailyNope": "{{emoji}} Hmm? Úgy látszik, hogy ma már megkaptad a Rubinjaidat, ha többet szeretnél, gyere vissza **{{remaining}}** múlva.",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{emoji}} Hmm? Úgy látszik, hogy ma már megkaptad a Rubinjaidat, ha többet szeretnél, gyere vissza **{{remaining}}** múlva."
         },
         "toggle": {
             "disabledSer": "",
@@ -443,7 +490,8 @@
             "cash1000": "Közel vagy ahhoz, hogy gazdagnak mondjalak, nagyon közel.",
             "cash5000": "Oh? Mégis hogy lettél ilyen gazdag?",
             "cash10000": "Na jó... Bankot raboltál? Lehet, hogy hívnom kellene a rendőrséget.",
-            "cashInfinite": "Tudod, nem kellene csalnod."
+            "cashInfinite": "Tudod, nem kellene csalnod.",
+            "balance": "Egyenleg"
         },
         "greet": {
             "byeOFF": "Kikapcsolod a búcsú üzeneteket? Lehet, hogy ez e legjobb, hiszen már úgy se látnák.",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "Dobásaid:",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "Nem gondolod, hogy be kellene előbb fejezni a játékot, amit elkezdtél, mielőtt újat kezdenél?",
-            "newgame": "",
-            "result": "Eredmény:",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Válaszolj `hit`, hogy még egy kártyát húzhass,",
-            "stand": "",
-            "split": "",
-            "double": "",
-            "pass": "",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "A nyereményed **%$%** %emj%",
-            "_minor": "Jobb, mint a semmi, nem?",
-            "_mid": "Nem rossz, de nem is jó",
-            "_major": "Majdnem!",
-            "_ultimate_1": "Nagyszerű!!! :heart:",
-            "_ultimate_2": "Annyira szerencsés vagy!!! :heart:",
-            "_ultimate_3": "Elhiszed ezt?! :heart:",
-            "kommunism": "KOMMUNISTA JACKPOT!!! A nyereményed szétosztottam az elvtársak között, bár te 3-szor annyit kapsz belőle.",
-            "pollux_jackpot": "",
-            "lucky": "",
-            "jackpot": "",
-            "bonanza": "Mennyi Rubin! Remélem, nem nekem kell majd mindet cipelnem.",
-            "potato": "Krumplik... Lehet, hogy készíthetnék ezekből valamit.",
-            "zero_1": "Jaj nekem, úgy látszik, hogy az összes Rubinod az enyém lett.",
-            "zero_2": "Egyet sem találtál el? Kár.",
-            "zero_3": "Talán, ha újra próbálod, akkor még nyerhetsz is valamit."
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "Tudod, hogy mi ez? Egy **RARE** Lootbox!",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "Nem tudsz ilyen boxot kinyitni, írd, hogy `{{prefix}}lootbox`, hogy lásd, milyen boxaid vannak~",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

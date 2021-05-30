@@ -3,15 +3,20 @@
         "RBN": "",
         "RBN_fullname": "",
         "RBN_plural": "",
+        "rubines": "",
         "JDE": "",
         "JDE_fullname": "",
         "JDE_plural": "",
+        "jades": "",
         "SPH": "",
         "SPH_fullname": "",
         "SPH_plural": "",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "",
         "U": "",
         "R": "",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "",
         "background": "",
-        "background_plural": ""
+        "background_plural": "",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -45,7 +53,7 @@
         "thanks": "",
         "thanks_short": "",
         "thx": "",
-        "total": "",
+        "total": "HIGH NOON",
         "amount": "",
         "overview": "",
         "dashboard": "",
@@ -119,7 +127,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "THE FOLLOWING PERMISSIONS ARE NOT PRESENT TO PROCEED CORRECTLY: HIGH NOON PERMISSION, {{PERMSLIST}}",
-            "denied": "YOU'RE NOT CREE ENOUGH TO USE THIS. THIS COMMANDS REQUIRES A RANK OF {{rankNeed}}, YOUR RANK IS {{rankMe}}. CONTACT MCCREE. OR THE SERVER OWNER. OR A MOD.",
+            "denied": "",
             "disabledModule": ":no_entry_sign: MCCREE HAS DECLARED {{module}} FORBIDDEN HERE. DON'T TRY.",
             "genericInvalid": "SHIT, THAT DOESN'T EXIST COWBOY.",
             "prefixChng": "ALRIGHT, MY PREFIX IS NOW {{MCCREE!}}, TRY IT OUT USING `MCCREE!NOONSTATS`",
@@ -127,6 +135,7 @@
             "chooseAmod": "CHOOSE A MODULE. COME ON.",
             "kinNone": "YOU NEED TO TELL ME WHO I'M SUPPOSED TO KICK. I'M GONNA KICK YOUR BUTT INSTEAD.",
             "kin404": "I CAN'T SEE THAT THOT! DID THEY LEAVE? MAYBE YOU SAW SOME WEIRD STUFF. A HIGH NOON PERHAPS.",
+            "target404": "",
             "unmutable": "",
             "unperm": "I CAN'T DO THIS. YOU SHOULD GIVE ME PERMS BEFORE COMMANDING ME TO DO STUFF.",
             "noRoleHere": "SEEMS LIKE THAT ROLE ISN'T IN THE NOONLIST. YOU SURE YOU'RE TYPING IT CORRECTLY?",
@@ -144,9 +153,13 @@
             "noChannelGiven": "YOU NEED TO TELL ME WHICH CHANNEL TO LOG THE ACTIVITIES INFO.",
             "emojiError": "",
             "insuperms": "",
-            "not-a-NSFW-channel": ""
+            "not-a-NSFW-channel": "",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -273,19 +286,23 @@
             "isEmpty": ""
         },
         "discoin": {
-            "desc": "",
-            "intake": "",
-            "outtake": "",
-            "remainder": "",
-            "receiptCode": "",
-            "amNaN": "",
-            "invalidCurr": "",
-            "invalidAmt": "",
-            "unverified": "",
-            "userLimit": "",
-            "globalLimit": "",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "",
-            "ex-succ": ""
+            "invalidCurr": "",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "YOU'VE CHANGED YOUR THING TEXT TO: {{pstext}}\nUSE `{{prefix}}MCCREEISTHEBEST` TO SEE THE LINE ON THAT THING YOU HAVE. I'M PRETTY SURE SOMEONE WILL TRY TO HIGH NOON YOU FOR THAT."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "",
+            "selectIndex": "",
             "cancel": "",
             "noFundsBalance": "NOT ENOUGH NOON, YOU HAVE {{number}} NOONS",
             "noFunds": "NOT ENOUGH NOONS",
@@ -407,19 +439,34 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{emoji}} IT'S HIGH NOON, 100 NOONS FOR FREE!",
-            "dailyNope": "{{emoji}} WOAH THERE? SEEMS LIKE YOU ALREADY USED HIGH NOON, YOU CAN HIGH NOON MORE IN: **{{remaining}}**",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": ""
         },
         "toggle": {
             "disabledSer": "THE **{{module}}** MODULE HAS BEEN DISABLED **GLOBALLY**.",
-            "disabledChn": "THE {{module}} MODULE HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>",
+            "disabledChn": "",
             "disabledComSer": "THE **{{command}}** COMMAND HAS BEEN DISABLED **GLOBALLY**.",
-            "disabledComChn": "THE **{{command}}** COMMAND HAS BEEN DISABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>.",
+            "disabledComChn": "",
             "enabledSer": "THE **{{module}}** MODULE HAS BEEN ENABLED **GLOBALLY**.",
-            "enabledChn": "THE **{{module}}** MODULE HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>.",
+            "enabledChn": "",
             "enabledComSer": "THE **{{command}}** COMMAND HAS BEEN ENABLED **GLOBALLY**.",
-            "enabledComChn": "THE **{{command}}** COMMAND HAS BEEN ENABLED IN MCCREE'S FAVORITE CHANNEL, <#{{channel}}>."
+            "enabledComChn": ""
         },
         "reput": {
             "noSelf": "NO, I REFUSE TO LET YOU ~~HIGH NOON~~ REP YOURSELF.",
@@ -443,7 +490,8 @@
             "cash1000": "YOU'RE ALMOST NOON.",
             "cash5000": "YOU'RE VERY NOON.",
             "cash10000": "YOU'RE ULTRA NOON.",
-            "cashInfinite": "FUCK YOU."
+            "cashInfinite": "FUCK YOU.",
+            "balance": "HIGH NOON"
         },
         "greet": {
             "byeOFF": "YOU DISABLED THE BYE MESSAGE? PERHAPS THAT'S FOR THE BEST, THEY WOULDN'T SEE IT ANYWAYS.",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "",
-            "newgame": "",
-            "result": "",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "",
-            "stand": "",
-            "split": "",
-            "double": "",
-            "pass": "",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "",
-            "_minor": "",
-            "_mid": "",
-            "_major": "",
-            "_ultimate_1": "",
-            "_ultimate_2": "",
-            "_ultimate_3": "",
-            "kommunism": "",
-            "pollux_jackpot": "",
-            "lucky": "",
-            "jackpot": "",
-            "bonanza": "",
-            "potato": "",
-            "zero_1": "",
-            "zero_2": "",
-            "zero_3": ""
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

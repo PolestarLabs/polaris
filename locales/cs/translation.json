@@ -31,7 +31,7 @@
         "trades": "Výměny",
         "drops": "Dropy",
         "balance": "Zůstatek",
-        "total": "",
+        "total": "Součet",
         "noFundsBet": "Myslím že tuhle sázku nemůžeš zaplatit... Máš {{number}} rubínů",
         "plus_rubines_generic": "Bylo ti přidáno %R% rubínů.",
         "minus_rubines_generic": "Vezmu si od tebe %R% rubínů, dobře~?",

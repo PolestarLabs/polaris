@@ -65,6 +65,7 @@
         "colorChange": "Favorittfargen din er lagret!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "Det er ikke slik du bruker den kommandoen.Prøv {{usage}}. Eksempel {{example}}",
         "disabledModule": ":no_entry_sign: Vår mester har erklært at {{module}} ikke er tillatt her. Det var synd.",
         "genericInvalid": "Ohh, ser ut som den kommandoen ikke fungerer ;---; ",

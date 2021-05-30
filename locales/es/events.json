@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "Heehee. Una vez consigues el primero, ya no puedes parar, ¿Eh? Así que, ¿Que me das a cambio de este **Ataúd**?",
@@ -80,7 +101,7 @@
   "halloween17": {
     "treat": "***¡Truco o trato!*** ¡Tienes **{{qtd}}** Dulces de este servidor!",
     "treatRefresh": "¡No no no! Ya tienes tus dulces, vete!\nPuede volver a aparecer en **{{remaining}}**",
-    "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusive__ para tu `p!profile`!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.gg/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
+    "current_event": "Hey~ ¿Sabías que hay un **Evento de Halloween** global ahora mismo? :jack_o_lantern:\nEn este evento puedes conseguir cosas geniales y __exclusivas__ para tu `p!profile` card!\nDisponible solo durante este evento, el cual durará hasta el **5 de Noviembre**\nMas info en <http://pollux.gg/events/haloween> *(página en inglés)*\n*Contacta el Propietario de tu Servidor para ver si este servidor está participando*",
     "newAccOut": ":warning: Lo siento, las nuevas cuentas no pueden participar. Quizás puedas unirte al siguiente.",
     "nextThis": "Puedes hacer Truco o Trato acá de nuevo en:",
     "candiesCheck": "Has coleccionado ** {{amt}} ** Dulces hasta el momento. ¡Sigue llamando a los servidores para obtener más!",

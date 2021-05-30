@@ -3,15 +3,20 @@
         "RBN": "Rubine",
         "RBN_fullname": "",
         "RBN_plural": "Rubines",
+        "rubines": "",
         "JDE": "Jade",
         "JDE_fullname": "",
         "JDE_plural": "Jades",
+        "jades": "",
         "SPH": "Safira",
         "SPH_fullname": "",
         "SPH_plural": "Safiras",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "Comum",
         "U": "Incomum",
         "R": "Raro",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "Autocolantes",
         "background": "",
-        "background_plural": "Papeis de parede"
+        "background_plural": "Papeis de parede",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -119,7 +127,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "As permissões seguintes não estão presentes para proceder corretamente:\n{{PERMSLIST}}",
-            "denied": "Não estás autorizado a usar isto. Este comando requer um rank elevado a {{rankNeed}}, o teu rank é {{rankMe}}. Contacta o dono do servidor ou um Mod.",
+            "denied": "",
             "disabledModule": ":no_entry_sign: O nosso mestre declarou {{module}} proibido aqui. Ora bolas.",
             "genericInvalid": "Uh-oh... Comando inválido ;-;",
             "prefixChng": "Ok, o meu prefixo agora é {{prefix}}, tenta agora usando `{{prefix}}stats`",
@@ -127,6 +135,7 @@
             "chooseAmod": "Escolhe um módulo, se não te importas",
             "kinNone": "Primeiro, diz-me o nome do gajo que eu irei dar um pontapé no cú, antes que eu te dê primeiro",
             "kin404": "Oops, não encontrei esse gajo. Ele já não saiu? Ele existe? Não é da tua imaginação? TENS A CERTEZA??",
+            "target404": "",
             "unmutable": "",
             "unperm": "Por alguma razão eu não tenho permissões para fazer isso. DÁ-ME PERMISSÕES PORRA",
             "noRoleHere": "Esta role não está na lista. Vê duas vezes as tuas merdas, por favor.",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Ok, e onde é que vou enviar as tuas atividades? Na tua cara? Diz-me um canal que possa enviá-las!",
             "emojiError": "",
             "insuperms": "",
-            "not-a-NSFW-channel": ""
+            "not-a-NSFW-channel": "",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -254,7 +267,7 @@
             "failure": ""
         },
         "equip": {
-            "getMoreBG": "",
+            "getMoreBG": "Obtem mais papeis de parede",
             "NFSALE": "",
             "equipOwned": "",
             "buyThisBG": "",
@@ -273,19 +286,23 @@
             "isEmpty": ""
         },
         "discoin": {
-            "desc": "",
-            "intake": "",
-            "outtake": "",
-            "remainder": "",
-            "receiptCode": "",
-            "amNaN": "",
-            "invalidCurr": "",
-            "invalidAmt": "",
-            "unverified": "",
-            "userLimit": "",
-            "globalLimit": "",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "",
-            "ex-succ": ""
+            "invalidCurr": "",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Ok, tudo pronto! O teu texto pessoal é agora {{pstext}}\nUsa `{{prefix}}profile` para veres esta linha no teu ProfileCard ~~não tão bonito~~. Hehe~"
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "",
+            "selectIndex": "",
             "cancel": "",
             "noFundsBalance": "Eu acho que não tens dinheiro para esta aposta... Tu tens {{number}} Rubys",
             "noFunds": "Rubys insuficientes",
@@ -407,19 +439,34 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{emoji}} Recebeste 80 Rubys do teu bónus diário~",
-            "dailyNope": "{{emoji}} Ei! Tu já resgataste o teu bónus diário, tempo restante para o próximo: **{{remaining}}**",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": ""
         },
         "toggle": {
             "disabledSer": "O módulo **{{module}}** foi desativado **globalmente**.",
-            "disabledChn": "O módulo {{module}} foi desativado no canal <#{{channel}}>",
+            "disabledChn": "",
             "disabledComSer": "O comando **{{command}}** foi desligado **globalmente**.",
-            "disabledComChn": "O comando **{{command}}** foi desligado no canal <#{{channel}}>",
+            "disabledComChn": "",
             "enabledSer": "O módulo **{{module}}** foi ativado **globalmente**.",
-            "enabledChn": "O módulo {{module}} foi ativado no canal <#{{channel}}>",
+            "enabledChn": "",
             "enabledComSer": "O comando **{{command}}** foi ativado **globalmente**.",
-            "enabledComChn": "O comando **{{command}}** foi ativado no canal <#{{channel}}>"
+            "enabledComChn": ""
         },
         "reput": {
             "noSelf": "Hey, puto! Não podes dar rep a ti próprio!",
@@ -443,7 +490,8 @@
             "cash1000": "És semi-rico",
             "cash5000": "És super RICO",
             "cash10000": "Roubaste um banco?",
-            "cashInfinite": "És um cheater do caralho"
+            "cashInfinite": "És um cheater do caralho",
+            "balance": ""
         },
         "greet": {
             "byeOFF": "Mensagem de Adeus desligada! Diz adeus ao adeus. Entendeste?\nAdeus...\nao **Adeus**\nHahahah... hahah... oh, bom, já foi. Obrigada!",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "",
-            "newgame": "",
-            "result": "",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "",
-            "stand": "",
-            "split": "",
-            "double": "",
-            "pass": "",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "",
-            "_minor": "",
-            "_mid": "",
-            "_major": "",
-            "_ultimate_1": "",
-            "_ultimate_2": "",
-            "_ultimate_3": "",
-            "kommunism": "",
-            "pollux_jackpot": "",
-            "lucky": "",
-            "jackpot": "",
-            "bonanza": "",
-            "potato": "",
-            "zero_1": "",
-            "zero_2": "",
-            "zero_3": ""
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

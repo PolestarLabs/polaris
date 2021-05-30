@@ -65,6 +65,7 @@
         "colorChange": "Uw favoriete kleur is opgeslagen!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Onze master heeft {{module}} hier verboden verklaard. Dat is te slecht.",
         "genericInvalid": "Oh jee, het lijkt erop dat de opdracht ongeldig is ;~;",

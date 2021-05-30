@@ -3,75 +3,75 @@
         "name": ""
     },
     "broken_excavator": {
-        "name": ""
+        "name": "Máy xúc hỏng"
     },
     "commendtoken": {
-        "name": "",
+        "name": "Xu khen thưởng",
         "description": ""
     },
     "complete_ring_jade": {
-        "name": "",
-        "description": ""
+        "name": "Nhẫn ngọc bích lộng lẫy",
+        "description": "Xanh như cam kết của bạn với tình yêu."
     },
     "complete_ring_rubine": {
-        "name": "",
-        "description": ""
+        "name": "Nhẫn hồng ngọc tráng lệ",
+        "description": "Hoa hồng có màu đỏ, hoa violet có màu xanh, chiếc nhẫn này cũng màu đỏ và đẹp như bạn!"
     },
     "complete_ring_sapphire": {
-        "name": "",
-        "description": ""
+        "name": "Nhẫn lam ngọc sang trọng",
+        "description": "Bước đầu tiên để cam kết là từ bỏ một viên ngọc quý hiếm cho người thân yêu của bạn - xin chúc mừng! "
     },
     "complete_ring_stardust": {
-        "name": "",
-        "description": ""
+        "name": "Nhẫn ngôi sao sang trọng",
+        "description": "Một người yêu, trong trái tim anh ta, là một kẻ điên, và trong đầu anh ta là một minstrel.\n- Neil Gaiman, Stardust."
     },
     "cosmo_fragment": {
-        "name": "",
-        "description": ""
+        "name": "Mảnh vỡ vũ trụ",
+        "description": "Sỏi sáng bóng được sử dụng để che giấu mảnh vỡ vũ trụ"
     },
     "cosmo_gem_C": {
-        "name": "",
-        "description": ""
+        "name": "Đá quý vũ trụ thông thường",
+        "description": "Oh tốt, ít nhất là nó sáng bóng."
     },
     "cosmo_gem_R": {
-        "name": "",
-        "description": ""
+        "name": "Đá quý vũ trụ hiếm",
+        "description": "Oh? Một chút tốn kém, phải không?"
     },
     "cosmo_gem_SR": {
-        "name": "",
-        "description": ""
+        "name": "Đá quý vũ trụ siêu hiếm",
+        "description": "Woah, đó là một viên ngọc nhỏ đặc biệt bạn có ở đó. Bạn muốn bao nhiêu cho nó? 6 hồng ngọc? hay 8?"
     },
     "cosmo_gem_U": {
-        "name": "",
-        "description": ""
+        "name": "Đá quý vũ trụ không phổ biến",
+        "description": "Ý tôi là, tôi đoán nó tốt hơn thông thường."
     },
     "cosmo_gem_UR": {
-        "name": "",
-        "description": ""
+        "name": "Đá quý vũ trụ cực hiếm",
+        "description": "Mong muốn một ngôi sao... Và cuối cùng bạn đã có một."
     },
     "daianwatch_booster": {
-        "name": "",
-        "description": ""
+        "name": "Overwatch bởi Daianpan",
+        "description": "Vui lòng không 4 DPS trong gói nâng cấp nhóm"
     },
     "doki_booster": {
-        "name": "",
-        "description": ""
+        "name": "Doki Doki Literature Club",
+        "description": "Just Monika"
     },
     "doublehook": {
-        "name": "",
-        "description": ""
+        "name": "Móc đôi",
+        "description": "Một móc móc, hoặc nếu bạn thích móc²"
     },
     "excavator": {
-        "name": "",
-        "description": ""
+        "name": "Máy xúc đào mộ",
+        "description": "Dành cho những người không muốn bị bẩn tay."
     },
     "hook": {
-        "name": "",
-        "description": ""
+        "name": "Móc",
+        "description": "Lần cuối nhìn thấy đuổi theo một cậu bé bay nhỏ."
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "Initial D",
+        "description": "Dejà vu. Tôi mới mở booster này trước đây."
     },
     "iwd1_booster": {
         "name": "",
@@ -288,7 +288,7 @@
         "description": ""
     },
     "rod_r": {
-        "name": "",
+        "name": "Cần câu",
         "description": ""
     },
     "rod_sr": {
@@ -326,5 +326,20 @@
     "fork": {
         "name": "",
         "description": ""
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }
