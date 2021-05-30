@@ -146,19 +146,19 @@ const init = async (msg) => {
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  if (Roulette.gameExists(msg.guild.id)) return $t("games.alreadyPlaying", P);
+  if (Roulette.gameExists(msg.guild.id)) return $t("games:alreadyPlaying", P);
 
   const helpEmbed = {
     color: settings.helpEmbedColor,
-    title: $t("games.roulette.helpTitle", P),
-    description: $t("games.roulette.helpDescription", P),
+    title: $t("games:roulette.helpTitle", P),
+    description: $t("games:roulette.helpDescription", P),
     image: { url: settings.helpURL },
   };
 
   const board = await generateBoard();
   const boardEmbed = { color: settings.boardEmbedColor, fields: [] };
-  boardEmbed.title = $t("games.roulette.boardTitle", P);
-  boardEmbed.description = $t("games.roulette.boardDescription", P);
+  boardEmbed.title = $t("games:roulette.boardTitle", P);
+  boardEmbed.description = $t("games:roulette.boardDescription", P);
   boardEmbed.image = { url: board };
   boardEmbed.fields = [];
   boardEmbed.fields[0] = { name: "Feed", value: "_ _" };
@@ -167,7 +167,7 @@ const init = async (msg) => {
   const Collector = msg.channel.createMessageCollector((m) => m.content.toLowerCase().startsWith("bet "), { time: settings.collectTime });
 
   const wheelEmbed = { color: settings.boardEmbedColor, fields: [] };
-  wheelEmbed.description = $t("games.roulette.wheelDescription", { P, seconds: (settings.collectTime - settings.sendWheelTime) / 1e3 });
+  wheelEmbed.description = $t("games:roulette.wheelDescription", { P, seconds: (settings.collectTime - settings.sendWheelTime) / 1e3 });
   let wheelmsg;
   setTimeout(async () => {
     const wheel = await generateWheel(Game.winningNumber);
@@ -185,7 +185,7 @@ const init = async (msg) => {
     P.amount = `**${miliarize(bet.amount)}** ${_emoji("RBN")}`;
     P.bet = translate(bet);
 
-    const commentary = rand$t("games.roulette.betPlaced", P);
+    const commentary = rand$t("games:roulette.betPlaced", P);
     */
 
     const betPlacedString = `<@${userID}>: **\`${(`${bet.amount}`).padStart(4, " ")}\`** ${_emoji("RBN")} \u2002→ \u2002${translate(bet)}`;
@@ -199,19 +199,19 @@ const init = async (msg) => {
     if (m.content.split(" ")[1]?.toLowerCase() === "help") return m.channel.send({ content: "", embed: helpEmbed });
 
     const userID = m.author.id;
-    if (checkSpam(m)) return m.reply($t("games.roulette.notSoFast"));
+    if (checkSpam(m)) return m.reply($t("games:roulette.notSoFast"));
 
     const bet = Roulette.parseBet(m.content);
     if (!bet.valid) {
       m.addReaction(_emoji("chipERROR").reaction);
-      return m.reply(_emoji("chipERROR") + $t(`games.roulette.${bet.reason}`, P) || $t("games.roulete.invalidBet", P))
+      return m.reply(_emoji("chipERROR") + $t(`games:roulette.${bet.reason}`, P) || $t("games:roulete.invalidBet", P))
         .then((r) => r.deleteAfter(settings.noticeTimeout));
     }
 
     const allowed = await allowedToBet(Game, userID, bet);
     if (allowed !== true) {
       m.addReaction(_emoji("chipWARN").reaction);
-      return m.reply(_emoji("chipWARN") + $t(`games.roulette.${allowed.reason}`, { P, count: allowed.count }) || $t("games.roulette.notAllowed"))
+      return m.reply(_emoji("chipWARN") + $t(`games:roulette.${allowed.reason}`, { P, count: allowed.count }) || $t("games:roulette.notAllowed"))
         .then((r) => r.deleteAfter(settings.noticeTimeout));
     }
     Progression.emit("play.roulette."+bet.type ,{msg:m, userID, value:bet.amount});
@@ -225,7 +225,7 @@ const init = async (msg) => {
   });
 
   Collector.on("end", async () => {
-    wheelEmbed.description = $t("games.roulette.wheelEnd", P);
+    wheelEmbed.description = $t("games:roulette.wheelEnd", P);
     await wheelmsg.edit({ embed: wheelEmbed });
 
     const { results } = Game;
@@ -235,8 +235,8 @@ const init = async (msg) => {
     const displayNumber = Game.winningNumber === 37 ? "d" : Game.winningNumber;
 
     const resultsEmbed = { color: settings.resultsEmbedColor, fields: [] };
-    resultsEmbed.title = $t("games.roulette.resultsTitle", P);
-    resultsEmbed.description = $t("games.roulette.resultsDescription", { P, number: _emoji(`roulette${displayNumber}`) });
+    resultsEmbed.title = $t("games:roulette.resultsTitle", P);
+    resultsEmbed.description = $t("games:roulette.resultsDescription", { P, number: _emoji(`roulette${displayNumber}`) });
     resultsEmbed.image = { url: "attachment://roulette.png" };
     // resultsEmbed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji(`roulette${displayNumber}`).id}.png` };
 
@@ -250,25 +250,25 @@ const init = async (msg) => {
       value = validatedResults.map((result) => {
         let resultStrings;
         if (result.invalid) {
-          resultStrings = $t("games.roulette.resultsInvalid", P);
+          resultStrings = $t("games:roulette.resultsInvalid", P);
         } else if (result.payout > 0) {
-          resultStrings = $t("games.roulette.resultsWin", {
+          resultStrings = $t("games:roulette.resultsWin", {
             P, e: _emoji("RBN"), count: result.payout, returnObjects: true,
           });
         } else if (result.payout < 0) {
-          resultStrings = $t("games.roulette.resultsLoss", {
+          resultStrings = $t("games:roulette.resultsLoss", {
             P, e: _emoji("RBN"), count: Math.abs(parseInt(result.payout)), returnObjects: true,
           });
         } else {
-          resultStrings = $t("games.roulette.resultsDraw", { P, returnObjects: true });
+          resultStrings = $t("games:roulette.resultsDraw", { P, returnObjects: true });
         }
         return `<@${result.userID}> ${typeof resultStrings === "object"
           ? resultStrings[Math.floor(Math.random() * resultStrings.length)] : resultStrings}`;
       }).join("\n");
     } else {
-      value = $t("games.roulette.resultsNoBet", P);
+      value = $t("games:roulette.resultsNoBet", P);
     }
-    resultsEmbed.fields.push({ name: $t("games.roulette.resultsPlayer"), value });
+    resultsEmbed.fields.push({ name: $t("games:roulette.resultsPlayer"), value });
 
     setTimeout(async () => {
       boardEmbed.image = {};

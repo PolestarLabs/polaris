@@ -261,7 +261,7 @@ if (["default", "vegas", "reset"].includes(msg.args[1])) {
   await DB.users.set(msg.author.id, { "modules.skins.blackjack": "default" });
   P.deckname = `${_emoji("plxcards").no_space}\`Vegas (default)\``;
   return msg.channel.send(`${rand$t("responses.verbose.interjections.acknowledged")} `
-    + `${$t("games.blackjack.switchdeck", P)} ${rand$t("responses.verbose.opinion_decks", P)}`);
+    + `${$t("games:blackjack.switchdeck", P)} ${rand$t("responses.verbose.opinion_decks", P)}`);
 }
 
 const DECKDATA = await DB.cosmetics.find({ type: "skin", for: "casino" });
@@ -278,10 +278,10 @@ const targetDeck = DECKDATA.find(
 if (targetDeck && USERDATA.modules.skinInventory.includes(targetDeck.id)) {
   await DB.users.set(msg.author.id, { "modules.skins.blackjack": targetDeck.localizer });
   P.deckname = `${_emoji("plxcards").no_space}\`${targetDeck.name}\``;
-  let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games.blackjack.switchdeck", P)}`
+  let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeck", P)}`
     + `${rand$t("responses.verbose.opinion_decks", P)}`;
-  if (randomize(1, 6) === 3 && $t("games.blackjack.switchdeckEgg", P).length > 1) {
-    deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games.blackjack.switchdeckEgg", P)} ${_emoji("plxOof")}`;
+  if (randomize(1, 6) === 3 && $t("games:blackjack.switchdeckEgg", P).length > 1) {
+    deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeckEgg", P)} ${_emoji("plxOof")}`;
   }
   return msg.channel.send(deckSwitchMessage);
 }
@@ -307,10 +307,10 @@ return balance >= bet * 2
 }
 
 function hitStandMessage(P, canDoubleDown, canSplit, canInsurance) {
-const HIT_TXT     = $t("games.blackjack.hit", P);
-const DOUBLE_TXT = $t("games.blackjack.double", P);
-const SPLIT_TXT  = $t("games.blackjack.split", P);
-const PASS_TXT    = $t("games.blackjack.pass", P);
+const HIT_TXT     = $t("games:blackjack.hit", P);
+const DOUBLE_TXT = $t("games:blackjack.double", P);
+const SPLIT_TXT  = $t("games:blackjack.split", P);
+const PASS_TXT    = $t("games:blackjack.pass", P);
 
 const hitstand = `${!canDoubleDown && !canSplit
   ? HIT_TXT + PASS_TXT
@@ -318,8 +318,8 @@ const hitstand = `${!canDoubleDown && !canSplit
     ? DOUBLE_TXT
     : ""}${canSplit
     ? SPLIT_TXT : ""}${PASS_TXT}`}
-${$t("games.blackjack.surrender_helper", P)}
-${canInsurance ? $t("games.blackjack.insurance_helper", P) : ""}
+${$t("games:blackjack.surrender_helper", P)}
+${canInsurance ? $t("games:blackjack.insurance_helper", P) : ""}
 `;
 return hitstand;
 }
@@ -584,22 +584,22 @@ const playerName = msg.member.nick || msg.author.username;
 
 const P = { lngs: msg.lang };
 const v = {};
-v.ONGOING = $t("games.blackjack.ongoing", P);
-v.NEWGAME = $t("games.blackjack.newgame", P);
-v.RESULT = $t("games.blackjack.result", P);
-v.BUST = $t("games.blackjack.bust", P);
+v.ONGOING = $t("games:blackjack.ongoing", P);
+v.NEWGAME = $t("games:blackjack.newgame", P);
+v.RESULT = $t("games:blackjack.result", P);
+v.BUST = $t("games:blackjack.bust", P);
 
-v.HAND = $t("games.blackjack.hand", P);
+v.HAND = $t("games:blackjack.hand", P);
 
-v.HIT = $t("games.blackjack.hit", P);
-v.STAND = $t("games.blackjack.stand", P);
-v.SPLIT = $t("games.blackjack.split", P);
-v.DOUBLE_DOWN = $t("games.blackjack.doubledown", P).replace("double down", "double");
+v.HIT = $t("games:blackjack.hit", P);
+v.STAND = $t("games:blackjack.stand", P);
+v.SPLIT = $t("games:blackjack.split", P);
+v.DOUBLE_DOWN = $t("games:blackjack.doubledown", P).replace("double down", "double");
 
-v._WIN = $t("games.blackjack.youwin", P);
-v._LOSE = $t("games.blackjack.youlose", P);
-v._JOKER = $t("games.blackjack.joker", P);
-v._EVEN = $t("games.blackjack.even", P);
+v._WIN = $t("games:blackjack.youwin", P);
+v._LOSE = $t("games:blackjack.youlose", P);
+v._JOKER = $t("games:blackjack.joker", P);
+v._EVEN = $t("games:blackjack.even", P);
 v._PRIZE = $t("$.plus_rubines_generic", P);
 v._ANTIPRIZE = $t("$.minus_rubines_generic", P);
 
@@ -608,7 +608,7 @@ v.bet = $t("dict.bet", P);
 v.insu = $t("$.insuBet", { lngs: msg.lang, number: 25 });
 v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.RBN });
 v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 });
-v.ceiling = $t("games.ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"));
+v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"));
 
 console.log(Blackjack.gameExists(msg.author.id));
 
@@ -823,19 +823,19 @@ try {
 
     if (finalResult === "push") PLAY_RES = v._EVEN;
 
-    if (finalResult === "surrender") PLAY_RES = $t("games.blackjack.surrender_res", P);
+    if (finalResult === "surrender") PLAY_RES = $t("games:blackjack.surrender_res", P);
 
-    if (dealerValue === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_lose", P);
+    if (dealerValue === "Blackjack") PLAY_RES = $t("games:blackjack.blackjack_lose", P);
 
-    if (playerHands.length === 1 && Blackjack.handValue(playerHand) === "Blackjack") PLAY_RES = $t("games.blackjack.blackjack_win", P);
+    if (playerHands.length === 1 && Blackjack.handValue(playerHand) === "Blackjack") PLAY_RES = $t("games:blackjack.blackjack_win", P);
 
     // TOP -> Commentary
 
-    if (playerHand.doubled && ["loss", "bust", "surrender"].includes(finalResult)) PLAY_RES += `\n${$t("games.blackjack.double_lose", P)}`;
-    else if (playerHand.doubled) PLAY_RES += `\n${$t("games.blackjack.double_win", P)}`;
+    if (playerHand.doubled && ["loss", "bust", "surrender"].includes(finalResult)) PLAY_RES += `\n${$t("games:blackjack.double_lose", P)}`;
+    else if (playerHand.doubled) PLAY_RES += `\n${$t("games:blackjack.double_win", P)}`;
 
-    if (playerHand.insurance && dealerValue === "Blackjack") PLAY_RES += `\n${$t("games.blackjack.insurance_win", P)}`;
-    else if (playerHand.insurance) PLAY_RES += `\n${$t("games.blackjack.insurance_lost", P)}`;
+    if (playerHand.insurance && dealerValue === "Blackjack") PLAY_RES += `\n${$t("games:blackjack.insurance_win", P)}`;
+    else if (playerHand.insurance) PLAY_RES += `\n${$t("games:blackjack.insurance_lost", P)}`;
 
     const [POLLUX_HAND_GFX, PLAYER_HAND_GFX] = await Promise.all([
       renderHand(playerHands, myDeck),
@@ -877,7 +877,7 @@ try {
       .then((m) => {
         if (splitExplain.length) {
           log.embed.fields.push({
-            name: `**${splitExplain.length > 1 ? $t("games.blackjack.splitbreak", P) : $t("games.blackjack.result", P)}**`,
+            name: `**${splitExplain.length > 1 ? $t("games:blackjack.splitbreak", P) : $t("games:blackjack.result", P)}**`,
             value: splitExplain.join("\n"),
             inline: false,
           });

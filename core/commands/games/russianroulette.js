@@ -2,54 +2,54 @@ const STRINGS = (P) => {
 	
 	P.RBN_emoji = _emoji('RBN');
 	P.emojiNope = _emoji('nope');
-	
+
 	P.playersList = `\`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
 	P.totalBetTally = P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b) || 0;
 	P.tokaiValue = ~~(P.value*1.5);
 	P.minBet20 = ~~(P.minBet*.8)||0;
 	P.rubines = $t('keywords.RBN',{count:P.value});
-	P.died_in_round = P.diedInRound ? $t("games.rrlt.mp_round_results_died" , P) : $t("games.rrlt.mp_round_results_no_dead" , P);
+	P.died_in_round = P.diedInRound ? $t("games:rrlt.mp_round_results_died" , P) : $t("games:rrlt.mp_round_results_no_dead" , P);
 	
 	const v = {
-		singleplayer_no_bet: $t("games.rrlt.singleplayer_no_bet" , P),
-		singleplayer_no_funds: $t("games.rrlt.singleplayer_no_funds" , P),
-		min_bet: $t("games.rrlt.min_bet" , P),
-		max_bet: $t("games.rrlt.max_bet" , P),
-		singleplayer_instructions: $t("games.rrlt.singleplayer_instructions" , P),
-		singleplayer_timeout: $t("games.rrlt.singleplayer_timeout" , P),
-		singleplayer_quit: $t("games.rrlt.singleplayer_quit" , P),
-		singleplayer_pre_message: $t("games.rrlt.singleplayer_pre_message" , P),
-		singleplayer_ded: $t("games.rrlt.singleplayer_ded" , P),
-		singleplayer_no_bullet_final: $t("games.rrlt.singleplayer_no_bullet_final" , P),
-		singleplayer_no_bullet_full: $t("games.rrlt.singleplayer_no_bullet_full" , P),
-		footer_instruction: $t("games.rrlt.footer_instruction" , P),
-		mp_player_turn: $t("games.rrlt.mp_player_turn" , P),
-		mp_ded: $t("games.rrlt.mp_ded" , P),
-		mp_no_bullet: $t("games.rrlt.mp_no_bullet" , P),
-		mp_intro: $t("games.rrlt.mp_intro" , P),
-		mp_pool: $t("games.rrlt.mp_pool" , P),
-		mp_no_20_under: $t("games.rrlt.mp_no_20_under" , P),
-		mp_pool_tally: $t("games.rrlt.mp_pool_tally" , P), 		//FIXME
-		mp_no_funds: $t("games.rrlt.mp_no_funds" , P),
-		mp_abort_player: $t("games.rrlt.mp_abort_player" , P),
-		switch_to_singleplayer: $t("games.rrlt.switch_to_singleplayer" , P),
-		mp_no_players: $t("games.rrlt.mp_no_players" , P),
-		mp_players_list: $t("games.rrlt.mp_players_list" , P),
-		round_no: $t("games.rrlt.round_no" , P),
-		bot_shame: $t("games.rrlt.bot_shame" , P),
-		bot_megashame: $t("games.rrlt.bot_megashame" , P),
-		bot_no_gambit: $t("games.rrlt.bot_no_gambit" , P),
-		victor_tokai: $t("games.rrlt.victor_tokai" , P), 		//FIXME
-		victor: $t("games.rrlt.victor" , P),					//FIXME
-		victor_gambit: $t("games.rrlt.victor_gambit" , P),
-		gambit: $t("games.rrlt.gambit" , P),
-		gambit_prompt: $t("games.rrlt.gambit_prompt" , P),
-		gambit_pre: $t("games.rrlt.gambit_pre" , P),
-		gambit_anytime: $t("games.rrlt.gambit_anytime" , P),
-		gambit_refuse: $t("games.rrlt.gambit_refuse" , P),
-		hes_ded_jim: $t("games.rrlt.hes_ded_jim" , P),
-		mp_round_end: $t("games.rrlt.mp_round_end" , P),
-		mp_round_results: $t("games.rrlt.mp_round_results" , P),	//FIXME
+		singleplayer_no_bet: $t("games:rrlt.singleplayer_no_bet" , P),
+		singleplayer_no_funds: $t("games:rrlt.singleplayer_no_funds" , P),
+		min_bet: $t("games:rrlt.min_bet" , P),
+		max_bet: $t("games:rrlt.max_bet" , P),
+		singleplayer_instructions: $t("games:rrlt.singleplayer_instructions" , P),
+		singleplayer_timeout: $t("games:rrlt.singleplayer_timeout" , P),
+		singleplayer_quit: $t("games:rrlt.singleplayer_quit" , P),
+		singleplayer_pre_message: $t("games:rrlt.singleplayer_pre_message" , P),
+		singleplayer_ded: $t("games:rrlt.singleplayer_ded" , P),
+		singleplayer_no_bullet_final: $t("games:rrlt.singleplayer_no_bullet_final" , P),
+		singleplayer_no_bullet_full: $t("games:rrlt.singleplayer_no_bullet_full" , P),
+		footer_instruction: $t("games:rrlt.footer_instruction" , P),
+		mp_player_turn: $t("games:rrlt.mp_player_turn" , P),
+		mp_ded: $t("games:rrlt.mp_ded" , P),
+		mp_no_bullet: $t("games:rrlt.mp_no_bullet" , P),
+		mp_intro: $t("games:rrlt.mp_intro" , P),
+		mp_pool: $t("games:rrlt.mp_pool" , P),
+		mp_no_20_under: $t("games:rrlt.mp_no_20_under" , P),
+		mp_pool_tally: $t("games:rrlt.mp_pool_tally" , P), 		//FIXME
+		mp_no_funds: $t("games:rrlt.mp_no_funds" , P),
+		mp_abort_player: $t("games:rrlt.mp_abort_player" , P),
+		switch_to_singleplayer: $t("games:rrlt.switch_to_singleplayer" , P),
+		mp_no_players: $t("games:rrlt.mp_no_players" , P),
+		mp_players_list: $t("games:rrlt.mp_players_list" , P),
+		round_no: $t("games:rrlt.round_no" , P),
+		bot_shame: $t("games:rrlt.bot_shame" , P),
+		bot_megashame: $t("games:rrlt.bot_megashame" , P),
+		bot_no_gambit: $t("games:rrlt.bot_no_gambit" , P),
+		victor_tokai: $t("games:rrlt.victor_tokai" , P), 		//FIXME
+		victor: $t("games:rrlt.victor" , P),					//FIXME
+		victor_gambit: $t("games:rrlt.victor_gambit" , P),
+		gambit: $t("games:rrlt.gambit" , P),
+		gambit_prompt: $t("games:rrlt.gambit_prompt" , P),
+		gambit_pre: $t("games:rrlt.gambit_pre" , P),
+		gambit_anytime: $t("games:rrlt.gambit_anytime" , P),
+		gambit_refuse: $t("games:rrlt.gambit_refuse" , P),
+		hes_ded_jim: $t("games:rrlt.hes_ded_jim" , P),
+		mp_round_end: $t("games:rrlt.mp_round_end" , P),
+		mp_round_results: $t("games:rrlt.mp_round_results" , P),	//FIXME
 	};
 
  

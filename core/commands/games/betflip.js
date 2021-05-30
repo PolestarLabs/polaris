@@ -70,7 +70,7 @@ const init = async (msg) => {
     P.prize = Math.ceil(bet * 1.5);
     P.currency = currency;
     P.interjection = win ? rand$t("responses.verbose.interjections.yatta", P) : rand$t("responses.verbose.interjections.ohmy_negative", P);
-    x.edit({ content: win ? $t("games.coinflip.coinVictory", P) : $t("games.coinflip.coinDefeat", P), embed });
+    x.edit({ content: win ? $t("games:coinflip.coinVictory", P) : $t("games:coinflip.coinDefeat", P), embed });
 
     if(win){
       Progression.emit("play.betflip.win",{msg, userID:msg.author.id});

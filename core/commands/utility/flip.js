@@ -13,12 +13,12 @@ const init = async function (msg) {
 
   const embed = new Embed();
   P.player = msg.author.username;
-  embed.author($t("games.coinflip.playerFlipsCoin", P), msg.author.avatarURL);
+  embed.author($t("games:coinflip.playerFlipsCoin", P), msg.author.avatarURL);
   embed.thumbnail(res);
 
   msg.channel.send({ embed }).then(async (x) => {
     P.coinFace = face;
-    embed.description = `${$t("games.coinflip.andLanded", P)}
+    embed.description = `${$t("games:coinflip.andLanded", P)}
         
         \u200b`;
     embed.thumbnail.url = res2;

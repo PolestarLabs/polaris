@@ -53,30 +53,30 @@ const init = async function (message) {
 
   const dicesRolled = rollEq.match(DICE_REGEX);
 
-  if (!dicesRolled) return message.channel.send($t("games.dice.noDiceRolled", P));
+  if (!dicesRolled) return message.channel.send($t("games:dice.noDiceRolled", P));
   const SINGLEROLL = (dicesRolled.length === 1 && !rollEq.match(MTH));
   const SIMPLEROLL = (dicesRolled.length === 1 && rollEq.match(MTH) != null);
 
-  if (dicesRolled.length > 5) return message.reply($t("games.dice.onlyRoll5", P));
+  if (dicesRolled.length > 5) return message.reply($t("games:dice.onlyRoll5", P));
   const MAX_DISP = Math.floor(dicesRolled.length / 25) || 25;
 
   const diceArray = [];
 
-  const streakLimit = $t("games.dice.limit25", P);
+  const streakLimit = $t("games:dice.limit25", P);
   const s_total = $t("terms.total", P);
   const s_overview = $t("terms.overview", P);
   const s_result = $t("terms.res", P);
-  const theyRollsomedice = $t("games.dice.userRolledSome", P);
+  const theyRollsomedice = $t("games:dice.userRolledSome", P);
 
-  const notThisPls = $t("games.dice.exceedLim", P);
+  const notThisPls = $t("games:dice.exceedLim", P);
 
   for (i in dicesRolled) {
     const diceAmount = Number(dicesRolled[i].split("d")[0] || 1);
     const diceFaces = Number(dicesRolled[i].split("d")[1] || 1);
 
     P.numDice = dicesRolled[i];
-    const theyRolled = $t("games.dice.userRolled", P);
-    const neutralRolled = $t("games.dice.neutralRolled", P);
+    const theyRolled = $t("games:dice.userRolled", P);
+    const neutralRolled = $t("games:dice.neutralRolled", P);
 
     Progression.emit("play.roll.d"+diceFaces,{value: dicesRolled.length ,msg:message, userID: message.author.id});
 
@@ -97,7 +97,7 @@ const init = async function (message) {
     }
 
     P.val = rollTotal;
-    const andGot = $t("games.dice.andGot", P);
+    const andGot = $t("games:dice.andGot", P);
 
     const commentary = rollTotal === diceFaces * diceAmount ? "⭐" : (rollTotal === 1 || rollTotal === diceAmount) ? "💀" : "";
     const dicepost = andGot + commentary;
@@ -127,7 +127,7 @@ const init = async function (message) {
     try {
       RESULT = eval(`${rollEq2}0`);
     } catch (err) {
-      message.reply($t("games.dice.invalidRoll", P));
+      message.reply($t("games:dice.invalidRoll", P));
     }
   }
 
