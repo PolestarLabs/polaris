@@ -1,6 +1,7 @@
 module.exports = async (interaction, data) => {
     console.log({data})
-    const [,,ownerID] = data.custom_id?.split(':')?.[3] || [];
+    const [,,ownerID] = data.custom_id?.split(':') || [];
+
     if (ownerID != interaction.userID) {
         return interaction.reply({
             content: "Stop poking other people's stuff!",
