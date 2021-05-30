@@ -1,5 +1,12 @@
 module.exports = async (interaction, data) => {
     console.log({data})
+    const [,,ownerID] = data.custom_id?.split(':')?.[3] || [];
+    if (ownerID != interaction.userID) {
+        return interaction.reply({
+            content: "Stop poking other people's stuff!",
+            flags: 64
+        });
+    }
     let destination;
     if (data.custom_id.includes("LOOTBOX") ) destination = require("../../core/commands/inventory/lootbox.js").init;
     if (data.custom_id.includes("BOOSTER") ) destination = require("../../core/commands/inventory/boosterpack.js").init;
