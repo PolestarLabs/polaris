@@ -31,7 +31,7 @@
         "trades": "Cserék",
         "drops": "",
         "balance": "Egyenleg",
-        "total": "",
+        "total": "Összesen",
         "noFundsBet": "Nem tehetsz fel ekkora tétet... Csak {{number}} Rubinod van",
         "plus_rubines_generic": "%R% Rubin a számládhoz lett adva. Ez azért elég jó, nem?",
         "minus_rubines_generic": "Levonok %R% rubint az egyenlegedről, oksi~?",
@@ -685,14 +685,14 @@
         "notThisbox": "Nem tudsz ilyen boxot kinyitni, írd, hogy `{{prefix}}lootbox`, hogy lásd, milyen boxaid vannak~"
     },
     "discord": {
-        "role": "",
+        "role": "Rang",
         "server": "Szerver",
         "member": "Tag",
         "user": "Felhasználó",
         "user_plural": "Felhasználók",
-        "channel": "",
+        "channel": "Csatorna",
         "channel_plural": "Channelek",
-        "voice_channel": "",
+        "voice_channel": "Hangcsatorna",
         "private": "Privát üzenet"
     },
     "music": {

@@ -1,10 +1,31 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
-      "acCask": "",
-      "acDoll": "",
-      "acToken": "",
-      "noCashR": "",
+      "acCask": "Teehee. Sau khi bạn nhận được đầu tiên, bạn không thể dừng lại nữa, phải không? Vì vậy, những gì bạn đang cho tôi để đổi lấy **Casket** này?",
+      "acDoll": "Oooh, một người lén lút~ Con búp bê này sẽ tự động đi lang thang ngay khi bạn trả tiền cho tôi, bạn muốn trả tiền cho nó như thế nào?",
+      "acToken": "Đồng xu, đồng xu cho hộp thiếc ngu ngốc với bộ ngực. Bạn sẽ chỉ nghĩ về điều đó. Tốt, bạn sẽ cho tôi những gì?",
+      "noCashR": "Bạn thấy đấy, những viên đá quý màu đỏ này chẳng có ý nghĩa gì với tôi nhưng... điều đó không có nghĩa là tôi sẽ giảm giá cho bạn!",
       "noCashC": "",
       "howMany": "",
       "completeC": "",

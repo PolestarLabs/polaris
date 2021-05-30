@@ -65,6 +65,7 @@
         "colorChange": "Warna favoritmu telah tersimpan!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "Pakai Perintahnya tidak begitu. Coba {{usage}}. Misal: {{example}}",
         "disabledModule": ":no_entry_sign: {{module}} telah dilarang di sini. Sayang sekali.",
         "genericInvalid": "Aduh-duh, kayaknya Perintah itu tidak benar ;~;",
@@ -354,7 +355,7 @@
         "ban": "`{{prefix}}ban @seseorang [reason]`\nLarang @seseorang dari server, Kamu juga bisa menambahkan alasannya.",
         "speakAvailable": "Bahasa yang tersedia adalah:",
         "autorole": "`{{prefix}}autorole [add | rem | list] [Role | @role]` \n\n`{{prefix}}autorole add Games` Mengizinkan peran **Games** sebagai peran otomatis.\n`{{prefix}}autorole rem Games` Menghapus peran **Games** dari daftar.\n`{{prefix}}autorole list` Menampilkan daftar dan perintah untuk masing-masing peran otomatis\n\n Ketik nama Peran sama persis seperti sewaktu di daftarkan, kapital berpengaruh, atau @mention saja perannya",
-        "background": "`{{prefix}}background [Imagecode]`\n\n :warning: **PENTING:** \n*Imagecode* __bukanlah sebuah link__, melainkan kode yg dapat di peroleh dari http://www.pollux.gg/bgshop. \n\nContoh: `{{prefix}}background IlyEEDBj0GLLlFl8n6boPLSkADNuBwke`",
+        "background": "",
         "bye": "",
         "welcome": "",
         "chinese": "`{{prefix}}chinese [text]`",
@@ -415,7 +416,7 @@
         "eggtrade": "",
         "lewd": "`{{prefix}}lewd`\nKamu juga bisa memilih dari Kurator mana yang ingin kamu lihat! Ketik saja nama mereka setelah perintah seperti `{{prefix}}lewd pollyanna` sebagai contoh, untuk melihat segala jenis yang telah di kuratori oleh **Pollyanna**.\n\n Tim Kurator kami saat ini:\n {{squad}}",
         "marry": "Pernikahan mengandalkan `{{prefix}}craft` secara langsung, karena kamu butuh sebuah cincin sebelum dapat melamar.\n\nUntuk menikahi seseorang yang kamu cintai, lakukan `{{prefix}}marry @user [ring]`. Ada 4 tingkatan dari sebuah cincin pernikahan, setiap jenisnya terbuat dari Batu Permata yang berbeda, untuk memamerkan seberapa mewahnya pernikahanmu. Di masa yang akan datang, peringkat cincin yang lebih tinggi akan memberikan Poin Cinta yg lebih banyak supaya mereka dapat membelanjakannya bersama.\n\nContoh penggunaan: `{{prefix}}marry @someone rubine` untuk melamar menggunakan Cincin Rubine.\n\nMembutuhkan Embed, Kelola Pesan dan Izin Reaksi",
-        "craft": "`{{prefix}}craft [kode item]`\n Kamu bisa menemukan kode item dan semua informasi di http://pollux.gg/crafting.\n\nUntuk membuat sebuah item kamu membutuhkan semua material yang dibutuhkan, beberapa material butuh di buat terlebih dahulu agar dapat tersedia, itu tidak akan tercraft secara otomatis jika kamu melakukan item yang memiliki tier/tingkatan yang lebih tinggi.",
+        "craft": "",
         "divorce": "`{{prefix}}divorce` Untuk menunjukan kepada semua orang yang pernah kamu nikahi. Entah itu hanya satu orang atau harem!\n`{{prefix}}divorce [@user || Discord ID]` Untuk menceraikan orang tersebut"
     },
     "logs": {

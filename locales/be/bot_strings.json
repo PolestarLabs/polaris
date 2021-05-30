@@ -3,15 +3,20 @@
         "RBN": "Лалы",
         "RBN_fullname": "",
         "RBN_plural": "Лалы",
+        "rubines": "",
         "JDE": "",
         "JDE_fullname": "",
         "JDE_plural": "Нефрыту",
+        "jades": "",
         "SPH": "",
         "SPH_fullname": "",
         "SPH_plural": "",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "",
         "U": "",
         "R": "",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "Стыкеры",
         "background": "",
-        "background_plural": "Фоны"
+        "background_plural": "Фоны",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -45,7 +53,7 @@
         "thanks": "",
         "thanks_short": "",
         "thx": "",
-        "total": "",
+        "total": "Усяго",
         "amount": "Колькасць",
         "overview": "Агляд",
         "dashboard": "Iнфармацыйная дошка",
@@ -127,6 +135,7 @@
             "chooseAmod": "Не маглі вы выбраць модуль?",
             "kinNone": "Для пачатку вам трэба сказаць, каго выгнаць. Ці мне варта выгнаць вас?",
             "kin404": "Здаецца, я не магу знайсці гэтага чалавека. Можа, ён ужо пайшоў? Ці гэта быў адзін з вашых ўяўных сяброў?",
+            "target404": "",
             "unmutable": "",
             "unperm": "У мяне няма правоў, каб зрабіць гэта. Вам варта даць мне права, для пачатку, перад тым, як казаць мне што - то зрабіць, што я зрабіць не магу.",
             "noRoleHere": "Здаецца, ролю не існуе. Вы ўпэўненыя, што правільна паказалі ролю?",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Вам трэба будзе падаць, на якім канале мне варта запісваць дзеянні.",
             "emojiError": "",
             "insuperms": "",
-            "not-a-NSFW-channel": "Гэты канал не з'яўляецца NSFW. Не пакідайце свае \"малюначкі\" усюды."
+            "not-a-NSFW-channel": "Гэты канал не з'яўляецца NSFW. Не пакідайце свае \"малюначкі\" усюды.",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -254,7 +267,7 @@
             "failure": ""
         },
         "equip": {
-            "getMoreBG": "",
+            "getMoreBG": "Атрымаць больш фонавым",
             "NFSALE": "",
             "equipOwned": "",
             "buyThisBG": "",
@@ -273,19 +286,23 @@
             "isEmpty": "Тут няма чаго прыбіраць!"
         },
         "discoin": {
-            "desc": "Вашы Лалы былі дасланыя, адказ ад %BOT% прыйдзе так хутка, наколькі гэта магчыма.",
-            "intake": "Поллукс **Лалы** (РБН) абменам:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) атрыманы:",
-            "remainder": "Пакінуты ліміт на {{$}}",
-            "receiptCode": "Код транзакцыі",
-            "amNaN": "Недапушчальнае колькасць",
-            "invalidCurr": "Гэта валюта не існуе!",
-            "invalidAmt": "Вы не можаце абмяняць гэта колькасць!",
-            "unverified": "Вы не верыфікаваць, каб вы маглі здзяйсняць абмены.\nКалі ласка, верыфікуецца сябе на сайце [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Ваш ліміт абменаў на сёння дасягнуты!",
-            "globalLimit": "Вы дасягнулі ліміту Дискоин, паспрабуйце заўтра.",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "Захавайце код у выпадку, калі вашы Лалы не дойдуць да адрасата.",
-            "ex-succ": "Абмен паспяховы!"
+            "invalidCurr": "Гэта валюта не існуе!",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Я памяняла ваш тэкст у профілі на: {{pstext}}\nВыкарыстоўвайце `{{prefix}}profile` каб убачыць ваш новы тэкст у профілі. Я ўпэўнена, каму - небудзь ён спадабаецца. Але не мне."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "",
             "saidnope": "",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Запрасіце мяне на ваш сервер, націснуўшы [СЮДА]",
+            "selectIndex": "",
             "cancel": "",
             "noFundsBalance": "␣Кажется, вы не можаце дазволіць сабе гэта, ваш баланс {{number}} Рубінаў",
             "noFunds": "Вам не хапае Рубінаў",
@@ -407,9 +439,24 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{Emoji}} Вы атрымалі 100 штодзённых Рубінаў!",
-            "dailyNope": "{{Emoji}} Хмм? Здаецца, вы ўжо атрымалі штодзённыя лалы, вы можаце атрымаць яшчэ праз: **{{remaining}}**",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{Emoji}} Хмм? Здаецца, вы ўжо атрымалі штодзённыя лалы, вы можаце атрымаць яшчэ праз: **{{remaining}}**"
         },
         "toggle": {
             "disabledSer": "**{{module}}** модуль выключаны. **Глабальна**",
@@ -443,7 +490,8 @@
             "cash1000": "Я магла б вас палічыць амаль багатым. Амаль.",
             "cash5000": "Оу? Як ТЫ змог стаць настолькі багатым?",
             "cash10000": "Ты абакраў банк? Мне варта выклікаць паліцыю?",
-            "cashInfinite": "Ведаеш, табе не варта выкарыстоўваць Чыты."
+            "cashInfinite": "Ведаеш, табе не варта выкарыстоўваць Чыты.",
+            "balance": "Баланс"
         },
         "greet": {
             "byeOFF": "Вы адключылі развітальнае паведамленне? Напэўна, гэта і да лепшага, бо яны ўсё роўна яго не ўбачаць.",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -567,12 +626,15 @@
         "generic": {
             "deleted": "",
             "cancel": "",
-            "timeout": "",
+            "timeout": "Тайм-аут!",
             "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "Кідкі кубіка былі:",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "Вам варта скончыць гульню, перш чым пачынаць другую.",
-            "newgame": "Хм, блэкджек? Вы ўжо ведаеце правілы, так што, давайце пачнем.",
-            "result": "Вынік:",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Адкажыце `hit`, каб узяць яшчэ адну карту,",
-            "stand": "",
-            "split": "`Split` каб падзяліць ваш hand,",
-            "double": "",
-            "pass": "або `stand`, каб прапусціць.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "Ваш приз **%$% **%emj%",
-            "_minor": "Лепш, чым нічога, так?",
-            "_mid": "Нядрэнна, вы атрымалі крыху Рубінаў.",
-            "_major": "Так блізка!",
-            "_ultimate_1": "Цудоўна! :Heart:",
-            "_ultimate_2": "вам вельмі шанцуе!!! :heart:",
-            "_ultimate_3": "вы можаце паверыць у гэта ?! :heart:",
-            "kommunism": "Камуністычны Джэкпот! Ваш прыз быў падзелены паміж усімі людзьмі, вы атрымліваеце 3х з усяго, што яны робяць.",
-            "pollux_jackpot": "",
-            "lucky": "Ўдачлівыя сямёркі, нядрэнна.",
-            "jackpot": "У дадатку да вашага прызу, вы атрымалі 100 кольцаў і дадатковую жыццё",
-            "bonanza": "Так шмат Рубінаў! Спадзяюся, вы не прымусіце мяне іх усё несці.",
-            "potato": "Бульбачка ... Думаю, я магу што - небудзь зрабіць з яе.",
-            "zero_1": "Божа мой, здаецца, усе вашы Лалы цяпер мае.",
-            "zero_2": "Ні разу не выйгралі? Крыўдна.",
-            "zero_3": "Можа, калі вы паспрабуеце зноў, тое, што - небудзь, ды выйграеце?"
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "Ведаеш, што гэта такое? Гэта **РЭДКІМІ** Лутбокс!",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "Здаецца, у вас няма гэтага бокса. Паспрабуйце `{{prefix}}lootbox` зноў і паглядзіце, якія боксы ў вас ёсць.",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

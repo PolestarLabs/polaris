@@ -65,6 +65,7 @@
         "colorChange": "¡Se ha guardado tu color favorito!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Nuestro maestro ha declarado la prohibición de {{module}} por aquí. Aguafiestas.",
         "genericInvalid": "Uh-oh... Comando inválido ;~;",
@@ -780,7 +781,7 @@
         "egghuntfail": "*Pero no pudo encontrar nada*",
         "egghuntsuccess": "¡Genial! ¡Aquí hay un huevo! Vamos a ver...",
         "egghuntsuccess2": "{{rarity_emoji}} ¡ {{user}} encontró un **Huevo {{rarity}}**!",
-        "egghuntsuccess3": "",
+        "egghuntsuccess3": "Tienes un total de **{{X}}** huevos contigo.\n**{{Y}}** de ellos son únicos.\n\nMas info en: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
         "delaytrade": "",
         "wanttrade": "{{user}} quiere intercambiar **{{tradingEgg}}** contigo.",
         "wanttrade2": "*Para aceptarlo, escribe `accept` seguido del ID del Huevo que mandarás de vuelta.*\n\nE.j. `accept C1` para dar un Huevo [**C1**] a cambio de este Huevo [**{{eggcode}}**]",

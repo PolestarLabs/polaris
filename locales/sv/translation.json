@@ -65,6 +65,7 @@
         "colorChange": "Din favoritfärg har sparats!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "",
         "disabledModule": ":no_entry_sign: Vår mästare har förklarat {{module}} förbjudna här. Det är för dåligt.",
         "genericInvalid": "Åh min, Verkar som kommandot är ogiltigt ;~;",

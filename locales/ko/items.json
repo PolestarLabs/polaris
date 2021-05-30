@@ -62,7 +62,7 @@
         "description": ""
     },
     "excavator": {
-        "name": "",
+        "name": "무덤파기용 굴착기",
         "description": ""
     },
     "hook": {
@@ -70,8 +70,8 @@
         "description": ""
     },
     "initd_booster": {
-        "name": "",
-        "description": ""
+        "name": "이니셜D",
+        "description": "방금 이 부스터를 열었었는데... 헉 데자뷰인가"
     },
     "iwd1_booster": {
         "name": "",
@@ -326,5 +326,20 @@
     "fork": {
         "name": "",
         "description": ""
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

@@ -3,12 +3,15 @@
         "RBN": "Rubine",
         "RBN_fullname": "Gemas de Rubine",
         "RBN_plural": "Rubines",
+        "rubines": "{{keywords.RBN_plural}}",
         "JDE": "Jade",
         "JDE_fullname": "Pó de Jades",
         "JDE_plural": "Jades",
+        "jades": "{{keywords.JDE_plural}}",
         "SPH": "Safira",
         "SPH_fullname": "Fragmentos de Safira",
         "SPH_plural": "Safiras",
+        "sapphires": "{{keywords.SPH_plural}}",
         "synthGems": "Gemas de Síntese",
         "cosmoFragment": "Fragmento Cósmico",
         "cosmoFragment_plural": "Fragmentos Cósmicos",
@@ -27,7 +30,7 @@
         "consumable": "Consumível",
         "consumable_plural": "Consumíveis",
         "junk": "Tralha",
-        "junk_plural": "Tralhas",
+        "junk_plural": "Tralha",
         "key": "Itens-Chave",
         "material": "Material",
         "material_plural": "Materiais",
@@ -154,6 +157,9 @@
             "unparsable": "Este não é um embed válido. Já tentou o {{link}}?"
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "Espera aí, me dá um minutinho!",
                 "Reduza a marcha, por favor!",
@@ -162,7 +168,7 @@
                 "Comandos demais ao mesmo tempo!",
                 "Aaah! Vá com calma!",
                 "Eu não tenho dedos infinitos! Calma aí!",
-                "Pra que a pressa?!",
+                "Por que a pressa? Espere alguns segundos para usar esse comando novamente.",
                 "Preciso de um minuto pra respirar!",
                 "Amorzinho, por favor, um de cada vez.",
                 "*Você está indo rápido demais senpai uwu Não consigo aguentar uwu*"
@@ -306,6 +312,15 @@
         "profile": {
             "persotexUpdate": "Woo, tudo certinho! Seu texto pessoal mudou para: {{pstext}}\nDigite `{{prefix}}profile` para visualizar esta linda frase no seu ~~não tão lindo~~ perfil. Hihihi~"
         },
+        "gift": {
+            "noTarget": "Você precisa dizer quem deve receber isso!",
+            "noSelf": "Seria muito mais gentil dar esse presente para outra pessoa!",
+            "invEmpty": "Parece um pouco vazio aqui...",
+            "invEmptyGive": "Você ainda não tem presentes, por que não embrulha alguns?",
+            "inv>1": "Você tem {{count}} presentes, você precisa especificar qual dar!",
+            "inv<amt": "",
+            "sent": "🎁 <@{{sender}}> deu **um presente** para <@{{target}}>"
+        },
         "trade": {
             "exchangeWhat": "O que você quer dar em troca?",
             "tradeStert": "**{{user.tag}}** começou uma Troca",
@@ -394,7 +409,8 @@
         },
         "thx": {
             "after": "{{userA}} mandou um *\"Valeu\"* para **{{userB}}**!\n{{userB}} foi agradecido **{{totalTHX}}** vezes.",
-            "wipe": "Isso vai remover **todos** os pontos de {{THX}} de {{user}}. **Tem certeza que quer fazer isso?**"
+            "wipe": "Isso vai remover **todos** os pontos de {{THX}} de {{user}}. **Tem certeza que quer fazer isso?**",
+            "noself": "Eu preferiria se você agradecesse a outra pessoa."
         },
         "divorce": {
             "confirmdiag": "Você concorda em divorciar-se de {{user}}? O divórcio tem ônus judiciais no valor de %EMJ% **5000 Rubines** a ser debitado **de vocês dois**! E a Pontuação Mozão de vocês dois será cortada **pela metade**!",
@@ -428,19 +444,27 @@
             "noRestorerInfo": "Você pode craftar um restaurador com `{{prefix}}craft streakfix`",
             "yesRestorerInfo": "Você tem um restaurador em seu inventário! Tente `{{prefix}}use streakfix` para usá-lo!",
             "dailyBonus": [
-                "Bom dia! Vamos nos divertir muito hoje, que tal? Estas são as suas recompensas pra hoje:"
+                "Bom dia! Vamos nos divertir muito hoje, que tal? Estas são as suas recompensas pra hoje:",
+                "Você chegou! Bem-vindo de volta estes presentes estavam esperando por você:",
+                "Alguém passou da hora de novo? Bem, pegue esses:",
+                "Finalmente! Eu estive muito sozinha. Aqui está um incentivo para ter certeza de que você voltará amanhã:",
+                "Bom dia~ Você dormiu bem? Eu não! Estive esperando para te entregar isso a noite toda:",
+                "Olá, Olá, Olá! Pollux Maid aqui! Entrega para {{username}}:",
+                "Eu queria que alguém me desse prêmios diários por acordar. Acho que posso viver através de você, então por favor aproveite estes para mim:",
+                "Ei, aqui está seus brindes do dia! Não, eles não são da caixa de promoções, pare de perguntar:",
+                "Seu saldo está um pouco triste - vamos melhora-lo juntos! Talvez isso ajude um pouco:",
+                "Ah, é assim que você se parece de manhã? Não responda. Pegue isso e escove o seu cabelo:"
             ],
-            "dailyGet": "{{emoji}} Você recebeu 100 Rubines de bônus diário~",
-            "dailyNope": "{{emoji}} Ei! Você já pegou o seu bônus diário. Ele fica disponível novamente em **{{remaining}}**",
-            "dailyStreak": "{{emoji}} Eba! Você recebeu mais **500 Rubines** por fazer 10 dias seguidos de bônus diário!"
+            "firstDaily": "Ei! Você é novo aqui... certo? Bom, você pode vir todos os dias para alguns brindes!",
+            "dailyNope": "Hm? Parece que você já pegou seu bônus diário. Ele ficará disponível novamente em **{{remaining}}**"
         },
         "toggle": {
             "disabledSer": "O módulo **{{module}}** foi desabilitado **globalmente**",
-            "disabledChn": "O módulo **{{module}}** foi desabilitado no canal <#{{channel}}>",
+            "disabledChn": "O módulo {{module}} foi desabilitado no canal <#{{channel}}>",
             "disabledComSer": "O comando **{{command}}** foi desabilitado **globalmente**",
-            "disabledComChn": "O comando **{{command}}** foi desabilitado no canal <#{{channel}}>",
+            "disabledComChn": "O comando **{{command}}** foi desabilitado em <#{{channel}}>",
             "enabledSer": "O módulo **{{module}}** foi habilitado **globalmente**",
-            "enabledChn": "O módulo **{{module}}** foi habilitado no canal <#{{channel}}>",
+            "enabledChn": "O módulo **{{module}}** foi habilitado em <#{{channel}}>",
             "enabledComSer": "O comando **{{command}}** foi habilitado **globalmente**",
             "enabledComChn": "O comando **{{command}}** foi habilitado no canal <#{{channel}}>"
         },
@@ -525,10 +549,14 @@
         },
         "crafting": {
             "craftingItem": "Criando `{{item_name}}`",
+            "craftedItem": "Criado `{{item_name}}`",
             "noitem": "Não consegui encontrar este item",
-            "noitemu": "Não consegui achar esse item ou algo parecido.",
-            "materialMissing": "Há materiais faltando no seu inventário, eu não posso criar isso.",
+            "noitemlike": "Não consegui achar esse item nem nada parecido.",
+            "gemsMissing": "Criar não é gratuito, não posso fazer isso sem as gemas certas.",
+            "materialMissing": "Há itens faltando no seu inventário, não posso fabricar isso.",
+            "materialAutocraft": "Você tem alguns materiais faltando... quer que eu veja se consigo fazê-los?",
             "materialPresent": "Todos os materiais estão disponíveis no seu inventário, prosseguir com o crafting?",
+            "materialPresentAuto": "Todos os materiais para fabricação automática estão disponíveis, continuar com a fabricação?",
             "didyoumean": "Eu não consegui achar esse item. Por acaso, está falando de algum desses?",
             "didyoumeanOne": "Algo não parece certo... É isso que você está procurando, querido?",
             "timeout": "Tempo esgotado! Você demorou muito para decidir, e agora a fornalha de forja esfriou.",
@@ -603,7 +631,10 @@
             "clicktoconfirm": "Clique em ✔ para confirmar sua escolha ou ✖ para cancelar.",
             "confirmDelete": "Confirmar exclusão?",
             "alotWentOn": "Muita coisa rolou nesse dia...",
-            "alreadyOwnThis": "Ei, você já tem esse item!"
+            "alreadyOwnThis": "Ei, você já tem esse item!",
+            "redactedLink": "LINK CENSURADO",
+            "redactedMention": "@MENÇÃO CENSURADA",
+            "redacted": "CENSURADO"
         },
         "reminders": {
             "currentActive": "Aqui estão seus lembretes ativos:",
@@ -611,7 +642,9 @@
             "maxActive": "Você só poder ter **{{count}}** lembretes ativos de uma vez!",
             "errorWhen": "Pera, me perdi. Não entendi exatamente *quando* você quer que eu te lembre disso.",
             "errorTARDIS": "Com licença viajante temporal, eu não posso voltar ao passado para te lembrar daquilo que você já esqueceu.",
+            "errorTooShort": "Por que você precisa de um lembrete para menos de um minuto? Você não pode usar um temporizador ou algo parecido?",
             "reminderOk": "Ok, te lembrarei de {{appointment}} às **{{time}} (UTC)** {{location}}",
+            "reminderOk_empty": "Ok, te lembrarei às **{{time}} (UTC)** {{location}}",
             "reminderChannel": "em {{channel}}",
             "reminderDMs": "no seu privado"
         },
@@ -741,137 +774,6 @@
             "end": "\n**A lista de Comandos completa pode ser achada em <https://pollux.gg/command>**\n\nVeja nossas Parceiros em: **<https://pollux.gg/partners>**\nVeja ou envie artes criadas for fãs em: **<https://pollux.gg/fanart>**\nVeja seu perfil público em: **<https://pollux.gg/profile/me>**\n\n**Cosméticos**\nLoja de planos de fundo: **https://pollux.gg/bgshop**\nLoja de medalhas: **https://pollux.gg/medalshop**\nOficina de Criação: **https://pollux.gg/crafting**\nStickers virtuais: **<https://pollux.gg/stickers>** (para stickers físicos, cheque o Servidor de Suporte)\nInformações sobre eventos: **<https://pollux.gg/events>**\n\nMe apoie em **<https://patreon.com/Pollux>** ou **<https://pollux.gg/donate>**\nMe siga no Twitter: **<https://twitter.com/maidPollux>**\n\n◉◎◈◎◉\n\n**Para outros assuntos, cheque o __Dashboard__: <https://pollux.gg/dashboard>**\nOu entre no meu servidor de suporte: **​ https://discord.gg/rEBCccS ​**\nMe convide para o seu servidor em: **<https://pollux.gg/invite>**\n"
         }
     },
-    "games": {
-        "flags": {
-            "title": "Adivinhe a Bandeira",
-            "youhave10": "Você tem 10 segundos para adivinhar o país a que pertence essa bandeira. **VAI!**",
-            "wellDone": "{{interjection}} **{{user}}** acertou! Essa é a bandeira do(a) **{{country}}**",
-            "noGuess": "{{interjectionB}} Parece que ninguém acertou... Mais sorte na próxima!"
-        },
-        "coinflip": {
-            "coinVictory": "{{interjection}} Você acertou! Você ganhou **{{prize}}** $t(keywords.{{currency}}_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} Parece que você se f... digo... mais sorte na próxima vez!"
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** rolou alguns dados:",
-            "userRolled": "**{{user}}** rolou **`{{numDice}}`**...",
-            "neutralRolled": "Rolando **`{{numDice}}`**...",
-            "andGot": "e tirou **{{val}}**!",
-            "rollsWere": "As rolagens foram:",
-            "invalidRoll": "Equação Inválida -- Apenas o dado será lançado!",
-            "onlyRoll5": "Você só pode lançar 5 dados diferentes por vez!",
-            "limit25": "A pilha de Dados pode ser mostrada para até 25 rolagens.",
-            "noDiceRolled": "Peraí, não tem nenhum dado para eu rolar, use `{{prefix}}roll help` se você não tem ideia do que está fazendo~",
-            "exceedLim": "Essa rolagem excede o limite de caracteres. Tente usar `-nostreak` para ocultar os valores das rolagens"
-        },
-        "blackjack": {
-            "ongoing": "Ei, fofis~ Já estamos jogando, sabia?",
-            "newgame": "Hora de jogar um pouco de Blackjack, você conhece as regras, certo? Então vamos começar.",
-            "result": "Resultado:",
-            "bust": "Estourou",
-            "youwin": "Parabéns! Você ganhou, *dessa vez*.",
-            "youlose": "Oh? Ganhei, que pena de você~.",
-            "hit": "Responda com `hit` para puxar mais uma carta,",
-            "stand": "Manter",
-            "split": "`split` para dividir sua mão,",
-            "double": "`double` para dobrar sua aposta e puxar uma última carta,",
-            "pass": "ou `stand` para passar.",
-            "surrender": "Render-se",
-            "insurance": "Seguro",
-            "surrender_res": "Você se rendeu, isso é uma pena... Aqui está como ficaria meu jogo se continuássemos:",
-            "joker": "Ah não! Um Coringa! Você é muito sortudo~",
-            "blackjack_win": "Um Blackjack? Isso é impossível! Será que contei as cartas errado?",
-            "blackjack_lose": "BLACKJACK baby, na sua cara! \\❤",
-            "double_win": "Voce foi tão ousado em dobrar sua aposta. Parabéns!",
-            "double_lose": "O dobro da expectativa, o dobro da decepção.",
-            "insurance_lost": "Mas o seguro é meu! Hehe~ Me dê esses {{insurance}} Rubines.",
-            "insurance_win": "Você tinha um seguro, aqui, pegue {{insurance}} Rubines de volta.",
-            "surrender_helper": "Se você não está se sentindo confiante você pode `render-se` e perder apenas metade da sua aposta",
-            "insurance_helper": "Eu tenho um Às aberto nessa partida, você pode adicionar um `seguro` para proteger-se de um Blackjack.",
-            "splitbreak": "Detalhamento dos Splits:",
-            "switchdeck": "Agora vamos jogar BlackJack usando o baralho **{{deckname}}**!",
-            "switchdeckEgg": "Agora vamos jogar BlackJack usando o caralho– digo, o **baralho** {{deckname}}!\nAi meu deus que horror dsclp!",
-            "even": "Parece que empatamos, então aqui estão seus Rubines."
-        },
-        "slots": {
-            "takePrize": "Seu prêmio foi de **%$%** %emj%",
-            "_minor": "Melhor que nada, não é? :wink:",
-            "_mid": "Nada mal, nada mal mesmo!",
-            "_major": "Tããão perto!",
-            "_ultimate_1": "Maravilhoso!!! :heart:",
-            "_ultimate_2": "Que sorte da porra!!! :heart:",
-            "_ultimate_3": "consegue acreditar?! :heart:",
-            "kommunism": "JACKPOT COMUNISTA!!! Seu prêmio é 3x maior, e vai ser dividido pelo máximo de pessoas que eu encontrar!",
-            "pollux_jackpot": "Uma é pouco. Duas é bom. Agora, três de mim? Isso merece um prêmio generoso!",
-            "lucky": "Sete da Sorte meu bem~",
-            "jackpot": "Junto com seu prêmio, você tambem tem 100 anéis e uma vida extra.",
-            "bonanza": "Eba! Bonanza de Rubines! São muitos pra carregar!",
-            "potato": "Batatas... Nada mal, mas também nada bem.",
-            "zero_1": "Ai nãããão :frowning: Você não conseguiu nem um Rubininho sequer...",
-            "zero_2": "Ih... Deu ruim, levou nada.",
-            "zero_3": "Mais sorte da próxima vez, chuchu. Acredito em você! :wink:"
-        },
-        "roulette": {
-            "boardTitle": "Roleta Fantástica da Pollux",
-            "boardDescription": "Senhoras e senhores, weebs e otomes. Vocês podem colocar suas apostas!\n**Vocês têm _45 segundos_ até que a roleta gire!**\n\n Coloquem suas apostas respondendo com: `bet [AMOUNT] [BET TYPE]`\nUse `bet help` ou `{{prefix}}roulette help` para um tutorial detalhado.",
-            "helpTitle": "Apostando na Roleta 101",
-            "helpDescription": "Você pode achar mais informações na [Pollux Wiki](https://wiki.pollux.gg)!",
-            "resultsTitle": "Resultados da Roleta",
-            "resultsDescription": "O número sorteado foi {{number}}.",
-            "resultsPlayer": "Resultado do jogador ",
-            "resultsWin": [
-                "Eba! Contra todas as probabilidades, você ganhou **{{count}}**{{e}} $t(keywords.RBN)!",
-                "Hmph. Vou adicionar **{{count}}**{{e}} $t(keywords.RBN) à sua conta, e ver sobre mudar essas probabilidades...",
-                "Não acredito que você me venceu! Eu realmente não acredito. Aqui está o seu prêmio de **{{count}}**{{e}} $t(keywords.RBN).",
-                "Como que eu perdi **{{count}}**{{e}} $t(keywords.RBN) desse jeito?!",
-                "Parabéns! Você esgotou **{{count}}**{{e}} $t(keywords.RBN) de minha poupança. Espero que esteja feliz. Seu muquirana...",
-                "Tudo bem, você é um pouco mais sortudo do que o jogador comum. Pegue seus **{{count}}**{{e}} $t(keywords.RBN) e some daqui.",
-                "Por favor, não gaste toda a sua nova **{{count}}**{{e}} $t(keywords.RBN) no *clube* ao lado. Sério.",
-                "Ah, interessante. Você ganhou **{{count}}**{{e}} $t(keywords.RBN) de mim. Agora, você acha que consegue manter sua sorte?",
-                "Parabéns! Você ganhou **{{count}}**{{e}}$t(keywords.RBN)."
-            ],
-            "resultsLoss": [
-                "A casa sempre vence, meu anjo. **{{count}}**{{e}} $t(keywords.RBN) pra mim~",
-                "Você está **{{count}}**{{e}} $t(keywords.RBN) mais pobre do que quando você começou. Tenho certeza de que sua sorte vai virar se você jogar apenas mais uma partida.",
-                "Que estratégia interessante. Te custou **{{count}}**{{e}} $t(keywords.RBN).",
-                "Uhh! Você está mesmo tentando? Vou perguntar aos meus novos **{{count}}**{{e}} $t(keywords.RBN), eu acho.",
-                "Não sei por que eu estava preocupada. **{{count}}**{{e}} $t(keywords.RBN), por favor.",
-                "Obrigado pela sua contribuição de **{{count}}**{{e}} $t(keywords.RBN) para o Fundo de Eventos da Pollux.",
-                "Ave marinha cheia de graxa! São mais **{{count}}**{{e}} $t(keywords.RBN) que você perdeu!",
-                "Vou pegar **{{count}}**{{e}} $t(keywords.RBN) de você."
-            ],
-            "resultsDraw": [
-                "Você não ganhou, mas também não perdeu.",
-                "Você saiu no zero a zero. Que coisa mais sem graça! Revanche!",
-                "Bem, você não levou nada. Mas você se divertiu, certo? É isso que importa!",
-                "Empate... hmph. Venha de novo e da próxima vez traga mais dinheiro.",
-                "O que?! Um empate?! Inaceitável, use esse comando novamente!",
-                "Huh. Nós dois perdemos e, no entanto, ambos vencemos. Você acha que essa filosofia também pode ser aplicada à vida?",
-                "Uhuhu, isso foi divertido. Não me deixe esperar muito para a próxima rodada.",
-                "Hmm, você não foi nada mal. . . Talvez uma das garçonetes possa pagar a sua bebida.",
-                "É um empate! Você Fica com o seu e eu fico com o meu. Feito?"
-            ],
-            "resultsInvalid": "Você perdeu seu dinheiro de alguma forma, então suas apostas foram dispensadas.",
-            "resultsNoBet": "Infelizmente, ninguém fez nenhuma aposta... Estou *devastada* 💔",
-            "wheelDescription": "Ainda tem {{seconds}} segundos para colocarem suas apostas! Não seja tímido!! Coloque só mais umazinha!!! E se hoje for seu dia de sorte~?",
-            "wheelEnd": "**Acabou o tempo, garotos e garotas!**\nAgora a roda vai decidir o destino de vocês... Não há mais como voltar.",
-            "notSoFast": "Você está apostando rápido demais.",
-            "invalidBet": "Desculpe, não consigo entender essa aposta.",
-            "missingAll": "Não foi possível encontrar sua aposta.",
-            "missingAmount": "Desculpe, docinho. Você não pode apostar sem dinheiro.",
-            "missingBet": "Hm, onde está a sua aposta?",
-            "zeroAmount": "Aposte pelo menos 1 $t(keywords.RBN)!",
-            "notAllowed": "Você não pode apostar nesse momento. Chô!",
-            "noMoney": "Você não tem dinheiro suficiente, querido(a)...",
-            "minperBet": "Tenha culhões, a aposta mínima aqui é **{{count}}$t(keywords.RBN)**, pirralho.",
-            "maxPerBet": "Segura aí, riquinho! Apostas não podem ser maiores que {{count}}$t(keywords.RBN).",
-            "maxBets": "Acalme-se, você já colocou {{count}} apostas.",
-            "maxtotal": "Ok, ok, espera aí! Você não pode apostar mais do que {{count}}$t(keywords.RBN) no total!"
-        },
-        "ceilingBet": "Você não pode apostar mais do que **{{number}}** $t(keywords.RBN_plural) neste jogo!",
-        "tryAgain": "Tentar de novo?",
-        "alreadyPlaying": "Calma lá! Nós já estamos jogando!"
-    },
     "loot": {
         "rareDrop": "Você sabe o que é isso? É uma Caixa **RARA** !",
         "suprareDrop": "{{interjection}} uma Caixa **SUPER RARA**!",
@@ -906,6 +808,7 @@
         "eventDrop": "E tem mais! Esta é uma **CAIXA DE EVENTO** o que significa que tem **coisas mais legais ainda** dentro!",
         "notThisbox": "Você não tem essa Caixa. Tenta `{{prefix}}lootbox` de novo para ver as opções.",
         "options_new": "{{k_emoji}}Manter | {{r_emoji}}Sortear novamente{{amt}}",
+        "options_nrr": "{{k_emoji}}Manter | {{r_emoji}}~~Sortear novamente~~ {{amt}}",
         "rerollRemain_new": "Você pode sortear **uma** última vez!",
         "rerollRemain_new_plural": "Você pode sortear mais **{{count}}** vezes!",
         "hasDupes": "{{x_frags}} de itens duplicados!",

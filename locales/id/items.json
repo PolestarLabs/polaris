@@ -7,7 +7,7 @@
     },
     "commendtoken": {
         "name": "Token Pujian",
-        "description": "Apa ini? Altruis?"
+        "description": ""
     },
     "complete_ring_jade": {
         "name": "Cincin Giok Brilian",
@@ -326,5 +326,20 @@
     "fork": {
         "name": "",
         "description": ""
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

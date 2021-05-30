@@ -3,15 +3,20 @@
         "RBN": "Рубин",
         "RBN_fullname": "Рубини",
         "RBN_plural": "Рубини",
+        "rubines": "",
         "JDE": "Нефрит",
         "JDE_fullname": "Нефритов прах",
         "JDE_plural": "Нефрит",
+        "jades": "",
         "SPH": "Сапфир",
         "SPH_fullname": "Сапфирови парчета",
         "SPH_plural": "Сапфири",
+        "sapphires": "",
         "synthGems": "",
         "cosmoFragment": "",
         "cosmoFragment_plural": "",
+        "COS": "",
+        "COS_plural": "",
         "C": "Често срещан",
         "U": "Рядко срещан",
         "R": "Рядък",
@@ -36,7 +41,10 @@
         "sticker": "",
         "sticker_plural": "Стикери",
         "background": "",
-        "background_plural": "Тапети"
+        "background_plural": "Тапети",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "",
@@ -127,6 +135,7 @@
             "chooseAmod": "Би ли използвал модул.",
             "kinNone": "Първо на прво кажи ми името на члена, който трябва да отстраня за да не те отстраня теб",
             "kin404": "Опппа, не мога да открия този член. :slight_frown:  Не е ли вече премахнат? Съществува ли? Да не е плод на твоето воображения ? Сигурен ли си???",
+            "target404": "",
             "unmutable": "Каквото и да казваш, аз нчма да заглуша този потребител.",
             "unperm": "Поради някаква причина нямам права да използвам тази опция. ДАЙ МИ ПРОКЛЕТИТЕ ПРАВА!",
             "noRoleHere": "Ролята не е в списъка, прегелдай си глупостите моля.",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Трябва да посочите на какъв канал трябва да напиша действията.",
             "emojiError": "",
             "insuperms": "{{imsorry}} Не мога да направя това за теб, ако нямаш нужните права.",
-            "not-a-NSFW-channel": "Задай каналът за пълонолетни! Има деца в този сървър!"
+            "not-a-NSFW-channel": "Задай каналът за пълонолетни! Има деца в този сървър!",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "",
                 "",
@@ -254,7 +267,7 @@
             "failure": "О не! Изглежда, че нещо се обърка. Съжалявам."
         },
         "equip": {
-            "getMoreBG": "",
+            "getMoreBG": "Вземете повече фонове",
             "NFSALE": "",
             "equipOwned": "",
             "buyThisBG": "",
@@ -273,19 +286,23 @@
             "isEmpty": "Няма какво да бъде премахнато!"
         },
         "discoin": {
-            "desc": "Вашата транзакция в момента се обработва, моля изчакайте одговор за потвърждение от %BOT%!",
-            "intake": "Pollux **Рубини** (RBN) Обмен:",
-            "outtake": "%BOTNAME% **%CURRNAME%** ({{$}}) получи:",
-            "remainder": "Оставащият лимит за {{$}}",
-            "receiptCode": "Код на транзакция",
-            "amNaN": "Невалиден номер",
-            "invalidCurr": "Тази валута не съществува!",
-            "invalidAmt": "Не можете да обмените толкова голямо количество от тази сума!",
-            "unverified": "За да направите обмен, трябва да потвърдите профила си.\nМоля, потвърдете го на уеб сайта [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Вашият лимит на обмен за днес е достигнат!",
-            "globalLimit": "Вие сте достигнали границата на Discoin, опитайте утре.",
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
             "takedis": "Запазете кода в случай, че вашите Rubies не достигнат адреса.",
-            "ex-succ": "Борсата е успешна!"
+            "invalidCurr": "Тази валута не съществува!",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "Добре, от сега нататък, ще говоря {{LANGUAGE}} в този сървър. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Всичко е готово! Твоят информация е променена на:\n{{pstext}}\nИзползвай '{{prefix}}profile' за да видиш този красив текст, на тази не толкова красива Профилът. Хехехе."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "Какво, искате да дадете в размяна?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "Съгласен ли си да се разведеш с {{user}}? Данъците за развода са %EMJ% **5000 Рубина**, които ще бъдат взети от **двама ви** и вашите любовни точки ще бъдат **разделени на половина**!",
             "saidnope": "{{userB}} не иска развод. Можеш да наложиш този развод, като платиш %EMJ% **10000 Рубина** за да се свържа с адвокат, но ще загубите и двама всичките си **любовни точки***!",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Поканете ме на сървъра си, като кликнете върху [HERE]",
+            "selectIndex": "",
             "cancel": "Промени си мнението? Добре, ще се видим по-късно",
             "noFundsBalance": "Изглежда, че не можеш да си позволиш това, балансът ти е {{number}} Рубини",
             "noFunds": "Няма достатъчно Рубини",
@@ -407,9 +439,24 @@
             "minus_rubines": ""
         },
         "daily": {
-            "dailyGet": "{{emoji}} Получавате 100 Рубини от дневния си бонус ~",
-            "dailyNope": "{{emoji}} Хей! Вече сте заявили ежедневните си Рубини, можете да получите повече след ** {{remaining}} **",
-            "dailyStreak": ""
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{emoji}} Хей! Вече сте заявили ежедневните си Рубини, можете да получите повече след ** {{remaining}} **"
         },
         "toggle": {
             "disabledSer": "Този модул:**{{module}}** е с отказан достъп **\"В световен мащаб\"**",
@@ -443,7 +490,8 @@
             "cash1000": "Вие сте почти богати. Почти.",
             "cash5000": "Вие сте богат",
             "cash10000": "Открадна ли банката?",
-            "cashInfinite": "Знаете ли, не е нужно да използвате измами."
+            "cashInfinite": "Знаете ли, не е нужно да използвате измами.",
+            "balance": "Баланс"
         },
         "greet": {
             "byeOFF": "Чао съобщението бе изтрито! Кажи чао на чао. Схвана ли?\nЧао...\nна **чао**\n:D ХАХА е няма го вече изчезна.",
@@ -493,12 +541,22 @@
             "noItem": "",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "",
+            "craftedItem": "",
             "noitem": "",
-            "noitemu": "",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "",
             "didyoumeanOne": "",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "",
@@ -567,12 +626,15 @@
         "generic": {
             "deleted": "",
             "cancel": "",
-            "timeout": "",
+            "timeout": "Тайм-аут!",
             "cantAfford": "",
             "clicktoconfirm": "",
             "confirmDelete": "",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "",
-            "youhave10": "",
-            "wellDone": "",
-            "noGuess": ""
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "",
-            "userRolled": "",
-            "neutralRolled": "",
-            "andGot": "",
-            "rollsWere": "Зарове бяха:",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": ""
-        },
-        "blackjack": {
-            "ongoing": "Трябва да завършите тази игра, преди да започнете друга.",
-            "newgame": "Хм, блекджек? Опасявам се, че знаете правилата, така че нека започнем.",
-            "result": "Резултат:",
-            "bust": "Бюджет",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Отговор с `hit`, за да получите друга карта,",
-            "stand": "Стоя",
-            "split": "`split`, за да разделите ръката си,",
-            "double": "",
-            "pass": "или \"stand\", за да пропуснете.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "Вашата награда **%$%** %emj%",
-            "_minor": "По-добре от нищо, нали?",
-            "_mid": "не е зле!",
-            "_major": "толкова близо!",
-            "_ultimate_1": "чудесно! :heart:",
-            "_ultimate_2": "какъв касметлия! :heart:",
-            "_ultimate_3": "можеш ли да повярваш? :heart:",
-            "kommunism": "Комунистическият джакпот! Вашите печалби се увеличиха 3 пъти и бяха разделени на всички, които можах да намеря!",
-            "pollux_jackpot": "",
-            "lucky": "Щастливите седем, не е зле.",
-            "jackpot": "В допълнение към наградата си получихте 100 пръстена и допълнителен живот",
-            "bonanza": "Толкова много рубини! Надявам се да не ме карате да ги нося.",
-            "potato": "Картофи ... Не е зле, но не е добре също!",
-            "zero_1": "Боже мой, изглежда, всичките ти Рубини са мои сега.",
-            "zero_2": "Много лошо... това е празно.",
-            "zero_3": "Следващият път, сладурче. Вярвам в теб! ;)"
-        },
-        "ceilingBet": "",
-        "tryAgain": "",
-        "alreadyPlaying": ""
-    },
     "loot": {
         "rareDrop": "Знаеш ли какво е това? Това **РЯДЪК** Lootbox!",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "",
         "notThisbox": "Изглежда, че този Lootbox не съществува. Опитайте отново `{{prefix}}lootbox` и вижте кои кутии имате~",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

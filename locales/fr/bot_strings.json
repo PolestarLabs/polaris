@@ -3,15 +3,20 @@
         "RBN": "Rubine",
         "RBN_fullname": "Bijoux Rubine",
         "RBN_plural": "Rubines",
+        "rubines": "{{keywords.RBN_plural}}",
         "JDE": "Jade",
         "JDE_fullname": "Poudre de Jades",
         "JDE_plural": "Jade",
+        "jades": "{{keywords.JDE_plural}}",
         "SPH": "Saphir",
         "SPH_fullname": "Fragments de Sapphire",
         "SPH_plural": "Saphirs",
+        "sapphires": "{{keywords.SPH_plural}}",
         "synthGems": "Synthèse de bijoux",
         "cosmoFragment": "Fragment des cosmos",
         "cosmoFragment_plural": "Fragment des cosmos",
+        "COS": "Fragment des cosmos",
+        "COS_plural": "Fragment des cosmos",
         "C": "Commun",
         "U": "Peu commun",
         "R": "Rare",
@@ -25,7 +30,7 @@
         "consumable": "Consommable",
         "consumable_plural": "Consommables",
         "junk": "Camelote",
-        "junk_plural": "Déchets",
+        "junk_plural": "Camelote",
         "key": "Articles clés",
         "material": "Matériel",
         "material_plural": "Matériaux",
@@ -36,7 +41,10 @@
         "sticker": "Collant",
         "sticker_plural": "Collants",
         "background": "Fond d'écran",
-        "background_plural": "Bannières"
+        "background_plural": "Bannières",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "Transfert refusé",
@@ -127,6 +135,7 @@
             "chooseAmod": "Choisis un module s'il te plaît.",
             "kinNone": "Dans un premier temps, dis-moi qui je dois frapper. Avant que je te frappe à sa place.",
             "kin404": "Ouuuups, je n'arrive pas à trouver cette personne :< Il n'est pas déjà parti? En fait, existe-t-il? C'est pas ton imagination? T'ES SÛR???",
+            "target404": "",
             "unmutable": "Peu importe ce que tu dis, je ne lui couperai pas.",
             "unperm": "Pour une quelconque raison je n'ai pas les droits pour faire cela. DONNE-MOI LES DROITS BORDEL",
             "noRoleHere": "Ce rôle n'est pas dans la liste, relis-toi bordel!",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Ok, et où est-ce que je vais répertorier ces activités? Sur ton visage? Donne-moi un salon au quel me connecter!",
             "emojiError": "Je n'ai pas pu ajouter cet Emoji. Vérifie les permissions d'ajoutement des réactions ou si l'Emoji est valide...",
             "insuperms": "{{Imsorry}} Je ne peux pas faire ça pour toi si tu n'as pas le permission non plus.",
-            "not-a-NSFW-channel": "Eh oh! Rends ce salon NSFW d'abord, il y a des enfants par ici..."
+            "not-a-NSFW-channel": "Eh oh! Rends ce salon NSFW d'abord, il y a des enfants par ici...",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "Attendez, j'ai besoin d'une minute!",
                 "Je ne suis pas une imprimante, ralentez svp!",
@@ -273,19 +286,23 @@
             "isEmpty": "Il n'y a rien à enelver ici"
         },
         "discoin": {
-            "desc": "Ta transaction est en cours, on attend une réponse de %BOT%!",
-            "intake": "**Rubines** Pollux (RBN) échangées:",
-            "outtake": "%BOTNAME% **%CURRNAME%** ({{$}}) pour recevoir:",
-            "remainder": "Limite restante pour {{$}}",
-            "receiptCode": "Code reçu de la transaction",
-            "amNaN": "Quantité invalide",
-            "invalidCurr": "Cette monnaie n'existe pas!",
-            "invalidAmt": "Vous ne pouvez échanger ce montant!",
-            "unverified": "Vous n'êtes pas autorisé à faire des échanges.\nVous devez d'abord autoriser votre compte: <http://discoin.sidetrip.xyz/verify>",
-            "userLimit": "Votre limite d'échanges du jour a été atteinte!",
-            "globalLimit": "Les opérations du jour ont été fermées, merci!",
+            "links": "Liens pertinents:",
+            "list": "",
+            "graphs": "",
+            "guide": "Manuel d’utilisation",
+            "tax": "Informations fiscales",
+            "tax_desc": "Taxe d'échange : **{{exchange}}%**\nImpôt sur le revenu : **{{income}}%**\nTaxe de transfert : **{{transfer}}%**",
+            "discoin_desc": "Votre transaction est en cours, on attend une réponse de %BOT%.",
+            "receipt": "Voici votre reçu de transaction :",
+            "receiptnoDM": "Je ne pouvais pas le livrer en privé, donc voici votre reçu:",
             "takedis": "Gardez ce code au cas où ~c'est la merde~",
-            "ex-succ": "Echange réussi!"
+            "invalidCurr": "Cette monnaie n'existe pas!",
+            "debt": "",
+            "zero": "Échangez au moins 1 Rubine.",
+            "perMin": "Le minimum est de {{perMin}} Rubines par transaction.",
+            "perMax": "Le maximum par transaction est de {{perMax}} Rubines.",
+            "dailyMax": "Vous avez atteint le maximum quotidien de {{dailyMax}} Rubines.",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "D'acc, je vais désormais parler {{LANGUAGE}} dans ce serveur. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Tout est bon! Ton texte personnel est désormais: \n {{pstext}} \n Utilise `{{prefix}}profile` pour voir ce joli ~~quoi que~~ profil. Hehee~ "
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "Il a l'air plutôt vide ici...",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "Que veux-tu donner en échange?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": "Je préfère que vous remerciiez quelqu'un d'autre."
+        },
         "divorce": {
             "confirmdiag": "Acceptes-tu de divorcer {{user}}? Un frais de %EMJ%**5000 Rubines** serait chargé de **chaque personne**! Les points d'amour seront **chacun réduit par un demi**!",
             "saidnope": "{{userB}} ne veut pas un divorce. Tu peux le forcer en payant %EMJ%**10000 Rubines** pour que je puisse appeler un avocat pour le résoudre, mais vous deux perdrez **tous vos Points d'Amour**!",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Invite-moi sur ton serveur en cliquant [ICI]",
+            "selectIndex": "",
             "cancel": "Changé d'idées? D'acc, à bientôt~",
             "noFundsBalance": "␣On dirait que tu ne peux pas te payer ça... Tu as {{number}} Rubines",
             "noFunds": "Pas assez de Rubines",
@@ -407,9 +439,24 @@
             "minus_rubines": "Je prends %R $t(keywords.RBN_plural) de ta compte okay~?"
         },
         "daily": {
-            "dailyGet": "{{emoji}} Coucou! Voici tes 100 Rubines de bonus quotidien~",
-            "dailyNope": "{{emoji}} Hop! Hop! Hop! Tu as déjà eu ton bonus quotidien! Le prochain étant dans: **{{remaining}}**",
-            "dailyStreak": "{{emoji}} Et voici 500 Rubines de plus pour 10 jours d'affilée! Youpi!"
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": "{{emoji}} Hop! Hop! Hop! Tu as déjà eu ton bonus quotidien! Le prochain étant dans: **{{remaining}}**"
         },
         "toggle": {
             "disabledSer": "Le module **{{module}}** a été **globalement** désactivé.␣ ",
@@ -443,7 +490,8 @@
             "cash1000": "Hmmm... On a un aristocrate par ici~",
             "cash5000": "Tu es RICHE! Fini le LIDL mec!",
             "cash10000": "T'as braqué une banque ?",
-            "cashInfinite": "Tu cheat batard"
+            "cashInfinite": "Tu cheat batard",
+            "balance": "Porte-monnaie"
         },
         "greet": {
             "byeOFF": "Message d'aurevoir désactivé! Dis aurevoir à l'aurevoir.\nAurevoir à **aurevoir**\nHahahah~ !! haha... ha... enfin c'est parti quoi.",
@@ -493,12 +541,22 @@
             "noItem": "T'as besoin d'un jeton de louage, et t'en n'as pas. T'en as besoin de louer quelqu'un.",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "Fabrication d'`{{item_name}}`",
+            "craftedItem": "",
             "noitem": "Je n'ai pas pu trouver cet article",
-            "noitemu": "Impossible de trouver cet article ni quoi que ce soit de ce genre",
+            "noitemlike": "",
+            "gemsMissing": "",
             "materialMissing": "Il t'en manque des matériaux, je ne peux pas fabriquer le produit.",
+            "materialAutocraft": "",
             "materialPresent": "",
+            "materialPresentAuto": "",
             "didyoumean": "Je n'ai pas pu trouver cet article. Par hasard, veux-tu dire ceci?",
             "didyoumeanOne": "Quelque chose n'y va pas... Est-ce ce que tu cherches, ma caille?",
             "timeout": "",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "Eh bien, je ne peux pas voir cette boîte là et je suis sur que tu n'en vois rien aussi.",
@@ -567,12 +626,15 @@
         "generic": {
             "deleted": "",
             "cancel": "",
-            "timeout": "",
+            "timeout": "Expiré!",
             "cantAfford": "",
             "clicktoconfirm": "✔ pour confirmer votre choix, ✖ pour annuler.",
             "confirmDelete": "Affirmer la suppression?",
             "alotWentOn": "",
-            "alreadyOwnThis": ""
+            "alreadyOwnThis": "",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": ""
         }
     },
-    "games": {
-        "flags": {
-            "title": "Devine le drapeau",
-            "youhave10": "Vous avez 10 secondes pour deviner le pays auquel ce drapeau appartient. **GO!**",
-            "wellDone": "{{interjection}} **{{user}}** l'a deviné! Voici le drapeau du pays de **{{country}}**",
-            "noGuess": "{{interjectionB}} Semble que personne l'a deviné... Meilleure chance la prochaine fois!"
-        },
-        "coinflip": {
-            "coinVictory": "",
-            "coinDefeat": ""
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** a roulé quelques dés:",
-            "userRolled": "**{{user}} a roulé **{{numDice}}**...",
-            "neutralRolled": "Roulant **{{numDice}}**...",
-            "andGot": "et a roulé **{{val}}**!",
-            "rollsWere": "Les lancés étaient:␣",
-            "invalidRoll": "",
-            "onlyRoll5": "",
-            "limit25": "",
-            "noDiceRolled": "",
-            "exceedLim": "Ce lancer dépasse les limites de caractères, essaye `-nostreak` pour omettre les valeurs des lancers"
-        },
-        "blackjack": {
-            "ongoing": "Attention mon cher, on joue déjà une partie là!",
-            "newgame": "C'est le moment de jouer au blackjack~ ! Je pense que tu connais les règles, c'est parti!",
-            "result": "Résultat:",
-            "bust": "",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Réponds `hit` pour tirer une autre carte,␣",
-            "stand": "",
-            "split": "`split` pour partager ta main,␣",
-            "double": "",
-            "pass": "ou `stand` pour passer.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "",
-            "switchdeck": "",
-            "switchdeckEgg": "",
-            "even": ""
-        },
-        "slots": {
-            "takePrize": "Ton gain est de **%$%** %emj%",
-            "_minor": "Mieux que rien non? ;)",
-            "_mid": "Pas mal!",
-            "_major": "Aaahhh si près du but!~",
-            "_ultimate_1": "Génial!!! :heart:",
-            "_ultimate_2": "La chance!!! :heart:",
-            "_ultimate_3": "T'arrives à y croire?! :heart:",
-            "kommunism": "JACKPOT KOMMUNIST!!! Ton prix est 3x plus élevé, et il a été réparti à toutes les personnes que j'ai pu trouver!",
-            "pollux_jackpot": "",
-            "lucky": "Les 7 de la chance~",
-            "jackpot": "En plus de ton prix, tu gagnes également 100 anneaux et une vie supplémentaire",
-            "bonanza": "Yay! Un filon de Rubines!",
-            "potato": "Des patates... pas mauvais, mais pas bon non plus (le gain bien sûr).",
-            "zero_1": "Ahhhh mince... Tu n'as même pas regagné une Rubine... :(",
-            "zero_2": "Ah dommage... Rien ici.",
-            "zero_3": "Tu auras plus de chance la prochaine fois mon chou~ J'ai confiance en toi! ;)"
-        },
-        "ceilingBet": "",
-        "tryAgain": "Veuiller tenter encore?",
-        "alreadyPlaying": "Une minute! On joue déjà!"
-    },
     "loot": {
         "rareDrop": "Tu sais ce que c'est ? C'est une Lootbox **RARE** !",
         "suprareDrop": "",
@@ -818,6 +808,7 @@
         "eventDrop": "Et il en a plus! Ce coffre est un **COFFRE D'ÉVÉNEMENT** qui signifie: **'des trucs spéciaux dedans'!**",
         "notThisbox": "Tu ne possèdes pas ce genre de lootbox, retente `{{prefix}}lootbox` et regarde ce que tu as~",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",

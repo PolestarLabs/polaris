@@ -65,6 +65,7 @@
         "colorChange": "Ваш любимый цвет сохранен!"
     },
     "CMD": {
+        "denied": "",
         "incorrectUsage": "Тупица, ты неправильно используешь команду. Попробуй {{usage}}. Например: {{example}}",
         "disabledModule": ":no_entry_sign: Наш хозяин объявил {{module}} запрещенным. Беда.",
         "genericInvalid": "Божечки, кажется, это неправильная команда  ;~;",
@@ -780,7 +781,7 @@
         "egghuntfail": "*Но не удалось найти ни одного*",
         "egghuntsuccess": "Отлично! Вы нашли яйцо! Посмотрим..",
         "egghuntsuccess2": "{{rarity_emoji}} {{user}} нашел **{{rarity}} Яйцо**!",
-        "egghuntsuccess3": "",
+        "egghuntsuccess3": "У Вас есть **{{X}}** яиц,\n**{{Y}}** из которых - уникальные.\n\nУзнать больше: [Pollux Easter Event 2018](https://pollux.gg/events/easter2018)",
         "delaytrade": "Подождите! Вы сможете обмениваться яйцами через {{remaining}}",
         "wanttrade": "{{user}} хочет обменяться **{{tradingEgg}}** с Вами.",
         "wanttrade2": "*Чтобы принять его, введите `accept`, а затем ID яйца, которое вы даёте взамен.*\n\nНапример. `accept C1`, чтобы дать [**C1**] в обмен на [**{{eggcode}}**] яйцо.",

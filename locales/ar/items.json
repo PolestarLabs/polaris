@@ -7,7 +7,7 @@
     },
     "commendtoken": {
         "name": "رمز الثناء",
-        "description": "ما هذا؟ الإيثار؟"
+        "description": ""
     },
     "complete_ring_jade": {
         "name": "خاتم الشم المشتت",
@@ -326,5 +326,20 @@
     "fork": {
         "name": "Fork",
         "description": "بأربعة أضعاف القدرة على الطعن في سكين، ولكن نصف التأثير، إنها ضعف القيمة!"
+    },
+    "lootbox_C_D": {
+        "name": ""
+    },
+    "lootbox_U_D": {
+        "name": ""
+    },
+    "lootbox_R_D": {
+        "name": ""
+    },
+    "lootbox_SR_D": {
+        "name": ""
+    },
+    "lootbox_UR_D": {
+        "name": ""
     }
 }

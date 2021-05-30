@@ -1,4 +1,25 @@
 {
+  "halloween20": {
+    "covenants": {
+      "dusk": "",
+      "umbral": "",
+      "plsupdate": "",
+      "joinDusk": "",
+      "joinDuskAffinity": "",
+      "joinUmbral": "",
+      "joinUmbralAffinity": ""
+    },
+    "avatar": {
+      "clickHere": "",
+      "preview": "",
+      "dusk": "",
+      "night": "",
+      "inad": "",
+      "fine": "",
+      "opos": "",
+      "diff": ""
+    }
+  },
   "halloween18": {
     "noctix": {
       "acCask": "",
@@ -80,7 +101,7 @@
   "halloween17": {
     "treat": "***不給糖就搗蛋！***你從這個伺服器拿到了**{{qtd}}**個糖果",
     "treatRefresh": "你已經拿過糖果了！你可以等**{{remaining}}**之後再來",
-    "current_event": "嘿～ 你知道現在有個全球的**聖誕節活動**嗎？:jack_o_lantern:\n你可以在活動中拿到一些酷炫且__限定__的物品來裝飾你的`p!profile`名片\n只在這個活動中開放，活動將於**11月5號**結束\n更多資訊：<http://pollux.gg/events/haloween> *（英文頁面）*\n*聯絡你的管理員來確認這個伺服是否有參與活動*",
+    "current_event": "",
     "newAccOut": ":warning: 抱歉，新的帳號無法參與。但是你可以參加下次活動",
     "nextThis": "下次要糖時間：",
     "candiesCheck": "你到目前為止收集了**{{amt}}**顆糖果，繼續去每個伺服器挨家挨戶的敲門吧！",
@@ -136,7 +157,7 @@
     "egghuntfail": "*但是什麼都找不到*",
     "egghuntsuccess": "真棒！這裡有個彩蛋！",
     "egghuntsuccess2": "{{rarity_emoji}}{{user}}找到了一個**{{rarity}}彩蛋**！",
-    "egghuntsuccess3": "你總共有**{{X}}**個彩蛋，其中有**{{Y}}**種\n\n\n更多資訊： [Pollux復活節活動2018](https://pollux.gg/events/easter2018)",
+    "egghuntsuccess3": "",
     "delaytrade": "等等！你要在{{remaining}}之後才能再次交換彩蛋",
     "wanttrade": "{{user}}想要用**{{tradingEgg}}**跟你換其他彩蛋",
     "wanttrade2": "*如果要接受，輸入`accept`然後補上你要送出的彩蛋ID*\n\n例如：`accept C1`提供[**C1**]彩蛋來換這個[**{{eggcode}}**]彩蛋",

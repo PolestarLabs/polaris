@@ -3,15 +3,20 @@
         "RBN": "Rubi",
         "RBN_fullname": "Permata Rubi",
         "RBN_plural": "Rubi",
+        "rubines": "",
         "JDE": "Giok",
         "JDE_fullname": "Serbuk Giok",
         "JDE_plural": "Giok",
+        "jades": "",
         "SPH": "Safir",
         "SPH_fullname": "Pecahan Safir",
         "SPH_plural": "Safir",
+        "sapphires": "",
         "synthGems": "Paduan Permata",
         "cosmoFragment": "Kepingan Kosmo",
         "cosmoFragment_plural": "Kepingan Kosmo",
+        "COS": "Kepingan Kosmo",
+        "COS_plural": "Kepingan Kosmo",
         "C": "Biasa",
         "U": "Luar Biasa",
         "R": "Langka",
@@ -36,7 +41,10 @@
         "sticker": "Stiker",
         "sticker_plural": "Stiker",
         "background": "Latar Belakang",
-        "background_plural": "Latar Belakang"
+        "background_plural": "Latar Belakang",
+        "EXP": "",
+        "PSM": "",
+        "PSM_plural": ""
     },
     "terms": {
         "transferDenied": "Transfer Ditolak",
@@ -119,7 +127,7 @@
     "responses": {
         "errors": {
             "iNeedThesePerms": "Hak untuk akses ini tidak bisa dijalankan dengan benar:\n{{PERMSLIST}}",
-            "denied": "Kamu tidak diizinkan untuk menggunakan ini. Perintah ini membutuhkan Pangkat {{rankNeed}}, Pangkat kamu sekarang {{rankMe}}. Hubungi pemilik server atau Moderator.",
+            "denied": "",
             "disabledModule": ":no_entry_sign: {{module}} telah dilarang di sini. Sayang sekali.",
             "genericInvalid": "Aduh-duh, kayaknya Perintah itu tidak benar ;~;",
             "prefixChng": "Sip, sekarang awalannya adalah {{prefix}}, ayo coba `{{prefix}}stats'.",
@@ -127,6 +135,7 @@
             "chooseAmod": "Bisa pilih sebuah _module_ enggak?",
             "kinNone": "Bilang dong mau _Tendang_ siapa. Tentu saja, mungkin aku juga bisa menendangmu.",
             "kin404": "Aku tidak bisa menemukannya. Apa dia sudah kabur duluan? Atau mereka hanya imajinasi milikmu saja.",
+            "target404": "",
             "unmutable": "Tidak peduli apa yang kamu katakan, aku tidak akan membungkam orang ini.",
             "unperm": "Aku tidak bisa melakukannya. Mungkin kamu bisa memberiku akses sebelum menyuruhku untuk melakukan sesuatu.",
             "noRoleHere": "_Role_ itu tidak terdaftar. Pastikan kamu memberikan _role_ yang tepat.",
@@ -144,9 +153,13 @@
             "noChannelGiven": "Beritahu aku channel mana yang ingin diberikan informasi aktivitas.",
             "emojiError": "Aku tidak dapat menambahkan emoji ini. Cek izin reaction atau jika emojinya valid...",
             "insuperms": "{{imsorry}} Aku tidak dapat melakukannya untukmu jika kamu sendiri tidak memiliki izin.",
-            "not-a-NSFW-channel": "Channel ini tidak tersiapkan untuk NSFW. Jangan tinggalkan \"karya seni\"mu dimana-mana."
+            "not-a-NSFW-channel": "Channel ini tidak tersiapkan untuk NSFW. Jangan tinggalkan \"karya seni\"mu dimana-mana.",
+            "unparsable": ""
         },
         "cooldown": {
+            "commands": {
+                "roulette": ""
+            },
             "generic": [
                 "Tunggu sebentar!",
                 "Aku bukan mesin printer, jadi sabar dong!",
@@ -155,7 +168,7 @@
                 "Terlalu banyak perintah!",
                 "Aaah! pelan-pelan!",
                 "Aku hanya punya beberapa jari untuk beberapa tombol! Sabar dong!",
-                "Kenapa buru-buru?!",
+                "",
                 "Aku butuh waktu sejenak untuk bernafas!",
                 "Sayang, satu-satu dong.",
                 "*Kamu terlalu cepat senpai uwu aku tuh ngga bisa diginiin uwu*"
@@ -273,19 +286,23 @@
             "isEmpty": "Disitu tidak ada yang bisa dilepas!"
         },
         "discoin": {
-            "desc": "Rubimu sedang dikirim, sebuah respon dari %BOT% akan datang setelah barang sampai tujuan.",
-            "intake": "Pollux **Rubi** (RBN) Tertukar:",
-            "outtake": "%BOTNAME%'s **%CURRNAME%** ({{$}}) untuk menerima:",
-            "remainder": "Batas waktu yang tersisa untuk {{$}}",
-            "receiptCode": "Kode Penerimaan Transaksi",
-            "amNaN": "Kuantitas tidak valid",
-            "invalidCurr": "Mata uang itu tidak ada!",
-            "invalidAmt": "Kamu tidak bisa menukarkan dengan jumlah itu! ",
-            "unverified": "Kamu tidak terverifikasi untuk melakukan pertukaran.\nTolong verifikasi dirimu di [http://discoin.sidetrip.xyz/verify]",
-            "userLimit": "Pertukaranmu untuk hari ini telah mencapai batas!",
-            "globalLimit": "Kamu telah mencapai batas video harian, Coba lagi besok.",
-            "takedis": "Simpan kode ini sewaktu-waktu Rubimu tidak mencapai destinasi.",
-            "ex-succ": "Pertukaran sukses!"
+            "links": "",
+            "list": "",
+            "graphs": "",
+            "guide": "",
+            "tax": "",
+            "tax_desc": "",
+            "discoin_desc": "",
+            "receipt": "",
+            "receiptnoDM": "",
+            "takedis": "",
+            "invalidCurr": "",
+            "debt": "",
+            "zero": "",
+            "perMin": "",
+            "perMax": "",
+            "dailyMax": "",
+            "unreachable": ""
         },
         "langIntro": {
             "global": "Oke, mulai dari sekarang aku akan berbiacara {{LANGUAGE}} di server ini. {{LANGJOKE}}",
@@ -294,6 +311,15 @@
         },
         "profile": {
             "persotexUpdate": "Aku telah mengganti teks personal milikmu ke: {{pstext}}\nCoba `{{prefix}}profile` untuk melihat perubahannya pada Kartu Profil milikmu. Aku yakin seseorang pasti akan menyukainya."
+        },
+        "gift": {
+            "noTarget": "",
+            "noSelf": "",
+            "invEmpty": "",
+            "invEmptyGive": "",
+            "inv>1": "",
+            "inv<amt": "",
+            "sent": ""
         },
         "trade": {
             "exchangeWhat": "Apa yang akan kamu berikan di pertukaran?",
@@ -381,6 +407,11 @@
                 ]
             ]
         },
+        "thx": {
+            "after": "",
+            "wipe": "",
+            "noself": ""
+        },
         "divorce": {
             "confirmdiag": "Apakah kamu setuju untuk menerima perceraian dari {{user}}? Biaya %EMJ% **5000 Rubi** akan dikenakan dari kedua belah pihak. LovePoints kalian akan dipotong setengah juga!",
             "saidnope": "{{userB}} tidak mau diceraikan. Kamu bisa memaksanya dengan menyogok %EMJ%**10000 Rubi** agar aku bisa memanggil seorang pengacara untuk menyelesaikan ini, tetapi kalian akan kehilangan **semua LovePoints** !",
@@ -400,6 +431,7 @@
         },
         "generic": {
             "inviteText": "Undang aku ke servermu, klik [HERE]",
+            "selectIndex": "",
             "cancel": "Berubah pikiran? Oke, sampai jumpa kembali~",
             "noFundsBalance": "Jumlah Rubi kamu sekarang {{number}}, tidak cukup untuk membelinya",
             "noFunds": "Rubi tidak cukup",
@@ -407,19 +439,34 @@
             "minus_rubines": "Aku mengambil %R $t(keywords.RBN_plural) dari saldomu oke~?"
         },
         "daily": {
-            "dailyGet": "{{emoji}} Kamu dapat 100 Rubi dari bonus harian!",
-            "dailyNope": "Ini {{emoji}} ya? Sepertinya kamu sudah mengklaim Rubi tersebut, kamu bisa dapat lagi di: **{{remaining}}**",
-            "dailyStreak": "{{emoji}} **+500 Rubi** karena telah mengumpulkan harian selama 10 hari berturut-turut!"
+            "insuranceConsumed": "",
+            "streakLost": "",
+            "noRestorerInfo": "",
+            "yesRestorerInfo": "",
+            "dailyBonus": [
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            ],
+            "firstDaily": "",
+            "dailyNope": ""
         },
         "toggle": {
             "disabledSer": "_Module_ **{{module}}** telah dimatikan secara **Global**.",
-            "disabledChn": "_Module_ {{module}} telah dimatikan pada <#{{channel}}>",
+            "disabledChn": "",
             "disabledComSer": "Perintah {{command}} telah dimatikan secara **Global**.",
-            "disabledComChn": "Perintah {{command}} telah dimatikan pada <#{{channel}}>",
+            "disabledComChn": "",
             "enabledSer": "_Module_ **{{module}}** telah diperbolehkan secara **Global**.",
-            "enabledChn": "_Module_ {{module}} telah diperbolehkan pada <#{{channel}}>",
+            "enabledChn": "",
             "enabledComSer": "Perintah **{{command}}** telah diperbolehkan secara **Global**",
-            "enabledComChn": "Perintah {{command}} telah diperbolehkan pada <#{{channel}}>"
+            "enabledComChn": ""
         },
         "reput": {
             "noSelf": "Enggak, aku tidak bisa memberi _rep_ ke dirimu sendiri.",
@@ -443,7 +490,8 @@
             "cash1000": "Oke, sekarang kamu sepertnya sudah tajir.",
             "cash5000": "Wah! Kok bisa Kamu jadi _super_ tajir begitu?",
             "cash10000": "Kamu tidak membobol bank, 'kan? Aku boleh telepon polisi enggak?",
-            "cashInfinite": "Berbuat curang itu tidak baik loh."
+            "cashInfinite": "Berbuat curang itu tidak baik loh.",
+            "balance": "Saldo"
         },
         "greet": {
             "byeOFF": "Kamu mematikan pesan perpisahan? Ini mungkin bagus, mengingat mereka juga tidak melihatnya.",
@@ -493,12 +541,22 @@
             "noItem": "Kamu membutuhkan Koin Pemujian, dan kamu saat ini tidak punya sama sekali. Kamu membutuhkannya untuk memuji orang lain.",
             "commendationLimit": ""
         },
+        "timers_generic": {
+            "cooldown": "",
+            "check_no": "",
+            "check_yes": "",
+            "noSelf": ""
+        },
         "crafting": {
             "craftingItem": "Membuat `{{item_name}}`",
+            "craftedItem": "",
             "noitem": "Aku tidak dapat menemukan barang ini",
-            "noitemu": "Tidak dapat menemukan barang ini atau apapun yang sejenis",
-            "materialMissing": "Ada beberapa kekurangan material di inventorimu, Aku tidak dapat membuat ini.",
+            "noitemlike": "",
+            "gemsMissing": "",
+            "materialMissing": "",
+            "materialAutocraft": "",
             "materialPresent": "Semua material telah tersedia di inventorimu, lanjut ke pembuatan?",
+            "materialPresentAuto": "",
             "didyoumean": "Aku tidak dapat menemukan itu. Kira-kira yang kamu maksud adalah salah satu dari ini?",
             "didyoumeanOne": "Sesuatu tidak benar disini... apakah ini yang kamu cari, sayang?",
             "timeout": "Waktu habis! kamu menghabiskan terlalu banyak waktu, perapiannya sekarang dingin.",
@@ -520,7 +578,8 @@
             "success": ""
         },
         "give": {
-            "cooldown": ""
+            "cooldown": "",
+            "not2self": ""
         },
         "inventory": {
             "noSuchBox": "Lihat, aku tidak bisa melihat kotak ini disitu dan aku yakin kamu sendiri juga ngga bisa.",
@@ -572,7 +631,10 @@
             "clicktoconfirm": "Klik ✔ untuk menkonfirmasi pilihanmu, ✖ untuk membatalkan.",
             "confirmDelete": "Konfirmasi penghapusan?",
             "alotWentOn": "Banyak yang terlewati hari ini...",
-            "alreadyOwnThis": "Hei, kamu sudah memiliki ini!"
+            "alreadyOwnThis": "Hei, kamu sudah memiliki ini!",
+            "redactedLink": "",
+            "redactedMention": "",
+            "redacted": ""
         },
         "reminders": {
             "currentActive": "",
@@ -580,7 +642,9 @@
             "maxActive": "",
             "errorWhen": "",
             "errorTARDIS": "",
+            "errorTooShort": "",
             "reminderOk": "",
+            "reminderOk_empty": "",
             "reminderChannel": "",
             "reminderDMs": ""
         },
@@ -710,80 +774,6 @@
             "end": "\n**Daftar keseluruhan perintah dapat di temukan di <https://pollux.gg/commands>**\n\nCek partner kami di **<https://pollux.gg/partners>**\nLihat atau ajukan karya seni fans di **<https://pollux.gg/fanart>**\nLihat profil publikmu di **<https://pollux.gg/profile/me>**\n\n**Kosmetik**\nToko Latar Belakang **https://pollux.gg/bgshop**\nToko Medali **https://pollux.gg/medalshop**\nBengkel Kerajinan **https://pollux.gg/crafting**\nStiker Virtual **<https://pollux.gg/stickers>** (untuk stiker asli cek Support Server)\nInformasi Acara **<https://pollux.gg/events>**\n\nDukung aku di **<https://patreon.com/Pollux>** atau **<https://pollux.gg/donate>**\nIkuti aku di Twitter **<https://twitter.com/maidPollux>**\n\n---\n\n**Untuk hal lain, cek __Dashboard__: <https://pollux.gg/dashboard>**\nAtau gabung Server Support: **​ https://discord.gg/rEBCccS ​**\nUndang aku ke servermu **<https://pollux.gg/invite>**\n"
         }
     },
-    "games": {
-        "flags": {
-            "title": "Tebak benderanya",
-            "youhave10": "Kamu punya 10 detik untuk menebak darimana asal negara dari bendera ini. **GO!**",
-            "wellDone": "{{interjection}} **{{user}}** yap! Ini adalah bendera **{{country}}**",
-            "noGuess": "{{interjectionB}} sepertinya tidak ada seorang pun yang mampu menjawab... Semoga beruntung lain kali!"
-        },
-        "coinflip": {
-            "coinVictory": "{{interjection}} kamu menang! kamu mendapatkan **{{prize}}** $t(keyowrds.{{currency}}_plural) {{emoji}}",
-            "coinDefeat": "{{interjection}} kalah yah...semoga beruntung lain kali!"
-        },
-        "dice": {
-            "userRolledSome": "**{{user}}** menggulirkan dadu:",
-            "userRolled": "**{{user}}** menggulirkan **`{{numDice}}`**...",
-            "neutralRolled": "Menggulirkan **`{{numDice}}`**...",
-            "andGot": "dan mendapatkan **{{val}}**!",
-            "rollsWere": "Hasil dadunya adalah:",
-            "invalidRoll": "Salah penggunaan dadu -- hanyalah dadu yang akan di gulirkan!",
-            "onlyRoll5": "Kamu hanya dapat menggulirkan 5 dadu yang berbeda secara bersamaan!",
-            "limit25": "Konsekutif dadu hanya dapat di tampilkan sampai 25 guliran.",
-            "noDiceRolled": "Tunggu, tidak ada dadu yang dapat aku gulirkan, gunakan `{{prefix}}roll help` jika kamu tidak yakin apa yang sedang kamu lakukan~",
-            "exceedLim": "Guliran ini melebihi batas karakter, coba gunakan `-nostreak` untuk menghilangkan hasil guliran"
-        },
-        "blackjack": {
-            "ongoing": "Kamu harus menyelesaikan permainan ini sebelum memulai yang lain.",
-            "newgame": "Blackjack hm? seharusnya kamu sudah mengerti aturannya, jadi ayo mulai.",
-            "result": "Hasil:",
-            "bust": "Ledakan",
-            "youwin": "",
-            "youlose": "",
-            "hit": "Respon dengan `hit` untuk menarik satu kartu lagi,",
-            "stand": "Berdiri",
-            "split": "`split` untuk memisahkan tanganmu,",
-            "double": "`double` untuk menggandakan taruhanmu dan tarik satu kartu terakhir,",
-            "pass": "atau `stand` untuk melewati.",
-            "surrender": "",
-            "insurance": "",
-            "surrender_res": "",
-            "joker": "",
-            "blackjack_win": "",
-            "blackjack_lose": "",
-            "double_win": "",
-            "double_lose": "",
-            "insurance_lost": "",
-            "insurance_win": "",
-            "surrender_helper": "",
-            "insurance_helper": "",
-            "splitbreak": "Perincian Pembagian:",
-            "switchdeck": "Sekarang kita akan memainkan BlackJack menggunakan dek **{{deckname}}**!",
-            "switchdeckEgg": "Sekarang kita akan memainkan BlackJack menggunakan dog-- maksudku **dek** {{deckname}}!\nOMG maafkan aku!",
-            "even": "Sepertinya kita mulai miskin, nih, ambil kembali Rubimu."
-        },
-        "slots": {
-            "takePrize": "Hadiahmu untuk ini adalah **%$%** %emj%",
-            "_minor": "Lebih baik daripada tidak sama sekali kan?",
-            "_mid": "Tidak buruk, tidak bagus juga",
-            "_major": "Hampir saja!",
-            "_ultimate_1": "Mantap! :heart:",
-            "_ultimate_2": "kamu sangat beruntung!!! :heart:",
-            "_ultimate_3": "dapatkah kamu percaya ini? :heart:",
-            "kommunism": "Jackpot Komunis! hadiahmu akan di redistribusikan kepada para penduduk, kamu akan mendapatkan 3x dari apa yg mereka lakukan.",
-            "pollux_jackpot": "Weh, sudah yang ketiga kalinya. Mungkin kamu layak menerima sesuatu... yang lebih.",
-            "lucky": "Tujuh Keberuntungan! mantap jiwa.",
-            "jackpot": "Sebagai tambahan hadiah, kamu akan menerima 100 cincin dan tambahan nyawa",
-            "bonanza": "Hujan Rubi! Aku harap kamu tidak berencana menyuruhku untuk membawa semua ini.",
-            "potato": "Kentang... sepertinya aku bisa membuat sesuatu untuk mu.",
-            "zero_1": "Oh my, sepertinya semua Rubimu akan menjadi milikku.",
-            "zero_2": "Mana nih jimatnya? memalukan sekali.",
-            "zero_3": "Mungkin jika kamu mau mencoba lagi kamu akan memenangkan sesuatu?"
-        },
-        "ceilingBet": "Kamu tidak bisa bertaruh lebih dari **{{number}}** $t(keywords.RBN_plural) di permainan ini.",
-        "tryAgain": "Coba lagi?",
-        "alreadyPlaying": "Tunggu! kita masih bermain!"
-    },
     "loot": {
         "rareDrop": "Taukah kamu apa ini? Ini adalah sebuah Lootbox yang **LANGKA**!",
         "suprareDrop": "{{interjection}} sebuah Lootbox yang **SANGAT LANGKA**!",
@@ -818,6 +808,7 @@
         "eventDrop": "Dan masih ada lagi! Kotak ini adalah sebuah **KOTAK ACARA** yang artinya: **'berisi barang-barang spesial'!**",
         "notThisbox": "Kamu sepertinya tidak mempunyai kotak itu. Coba `{{prefix}}lootbox` lagi dan lihat kotak apa yang kamu miliki.",
         "options_new": "",
+        "options_nrr": "",
         "rerollRemain_new": "",
         "rerollRemain_new_plural": "",
         "hasDupes": "",
