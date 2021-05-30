@@ -478,7 +478,7 @@ async function startMultiplayerGame(msg) {
 			},
 		}).then((m) => m.deleteAfter(2e3));
 
-		return processRound(players, round++);
+		return processRound(shuffle(players), ++round );
 	};
 }
 
