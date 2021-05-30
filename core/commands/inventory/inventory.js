@@ -138,16 +138,12 @@ const init = async (msg, args) => {
     ],[
       { style: 2, label: ""??"KEY", custom_id: `invButton:KEY:${msg.author.id}`, emoji: {id: _emoji("KEY").id}},
     //],[
-      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
-      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
-      { style: 2, custom_id: `invButton:CLOSE:${msg.author.id}`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 2, custom_id: `BLANK`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 2, custom_id: `BLANK`, disabled: true, emoji: {id: _emoji("__").id}},
+      { style: 2, custom_id: `BLANK}`, disabled: true, emoji: {id: _emoji("__").id}},
       { style: 4, label: ""??"CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: {id: _emoji("nope").id}},
     ]
   ];
-
-  let invbuts = await msg.setButtons(inventoryButtons,1);
-  console.log({invbuts});
-  
 
   menumes = await msg.channel.send({
     components: msg.setButtons(inventoryButtons,1)
@@ -155,7 +151,7 @@ const init = async (msg, args) => {
   menumes.target = Target;
   args[10] = userData;
   args[11] = msg.prefix;
-  args[12] = msg;
+  //args[12] = msg;
   INVOKERS.set(msg.author.id, menumes.id);
   return menumes;
   // menumes.addReaction(_emoji("LOOTBOX").replace(/(\<:|\>)/g,'') )
