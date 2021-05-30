@@ -157,6 +157,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           
           await DB.users.set(msg.author.id, { $set: { "modules.inventory": newInventory } }).catch(console.error);
           userData_OLD.modules.inventory = newInventory;
+
           
           return true;
         }
@@ -313,6 +314,10 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
              "modules.tagline": userData_OLD.modules.tagline,
              "modules.persotext": userData_OLD.modules.persotext,
              "modules.favcolor": userData_OLD.modules.favcolor,
+             "modules.medalInventory": userData_OLD.modules.medalInventory,
+             "modules.flairsInventory": userData_OLD.modules.flairsInventory,
+             "modules.bgInventory": userData_OLD.modules.bgInventory,
+             "modules.stickerInventory": userData_OLD.modules.stickerInventory,
           } }); 
           return true;
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
