@@ -50,14 +50,14 @@ Eris.Message.prototype.getComponents = async function(){
 }
 Eris.Message.prototype.setButtons = function(buttons,dry){
   if (buttons.length > 5) return Promise.reject("Max 5 Rows");
-  if ( buttons.some(b=>b.length>5) )  return Promise.reject("Max 5 Buttons");
-
-  if (!buttons[0].length) buttons = [buttons];
+  if ( buttons.some?.(b=>b.length>5) )  return Promise.reject("Max 5 Buttons");
+  
+  if (!buttons[0]?.length) buttons = [buttons];
 
   const components = buttons.map(row=>{
     return {
       type: 1,
-      components: row.map((btn,i)=>{
+      components: row.map?.((btn,i)=>{
         return {
           type: 2,
           label: btn.label,
@@ -66,7 +66,7 @@ Eris.Message.prototype.setButtons = function(buttons,dry){
           disabled: btn.disabled,
           emoji: btn.emoji
         }
-      })
+      }) || [Object.assign({type:2},row)]
     }
   });
 
