@@ -125,7 +125,6 @@ const init = async (msg, args) => {
       console.error(e);      
     }).then(async (inter) => {
       const choice = inter?.[0];
-      console.log({choice})
       if (choice?.id === "reroll") {
         message.delete();
         currentRoll++;
@@ -168,7 +167,8 @@ const init = async (msg, args) => {
     });
   }
 
-  return process();
+  await process();
+  return null;
 };
 
 function renderCard(item, visual, P) {
