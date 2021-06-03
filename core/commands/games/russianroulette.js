@@ -346,11 +346,15 @@ async function startMultiplayerGame(msg) {
 		});
 		await Promise.all(verifiedPlayers.map(plyr => {
 			return ECO.pay(plyr.id, plyr.money, "russianroulette.gambling");
-		}));
-		return processRound(shuffle(verifiedPlayers), 1, initialMessage, hasBots);
+		}));		
+
+		const Game = new RussianRoulette(null, 0);
+		Game.prizePool = verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b);
+
+		return processRound(Game, shuffle(verifiedPlayers), 1, initialMessage, hasBots);
 	});
 
-	async function processRound(players, round = 1, initialMessage) {
+	async function processRound(Game, players, round = 1, initialMessage) {
 		console.log({round})
 		// Initialise game
 		//let voiceChannel = msg.member.voiceState.channelID;
@@ -359,8 +363,8 @@ async function startMultiplayerGame(msg) {
 		await wait(2);
 
 		
-		const value = players.map((a) => a.money).reduce((a, b) => a + b);
-		const Game = new RussianRoulette(null, 0);
+		const value = Game.prizePool;
+		console.log({players})
 
 		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value});
 
@@ -381,7 +385,7 @@ async function startMultiplayerGame(msg) {
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
 		const diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
-		await gameMessage.deleteAfter(5).catchReturn();
+		//await gameMessage.deleteAfter(5).catchReturn();
 
 		// Is there 1 person left?
 		if (players.length === 1) { // This person wins
@@ -482,9 +486,9 @@ async function startMultiplayerGame(msg) {
 				description: v.mp_round_results,
 				thumbnail: { url: `${paths.CDN}/build/games/russian_roulette/miniload.gif` },
 			},
-		}).then((m) => m.deleteAfter(2e3));
+		}) //.then((m) => m.deleteAfter(2e3));
 
-		return processRound(shuffle(players), ++round );
+		return processRound(Game,shuffle(players), ++round );
 	};
 }
 
