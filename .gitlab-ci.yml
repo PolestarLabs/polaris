@@ -10,7 +10,7 @@ cooking:
     - polestar
   script:
     - cd /home/pollux/polaris/LIVE/beta/
-    - git clear -f
+    - git clean -f
     - git reset --hard origin/beta
     - git pull
     - npm install
