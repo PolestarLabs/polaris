@@ -84,11 +84,14 @@ const init = async (msg, args) => {
 
       // Create material display
       const { itemsTotal } = crafter;
+      
       for (const itemArr of itemsTotal) {
+        
         const icona = itemArr[2] < itemArr[1] ? "nope" : "yep";
+
         const itemDetails = Crafter.getItem(itemArr[0]);
-        matDisplay += `\n${_emoji(icona)} | ${itemDetails.emoji?.trim() || "📦"}`
-          + ` ${itemDetails.name} (${itemArr[2]}/${itemArr[1]})`;
+        matDisplay += `\n${_emoji(icona)} | ${itemDetails?.emoji?.trim() || "📦"}`
+          + ` ${itemDetails?.name} (${itemArr[2]}/${itemArr[1]})`;
       }
       // Not enough gems; fatal to crafting.
       if (crafter.isMissingGems) {
