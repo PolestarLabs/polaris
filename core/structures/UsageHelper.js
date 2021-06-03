@@ -43,7 +43,7 @@ exports.run = function run(cmd, m, third, extras) {
     prefix: m.prefix,
     command: cmd,
     prepend: i18n.exists(`commands:usage.${cmd}`) ? "" : "`{{prefix}}{{command}}` -",
-    websiteRoot: paths.CDN,
+    websiteRoot: paths.DASH,
     squad: "- PurpleCat\n - Shamisu\n - Pollyanna\n - Kurono\n - Yuki\n - Celeste",
   }), false);
 
