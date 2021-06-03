@@ -24,7 +24,7 @@ const init = async function (msg, args) {
   const embed = {};
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
-  const mansionMember = await PLX.resolveMember("277391723322408960",msg.author.id,{softMatch:false});
+  const mansionMember = await PLX.resolveMember("277391723322408960",msg.author.id,{softMatch:false}).catch(e=> msg.member);
   
   if (PLX.user.id === '354285599588483082') return;
   
@@ -37,6 +37,7 @@ const init = async function (msg, args) {
   const userData_NEW = await DB.users.findOne({id:msg.author.id}).noCache().lean();
   
 
+  if (userData_OLD.blacklisted?.length > 1 && userData_OLD.blacklisted !="false") return msg.reply(`${_emoji('nope')} • Blacklisted accounts will have to start over!`);
   if (userData_NEW.migrated) return msg.reply(`${_emoji('nope')} • Your account has already been migrated!`);
 
   // SECTION SLIDE 1 ----------------------------------------------------------
@@ -326,6 +327,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
              "modules.flairsInventory": userData_OLD.modules.flairsInventory,
              "modules.bgInventory": userData_OLD.modules.bgInventory,
              "modules.stickerInventory": userData_OLD.modules.stickerInventory,
+             "personal": userData_OLD.personal,
           } }); 
           return true;
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
