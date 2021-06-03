@@ -1,19 +1,17 @@
-include:
-  - template: Code-Quality.gitlab-ci.yml
-
-
-
-before_script:
-    
+before_script:    
   - echo "Hoping this won't break anything"
   
 cooking:
   stage: build
+  rules:
+    - if: $CI_COMMIT_BRANCH === "beta"
+
   tags:
     - polestar
   script:
-    - cd /home/pollux/polaris/DEV/bot/
-    - git reset --hard origin/dev
+    - cd /home/pollux/polaris/LIVE/beta/
+    - git clear -f
+    - git reset --hard origin/beta
     - git pull
     - npm install
 
@@ -28,6 +26,7 @@ catapulting:
   tags:
     - polestar
   script:
-    - cd /home/pollux/polaris/DEV/bot/
+    - cd /home/pollux/polaris/LIVE/beta/
     - echo "Did this work idk"
-    - plx-reload polaris
+    - pm2 restart Pollux.Premium
+    - pm2 restart Pollux.Beta
