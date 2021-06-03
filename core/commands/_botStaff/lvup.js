@@ -34,6 +34,7 @@ const init = async function (msg,args){
     });
 
     const userData = await DB.users.get(msg.author.id);
+    if (!userData) return;
 
 
     let LV_SIZE = 42; //52  

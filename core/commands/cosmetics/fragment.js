@@ -19,6 +19,7 @@ const init = async (msg, args) => {
   itemType = itemType === "bg" ? "background" : itemType;
 
   const userData = await DB.users.getFull({ id: msg.author.id });
+  if (!userData) return "User Not Registered";
   let BASE; let inventory; let param;
 
   if (itemType === "background") {

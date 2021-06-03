@@ -8,6 +8,7 @@ const init = async (msg) => {
     DB.cosmetics.find({ type: "sticker" }),
     DB.items.find({ type: "boosterpack" }),
   ]);
+  if (!userData) return "User Not Registered";
   const collection = msg.args[0];
 
   // if(userData.amtItem(collection) < 1) return msg.channel.send($t('interface.booster.'));

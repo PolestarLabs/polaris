@@ -12,6 +12,7 @@ const init = async (msg) => {
     const query = msg.args[0] === "check" ? msg.args[1] : msg.args[0];
     const usery = await PLX.getTarget(query) || msg.author;
     const uData = await DB.users.get(usery.id);
+    if (!userData) return "User Not Registered";
 
     const embed = new Embed();
     let x;

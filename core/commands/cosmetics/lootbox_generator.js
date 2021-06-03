@@ -71,7 +71,7 @@ const init = async (msg, args) => {
   if (!staticAssets.loaded) await staticAssets.load;
   if (VisualsCache.size > 800) VisualsCache.clear();
 
-  const USERDATA = await DB.users.getFull({ id: msg.author.id });
+  const USERDATA = (await DB.users.getFull({ id: msg.author.id })) || (await DB.users.new(  msg.author ));
 
   if (LootingUsers.get(msg.author.id)) {
     await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });

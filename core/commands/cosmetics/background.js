@@ -52,6 +52,8 @@ const init = async (msg, args) => {
   else embed.field("\u200b", "\u200b", true);
 
   const userData = await DB.users.get(msg.author.id);
+  if (!userData) return "User Not Registered";
+  
   const hasIt = userData.modules.bgInventory.includes(selectedBG.code);
   const affordsIt = await ECO.checkFunds(msg.author, _price);
   const canBuy = selectedBG.buyable && !isEventBG(selectedBG);

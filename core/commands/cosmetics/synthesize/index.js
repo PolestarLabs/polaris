@@ -18,6 +18,7 @@ const init = async (message, args) => {
 
   const operation = message.args[0] || "bg";
   const userData = await DB.users.getFull({ id: message.author.id });
+  if (!userData) return "User Not Registered";
   const embed = new Embed();
   let hasIt; let affordsIt; let canBuy; let selectedItem; let positive; let obtainable;
 

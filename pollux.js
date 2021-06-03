@@ -487,3 +487,9 @@ ${err?.stack?.slice(0, 1900)}
   // if(!PLX.beta) PLX.softKill();
   // else PLX.hardKill();
 });
+
+PLX.getOrCreateUser = async (user){
+  let udata = await DB.users.findOne({id:user.id});
+  if (!udata) udata = await DB.users.new(user);
+  return udata;
+}

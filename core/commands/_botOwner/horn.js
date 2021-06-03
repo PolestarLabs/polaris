@@ -8,6 +8,7 @@ const init = async function (msg) {
             {type:2,style:2,emoji:{name:"⛳"},custom_id:"playHorn:bolinha"},
             {type:2,disabled: true, style:2,emoji:{id:"434743628800458793"},custom_id:"playHorn:noot"},
             {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},          
+            {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},          
         ]},
     {type:1,components:[  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},]},
     {type:1,components:[  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},  {type:2,disabled: true, style:2,emoji:{id:"601288252867084318"},custom_id:"playHorn:noot"},]},

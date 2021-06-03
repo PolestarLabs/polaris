@@ -351,6 +351,7 @@ async function startMultiplayerGame(msg) {
 	});
 
 	async function processRound(players, round = 1, initialMessage) {
+		console.log({round})
 		// Initialise game
 		//let voiceChannel = msg.member.voiceState.channelID;
 		//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
@@ -371,6 +372,8 @@ async function startMultiplayerGame(msg) {
 				color: 0x2b2b3b,
 			},
 		};
+
+		if (round > 5) Game.handgunBarrel.pop();
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
@@ -489,7 +492,7 @@ async function userShoot(msg,player){
 		msg.channel.awaitMessages(m=>m.author.id === player.id && ['bang','shoot','boom','pew'].includes(m.content),{time:10e3, maxMatches:1}),
 		msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
 		msg.awaitButtonClick(click=> click.userID === player.id && click.id === 'shoot!', {time:10e3, maxMatches:1}),
-		( player.isBot ? wait( randomize(11,15) ) : wait(8))
+		( player.isBot ? wait( randomize(1,5) ) : wait(8))
 	]);
 }
 

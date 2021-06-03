@@ -23,7 +23,8 @@ const init = async (msg) => {
 
   moment.locale(msg.lang[0]);
 
-  const TARGETDATA = await DB.users.get({ id: Target.id });
+  const TARGETDATA = (await DB.users.get({ id: Target.id })) || (await DB.users.new(msg.author)) ;
+  
   emb.color("#ffc156");
   emb.title(bal);
 

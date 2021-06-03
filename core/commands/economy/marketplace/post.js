@@ -41,6 +41,7 @@ const init = async (msg, args) => {
 
   async function AllChecks() {
     const userData = DB.users.getFull({ id: msg.author.id });
+    if (!userData) return { pass:false, reason:"User Not Registered" };
 
     const checkItem = (uD, type, id, transaction) => {
       pass = true;

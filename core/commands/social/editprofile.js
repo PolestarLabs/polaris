@@ -30,7 +30,8 @@ const init = async function (msg) {
 
   delete require.cache[require.resolve("../../structures/ReactionMenu")];
   const ReactionMenu = require("../../structures/ReactionMenu");
-  const userData = await DB.users.get(msg.author.id);
+  const userData = (await DB.users.get(msg.author.id)) || (await DB.users.new(msg.author));
+  
   const frameOn = (userData.switches || { profileFrame: "unavailable" }).profileFrame;
   embed = new Embed();
   embed.title(":tools: Profile Quick Edit");

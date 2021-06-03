@@ -1,4 +1,4 @@
-const handgunBarrel = [0, 0, 0, 1, 0, 0];
+ 
 
 module.exports = class RussianRoulette {
   constructor(message, value) {
@@ -6,6 +6,7 @@ module.exports = class RussianRoulette {
     this.currentPayout = value;
     this.rounds = 5;
     this.maxValue = value - Math.floor(value * 0.125);
+    this.handgunBarrel = [1, 0, 0, 0, 0, 0];
   }
 
   get nextValue() {
@@ -16,7 +17,7 @@ module.exports = class RussianRoulette {
   async renderCard() {} // eslint-disable-line no-empty-function
 
   willSurvive() {
-    return !shuffle(handgunBarrel)[0];
+    return !shuffle(this.handgunBarrel)[0];
   }
 
   handleInput(message) {

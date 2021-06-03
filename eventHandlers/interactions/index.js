@@ -38,7 +38,7 @@ module.exports = async function(payload){
             });
         },
         updateMessage: function(data){
-            if (this.type === 3) return null;
+            //if (this.type === 3) return null;
             const response = {data};
             response.type = 7;
             PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response);
@@ -54,6 +54,7 @@ module.exports = async function(payload){
         PLX.emit("applicationCommand", interaction, payload.d.data);
     }
     if (interaction_type === 3){
+        console.log(require('util').inspect({interaction,data: payload.d.data},0,2,1))
         PLX.emit("messageComponent", interaction, payload.d.data);
     }
 

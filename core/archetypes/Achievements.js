@@ -130,6 +130,8 @@ async function init(){
     
     const { DM, msg } = options;
     const userData = await DB.users.get(uID);
+    if (!userData) return;
+    
     const awarded = await Achievements.give(userData, achievement);
     DB.users.set(uID, { $inc: { "modules.exp": awarded.exp || 100 } });
     const DMchannel = await PLX.getDMChannel(uID);

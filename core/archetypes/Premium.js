@@ -641,6 +641,7 @@ const DAILY_GETS = {
 
 async function getTier(userID) {
     const usr = await DB.users.get(userID);
+    if (!usr) return null;
     const tier = usr.prime?.tier || usr.donator; // LEGACY SUPPORT
     return tier?.toLowerCase() || null;
     // return false;

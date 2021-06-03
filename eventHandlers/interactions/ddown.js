@@ -1,9 +1,9 @@
 module.exports = async (interaction, data)=>{
+   const components = interaction.messageRaw.components;
+   //components[1].components[0].disabled=false;
 
-interaction.reply({
- 
-        "flags": 64,
-        "content": "Item",
+    interaction.updateMessage({
+        content: `Confirm **${data.values[0]}**` ,
         "components": [
             {
                 "type": 1,
@@ -38,7 +38,7 @@ interaction.reply({
                     {
                         "type": 2,
                         "style":1,
-                        disabled: true,
+                        disabled: false,
                         custom_id: "ttbt1",
                         "label":"Yep"
                     },
@@ -52,6 +52,6 @@ interaction.reply({
                 ]
             }
         ]
- 
-})
+    }) 
+
 }
