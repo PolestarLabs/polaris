@@ -20,7 +20,8 @@ const init = async function (msg) {
 };
 module.exports = {
   init,
-  deleteCommand: true,
+  //FIXME
+  //deleteCommand: true,
   argsRequired: true,
   pub: true,
   cmd: "clear",
