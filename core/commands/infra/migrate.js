@@ -25,8 +25,11 @@ const init = async function (msg, args) {
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
   const mansionMember = await PLX.resolveMember("277391723322408960",msg.author.id,{softMatch:false});
+  
+  if (PLX.user.id === '354285599588483082') return;
+  
   if ( !mansionMember.roles.includes('278985430844833792') && !mansionMember.roles.includes('278985430844833792') ){
-    return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
+   // return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
   }
 
 
@@ -262,7 +265,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         }
       },
       {
-        name: "Converting Cosmetics IDs (Waiting for BGs sheet) ",
+        name: "Converting Cosmetics IDs (Supposed to fail) ",
         wait: true,
         status: "pending",
         action: async function(){
@@ -271,7 +274,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           const myBGsFULL = await DB.cosmetics.find({ code: { $in: myBGs } }).lean();
           this.name += ` (${myBGsFULL.length}/${myBGs.length} found)`
           return false;
-          // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
+          //await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
         }
       },
       {
@@ -279,7 +282,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: true,
         status: "pending",
         action: async function(){
-          //await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
+          await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
           await DB.users.set(msg.author.id,{$set: {"counters.legacy.globalLV": userData_OLD.modules.level , "counters.legacy.globalXP": userData_OLD.modules.exp} });
           return true;
         }
@@ -360,8 +363,8 @@ console.log({totalActions})
 
     if (actionsDone >= totalActions){
       if (marriage_message) marriage_message.delete().catchReturn();
-      //await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
-      //await DB.users.set(msg.author.id,{$set: {"migrated": true} });
+      await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
+      await DB.users.set(msg.author.id,{$set: {"migrated": true} });
 
       embed.title = "Transfer complete!";
       embed.color = 0x22AA66;
