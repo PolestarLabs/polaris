@@ -8,6 +8,7 @@ async function fetchLocalRanks(server){
   let dbRankData = await DB.users.find({id: {$in: lRanks.map(u=>u.user)} },PROJECTION).lean();
   return lRanks.map(usr=>{
     let thisUser = dbRankData.find(u=>usr.user === u.id);    
+    if (!thisUser) return null;
     thisUser.modules.exp = usr.exp;
     thisUser.modules.level = usr.level;
     return thisUser;
