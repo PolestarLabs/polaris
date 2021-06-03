@@ -29,4 +29,3 @@ catapulting:
     - cd /home/pollux/polaris/LIVE/beta/
     - echo "Did this work idk"
     - pm2 restart Pollux.Premium
-    - pm2 restart Pollux.Beta
