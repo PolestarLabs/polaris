@@ -173,7 +173,7 @@ const DEFAULT_CMD_OPTS = {
     const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js
-${(err?.stack || err?.message || "UNKNOWN ERROR").slice(0, 1850)}
+${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
     \`\`\`
     **Command:** \`${msg.command.label || "NO-COMMAND-LABEL"}\`
     **CODE:** \`${errorCode}\`
