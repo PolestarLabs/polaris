@@ -373,7 +373,10 @@ async function startMultiplayerGame(msg) {
 			},
 		};
 
-		if (round > 5) Game.handgunBarrel.pop();
+		if (round > 5) {
+			Game.handgunBarrel.pop();
+			Game.handgunBarrel.push(1);
+		}
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
@@ -384,7 +387,7 @@ async function startMultiplayerGame(msg) {
 		if (players.length === 1) { // This person wins
 
 			const player = players[0];
-			initialMessage.delete().catchReturn();
+			initialMessage?.delete().catch();
 			gameFrame.embed.footer = {};
 
 			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value});
