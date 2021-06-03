@@ -31,7 +31,7 @@
         "victor_tokai": "\n\n • {{RBN_emoji}} **{{tokaiValue}}** {{rubines}} added to your balance!",
         "victor": "{{ player.name }} stands victorious!\n\n • {{RBN_emoji}} **{{value}}** {{rubines}} added to your balance!",
         "victor_gambit": "{{ player.name }} stands victorious like an absolute champion!",
-        "gambit": "<@ {{player.id}}> **Winner's Gambit:** Try one last time for a 150% prize?",
+        "gambit": "<@{{player.id}}> **Winner's Gambit:** Try one last time for a 150% prize?",
         "gambit_prompt": "Click the <:Gun:338331025300127745> to accept. Otherwise click {{emojiNope}}",
         "gambit_pre": "Looks like {{ player.name }} is shooting one last time! Let's see...",
         "gambit_anytime": "Anytime now...",
