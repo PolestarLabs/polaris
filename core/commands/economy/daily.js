@@ -304,6 +304,14 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     if (timedUsage.userDaily.lastStreak <= 1) {
       P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.firstDaily", P);
+      postmortem += `
+      
+      **NOTE:**
+      Pollux is going through a major update at this time and if it appears your streak was lost, don't worry.
+      You can port everything back from your old account with \`plx!migrate\`. Note that this migration is permanent and once done you can't use the old version anymore. 
+      Any questions you can ask our support team, link is in \`plx!help\`
+      `
+
 
     } else{
 
