@@ -197,7 +197,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           const newRubines = Math.min(~~((userData_OLD.modules.rubines || 0) * 0.05) + (userData_OLD.modules.dyStreakHard || 1) * 10, 50000);
           const oldRubines = userData_OLD.modules.rubines || 0;
           const jades      = ~~(userData_OLD.modules.jades / 2);
-          const saph       = ~~(userData_OLD.modules.sapphires * (SAPPHIREFACTOR(userData_OLD.donator, userData_OLD.formerDonator)) / 10 + 1);
+          const saph       = ~~(userData_OLD.modules.sapphires * (((SAPPHIREFACTOR(userData_OLD.donator, userData_OLD.formerDonator) || 1) / 10) + 1));
 
           await DB.users.set(msg.author.id, {
             $set:
@@ -292,13 +292,18 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         wait: true,
         status: "pending",
         action: async function(){
-          const oldDonoTier = userData_OLD.donator;
-          const oldDonoStreak = userData_OLD.switches.donateStreak;
+          try{
 
-          await DB.users.set(msg.author.id,{$set: { "prime.tier":oldDonoTier, "counters.prime_streak":oldDonoStreak  } });
-          
-          this.name = this.name.replace( "(if any)", `(**${oldDonoTier}** and ${Object.keys(oldDonoStreak).length} more tier(s) found)` );
-          return true;
+            const oldDonoTier = userData_OLD.donator;
+            const oldDonoStreak = userData_OLD.switches.donateStreak;
+            
+            await DB.users.set(msg.author.id,{$set: { "prime.tier":oldDonoTier, "counters.prime_streak":oldDonoStreak  } });
+            
+            this.name = this.name.replace( "(if any)", `(**${oldDonoTier}** and ${Object.keys(oldDonoStreak).length} more tier(s) found)` );
+            return true;
+          }catch(err){
+            return false;
+          }
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
         }
       },
