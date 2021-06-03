@@ -5,6 +5,8 @@ const WHITELIST = [
 ]
 
 const init = async (msg, args) => {
+  return `${_emoji("nope")}`;
+  
   if (PLX.user.id !== "354285599588483082") return;
 
   if(!WHITELIST.includes(msg.channel.id)) return;
