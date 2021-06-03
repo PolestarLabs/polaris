@@ -105,6 +105,7 @@ const DEFAULT_CMD_OPTS = {
       m.args = a;
       m.lang = [m.channel.LANG || m.guild?.LANG || "en", "dev"];
       m.runtime = performance.now();
+      DB.users.new(m.author);
     },
     postCheck: (m, a, chk) => {
       if (!chk) return null;
