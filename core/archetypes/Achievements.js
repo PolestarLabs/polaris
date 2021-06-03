@@ -1,5 +1,6 @@
 // @ts-nocheck
 const { EventEmitter } = require("events");
+if (!global.DB) return;
 let ACHIEVEMENTS = DB.achievements.find({}).noCache().lean().then(a=> ACHIEVEMENTS = a);
 
 
