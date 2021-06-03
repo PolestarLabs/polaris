@@ -3,6 +3,10 @@
 const cmd = "pin";
 
 const init = async function (msg) {
+  const serverData = await DB.servers.get(msg.guild.id);
+  const modPass = PLX.modPass(msg.member, "manageMessages", serverData);
+  if (!modPass) return msg.reply(_emoji('nope') + "Insufficient Permissions! You need: **Manage Messages** permission for this command!");
+
   let messageGrab;
   if (msg.args.length === 0 || [msg.args[0], msg.args[1], msg.args[2]].some((a) => a === "^")) {
     messageGrab = await PLX.getPreviousMessage(msg);
@@ -42,3 +46,4 @@ module.exports = {
   cat: "utility",
   botPerms: ["manageMessages", "embedLinks"],
 };
+
