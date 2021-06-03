@@ -1,6 +1,6 @@
 const { autoSubs: topAutoSubs } = require("./top.js");
 
-const DAY = .001*3.6e+6;
+const DAY = 1*3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
