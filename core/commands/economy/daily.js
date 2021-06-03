@@ -301,10 +301,17 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     postmortem = $t("responses.daily.insuranceConsumed", P);
   }
   if (timedUsage.streakStatus === "lost") {
-    P.oldStreak = timedUsage.userDaily.lastStreak;
-    const streakfixes = userData.modules.inventory.find((i) => i.id === "streakfix")?.count || 0;
-    postmortem = `${$t("responses.daily.streakLost", P)
-    }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
+    if (timedUsage.userDaily.lastStreak <= 1) {
+      P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
+      postmortem = $t("responses.daily.firstDaily", P);
+
+    } else{
+
+      P.oldStreak = timedUsage.userDaily.lastStreak;
+      const streakfixes = userData.modules.inventory.find((i) => i.id === "streakfix")?.count || 0;
+      postmortem = `${$t("responses.daily.streakLost", P)
+      }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
+    }
   }
 
   // @ts-ignore TODO[epic=flicky] Random self-ad for daily perks.
