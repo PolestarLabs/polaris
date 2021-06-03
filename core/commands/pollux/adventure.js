@@ -151,7 +151,8 @@ const init = async function (msg) {
 
   res_LOC.menuMessage.delete();
 
-  const userData = await DB.users.get(msg.author.id);
+  //const userData = await DB.users.get(msg.author.id);
+  const userData = PLX.getOrCreateUser(msg.author);
   userData.supplied_rubines = selectedInsurance;
 
   const playersHere = await DB.advJourneys.find({ location: selectedLocation._id, end: { $gt: Date.now() } }).lean();
