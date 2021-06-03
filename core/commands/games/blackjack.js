@@ -452,7 +452,7 @@ async function ProcessHand(currentHand) {
   }
 
   scene_msg.edit({
-      content:"  hitstand_message ", 
+      content:scene_msg.content, 
       components: [
           {type:1,components: buttonsToAdd.row1.filter(x=>!!x)},
           {type:1,components: buttonsToAdd.row2.filter(x=>!!x)},
