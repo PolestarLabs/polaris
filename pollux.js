@@ -224,7 +224,7 @@ const DBSchema = require("@polestar/database_schema");
 
 const dbConnectionData = {
   hook,
-  url: cfg.dbURL,
+  url: PLX.beta ? cfg.dbURL_beta : cfg.dbURL,
   options: {
 
     useNewUrlParser: true,
