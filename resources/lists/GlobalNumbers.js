@@ -46,7 +46,7 @@ module.exports = {
       // BOOSTERS
       BPK: 200,
       // ITEMS
-      ITM: 100,
+      ITM: 0,
       // SAPPHIRE
       SPH: 1,
     },
