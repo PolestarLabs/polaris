@@ -118,10 +118,10 @@ const init = async (msg, args) => {
             "BOX",
             ">",
           );
+          
           await ECO.pay(msg.author.id, 250, "lootbox_transfer_tax");
-
-          userData.removeItem(CHOSENBOX.id);
-          targetData.addItem(CHOSENBOX.id);
+          await userData.removeItem(CHOSENBOX.id);
+          await targetData.addItem(CHOSENBOX.id);
 
           embed.description = `
                 ${_emoji("yep")}${$t("responses.transfer.success", P)}    
