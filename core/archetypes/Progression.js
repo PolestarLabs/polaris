@@ -46,7 +46,7 @@ class ProgressionManager extends EventEmitter {
                     await this.updateProgress(userID,quest._id,amount,msg);
                 }
                 if(!msg) return;
-                this.checkStatusOne(quest._id,userID,msg);
+                //this.checkStatusOne(quest._id,userID,msg);
             }));
         });
         
@@ -77,7 +77,7 @@ class ProgressionManager extends EventEmitter {
             const {msg,userQuests} = opts;
             moment.locale(msg.lang?.[0]||'en');
             //award rewards;
-            msg.channel.send( await questCompletedMsg(quest,msg.author.id) )
+            msg.reply( await questCompletedMsg(quest,msg.author.id) )
                 .catch((err)=>{
                     console.error(err)
                     PLX.getDMChannel(msg.author.id).then( async DM=>
@@ -87,7 +87,7 @@ class ProgressionManager extends EventEmitter {
             if(userQuests?.every(q=>q.completed)){
                 await wait(4);
                 //award extra bonus
-                msg.channel.send("Extra bonus: `All Quests Completed` +100 EXP");
+                msg.reply("**Extra bonus:** `All Quests Completed` +100 EXP");
                 await DB.users.set(userID, {$inc: {
                     "modules.exp": 100,
                     "modules.SPH": 0
@@ -302,7 +302,7 @@ async function questCompletedMsg(userQuest,userID){
 
     embed.description = `${_emoji('yep')} \`COMPLETED\` **${quest.name}**
 *${quest.INSTRUCTION}*
-Rewards:\n${[
+    ${[
         (quest.rewards?.exp ? `${_emoji('EXP')}**${quest.rewards.exp}**  ` : ""),
         (quest.rewards?.RBN ? `${_emoji('RBN')}**${quest.rewards.RBN}**  ` : ""),
         (quest.rewards?.SPH ? `${_emoji('SPH')}**${quest.rewards.SPH}**  ` : "")
