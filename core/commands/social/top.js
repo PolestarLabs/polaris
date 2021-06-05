@@ -37,7 +37,7 @@ const topCommend = async (m) => {
 
   const [listCommend,  listCommenders,  listCommend2,  listCommenders2] = [
 
-    (commendSort.slice(0, 3).map(
+    (commendedSort.slice(0, 3).map(
         (x) => {
           let user = usersDiscordData.find(u=>u.id===x._id);
           return `:reminder_ribbon: *\`\u200b${(x.total || 0).toString().padStart(3, "\u2003")} \`\u2003[${
@@ -48,7 +48,7 @@ const topCommend = async (m) => {
         }
       )),
 
-    (commendedSort.slice(0, 3).map(
+    (commendSort.slice(0, 3).map(
         (x) => {
           let user = usersDiscordData.find(u=>u.id===x._id);
           return `${_emoji("plxcoin")}*\`\u200b${(x.total || 0).toString().padStart(3, "\u2003")} \`\u2003[${
@@ -59,7 +59,7 @@ const topCommend = async (m) => {
         }
       )),
 
-    (commendSort.slice(3, 10).map(
+    (commendedSort.slice(3, 10).map(
         (x) => {
           let user = usersDiscordData.find(u=>u.id===x._id);
           return `:reminder_ribbon: *\`\u200b${(x.total || 0).toString().padStart(3, "\u2003")} \`\u2003[${
@@ -70,7 +70,7 @@ const topCommend = async (m) => {
         }
       )),
 
-    (commendedSort.slice(3, 10).map(
+    (commendSort.slice(3, 10).map(
         (x) => {
           let user = usersDiscordData.find(u=>u.id===x._id);
           return `${_emoji("plxcoin")}*\`\u200b${(x.total || 0).toString().padStart(3, "\u2003")} \`\u2003[${
