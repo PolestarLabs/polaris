@@ -54,7 +54,7 @@ module.exports = async function(payload){
         PLX.emit("applicationCommand", interaction, payload.d.data);
     }
     if (interaction_type === 3){
-        console.log(require('util').inspect({interaction,data: payload.d.data},0,2,1))
+        //console.log(require('util').inspect({interaction,data: payload.d.data},0,2,1))
         PLX.emit("messageComponent", interaction, payload.d.data);
     }
 
