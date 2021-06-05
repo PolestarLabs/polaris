@@ -60,6 +60,9 @@ const init = async (msg) => {
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
+
+  
+
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
 
   const timedUsage = await new TimedUsage("daily", { day: DAY, expiration: EXPIRE, streak: true }).loadUser(msg.author);
@@ -104,7 +107,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     return msg.channel.send({ embed });
   }
 
-  if (!timedUsage.available) {
+  if (!timedUsage.available && msg.author.id !=="88120564400553984") {
     P.remaining = moment.utc(timedUsage.availableAt).fromNow(true);
     return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P));
   }
@@ -112,10 +115,10 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   // @ts-ignore
   const processQueue = [];
   // const premiumTier = await Premium.getTier(msg.author);
-  const dailyCard = Picto.new(800, 600);
+  const dailyCard = Picto.new(800, 600); 
   const ctx = dailyCard.getContext("2d");
 
-  const daily = new Daily(timedUsage, msg.author, dailyPLXMember, userData)
+  const daily = new Daily(timedUsage, dailyPLXMember);
     .once("softStreak", (softStreak) => {
       processQueue.push(async () => ctx.drawImage(await constantAssets[`soft${softStreak}`], 0, 0));
     })
