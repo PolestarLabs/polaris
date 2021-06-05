@@ -24,7 +24,7 @@ const hook = new WebhookDigester(PLX);
 
 const dbConnectionData = {
   hook: null,
-  url: cfg.dbURL,
+  url: process.env.NODE_ENV === 'dev' ? cfg.dbURL_beta : cfg.dbURL,
   options: {
     useNewUrlParser: true,
     keepAlive: 1,
