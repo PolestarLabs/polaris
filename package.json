@@ -12,7 +12,7 @@
     "@google-cloud/vision": "^2.1.2",
     "@polestar/database_schema": "gitlab:PolestarLabs/database_schema",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
-    "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage",
+    "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#59a91d720befd6e40bec444a3b59374b45b2c534",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
     "axios": "^0.21.1",
@@ -24,7 +24,6 @@
     "cron": "^1.5.1",
     "eris": "^0.15.0",
     "eris-additions": "github:PolestarLabs/eris-additions-plus",
-    
     "fast-diff": "^1.2.0",
     "gif-encoder": "^0.7.2",
     "i18next": "^12.0.0",

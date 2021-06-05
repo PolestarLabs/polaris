@@ -64,8 +64,8 @@ const init = async (msg) => {
   
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
-
-  const timedUsage = await new TimedUsage("daily", { day: DAY, expiration: EXPIRE, streak: true }).loadUser(msg.author);
+  const daily = await Daily.load(msg.author);
+  const timedUsage = daily.timedUsage;
 
   if (["status", "stats"].includes(msg.args[0]?.toLowerCase())) {
     const { userDaily, dailyAvailable, keepStreak } = timedUsage;
@@ -118,7 +118,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   const dailyCard = Picto.new(800, 600); 
   const ctx = dailyCard.getContext("2d");
 
-  const daily = new Daily(timedUsage, dailyPLXMember);
+  daily
     .once("softStreak", (softStreak) => {
       processQueue.push(async () => ctx.drawImage(await constantAssets[`soft${softStreak}`], 0, 0));
     })
