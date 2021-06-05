@@ -38,17 +38,17 @@ const init = async (msg) => {
     if (x.from && x.to === TARGETDATA.id && x.from !== POLid) {
       othPart = (await PLX.getTarget(x.from, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
-      return `↔ \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+      return `↔ \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b\u2003\u2003|   `
         + `*\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id}) \`${othPart.id}\` `;
     }
     if (x.to && x.from === TARGETDATA.id && x.to !== POLid) {
       othPart = (await PLX.getTarget(x.to, null, true)) || { tag: "Unknown#0000" };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
-      return `↔  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   `
+      return `↔  \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b\u2003\u2003|   `
         + `*\`${x.type}\`* to [${othPart?.tag}](${paths.DASH}/p/${othPart?.id}) \`${othPart.id}\` `;
     }
-    if (x.to === POLid) return `📤  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
-    if (x.from === POLid) return `📥  \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *${x.type}*`;
+    if (x.to === POLid) return `🔴 \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b\u2003\u2003|   *${x.type}*`;
+    if (x.from === POLid) return `🟢 \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b\u2003\u2003|   *${x.type}*`;
 
     return "";
   }
