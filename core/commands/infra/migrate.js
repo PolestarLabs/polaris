@@ -204,7 +204,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             $set:
                 {
                   "counters.daily.streak": userData_OLD.modules.dyStreakHard || 0,
-                  "counters.daily.last": userData_OLD.modules.daily || 0,
+                  "counters.daily.last": Date.now() - (23 * 60 * 60 * 1000),
                   "modules.RBN": newRubines,
                   "modules.rubinesOld": oldRubines,
                   "modules.JDE": jades,
