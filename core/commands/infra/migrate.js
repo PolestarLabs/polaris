@@ -327,6 +327,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
              "modules.flairsInventory": userData_OLD.modules.flairsInventory,
              "modules.bgInventory": userData_OLD.modules.bgInventory,
              "modules.stickerInventory": userData_OLD.modules.stickerInventory,
+             "eventGoodie": userData_OLD.eventGoodie,
              "personal": userData_OLD.personal,
           } }); 
           return true;
