@@ -138,9 +138,10 @@ const init = async (msg, args) => {
         ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         // FIXME [epic=flicky] Boosterpacks not being added
-        Promise.all(lootbox.content.map(async (item) => await getPrize(item, USERDATA))),
-       
+        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
+        wait(1)
       ]);
+
 
       Progression.emit("lootbox.open",{msg,value:1,userID:msg.author.id});
 
@@ -304,9 +305,8 @@ function determineRerollCost(box, rollNum, USERDATA) {
 function boxBonus(USERDATA, lootbox, options) {
   // TO-DO: more options of small-prizes
   const rarityIndex = ["C", "U", "R", "SR", "UR", "XR"].indexOf(lootbox.rarity);
-  let prize = Math.ceil(100 + (rarityIndex * 100) - (options.currentRoll * 50 * rarityIndex));
-  if (prize < 100) prize = 50;
-
+  let prize = Math.max( Math.ceil(25 + (rarityIndex * 25) - (options.currentRoll * 15 * rarityIndex)) , 28);
+  
   prize += randomize(-25, 100);
 
   return {
