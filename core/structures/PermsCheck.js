@@ -10,7 +10,24 @@ exports.run = function run(cat, msg, perms) {
     let check1;
     const permsPass = [];
     Object.keys(perms).forEach((i) => {
-      if (!msg.channel.permissionsOf(PLX.user.id).has(perms[i]) && !msg.guild.member(PLX.user.id).hasPermission(perms[i])) {
+      let level, perm;
+      if (perms[i].includes(':')){
+        [level,perm] = perms[i].split(':');
+      }else{
+        perm = perms[i]
+      }
+      if (level === 'guild'){
+        //
+      }
+
+      console.log({perm,permsi:perms[i]})
+      const hasChannelPermissions = msg.channel.permissionsOf(PLX.user.id).has(perm);
+      const hasGuildPermissions = msg.guild.member(PLX.user.id).hasPermission(perm);
+
+      if ( !hasChannelPermissions && !hasGuildPermissions ) {
+        permsPass.push(_emoji("nope"));
+        check1 = "error1";
+      } else if (!hasGuildPermissions && level === 'guild') {
         permsPass.push(_emoji("nope"));
         check1 = "error1";
       } else {
