@@ -18,7 +18,9 @@ const init = async function (msg, args) {
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);
 
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
-  if (msg.guild.roles.get(ServerDATA.modules.MUTEROLE).position >= msg.guild.me.highestRole.position) {
+  const MUTEROLE = msg.guild.roles.get(ServerDATA.modules.MUTEROLE);
+
+  if (!!MUTEROLE && MUTEROLE.position >= msg.guild.me.highestRole.position) {
     return msg.channel.send($t("responses.errors.unmutable", P));
   }
 
@@ -89,10 +91,10 @@ const init = async function (msg, args) {
   const noPermsMe = $t("CMD.unperm", P);
 
   // Create a new role with data
-  const muteRole = ServerDATA.modules.MUTEROLE;
+ 
   if (
-    !muteRole
-    || (!Server.roles.find((x) => x.id === muteRole)
+    !MUTEROLE
+    || (!Server.roles.find((x) => x.id === MUTEROLE)
       && !Server.roles.find((x) => x.name.includes("POLLUX-MUTE")))
   ) {
     Server.createRole(
@@ -111,15 +113,15 @@ const init = async function (msg, args) {
         setupMute(role, time);
         commitMute(role.id, true);
       })
-      .catch(console.error);
+      .catch();
   } else if (Server.roles.find((x) => x.name === "POLLUX-MUTE")) {
     const r = Server.roles.find((x) => x.name === "POLLUX-MUTE");
     setupMute(r, time);
     commitMute(r);
-  } else if (Server.roles.find((x) => x.id === muteRole)) {
-    const r = Server.roles.find((x) => x.id === muteRole);
+  } else if (Server.roles.find((x) => x.id === MUTEROLE)) {
+    const r = Server.roles.find((x) => x.id === MUTEROLE);
     setupMute(r, time);
-    commitMute(muteRole);
+    commitMute(MUTEROLE);
   }
 
   async function setupMute(role, time) {
@@ -219,6 +221,7 @@ const init = async function (msg, args) {
   }
 
   async function commitMute(role, first = false) {
+    role = role.id || role;
     const totChans = Server.channels.filter((c) => (c.type = "text"));
     let erroredChans = 0;
     const promiseBucket = [];
@@ -229,14 +232,18 @@ const init = async function (msg, args) {
         promiseBucket.push(
           chn
             .editPermission(
-              role.id,
+              role,
               0,
               2048,
               "role",
               "UPDATING MUTE OVERRIDES",
             )
             .then()
-            .catch((err) => erroredChans++),
+            .catch((err) => {
+              
+            
+              erroredChans++
+            }),
         );
       }
       if (first === true) {
@@ -245,7 +252,7 @@ const init = async function (msg, args) {
             `\`Could not edit Mute overrides in ${erroredChans
             } Channels 💔\``,
           );
-        });
+        }).catch( );
       }
     });
   }
@@ -253,9 +260,10 @@ const init = async function (msg, args) {
 
 module.exports = {
   pub: true,
+  argsRequired: true,
   cmd,
   perms: 3,
   init,
   cat: "moderation",
-  botPerms: ["manageChannels", "manageRoles"],
+  botPerms: ["manageChannels", "guild:manageRoles"],
 };
