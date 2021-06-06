@@ -49,6 +49,7 @@ const init = async (msg, args) => {
   if(_LOCAL){
     localUserRanks = Promise.all(localRanks.map( async index => {
       console.log({index})
+      if (!index) return;
       const discordMember = await PLX.resolveMember(msg.guild.id,index.id);
       index.discordData = discordMember;
       return index;
