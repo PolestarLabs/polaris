@@ -10,7 +10,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
-    "@polestar/database_schema": "gitlab:PolestarLabs/database_schema#f0cb9b5c83addec3772dff239e9ef7e3ca9f68eb",
+    "@polestar/database_schema": "gitlab:PolestarLabs/database_schema#85c6176babe694c1f421993f66f029edf9698383",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#59a91d720befd6e40bec444a3b59374b45b2c534",
     "@sentry/node": "^5.15.4",
