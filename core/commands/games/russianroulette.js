@@ -384,7 +384,7 @@ async function startMultiplayerGame(msg) {
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
-		const diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
+		P.diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
 		//await gameMessage.deleteAfter(5).catchReturn();
 
 		// Is there 1 person left?
