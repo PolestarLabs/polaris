@@ -366,7 +366,7 @@ async function startMultiplayerGame(msg) {
 		const value = Game.prizePool;
 		console.log({players})
 
-		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value});
+		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value, diedInRound: await handlePlayers(gameMessage, players, Game, gameFrame)});
 
 		const gameFrame = {
 			embed: {
@@ -384,7 +384,7 @@ async function startMultiplayerGame(msg) {
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
-		P.diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
+		
 		//await gameMessage.deleteAfter(5).catchReturn();
 
 		// Is there 1 person left?
@@ -394,7 +394,7 @@ async function startMultiplayerGame(msg) {
 			initialMessage?.delete().catch();
 			gameFrame.embed.footer = {};
 
-			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value});
+			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value, diedInRound: await handlePlayers(gameMessage, players, Game, gameFrame)});
 
 			await wait(3);
 
