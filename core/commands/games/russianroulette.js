@@ -65,10 +65,10 @@ const STRINGS = (P) => {
 const RussianRoulette = require("../../archetypes/RussianRoulette.js");
 const BOARD = require("../../archetypes/Soundboard.js");
 
-const gunRoll = `${appRoot}/../assets/sound/gunroll.mp3`;
-const awp = `${appRoot}/../assets/sound/awp.mp3`;
-const click = `${appRoot}/../assets/sound/click.mp3`;
-const clickNoAmmo = `${appRoot}/../assets/sound/noammo.mp3`;
+const gunRoll = `${paths.ASSETS}/sound/gunroll.mp3`;
+const awp = `${paths.ASSETS}/sound/awp.mp3`;
+const click = `${paths.ASSETS}/sound/click.mp3`;
+const clickNoAmmo = `${paths.ASSETS}/sound/noammo.mp3`;
 
 // TRANSLATE[epic=translations] russian roulette
 // TODO[epic=anyone] rr - add easter egg with `=say` cmd
@@ -143,14 +143,22 @@ const playerRoulette = async (player, game) => {
 const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 	let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players});
-	//let voiceChannel = msg.member.voiceState.channelID;
-	//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+	let voiceChannel = msg.member.voiceState?.channelID;
+	try{
+		voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+	}catch(err){
+
+	}
 	let deadInThisRound = null;
 	for (const index in players) { // eslint-disable-line guard-for-in
 
 		await wait(1);
-
-		//if (voiceChannel) voiceChannel.stopPlaying();
+		try {
+			
+			if (voiceChannel) voiceChannel.stopPlaying();
+		} catch (err) {
+			
+		}
 		const player = players[index];
 		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, player});
 
@@ -158,8 +166,15 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 		gameFrame.embed.description += v.mp_player_turn;
 		gameFrame.embed.footer = {text: v.footer_instruction }
-		//if (voiceChannel) voiceChannel.play(click);
-		// gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
+		try {
+			if (voiceChannel) {
+				await voiceChannel.play(click);
+			}
+			//gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
+		} catch (err) {
+			
+		}
+		
 		const died = await playerRoulette(player, Game);
 		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
 
@@ -181,16 +196,27 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 		}
 
 		// Tell players the status of that player
-		// await wait(1);
-		// if (game.voiceChannel) game.voiceChannel.stopPlaying();
+		try {
+			await wait(2);
+			if (voiceChannel) voiceChannel.stopPlaying();
+			if (game.voiceChannel) game.voiceChannel.stopPlaying();
+			//gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
+		} catch (err) {
+			
+		}
 
-		//if (voiceChannel) voiceChannel.stopPlaying();
+		
+
 		await msg.edit(gameFrame);
 
-		if (died) {
-			//if (voiceChannel) voiceChannel.play(awp);
-		} //else if (voiceChannel) voiceChannel.play(clickNoAmmo);
-
+		try {
+			if (died) {
+				if (voiceChannel) await  voiceChannel.play(awp);
+				await wait(2);
+			} else if (voiceChannel)  await  voiceChannel.play(clickNoAmmo);
+		} catch (err) {
+				console.errpr(err)
+		}
 		if (died) break;
 	}
 
@@ -301,7 +327,6 @@ async function startMultiplayerGame(msg) {
 			minBet = ~~(verifiedPlayers.reduce((a, b) => a + b.money, 0) / verifiedPlayers.length);
 
 			if (joinMsg.author.bot) hasBots = true;
-				console.log({verifiedPlayers})
 			v = STRINGS({lngs:msg.lang, verifiedPlayers, minBet});
 
 			poolEmbed.description = v.mp_pool_tally;
@@ -314,8 +339,6 @@ async function startMultiplayerGame(msg) {
 
 	});
 	playerCollector.on('end', async (msgs, reason) => {
-
-		console.log({ reason }, 'stopCollectorRRoulette');
 
 		if (reason === 'abort'){
 			  await poolMsg.edit({content: v.mp_abort_player, embed: null});
@@ -355,16 +378,18 @@ async function startMultiplayerGame(msg) {
 	});
 
 	async function processRound(Game, players, round = 1, initialMessage) {
-		console.log({round})
 		// Initialise game
-		//let voiceChannel = msg.member.voiceState.channelID;
-		//voiceChannel &= await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
-		//if (voiceChannel) voiceChannel.play(gunRoll);
+		let voiceChannel = msg.member.voiceState?.channelID;
+		try{
+			voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+			if (voiceChannel) await  voiceChannel.play(gunRoll);
+		}catch(err){
+
+		}
 		await wait(2);
 
 		
 		const value = Game.prizePool;
-		console.log({players})
 
 		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value});
 
@@ -384,7 +409,9 @@ async function startMultiplayerGame(msg) {
 
 		// Actual rounds
 		const gameMessage = await msg.channel.send(gameFrame);
-		v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value, diedInRound: await handlePlayers(gameMessage, players, Game, gameFrame)});
+		const diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
+
+		v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value, diedInRound});
 
 		
 		//await gameMessage.deleteAfter(5).catchReturn();
@@ -396,7 +423,7 @@ async function startMultiplayerGame(msg) {
 			initialMessage?.delete().catch();
 			gameFrame.embed.footer = {};
 
-			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value, diedInRound: await handlePlayers(gameMessage, players, Game, gameFrame)});
+			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value, diedInRound});
 
 			await wait(3);
 
@@ -477,8 +504,11 @@ async function startMultiplayerGame(msg) {
 				if (!died) await ECO.receive(players[0].id, ~~(value * 1.5), "russianroulette.gambit");
 																			}
 
+			try{
+				if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
+			}catch(err){
 
-			//if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
+			}
 			return;
 		}
 		// There are more people in the game
