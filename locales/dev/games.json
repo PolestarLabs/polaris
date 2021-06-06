@@ -23,7 +23,7 @@
         "mp_abort_player": "Game cancelled by the creator.",
         "switch_to_singleplayer": "Looks like only one person is gonna play. Switching to singleplayer mode...",
         "mp_no_players": "No one joined. I'm not playing this alone.",
-        "mp_players_list": "**Time's up!** Let's get started.\nayers:",
+        "mp_players_list": "**Time's up!** Let's get started.",
         "round_no": "**Round  {{round}}**\n",
         "bot_shame": "Did y'all lose to a **bot**???",
         "bot_megashame": "{{ player.name }} stands victorious! You guys suck...",
