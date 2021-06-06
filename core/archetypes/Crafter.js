@@ -466,7 +466,8 @@ class Crafter extends EventEmitter {
       return DB.items.find({
         $and:[
           {
-            crafted: true
+            crafted: true,
+            open: true,
           },
           {
             $or:[
