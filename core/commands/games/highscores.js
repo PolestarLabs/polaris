@@ -24,13 +24,13 @@ async function topFlags(msg, args) {
     if (i===5) return '';
     let subject;
     if (item.type.includes("solo")) subject = await PLX.resolveUser(item.id);
-    else subject = await PLX.getRESTGuild(item.id);
+    else subject = await PLX.getRESTGuild(item.id).catch(err=> ({name:"Unknown Server"}));
     
 //FIXME[epic=flicky] Fix response design: current solution constantly hits max chars
     return `\
 ${_emoji(`rank${i + 1}`)} \`\
 [${item.type.includes("solo") ? " SOLO " : "SERVER"}]\` \
-**${subject.name || (`${subject.username}#${subject.discriminator}`)}** \ 
+**${ (subject.name || (`${subject.username}#${subject.discriminator}`)).slice(0,25) }** \ 
 ${_emoji("__")}${_emoji("__")}  \
 Grade ${_emoji(`grade${item.data.grade}`)}\
 ${''/*_emoji("__")*/}\
