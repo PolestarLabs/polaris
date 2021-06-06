@@ -12,7 +12,7 @@ const init = async function (msg, args) {
 
     if (Target.id === msg.author.id) return msg.reply(_emoji('nope') + "You can't play with yourself, duh.");
     if (Target.bot) return msg.reply(_emoji('nope') + "You can't play with bots...");
-   // if (!Target) return msg.reply(_emoji('nope') + "You must tag someone **valid**.");
+    // if (!Target) return msg.reply(_emoji('nope') + "You must tag someone **valid**.");
 
     if (Ongoing.get(Target.id)) {
         return msg.reply({
@@ -106,7 +106,9 @@ const init = async function (msg, args) {
             matchResultsMsg.edit({ embed });
             return res;
         }
-    }, { removeButtons: false, maxMatches: 2, time: 30e3 });
+    }, { removeButtons: false, maxMatches: 2, time: 30e3 }).catch(err => {
+        return msg.reply("No one choosed...");
+    });
 
     prompt.edit({
         content: prompt.content,
@@ -118,7 +120,7 @@ const init = async function (msg, args) {
         }]
     });
 
-    
+    if (!res[0]) return;
     if (res.find(r => r.id === 'fuckoff')) return msg.reply(`Someone sent a 🖕... Looks like ${Target.nick || Target.user.username} doesn't want to play... just sayin'`);
     if (res.length !== 2) return msg.reply("Someone seems to have ran away...");
 
