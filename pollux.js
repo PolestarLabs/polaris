@@ -27,7 +27,7 @@ const WebhookDigester = require("./utils/WebhookDigester.js");
 require("./core/structures/ReactionCollector.js")(ERIS);
 require("./core/structures/ButtonCollector.js")(ERIS);
 
-require("./core/structures/ComponentHandler.js")(Eris);
+require("./core/structures/ComponentsHandler.js")(Eris);
 
 const runtime         = performance.now();
 global.appRoot = path.resolve(__dirname);
