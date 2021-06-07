@@ -69,6 +69,8 @@ const gunRoll = `${paths.ASSETS}/sound/gunroll.mp3`;
 const awp = `${paths.ASSETS}/sound/awp.mp3`;
 const click = `${paths.ASSETS}/sound/click.mp3`;
 const clickNoAmmo = `${paths.ASSETS}/sound/noammo.mp3`;
+const HORN = "https://cdn.discordapp.com/attachments/488142034776096772/848254716765143071/colonydeed_partyhorn.ogg";
+const loser =  `${paths.ASSETS}/sound/kingoflosers.mp3`;
 
 // TRANSLATE[epic=translations] russian roulette
 // TODO[epic=anyone] rr - add easter egg with `=say` cmd
@@ -470,12 +472,25 @@ async function startMultiplayerGame(msg) {
 
 					await wait(2);
 
+					try {
+						// NOTE AUDIO
+						if (voiceChannel) await voiceChannel.play(click);
+					} catch (err) {
+						
+					}
+
 					challengeFrame.embed.description += `\n\n${v.gambit_anytime}  `
 					await challenge.edit(challengeFrame);
 				}else{
 					challengeFrame.embed.image = {};
 					challengeFrame.embed.description = v.gambit_refuse;
 					challenge.removeReactions();
+					try {
+						// NOTE AUDIO
+						if (voiceChannel) await voiceChannel.play(loser);
+					} catch (err) {
+						
+					}
 					await challenge.edit(challengeFrame);
 
 					if (!value) return;
@@ -487,11 +502,24 @@ async function startMultiplayerGame(msg) {
 
 				const died = await playerRoulette(player, Game);
 				if (died) { // Person died
+					try {
+						// NOTE AUDIO
+						if (voiceChannel) await voiceChannel.play(awp);
+					} catch (err) {
+						
+					}
 					challengeFrame.embed.description += v.hes_ded_jim;
 					challengeFrame.embed.color = 0x521723;
 					challengeFrame.embed.image.url = "https://media1.tenor.com/images/d2fcf092a1223a8060639182c5e85616/tenor.gif" //`${paths.CDN}/build/games/russian_roulette/shot_.gif`;
 				} else { // Person did not die
 					challengeFrame.embed.description = v.victor_gambit;
+					try {
+						// NOTE AUDIO
+						if (voiceChannel) await voiceChannel.play(HORN);
+						await wait(2)
+					} catch (err) {
+						
+					}
 					challengeFrame.embed.color = 0x32437d;
 					challengeFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
 				}
