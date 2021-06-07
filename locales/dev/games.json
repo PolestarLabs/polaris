@@ -39,7 +39,7 @@
         "hes_ded_jim": "BOOM! Oh sh*t *he's dead, Jim.*",
         "mp_round_end": "End of the round!",
         "mp_round_results": "**Results:**\n{{died_in_round}}\nStarting the next round.",
-        "mp_round_results_died": "{{ diedInRound.name }} was the loser. RI",
+        "mp_round_results_died": "{{ diedInRound.name }} was the loser. RIP",
         "mp_round_results_no_dead": "No one died this time..."
     },
     "flags": {
