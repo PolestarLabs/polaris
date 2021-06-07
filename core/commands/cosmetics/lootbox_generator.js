@@ -138,7 +138,7 @@ const init = async (msg, args) => {
         ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         // FIXME [epic=flicky] Boosterpacks not being added
-        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))).then(console.log);
+        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))).then(console.log),
         wait(1)
       ]);
       
