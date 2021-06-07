@@ -9,9 +9,10 @@ const init = async (msg, args) => {
   if (!member) return msg.channel.createMessage('Unresolved member')
   const players = [msg.author.id, member.id];
   let playerTurnIndex = 0;
+  let PLXMessage;
 
   const listener = async (d) => {
-    if (d.message.id !== msg.id) return;
+    if (d.message.id !== PLXMessage) return;
     msg.channel.createMessage('Interaction received');
     if (!players.includes(d.member.user.id)) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Invalid user', flags: 64 } }).then(console.log);
     if (players[playerTurnIndex] !== d.member.user.id) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Turn is currently other user', flags: 64 } }).then(console.log);
@@ -89,7 +90,7 @@ const init = async (msg, args) => {
         ]
       }
     ]
-  })
+  }).then((m) => PLXMessage = m.id)
   PLX.on('rawWS', (p) => p.t === 'INTERACTION_CREATE' && listener(p.d))
 }
 
