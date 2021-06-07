@@ -34,17 +34,17 @@ const init = async (msg, args) => {
           {
             type: 2,
             style: 2,
-            custom_id: '1,3',
+            custom_id: '1,1',
             label: '\u200b'
           }, {
             type: 2,
             style: 2,
-            custom_id: '2,3',
+            custom_id: '2,1',
             label: '\u200b'
           }, {
             type: 2,
             style: 2,
-            custom_id: '3,3',
+            custom_id: '3,1',
             label: '\u200b'
           }
         ]
@@ -74,17 +74,17 @@ const init = async (msg, args) => {
           {
             type: 2,
             style: 2,
-            custom_id: '1,1',
+            custom_id: '1,3',
             label: '\u200b'
           }, {
             type: 2,
             style: 2,
-            custom_id: '2,1',
+            custom_id: '2,3',
             label: '\u200b'
           }, {
             type: 2,
             style: 2,
-            custom_id: '3,1',
+            custom_id: '3,3',
             label: '\u200b'
           }
         ]
