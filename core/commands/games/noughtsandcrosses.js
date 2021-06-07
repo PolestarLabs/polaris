@@ -17,9 +17,9 @@ const init = async (msg, args) => {
     if (!players.includes(d.member.user.id)) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Invalid user', flags: 64 } }).then(console.log);
     if (players[playerTurnIndex] !== d.member.user.id) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Turn is currently other user', flags: 64 } }).then(console.log);
     const [x, y] = d.data.custom_id.split(',');
-    d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 3 : 1;
+    d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
     d.message.components[y - 1].components[x - 1].label = '';
-    d.message.components[y - 1].components[x - 1].emoji = { name: playerTurnIndex ? '❌' : '⭕' };
+    d.message.components[y - 1].components[x - 1].emoji = playerTurnIndex ? { name: '✖️' } : { id: '851610730880303125' }; // { name: playerTurnIndex ? '❌' : '⭕' };
     d.message.components[y - 1].components[x - 1].disabled = true;
     playerTurnIndex = playerTurnIndex ? 0 : 1;
     await PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `It is now <@${players[playerTurnIndex]}>'s turn`, components: d.message.components }}).then(console.log)
