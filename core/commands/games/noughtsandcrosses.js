@@ -10,7 +10,7 @@ const init = async (msg, args) => {
   const players = [msg.author.id, member.id];
   let playerTurnIndex = 0;
 
-  const listener = (d) => {
+  const listener = async (d) => {
     if (d.message.id !== msg.id) return;
     if (!players.includes(d.member.user.id)) return PLX.requestHandler.request('POST', `/webhooks/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Invalid user', flags: 64 } });
     if (players[playerTurnIndex] !== d.member.user.id) return PLX.requestHandler.request('POST', `/webhooks/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Turn is currently other user', flags: 64 } });
