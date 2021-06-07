@@ -31,11 +31,15 @@ const init = async (msg, args) => {
 
     // If args === item.id
     let craftedItem = Crafter.getItem(toBeCrafted);
+
+    console.log({craftedItem})
     // Else find a partial match
     if (!craftedItem) {
       const userDiscoveries = (await DB.users.get(msg.author.id))?.modules.inventory.filter((itm) => itm.crafted).map((itm) => itm.id) || [];
       const searchResults = await Crafter.searchItems(toBeCrafted);
-      const DYM = searchResults.filter((x) => x._doc.open || userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
+      console.log({searchResults})
+      const DYM = searchResults.filter((x) => (x._doc||x).open || userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
+      console.log({DYM})
       const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
 
       if (DYM.length > 0) {
@@ -214,20 +218,12 @@ const init = async (msg, args) => {
 
       function getYesNo(m, l = 10000) {
         return new Promise(async (resolve, reject) => {
-          await m.addReaction(YA.r);
-          m.addReaction(NA.r);
+          
+          let response = await YesNo(m,msg,{time:l});
 
-          // Confirmation of craft through reactions
-          const reas = await m.awaitReactions({
-            maxMatches: 1,
-            time: l,
-            authorOnly: msg.author.id,
-          }).catch(() => reject("timeout"));
-
-          await m.removeReactions().catch();
-          if (!reas || reas.length === 0) reject("timeout");
-          if (reas.length === 1 && reas[0].emoji.id === NA.id) reject("no");
-          if (reas.length === 1 && reas[0].emoji.id === YA.id) resolve();
+          if ( response ) resolve();
+          if ( response === false ) reject("no");
+          if ( !response ) reject("timeout");
           reject();
         });
       }
