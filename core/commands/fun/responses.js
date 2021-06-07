@@ -1,4 +1,3 @@
-const messageCreate = require("../../../eventHandlers/messageCreate")
 const { modPass } = require("../../utilities/Gearbox/client")
 
 const init = async function (msg,args){
