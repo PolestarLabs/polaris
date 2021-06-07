@@ -11,6 +11,7 @@ const init = async (msg, args) => {
   let playerTurnIndex = 0;
 
   const listener = async (d) => {
+    msg.channel.createMessage('Interaction received');
     if (d.message.id !== msg.id) return;
     if (!players.includes(d.member.user.id)) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Invalid user', flags: 64 } });
     if (players[playerTurnIndex] !== d.member.user.id) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Turn is currently other user', flags: 64 } });
