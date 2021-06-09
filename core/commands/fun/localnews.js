@@ -18,6 +18,10 @@ const init = async (msg) => {
     // const MENTION   = (msg.args.join(" ").match(/(<@[0-9]+>)/gm) || [""])[0];
     let HEADLINE  = msg.args.join(" ").replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, "");
 
+    if (msg.mentions[0]){
+      Progression.emit("command.localnews.friends",{msg,userID:msg.author.id});
+    }
+
     try {
       // imgLink ??= msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
       if (!imgLink) imgLink = msg.mentions[0]?.displayAvatarURL || await PLX.getChannelImg(msg);
