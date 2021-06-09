@@ -6,11 +6,13 @@ const RUNNING_MONTH_SHORT = new Date().toLocaleString('en', { month: 'short' }).
 const RUNNING_MONTH_LONG = new Date().toLocaleString('en', { month: 'long' }).toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 4; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 5; // JANUARY = 0;
 
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
+
+//const THIS_MONTH_STICKER_CODE = `plx${RUNNING_MONTH_SHORT}${RUNNING_YEAR.slice(2)}`
 
 const VERIFICATION_ROLE = "421181998439333901";
 const LEGACY_ROLE = "663439502571732992";
@@ -306,8 +308,10 @@ const PREMIUM_INFO = {
     },
 }
 
-const PREMIUM_STICKERS = DB.cosmetics.find({public: true, GROUP:"plx_collection"}).noCache().lean();
-const PREMIUM_PACKS = DB.items.find({type: "boosterpack", GROUP:"plx_collection"}).noCache().lean();
+const PREMIUM_STICKERS = (DB.cosmetics.find({public: true, GROUP:"plx_collection"}).noCache().then(x=>{
+    return x.sort((a,b)=>  a._doc.release_number - b._doc.release_number);
+}) );
+const PREMIUM_PACKS = DB.items.find({type: "boosterpack", filter:"plx_collection"}).noCache().lean();
 
 function REWARDS_ROLLOUT(){ 
     return new Date(global.PRIME_ROLLOUT_OVERRIDE || `${RUNNING_MONTH+1}/${TURNING_DAY}/${RUNNING_YEAR}`) 
@@ -320,10 +324,10 @@ async function shiftCountdownRoles(Member){
     while ( --i ){
         let roleID = PREMIUM_COUNTDOWN[i];
         let nextRoleID = PREMIUM_COUNTDOWN[i+1];
+
         if(!roleID) break;
         
         if(Member.roles.includes(roleID)){
-            console.log({roleID,nextRoleID,i})
             if(!nextRoleID) {
               STATUS = "expired";
               continue;
@@ -350,7 +354,6 @@ function tierFromLevel(level){
 }
 
 function tierDiff(oldTier,newTier){    
-    console.log({oldTier,newTier})
     return {
         monthly_sph: Math.max(-oldTier.monthly_sph + newTier.monthly_sph, 0),
         immediate_sph: Math.max(-oldTier.immediate_sph + newTier.immediate_sph, 0),
@@ -390,6 +393,9 @@ async function checkPrimeStatus(mansionMember){
     const roleVerified = mansionMember.roles.includes(VERIFICATION_ROLE);
     const isLegacy = mansionMember.roles.includes(LEGACY_ROLE);
     const rewardsLastClaimed = userData.prime?.lastClaimed || 0;
+    const countdownStatus = await shiftCountdownRoles(mansionMember);
+
+    if (countdownStatus === "expired") return Promise.reject("expired");
 
     const staffLevel = isStaff(mansionMember);
 
@@ -419,7 +425,7 @@ async function checkPrimeStatus(mansionMember){
         if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier){
             interTier = tierDiff(PREMIUM_INFO[currentTier],PREMIUM_INFO[highestPremiumRoleTier]);
             STATUS = tierLevel(currentTier) > tierLevel(highestPremiumRoleTier) ? "upgrade" : "downgrade";
-            if (STATUS === "downgrade") return Promise.reject("dongrading");
+            if (STATUS === "downgrade") return Promise.reject("downgrading");
             interTier.from = currentTier;
             interTier.to = highestPremiumRoleTier;
         }else{
@@ -515,6 +521,8 @@ async function processRewards( userID, options){
         const packQueries = [];
         if (tierPrizes.sticker_prize.PACK > 0){
             let adds = tierPrizes.sticker_prize.PACK;
+           
+
             while (adds-- > 0){
                 const toAdd = shuffle(availablePacks)[0];
                 packsReport.push(toAdd);
@@ -533,7 +541,6 @@ async function processRewards( userID, options){
             }},
             ...packQueries
         ]);
-        console.log(bulkWriteQuery)
     }
 
     if (isBooster){

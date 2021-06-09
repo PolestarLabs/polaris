@@ -9,13 +9,26 @@ const init = async function (msg,args){
         //waiting
         //unverified
         //already-claimed
+        if (primeStatus.err === "expired") 
+            return msg.reply({embed:{description: `Your sub has expired. Thanks for supporting until this point~`}});
         if (primeStatus.err === "waiting") 
             return msg.reply({embed:{description: `*Rewards for **${Premium.RUNNING_MONTH_LONG}** are not yet released.`}});
         if (primeStatus.err === "unverified") 
-            return msg.reply({embed:{description: `*Verification failed: Check if you're missing the ✅ Role*.`}});
+            return msg.reply({embed:{
+                description: `${_emoji('nope')} *Rewards are reserved for Donators, Supporters, Collaborators and Staff.*
+                If you're interested in supporting us please check out one of the following:   
+
+                <:patreon:684734175986712613> [Patreon](https://patreon.com/join/pollux)  • <:Paypal:338329328947429378> [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8JDLAY5TFU9D6&source=url)  • <:pix:845985531162525736> [Pix](https://media.discordapp.net/attachments/277392117167292417/808354942138056764/unknown.png)
+                
+                By supporting us you help to keep the project going and also get some sweet perks like <:sapphire:367128894307827712> **Sapphires**, <:loot:339957191027195905> **Lootboxes**, and some **exclusive Stickers**
+                
+                **[\` MORE INFO \`](${paths.DASH}/donate)**
+                `}
+            });
+            //return msg.reply({embed:{description: `*Verification failed: Check if you're missing the ✅ Role*.`}});
         if (primeStatus.err === "already-claimed") 
             return msg.reply({embed:{description: `*You already claimed rewards for this month.*`}});
-        if (primeStatus.err === "dongrading") 
+        if (primeStatus.err === "downgrading") 
             return msg.reply({embed:{description: `*You have downgraded your subscription. Rewards will update next month.*`}});
     } else if (primeStatus.STATUS === "not-prime"){
         return msg.reply({embed:{
@@ -31,8 +44,6 @@ const init = async function (msg,args){
         });
     }
 
-    console.log({primeStatus})
-
     const {interTier,currentTier,isStaff,isLegacy} = primeStatus;
     let PROCESS_RWD = await Premium.processRewards(msg.author.id, { isLegacy, isStaff, currentTier, interTier, mansionMember: msg.member, dry_run: args[0]=="--dry-run" ? args[1]||true : false });
     if (args[0]=="--dry-run"){
@@ -43,6 +54,7 @@ const init = async function (msg,args){
     //-----------------------------------------------------------------------
     const canvas = Picto.new(780,385);
     const ctx = canvas.getContext('2d');
+    console.log(REPORT,"REPORT")
 
     if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = [...(await Premium.PREMIUM_STICKERS)].pop();
     
