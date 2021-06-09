@@ -48,10 +48,10 @@ const init = async function (msg) {
   if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
   const userData = Target ? await DB.users.findOne({ id: msg.author.id }).populate('marriageData').lean() : null;
-  const marriedtarget = userData?.marriageData;
+  const marriedtarget = await DB.relationships.find({users:msg.author.id});
   console.log({marriedtarget})
 
-  if (marriedtarget && marriedtarget.users.includes(Target?.id) &&  marriedtarget.users.includes(msg.author.id) ) {
+  if (marriedtarget && marriedtarget.find(x=>x.users.includes(Target?.id))) {
     Progression.emit("command.kiss.isWife",{msg});
     const noise = randomize(0, 50);
     let pris = randomize(1, 0);
