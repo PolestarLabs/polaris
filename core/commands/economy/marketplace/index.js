@@ -1,5 +1,4 @@
 module.exports = {
-  init: "Marketplace",
   pub: true,
   cmd: "marketplace",
   perms: 3,
