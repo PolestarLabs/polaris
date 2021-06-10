@@ -455,7 +455,10 @@ async function processRewards( userID, options){
 
     if (!currentTier) return Promise.reject("NO TIER REGISTERED");
 
-    const tierStreak = userData.counters?.prime_streak?.[currentTier] || 1;
+    const tierStreak = userData.counters?.prime_streak
+    if (!userData.counters?.prime_streak){
+        await DB.users.set(userID,{$set: {"counters.prime_streak": {}}});
+    }
     if (tierStreak === 1)  await DB.users.set(userID,{$set: {[`counters.prime_streak.${currentTier}`]: 1}});
     const totalStreak = userData.counters?.prime_streak?.total || 1;
     if (totalStreak === 1)  await DB.users.set(userID,{$set: {"counters.prime_streak.total": 1}});
