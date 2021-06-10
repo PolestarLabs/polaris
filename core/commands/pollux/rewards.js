@@ -56,7 +56,7 @@ const init = async function (msg,args){
     const ctx = canvas.getContext('2d');
     console.log(REPORT,"REPORT")
 
-    if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = [...(await Premium.PREMIUM_STICKERS)].pop();
+    if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = REPORT.STICKERS[0] || [...(await Premium.PREMIUM_STICKERS)].pop();
     
     const [base,overlay,sticker,tierIcon] = await Promise.all([
         Picto.getCanvas(`${paths.CDN}/build/rewards/basse.png`),
@@ -179,7 +179,7 @@ const init = async function (msg,args){
         })
     }
 
-    msg.channel.send({embed},{file: canvas.toBuffer(), name:"rewards.png"})
+    msg.channel.send({embed},  PROCESS_RWD.data.tier == 'plastic' ? {} : {file: canvas.toBuffer(), name:"rewards.png"})
 
 
 
