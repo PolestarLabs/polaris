@@ -226,6 +226,7 @@ module.exports = {
   argsRequired: false,
   caseInsensitive: true,
   cooldown: 8000,
+  aliases: ['buy','sell'],
   hooks: {
     preCommand: (msg) => (msg.author.marketplacing = true),
     postExecution: (msg) => (msg.author.marketplacing = false),
