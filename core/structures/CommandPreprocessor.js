@@ -210,7 +210,9 @@ function QUEUED_COMMAND(commandFile) {
     if (PLX.restarting) {
       return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
     }
-    const execCommand = commandFile.init ? commandFile.init(...args) : commandFile.gen(...args);
+    const execCommand = typeof commandFile.init == 'function' ? commandFile.init(...args) : typeof commandFile.gen == 'function' ? commandFile.gen(...args) : null;
+    if (!execCommand) return commandFile.init;
+
     PLX.execQueue.push(new Promise((res,rej) => execCommand.then(res).catch(rej) ));
     return execCommand;
   };
@@ -226,7 +228,8 @@ const registerOne = (folder, _cmd) => {
     if(commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
-    const CMD = PLX.registerCommand(_cmd, QUEUED_COMMAND(commandFile), commandFile)
+    const cmdQ = QUEUED_COMMAND(commandFile);
+    const CMD = PLX.registerCommand(_cmd, cmdQ, commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
