@@ -511,13 +511,15 @@ async function processRewards( userID, options){
 
         const randoms = []
         if (tierPrizes.sticker_prize.RANDOM > 0){
-            let adds = tierPrizes.sticker_prize.LAST;
+            let adds = tierPrizes.sticker_prize.RANDOM;
             let availableRandomStickers = shuffle(availableStickerList);
             while (adds-- > 0){
                 availableRandomStickers = shuffle(availableRandomStickers);
                 let toPush = availableRandomStickers.pop();
-                stickersReport.push(toPush);
-                randoms.push(toPush.id);
+                if(toPush){
+                    stickersReport.push(toPush);
+                    randoms.push(toPush.id);
+                }
             }
         }
 
@@ -528,9 +530,11 @@ async function processRewards( userID, options){
 
             while (adds-- > 0){
                 const toAdd = shuffle(availablePacks)[0];
-                packsReport.push(toAdd);
-                let query = createAddItemQuery(toAdd.id);
-                packQueries.push(query);
+                if (toAdd){
+                    packsReport.push(toAdd);
+                    let query = createAddItemQuery(toAdd.id);
+                    packQueries.push(query);
+                }
             }
         }
         bulkWriteQuery.push(...[
