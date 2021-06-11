@@ -7,14 +7,7 @@ const LootboxItem = require("./LootboxItem");
 
 const itmODDS = GNums.LootRates.itemType;
 const rarODDS = GNums.LootRates.rarity;
-const COLORS = {
-  C: "#928fa8",
-  U: "#63b361",
-  R: "#3646bf",
-  SR: "#8827ce",
-  UR: "#dc5c50",
-  XR: "#981f1f",
-};
+const COLORS  = Gnums.colors.rarity
 
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 

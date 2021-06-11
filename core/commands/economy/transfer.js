@@ -80,7 +80,7 @@ const init = async (msg) => {
       message.channel.send({ embed });
     });
   };
-
+  // TODO[epic=Constants Module] Replace with constants module
   return Timed.init(msg, "transfer_rbn", { day: (4 * 60 * 60 * 1000) }, after, reject, info, precheck);
 };
 

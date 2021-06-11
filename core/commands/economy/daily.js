@@ -1,3 +1,4 @@
+//TODO[epic=Constants Module] Replace
 const DAY =  22 * 60 * 60e3;
 const EXPIRE = 1 * DAY * 2.5;
 
@@ -60,7 +61,7 @@ const init = async (msg) => {
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
-
+  console.log({dailyPLXMember})
   
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars

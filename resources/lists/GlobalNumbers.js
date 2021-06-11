@@ -15,6 +15,30 @@ const bgP    = (S) => ~~( mdP(S) * FIBONACCI(BASELINE*2.5,1) * S / BASELINE );
 
 module.exports = {
 
+  colors:{
+    rarity:  {
+      C: "#928fa8",
+      U: "#63b361",
+      R: "#3646bf",
+      SR: "#8827ce",
+      UR: "#dc5c50",
+      XR: "#981f1f",
+    }
+  },
+  timers:{
+
+    daily: {
+      DAY:  22 * 60 * 60e3,  // 22 HOURS
+      EXPIRE: 1 * DAY * 2.5, // 55 HOURS / 2.5x CDWN
+    },
+    boxTrade: 2 * 60 * 60e3,  // 2 HOURS
+    transfer: 4 * 60 * 60e3,  // 4 hours
+    thanks:   1 * 3.6e+6,     // (no idea)
+    commend:  1 * 3.6e+6      // (no idea)
+
+
+  },
+
   DROPMAX: 1000, // Maximum dice face for Lootbox Drops
   
   sapphireModifier: 0.000794912559618442, // ÷1258
