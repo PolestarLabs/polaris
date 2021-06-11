@@ -1,11 +1,9 @@
-//TODO[epic=anyone] Replace NODE-FETCH with AXIOS
-
-const axios = require("axops");
+const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
 const Eris = require("eris");
 const MersenneTwister = require("../MersenneTwister");
-const { default: axios } = require("axios");
+
 
 if (Eris.Embed) {
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
