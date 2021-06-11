@@ -12,6 +12,7 @@
     "@google-cloud/vision": "^2.1.2",
     "@polestar/database_schema": "gitlab:PolestarLabs/database_schema#395c03b3ec93652b8be7bf4694879f338cbe17f8",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
+    "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
     "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#59a91d720befd6e40bec444a3b59374b45b2c534",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",

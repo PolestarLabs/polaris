@@ -181,45 +181,8 @@ DBSchema(vanillaConnection,{redis: null}).then(vConnection=>{
 
 
 // Translation Engine ------------- <
-global.translateEngineStart = () => {
-  const i18next = require("i18next");
-  const multilang = require("./utils/i18node.js");
-  const i18nBackend = require("i18next-node-fs-backend");
-  const backendOptions = {
-    // loadPath: "./locales/{{lng}}/{{ns}}.json",
-    loadPath: `${paths.LOCALES}{{lng}}/{{ns}}.json`,
-    jsonIndent: 2,
-  };
-  readdirAsync(paths.LOCALES).then((list) => {
-    i18next.use(i18nBackend).init({
-      backend: backendOptions,
-      lng: "en",
-      fallbackLng: ["en", "dev"],
-      fallbackToDefaultNS: true,
-      fallbackOnNull: true,
-      returnEmptyString: false,
-      preload: list,
-      load: "currentOnly",
-      ns: ["bot_strings", "events", "commands", "website", "items", "translation", "games"],
-      defaultNS: "bot_strings",
-      fallbackNS: "translation",
-      interpolation: {
-        escapeValue: false,
-      },
-    }, (err, t) => {
-      if (err) {
-        console.warn("• ".yellow, "Failed to Load Some Translations".yellow, `\n${err.map((e) => e?.path?.gray).join("\n")}`);
-      }
-      console.log("• ".green, "Translation Engine Loaded");
 
-      multilang.setT(t);
-      global.i18n = i18next;
-      global.$t = multilang.getT();
-      global.rand$t = multilang.rand;
-    });
-  });
-  return "Translation Engine Loading!";
-};
+const {translateEngineStart} = require("@polestar/i18n");
 translateEngineStart();
 
 //= ======================================//
