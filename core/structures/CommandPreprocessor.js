@@ -185,10 +185,11 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
         // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
         description: "Oh **no**! Something went wrong...\n"
           + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${
-            PLX.beta || cfg.testChannels.includes(msg.channel.id)
+            //PLX.beta || cfg.testChannels.includes(msg.channel.id)
             // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
-              ? `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
-              : ""
+            // ? 
+            `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
+            // : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
         color: 0xF05060,
