@@ -1,5 +1,6 @@
 module.exports = {
   pub: true,
+  init: ()=>{},
   cmd: "marketplace",
   perms: 3,
   cat: "economy",
