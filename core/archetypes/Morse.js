@@ -96,8 +96,22 @@ function decodeCharacterByMap(char) {
   return " ";
 }
 
+function cleanup(string){
+    return string
+        .replace(/[À-Åà-å]/gmi, "A")
+        .replace(/[Ææ]/gmi, "AE")
+        .replace(/[Çç]/gmi, "C")
+        .replace(/[Ð]/gmi, "D")
+        .replace(/[È-Ëè-ë]/gmi, "E")
+        .replace(/[Ì-Ïì-ï]/gmi, "I")
+        .replace(/[Ññ]/gmi, "N")
+        .replace(/[Ò-Øðò-ø]/gmi, "O")
+        .replace(/[ßẞ]/gmi, "S")
+        .replace(/[Ù-Üù-ü]/gmi, "U")
+        .replace(/[Ýýÿ]/gmi, "Y")
+        .replace(/[þÞ]/gmi, "TH")
+        .toUpperCase();
+}
 
-module.exports = {
-    encode: encode,
-    decode: decode,
-};
+
+module.exports = { encode, decode, cleanup };
