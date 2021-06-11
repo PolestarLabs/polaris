@@ -29,7 +29,7 @@ module.exports = {
 
     daily: {
       DAY:  22 * 60 * 60e3,  // 22 HOURS
-      EXPIRE: this.timers.daily.day * 2.5, // 55 HOURS / 2.5x CDWN
+      EXPIRE: this.day * 2.5, // 55 HOURS / 2.5x CDWN
     },
     boxTrade: 2 * 60 * 60e3,  // 2 HOURS
     transfer: 4 * 60 * 60e3,  // 4 hours
