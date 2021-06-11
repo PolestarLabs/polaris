@@ -229,8 +229,8 @@ const registerOne = (folder, _cmd) => {
     if(commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
-    const cmdQ = QUEUED_COMMAND(commandFile);
-    const CMD = PLX.registerCommand(_cmd, cmdQ, commandFile)
+    //const cmdQ = QUEUED_COMMAND(commandFile);
+    const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
