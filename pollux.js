@@ -182,7 +182,7 @@ DBSchema(vanillaConnection,{redis: null}).then(vConnection=>{
 
 // Translation Engine ------------- <
 
-const {translateEngineStart} = require("@polestar/i18n");
+global.translateEngineStart = require("@polestar/i18n").translateEngineStart;
 translateEngineStart();
 
 //= ======================================//
