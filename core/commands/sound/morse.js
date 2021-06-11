@@ -77,7 +77,8 @@ const init = async function (msg, args) {
 
 module.exports = {
   init,
-  pub: false,
+  pub: true,
+  argsRequired: true,
   cmd: "morse",
   cat: "sound",
   botPerms: ["attachFiles", "embedLinks"],
