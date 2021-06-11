@@ -55,11 +55,6 @@ const MAP = {
   " ": ".......",
 };
 
-module.exports = {
-  encode: encode,
-  decode: decode,
-};
-
 function encode(obj) {
   return maybeRecurse(obj, encodeMorseString);
 
@@ -100,3 +95,9 @@ function decodeCharacterByMap(char) {
   }
   return " ";
 }
+
+
+module.exports = {
+    encode: encode,
+    decode: decode,
+};
