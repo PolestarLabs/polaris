@@ -1,10 +1,11 @@
 //TODO[epic=anyone] Replace NODE-FETCH with AXIOS
 
-const fetch = require("node-fetch");
+const axios = require("axops");
 const fs = require("fs");
 const path = require("path");
 const Eris = require("eris");
 const MersenneTwister = require("../MersenneTwister");
+const { default: axios } = require("axios");
 
 if (Eris.Embed) {
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
@@ -133,7 +134,7 @@ module.exports = {
 
     if (typeof resource === "string") {
       if (/^https?:\/\//.test(resource)) {
-        return fetch(resource).then((res) => res.buffer());
+        return axios(resource).then((res) => Buffer.from(res.data, 'binary') );
       }
       return new Promise((resolve, reject) => {
         const file = path.resolve(resource);
