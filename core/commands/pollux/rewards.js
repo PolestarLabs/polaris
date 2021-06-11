@@ -54,7 +54,6 @@ const init = async function (msg,args){
     //-----------------------------------------------------------------------
     const canvas = Picto.new(780,385);
     const ctx = canvas.getContext('2d');
-    console.log(REPORT,"REPORT")
 
     if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = REPORT.STICKERS[0] || [...(await Premium.PREMIUM_STICKERS)].pop();
     
@@ -110,6 +109,8 @@ const init = async function (msg,args){
     embed.fields.push({ name: "\u200b", value: "\u200b", inline: true });
  
     let STICKERS_LIST = REPORT.STICKERS.map(s=>` • ${s.name}`);
+
+
     if ( STICKERS_LIST.length > 3 ) {
         let others =  STICKERS_LIST.length -3; 
         STICKERS_LIST =  STICKERS_LIST.slice(0,3);
@@ -150,7 +151,7 @@ const init = async function (msg,args){
     embed.fields.push({
         name: "\u200b",
         value: `
-        ${_emoji("TIME3")} **Streak:** ${REPORT.STREAK} (${REPORT.AS_TIER} as ${capitalize(PROCESS_RWD.data.tier)})
+        ${_emoji("TIME3")} **Streak:** ${REPORT.STREAK} (${REPORT.AS_TIER?.[PROCESS_RWD.data.tier] || 1} as ${capitalize(PROCESS_RWD.data.tier)})
         ${REPORT.HAS_MEDAL 
             ? _emoji("yep")
             : _emoji("maybe")
