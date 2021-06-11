@@ -47,7 +47,7 @@ const init = async function (msg) {
       : $t("responses.forFun.kissedNone", P)}`;
   if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
-  const userData = Target ? await DB.users.findOne({ id: msg.author.id }).populate('marriageData').lean() : null;
+  const userData = Target ? await DB.users.findOne({ id: msg.author.id }).lean() : null;
   const marriedtarget = await DB.relationships.find({users:msg.author.id});
   console.log({marriedtarget})
 
