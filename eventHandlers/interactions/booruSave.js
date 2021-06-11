@@ -7,9 +7,9 @@ module.exports = async (interaction, data)=>{
             tags: emb.fields.tags ? emb.fields.tags.replaceAll(/[\[\]\`]/,"") : "",
             nsfw: emb.color == 16731205,
         }
-        let res = await DB.usercols.set({id: interaction.userID}, { $addToSet: { "collections.boorusave": save } });
+        let res = await DB.usercols.updateOne({id: interaction.userID}, { $addToSet: { "collections.boorusave": save } },{upsert:true});
         console.log({res})
-        if (res?.nModified !== 1) return;
+        if (res?.nModified !== 1 && !res.upserted) return;
 
         Progression.emit("action.gallery.save",{msg:interaction.message,userID:interaction.userID,value:1});
         interaction.reply({
