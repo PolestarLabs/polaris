@@ -16,6 +16,7 @@ module.exports = async ( interaction, data) => {
         }
 
         response.embeds = [response?.embed]
+        if (data.options?.find(x=>x.name==='private')?.value) response.flags = 64;
 
         if (response?.length && typeof response !== 'string') {
             let [res,file] = response;            
