@@ -95,7 +95,16 @@ module.exports = {
   pub: true,
   slashable: true,
   slashOptions: {
-    guilds: ["789382326680551455"]
+    options: [
+      {
+        name: "private",
+        description: "Show this only to yourself",
+        type: 5,
+        required: false,
+      }
+    ],
+    guilds: ["789382326680551455"],
+    //global: true,
   },
   botPerms: ["embedLinks"],
   aliases: ["bal", "sapphires", "jades"],
