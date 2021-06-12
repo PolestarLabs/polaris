@@ -633,8 +633,8 @@ const init = async (msg) => {
     ///             HONORIFICS
     //= ========================================
 
-    setImmediate(() => {
-      Promise.all([backdrop, foreground, hexes]).then(async (arr) => {
+    //setImmediate(() => {
+      return Promise.all([backdrop, foreground, hexes]).then(async (arr) => {
         ctx.globalCompositeOperation = "destination-over";
         ctx.drawImage(arr[0], 0, 0);
 
@@ -683,9 +683,9 @@ const init = async (msg) => {
         txt = null;
         Target_Database = null;
         
-        FINALIZE(msg, canvas);
+        return await FINALIZE(msg, canvas);
       });
-    });
+    //});
   } catch (e) {
     console.log("ERROR PROFILE");
     console.error(e);
@@ -723,6 +723,20 @@ module.exports = {
   cmd: "profile",
   perms: 3,
   
+  slashable: true,
+  slashOptions:{
+    args: ["player"],
+    guilds:["789382326680551455"],
+    options: [
+      {
+        name: "player",
+        description: "The person to display their Profile, leave blank for self",
+        type: 6,
+        required: false,
+      }
+    ]
+  },
+
   init,
   cat: "social",
   aliases: ["ppc", "perfil"],
@@ -735,20 +749,20 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
     let messageToSend = "";
     let noimg = false;
     let preBuffer = performance.now();
-
+ 
+    let postBuffer = performance.now() - preBuffer;
+      
+    if (msg.content.includes("-ni")) noimg = true;
+    messageToSend += msg.content.includes('-bm') ?  `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";      
     
-    canvas.toBuffer( (err,buff) => {
-      if (err) throw err;
-      let postBuffer = performance.now() - preBuffer;
-      
-      if (msg.content.includes("-ni")) noimg = true;
-      messageToSend += msg.content.includes('-bm') ?  `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";      
-      msg.channel.createMessage(messageToSend, noimg ? undefined : {
-        file: buff,
-        name: "profile.png",
-      });
-      
-    } ,"image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+    if (msg.fake) return ["",{file: buff, name: "profile.png"}];
+
+    msg.channel.createMessage(messageToSend, noimg ? undefined : {
+      file: buff,
+      name: "profile.png",
+    });
+
+
     
     if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
 }
