@@ -13,14 +13,14 @@ if (Eris.Embed) {
 module.exports = {
   img2base64: function ImageToBase64(resource) {
     return new Promise((resolve, reject) => {
-      axios(resource).then((res) => {
+      axios(resource, { responseType: 'arraybuffer' }).then((res) => {
         if (res.status !== 200) return reject(res);
         const b64 = Buffer.from(res.data, "binary").toString("base64");
         return resolve({
           b64,
           dataUri: `data:${res.headers["content-type"]};base64,${b64}`,
         });
-      });
+      }).catch(reject);
     });
   },
 
