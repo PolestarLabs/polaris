@@ -11,7 +11,7 @@ const init = async function (message, cmdPiece = false) {
       if (img) resolve(vere(img.b64, message, cmdPiece)).catch(err=>null);
       else reject("NO IMAGE");
 
-    }).catch(err=>{
+    }).catch(async err=>{
       if (err) {
         let nwurl = await PLX.getChannelImg(message);
         if (nwurl?.includes(".discordapp.")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
