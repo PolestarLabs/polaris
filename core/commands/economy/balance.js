@@ -87,10 +87,16 @@ ${await lastTransBuild(lastTrans[4])}
     emb.fields = [];
   }
   emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`);
-  msg.channel.send({ embed: emb });
+  
+  
+  return { embed: emb };
 };
 module.exports = {
   pub: true,
+  slashable: true,
+  slashOptions: {
+    guilds: ["789382326680551455"]
+  },
   botPerms: ["embedLinks"],
   aliases: ["bal", "sapphires", "jades"],
   cmd: "balance",
