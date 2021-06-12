@@ -14,7 +14,7 @@
     "@polestar/database_schema": "gitlab:PolestarLabs/database_schema#395c03b3ec93652b8be7bf4694879f338cbe17f8",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
-    "@polestar/morse": "gitlab:PolestarLabs/morse",
+    "@polestar/morse": "gitlab:PolestarLabs/morse#328f2c8d1718687aa0adda9e39b96dc34f3665fe",
     "@polestar/timed-usage": "gitlab:PolestarLabs/timed-usage#59a91d720befd6e40bec444a3b59374b45b2c534",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
