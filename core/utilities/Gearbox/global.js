@@ -11,20 +11,38 @@ if (Eris.Embed) {
 }
 
 module.exports = {
-  nope: ":nope:339398829088571402",
-  reload() { delete require.cache[require.resolve("./Gearbox")]; },
+  img2base64: function ImageToBase64(resource) {
+    return new Promise((resolve, reject) => {
+      axios(resource).then((res) => {
+        if (res.status !== 200) return reject(res);
+        const b64 = Buffer.from(res.data, "binary").toString("base64");
+        return resolve({
+          b64,
+          dataUri: `data:${res.headers["content-type"]};base64,${b64}`,
+        });
+      });
+    });
+  },
 
-  invisibar: "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003"
-    + "\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
+  nope: ":nope:339398829088571402",
+  reload() {
+    delete require.cache[require.resolve("./Gearbox")];
+  },
+
+  invisibar:
+    "\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u200b\u2003\u2003\u2003\u2003\u2003\u2003" +
+    "\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003",
 
   Embed: Eris.Embed,
   RichEmbed: this.Embed, // legacy comp
 
   weightedRand: (wArr = [-1]) => {
     let ttWgt = 0;
-    let i; let
-      rand;
-    wArr.forEach((n) => { ttWgt += n; });
+    let i;
+    let rand;
+    wArr.forEach((n) => {
+      ttWgt += n;
+    });
     rand = Math.random() * ttWgt;
     Object.keys(wArr).forEach((n) => {
       if (rand < wArr[n]) {
@@ -44,8 +62,7 @@ module.exports = {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(true);
-      },
-      time * 1000 || 1000);
+      }, time * 1000 || 1000);
     });
   },
   miliarize: function miliarize(numstring, strict, char = ".") {
@@ -61,7 +78,9 @@ module.exports = {
 
       if (numstring.length < 4) return numstring;
       // -- -- -- -- --
-      const stashe = numstring.replace(/\B(?=(\d{3})+(?!\d))/g, char).toString();
+      const stashe = numstring
+        .replace(/\B(?=(\d{3})+(?!\d))/g, char)
+        .toString();
       // Gibe precision pls
       if (strict) {
         let stash = stashe;
@@ -75,11 +94,16 @@ module.exports = {
               return `${stash[0] + numstringExtra}K`;
             case 3:
               if (stash[2] !== "000") break;
-              return `${stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra}Mi`;
+              return `${
+                stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
+              }Mi`;
             case 4:
               if (stash[3] !== "000") break;
-              return `${stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra}Bi`;
-            default: break;
+              return `${
+                stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
+              }Bi`;
+            default:
+              break;
           }
           return stashe + numstringExtra;
         }
@@ -97,7 +121,8 @@ module.exports = {
           return `${stash[0]}Mi`;
         case 4:
           return `${stash[0]}Bi`;
-        default: break;
+        default:
+          break;
       }
       return stashe + numstringExtra;
     } catch (err) {
@@ -107,8 +132,8 @@ module.exports = {
   shuffle: function shuffle(array) {
     // console.warn("Deprecation warning: This is a Legacy Function")
     let currentIndex = array.length;
-    let temporaryValue; let
-      randomIndex;
+    let temporaryValue;
+    let randomIndex;
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex -= 1;
@@ -123,7 +148,9 @@ module.exports = {
   },
   objCount: function count(array, what) {
     let it = 0; // go
-    array.forEach((i) => { if (i === what) it += 1; });
+    array.forEach((i) => {
+      if (i === what) it += 1;
+    });
     return it;
   },
 
@@ -132,13 +159,14 @@ module.exports = {
 
     if (typeof resource === "string") {
       if (/^https?:\/\//.test(resource)) {
-        return axios(resource).then((res) => Buffer.from(res.data, 'binary') );
+        return axios(resource).then((res) => Buffer.from(res.data, "binary"));
       }
       return new Promise((resolve, reject) => {
         const file = path.resolve(resource);
         fs.stat(file, (err, stats) => {
           if (err) return reject(err);
-          if (!stats?.isFile()) return reject(new Error("[FILE NOT FOUND] ".red + file));
+          if (!stats?.isFile())
+            return reject(new Error("[FILE NOT FOUND] ".red + file));
           fs.readFile(file, (err2, data) => {
             if (err2) reject(err2);
             else resolve(data);
@@ -146,7 +174,8 @@ module.exports = {
           return null;
         });
       });
-    } if (typeof resource.pipe === "function") {
+    }
+    if (typeof resource.pipe === "function") {
       return new Promise((resolve, reject) => {
         const buffers = [];
         resource.once("error", reject);
@@ -159,7 +188,8 @@ module.exports = {
   file(file, name) {
     const finalFile = file instanceof Buffer ? file : fs.readFileSync(file);
     const ts = Date.now();
-    if (typeof name === "undefined" && typeof file === "string") name = path.basename(file);
+    if (typeof name === "undefined" && typeof file === "string")
+      name = path.basename(file);
     else name = `${ts}.png`;
     const fileObject = {
       file: finalFile,
@@ -171,7 +201,9 @@ module.exports = {
     return new Promise((res, rej) => {
       let output = "";
 
-      const write = (data) => { output += data; };
+      const write = (data) => {
+        output += data;
+      };
       const cmd = require("child_process").exec(command, options);
 
       cmd.stderr.on("data", write);

@@ -1,23 +1,23 @@
 // TRANSLATE[epic=translations] read
 
-const i2b = require("imageurl-base64");
 const Vision = require("@google-cloud/vision/");
 
 const cmd = "read";
 const init = async function (message, cmdPiece = false) {
-  return new Promise(async (resolve) => {
+  return new Promise(async (resolve,reject) => {
     const url = `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(message.args[0])}`;
-    i2b(url, async (err, img) => {
+
+    img2base64(url).then(async (img) => {
+      if (img) resolve(vere(img.b64, message, cmdPiece)).catch(err=>null);
+      else reject("NO IMAGE");
+
+    }).catch(err=>{
       if (err) {
         let nwurl = await PLX.getChannelImg(message);
-        console.log({err,nwurl})
         if (nwurl?.includes(".discordapp.")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
-        console.log({nwurl})
         if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
-        return i2b(nwurl, (err, b64) => resolve(vere(b64.base64, message, cmdPiece)));
-      }
-      if (img) {
-        resolve(vere(img.base64, message, cmdPiece));
+        
+        return i2b(nwurl).then(img => resolve(vere(img.b64, message, cmdPiece)));
       }
     });
   });

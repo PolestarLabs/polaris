@@ -1,5 +1,3 @@
-const i2b64 = Promise.promisify((require("imageurl-base64")));
-
 class DisposableHook {
   constructor(msg, name, b64avatar, info) {
     this.msg = msg;
@@ -18,7 +16,7 @@ class DisposableHook {
   }
 
   async init(avatarURL) {
-    const avatar = avatarURL ? await i2b64(avatarURL).then((b64) => b64.dataUri) : this.avatar;
+    const avatar = avatarURL ? await img2base64(avatarURL).then((img) => img.dataUri) : this.avatar;
     this.hook = await PLX.createChannelWebhook(
       this.msg.channel.id,
       { name: this.name, avatar },
