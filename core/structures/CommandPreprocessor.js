@@ -223,6 +223,9 @@ const registerOne = (folder, _cmd) => {
   try {
     delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))];
     const commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
+    if (commandFile.slashable) {
+      require("./SlashCommandPreprocessor.js").proc(commandFile);
+    }
     // commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };
     commandFile.hidden = !commandFile.pub;  // legacy port
     
@@ -232,6 +235,7 @@ const registerOne = (folder, _cmd) => {
     //const cmdQ = QUEUED_COMMAND(commandFile);
     const CMD = PLX.registerCommand(_cmd, commandFile.init, commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
+    PLX.commands[CMD.label].slashOptions = commandFile.slashOptions;
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
     PLX.commands[CMD.label].scope = commandFile.scope;
