@@ -1,6 +1,5 @@
-//TODO[epic=anyone] Replace REQUEST with AXIOS
 
-const request = require("request");
+const axios = require("axios");
 
 const rescodes = [200, 201, 400, 401, 403];
 const ROOT = "https://discoin.zws.im";
@@ -13,13 +12,14 @@ module.exports = class Discoin {
         query = payload; payload = null;
       }
       return new Promise((resolve, reject) => {
-        (request[METHOD])({
+        (axios[METHOD])({
           url: `${ROOT}/${route}${query ? `?s=${encodeURIComponent(query)}` : ""}`,
           headers: { Authorization: `Bearer ${this.token}` },
           json: payload,
-        }, (err, res, body) => {
-          if (err || rescodes.indexOf(res.statusCode) === -1) return reject(new Error(`[${res.statusCode}] :: API failure`));
-          if (![200, 201].includes(res.statusCode)) {
+        }).then( (res) => {
+          const body = res.data;
+          if (err || rescodes.indexOf(res.status) === -1) return reject(new Error(`[${res.status}] :: API failure`));
+          if (![200, 201].includes(res.status)) {
             return reject(new Error(JSON.stringify({ body, request: `${METHOD.toUpperCase()}: /${route}`, payload })));
           }
           return resolve(body);
@@ -28,10 +28,10 @@ module.exports = class Discoin {
     };
 
     this.currencies = () => new Promise((resolve, reject) => {
-      request.get({ url: "https://pollux.gg/api/discoin/currencies" }, (err, res, body) => {
-        if (res.statusCode === 200) resolve(JSON.parse(body));
-        else reject(res.statusCode);
-      });
+      axios.get({ url: "https://pollux.gg/api/discoin/currencies" }).then((res) => {
+        if (res.status === 200) resolve(JSON.parse(res.data));
+        else reject(res.status);
+      }).catch(res=> reject(res.status) );
     });
   }
 
