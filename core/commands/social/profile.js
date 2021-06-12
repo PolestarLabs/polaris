@@ -725,6 +725,7 @@ module.exports = {
   
   slashable: true,
   slashOptions:{
+    global: true,
     args: ["player"],
     guilds:["789382326680551455"],
     options: [
