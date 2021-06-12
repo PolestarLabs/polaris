@@ -1,7 +1,6 @@
 const Stream = require("stream");
 const fs = require("fs");
-
-const MORSE = require("../../archetypes/Morse.js");
+const { encode } = require("@polestar/morse");
 const BOARD = require("../../archetypes/Soundboard.js");
 
 // const _RADIO = (paths.ASSETS    +  '/sound/tune.mp3');
@@ -16,10 +15,8 @@ const space = " ";// "<:space:747373996269371513>"
 const init = async function (msg, args) {
   const P = { lngs: msg.lang };
   
-  const string = MORSE.cleanup( args.join(" ") );
-  const morseCodeString = MORSE.encode( string );
+  const outputTX = encode( args.join(" ") ); // TODO[epic=flicky] Error messages
 
-  const outputTX = morseCodeString.replace(/\.\.\.\.\.\.\./g, " ");
   const embed = { // TRANSLATE[epic=translations] ?? morse
     author: { name: "We get signal!" },
     footer: { text: "Radio Operator | Zero Wing", icon_url: "http://i.imgur.com/tda07NK.png" },
@@ -32,7 +29,7 @@ const init = async function (msg, args) {
     msg.channel.send({ content: $t("responses.warnings.enterVoiceBetterExperience", P), embed });
   } else {
     const output = new Stream.PassThrough();
-    const morseCodeArray = args.map(MORSE.encode);
+    const morseCodeArray = args.map(encode); // TODO[epic=flicky] Error messages
     const morseFiles = morseCodeArray.reduce((prev, curr) => {
       const morse_arr = [_SILENCE];
       for (position in curr) {
