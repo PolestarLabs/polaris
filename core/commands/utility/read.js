@@ -12,13 +12,16 @@ const init = async function (message, cmdPiece = false) {
       else reject("NO IMAGE");
 
     }).catch(async err=>{
-      if (err) {
+      
         let nwurl = await PLX.getChannelImg(message);
-        if (nwurl?.includes(".discordapp.")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
+        if (nwurl?.includes(".discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
         if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
-        
-        return i2b(nwurl).then(img => resolve(vere(img.b64, message, cmdPiece)));
-      }
+        return img2base64(nwurl).then(img => {
+          resolve(vere(img.b64, message, cmdPiece))
+        }).catch(err=>{
+            message.channel.send("`INVALID IMAGE URL (2)`");
+        });
+ 
     });
   });
 };
