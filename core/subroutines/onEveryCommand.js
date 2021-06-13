@@ -3,7 +3,7 @@ module.exports = {
 
   async updateMeta(msg) {
     DB.userDB.updateMeta(msg.author);
-    DB.serverDB.updateMeta(msg.guild);
+    if (msg.guild) DB.serverDB.updateMeta(msg.guild);
     return null;
   },
 
