@@ -1,13 +1,13 @@
-const GNums = require("../../resources/lists/GlobalNumbers.js");
+const LootRates = require("@polestar/constants/lootbox");
 
 const LootboxItem = require("./LootboxItem");
 /** *********************** */
 //          ODDS          //
 /** *********************** */
 
-const itmODDS = GNums.LootRates.itemType;
-const rarODDS = GNums.LootRates.rarity;
-const COLORS  = GNums.colors.rarity
+const itmODDS = LootRates.LootItemType;
+const rarODDS = LootRates.LootRarity;
+const COLORS  = require("@polestar/constants/ui-colors").RarityColors;
 
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 

@@ -3,7 +3,7 @@ const ECO = require("../../archetypes/Economy");
 const CFG = require("../../../config.json");
 
 const DCN = new Discoin(CFG.discoin);
-const DEmojis = require(`${appRoot}/resources/lists/discoin.json`).emojis;
+const DEmojis = require("@polestar/constants/discoin").default;
 const Picto =  require("../../utilities/Picto");
 
 const tax = 0.15;

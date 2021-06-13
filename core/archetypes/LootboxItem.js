@@ -1,4 +1,4 @@
-const gemRATES = (require("../../resources/lists/GlobalNumbers.js")).LootRates.gems;
+const gemRATES = require("@polestar/constants/lootbox").LootGems;
 
 class LootboxItem {
   #filter;

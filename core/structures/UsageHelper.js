@@ -58,7 +58,7 @@ exports.run = function run(cmd, m, third, extras) {
     emb.image = { url: extras.helpImage };
   }
 
-  if (cmd === "exchange") {
+  if (cmd === "exchange") { // FIXME[epic=flicky] This leads to nowhere
     let litzka = "\u200b";
 
     Object.keys(coinbase).forEach((i) => {

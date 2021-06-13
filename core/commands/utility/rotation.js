@@ -89,7 +89,7 @@ ${_emoji(rotation[0][9].replace(/\./g, "").replace(" ", "").toLowerCase())}${rot
       const body4new = JSON.parse(r.body).freeChampionIdsForNewPlayers;
       const maxnewlv = JSON.parse(r.body).maxNewPlayerLevel;
 
-      const obj = require(`${appRoot}/resources/lists/league.json`).data;
+      const obj = require("@polestar/constants/league.json").data;
       const allchamps = Object.keys(obj).map((key) => obj[key]).filter((key) => body.includes(key.id));
 
       const allchampsNew = Object.keys(obj).map((key) => obj[key]).filter((key) => body4new.includes(key.id));

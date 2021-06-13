@@ -9,7 +9,7 @@ const Canvas = require("canvas");
 const Lootbox = require("../../archetypes/Lootbox.js");
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
-const GNums = require("../../../resources/lists/GlobalNumbers.js");
+const { LootGems } = require("@polestar/constants/lootbox");
 
 const LootingUsers = new Map();
 const VisualsCache = new Map();
@@ -18,7 +18,6 @@ const CARD_WIDTH = 270;
 const BASELINE_REROLLS = 3;
 const REROLL_MSG = (P) => ({ embed: { description: $t("loot.rerolled", P) } });
 const FIRSTROLL_MSG = (P) => ({ embed: { description: $t("loot.opening", P) } });
-const rates = GNums.LootRates;
 
 const staticAssets = {};
 staticAssets.load = Promise.all([
@@ -160,7 +159,7 @@ const init = async (msg, args) => {
     let label = x.name
       ? `${x.emoji || _emoji(x.type, _emoji(getEmoji(x)))} **${$t(`keywords.${x.type}`)}:** ${x.name}`
       : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
-    if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${rates.gems[x.rarity]}*`;
+    if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${LootGems[x.rarity]}*`;
     return label;
   }).join("\n")}
                 `;
@@ -267,7 +266,7 @@ function renderCard(item, visual, P) {
 function renderDupeTag(rarity, P) {
   const canvas = Picto.new(staticAssets.dupe_tag.width, staticAssets.dupe_tag.width);
   const ctx = canvas.getContext("2d");
-  const cosmoAward = rates.gems[rarity];
+  const cosmoAward = LootGems[rarity];
   P.cosmos += cosmoAward;
 
   ctx.translate(canvas.width - staticAssets.dupe_tag.width + 10, canvas.height / 2);

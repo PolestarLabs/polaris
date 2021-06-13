@@ -1,4 +1,4 @@
-const NAMES = require(`${paths.LISTS}/colors.json`);
+const NAMES = require(`${paths.LISTS}/colors.json`); // FIXME[epic=flicky] Not used anywhere
 
 colName = {
 

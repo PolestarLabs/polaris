@@ -6,7 +6,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
-global.clusterNames = require("./resources/lists/clusters.json");
+global.clusterNames = require("@polestar/constants/clusters");
 
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;

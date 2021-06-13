@@ -2,7 +2,7 @@ const https = require("https");
 const crypto = require("crypto");
 
 const { appId, client, secret } = require(`${appRoot}/config.json`).yahooAPI;
-const countries = JSON.parse(require("fs").readFileSync(`${appRoot}/resources/lists/worldISO.json`).toString());
+const countries = require("@polestar/constants/countries").default;
 
 class Weather {
 	#baseURL = "https://weather-ydn-yql.media.yahoo.com/forecastrss";
@@ -76,10 +76,11 @@ class Weather {
 	 */
 	_findISO(name) {
 		const possibilities = [];
-		for (const country of countries) {
-			if (country.country == name) return country.iso;
-			if (country.country.includes(name)) {
-				const charArr1 = country.country.split("");
+		const ctrys = Object.values(countries);
+		for (const country of ctrys) {
+			if (country === name) return countries[country];
+			if (country.includes(name)) {
+				const charArr1 = country.split("");
 				const charArr2 = name.split("");
 
 				let diff = 0;
@@ -87,7 +88,7 @@ class Weather {
 					if (!charArr2[i] || charArr1[i] != charArr2[i]) 
 						diff += 1;
 
-				possibilities.push({ name: country.country, toRet: country.iso, diff });
+				possibilities.push({ name: country, toRet: countries[country], diff });
 			}
 		}
 		return null;

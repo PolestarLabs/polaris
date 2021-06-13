@@ -1,7 +1,7 @@
 const cmd = "background";
 const ECO = require("../../archetypes/Economy.js");
 
-const GNums = require("../../../resources/lists/GlobalNumbers.js");
+const { BackgroundPrices } = require("@polestar/constants/shop");
 const Picto = require("../../utilities/Picto");
 const YesNo = require("../../structures/YesNo");
 
@@ -34,7 +34,7 @@ const init = async (msg, args) => {
   \`${selectedBG.code}\`
   [${$t("responses.equip.getMoreBG", P)}](${paths.DASH}/bgshop)
   `;
-  const _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity];
+  const _price = selectedBG.price || BackgroundPrices[selectedBG.rarity];
 
   embed.field(
     $t("terms.price", P),
