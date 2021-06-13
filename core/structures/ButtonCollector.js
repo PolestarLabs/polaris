@@ -8,7 +8,7 @@ class ButtonCollector extends EventEmitter {
     this.message = message;
     this.ended = false;
     this.collected = [];
-    this.bot = message.channel.guild?.shard.client || message.channel._client;
+    this.bot = message.channel.guild?.shard.client || message.channel._client || PLX;
     this.listener = (interaction, data) => this.verify(interaction, data, interaction.member.user.id);
     this.bot.on("messageComponent", this.listener);
     if (this.options.time) setTimeout(() => this.stop("time"), this.options.time);
