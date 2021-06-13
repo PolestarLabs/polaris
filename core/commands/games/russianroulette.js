@@ -217,7 +217,7 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 				await wait(2);
 			} else if (voiceChannel)  await  voiceChannel.play(clickNoAmmo);
 		} catch (err) {
-				console.errpr(err)
+				console.error(err)
 		}
 		if (died) break;
 	}
