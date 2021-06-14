@@ -126,7 +126,9 @@ class GuessingGame {
 
       };
 
-      let { names } = await this.generate();
+      let { names, url } = await this.generate();
+
+      PLX.createMessage('792176688070918194', `${require("util").inspect(this)} ${url}`)
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
       .then( ()=> {
