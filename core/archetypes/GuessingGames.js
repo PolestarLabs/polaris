@@ -127,7 +127,7 @@ class GuessingGame {
       };
 
       let { names, url } = await this.generate();
-      msg.channel.createMessage(url)
+      msg.channel.createMessage(`${url} ${!!this.imageFile}`)
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
       .then( ()=> {
