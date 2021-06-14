@@ -143,7 +143,7 @@ module.exports = class Switch {
       DB.servers.get(this._guild.id),
       DB.channels.get(this._channel.id),
     ]).then(([guildobj, channelobj]) => {
-      if (!guildobj) guildobj = DB.guilds.new(this._guild);
+      if (!guildobj) guildobj = DB.guilds.new(this._guild); // FIXME Both of these return void?
       if (!channelobj) channelobj = DB.channels.new(this._channel);
 
       this.gd = guildobj.modules?.DISABLED || [];
