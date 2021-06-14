@@ -159,7 +159,7 @@ module.exports = {
 
     if (typeof resource === "string") {
       if (/^https?:\/\//.test(resource)) {
-        return axios(resource).then((res) => Buffer.from(res.data, "binary"));
+        return axios(resource, {responseType: "arraybuffer"}).then((res) => Buffer.from(res.data, "binary"));
       }
       return new Promise((resolve, reject) => {
         const file = path.resolve(resource);
