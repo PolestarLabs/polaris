@@ -1,4 +1,5 @@
 // guessingGame('name' , 'type(text/image)' ,'thumb', options)
+// @ts-check
 const axios = require("axios");
 
 function parseGrade(g) {
@@ -72,7 +73,7 @@ class GuessingGame {
       color,
       description: prompt,
       fields: [],
-      [imgPosition]: type === "image" ? { url: `attachment://${name}.png` } : {},
+      [imgPosition]: { url: `attachment://${name}.png` },
       footer: { text: `⏱ ${this.time / 1000}s` },
     };
   }
@@ -109,6 +110,7 @@ class GuessingGame {
     return null;
   }
 
+  /** @param {import('eris').Message} msg */
   async play(msg) {
   
     return new Promise( async(resolve) => {
@@ -126,7 +128,11 @@ class GuessingGame {
 
       };
 
-      let { names } = await this.generate();
+      let { names, url } = await this.generate();
+
+      PLX.createMessage('792176688070918194', `${require("util").inspect(this)} ${url}`)
+      PLX.createMessage('792176688070918194', { content: 'DEBUG', embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
+      PLX.createMessage('792176688070918194', { content: 'DEBUG'}, { file: this.imageFile, name: `${this.name}.png` })
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
       .then( ()=> {
