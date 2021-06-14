@@ -72,7 +72,7 @@ class GuessingGame {
       color,
       description: prompt,
       fields: [],
-      [imgPosition]: type === "image" ? { url: `attachment://${name}.png` } : {},
+      [imgPosition]: { url: `attachment://${name}.png` },
       footer: { text: `⏱ ${this.time / 1000}s` },
     };
   }
@@ -126,8 +126,7 @@ class GuessingGame {
 
       };
 
-      let { names, url } = await this.generate();
-      msg.channel.createMessage(`${url} ${!!this.imageFile}`)
+      let { names } = await this.generate();
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
       .then( ()=> {
