@@ -56,7 +56,7 @@ const init = async function (msg) {
     const noise = randomize(0, 50);
     let pris = randomize(1, 0);
     pris === 1 ? (pris = randomize(1, 0)) : false;
-    variation = userData.lovepoints < 50 + noise ? "couple" : "wet";
+    variation = userData.lovepoints < 50 + noise ? "couple" : "wet"; // FIXME See 0x17A0BAFBD79 - A relationship without userdata, possibly migration related?
     if (randomize(0, 5) === 1) variation = "cute";
     await DB.relationships.set({ _id: marriedtarget._id }, { $inc: { lovepoints: pris } });
   }
