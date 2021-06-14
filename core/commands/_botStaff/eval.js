@@ -21,8 +21,10 @@ const clean = (text) => {
   return output;
 };
 
+const devs = ["88120564400553984", "253600545972027394", "124989722668957700"];
+
 const init = async (msg) => {
-  if (msg.author.id !== "88120564400553984") {
+  if (!devs.includes(msg.author.id)) {
     if (msg.content.includes("fs")) return null;
     if (msg.content.includes("json")) return null;
     if (msg.content.includes("../../")) return null;
@@ -42,11 +44,11 @@ const init = async (msg) => {
   const invisibar = "\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b";
   let code = msg.args.join(" ");
 
-  if (code.includes("child_process") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes("exec") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes(".leave(") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes(".drop") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes("process.") && msg.author.id !== "88120564400553984") return null;
+  if (code.includes("child_process") && !devs.includes(msg.author.id)) return null;
+  if (code.includes("exec") && !devs.includes(msg.author.id)) return null;
+  if (code.includes(".leave(") && !devs.includes(msg.author.id)) return null;
+  if (code.includes(".drop") && !devs.includes(msg.author.id)) return null;
+  if (code.includes("process.") && !devs.includes(msg.author.id)) return null;
 
   if (!code) return null;
 
