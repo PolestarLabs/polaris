@@ -5,12 +5,9 @@ module.exports = async (member,newChannel) => {
     if(member.id === PLX.user.id){
         console.log(newChannel.type)
         if(newChannel.type !== 13) return;
-        axios.patch(`https://discord.com/api/v8/guilds/${newChannel.guild.id}/voice-states/${member.id}`,
-            { headers: { Authorization: PLX.token, 'Content-Type':'application/json' } },
-            {
-                "suppress": false,
-                "channel_id": newChannel.id
-            }
-        )
+        PLX.requestHandler.request("PATCH", `/guilds/${newChannel.guild.id}/voice-states/@me`, true, {
+            suppress: false,
+            channel_id: newChannel.id,
+        })
     } 
 };
