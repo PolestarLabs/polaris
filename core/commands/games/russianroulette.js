@@ -79,11 +79,11 @@ const loser =  `${paths.ASSETS}/sound/kingoflosers.mp3`;
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 
-const startSinglePlayer = async (msg,args) => {
+const startSinglePlayer = async (msg) => {
 
 	let v = STRINGS({lngs:msg.lang});
 
-	const BET = parseInt(args[0]);
+	const BET = parseInt(msg.args[0]);
 
 	if (!BET) {
 		return msg.reply( v.singleplayer_no_bet );
