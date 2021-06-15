@@ -66,7 +66,7 @@ module.exports = class Redeem {
     // no needed "else", this is executed both in single and multi redeem
     const userData = await DB.users.getFull(this.user);
     if (!userData) return "User Not Found";
-    
+
     const sPrize = prize.split(" ");
     await userData.addItem(`${sPrize[1]}_${sPrize[2]}_O`, Number(sPrize[0]));
     return this.audit()

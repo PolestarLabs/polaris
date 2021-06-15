@@ -53,7 +53,7 @@ module.exports = class Hangmaid {
   handleInput(guess) {
     if (this.isFullGuess(guess)) return this.terminate("win");
     //If a full guess is attepmted without triggering a correct answer, game is automatically lost
-    if (guess.length > 1) return this.terminate("lose"); 
+    if (guess.length > 1) return this.terminate("lose");
 
     const wordArray = this.word.toUpperCase()
       .split("");

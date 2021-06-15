@@ -51,34 +51,34 @@ const init = async function (msg, args) {
   x.strong = function (bait, rod) {
     return rod.attribs.includes("reinforced") && bait.size >= 2;
   },
-  x.large = function (bait, rod) {
-    return rod.attribs.includes("reinforced") && bait.size > 2;
-  },
-  x.bloodlust = function (bait, rod) {
-    return bait.attribs.includes("blood");
-  },
+    x.large = function (bait, rod) {
+      return rod.attribs.includes("reinforced") && bait.size > 2;
+    },
+    x.bloodlust = function (bait, rod) {
+      return bait.attribs.includes("blood");
+    },
 
-  x.picky = function (bait, rod, self) {
-    return rarLv[bait.rarity] >= rarLv[self.rarity] - 1;
-  };
+    x.picky = function (bait, rod, self) {
+      return rarLv[bait.rarity] >= rarLv[self.rarity] - 1;
+    };
 
   x.baitless = function (bait, rod) {
     return true;
   },
 
-  x.delicate = function (bait, rod) {
-    return !rod.attribs.includes("violent") && bait.size < 3;
-  },
+    x.delicate = function (bait, rod) {
+      return !rod.attribs.includes("violent") && bait.size < 3;
+    },
 
-  x.agile = function (bait, rod) {
-    return rod.attribs.includes("swift");
-  },
-  x.deepsea = function (bait, rod) {
-    return rod.attribs.includes("deep");
-  },
-  x.numerous = function (bait, rod) {
-    return true;
-  };
+    x.agile = function (bait, rod) {
+      return rod.attribs.includes("swift");
+    },
+    x.deepsea = function (bait, rod) {
+      return rod.attribs.includes("deep");
+    },
+    x.numerous = function (bait, rod) {
+      return true;
+    };
 
   let eligibleFishes = [];
   const morefish = FISHES.filter((fish) => {
@@ -110,9 +110,9 @@ const init = async function (msg, args) {
     if (res == true) {
       if (rod.attribs.some((att) => fish.attribs.bonus.includes(att))) eligibleFishes.push(fish, fish, fish, fish);
       if (bait.attribs.some((att) => fish.attribs.bonus.includes(att))) eligibleFishes.push(fish, fish, fish, fish);
-      bait.attribs.forEach((att) => { if (fish.attribs.bonus.includes(att))eligibleFishes.push(fish, fish); });
-      rod.attribs.forEach((att) => { if (fish.attribs.penalty.includes(att))eligibleFishes.filter((fi) => fish.id === fi.id); });
-      bait.attribs.forEach((att) => { if (fish.attribs.penalty.includes(att))eligibleFishes.filter((fi) => fish.id === fi.id); });
+      bait.attribs.forEach((att) => { if (fish.attribs.bonus.includes(att)) eligibleFishes.push(fish, fish); });
+      rod.attribs.forEach((att) => { if (fish.attribs.penalty.includes(att)) eligibleFishes.filter((fi) => fish.id === fi.id); });
+      bait.attribs.forEach((att) => { if (fish.attribs.penalty.includes(att)) eligibleFishes.filter((fi) => fish.id === fi.id); });
     }
 
     if (fish.attribs.aspect.length == 0) res = true;

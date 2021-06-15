@@ -3,8 +3,8 @@ const ECO = require("../../archetypes/Economy");
 const CFG = require("../../../config.json");
 
 const DCN = new Discoin(CFG.discoin);
-const DEmojis = require(`${appRoot}/resources/lists/discoin.json`).emojis;
-const Picto =  require("../../utilities/Picto");
+const DEmojis = require("@polestar/constants/discoin").default;
+const Picto = require("../../utilities/Picto");
 
 const tax = 0.15;
 const perMin = null;
@@ -60,7 +60,7 @@ const init = async (msg, args) => {
   const DiscoinCurrencies = await DCN.currencies();
   const RBN = Rates.find((r) => r.id === "RBN");
   const canvas = Picto.new(715, 600);
-  const ctx    = canvas.getContext("2d");
+  const ctx = canvas.getContext("2d");
   const textMode = args.length === 1 && args[0] === "-t";
 
   const homeCurrency = DiscoinCurrencies.find((c) => c.id === "RBN");
@@ -154,7 +154,7 @@ const init = async (msg, args) => {
 
   async function createCard(curr) {
     const canv = Picto.new(225, 90);
-    const c    = canv.getContext("2d");
+    const c = canv.getContext("2d");
 
     const thisCurrency = DiscoinCurrencies.find((d) => d.id === curr.id);
 
@@ -210,7 +210,7 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   //TODO[epic=Unfinished Commands] Discoin won't be out on launch;
-  disabled: true, 
+  disabled: true,
   pub: true,
   cmd: "exchange",
   perms: 3,

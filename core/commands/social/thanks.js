@@ -1,6 +1,6 @@
 const { autoSubs: topAutoSubs } = require("./top.js");
 
-const DAY = 1*3.6e+6;
+const DAY = 1 * 3.6e+6;
 const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
@@ -8,7 +8,7 @@ const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const Target = await PLX.getTarget(msg.args[0], msg.guild, false);
-  if (Target && Target.id === msg.author.id) return `${_emoji("nope")} ${$t("responses.thx.noself",P)}`;
+  if (Target && Target.id === msg.author.id) return `${_emoji("nope")} ${$t("responses.thx.noself", P)}`;
 
   const embed = {};
 

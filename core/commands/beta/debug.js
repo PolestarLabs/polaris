@@ -1,15 +1,15 @@
 const WHITELIST = [
   //"800104091409186857", //adv test 1
- // "800119647910494239", //adv test 2
+  // "800119647910494239", //adv test 2
   "792176688070918194"
 ]
 
 const init = async (msg, args) => {
   return `${_emoji("nope")}`;
-  
+
   if (PLX.user.id !== "354285599588483082") return;
 
-  if(!WHITELIST.includes(msg.channel.id)) return;
+  if (!WHITELIST.includes(msg.channel.id)) return;
 
   if (args[0] === "rbn") {
     const AMT = Number(args[1]) || 0;

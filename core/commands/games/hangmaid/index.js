@@ -103,9 +103,8 @@ const startCollector = async (Game, msg, mode) => {
         title: "Game's on!",
         description: `The word's theme is \`${Game.HINT}\`\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
         image: {
-          url: `${paths.DASH}/generators/hangmaid?${
-            encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME === "win" ? "win" : "lose"}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
-          }`
+          url: `${paths.DASH}/generators/hangmaid?${encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME === "win" ? "win" : "lose"}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
+            }`
         }
       };
 

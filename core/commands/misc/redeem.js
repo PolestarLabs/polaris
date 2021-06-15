@@ -77,5 +77,5 @@ module.exports = {
   cat: "inventory",
   argsRequired: true,
   pub: false,
-  
+
 };

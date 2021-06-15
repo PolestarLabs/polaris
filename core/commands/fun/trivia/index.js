@@ -52,7 +52,7 @@ const init = async (msg, args) => {
 
     const embed = {
       description:
-       `*\`\`\`css\n${Q.question}\`\`\`*`,
+        `*\`\`\`css\n${Q.question}\`\`\`*`,
     };
     embed.description += "\n\u200b";
     embed.fields = [];
@@ -110,7 +110,7 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   //TODO[epic=Unfinished Commands] Needs some polishing;
-  disabled: true, 
+  disabled: true,
   pub: true,
   cmd: "trivia",
   perms: 3,

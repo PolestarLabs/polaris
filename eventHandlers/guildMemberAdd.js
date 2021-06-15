@@ -50,10 +50,10 @@ module.exports = async (guild, member) => {
 
     resolveFile(url).then(async (buffer) => {
       const welcomeChannelObj = PLX.getChannel(welcomeChannel);
-      if ( !welcomeChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !welcomeChannelObj.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+      if (!welcomeChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !welcomeChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
       welcomeChannelObj.send({ content: welcomeText, embed }, (welcomeImage ? file(buffer, "in.png") : null)).then((ms) => {
         if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(err=>null);
+  }).catch(err => null);
 };

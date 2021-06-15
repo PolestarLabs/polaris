@@ -1,7 +1,7 @@
 const { Embed } = require("eris");
 // const locale = require('../../utils/i18node');
 // const $t = locale.getT();
-const coinbase = require("../../resources/lists/discoin.json");
+// const coinbase = require("../../resources/lists/discoin.json");
 const $d = require("./infra.json").decoration;
 const langlistage = require("./Locales").langlist;
 
@@ -58,12 +58,14 @@ exports.run = function run(cmd, m, third, extras) {
     emb.image = { url: extras.helpImage };
   }
 
-  if (cmd === "exchange") {
+  if (cmd === "exchange") { // FIXME[epic=flicky] This leads to nowhere
     let litzka = "\u200b";
 
+    /*
     Object.keys(coinbase).forEach((i) => {
       if (i !== "DISCOIN" && i !== "RBN") litzka += `  \`${i}\`  ${coinbase[i].icon}  **${coinbase[i].bot}**  ${coinbase[i].name}\n`;
     });
+    */
 
     emb.field("\u200b", litzka, false);
   }

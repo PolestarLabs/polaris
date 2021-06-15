@@ -5,7 +5,7 @@ const INVOKERS = new Map();
 const INV_STATUS = new Map();
 
 
-const createInventoryEmbed = function createInventoryEmbed (Inventory, {author, lang="en", prefix="p!"} ) {
+const createInventoryEmbed = function createInventoryEmbed(Inventory, { author, lang = "en", prefix = "p!" }) {
   const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
   embed.description = Inventory.length > 0
     ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${prefix}open box ${i.rarity}\``).join("\n")
@@ -28,7 +28,7 @@ const init = async function (msg, args, reactionMember) {
 
   console.log({ userID: reactionUserID, args10: args[10]?.id || args[10] }, "init");
 
-  if (reactionUserID && args[10]?.id != reactionUserID && reactionUserID !== msg.author.id ) return "Only the owner can see inside";
+  if (reactionUserID && args[10]?.id != reactionUserID && reactionUserID !== msg.author.id) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
   const userInventory = new INVENTORY(reactionUserID || msg.author.id, "box");
@@ -40,20 +40,21 @@ const init = async function (msg, args, reactionMember) {
   args[1] = Inventory.map((i) => i.rarity);
   INV_STATUS.set(reactionUserID || msg.author.id, args[1]);
 
-  const response = { 
+  const response = {
     content: `${_emoji("LOOTBOX")} ${$t("responses.inventory.browsingBox", { lngs: msg.lang })}`,
     embed,
-    components:[{type:1,components: 
-      ["C","U","R","SR","UR"].map(rar=>{
-        return {
-          type: 2,
-          style: 2,
-          emoji: {id: _emoji(rar).id },
-          label: $t(`keywords.${rar}`,{lngs: msg.lang}),
-          custom_id: `openBox:${rar}:${msg.author.id}:${msg.lang[0]}`,
-          disabled: !Inventory.some(i=> i.rarity === rar)
-        }
-      })
+    components: [{
+      type: 1, components:
+        ["C", "U", "R", "SR", "UR"].map(rar => {
+          return {
+            type: 2,
+            style: 2,
+            emoji: { id: _emoji(rar).id },
+            label: $t(`keywords.${rar}`, { lngs: msg.lang }),
+            custom_id: `openBox:${rar}:${msg.author.id}:${msg.lang[0]}`,
+            disabled: !Inventory.some(i => i.rarity === rar)
+          }
+        })
     }]
   };
 

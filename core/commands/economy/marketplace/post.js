@@ -41,7 +41,7 @@ const init = async (msg, args) => {
 
   async function AllChecks() {
     const userData = DB.users.getFull({ id: msg.author.id });
-    if (!userData) return { pass:false, reason:"User Not Registered" };
+    if (!userData) return { pass: false, reason: "User Not Registered" };
 
     const checkItem = (uD, type, id, transaction) => {
       pass = true;
@@ -109,12 +109,12 @@ const init = async (msg, args) => {
     }
 
     const validOperation = ["sell", "buy"].includes(operation);
-    const validType = ["background", "medal", "boosterpack", "sticker", "skin", "key", "consumable", "junk","material","item"].includes(itemType);
+    const validType = ["background", "medal", "boosterpack", "sticker", "skin", "key", "consumable", "junk", "material", "item"].includes(itemType);
     const validCurrency = ["RBN", "SPH"].includes(currency);
     const itemFindQuery = {};
     if (itemType !== 'item') itemFindQuery.type = itemType;
     itemFindQuery["$or"] = [{ id: itemID }, { icon: itemID }];
-    const validItem = await DB.items.findOne( itemFindQuery );
+    const validItem = await DB.items.findOne(itemFindQuery);
     const checkCosmetic = await DB.cosmetics.findOne({
       type: itemType,
       $or: [
@@ -124,7 +124,7 @@ const init = async (msg, args) => {
         { localizer: itemID },
       ],
     });
-    
+
     return {
       validOperation, validType, item_id: validItem?._id || checkCosmetic?._id, validItem, checkCosmetic, price, validCurrency, itemStatus, saleStatus,
     };
@@ -138,10 +138,10 @@ const init = async (msg, args) => {
     if (complete) {
       console.log(complete);
       return complete.validOperation && complete.validType && complete.item_id && (complete.validItem || complete.checkCosmetic)
-      && complete.price && complete.validCurrency && complete.itemStatus.pass && complete.saleStatus[`for${currency}`];
+        && complete.price && complete.validCurrency && complete.itemStatus.pass && complete.saleStatus[`for${currency}`];
     }
     return validOperation && validType && itemID && (validItem || checkCosmetic)
-    && price && validCurrency && itemStatus.pass && saleStatus[`for${currency}`];
+      && price && validCurrency && itemStatus.pass && saleStatus[`for${currency}`];
   }
 
   const abort = () => {
@@ -162,7 +162,7 @@ const init = async (msg, args) => {
 
   const confirm = async (cancellation) => {
     payload = await AllChecks();
-    console.log({payload})
+    console.log({ payload })
     if (!payload.itemStatus.pass) return cancellation();
     if (FULLCHECKS(payload)) {
       payload.LISTING = {
@@ -177,18 +177,18 @@ const init = async (msg, args) => {
       console.log('pre axios')
       console.log(`${paths.DASH}/api/marketplace`)
       let submitMessage = await msg.channel.send(`${_emoji('loading')} Submitting Listing...`);
-      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err=> console.log(err) && null);
+      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err => console.log(err) && null);
 
-      console.log('axios'.green,listingPOSTRequest.ok)
+      console.log('axios'.green, listingPOSTRequest.ok)
 
       if (listingPOSTRequest && listingPOSTRequest.data?.status == "OK" || listingPOSTRequest.data?.status == 200) {
         console.log(listingPOSTRequest.data)
-        let entryId = listingPOSTRequest.data.payload?.id ||  listingPOSTRequest.data.payload.PAYLOAD.id;
-        
-        Progression.emit("action.market.post",{ value: 1, msg, userID: msg.author.id});
-        
+        let entryId = listingPOSTRequest.data.payload?.id || listingPOSTRequest.data.payload.PAYLOAD.id;
+
+        Progression.emit("action.market.post", { value: 1, msg, userID: msg.author.id });
+
         submitMessage.edit(`${_emoji("yep")} **Done!** You can find your entry here:\n`
-        + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
+          + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
       } else {
         console.log('cancel axios');
         submitMessage.edit(`${_emoji('nope')} Error! `);
@@ -209,7 +209,7 @@ const init = async (msg, args) => {
       msg.channel.send({
         embed: {
           description: `${operation === "sell" ? "Selling" : "Buying"}: \`${itemType}\``
-          + `**${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}`,
+            + `**${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}`,
         },
       }).then(async (ms) => {
         await YesNo(ms, msg, confirm);
@@ -226,7 +226,7 @@ module.exports = {
   argsRequired: false,
   caseInsensitive: true,
   cooldown: 8000,
-  aliases: ['buy','sell'],
+  aliases: ['buy', 'sell'],
   hooks: {
     preCommand: (msg) => (msg.author.marketplacing = true),
     postExecution: (msg) => (msg.author.marketplacing = false),

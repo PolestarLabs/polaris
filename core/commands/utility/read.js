@@ -4,24 +4,24 @@ const Vision = require("@google-cloud/vision/");
 
 const cmd = "read";
 const init = async function (message, cmdPiece = false) {
-  return new Promise(async (resolve,reject) => {
+  return new Promise(async (resolve, reject) => {
     const url = `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(message.args[0])}`;
 
     img2base64(url).then(async (img) => {
-      if (img) resolve(vere(img.b64, message, cmdPiece)).catch(err=>null);
+      if (img) resolve(vere(img.b64, message, cmdPiece)).catch(err => null);
       else reject("NO IMAGE");
 
-    }).catch(async err=>{
-      
-        let nwurl = await PLX.getChannelImg(message);
-        if (nwurl?.includes(".discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
-        if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
-        return img2base64(nwurl).then(img => {
-          resolve(vere(img.b64, message, cmdPiece))
-        }).catch(err=>{
-            message.channel.send("`INVALID IMAGE URL (2)`");
-        });
- 
+    }).catch(async err => {
+
+      let nwurl = await PLX.getChannelImg(message);
+      if (nwurl?.includes(".discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
+      if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
+      return img2base64(nwurl).then(img => {
+        resolve(vere(img.b64, message, cmdPiece))
+      }).catch(err => {
+        message.channel.send("`INVALID IMAGE URL (2)`");
+      });
+
     });
   });
 };

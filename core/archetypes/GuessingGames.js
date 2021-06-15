@@ -78,20 +78,20 @@ class GuessingGame {
     };
   }
 
-  progressionTrack(message){
+  progressionTrack(message) {
     if (!message) return;
-    Progression.emit(`play.${this.name}.${this.gamemode}`,{msg: message, userID: message.author.id});
+    Progression.emit(`play.${this.name}.${this.gamemode}`, { msg: message, userID: message.author.id });
   }
-  progressionScore(message,score){
+  progressionScore(message, score) {
     if (!message) return;
-    Progression.emit(`play.${this.name}.score`,{valueSet: score, msg: message, userID: message.author.id});
+    Progression.emit(`play.${this.name}.score`, { valueSet: score, msg: message, userID: message.author.id });
   }
-  progressionStreak(message,reset){
+  progressionStreak(message, reset) {
     if (!message) return;
     if (reset)
-      Progression.emit(`streak.${this.name}.${this.gamemode}`,{valueSet: 0, msg: message, userID: message.author.id, data: this});
+      Progression.emit(`streak.${this.name}.${this.gamemode}`, { valueSet: 0, msg: message, userID: message.author.id, data: this });
     else
-      Progression.emit(`streak.${this.name}.${this.gamemode}`,{value: 1, msg: message, userID: message.author.id, data: this});
+      Progression.emit(`streak.${this.name}.${this.gamemode}`, { value: 1, msg: message, userID: message.author.id, data: this });
   }
 
   async generate() {
@@ -111,8 +111,8 @@ class GuessingGame {
   }
 
   async play(msg) {
-  
-    return new Promise( async(resolve) => {
+
+    return new Promise(async (resolve) => {
       const v = {
         points: $t(["keywords.points", "points"], { lngs: msg.lang }),
         grade: $t(["keywords.grade", "Grade"], { lngs: msg.lang }),
@@ -130,163 +130,163 @@ class GuessingGame {
       let { names } = await this.generate();
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
-      .then( ()=> {
-        this.start = Date.now();
+        .then(() => {
+          this.start = Date.now();
 
-        const Collector = msg.channel.createMessageCollector((m) => (this.solo ? m.author.id === msg.author.id : true), { time: this.time });
+          const Collector = msg.channel.createMessageCollector((m) => (this.solo ? m.author.id === msg.author.id : true), { time: this.time });
 
-        const isValid = (m, n) => n.includes(m.content.normalize().toLowerCase());
-        const _capitalize = (s) => s.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
+          const isValid = (m, n) => n.includes(m.content.normalize().toLowerCase());
+          const _capitalize = (s) => s.replace(/\w\S*/g, (t) => t.charAt(0).toUpperCase() + t.substr(1).toLowerCase());
 
-        
 
-        if (this.gamemode === "normal") {
-          Collector.on("message", (m) => {            
-            if (isValid(m, names)) {
-              const res = capitalize(names[0]);
-              msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
 
-              this.progressionTrack(m);
-              this.progressionStreak(m);
+          if (this.gamemode === "normal") {
+            Collector.on("message", (m) => {
+              if (isValid(m, names)) {
+                const res = capitalize(names[0]);
+                msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
 
-              Collector.stop();
-            }
-          });
-          Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) && this.progressionStreak(m, /*RESET*/ true) : console.log({ reason })));
-        }
+                this.progressionTrack(m);
+                this.progressionStreak(m);
 
-        if (this.gamemode === "endless") {
+                Collector.stop();
+              }
+            });
+            Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) && this.progressionStreak(m, /*RESET*/ true) : console.log({ reason })));
+          }
 
-          this.round = 1;
-          let active = true;
-          const activity = setInterval(() => {
-            if (!active) return Collector.stop("time");
-            active = false; return null;
-          }, 15e3);
-          let points = 0;
+          if (this.gamemode === "endless") {
 
-          Collector.on("message", async (m) => {
-            if (isValid(m, names)) {
-              const res = _capitalize(names[0]);
-              active = true;
-              msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
-              const totalTime = ~~(Date.now() - this.start);
+            this.round = 1;
+            let active = true;
+            const activity = setInterval(() => {
+              if (!active) return Collector.stop("time");
+              active = false; return null;
+            }, 15e3);
+            let points = 0;
 
-              await wait(1);
-              this.round++;
-              msg.channel.send(v.next);
-              await wait(1);
+            Collector.on("message", async (m) => {
+              if (isValid(m, names)) {
+                const res = _capitalize(names[0]);
+                active = true;
+                msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
+                const totalTime = ~~(Date.now() - this.start);
 
-              names = (await this.generate()).names;
+                await wait(1);
+                this.round++;
+                msg.channel.send(v.next);
+                await wait(1);
 
-              points += ((this.round * res.length) ** 2) / (totalTime / 1000);
+                names = (await this.generate()).names;
 
-              this.embed.fields[0] = {
-                name: capitalize(v.score),
-                value: `${~~points} ${v.points}`,
-                inline: !0,
-              };
+                points += ((this.round * res.length) ** 2) / (totalTime / 1000);
 
-              this.progressionTrack(m);
-              this.progressionStreak(m);
+                this.embed.fields[0] = {
+                  name: capitalize(v.score),
+                  value: `${~~points} ${v.points}`,
+                  inline: !0,
+                };
 
-              await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
-            } else if (this.solo && m.content?.toLowerCase() === "quit") {
-              Collector.end("retire");
-            }
-          });
-          Collector.on("end", () => {
-            // if (reason === 'time')
+                this.progressionTrack(m);
+                this.progressionStreak(m);
 
-            const totalTime = ~~((Date.now() - this.start) / 1000);
-            const gradeCalc = Math.max(totalTime - 14, 1) / 15 / this.round;
-            const grade = parseGrade(gradeCalc);
+                await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
+              } else if (this.solo && m.content?.toLowerCase() === "quit") {
+                Collector.end("retire");
+              }
+            });
+            Collector.on("end", () => {
+              // if (reason === 'time')
 
-            msg.channel.send({
-              content: this.timeout,
-              embed: {
-                title: v.endlessModeResults,
-                description: `
+              const totalTime = ~~((Date.now() - this.start) / 1000);
+              const gradeCalc = Math.max(totalTime - 14, 1) / 15 / this.round;
+              const grade = parseGrade(gradeCalc);
+
+              msg.channel.send({
+                content: this.timeout,
+                embed: {
+                  title: v.endlessModeResults,
+                  description: `
                           ${v.rounds}: ${this.round}
                           ${v.time}: ${totalTime} ${v.seconds}
                           ${v.score}: ${~~points} ${v.points}
                           ${v.grade}: **${grade}**
                           
                           `,
-              },
+                },
+              });
+
+              clearInterval(activity);
+              setTimeout(() => this.progressionStreak(m, /*RESET*/ true), 5000);
+
+              resolve({
+                rounds: this.round,
+                time: totalTime,
+                score: ~~points,
+                grade,
+              });
             });
+          }
 
-            clearInterval(activity);
-            setTimeout( () => this.progressionStreak(m, /*RESET*/ true), 5000 );
+          if (this.gamemode === "time") {
 
-            resolve({
-              rounds: this.round,
-              time: totalTime,
-              score: ~~points,
-              grade,
+            this.round = 1;
+            let points = 0;
+
+            Collector.on("message", async (m) => {
+              if (isValid(m, names)) {
+                const res = _capitalize(names[0]);
+                msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
+                const totalTime = ~~(Date.now() - this.start);
+                this.round++;
+
+                names = (await this.generate()).names;
+                points += ((this.round * res.length) ** 2) / (totalTime / 1000);
+
+                this.embed.fields[0] = {
+                  name: v.score,
+                  value: `${~~points} ${v.points}`,
+                  inline: !0,
+                };
+
+                this.progressionTrack(m);
+                this.progressionStreak(m);
+
+                await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
+              } else if (m.content?.toLowerCase() === "skip") {
+                names = (await this.generate()).names;
+                await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
+              }
             });
-          });
-        }
+            Collector.on("end", () => {
+              // if (reason === 'time')
 
-        if (this.gamemode === "time") {
+              const totalTime = ~~(Date.now() - this.start) / 1000;
+              const gradeCalc = Math.max(totalTime - 14, 1) / 15 / this.round;
+              const grade = parseGrade(gradeCalc);
 
-          this.round = 1;
-          let points = 0;
-
-          Collector.on("message", async (m) => {
-            if (isValid(m, names)) {
-              const res = _capitalize(names[0]);
-              msg.channel.send($t(this.guessed, { user: `<@${m.author.id}>`, answer: `**${res}**` }));
-              const totalTime = ~~(Date.now() - this.start);
-              this.round++;
-
-              names = (await this.generate()).names;
-              points += ((this.round * res.length) ** 2) / (totalTime / 1000);
-
-              this.embed.fields[0] = {
-                name: v.score,
-                value: `${~~points} ${v.points}`,
-                inline: !0,
-              };
-
-              this.progressionTrack(m);
-              this.progressionStreak(m);
-
-              await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
-            } else if (m.content?.toLowerCase() === "skip") {
-              names = (await this.generate()).names;
-              await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
-            }
-          });
-          Collector.on("end", () => {
-            // if (reason === 'time')
-
-            const totalTime = ~~(Date.now() - this.start) / 1000;
-            const gradeCalc = Math.max(totalTime - 14, 1) / 15 / this.round;
-            const grade = parseGrade(gradeCalc);
-
-            msg.channel.send({
-              content: this.timeout,
-              embed: {
-                title: v.timeAttackResults,
-                description: `
+              msg.channel.send({
+                content: this.timeout,
+                embed: {
+                  title: v.timeAttackResults,
+                  description: `
                           ${v.flags}: ${this.round}
                           ${v.score}: ${~~points} ${v.points}
                           ${v.grade}: **${grade}**
                       
                           `,
 
-              },
-            });
+                },
+              });
 
-            resolve({
-              flags: this.round,
-              score: ~~points,
-              grade,
+              resolve({
+                flags: this.round,
+                score: ~~points,
+                grade,
+              });
             });
-          });
-        }
-      });
+          }
+        });
     });
   }
 }

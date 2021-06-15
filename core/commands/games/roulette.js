@@ -54,13 +54,13 @@ async function creditUsers(results) {
     ECO.checkFunds(userID, result.cost).then((hasEnough) => {
       if (!hasEnough) result.invalid = true;
       else if (result.payout < 0) {
-        Progression.emit("play.roulette.lose",{userID, value: 1});
-        Progression.emit("streak.roulette.win",{userID, valueSet: 0});
+        Progression.emit("play.roulette.lose", { userID, value: 1 });
+        Progression.emit("streak.roulette.win", { userID, valueSet: 0 });
         ECO.pay(userID, result.payout, "gambling_roulette").catch(() => "Too bad")
       }
       else if (result.payout > 0) {
-        Progression.emit("play.roulette.win",{userID, value: 1});
-        Progression.emit("streak.roulette.win",{userID, value: 1});
+        Progression.emit("play.roulette.win", { userID, value: 1 });
+        Progression.emit("streak.roulette.win", { userID, value: 1 });
         ECO.receive(userID, result.payout, "gambling_roulette").catch(() => "Shouldn't happen")
       };
     });
@@ -214,7 +214,7 @@ const init = async (msg) => {
       return m.reply(_emoji("chipWARN") + $t(`games:roulette.${allowed.reason}`, { P, count: allowed.count }) || $t("games:roulette.notAllowed"))
         .then((r) => r.deleteAfter(settings.noticeTimeout));
     }
-    Progression.emit("play.roulette."+bet.type ,{msg:m, userID, value:bet.amount});
+    Progression.emit("play.roulette." + bet.type, { msg: m, userID, value: bet.amount });
 
     Game.addBet(userID, bet);
     Game.users[userID].hash = m.author.avatar || m.author.defaultAvatar;
@@ -242,11 +242,11 @@ const init = async (msg) => {
 
     let value;
     if (validatedResults.length) {
-      const uniqueUsers = validatedResults.map(x=>x.userID).filter((v,i,a)=> a.indexOf(v)===i);
-      uniqueUsers.forEach(userID=>{
-        Progression.emit("play.roulette.lose",{userID,msg,value: uniqueUsers.length});
+      const uniqueUsers = validatedResults.map(x => x.userID).filter((v, i, a) => a.indexOf(v) === i);
+      uniqueUsers.forEach(userID => {
+        Progression.emit("play.roulette.lose", { userID, msg, value: uniqueUsers.length });
       });
-        
+
       value = validatedResults.map((result) => {
         let resultStrings;
         if (result.invalid) {

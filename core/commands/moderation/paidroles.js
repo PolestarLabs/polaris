@@ -41,7 +41,7 @@ const init = async (msg, args) => {
     return {
       embed: {
         description: `${roleMarket.map((role, i) => `\`#${i}\` <@&${role.role}> : **${role.price}**${_emoji("RBN")} \`${msg.prefix}brl ${role.short}\` | ${role.temp ? `${role.temp / 60000}min` : ""} `).join("\n")
-        }\n Use \`${msg.prefix}paidroles remove [#]\` to delete one.`,
+          }\n Use \`${msg.prefix}paidroles remove [#]\` to delete one.`,
       },
     };
   }
@@ -65,7 +65,7 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   //TODO[epic=Unfinished Commands] Needs some testing and QoL tweaks;
-  disabled: true, 
+  disabled: true,
   pub: true,
   cmd: "paidroles",
   perms: 3,

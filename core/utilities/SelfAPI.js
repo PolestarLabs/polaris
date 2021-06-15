@@ -5,7 +5,7 @@ class SelfAPI {
   constructor(key) {
     this.key = key;
     Object.assign(this, axios.create({
-      baseURL: `${ paths.API }/`,
+      baseURL: `${paths.API}/`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${this.key}`,

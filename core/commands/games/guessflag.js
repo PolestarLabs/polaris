@@ -3,10 +3,10 @@
 const GG = require("../../archetypes/GuessingGames");
 
 const init = async function (msg, args) {
-  let gamemode =  "normal";
-  let solo     =  false;
-  let guessed  =  "{{user}} got it! This is the flag of **{{answer}}**";
-  let timeout  =  "Time's up! Seems like nobody guessed it. :(";
+  let gamemode = "normal";
+  let solo = false;
+  let guessed = "{{user}} got it! This is the flag of **{{answer}}**";
+  let timeout = "Time's up! Seems like nobody guessed it. :(";
 
   if (args.includes("solo")) {
     solo = true;

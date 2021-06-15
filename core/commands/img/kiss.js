@@ -41,22 +41,21 @@ const init = async function (msg) {
     return msg.channel.send({ embed });
   }
 
-  embed.description = `:hearts: ${
-    Target
+  embed.description = `:hearts: ${Target
       ? $t("responses.forFun.kissed", P)
       : $t("responses.forFun.kissedNone", P)}`;
   if (Target?.id === msg.author.id) embed.description = `:hearts: ${$t("responses.forFun.kissedSelf", P)}`;
 
   const userData = Target ? await DB.users.findOne({ id: msg.author.id }).lean() : null;
-  const marriedtarget = await DB.relationships.find({users:msg.author.id});
-  console.log({marriedtarget})
+  const marriedtarget = await DB.relationships.find({ users: msg.author.id });
+  console.log({ marriedtarget })
 
-  if (marriedtarget && marriedtarget.find(x=>x.users.includes(Target?.id))) {
-    Progression.emit("command.kiss.isWife",{msg});
+  if (marriedtarget && marriedtarget.find(x => x.users.includes(Target?.id))) {
+    Progression.emit("command.kiss.isWife", { msg });
     const noise = randomize(0, 50);
     let pris = randomize(1, 0);
     pris === 1 ? (pris = randomize(1, 0)) : false;
-    variation = userData.lovepoints < 50 + noise ? "couple" : "wet";
+    variation = userData.lovepoints < 50 + noise ? "couple" : "wet"; // FIXME See 0x17A0BAFBD79 - A relationship without userdata, possibly migration related?
     if (randomize(0, 5) === 1) variation = "cute";
     await DB.relationships.set({ _id: marriedtarget._id }, { $inc: { lovepoints: pris } });
   }

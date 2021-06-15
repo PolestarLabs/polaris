@@ -1,7 +1,7 @@
 const cmd = "background";
 const ECO = require("../../archetypes/Economy.js");
 
-const GNums = require("../../../resources/lists/GlobalNumbers.js");
+const { BackgroundPrices } = require("@polestar/constants/shop");
 const Picto = require("../../utilities/Picto");
 const YesNo = require("../../structures/YesNo");
 
@@ -21,7 +21,7 @@ const init = async (msg, args) => {
     if (msg.args.some((arg) => (bg.tags || "").toLowerCase().includes(arg))) return true;
     return false;
   });
-  if (!selectedBG) [,,,,,,,,,,,,,,,,,,,,,,,,,,,, selectedBG] = shuffle(BGBASE);
+  if (!selectedBG) [, , , , , , , , , , , , , , , , , , , , , , , , , , , , selectedBG] = shuffle(BGBASE);
 
   const embed = new Embed();
 
@@ -34,7 +34,7 @@ const init = async (msg, args) => {
   \`${selectedBG.code}\`
   [${$t("responses.equip.getMoreBG", P)}](${paths.DASH}/bgshop)
   `;
-  const _price = selectedBG.price || GNums.bgPrices[selectedBG.rarity];
+  const _price = selectedBG.price || BackgroundPrices[selectedBG.rarity];
 
   embed.field(
     $t("terms.price", P),
@@ -53,7 +53,7 @@ const init = async (msg, args) => {
 
   const userData = await DB.users.get(msg.author.id);
   if (!userData) return "User Not Registered";
-  
+
   const hasIt = userData.modules.bgInventory.includes(selectedBG.code);
   const affordsIt = await ECO.checkFunds(msg.author, _price);
   const canBuy = selectedBG.buyable && !isEventBG(selectedBG);
@@ -79,7 +79,7 @@ const init = async (msg, args) => {
       }
       if (!affordsIt) return cancellation();
       return DB.users.set({ id: msg.author.id },
-        { $set: { "modules.bgID": selectedBG.code }, $addToSet: { "modules.bgInventory": selectedBG.code } }).then(() => {});
+        { $set: { "modules.bgID": selectedBG.code }, $addToSet: { "modules.bgInventory": selectedBG.code } }).then(() => { });
     }
 
     if (hasIt || (affordsIt && canBuy)) {

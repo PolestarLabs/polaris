@@ -1,4 +1,4 @@
-module.exports = {
+module.exports = { // FIXME[epic=flicky] This doesn't seem to be used anywhere?
 
   gamechange: function gamechange(gamein = false) {
     try {

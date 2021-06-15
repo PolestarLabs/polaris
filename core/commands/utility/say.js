@@ -35,19 +35,23 @@ const init = async function (msg, args) {
     let userEmbed;
     try {
       userEmbed = JSON.parse(embedstr);
+      if (userEmbed.embed) userEmbed = { embed: userEmbed.embed };
     } catch (e) {
       return msg.channel.send({ embed: { description: $t("responses.errors.unparsable", { ...P, link: `[Pollux Embed Architect](${paths.DASH}/embedarchitect)` }) } });
     }
 
     if (!modPass) {
-      delete userEmbed.image;
-      delete userEmbed.thumbnail;
-      delete userEmbed.author;
+      delete userEmbed.embed.image;
+      delete userEmbed.embed.thumbnail;
+      delete userEmbed.embed.author;
     }
 
-    msg.channel.send(userEmbed.embed ? userEmbed : { embed: userEmbed });
+    if (userEmbed.content?.length > 2000) return msg.channel.send("I can't send messages longer than 2000 characters!"); // TRANSLATE
+
+    msg.channel.send(userEmbed);
   } else {
     if (!modPass) content = content.replace(/<@[!&]?\d*>/gmi, `\`[${$t(["interface.generic.redactedMention", "REDACTED MENTION"], P)}]\``);
+    if (content.length > 2000) return msg.channel.send("I can't send messages longer than 2000 characters!"); // TRANSLATE
 
     msg.channel.send(content);
   }

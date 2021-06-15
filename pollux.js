@@ -6,7 +6,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
-global.clusterNames = require("./resources/lists/clusters.json");
+global.clusterNames = require("@polestar/constants/clusters");
 
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
@@ -29,7 +29,7 @@ require("./core/structures/ButtonCollector.js")(ERIS);
 
 require("./core/structures/ComponentsHandler.js")(Eris);
 
-const runtime         = performance.now();
+const runtime = performance.now();
 global.appRoot = path.resolve(__dirname);
 Promise.config({ longStackTraces: true });
 require("./utils/paths").run();
@@ -46,7 +46,7 @@ Eris.Embed.prototype.setColor = function setColor(color) {
 
 
 
-Sentry.init({ 
+Sentry.init({
   dsn: cfg.sentryDSN,
   environment: process.env.NODE_ENV,
   serverName: `Polaris-[C${CLUSTER_ID}]`,
@@ -60,7 +60,7 @@ console.table({
   TOTAL_SHARDS,
 });
 
-global.PLX = new Eris.CommandClient( isPRIME ? cfg.token_prime : cfg.token, {
+global.PLX = new Eris.CommandClient(isPRIME ? cfg.token_prime : cfg.token, {
   maxShards: TOTAL_SHARDS,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID),
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
@@ -89,7 +89,7 @@ PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.isPRIME = isPRIME;
 
-PLX.cluster = isPRIME ? {id: 0, name: "Polaris Prime"} : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+PLX.cluster = isPRIME ? { id: 0, name: "Polaris Prime" } : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 global.hook = new WebhookDigester(PLX);
 
@@ -156,7 +156,7 @@ DBSchema(dbConnectionData, {
   },
 }).then((Connection) => {
   global.DB = Connection;
-  
+
   try {
     (require("./core/archetypes/Achievements.js")).init();
     (require("./core/archetypes/Progression.js")).init();
@@ -174,9 +174,9 @@ DBSchema(dbConnectionData, {
 });
 
 
-DBSchema(vanillaConnection,{redis: null}).then(vConnection=>{
+DBSchema(vanillaConnection, { redis: null }).then(vConnection => {
   global.vDB = vConnection;
-  console.log("•".yellow," Connected to Vanilla DB".blue)
+  console.log("•".yellow, " Connected to Vanilla DB".blue)
 })
 
 
@@ -196,13 +196,13 @@ PLX.once("ready", async () => {
   PLX.on("rawREST", payload => {
     //if (PLX.logRaw) console.log(`${" RAW RE ".bgMagenta} }`, require('util').inspect(payload,0,2,1));
   })
-  PLX.on("rawWS" , payload => {
-    if (payload.t === "INTERACTION_CREATE"){
+  PLX.on("rawWS", payload => {
+    if (payload.t === "INTERACTION_CREATE") {
       require(`./eventHandlers/interactions`)(payload);
     }
-    if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload,0,2,1));
+    if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload, 0, 2, 1));
   })
-  
+
 
   console.log(" READY ".bold.bgCyan);
   require("./core/subroutines/cronjobs.js").run();
@@ -221,7 +221,7 @@ PLX.once("ready", async () => {
       const eventide = file.split(".")[0];
       PLX.on(eventide, (...args) => {
         const eventor = require(`./eventHandlers/${file}`);
-        PLX.eventHandlerFunctions[eventide] =  eventor;
+        PLX.eventHandlerFunctions[eventide] = eventor;
         return eventor(...args);
       });
     });
@@ -268,13 +268,13 @@ PLX.softKill = (msg) => {
   console.log("Soft killing".bgBlue);
   PLX.restarting = true;
   PLX.removeListener('messageCreate', PLX.eventHandlerFunctions.messageCreate);
-  
+
   Promise.all(PLX.execQueue).then(async () => {
-    if (msg) await msg.reply(_emoji('yep') + " Queue consumed. Rebooting now..." );
+    if (msg) await msg.reply(_emoji('yep') + " Queue consumed. Rebooting now...");
     PLX.disconnect({ reconnect: false });
     process.exit(0);
   }).timeout(30e3).catch(async (error) => {
-    if (msg) await msg.reply(_emoji('nope') + " Queue errored or timed out. Hard-rebooting now..." );
+    if (msg) await msg.reply(_emoji('nope') + " Queue errored or timed out. Hard-rebooting now...");
     console.error(error);
     process.exit(1);
   });
@@ -303,7 +303,7 @@ PLX.bean = (guild, user, delete_message_days = 0, reason = "No reason specified"
 PLX.unbean = (guild, user, delete_message_days = 0, reason = "No reason specified") => axios.delete(`https://discord.com/api/guilds/${guild}/bans/${user}`, { delete_message_days, reason }, { headers: { Authorization: PLX._token } });
 PLX.reply = (msg, content, ping = false) => {
   const payload = {
-    allowed_mentions: {replied_user: ping},
+    allowed_mentions: { replied_user: ping },
     message_reference: {
       channel_id: msg.channel.id,
       guild_id: msg.guild.id,
@@ -352,7 +352,7 @@ ${err?.stack?.slice(0, 1900)}
 });
 
 PLX.getOrCreateUser = async (user) => {
-  let udata = await DB.users.findOne({id:user.id});
+  let udata = await DB.users.findOne({ id: user.id });
   if (!udata) udata = await DB.users.new(user);
   return udata;
 }

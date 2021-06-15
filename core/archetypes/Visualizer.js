@@ -39,7 +39,7 @@ class Visualizer {
 
     for (const gemArr of gemsMissing) {
       toret += `\n${nope} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** `
-      + `${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[2] ? ` (+${miliarize(gemArr[2])})` : ""}`;
+        + `${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[2] ? ` (+${miliarize(gemArr[2])})` : ""}`;
     }
     for (const itemArr of itemsMissing) {
       const item = Crafter.getItem(itemArr[0]);
@@ -57,7 +57,7 @@ class Visualizer {
 
     for (const gemArr of gemsTotal) {
       toret += `\n${yep} | ${_emoji(gemArr[0])}**${miliarize(gemArr[1], true)}** `
-      + `${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[3] ? ` (+${miliarize(gemArr[3])})` : ""}`;
+        + `${$t(`keywords.${gemArr[0]}_plural`, this.P)}${gemArr[3] ? ` (+${miliarize(gemArr[3])})` : ""}`;
     }
     for (const itemArr of itemsInventory) {
       const item = Crafter.getItem(itemArr[0]);
@@ -72,8 +72,8 @@ class Visualizer {
     let depthstr = "";
     const it = "\u2003\u2002";
     const pipe = "║";
-    const _T  = "╠═";
-    const _L  = "╚═";
+    const _T = "╠═";
+    const _L = "╚═";
     console.log(` ${item.id} `.bgRed);
     for (let i = 0; i < depth; i++) {
       depthstr += ((parentIndex < maxdepth && (maxdepth - (i + 1) === depth || parentIndex + i === maxdepth || depth === i + 1))

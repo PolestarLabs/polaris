@@ -14,8 +14,8 @@ const space = " ";// "<:space:747373996269371513>"
 
 const init = async function (msg, args) {
   const P = { lngs: msg.lang };
-  
-  const outputTX = encode( args.join(" ") ); // TODO[epic=flicky] Error messages
+
+  const outputTX = encode(args.join(" ")); // TODO[epic=flicky] Error messages
 
   const embed = { // TRANSLATE[epic=translations] ?? morse
     author: { name: "We get signal!" },

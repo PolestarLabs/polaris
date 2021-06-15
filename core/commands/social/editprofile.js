@@ -23,7 +23,7 @@ const init = async function (msg) {
     msg.channel.send({
       embed: {
         description:
-            `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
+          `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
       },
     });
   }
@@ -31,7 +31,7 @@ const init = async function (msg) {
   delete require.cache[require.resolve("../../structures/ReactionMenu")];
   const ReactionMenu = require("../../structures/ReactionMenu");
   const userData = (await DB.users.get(msg.author.id)) || (await DB.users.new(msg.author));
-  
+
   const frameOn = (userData.switches || { profileFrame: "unavailable" }).profileFrame;
   embed = new Embed();
   embed.title(":tools: Profile Quick Edit");
@@ -106,7 +106,7 @@ const init = async function (msg) {
       msg.channel.send({
         embed: {
           description:
-                `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
+            `<:Userlocation:338762651423473668> | Go to [the Dashboard or your Public Profile Page](${paths.DASH}/profile/me) to edit these.`,
         },
       });
       men.deleteAfter(3000);

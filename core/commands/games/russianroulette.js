@@ -1,59 +1,59 @@
 const STRINGS = (P) => {
-	
+
 	P.RBN_emoji = _emoji('RBN');
 	P.emojiNope = _emoji('nope');
 
 	P.playersList = `\`\`\`${P.verifiedPlayers?.map((a) => a.name).join(", ")}\`\`\``;
 	P.totalBetTally = P.verifiedPlayers?.map((a) => a.money).reduce((a, b) => a + b) || 0;
-	P.tokaiValue = ~~(P.value*1.5);
-	P.minBet20 = ~~(P.minBet*.8)||0;
-	P.rubines = $t('keywords.RBN',{count:P.value});
-	P.died_in_round = P.diedInRound ? $t("games:rrlt.mp_round_results_died" , P) : $t("games:rrlt.mp_round_results_no_dead" , P);
-	
+	P.tokaiValue = ~~(P.value * 1.5);
+	P.minBet20 = ~~(P.minBet * .8) || 0;
+	P.rubines = $t('keywords.RBN', { count: P.value });
+	P.died_in_round = P.diedInRound ? $t("games:rrlt.mp_round_results_died", P) : $t("games:rrlt.mp_round_results_no_dead", P);
+
 	const v = {
-		singleplayer_no_bet: $t("games:rrlt.singleplayer_no_bet" , P),
-		singleplayer_no_funds: $t("games:rrlt.singleplayer_no_funds" , P),
-		min_bet: $t("games:rrlt.min_bet" , P),
-		max_bet: $t("games:rrlt.max_bet" , P),
-		singleplayer_instructions: $t("games:rrlt.singleplayer_instructions" , P),
-		singleplayer_timeout: $t("games:rrlt.singleplayer_timeout" , P),
-		singleplayer_quit: $t("games:rrlt.singleplayer_quit" , P),
-		singleplayer_pre_message: $t("games:rrlt.singleplayer_pre_message" , P),
-		singleplayer_ded: $t("games:rrlt.singleplayer_ded" , P),
-		singleplayer_no_bullet_final: $t("games:rrlt.singleplayer_no_bullet_final" , P),
-		singleplayer_no_bullet_full: $t("games:rrlt.singleplayer_no_bullet_full" , P),
-		footer_instruction: $t("games:rrlt.footer_instruction" , P),
-		mp_player_turn: $t("games:rrlt.mp_player_turn" , P),
-		mp_ded: $t("games:rrlt.mp_ded" , P),
-		mp_no_bullet: $t("games:rrlt.mp_no_bullet" , P),
-		mp_intro: $t("games:rrlt.mp_intro" , P),
-		mp_pool: $t("games:rrlt.mp_pool" , P),
-		mp_no_20_under: $t("games:rrlt.mp_no_20_under" , P),
-		mp_pool_tally: $t("games:rrlt.mp_pool_tally" , P), 		//FIXME
-		mp_no_funds: $t("games:rrlt.mp_no_funds" , P),
-		mp_abort_player: $t("games:rrlt.mp_abort_player" , P),
-		switch_to_singleplayer: $t("games:rrlt.switch_to_singleplayer" , P),
-		mp_no_players: $t("games:rrlt.mp_no_players" , P),
-		mp_players_list: $t("games:rrlt.mp_players_list" , P),
-		round_no: $t("games:rrlt.round_no" , P),
-		bot_shame: $t("games:rrlt.bot_shame" , P),
-		bot_megashame: $t("games:rrlt.bot_megashame" , P),
-		bot_no_gambit: $t("games:rrlt.bot_no_gambit" , P),
-		victor_tokai: $t("games:rrlt.victor_tokai" , P), 		//FIXME
-		victor: $t("games:rrlt.victor" , P),					//FIXME
-		victor_gambit: $t("games:rrlt.victor_gambit" , P),
-		gambit: $t("games:rrlt.gambit" , P),
-		gambit_prompt: $t("games:rrlt.gambit_prompt" , P),
-		gambit_pre: $t("games:rrlt.gambit_pre" , P),
-		gambit_anytime: $t("games:rrlt.gambit_anytime" , P),
-		gambit_refuse: $t("games:rrlt.gambit_refuse" , P),
-		hes_ded_jim: $t("games:rrlt.hes_ded_jim" , P),
-		mp_round_end: $t("games:rrlt.mp_round_end" , P),
-		mp_round_results: $t("games:rrlt.mp_round_results" , P),	//FIXME
+		singleplayer_no_bet: $t("games:rrlt.singleplayer_no_bet", P),
+		singleplayer_no_funds: $t("games:rrlt.singleplayer_no_funds", P),
+		min_bet: $t("games:rrlt.min_bet", P),
+		max_bet: $t("games:rrlt.max_bet", P),
+		singleplayer_instructions: $t("games:rrlt.singleplayer_instructions", P),
+		singleplayer_timeout: $t("games:rrlt.singleplayer_timeout", P),
+		singleplayer_quit: $t("games:rrlt.singleplayer_quit", P),
+		singleplayer_pre_message: $t("games:rrlt.singleplayer_pre_message", P),
+		singleplayer_ded: $t("games:rrlt.singleplayer_ded", P),
+		singleplayer_no_bullet_final: $t("games:rrlt.singleplayer_no_bullet_final", P),
+		singleplayer_no_bullet_full: $t("games:rrlt.singleplayer_no_bullet_full", P),
+		footer_instruction: $t("games:rrlt.footer_instruction", P),
+		mp_player_turn: $t("games:rrlt.mp_player_turn", P),
+		mp_ded: $t("games:rrlt.mp_ded", P),
+		mp_no_bullet: $t("games:rrlt.mp_no_bullet", P),
+		mp_intro: $t("games:rrlt.mp_intro", P),
+		mp_pool: $t("games:rrlt.mp_pool", P),
+		mp_no_20_under: $t("games:rrlt.mp_no_20_under", P),
+		mp_pool_tally: $t("games:rrlt.mp_pool_tally", P), 		//FIXME
+		mp_no_funds: $t("games:rrlt.mp_no_funds", P),
+		mp_abort_player: $t("games:rrlt.mp_abort_player", P),
+		switch_to_singleplayer: $t("games:rrlt.switch_to_singleplayer", P),
+		mp_no_players: $t("games:rrlt.mp_no_players", P),
+		mp_players_list: $t("games:rrlt.mp_players_list", P),
+		round_no: $t("games:rrlt.round_no", P),
+		bot_shame: $t("games:rrlt.bot_shame", P),
+		bot_megashame: $t("games:rrlt.bot_megashame", P),
+		bot_no_gambit: $t("games:rrlt.bot_no_gambit", P),
+		victor_tokai: $t("games:rrlt.victor_tokai", P), 		//FIXME
+		victor: $t("games:rrlt.victor", P),					//FIXME
+		victor_gambit: $t("games:rrlt.victor_gambit", P),
+		gambit: $t("games:rrlt.gambit", P),
+		gambit_prompt: $t("games:rrlt.gambit_prompt", P),
+		gambit_pre: $t("games:rrlt.gambit_pre", P),
+		gambit_anytime: $t("games:rrlt.gambit_anytime", P),
+		gambit_refuse: $t("games:rrlt.gambit_refuse", P),
+		hes_ded_jim: $t("games:rrlt.hes_ded_jim", P),
+		mp_round_end: $t("games:rrlt.mp_round_end", P),
+		mp_round_results: $t("games:rrlt.mp_round_results", P),	//FIXME
 	};
 
- 
- 
+
+
 
 
 	return v;
@@ -70,7 +70,7 @@ const awp = `${paths.ASSETS}/sound/awp.mp3`;
 const click = `${paths.ASSETS}/sound/click.mp3`;
 const clickNoAmmo = `${paths.ASSETS}/sound/noammo.mp3`;
 const HORN = "https://cdn.discordapp.com/attachments/488142034776096772/848254716765143071/colonydeed_partyhorn.ogg";
-const loser =  `${paths.ASSETS}/sound/kingoflosers.mp3`;
+const loser = `${paths.ASSETS}/sound/kingoflosers.mp3`;
 
 // TRANSLATE[epic=translations] russian roulette
 // TODO[epic=anyone] rr - add easter egg with `=say` cmd
@@ -79,14 +79,14 @@ const loser =  `${paths.ASSETS}/sound/kingoflosers.mp3`;
 
 const ECO = require(`${appRoot}/core/archetypes/Economy.js`);
 
-const startSinglePlayer = async (msg,args) => {
+const startSinglePlayer = async (msg) => {
 
-	let v = STRINGS({lngs:msg.lang});
+	let v = STRINGS({ lngs: msg.lang });
 
-	const BET = parseInt(args[0]);
+	const BET = parseInt(msg.args[0]);
 
 	if (!BET) {
-		return msg.reply( v.singleplayer_no_bet );
+		return msg.reply(v.singleplayer_no_bet);
 	}
 	if (BET < 100) return msg.reply(v.min_bet);
 	if (BET > 5000) return msg.reply(v.max_bet);
@@ -95,7 +95,7 @@ const startSinglePlayer = async (msg,args) => {
 	if (!hasFunds) return msg.reply(v.singleplayer_no_funds);
 
 	const Game = new RussianRoulette(msg, BET);
-	v = STRINGS({lngs:msg.lang, Game});
+	v = STRINGS({ lngs: msg.lang, Game });
 
 	await msg.channel.send(v.singleplayer_instructions);
 	Progression.emit("play.russianroulette.solo", { msg, userID: msg.author.id });
@@ -103,7 +103,7 @@ const startSinglePlayer = async (msg,args) => {
 	const startGameCollector = async () => {
 		const response = await msg.channel.awaitMessages(
 			(m) => m.author.id === msg.author.id && ["shoot", "stop"].includes(m.content.toLowerCase()),
-			{time: 10e3, maxMatches: 1}
+			{ time: 10e3, maxMatches: 1 }
 		);
 
 		if (!response[0]) return msg.reply(v.singleplayer_timeout);
@@ -127,7 +127,7 @@ const startSinglePlayer = async (msg,args) => {
 			return gameMessage.edit(v.singleplayer_no_bullet_final);
 		}
 
-		v = STRINGS({lngs:msg.lang, Game, result});
+		v = STRINGS({ lngs: msg.lang, Game, result });
 		await gameMessage.edit(v.singleplayer_no_bullet_full);
 
 		return startGameCollector();
@@ -144,11 +144,11 @@ const playerRoulette = async (player, game) => {
 
 const handlePlayers = async (msg, players, Game, gameFrame) => {
 
-	let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players});
+	let v = STRINGS({ lngs: msg.lang, Game, players, verifiedPlayers: players });
 	let voiceChannel = msg.member.voiceState?.channelID;
-	try{
+	try {
 		voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
-	}catch(err){
+	} catch (err) {
 
 	}
 	let deadInThisRound = null;
@@ -156,31 +156,31 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 		await wait(1);
 		try {
-			
+
 			if (voiceChannel) voiceChannel.stopPlaying();
 		} catch (err) {
-			
+
 		}
 		const player = players[index];
-		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, player});
+		let v = STRINGS({ lngs: msg.lang, Game, players, verifiedPlayers: players, player });
 
 		// No one is dead so far
 
 		gameFrame.embed.description += v.mp_player_turn;
-		gameFrame.embed.footer = {text: v.footer_instruction }
+		gameFrame.embed.footer = { text: v.footer_instruction }
 		try {
 			if (voiceChannel) {
 				await voiceChannel.play(click);
 			}
 			//gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
 		} catch (err) {
-			
+
 		}
-		
+
 		const died = await playerRoulette(player, Game);
 		await msg.edit(gameFrame); // Next person, edit message and wait 3 seconds
 
-		await userShoot(msg,player);
+		await userShoot(msg, player);
 
 
 		// Fire. Check if they're dead
@@ -204,20 +204,20 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 			if (game.voiceChannel) game.voiceChannel.stopPlaying();
 			//gameFrame.embed.image.url = ""// `${paths.CDN}/build/games/russian_roulette/load1_.gif`
 		} catch (err) {
-			
+
 		}
 
-		
+
 
 		await msg.edit(gameFrame);
 
 		try {
 			if (died) {
-				if (voiceChannel) await  voiceChannel.play(awp);
+				if (voiceChannel) await voiceChannel.play(awp);
 				await wait(2);
-			} else if (voiceChannel)  await  voiceChannel.play(clickNoAmmo);
+			} else if (voiceChannel) await voiceChannel.play(clickNoAmmo);
 		} catch (err) {
-				console.err(err)
+			console.error(err)
 		}
 		if (died) break;
 	}
@@ -233,7 +233,7 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 const init = async (msg, args) => {
 
-	const P = {lngs: msg.lang};
+	const P = { lngs: msg.lang };
 
 	if (args[0] === "multiplayer" || args[0] === "mp" || args[0] === "start") {
 
@@ -259,28 +259,29 @@ module.exports = {
 
 async function startMultiplayerGame(msg) {
 
-	let v = STRINGS({lngs:msg.lang});
+	let v = STRINGS({ lngs: msg.lang });
 
 	await msg.channel.send(v.mp_intro);
 	const verifiedPlayers = [];
 	const poolEmbed = {
 		description: v.mp_pool_tally,
-		fields:[
-			{name:"Players", value: `${
-				verifiedPlayers?.map((a) => ` • <@${a.id}> - ${_emoji("RBN")} **${a.money}** \n`).join("") 
-				|| `${_emoji('loading') } Waiting...`
-			}`}
+		fields: [
+			{
+				name: "Players", value: `${verifiedPlayers?.map((a) => ` • <@${a.id}> - ${_emoji("RBN")} **${a.money}** \n`).join("")
+					|| `${_emoji('loading')} Waiting...`
+					}`
+			}
 		]
 	}
 	const poolMsg = await msg.channel.send({
-		embed:poolEmbed,
-		components: msg.setButtons( [
-			{label: "Start", emoji:{name:"🔫"},disabled:true,style:1,custom_id:`rrStart`},
-			{label: "Abort", emoji:{name:"🔫"},disabled:false,style:4,custom_id:`rrStop`},
-		] ,1) // 1 = dry-run
+		embed: poolEmbed,
+		components: msg.setButtons([
+			{ label: "Start", emoji: { name: "🔫" }, disabled: true, style: 1, custom_id: `rrStart` },
+			{ label: "Abort", emoji: { name: "🔫" }, disabled: false, style: 4, custom_id: `rrStop` },
+		], 1) // 1 = dry-run
 	});
 
-	
+
 	let hasBots = false;
 	let minBet = 0;
 
@@ -291,22 +292,22 @@ async function startMultiplayerGame(msg) {
 		&& !Number.isNaN(m.content.split(" ")[1])
 		&& parseInt(m.content.split(" ")[1]) > 0
 	) || (
-		["start", "stop"].includes(m.content.toLowerCase())
-		&& m.author.id === msg.author.id
-	);
+			["start", "stop"].includes(m.content.toLowerCase())
+			&& m.author.id === msg.author.id
+		);
 
 	//await msg.channel.awaitMessages(filter, {time: 60e3});
 	const playerCollector = msg.channel.createMessageCollector(filter, { time: 60e3 });
-	const buttonCollector = poolMsg.createButtonCollector((i,d)=>i.userID===msg.author.id,{maxMatches: 1, time: 60e3});	
+	const buttonCollector = poolMsg.createButtonCollector((i, d) => i.userID === msg.author.id, { maxMatches: 1, time: 60e3 });
 
-	buttonCollector.on("click",(b)=> b.id === "rrStart" ? playerCollector.stop("force_start") : playerCollector.stop('abort') );
+	buttonCollector.on("click", (b) => b.id === "rrStart" ? playerCollector.stop("force_start") : playerCollector.stop('abort'));
 	playerCollector.on('message', async (joinMsg) => {
 
-		if (joinMsg.content === 'stop'){
+		if (joinMsg.content === 'stop') {
 			buttonCollector.stop('abort');
 			return playerCollector.stop('abort');
 		}
-		if (joinMsg.content === 'start'){
+		if (joinMsg.content === 'start') {
 			buttonCollector.stop('force_start');
 			return playerCollector.stop('force_start');
 		}
@@ -329,22 +330,22 @@ async function startMultiplayerGame(msg) {
 			minBet = ~~(verifiedPlayers.reduce((a, b) => a + b.money, 0) / verifiedPlayers.length);
 
 			if (joinMsg.author.bot) hasBots = true;
-			v = STRINGS({lngs:msg.lang, verifiedPlayers, minBet});
+			v = STRINGS({ lngs: msg.lang, verifiedPlayers, minBet });
 
 			poolEmbed.description = v.mp_pool_tally;
 			poolEmbed.fields[0].value = `${verifiedPlayers?.map((a) => ` • <@${a.id}> - ${_emoji("RBN")} **${a.money}** \n`).join("") || '---'}`
-			poolMsg.edit({embed:poolEmbed});
+			poolMsg.edit({ embed: poolEmbed });
 			if (verifiedPlayers.length > 1) poolMsg.enableButtons("all");
 		} else {
-			joinMsg.reply(v.mp_no_funds).then(m=> m.deleteAfter(5) && joinMsg.deleteAfter(5).catchReturn() );
+			joinMsg.reply(v.mp_no_funds).then(m => m.deleteAfter(5) && joinMsg.deleteAfter(5).catchReturn());
 		}
 
 	});
 	playerCollector.on('end', async (msgs, reason) => {
 
-		if (reason === 'abort'){
-			  await poolMsg.edit({content: v.mp_abort_player, embed: null});
-			return msg.channel.send( v.mp_abort_player);
+		if (reason === 'abort') {
+			await poolMsg.edit({ content: v.mp_abort_player, embed: null });
+			return msg.channel.send(v.mp_abort_player);
 		}
 
 		verifiedPlayers?.forEach(player => {
@@ -371,7 +372,7 @@ async function startMultiplayerGame(msg) {
 		});
 		await Promise.all(verifiedPlayers.map(plyr => {
 			return ECO.pay(plyr.id, plyr.money, "russianroulette.gambling");
-		}));		
+		}));
 
 		const Game = new RussianRoulette(null, 0);
 		Game.prizePool = verifiedPlayers.map((a) => a.money).reduce((a, b) => a + b);
@@ -382,18 +383,18 @@ async function startMultiplayerGame(msg) {
 	async function processRound(Game, players, round = 1, initialMessage) {
 		// Initialise game
 		let voiceChannel = msg.member.voiceState?.channelID;
-		try{
+		try {
 			voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
-			if (voiceChannel) await  voiceChannel.play(gunRoll);
-		}catch(err){
+			if (voiceChannel) await voiceChannel.play(gunRoll);
+		} catch (err) {
 
 		}
 		await wait(2);
 
-		
+
 		const value = Game.prizePool;
 
-		let v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value});
+		let v = STRINGS({ lngs: msg.lang, Game, players, verifiedPlayers: players, round, value });
 
 		const gameFrame = {
 			embed: {
@@ -413,9 +414,9 @@ async function startMultiplayerGame(msg) {
 		const gameMessage = await msg.channel.send(gameFrame);
 		const diedInRound = await handlePlayers(gameMessage, players, Game, gameFrame);
 
-		v = STRINGS({lngs:msg.lang, Game, players, verifiedPlayers:players, round, value, diedInRound});
+		v = STRINGS({ lngs: msg.lang, Game, players, verifiedPlayers: players, round, value, diedInRound });
 
-		
+
 		//await gameMessage.deleteAfter(5).catchReturn();
 
 		// Is there 1 person left?
@@ -425,11 +426,11 @@ async function startMultiplayerGame(msg) {
 			initialMessage?.delete().catch();
 			gameFrame.embed.footer = {};
 
-			v = STRINGS({lngs:msg.lang, Game, player, players, verifiedPlayers:players, round, value, diedInRound});
+			v = STRINGS({ lngs: msg.lang, Game, player, players, verifiedPlayers: players, round, value, diedInRound });
 
 			await wait(3);
 
-			if (player.isBot){
+			if (player.isBot) {
 				gameFrame.embed.title = v.bot_shame;
 				gameFrame.embed.description = v.bot_megashame;
 				gameFrame.embed.color = 0x608a6d;
@@ -437,13 +438,13 @@ async function startMultiplayerGame(msg) {
 
 				return await msg.channel.send(gameFrame);
 
-			}else{
+			} else {
 
-				if (hasBots){
+				if (hasBots) {
 					if (value) await ECO.receive(players[0].id, value, "russianroulette.win");
 					return msg.channel.send({
 						content: v.bot_no_gambit,
-						embed:{
+						embed: {
 							description: v.victor,
 							color: 0x32437d,
 							image: {
@@ -464,8 +465,8 @@ async function startMultiplayerGame(msg) {
 				await challenge.addReaction("Gun:338331025300127745");
 				await challenge.addReaction(_emoji('nope').reaction);
 
-				const playerResponse = await challenge.awaitReactions(rea=> rea.userID === player.id && ['338331025300127745',_emoji('nope').id].includes(rea.emoji.id), {time:10e3, maxMatches:1}).catch(_e=>[]);
-				if (playerResponse[0]?.emoji?.id === '338331025300127745'){
+				const playerResponse = await challenge.awaitReactions(rea => rea.userID === player.id && ['338331025300127745', _emoji('nope').id].includes(rea.emoji.id), { time: 10e3, maxMatches: 1 }).catch(_e => []);
+				if (playerResponse[0]?.emoji?.id === '338331025300127745') {
 					challengeFrame.embed.description = v.gambit_pre
 					challengeFrame.embed.image = { url: `${paths.CDN}/build/games/russian_roulette/load1_.gif` };
 					await challenge.edit(challengeFrame);
@@ -476,12 +477,12 @@ async function startMultiplayerGame(msg) {
 						// NOTE AUDIO
 						if (voiceChannel) await voiceChannel.play(click);
 					} catch (err) {
-						
+
 					}
 
 					challengeFrame.embed.description += `\n\n${v.gambit_anytime}  `
 					await challenge.edit(challengeFrame);
-				}else{
+				} else {
 					challengeFrame.embed.image = {};
 					challengeFrame.embed.description = v.gambit_refuse;
 					challenge.removeReactions();
@@ -489,7 +490,7 @@ async function startMultiplayerGame(msg) {
 						// NOTE AUDIO
 						if (voiceChannel) await voiceChannel.play(loser);
 					} catch (err) {
-						
+
 					}
 					await challenge.edit(challengeFrame);
 
@@ -498,7 +499,7 @@ async function startMultiplayerGame(msg) {
 				}
 
 				await challenge.removeReactions();
-				await userShoot(challenge,player);
+				await userShoot(challenge, player);
 
 				const died = await playerRoulette(player, Game);
 				if (died) { // Person died
@@ -506,7 +507,7 @@ async function startMultiplayerGame(msg) {
 						// NOTE AUDIO
 						if (voiceChannel) await voiceChannel.play(awp);
 					} catch (err) {
-						
+
 					}
 					challengeFrame.embed.description += v.hes_ded_jim;
 					challengeFrame.embed.color = 0x521723;
@@ -518,7 +519,7 @@ async function startMultiplayerGame(msg) {
 						if (voiceChannel) await voiceChannel.play(HORN);
 						await wait(2)
 					} catch (err) {
-						
+
 					}
 					challengeFrame.embed.color = 0x32437d;
 					challengeFrame.embed.image.url = `${paths.CDN}/build/games/russian_roulette/win_.gif`;
@@ -527,14 +528,14 @@ async function startMultiplayerGame(msg) {
 				challenge.removeReactions();
 				await challenge.edit(challengeFrame);
 
-				Progression?.emit("action.gambit",{userID: player.id, msg});
+				Progression?.emit("action.gambit", { userID: player.id, msg });
 				if (!value) return;
 				if (!died) await ECO.receive(players[0].id, ~~(value * 1.5), "russianroulette.gambit");
-																			}
+			}
 
-			try{
+			try {
 				if (voiceChannel) voiceChannel.once("end", () => PLX.leaveVoiceChannel(plxMessage.member.voiceState.channelID));
-			}catch(err){
+			} catch (err) {
 
 			}
 			return;
@@ -548,18 +549,18 @@ async function startMultiplayerGame(msg) {
 			},
 		}) //.then((m) => m.deleteAfter(2e3));
 
-		return processRound(Game,shuffle(players), ++round );
+		return processRound(Game, shuffle(players), ++round);
 	};
 }
 
-async function userShoot(msg,player){
+async function userShoot(msg, player) {
 	//await msg.addReaction('Gun:338331025300127745');
-	await msg.setButtons({emoji:{id:"338331025300127745"},label:"Fire!",custom_id:"shoot!",style:4});
+	await msg.setButtons({ emoji: { id: "338331025300127745" }, label: "Fire!", custom_id: "shoot!", style: 4 });
 	return Promise.race([
-		msg.channel.awaitMessages(m=>m.author.id === player.id && ['bang','shoot','boom','pew'].includes(m.content),{time:10e3, maxMatches:1}),
-		msg.awaitReactions(rea=> rea.userID === player.id && rea.emoji.id === '338331025300127745', {time:10e3, maxMatches:1}),
-		msg.awaitButtonClick(click=> click.userID === player.id && click.id === 'shoot!', {time:10e3, maxMatches:1}),
-		( player.isBot ? wait( randomize(1,5) ) : wait(8))
+		msg.channel.awaitMessages(m => m.author.id === player.id && ['bang', 'shoot', 'boom', 'pew'].includes(m.content), { time: 10e3, maxMatches: 1 }),
+		msg.awaitReactions(rea => rea.userID === player.id && rea.emoji.id === '338331025300127745', { time: 10e3, maxMatches: 1 }),
+		msg.awaitButtonClick(click => click.userID === player.id && click.id === 'shoot!', { time: 10e3, maxMatches: 1 }),
+		(player.isBot ? wait(randomize(1, 5)) : wait(8))
 	]);
 }
 

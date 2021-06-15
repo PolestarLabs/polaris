@@ -1,7 +1,7 @@
 const YesNo = require("../../structures/YesNo.js");
 
 const init = async (msg, args) => {
-  const Target = await PLX.resolveMember( msg.guild.id,msg.mentions[0]?.id);
+  const Target = await PLX.resolveMember(msg.guild.id, msg.mentions[0]?.id);
 
   if (!Target) return this.invalidUsageMessage(msg);
 
@@ -209,7 +209,7 @@ function determineRing(arg, Rings) {
 }
 
 async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, upgradePrompt) {
-  const Target = await PLX.resolveMember(msg.guild.id,msg.mentions[0].id);
+  const Target = await PLX.resolveMember(msg.guild.id, msg.mentions[0].id);
   if (Target.id === msg.author.id) return $t("responses.marry.cantMarrySelf", P);
   const P = { lngs: msg.lang, prefix: msg.prefix };
   P.userA = msg.member.nick || msg.author.username;
@@ -255,7 +255,7 @@ async function upgradeMarriage(msg, args, userData, RING, RING_B, mrgPresent, up
 module.exports = {
   init,
   //TODO[epic=Unfinished Commands] Needs to comply with multiple rings format;
-  disabled: true, 
+  disabled: true,
   pub: true,
   cmd: "marry",
   perms: 3,

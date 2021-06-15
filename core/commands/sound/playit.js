@@ -7,27 +7,20 @@ const init = async function (msg, args) {
 
   ytdl.getInfo(args[0]).then((a, b) => {
     const { title } = a.videoDetails;
-    const author  = a.videoDetails.author.name;
-    const thumb   = `https://i.ytimg.com/vi/${a.videoDetails.videoId}/hqdefault.jpg`;
-    const dur     = a.videoDetails.lengthSeconds;
+    const author = a.videoDetails.author.name;
+    const thumb = `https://i.ytimg.com/vi/${a.videoDetails.videoId}/hqdefault.jpg`;
+    const dur = a.videoDetails.lengthSeconds;
 
     msg.delete();
 
-    const URL = `https://pollux.gg/generators/nowplaying.png?uid=${
-      msg.author.id
-    }&thumb=${
-      encodeURIComponent(thumb)
-    }&name=${
-      encodeURIComponent(title)
-    }&artist=${
-      encodeURIComponent(author)
-    }&dur=${
-      `${dur % 60}:${~~(dur / 60)}`
-    }&time=${
-      "00:04"
-    }&key=${
-      "polestar4728"
-    }`;
+    const URL = `https://pollux.gg/generators/nowplaying.png?uid=${msg.author.id
+      }&thumb=${encodeURIComponent(thumb)
+      }&name=${encodeURIComponent(title)
+      }&artist=${encodeURIComponent(author)
+      }&dur=${`${dur % 60}:${~~(dur / 60)}`
+      }&time=${"00:04"
+      }&key=${"polestar4728"
+      }`;
 
     console.log(URL);
 

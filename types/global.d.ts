@@ -4,6 +4,7 @@ import Bluebird from "bluebird";
 import { ExecOptions } from "child_process";
 import { EventEmitter } from "events";
 import { NextFunction, Request, Response } from "express";
+import Clusters from "@polestar/constants/clusters";
 
 declare class PolluxEmoji extends String {
   constructor(identifier: string, fallback?: PolluxEmoji);
@@ -101,7 +102,7 @@ declare global {
   export const paths: run;
   
   // In bot only
-  export const clusterNames: string[];
+  export const clusterNames: Clusters[];
   export const GNums: GlobalNumbers;
   export const hook: WebhookDigester;
   export const _emoji: ((E: string, F?: PolluxEmoji) => PolluxEmoji);

@@ -6,7 +6,7 @@ const init = async (msg) => {
   // FIXME[epic=anyone] This could be negative if clocks are out of sync
   // NOTE Seems super minor tbh
 
-  const ack   = Date.now() - msg.timestamp;
+  const ack = Date.now() - msg.timestamp;
 
   const embed = {};
   embed.color = 0x36393f;
@@ -64,20 +64,23 @@ const init = async (msg) => {
     inline: true,
   };
 
-  
-  PLX.api.get('/internal/ping').then( async res=>{
-    const {data} = res;
+
+  PLX.api.get('/internal/ping').then(async res => {
+    const { data } = res;
     let INST = data.RABBITHOUSE;
     INST.name = "RABBITHOUSE";
-    const cluster = ["cluster_"+ (process.env.CLUSTER_ID) ] ||0;
-    
+    const cluster = ["cluster_" + (process.env.CLUSTER_ID)] || 0;
+
     // FIXME add internal services later
-    embed.fields[3] = undefined && {
+    embed.fields.pop();
+    /*
+    embed.fields[3] = {
       name: "Internal Services",
       value: `${(INST?.[cluster]?.last) > Date.now() - 5e3 ? _emoji('yep') : _emoji('nope') } *\`${INST.name}/${process.env.CLUSTER_ID}\`* **${INST?.[cluster]?.diff || "000" }**ms\n` +
              `${(data.METEORA?.cluster_0?.last) > Date.now() - 5e3 ? _emoji('yep') : _emoji('nope') } *\`${"METEORA"}/${0}\`* **${start - data?.METEORA?.cluster_0?.last || "000" }**ms`,
       inline: true,
     };
+    */
     await wait(1);
     ms2.edit({ embed });
   });

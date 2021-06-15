@@ -23,8 +23,8 @@ const init = async (msg) => {
 
   moment.locale(msg.lang[0]);
 
-  const TARGETDATA = (await DB.users.get({ id: Target.id })) || (await DB.users.new(msg.author)) ;
-  
+  const TARGETDATA = (await DB.users.get({ id: Target.id })) || (await DB.users.new(msg.author));
+
   emb.color("#ffc156");
   emb.title(bal);
 
@@ -35,19 +35,19 @@ const init = async (msg) => {
 
     const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
     if (x.type === "SEND") x.type = "TRANSFER";
-    if (x.to === POLid || x.to === 'DASHBOARD' ) return `🔴 \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
-    if (x.from === POLid || x.from === 'DASHBOARD' ) return `🟢 \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
+    if (x.to === POLid || x.to === 'DASHBOARD') return `🔴 \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
+    if (x.from === POLid || x.from === 'DASHBOARD') return `🟢 \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
 
-    if ( x.from && (x.to === TARGETDATA.id && x.from !== POLid) ) {
+    if (x.from && (x.to === TARGETDATA.id && x.from !== POLid)) {
       othPart = (await PLX.getTarget(x.from, null, true)) || { tag: x.from };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
-      return `↔ \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b ╰ |   `
+      return `↔ \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   `
         + `*\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})   `;
     }
-    if ( x.to && (x.from === TARGETDATA.id && x.to !== POLid) ) {
+    if (x.to && (x.from === TARGETDATA.id && x.to !== POLid)) {
       othPart = (await PLX.getTarget(x.to, null, true)) || { tag: x.to };
       if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
-      return `↔  \`${ts}\` ${_emoji(x.currency,x.currency)} **${x.amt}**\n\u200b ╰ |   `
+      return `↔  \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   `
         + `*\`${x.type}\`* to [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})  `;
     }
 
@@ -87,8 +87,8 @@ ${await lastTransBuild(lastTrans[4])}
     emb.fields = [];
   }
   emb.thumbnail(`${paths.CDN}/build/coins/befli_t_s.png`);
-  
-  
+
+
   return { embed: emb };
 };
 module.exports = {

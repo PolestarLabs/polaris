@@ -15,20 +15,22 @@ const clean = (text) => {
 
   if (output.length > 1200) {
     let partial = output.slice(0, 1200);
-    let full =  output;
-    return {full,partial};    
+    let full = output;
+    return { full, partial };
   }
   return output;
 };
 
+const devs = ["88120564400553984", "253600545972027394", "124989722668957700"];
+
 const init = async (msg) => {
-  if (msg.author.id !== "88120564400553984") {
+  if (!devs.includes(msg.author.id)) {
     if (msg.content.includes("fs")) return null;
     if (msg.content.includes("json")) return null;
     if (msg.content.includes("../../")) return null;
     // if (msg.content.includes("require")) return null;
   }
-  
+
 
 
   let depthParam = 0;
@@ -42,11 +44,11 @@ const init = async (msg) => {
   const invisibar = "\u200b\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u2003\u200b";
   let code = msg.args.join(" ");
 
-  if (code.includes("child_process") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes("exec") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes(".leave(") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes(".drop") && msg.author.id !== "88120564400553984") return null;
-  if (code.includes("process.") && msg.author.id !== "88120564400553984") return null;
+  if (code.includes("child_process") && !devs.includes(msg.author.id)) return null;
+  if (code.includes("exec") && !devs.includes(msg.author.id)) return null;
+  if (code.includes(".leave(") && !devs.includes(msg.author.id)) return null;
+  if (code.includes(".drop") && !devs.includes(msg.author.id)) return null;
+  if (code.includes("process.") && !devs.includes(msg.author.id)) return null;
 
   if (!code) return null;
 
@@ -60,7 +62,7 @@ const init = async (msg) => {
   }
 
   // allow top-level await
-  if (/await/i.test(code)) 
+  if (/await/i.test(code))
     code = `(async() => {${/return/i.test(code) ? code : addReturn(code)}})()`;
 
   let runtime = performance.now();
@@ -78,20 +80,19 @@ const init = async (msg) => {
     const output = `<:yep:339398829050953728> ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${out.full ? "// Check output file" : out}\`\`\``;
     const embed = { description: output };
     embed.color = 0x2bce64;
-    return msg.channel.createMessage({ embed }, (out.full ? {name: "output.js", file: out.full  } : undefined) );
+    return msg.channel.createMessage({ embed }, (out.full ? { name: "output.js", file: out.full } : undefined));
   } catch (e) {
     runtime = performance.now() - runtime;
     const out = clean(e.stack || []);
-    const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${ 
-      (out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
-    const embed =  { description: output };
+    const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${(out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
+    const embed = { description: output };
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
     console.error(e);
-    return msg.channel.createMessage({ embed }, (out.full ? {name: "error.js", file: out.full  } : undefined) );
+    return msg.channel.createMessage({ embed }, (out.full ? { name: "error.js", file: out.full } : undefined));
   }
 };
- 
+
 /**
  * Attempts to place a return in the correct spot.
  * 
@@ -110,7 +111,7 @@ function addReturn(code) {
 }
 
 module.exports = {
-  init, 
+  init,
   aliases: ["ev", "ee"],
   cat: "dev",
 };

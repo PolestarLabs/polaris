@@ -43,14 +43,14 @@ module.exports = {
 
     const SVR = trigger.guild;
     const CHN = trigger.channel;
-    
+
     //FIXME This is pooling the DB on every message
-    if (!trigger.guild.switches || !trigger.guild.event){
+    if (!trigger.guild.switches || !trigger.guild.event) {
       const serverDATA = await DB.servers.findOne({ id: SVR.id }, { "modules.LOCALRANK": 0 }).lean().exec();
       if (!serverDATA) return;
       trigger.guild.switches = serverDATA.switches;
       trigger.guild.event = serverDATA.event || {};
-      setTimeout(()=>trigger.guild.switches = false, 60e3 * 60)
+      setTimeout(() => trigger.guild.switches = false, 60e3 * 60)
     }
     if (trigger.guild.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
 
@@ -146,8 +146,8 @@ module.exports = {
       let balContent = ballotMessage.content;
       const responses = await CHN.awaitMessages((pickMsg) => {
         if (!pickMsg.author.bot
-            && !pickers.find((u) => u.id === pickMsg.author.id)
-            && pickMsg.content.toLowerCase().includes("pick")) {
+          && !pickers.find((u) => u.id === pickMsg.author.id)
+          && pickMsg.content.toLowerCase().includes("pick")) {
           if (ballotMessage) {
             ballotMessage.edit(`${balContent}\n${pickMsg.author.username}`).then((newmsg) => {
               balContent = newmsg.content;
@@ -173,8 +173,8 @@ module.exports = {
         // if(responses.first()) responses.first().delete().catch(e=>false);
       }
 
-      lootMessage.delete().catch(() => {});
-      ballotMessage.delete().catch(() => {});
+      lootMessage.delete().catch(() => { });
+      ballotMessage.delete().catch(() => { });
 
       const pSz = pickers.length - 1;
       let rand = randomize(0, pSz);
@@ -224,7 +224,7 @@ Winner:\`${JSON.stringify(luckyOne)}\
           trigger.author.id,
           {
             $inc:
-          { "data.boxesLost": -1, "data.boxesTriggered": 1, "data.boxesEarned": 1 },
+              { "data.boxesLost": -1, "data.boxesTriggered": 1, "data.boxesEarned": 1 },
             $push: { "data.boxTriggerMessages": `[${pickers.length} Pickers] | ${trigger.content || "[Embeded Image]"}` },
           },
         ),

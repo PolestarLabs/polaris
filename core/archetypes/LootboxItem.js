@@ -1,4 +1,4 @@
-const gemRATES = (require("../../resources/lists/GlobalNumbers.js")).LootRates.gems;
+const gemRATES = require("@polestar/constants/lootbox").LootGems;
 
 class LootboxItem {
   #filter;
@@ -40,7 +40,7 @@ class LootboxItem {
       Object.keys(query).forEach((ky) => query[ky] ?? delete query[ky]);
 
       if (this.exclusive) query = [query, { exclusive: this.exclusive }]; // FIXME Is query an object or array of objects? Check where this is handled
-      
+
       DB[collection].aggregate([
         { $match: query },
         { $sample: { size: 1 } },

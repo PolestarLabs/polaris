@@ -1,11 +1,9 @@
 {
     "decoration": {
-
         "nsfw": {
             "color": "#240d12",
             "thumb": "https://img.icons8.com/%ICONSET%/250/porn-folder.png"
         },
-
         "anime": {
             "color": "#f04055",
             "thumb": "https://img.icons8.com/%ICONSET%/250/hiragana-ma.png"
@@ -86,7 +84,7 @@
             "color": "#e24f4f",
             "thumb": "https://img.icons8.com/%ICONSET%/250/swiss-army-knife.png"
         },
-      "halloween": {
+        "halloween": {
             "color": "#e2934f",
             "thumb": "http://pollux.gg/images/pumpxd.png"
         }
