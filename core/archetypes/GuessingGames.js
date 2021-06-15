@@ -1,5 +1,6 @@
 // guessingGame('name' , 'type(text/image)' ,'thumb', options)
 const axios = require("axios");
+const ONGOING_GAMES = new Map();
 
 function parseGrade(g) {
   let grade;
@@ -66,14 +67,14 @@ class GuessingGame {
     this.type = type;
 
     if (!["image", "thumbnail"].includes(imgPosition)) throw new Error("[imgPosition] must be either 'image' or 'thumbnail'.");
-
+    
     this.embed = {
       title,
       color,
       description: prompt,
       fields: [],
       [imgPosition]: type === "image" ? { url: `attachment://${name}.png` } : {},
-      footer: { text: `⏱ ${this.time / 1000}s` },
+      footer: { text: `⏱ ${this.time / 1000}s • Try also the new modes: "endless", "solo", and "time" !` },
     };
   }
 
