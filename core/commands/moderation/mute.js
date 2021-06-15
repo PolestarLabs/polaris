@@ -130,21 +130,10 @@ const init = async function (msg, args) {
       `MUTED BY ${msg.author.tag}  (${msg.author.id})`,
     );
     makeitMute(Target, role, time);
-    roleout(time, role);
     logThis(time, timeTx);
     return msg.channel.send(
       `**${(Target.user || Target).tag}** was MUTED for ${timeTx}`,
     );
-  }
-  async function roleout(tm, role) {
-    if (tm === undefined) return false;
-    return setTimeout((f) => {
-      Target.removeRole(role.id, "Mute Expired");
-      DB.mutes.expire({ S: Target.guild.id, U: Target.id }).lean().exec().then((d) => {
-        clearTimeout(PLX.muteTimers.get(d._id));
-        PLX.muteTimers.delete(d._id);
-      });
-    }, tm * 60000);
   }
 
   function logThis(time, timeTx) {
