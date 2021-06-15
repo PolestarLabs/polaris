@@ -34,7 +34,7 @@ const ReactionMenu = function ReactionMenu(menu, msg, choices, options = {}) {
         time,
       }).catch(() => {
         m.removeReactions().catch(() => null);
-        console.log({embed,avoidEdit})
+        console.log({ embed, avoidEdit })
         if (embed && !avoidEdit) {
           embed.color = 16499716;
           embed.footer = { text: strings.timeout };

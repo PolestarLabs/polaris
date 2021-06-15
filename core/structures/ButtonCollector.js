@@ -17,28 +17,28 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-    if (interaction.message.id !== this.message.id) return false;    
+    if (interaction.message.id !== this.message.id) return false;
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
-      if (this.options.authorOnly !== userID) return false; 
+      if (this.options.authorOnly !== userID) return false;
     }
 
     const buttonPress = {
-      interaction, id: data.custom_id , userID, message: interaction.message,
-    };    
+      interaction, id: data.custom_id, userID, message: interaction.message,
+    };
 
     if (!this.filter || this.filter(buttonPress)) {
       if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(buttonPress);
-      this.emit("click", buttonPress );
+      this.emit("click", buttonPress);
       if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
       interaction.ack();
       return true;
-    }else{
-      if (!this.filter(buttonPress)){
+    } else {
+      if (!this.filter(buttonPress)) {
         interaction.reply({
-          content:"You were not supposed to be clicking here. Shoo!",
+          content: "You were not supposed to be clicking here. Shoo!",
           flags: 64
         });
       }
@@ -50,7 +50,7 @@ class ButtonCollector extends EventEmitter {
     if (this.ended) return;
     this.ended = true;
     this.bot.removeListener("messageComponent", this.listener);
-    if (!this.options.removeButtons) this.message.edit({content: this.message.content, components:[]}).catch(err=>null)
+    if (!this.options.removeButtons) this.message.edit({ content: this.message.content, components: [] }).catch(err => null)
     this.emit("end", this.collected, reason);
   }
 }

@@ -36,19 +36,19 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   const time = options.time || 15000;
   const deleteFields = typeof options.deleteFields === "boolean" ? options.deleteFields : true;
   const buttonSettings = {
-    yep:   {
+    yep: {
       type: 2,
       style: 3,
-      emoji: {id: _emoji('yep').id },
-      label: $t( ["terms.yep","Yep"],{lngs: commandMessage.lang}) ,
-      custom_id: "yep" 
+      emoji: { id: _emoji('yep').id },
+      label: $t(["terms.yep", "Yep"], { lngs: commandMessage.lang }),
+      custom_id: "yep"
     },
-    nope:  {
+    nope: {
       type: 2,
       style: 4,
-      emoji: {id: _emoji('nope').id },
-      label: $t( ["terms.nope","Nope"],{lngs: commandMessage.lang}) ,
-      custom_id: "nope" 
+      emoji: { id: _emoji('nope').id },
+      label: $t(["terms.nope", "Nope"], { lngs: commandMessage.lang }),
+      custom_id: "nope"
     },
   };
   Object.assign(buttonSettings.yep, options.buttonSettings?.yep || {});
@@ -71,12 +71,14 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   let responses = [];
 
   if (useButtons) {
-    console.log({buttonSettings})
+    console.log({ buttonSettings })
     await promptMessage.edit({
       content: promptMessage.content,
-      components: [{type: 1, components: [
+      components: [{
+        type: 1, components: [
           buttonSettings.yep, buttonSettings.nope
-      ]}]      
+        ]
+      }]
     });
     responses = await promptMessage.awaitButtonClick({
       removeButtons: options.removeButtons || false,
@@ -87,7 +89,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
       console.error(err);
       return respondError();
     });
-  }else{
+  } else {
     await promptMessage.addReaction(YA.r);
     promptMessage.addReaction(NA.r);
     responses = await promptMessage.awaitReactions({
@@ -104,18 +106,18 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
 
   if (!responses?.length) return null;
 
-  console.log({responses})
+  console.log({ responses })
 
   if (
     (responses.length === 1 && responses[0]?.emoji?.id === NA.id) ||
-    (responses[0].id === "nope") 
+    (responses[0].id === "nope")
   ) {
     return cancellation();
   }
 
   if (
     (responses.length === 1 && responses[0]?.emoji?.id === YA.id) ||
-    (responses[0].id === "yep") 
+    (responses[0].id === "yep")
   ) {
     return respondPositive();
   }
@@ -136,7 +138,7 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (noFunction) return noFunction;
     if (!noFunction) return false;
   }
-  function respondPositive(){
+  function respondPositive() {
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 1234499;
@@ -149,20 +151,22 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
     if (!yesFunction) return true;
   }
 
-  function respondError(){
+  function respondError() {
     if (clearReacts) promptMessage.removeReactions().catch(() => null);
     if (embed && !avoidEdit) {
       embed.color = 16499716;
       if (deleteFields === true) embed.fields = [];
       embed.footer = { text: strings.timeout };
-      promptMessage.edit({embed});
+      promptMessage.edit({ embed });
     }
     promptMessage.edit({
       content: promptMessage.content,
-      components: [{type: 1, components: [
-          Object.assign({disabled:true},buttonSettings.yep),
-          Object.assign({disabled:true},buttonSettings.nope)
-      ]}]      
+      components: [{
+        type: 1, components: [
+          Object.assign({ disabled: true }, buttonSettings.yep),
+          Object.assign({ disabled: true }, buttonSettings.nope)
+        ]
+      }]
     });
     if (timeoutFunction && typeof timeoutFunction === "function") return timeoutFunction(promptMessage);
     if (timeoutFunction) return timeoutFunction;

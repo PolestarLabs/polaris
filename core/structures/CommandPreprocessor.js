@@ -59,7 +59,7 @@ const PERMS_CALC = function CommandPermission(msg) {
     if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch((err) => console.error(`Messed up perms at ${msg.guild.id}`)), false;
   }
   if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
-  if(msg.command.disabled && [...cfg.admins,cfg.owner].includes(msg.author.id)) return msg.addReaction(_emoji('COMMAND_DISABLED').reaction), false;
+  if (msg.command.disabled && [...cfg.admins, cfg.owner].includes(msg.author.id)) return msg.addReaction(_emoji('COMMAND_DISABLED').reaction), false;
 
   return (!uIDs.length || uIDs.includes(msg.author.id));
 };
@@ -105,7 +105,7 @@ const DEFAULT_CMD_OPTS = {
       m.args = a;
       m.lang = [m.channel.LANG || m.guild?.LANG || "en", "dev"];
       m.runtime = performance.now();
-      DB.users.new(m.author).catch(err=>null);
+      DB.users.new(m.author).catch(err => null);
     },
     postCheck: (m, a, chk) => {
       if (!chk) return null;
@@ -114,14 +114,14 @@ const DEFAULT_CMD_OPTS = {
       commandRoutine.updateMeta(m, m.command);
       return undefined;
     },
-    postCommand: (m,a,res)=>{
-       
+    postCommand: (m, a, res) => {
+
     },
-    postExecution: (m,a,status) => {
+    postExecution: (m, a, status) => {
 
       if (!status) return;
       if (m.command.argsRequired && !a.length) return;
-      
+
       Progression.emit(`command.${m.command.label}`, { msg: m });
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
@@ -139,29 +139,29 @@ const DEFAULT_CMD_OPTS = {
     console.error(err);
     const errorCode = `0x${(Date.now()).toString(16).toUpperCase()}`;
 
- 
-    Sentry.setTag("module", msg.command.module);    
+
+    Sentry.setTag("module", msg.command.module);
     Sentry.setTag("type", "USER-FACING ERROR");
-    Sentry.setContext("Command",{
-      label:  msg.command.label,
+    Sentry.setContext("Command", {
+      label: msg.command.label,
       author: msg.author.id
     });
-    Sentry.setContext("Permissions", msg.channel.permissionsOf(PLX.user.id) );
+    Sentry.setContext("Permissions", msg.channel.permissionsOf(PLX.user.id));
     {
-      const {id,username,discriminator,createdAt,publicFlags,bot} = msg.author;
-      Sentry.setContext("user", {id,username,discriminator,createdAt,publicFlags,bot} );
+      const { id, username, discriminator, createdAt, publicFlags, bot } = msg.author;
+      Sentry.setContext("user", { id, username, discriminator, createdAt, publicFlags, bot });
     }
     {
-      const {id,name,topic,nsfw} = msg.channel;
-      Sentry.setContext("Channel", {id,name,topic,nsfw} );
+      const { id, name, topic, nsfw } = msg.channel;
+      Sentry.setContext("Channel", { id, name, topic, nsfw });
     }
     {
-      const {name,id,ownerID,premiumSubscriptionCount,region,systemChannelID,createdAt,description,explicitContentFilter,joinedAt,memberCount} = msg.guild;
-      Sentry.setContext("Guild", {name,id,ownerID,premiumSubscriptionCount,region,systemChannelID,createdAt,description,explicitContentFilter,joinedAt,memberCount} );
+      const { name, id, ownerID, premiumSubscriptionCount, region, systemChannelID, createdAt, description, explicitContentFilter, joinedAt, memberCount } = msg.guild;
+      Sentry.setContext("Guild", { name, id, ownerID, premiumSubscriptionCount, region, systemChannelID, createdAt, description, explicitContentFilter, joinedAt, memberCount });
     }
 
-    Sentry.captureException(err,{
-      user:{
+    Sentry.captureException(err, {
+      user: {
         ip_address: msg.author.id,
         username: msg.author.username,
         id: msg.author.id
@@ -185,11 +185,11 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
         // + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n
         description: "Oh **no**! Something went wrong...\n"
           + `If this issue persists, please stop by our [Support Channel](https://discord.gg/TTNWgE5) to sort this out!\n${
-            //PLX.beta || cfg.testChannels.includes(msg.channel.id)
-            // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
-            // ? 
-            `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
-            // : ""
+          //PLX.beta || cfg.testChannels.includes(msg.channel.id)
+          // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
+          // ? 
+          `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
+          // : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
         color: 0xF05060,
@@ -201,12 +201,12 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
 
 function QUEUED_COMMAND(commandFile) {
   return (...args) => {
-    if (PLX.maintenance){
-      if ( args[0]?.guild.id == "277391723322408960" && args[0]?.channel.id != "488142034776096772") {
+    if (PLX.maintenance) {
+      if (args[0]?.guild.id == "277391723322408960" && args[0]?.channel.id != "488142034776096772") {
         console.log('nope'.red)
-        return args[0]?.reply( ('🔧') + " • Maintenance ongoing.");
+        return args[0]?.reply(('🔧') + " • Maintenance ongoing.");
       }
-      if (   ![cfg.STAFF_GUILD, cfg.OFFICIAL_GUILD].includes(args[0]?.guild.id) ) return args[0]?.reply( ('🔧') + " • Maintenance ongoing.");
+      if (![cfg.STAFF_GUILD, cfg.OFFICIAL_GUILD].includes(args[0]?.guild.id)) return args[0]?.reply(('🔧') + " • Maintenance ongoing.");
     }
     if (PLX.restarting) {
       return args[0]?.reply(_emoji('TIME1') + " • Restart in progress... please wait up to a minute.");
@@ -214,7 +214,7 @@ function QUEUED_COMMAND(commandFile) {
     const execCommand = typeof commandFile.init == 'function' ? commandFile.init(...args) : typeof commandFile.gen == 'function' ? commandFile.gen(...args) : null;
     if (!execCommand) return commandFile.init;
 
-    PLX.execQueue.push(new Promise((res,rej) => execCommand.then(res).catch(rej) ));
+    PLX.execQueue.push(new Promise((res, rej) => execCommand.then(res).catch(rej)));
     return execCommand;
   };
 }
@@ -228,8 +228,8 @@ const registerOne = (folder, _cmd) => {
     }
     // commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };
     commandFile.hidden = !commandFile.pub;  // legacy port
-    
-    if(commandFile.disabled && !PLX.beta) return null;
+
+    if (commandFile.disabled && !PLX.beta) return null;
     if (commandFile.noCMD) return null;
 
     //const cmdQ = QUEUED_COMMAND(commandFile);
@@ -302,12 +302,12 @@ ${_emoji("yep")} **${results.filter((_) => !!_.pass).length}** / ${results.lengt
 ${_emoji("maybe")} *(${results.filter((_) => _.hidden).length} hidden)*
 ${_emoji("nope")} ${results.filter((_) => !_.pass).length} commands failed.
 ${results.filter((_) => !_.pass).length
-    ? `
+          ? `
 \`\`\`js
 ${results.filter((_) => !_.pass).map((c) => ` • ${c.cmd}`).join("\n")}
 \`\`\`
 ` : ""
-}  `);
+        }  `);
     });
   });
 };
