@@ -44,7 +44,7 @@ module.exports = async (guild, member) => {
 
     resolveFile(url).then(async (buffer) => {
       const fwellChannelObj = PLX.getChannel(fwellChannel);
-      if ( !fwellChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !fwellChannelObj.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+      if (!fwellChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !fwellChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
       fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
