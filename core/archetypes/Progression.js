@@ -232,7 +232,7 @@ class ProgressionManager extends EventEmitter {
         })
         //*/
 
-        if(quest.tracker === eventTracker || quest.tracker === "*") { // PERFECT MATCH
+        if(quest.tracker === eventTracker || quest.tracker === "*" || quest.tracker === "*.*" || quest.tracker === "*.*.*"  ) { // PERFECT MATCH
             console.log("[Progression]".blue, "Perfect Match".green, eventTracker,"/",quest.tracker )
             return true;
         }else if ( questAction === eventAction && ( ((questScope||'*') === (eventScope||'*') && questCondition === eventCondition ) || (questScope||'*') === '*') ){
