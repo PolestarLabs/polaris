@@ -43,7 +43,7 @@ ${item.data.time ? "s :: Endless Mode" : ""}`;
   //* *\`${((subject.name||(`${subject.username}#${subject.discriminator}`)) +'').padEnd(40,"-")}\`** \
 
   console.log(standings)
-  msg.channel.send(`**High Scores for \`guessflag\`.**\n\n${standings}`);
+  return msg.channel.send(`**High Scores for \`guessflag\`.**\n\n${standings}`);
 }
 
 module.exports = {
