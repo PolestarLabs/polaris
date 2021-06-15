@@ -33,7 +33,7 @@ const init = async function (message) {
     counter++;
     if (counter > 25) break;
     variables.forEach((vari) => {
-      const regex = new RegExp(`!\\b${vari.tag.replace("!", "")}\\b`, "g");
+      const regex = new RegExp(`!\\b${vari.tag.replace("!", "").replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, "g");
       // console.log( rollEq)
       rollEq = rollEq.replace(regex, `(${vari.value})`);
     });
