@@ -7,11 +7,9 @@ const init = async function (msg) {
       color: 0x285691,
       image: {
         url:
-          `http://www.placecage.com/${
-            cage % 2 === 0 ? "c/" : ""
+          `http://www.placecage.com/${cage % 2 === 0 ? "c/" : ""
           }${cage + 300
-          }/${
-            cage2 + 300
+          }/${cage2 + 300
           }.png`,
         name: "cage.jpg",
       },

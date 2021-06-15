@@ -16,8 +16,8 @@ const init = async (msg) => {
     msg.channel.send("`[WARNING]` This subcommand will error. Feel free to ignore it. We'll come back to it later");
     msg.channel.send("Choose name");
     let responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && msg2.content.length < 16,
-    { maxMatches: 1, time: 30e3 });
+      && msg2.content.length < 16,
+      { maxMatches: 1, time: 30e3 });
 
     const pName = responses[0].content;
     if (!responses) return msg.reply("timeout");
@@ -38,22 +38,22 @@ const init = async (msg) => {
 
     msg.channel.send("Initial Investment (RBN)");
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !Number.isNaN(parseInt(msg2.content)),
-    { maxMatches: 1, time: 30e3 });
+      && !Number.isNaN(parseInt(msg2.content)),
+      { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     const pInvest = parseInt(responses[0].content) || 0;
 
     msg.channel.send(`Maximum Pool (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !Number.isNaN(parseInt(msg2.content)),
-    { maxMatches: 1, time: 30e3 });
+      && !Number.isNaN(parseInt(msg2.content)),
+      { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     const pPool = parseInt(responses[0].content) || 0;
 
     msg.channel.send(`Your Initial balance (${pCode})`);
     responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id
-            && !Number.isNaN(parseInt(msg2.content)),
-    { maxMatches: 1, time: 30e3 });
+      && !Number.isNaN(parseInt(msg2.content)),
+      { maxMatches: 1, time: 30e3 });
     if (!responses) return msg.reply("timeout");
     const pVolume = parseInt(responses[0].content) || 0;
 
@@ -113,7 +113,7 @@ const init = async (msg) => {
     if (amt + eco.volume > eco.pool) return msg.reply("Denied. Pool exceeded");
     eco.incVol = (amt * eco.rateIn);
     eco.incTrea = (amt * 0.65);
-    await ECO.pay(msg.author, amt, "local$", "RBN",{details:{currency: eco.code }});
+    await ECO.pay(msg.author, amt, "local$", "RBN", { details: { currency: eco.code } });
     await DB.audits.new(msg.author, amt, "local$_convert", eco.code); // NOTE audit is automatically made -- double auditing?
     msg.author.customCurr[msg.guild.id] += amt * eco.rateIn;
 
@@ -131,7 +131,7 @@ const init = async (msg) => {
 
     eco.incVol = (-(amt));
     eco.incTrea = (-(amt * eco.rateOut));
-    await ECO.receive(msg.author, Math.floor(amt * eco.rateOut * 0.8), "local$", "RBN",{details:{currency: eco.code }});
+    await ECO.receive(msg.author, Math.floor(amt * eco.rateOut * 0.8), "local$", "RBN", { details: { currency: eco.code } });
     await DB.audits.new(msg.author, -amt, "local$_convert", eco.code);
     msg.author.customCurr[msg.guild.id] -= amt;
 
@@ -144,7 +144,7 @@ const init = async (msg) => {
 module.exports = {
   init,
   //TODO[epic=Unfinished Commands] this one is barely fleshed out;
-  disabled: true, 
+  disabled: true,
   pub: false,
   cmd: "local$",
   perms: 3,

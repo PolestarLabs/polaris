@@ -24,20 +24,20 @@ const init = async function (msg, args) {
   const embed = {};
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
-  const mansionMember = await PLX.resolveMember("277391723322408960",msg.author.id,{softMatch:false}).catch(e=> msg.member);
-  
+  const mansionMember = await PLX.resolveMember("277391723322408960", msg.author.id, { softMatch: false }).catch(e => msg.member);
+
   if (PLX.user.id === '354285599588483082') return;
-  
-  if ( !mansionMember.roles.includes('278985430844833792') && !mansionMember.roles.includes('278985430844833792') ){
-   // return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
+
+  if (!mansionMember.roles.includes('278985430844833792') && !mansionMember.roles.includes('278985430844833792')) {
+    // return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
   }
 
 
-  const userData_OLD = await vDB.users.findOne({id:msg.author.id}).noCache().lean();
-  const userData_NEW = await DB.users.findOne({id:msg.author.id}).noCache().lean();
-  
+  const userData_OLD = await vDB.users.findOne({ id: msg.author.id }).noCache().lean();
+  const userData_NEW = await DB.users.findOne({ id: msg.author.id }).noCache().lean();
 
-  if (userData_OLD.blacklisted?.length > 1 && userData_OLD.blacklisted !="false") return msg.reply(`${_emoji('nope')} • Blacklisted accounts will have to start over!`);
+
+  if (userData_OLD.blacklisted?.length > 1 && userData_OLD.blacklisted != "false") return msg.reply(`${_emoji('nope')} • Blacklisted accounts will have to start over!`);
   if (userData_NEW.migrated) return msg.reply(`${_emoji('nope')} • Your account has already been migrated!`);
 
   // SECTION SLIDE 1 ----------------------------------------------------------
@@ -89,21 +89,21 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
   let marriage_message = null;
 
   const TASKLIST = {
-    
-    complete: function complete(id){
+
+    complete: function complete(id) {
       this.items[id].status = 'complete';
     },
-    notcomplete: function complete(id){
+    notcomplete: function complete(id) {
       this.items[id].status = 'nope';
     },
-    printProgress(){
-      return this.items.map(x=>x.status==='complete'?'🟦':x.status=='nope'?'🟦':'⬛').sort().reverse().join('');
+    printProgress() {
+      return this.items.map(x => x.status === 'complete' ? '🟦' : x.status == 'nope' ? '🟦' : '⬛').sort().reverse().join('');
     },
-    printList(){
-      return this.items.map(it=>{
+    printList() {
+      return this.items.map(it => {
         if (it.status == 'complete') return `${_emoji("yep")} • ${it.name}`;
         if (it.status == 'pending') return `${_emoji("loading")} • ${it.name}`;
-        else return `${_emoji("nope")} • ${it.name}`;        
+        else return `${_emoji("nope")} • ${it.name}`;
       }).join('\n');
     },
     items: [
@@ -111,14 +111,14 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Transferring Marriages",
         wait: true,
         status: "pending",
-        action: async function(){
+        action: async function () {
           const marr_mig = require("../misc/mrgt.js");
           const marriage_transfer_res = await new Promise(async (res, rej) => {
             await marr_mig.init(msg, args, res)
-            .catch((err) => {
-              console.error(err);
-              rej(err);
-            });
+              .catch((err) => {
+                console.error(err);
+                rej(err);
+              });
           }).timeout(15e4).catch((err) => {
             embed.color = 0xFF5500;
             embed.title = "Migration Aborted!";
@@ -126,43 +126,43 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             prompt.edit({ embed });
             return null;
           });
-      
+
           if (!marriage_transfer_res) {
             msg.channel.send("Something went wrong with your migration process. Please try again.");
-            return false;      
+            return false;
           }
-          
-          const {size,imported,cost} = marriage_transfer_res;
+
+          const { size, imported, cost } = marriage_transfer_res;
           await DB.users.set(msg.author.id, { $inc: { "modules.SPH": -1 * cost || 0 } });
           this.name += ` (${imported}/${size} - ${_emoji('SPH')}**-${cost}**)`;
           marriage_message = marriage_transfer_res.res;
 
           return true;
-        } 
+        }
       },
       {
         name: "Converting Inventory",
         wait: true,
         status: "pending",
-        action: async function(){
+        action: async function () {
 
           const oldInventory = userData_OLD.modules.inventory;
           const newInventory = [];
-          
+
           oldInventory.forEach((item) => {
             if (item.id) return;
             const currItem = newInventory.find((sub) => sub.id === item);
-            
+
             if (currItem) {
               if (currItem.id.includes("lootbox") && currItem.count < 10) currItem.count++;
-              else if (currItem.id.includes("lootbox") && currItem.count >= 10) exceedingBoxBonus++ ;
+              else if (currItem.id.includes("lootbox") && currItem.count >= 10) exceedingBoxBonus++;
             } else newInventory.push({ id: item, count: 1 });
           });
-          
+
           await DB.users.set(msg.author.id, { $set: { "modules.inventory": newInventory } }).catch(console.error);
           userData_OLD.modules.inventory = newInventory;
 
-          
+
           return true;
         }
       },
@@ -170,7 +170,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Capping Lootboxes",
         wait: true,
         status: "pending",
-        action: async function(){
+        action: async function () {
           /*
           const updatedUserDB = DB.users.findOne({id:msg.author.id}).noCache().lean();
           let boxes = updatedUserDB.modules.inventory.filter(item=>item.id.includes('lootbox'));
@@ -185,7 +185,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           return !!bulk;
           */
           this.name += ` (+${_emoji('PSM') + exceedingBoxBonus})`;
-          await DB.users.set(msg.author.id, {$set: {"modules.PSM": exceedingBoxBonus} });
+          await DB.users.set(msg.author.id, { $set: { "modules.PSM": exceedingBoxBonus } });
           return true;
         }
       },
@@ -193,26 +193,26 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Recalculating Gemstones",
         wait: true,
         status: "pending",
-        action: async function(){
-                  
+        action: async function () {
+
           const newRubines = Math.min(~~((userData_OLD.modules.rubines || 0) * 0.05) + (userData_OLD.modules.dyStreakHard || 1) * 10, 50000);
           const oldRubines = userData_OLD.modules.rubines || 0;
-          const jades      = ~~(userData_OLD.modules.jades / 2);
-          const saph       = ~~(userData_OLD.modules.sapphires * (((SAPPHIREFACTOR(userData_OLD.donator, userData_OLD.formerDonator) || 1) / 10) + 1));
+          const jades = ~~(userData_OLD.modules.jades / 2);
+          const saph = ~~(userData_OLD.modules.sapphires * (((SAPPHIREFACTOR(userData_OLD.donator, userData_OLD.formerDonator) || 1) / 10) + 1));
 
           await DB.users.set(msg.author.id, {
             $set:
-                {
-                  "counters.daily.streak": userData_OLD.modules.dyStreakHard || 0,
-                  "counters.daily.last": Date.now() - (23 * 60 * 60 * 1000),
-                  "modules.RBN": newRubines,
-                  "modules.rubinesOld": oldRubines,
-                  "modules.JDE": jades,
-                  "modules.SPH": saph,
-                },
+            {
+              "counters.daily.streak": userData_OLD.modules.dyStreakHard || 0,
+              "counters.daily.last": Date.now() - (23 * 60 * 60 * 1000),
+              "modules.RBN": newRubines,
+              "modules.rubinesOld": oldRubines,
+              "modules.JDE": jades,
+              "modules.SPH": saph,
+            },
           });
           this.name += ` (${_emoji('RBN')}×**${newRubines}** ${_emoji('SPH')}×**${saph}** ${_emoji('JDE')}×**${jades}**)`;
-          
+
           return true;
         }
       },
@@ -220,7 +220,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: `Transferring Daily Streak (--)`,
         wait: true,
         status: "pending",
-        action: async function(){
+        action: async function () {
           this.name = `Transferring Daily Streak (${userData_OLD.modules.dyStreakHard})`;
           return true;
         }
@@ -229,20 +229,20 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Baking a Cake",
         wait: false,
         status: "pending",
-        action: async function(){
-          await wait (1);
+        action: async function () {
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
-          await wait (1);
+          await wait(1);
           this.name += ".";
           return true;
         }
@@ -251,9 +251,9 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Awarding **Touhou Classic** Deck Skin",
         wait: false,
         status: "pending",
-        action: async function(){
-          await wait (2);
-          let result = await DB.users.set(msg.author.id,{$addToSet: {'modules.skinInventory':'casino_touhou-classic' } }).catch(err=>null);
+        action: async function () {
+          await wait(2);
+          let result = await DB.users.set(msg.author.id, { $addToSet: { 'modules.skinInventory': 'casino_touhou-classic' } }).catch(err => null);
           return !!result;
         }
       },
@@ -261,7 +261,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Declaring Rubines Income Tax ",
         wait: true,
         status: "pending",
-        action: async function(){
+        action: async function () {
           return true;
         }
       },
@@ -269,8 +269,8 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Converting Cosmetics IDs (Supposed to fail) ",
         wait: true,
         status: "pending",
-        action: async function(){
-          
+        action: async function () {
+
           const myBGs = userData_OLD.modules.bgInventory;
           const myBGsFULL = await DB.cosmetics.find({ code: { $in: myBGs } }).lean();
           this.name += ` (${myBGsFULL.length}/${myBGs.length} found)`
@@ -282,9 +282,9 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: `Freezing Global Ranks`,
         wait: true,
         status: "pending",
-        action: async function(){
-          await vDB.users.set(msg.author.id,{$set: {"switches.rankFrozen": true} });
-          await DB.users.set(msg.author.id,{$set: {"counters.legacy.globalLV": userData_OLD.modules.level , "counters.legacy.globalXP": userData_OLD.modules.exp} });
+        action: async function () {
+          await vDB.users.set(msg.author.id, { $set: { "switches.rankFrozen": true } });
+          await DB.users.set(msg.author.id, { $set: { "counters.legacy.globalLV": userData_OLD.modules.level, "counters.legacy.globalXP": userData_OLD.modules.exp } });
           return true;
         }
       },
@@ -292,17 +292,17 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Migrating Donation Streaks (if any)",
         wait: true,
         status: "pending",
-        action: async function(){
-          try{
+        action: async function () {
+          try {
 
             const oldDonoTier = userData_OLD.donator;
             const oldDonoStreak = userData_OLD.switches.donateStreak;
-            
-            await DB.users.set(msg.author.id,{$set: { "prime.tier":oldDonoTier, "counters.prime_streak":oldDonoStreak  } });
-            
-            this.name = this.name.replace( "(if any)", `(**${oldDonoTier}** and ${Object.keys(oldDonoStreak).length} more tier(s) found)` );
+
+            await DB.users.set(msg.author.id, { $set: { "prime.tier": oldDonoTier, "counters.prime_streak": oldDonoStreak } });
+
+            this.name = this.name.replace("(if any)", `(**${oldDonoTier}** and ${Object.keys(oldDonoStreak).length} more tier(s) found)`);
             return true;
-          }catch(err){
+          } catch (err) {
             return false;
           }
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
@@ -312,24 +312,26 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         name: "Copying over your profile configuration",
         wait: true,
         status: "pending",
-        action: async function(){
-         
+        action: async function () {
 
-          await DB.users.set(msg.author.id,{$set: {
-             "modules.bgID": userData_OLD.modules.bgID,
-             "modules.medals": userData_OLD.modules.medals,
-             "modules.sticker": userData_OLD.modules.sticker,
-             "modules.flair": userData_OLD.modules.flairTop,
-             "modules.tagline": userData_OLD.modules.tagline,
-             "modules.persotext": userData_OLD.modules.persotext,
-             "modules.favcolor": userData_OLD.modules.favcolor,
-             "modules.medalInventory": userData_OLD.modules.medalInventory,
-             "modules.flairsInventory": userData_OLD.modules.flairsInventory,
-             "modules.bgInventory": userData_OLD.modules.bgInventory,
-             "modules.stickerInventory": userData_OLD.modules.stickerInventory,
-             "eventGoodie": userData_OLD.eventGoodie,
-             "personal": userData_OLD.personal,
-          } }); 
+
+          await DB.users.set(msg.author.id, {
+            $set: {
+              "modules.bgID": userData_OLD.modules.bgID,
+              "modules.medals": userData_OLD.modules.medals,
+              "modules.sticker": userData_OLD.modules.sticker,
+              "modules.flair": userData_OLD.modules.flairTop,
+              "modules.tagline": userData_OLD.modules.tagline,
+              "modules.persotext": userData_OLD.modules.persotext,
+              "modules.favcolor": userData_OLD.modules.favcolor,
+              "modules.medalInventory": userData_OLD.modules.medalInventory,
+              "modules.flairsInventory": userData_OLD.modules.flairsInventory,
+              "modules.bgInventory": userData_OLD.modules.bgInventory,
+              "modules.stickerInventory": userData_OLD.modules.stickerInventory,
+              "eventGoodie": userData_OLD.eventGoodie,
+              "personal": userData_OLD.personal,
+            }
+          });
           return true;
           // await DB.users.set(msg.author.id, {$set:{'modules.bgInventory': myBGsFULL.map(b=>b.id) }});
         }
@@ -337,48 +339,48 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
     ],
   };
 
-   let actionsDone = 0;
+  let actionsDone = 0;
   let totalActions = TASKLIST.items.length;
-console.log({totalActions})
+  console.log({ totalActions })
   for (let i = 0; i < totalActions; i++) {
 
     embed.description = TASKLIST.printList();
     embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦" + TASKLIST.printProgress() };
-    await prompt.edit({embed});
+    await prompt.edit({ embed });
 
 
     let result;
-    if (TASKLIST.items[i].wait){
+    if (TASKLIST.items[i].wait) {
       result = await TASKLIST.items[i].action();
-      postTask(result,i);
-    }else{
-      TASKLIST.items[i].action().then(r=>postTask(r,i));
+      postTask(result, i);
+    } else {
+      TASKLIST.items[i].action().then(r => postTask(r, i));
     }
 
     embed.description = TASKLIST.printList();
-    await prompt.edit({embed});
+    await prompt.edit({ embed });
     await wait(2);
   };
 
-  async function postTask(result,i){
+  async function postTask(result, i) {
 
     if (result) TASKLIST.complete(i);
     else TASKLIST.notcomplete(i);
-    
+
     await wait(1);
     actionsDone++;
-    console.log({actionsDone,totalActions,name: TASKLIST.items[i].name})
+    console.log({ actionsDone, totalActions, name: TASKLIST.items[i].name })
 
-    if (actionsDone >= totalActions){
+    if (actionsDone >= totalActions) {
       if (marriage_message) marriage_message.delete().catchReturn();
-      await vDB.users.set(msg.author.id,{$set: {"migrated": true} });
-      await DB.users.set(msg.author.id,{$set: {"migrated": true} });
+      await vDB.users.set(msg.author.id, { $set: { "migrated": true } });
+      await DB.users.set(msg.author.id, { $set: { "migrated": true } });
 
       embed.title = "Transfer complete!";
       embed.color = 0x22AA66;
       embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦" + TASKLIST.printProgress() };
       embed.description = TASKLIST.printList();
-      await prompt.edit({embed});
+      await prompt.edit({ embed });
       await wait(1);
 
       msg.channel.send("All set! Your account has been migrated to the New Super Fancy Pollux Database™ successfully! Enjoy the new features~");
@@ -396,7 +398,7 @@ console.log({totalActions})
       });
 
       let neodata = await DB.users.get(msg.author.id);
-      console.log({neodata})
+      console.log({ neodata })
 
     };
   }

@@ -12,18 +12,18 @@ const EASTER_EGGS = [
 	}
 	/*
 	{
-	  trigger: ""         // Args match
-	  ,dummyLocation: ""  // Real location to use as a template
-	  ,city: ""           // 
-	  ,region: ""         //
-	  ,country: {name:""} //
-	  ,timezone_id:  ""   //
-	  ,curr: 00           // Current temp
-	  ,temp_offset: 00    // Add/Remove degrees from the original
-	  ,sunset: ""         // XX:XX TT
-	  ,sunrise:  ""       // XX:XX TT
-	  ,text: ""           // Condition text
-	  ,code: 00           // Condition code (See Yahoo Docs)
+		trigger: ""         // Args match
+		,dummyLocation: ""  // Real location to use as a template
+		,city: ""           // 
+		,region: ""         //
+		,country: {name:""} //
+		,timezone_id:  ""   //
+		,curr: 00           // Current temp
+		,temp_offset: 00    // Add/Remove degrees from the original
+		,sunset: ""         // XX:XX TT
+		,sunrise:  ""       // XX:XX TT
+		,text: ""           // Condition text
+		,code: 00           // Condition code (See Yahoo Docs)
 	} 
 	*/
 ]
@@ -33,7 +33,7 @@ const Weather = require("../../archetypes/Weather");
 const init = async (msg, args) => {
 	if (!args.length) {
 		//msg.channel.send("You didn't specify a region so I'm using yours instead");
-		args[0] = (await DB.users.get(msg.author.id,{personal:1})).personal?.city;
+		args[0] = (await DB.users.get(msg.author.id, { personal: 1 })).personal?.city;
 		if (!args[0]) return msg.command.invalidUsageMessage(msg)
 	}
 	//msg.reply("Where though?");
@@ -102,25 +102,25 @@ const init = async (msg, args) => {
 	const loc = inspect(weather.location);
   
 	msg.channel.send({
-	  embed: {
+		embed: {
 		title: "Weather properties",
 		description: "Methods: weather.setUnit('F' | 'C')\nProperties: `found` boolean",
 		color: 0x9dd9f2,
 		fields: [
-		  {
+			{
 			name: "weather.location",
 			value: `\`\`\`js\n${loc}\`\`\``,
-		  },
-		  {
+			},
+			{
 			name: "weather.now",
 			value: `\`\`\`js\n${now}\`\`\``,
-		  },
-		  {
+			},
+			{
 			name: "weather.week",
 			value: `\`\`\`js\n${week}\`\`\``,
-		  },
+			},
 		],
-	  },
+		},
 	});
 	*/
 

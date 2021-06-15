@@ -131,9 +131,8 @@ function list(ReactionData, msg) {
         
 \u200b\u2003 **${CH}**: <#${rea.channel}>
 \u200b\u2003 **${RC}/${RL}**:
-\u200b\u2003\u2003 ${
-  rea.rolemoji.map((rlmj) => `${rlmj.emoji.includes(":") ? `<:${rlmj.emoji}>` : rlmj.emoji} <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
-}
+\u200b\u2003\u2003 ${rea.rolemoji.map((rlmj) => `${rlmj.emoji.includes(":") ? `<:${rlmj.emoji}>` : rlmj.emoji} <@&${rlmj.role}>`).join("\n\u200b\u2003\u2003 ")
+      }
         
         `, true);
   });

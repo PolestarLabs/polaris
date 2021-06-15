@@ -9,7 +9,7 @@ const init = async (msg, args, ext) => {
 
   const embed = new Embed();
   embed.color = 0xf44283;
-  embed.footer(msg.author.tag + ( (ext?.nsfw) ? " | Content provided as-is by Gelbooru":" | Content provided as-is by Pixiv (via Safebooru)"), msg.author.avatarURL);
+  embed.footer(msg.author.tag + ((ext?.nsfw) ? " | Content provided as-is by Gelbooru" : " | Content provided as-is by Pixiv (via Safebooru)"), msg.author.avatarURL);
   embed.title("\\❤ \u2003 S a f e b o o r u \u2003 \\❤");
 
   if (ext && ext.constructor !== Array) {
@@ -60,7 +60,7 @@ const init = async (msg, args, ext) => {
         true,
       );
     }
-    if(msg.content.includes('--debug')){
+    if (msg.content.includes('--debug')) {
       embed.field(
         "Reference Link",
         enhancedRes.file_url,
@@ -82,17 +82,19 @@ const init = async (msg, args, ext) => {
         true,
       );
     }
-    msg.channel.send({ 
+    msg.channel.send({
       embed,
       components: [
-        {type:1, components:[{
-          type: 2,
-          style: 2,
-          label: "Save to Gallery",
-          custom_id: "booruSave",
-          emoji: {name:"⭐"}
-        }]}
-      ]      
+        {
+          type: 1, components: [{
+            type: 2,
+            style: 2,
+            label: "Save to Gallery",
+            custom_id: "booruSave",
+            emoji: { name: "⭐" }
+          }]
+        }
+      ]
     }).then((ms) => {
       ms.addReaction("👍").catch(() => null);
       ms.addReaction("👎").catch(() => null);

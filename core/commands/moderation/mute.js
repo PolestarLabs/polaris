@@ -91,7 +91,7 @@ const init = async function (msg, args) {
   const noPermsMe = $t("CMD.unperm", P);
 
   // Create a new role with data
- 
+
   if (
     !MUTEROLE
     || (!Server.roles.find((x) => x.id === MUTEROLE)
@@ -229,8 +229,8 @@ const init = async function (msg, args) {
             )
             .then()
             .catch((err) => {
-              
-            
+
+
               erroredChans++
             }),
         );
@@ -241,7 +241,7 @@ const init = async function (msg, args) {
             `\`Could not edit Mute overrides in ${erroredChans
             } Channels 💔\``,
           );
-        }).catch( );
+        }).catch();
       }
     });
   }

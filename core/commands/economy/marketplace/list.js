@@ -70,7 +70,7 @@ const init = async (msg, args) => {
     ],
   );
 
-  
+
 
   async function Pagination(page, mss, recursion = 0) {
     const totPages = Math.ceil(itemcount / 12);

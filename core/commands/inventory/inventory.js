@@ -1,6 +1,6 @@
 const Picto = require("../../utilities/Picto");
 
-const INVOKERS   = new Map();
+const INVOKERS = new Map();
 
 const init = async (msg, args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
@@ -130,23 +130,23 @@ const init = async (msg, args) => {
 
   const inventoryButtons = [
     [
-      { style: 2, label: ""??"MATERIAL", custom_id: `invButton:MATERIAL:${msg.author.id}`, emoji: {id: _emoji("MATERIAL").id}},
-      { style: 2, label: ""??"CONSUMABLE", custom_id: `invButton:CONSUMABLE:${msg.author.id}`, emoji: {id: _emoji("CONSUMABLE").id}},
-      { style: 2, label: ""??"JUNK", custom_id: `invButton:JUNK:${msg.author.id}`, emoji: {id: _emoji("JUNK").id}},
-      { style: 2, label: ""??"LOOTBOX", custom_id: `invButton:LOOTBOX:${msg.author.id}`, emoji: {id: _emoji("LOOTBOX").id}},
-      { style: 2, label: ""??"BOOSTER", custom_id: `invButton:BOOSTER:${msg.author.id}`, emoji: {id: _emoji("BOOSTER").id}},
-    ],[
-      { style: 2, label: ""??"KEY", custom_id: `invButton:KEY:${msg.author.id}`, emoji: {id: _emoji("KEY").id}},
-    //],[
-      { style: 2, custom_id: `BLANK`, disabled: true, emoji: {id: _emoji("__").id}},
-      { style: 2, custom_id: `BLANK`, disabled: true, emoji: {id: _emoji("__").id}},
-      { style: 2, custom_id: `BLANK}`, disabled: true, emoji: {id: _emoji("__").id}},
-      { style: 4, label: ""??"CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: {id: _emoji("nope").id}},
+      { style: 2, label: "" ?? "MATERIAL", custom_id: `invButton:MATERIAL:${msg.author.id}`, emoji: { id: _emoji("MATERIAL").id } },
+      { style: 2, label: "" ?? "CONSUMABLE", custom_id: `invButton:CONSUMABLE:${msg.author.id}`, emoji: { id: _emoji("CONSUMABLE").id } },
+      { style: 2, label: "" ?? "JUNK", custom_id: `invButton:JUNK:${msg.author.id}`, emoji: { id: _emoji("JUNK").id } },
+      { style: 2, label: "" ?? "LOOTBOX", custom_id: `invButton:LOOTBOX:${msg.author.id}`, emoji: { id: _emoji("LOOTBOX").id } },
+      { style: 2, label: "" ?? "BOOSTER", custom_id: `invButton:BOOSTER:${msg.author.id}`, emoji: { id: _emoji("BOOSTER").id } },
+    ], [
+      { style: 2, label: "" ?? "KEY", custom_id: `invButton:KEY:${msg.author.id}`, emoji: { id: _emoji("KEY").id } },
+      //],[
+      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK}`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 4, label: "" ?? "CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: { id: _emoji("nope").id } },
     ]
   ];
 
   menumes = await msg.channel.send({
-    components: msg.setButtons(inventoryButtons,1)
+    components: msg.setButtons(inventoryButtons, 1)
   }, file(canvas.toBuffer(), "inventory.png"));
   menumes.target = Target;
   args[10] = userData;

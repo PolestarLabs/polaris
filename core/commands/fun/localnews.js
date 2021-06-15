@@ -14,12 +14,12 @@ const init = async (msg) => {
     const headbl = Picto.new(470, 90);
     const ctx2 = headbl.getContext("2d");
 
-    let imgLink      = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
+    let imgLink = (msg.args.join(" ").match(/(http[^ |^>]+)/gm) || [""])[0];
     // const MENTION   = (msg.args.join(" ").match(/(<@[0-9]+>)/gm) || [""])[0];
-    let HEADLINE  = msg.args.join(" ").replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, "");
+    let HEADLINE = msg.args.join(" ").replace(/(<@[0-9]+>)|(http[^ |^>]+)/gm, "");
 
-    if (msg.mentions[0]){
-      Progression.emit("command.localnews.friends",{msg,userID:msg.author.id});
+    if (msg.mentions[0]) {
+      Progression.emit("command.localnews.friends", { msg, userID: msg.author.id });
     }
 
     try {

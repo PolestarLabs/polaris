@@ -60,8 +60,8 @@ const init = async (msg, args) => {
     const targetReminder = userReminders[index];
     await DB.feed.deleteOne({ _id: targetReminder._id });
     // Sidecar and bot do not talk with each other
-        //clearTimeout(PLX.reminderTimers.get(targetReminder._id));
-        //PLX.reminderTimers.delete(targetReminder._id);
+    //clearTimeout(PLX.reminderTimers.get(targetReminder._id));
+    //PLX.reminderTimers.delete(targetReminder._id);
 
     return { embed: { description: ` ${_emoji("nope")} **${$t("interface.generic.deleted", P)}** *${targetReminder.name}.*`, color: 0xcc2233 } };
   }

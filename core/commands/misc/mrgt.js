@@ -54,7 +54,7 @@ const init = async function (msg, args, resolve) {
 Please send **the number** of the selected marriages. Send \`ok\` to finish or skip.
 
 ${nMAR.map((x, i) => (x.transferred ? `\n\`${i}\` - Transferred! (<@${x.users.find((x) => x != msg.author.id)}>)`
-    : `\n\u200b\`${i}\` **From** ${moment(x.since).from(Date.now())} | **User:** <@${x.users.find((x) => x != msg.author.id)}> | Init: ${x.initiative === msg.author.id ? _emoji("yep") : _emoji("nope")}
+      : `\n\u200b\`${i}\` **From** ${moment(x.since).from(Date.now())} | **User:** <@${x.users.find((x) => x != msg.author.id)}> | Init: ${x.initiative === msg.author.id ? _emoji("yep") : _emoji("nope")}
 > **Highest Ring:** ${_emoji(x.ring, `💍\`${x.ring.toUpperCase()}\``)}${x.ringCollection.length > 1 ? `\n> **Ring Collection:** ${x.ringCollection.map((r) => _emoji(r, `💍\`${r.toUpperCase()}\``))}` : ""}
 ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 `;
@@ -68,8 +68,8 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 
   const Collector = msg.channel.createMessageCollector((m) => m.author.id === msg.author.id && (Math.abs(Number(m.content) ?? 999) < newMARRIAGES.length || m.content === "ok"), { time: 120000 });
 
-  let preImport = (await DB.relationships.find({ users: [msg.author.id], type: 'marriage' })).filter(existentNewMrg=>{
-    return MRG.find(m=> m._id == existentNewMrg._id );
+  let preImport = (await DB.relationships.find({ users: [msg.author.id], type: 'marriage' })).filter(existentNewMrg => {
+    return MRG.find(m => m._id == existentNewMrg._id);
   });
 
   let imported = preImport.length || 0;
@@ -106,24 +106,24 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
     console.log(newMARRIAGES, x.transferred)
     if (!newMARRIAGES.find((x) => !x.transferred)) return Collector.stop();
   });
-  Collector.on("end", async (m,r) => {
-    console.log({m,r})
+  Collector.on("end", async (m, r) => {
+    console.log({ m, r })
     last?.delete();
     const res = await marriageBox.edit({
       embed: {
         description: `
     **Complete!**
-    Marriages transferred: **${imported ||  newMARRIAGES.filter(x=>x.transferred).length }**
+    Marriages transferred: **${imported || newMARRIAGES.filter(x => x.transferred).length}**
 > ${transferlist.join(" | ")}
     Cost: **${5 * Math.max(imported - 3, 0) || "Free"}**
     `,
       },
     });
-    
+
     if (typeof resolve === "function") resolve({
       res,
       cost: 5 * Math.max(imported - 3, 0) || 0,
-      imported: imported || newMARRIAGES.filter(x=>x.transferred).length ,
+      imported: imported || newMARRIAGES.filter(x => x.transferred).length,
       size: MRG.length
     });
   });

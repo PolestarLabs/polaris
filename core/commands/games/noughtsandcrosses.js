@@ -21,7 +21,7 @@ const init = async (msg, args) => {
     d.message.components[y - 1].components[x - 1].emoji = playerTurnIndex ? { name: '✖️' } : { id: '851610730880303125' }; // { name: playerTurnIndex ? '❌' : '⭕' };
     d.message.components[y - 1].components[x - 1].disabled = true;
     playerTurnIndex = playerTurnIndex ? 0 : 1;
-    await PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `It is now <@${players[playerTurnIndex]}>'s turn`, components: d.message.components }});
+    await PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `It is now <@${players[playerTurnIndex]}>'s turn`, components: d.message.components } });
   }
 
   await msg.channel.createMessage({

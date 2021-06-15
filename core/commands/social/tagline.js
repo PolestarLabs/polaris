@@ -9,8 +9,8 @@ const init = async function (msg) {
 
   await DB.userDB.set(msg.author.id, { $set: { "modules.tagline": persotxt } });
   P.pstext = `*\`\`\`c\n${persotxt}\`\`\`*`,
-  P.prefix = msg.prefix,
-  embed = new Embed();
+    P.prefix = msg.prefix,
+    embed = new Embed();
   embed.description = `${_emoji("yep") + rand$t("responses.verbose.interjections.acknowledged", P)} ${$t("profile.persotexUpdate", P)}`;
 
   msg.channel.send({ embed });

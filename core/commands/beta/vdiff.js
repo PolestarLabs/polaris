@@ -1,14 +1,15 @@
-const init = async function (msg){
+const init = async function (msg) {
 
-    const userData = (await DB.users.findOne({id:msg.author.id}).noCache())._doc;
-    const vanillaUserData = (await vDB.users.findOne({id: msg.author.id}).noCache())._doc;
+    const userData = (await DB.users.findOne({ id: msg.author.id }).noCache())._doc;
+    const vanillaUserData = (await vDB.users.findOne({ id: msg.author.id }).noCache())._doc;
 
-    console.log({vanillaUserData,userData})
+    console.log({ vanillaUserData, userData })
 
     return {
-        embed:{
-            fields:[
-                {name: "Polaris DB",value:`
+        embed: {
+            fields: [
+                {
+                    name: "Polaris DB", value: `
                 Rubines: \`${userData.modules.RBN}\`
                 Sapphires: \`${userData.modules.SPH}\`
                 Jades: \`${userData.modules.JDE}\`
@@ -20,12 +21,14 @@ const init = async function (msg){
                 Stickers: \`${userData.modules.stickerInventory.length}\`
                 Flairs: \`${userData.modules.flairsInventory.length}\`
                 Equipped BG: 
-                 • \`${userData.modules.bgID.padEnd(32,' ')}\`
+                 • \`${userData.modules.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
                 \u2003 • \`${userData.modules.medals.join('\`\n\u2003 • \`')}\`
                 
-                `,inline:true},
-                {name: "Vanilla DB",value:`
+                `, inline: true
+                },
+                {
+                    name: "Vanilla DB", value: `
                 Rubines: \`${vanillaUserData.modules.rubines}\`
                 Sapphires: \`${vanillaUserData.modules.sapphires}\`
                 Jades: \`${vanillaUserData.modules.jades}\`
@@ -37,11 +40,12 @@ const init = async function (msg){
                 Stickers: \`${vanillaUserData.modules.stickerInventory.length}\`
                 Flairs: \`${vanillaUserData.modules.flairsInventory.length}\`
                 Equipped BG:
-                 • \`${vanillaUserData.modules.bgID.padEnd(32,' ')}\`
+                 • \`${vanillaUserData.modules.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
                 \u2003 • \`${vanillaUserData.modules.medals.join('\`\n\u2003 • \`')}\`
                 
-                `,inline:true},
+                `, inline: true
+                },
             ]
         }
     }
@@ -49,11 +53,11 @@ const init = async function (msg){
 
 
 }
-module.exports={
+module.exports = {
     init
-    ,pub:true
-    ,cmd:'vdiff'
-    ,cat:'beta'
-    ,botPerms:['attachFiles','embedLinks']
-    ,aliases:[]
+    , pub: true
+    , cmd: 'vdiff'
+    , cat: 'beta'
+    , botPerms: ['attachFiles', 'embedLinks']
+    , aliases: []
 }

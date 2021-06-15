@@ -18,7 +18,7 @@ const init = async (msg, args) => {
 
   const update = { $set: { holder: target } };
   if (msg.author.id !== gift.creator && !gift.previous?.includes(msg.author.id)) update.$push = { previous: msg.author.id };
-  Progression.emit("action.gift.send",{msg,value:1,userID:msg.author.id});
+  Progression.emit("action.gift.send", { msg, value: 1, userID: msg.author.id });
   await DB.gifts.updateOne({ _id: gift._id }, update);
 
   const emojiID = gift.emoji.replace(">", "").split(":")[2].trim();

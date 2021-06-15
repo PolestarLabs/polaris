@@ -32,10 +32,9 @@ const init = async (msg) => {
   embed.author($t("interface.booster.title", P));
   embed.color = 0x36393f;
   embed.description = `${"------------------------------------------------\n"
-  + `${stk1new ? newEmoji : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
-  + `${stk2new ? newEmoji : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
-  + "------------------------------------------------\n"}${
-    $t("interface.booster.checkStickersAt", P)}`;
+    + `${stk1new ? newEmoji : ":record_button:"} ${_emoji(stk1.rarity)}  ${stk1.name}\n`
+    + `${stk2new ? newEmoji : ":record_button:"} ${_emoji(stk2.rarity)}  ${stk2.name}\n`
+    + "------------------------------------------------\n"}${$t("interface.booster.checkStickersAt", P)}`;
 
   embed.image(`${paths.GENERATORS}/boosterpack/${collection}/${stk1.id}/${stk2.id}/booster.png?anew=${stk1new}&bnew=${stk2new}`);
   embed.thumbnail(`${paths.CDN}/build/boosters/showcase/${collection}.png`);

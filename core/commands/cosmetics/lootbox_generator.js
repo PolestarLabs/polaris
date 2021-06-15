@@ -1,6 +1,6 @@
 const BUTTONS = {
-  keep: {type:2, custom_id: 'keep', label: "Keep", style: 1, emoji: {name: "⭐"}},
-  reroll: {type:2, custom_id: 'reroll', label: "Reroll", style: 4, emoji: {name: "🔁"}},
+  keep: { type: 2, custom_id: 'keep', label: "Keep", style: 1, emoji: { name: "⭐" } },
+  reroll: { type: 2, custom_id: 'reroll', label: "Reroll", style: 4, emoji: { name: "🔁" } },
 }
 
 // TRANSLATE[epic=translations] lootbox
@@ -66,11 +66,11 @@ staticAssets.load = Promise.all([
 });
 
 const init = async (msg, args) => {
-  if(!args.boxID && msg.author.id !="88120564400553984" && args[0] > 5) return;
+  if (!args.boxID && msg.author.id != "88120564400553984" && args[0] > 5) return;
   if (!staticAssets.loaded) await staticAssets.load;
   if (VisualsCache.size > 800) VisualsCache.clear();
 
-  const USERDATA = (await DB.users.getFull({ id: msg.author.id })) || (await DB.users.new(  msg.author ));
+  const USERDATA = (await DB.users.getFull({ id: msg.author.id })) || (await DB.users.new(msg.author));
 
   if (LootingUsers.get(msg.author.id)) {
     await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
@@ -116,21 +116,21 @@ const init = async (msg, args) => {
 
     return message.awaitButtonClick((interaction) => {
 
-      if (interaction.userID !== msg.author.id && msg.author.id !== PLX.user.id ) return false;
+      if (interaction.userID !== msg.author.id && msg.author.id !== PLX.user.id) return false;
       if (interaction.id === "reroll") {
         return canReroll;
       } if (interaction.id === "keep") return true;
     }, { time: 15000, maxMatches: 1 }).catch((e) => {
-      console.error(e);      
+      console.error(e);
     }).then(async (inter) => {
       const choice = inter?.[0];
       if (choice?.id === "reroll") {
         message.delete();
         currentRoll++;
-        Progression.emit("lootbox.reroll",{msg,value:1,userID:msg.author.id});
+        Progression.emit("lootbox.reroll", { msg, value: 1, userID: msg.author.id });
         return process();
       }
-      
+
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
@@ -140,28 +140,30 @@ const init = async (msg, args) => {
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))).then(console.log),
         wait(1)
       ]);
-      
 
-      Progression.emit("lootbox.open",{msg,value:1,userID:msg.author.id});
+
+      Progression.emit("lootbox.open", { msg, value: 1, userID: msg.author.id });
 
       LootingUsers.delete(msg.author.id);
 
       firstRoll[0].components = [
-        {type:1, components: [
-          Object.assign({disabled: true},BUTTONS.keep),
-          Object.assign({disabled: true},BUTTONS.reroll)
-        ]}
+        {
+          type: 1, components: [
+            Object.assign({ disabled: true }, BUTTONS.keep),
+            Object.assign({ disabled: true }, BUTTONS.reroll)
+          ]
+        }
       ];
-      
+
       firstRoll[0].embed.description = `
 **${$t("loot.allItemsAdded", P)}**
 >>> ${lootbox.content.map((x) => {
-    let label = x.name
-      ? `${x.emoji || _emoji(x.type, _emoji(getEmoji(x)))} **${$t(`keywords.${x.type}`)}:** ${x.name}`
-      : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
-    if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${LootGems[x.rarity]}*`;
-    return label;
-  }).join("\n")}
+        let label = x.name
+          ? `${x.emoji || _emoji(x.type, _emoji(getEmoji(x)))} **${$t(`keywords.${x.type}`)}:** ${x.name}`
+          : `${_emoji(x.currency)} **${$t(`keywords.${x.currency}`, P)}:** x${x.amount}`;
+        if (x.isDupe) label = `~~${label}~~\n${_emoji("__") + _emoji("__")}***${$t("keywords.cosmoFragment_plural", P)}** x${LootGems[x.rarity]}*`;
+        return label;
+      }).join("\n")}
                 `;
       message.edit(firstRoll[0]);
     });
@@ -283,10 +285,10 @@ function renderDupeTag(rarity, P) {
 }
 function getPrize(loot, USERDATA) {
 
-  console.log({loot})
+  console.log({ loot })
   console.log("loot".red)
   if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox_rewards", loot.currency || "RBN");
-  
+
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
   if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
@@ -296,8 +298,8 @@ function getPrize(loot, USERDATA) {
 function determineRerollCost(box, rollNum, USERDATA) {
   let stake = Math.round(
     (USERDATA.modules.bgInventory.length || 100)
-		+ (USERDATA.modules.bgInventory.length || 100)
-		+ (USERDATA.modules.inventory.length || 100),
+    + (USERDATA.modules.bgInventory.length || 100)
+    + (USERDATA.modules.inventory.length || 100),
   );
   stake = stake < 50 ? 50 : stake;
 
@@ -307,8 +309,8 @@ function determineRerollCost(box, rollNum, USERDATA) {
 function boxBonus(USERDATA, lootbox, options) {
   // TO-DO: more options of small-prizes
   const rarityIndex = ["C", "U", "R", "SR", "UR", "XR"].indexOf(lootbox.rarity);
-  let prize = Math.max( Math.ceil(25 + (rarityIndex * 25) - (options.currentRoll * 15 * rarityIndex)) , 28);
-  
+  let prize = Math.max(Math.ceil(25 + (rarityIndex * 25) - (options.currentRoll * 15 * rarityIndex)), 28);
+
   prize += randomize(-25, 100);
 
   return {
@@ -399,11 +401,13 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   P.count = totalRerolls - currentRoll;
   P.x_frags = `${_emoji("COS")} **${P.cosmos}** [**${$t("keywords.cosmoFragment_plural", P)}**](${paths.WIKI}/items/cosmo_fragment)`;
   return [{
-    components:[
-      {type:1, components: [
-        BUTTONS.keep,
-        Object.assign({disabled: !canReroll},BUTTONS.reroll)
-      ]}
+    components: [
+      {
+        type: 1, components: [
+          BUTTONS.keep,
+          Object.assign({ disabled: !canReroll }, BUTTONS.reroll)
+        ]
+      }
     ],
     embed: {
       title: `${_emoji(lootbox.rarity)} **${$t(`items:${lootbox.id}.name`, P)}**`,
@@ -411,10 +415,10 @@ async function compileBox(msg, lootbox, USERDATA, options) {
 ${canReroll ? $t("loot.options_new", P) : $t("loot.options_nrr", P)}
 ${hasDupes ? $t("loot.hasDupes", P) : ""}
 ${totalRerolls - currentRoll > 0
-    ? `> ${$t("loot.rerollRemain_new", P)} [${totalRerolls - currentRoll}/${totalRerolls}]` : ""
-}
+          ? `> ${$t("loot.rerollRemain_new", P)} [${totalRerolls - currentRoll}/${totalRerolls}]` : ""
+        }
     ${!canAffordReroll ? $t("loot.noFunds", P) : currentRoll >= totalRerolls ? $t("loot.noMoreRolls", P) : ""
-}
+        }
 
             `,
       image: {

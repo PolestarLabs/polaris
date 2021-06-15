@@ -9,12 +9,12 @@ const init = async function (msg) {
   embed.color("#1b1b20");
   embed.description(
     _emoji("Rfriends").no_space
-        + _emoji("friendsdotred").no_space
-        + _emoji("Ofriends").no_space
-        + _emoji("friendsdotblue").no_space
-        + _emoji("Sfriends").no_space
-        + _emoji("friendsdotyellow").no_space
-        + _emoji("Sfriends").no_space,
+    + _emoji("friendsdotred").no_space
+    + _emoji("Ofriends").no_space
+    + _emoji("friendsdotblue").no_space
+    + _emoji("Sfriends").no_space
+    + _emoji("friendsdotyellow").no_space
+    + _emoji("Sfriends").no_space,
   );
 
   return { embed };

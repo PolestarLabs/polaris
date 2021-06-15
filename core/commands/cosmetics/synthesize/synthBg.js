@@ -15,7 +15,7 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
     return DB.users.set({ id: userData.id }, {
       $set: { "modules.bgID": selectedItem.code },
       $addToSet: { "modules.bgInventory": selectedItem.code },
-    }).then(() => {});
+    }).then(() => { });
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);

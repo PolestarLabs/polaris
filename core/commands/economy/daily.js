@@ -1,5 +1,5 @@
 //TODO[epic=Constants Module] Replace
-const DAY =  22 * 60 * 60e3;
+const DAY = 22 * 60 * 60e3;
 const EXPIRE = 1 * DAY * 2.5;
 
 const { TimedUsage, Daily } = require("@polestar/timed-usage");
@@ -61,8 +61,8 @@ const init = async (msg) => {
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
-  console.log({dailyPLXMember})
-  
+  console.log({ dailyPLXMember })
+
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(msg.author);
@@ -82,11 +82,11 @@ const init = async (msg) => {
       description: `
 ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}
 ${_emoji("future")} ${dailyAvailable
-  ? _emoji("online")
-  : _emoji("dnd")} **${v.next}** ${moment.utc(timedUsage.availableAt).fromNow()}
+          ? _emoji("online")
+          : _emoji("dnd")} **${v.next}** ${moment.utc(timedUsage.availableAt).fromNow()}
 ${_emoji("expired")} ${keepStreak ? _emoji("online") : _emoji("dnd")} **${v.expirestr}** ${keepStreak
-  ? ` ${moment.duration(-(Date.now() - last - (timedUsage.expiration || 0))).humanize({ h: 1000 })}!`
-  : "I have bad news for you..."}
+          ? ` ${moment.duration(-(Date.now() - last - (timedUsage.expiration || 0))).humanize({ h: 1000 })}!`
+          : "I have bad news for you..."}
 ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 `,
       fields: [
@@ -108,7 +108,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     return msg.channel.send({ embed });
   }
 
-  if (!timedUsage.available && msg.author.id !=="88120564400553984") {
+  if (!timedUsage.available && msg.author.id !== "88120564400553984") {
     P.remaining = moment.utc(timedUsage.availableAt).fromNow(true);
     return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P));
   }
@@ -116,7 +116,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   // @ts-ignore
   const processQueue = [];
   // const premiumTier = await Premium.getTier(msg.author);
-  const dailyCard = Picto.new(800, 600); 
+  const dailyCard = Picto.new(800, 600);
   const ctx = dailyCard.getContext("2d");
 
   daily
@@ -317,12 +317,12 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       `
 
 
-    } else{
+    } else {
 
       P.oldStreak = timedUsage.userDaily.lastStreak;
       const streakfixes = userData.modules.inventory.find((i) => i.id === "streakfix")?.count || 0;
       postmortem = `${$t("responses.daily.streakLost", P)
-      }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
+        }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
     }
   }
 

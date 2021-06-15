@@ -21,7 +21,7 @@ const init = async (msg) => {
   ]);
 
   if (USERDATA.modules.RBN < TARGETDATA.modules.RBN) {
-  //      return msg.reply("you cannot send Rubines to an account with a higher balance.");
+    //      return msg.reply("you cannot send Rubines to an account with a higher balance.");
   }
   if (AMOUNT > 2500) {
     return msg.reply("you cannot send more than 2500 Rubines at a time.");

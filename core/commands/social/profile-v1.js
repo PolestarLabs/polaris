@@ -178,7 +178,7 @@ init = async (msg) => {
   console.log({ USERPROFILE });
 
   try {
-  //= ===========================  CANVAS START   ===================//
+    //= ===========================  CANVAS START   ===================//
 
     const canvas = Picto.new(800, 600);
     const ctx = canvas.getContext("2d");
@@ -401,8 +401,8 @@ init = async (msg) => {
           const [imgRND, imgSPH, imgRBN] = await Promise.all([img[z], img.iconSapphire, img.iconRubine]);
 
           ctx.drawImage(imgRND, XYZ[z].X, XYZ[z].Y),
-          ctx.drawImage(imgSPH, XYZ.sapphires.X + 10 - txt.rubines.width - 50, XYZ.sapphires.Y, 28, 32),
-          ctx.drawImage(imgRBN, XYZ.rubines.X + 12, XYZ.rubines.Y + 2, 37, 30);
+            ctx.drawImage(imgSPH, XYZ.sapphires.X + 10 - txt.rubines.width - 50, XYZ.sapphires.Y, 28, 32),
+            ctx.drawImage(imgRBN, XYZ.rubines.X + 12, XYZ.rubines.Y + 2, 37, 30);
 
           return true;
         }
@@ -486,8 +486,8 @@ init = async (msg) => {
       ctx3.drawImage(await img.hex_pic, XYZ.avatar.X + XYZ.offset_hex, XYZ.avatar.Y + XYZ.offset_hex);
       if (USERPROFILE.profileFrame) {
         try {
-        // ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
-        } catch (e) {}
+          // ctx3.drawImage( await img.aviFrame , XYZ.avatar.X-(XYZ.offset_hex+5), 15 + XYZ.avatar.Y - XYZ.offset_hex, 300,284);
+        } catch (e) { }
 
         resolve(canvas3);
       } else {

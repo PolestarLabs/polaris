@@ -70,7 +70,7 @@ const init = async (msg) => {
     arrGrid[i] = arrGrid[i].join("\u200b");
   }
 
-  msg.channel.send(  arrGrid.join("\n") );
+  msg.channel.send(arrGrid.join("\n"));
 };
 module.exports = {
   init,

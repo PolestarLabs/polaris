@@ -6,7 +6,7 @@ const init = async (msg) => {
   // FIXME[epic=anyone] This could be negative if clocks are out of sync
   // NOTE Seems super minor tbh
 
-  const ack   = Date.now() - msg.timestamp;
+  const ack = Date.now() - msg.timestamp;
 
   const embed = {};
   embed.color = 0x36393f;
@@ -64,13 +64,13 @@ const init = async (msg) => {
     inline: true,
   };
 
-  
-  PLX.api.get('/internal/ping').then( async res=>{
-    const {data} = res;
+
+  PLX.api.get('/internal/ping').then(async res => {
+    const { data } = res;
     let INST = data.RABBITHOUSE;
     INST.name = "RABBITHOUSE";
-    const cluster = ["cluster_"+ (process.env.CLUSTER_ID) ] ||0;
-    
+    const cluster = ["cluster_" + (process.env.CLUSTER_ID)] || 0;
+
     // FIXME add internal services later
     embed.fields.pop();
     /*

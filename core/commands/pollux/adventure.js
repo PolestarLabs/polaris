@@ -177,7 +177,7 @@ module.exports = {
   init,
   pub: true,
   //TODO[epic=Unfinished Commands] Needs venture processor and 3rd island;
-  disabled: true, 
+  disabled: true,
   cmd: "adventure",
   perms: 3,
   cat: "pollux",

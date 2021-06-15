@@ -45,17 +45,14 @@ const init = async (msg, args) => {
     const userBoxList = Boxes.filter((box) => userData.hasItem(box.id));
     const boxColor = ["⬜", "🟩", "🟦", "🟪", "🟧", "🟥"];
 
-    const boxtats = (list, R, cbx) => `\`\`\`md\n${
-      list
+    const boxtats = (list, R, cbx) => `\`\`\`md\n${list
         .map(
-          (box, i) => `${box.tradeable ? ">-" : "> "}${
-            boxColor[["C", "U", "R", "SR", "UR", "XR"].indexOf(box.rarity)]
-          }${
-            i === R || box === cbx ? "✔️" : `[${i}]`
-          }${box.tradeable ? "[" : " "}${box.name}${box.tradeable ? "]" : " "}\n`,
+          (box, i) => `${box.tradeable ? ">-" : "> "}${boxColor[["C", "U", "R", "SR", "UR", "XR"].indexOf(box.rarity)]
+            }${i === R || box === cbx ? "✔️" : `[${i}]`
+            }${box.tradeable ? "[" : " "}${box.name}${box.tradeable ? "]" : " "}\n`,
         )
         .join("")
-    }\`\`\``;
+      }\`\`\``;
 
     const invEmpty = userBoxList.length === 0;
 
@@ -79,7 +76,7 @@ const init = async (msg, args) => {
       embed.thumbnail = {};
       embed.image = {
         url:
-        `${paths.CDN}/build/TRANSFER_BOX_timeout_1.gif`,
+          `${paths.CDN}/build/TRANSFER_BOX_timeout_1.gif`,
       };
       embed.footer.text = "🕑";
       prompt.edit({ embed });
@@ -91,7 +88,7 @@ const init = async (msg, args) => {
       embed.thumbnail = {};
       embed.image = {
         url:
-        `${paths.CDN}/build/TRANSFER_BOX_nope_4.gif`,
+          `${paths.CDN}/build/TRANSFER_BOX_nope_4.gif`,
       };
       embed.footer.text = "❌";
       prompt.edit({ embed });
@@ -118,7 +115,7 @@ const init = async (msg, args) => {
             "BOX",
             ">",
           );
-          
+
           await ECO.pay(msg.author.id, 250, "lootbox_transfer_tax");
           await userData.removeItem(CHOSENBOX.id);
           await targetData.addItem(CHOSENBOX.id);
@@ -132,7 +129,7 @@ const init = async (msg, args) => {
           embed.color = 0x2deb88;
           embed.image = {
             url:
-            `${paths.CDN}/build/TRANSFER_BOX_1.gif`,
+              `${paths.CDN}/build/TRANSFER_BOX_1.gif`,
           };
           prompt.edit({ embed });
           return true;
@@ -201,7 +198,7 @@ module.exports = {
   init,
   pub: false,
   //TODO[epic=Unfinished Commands] Still needs a few tweaks;
-  disabled: true, 
+  disabled: true,
   cmd: "givebox",
   perms: 3,
   argsRequired: true,

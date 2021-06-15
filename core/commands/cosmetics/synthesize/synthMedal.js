@@ -14,7 +14,7 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
     if (!affordsIt) return cancellation();
     return DB.users.set({ id: userData.id }, {
       $addToSet: { "modules.medalInventory": selectedItem.icon },
-    }).then(() => {});
+    }).then(() => { });
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);

@@ -72,11 +72,11 @@ const init = async (msg) => {
     P.interjection = win ? rand$t("responses.verbose.interjections.yatta", P) : rand$t("responses.verbose.interjections.ohmy_negative", P);
     x.edit({ content: win ? $t("games:coinflip.coinVictory", P) : $t("games:coinflip.coinDefeat", P), embed });
 
-    if(win){
-      Progression.emit("play.betflip.win",{msg, userID:msg.author.id});
-      Progression.emit("streak.betflip.win",{value: 1, msg, userID:msg.author.id});
-    }else{
-      Progression.emit("streak.betflip.win",{valueSet: 0, msg, userID:msg.author.id});
+    if (win) {
+      Progression.emit("play.betflip.win", { msg, userID: msg.author.id });
+      Progression.emit("streak.betflip.win", { value: 1, msg, userID: msg.author.id });
+    } else {
+      Progression.emit("streak.betflip.win", { valueSet: 0, msg, userID: msg.author.id });
     }
 
 
