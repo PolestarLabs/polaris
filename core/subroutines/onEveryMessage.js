@@ -117,7 +117,8 @@ async function levelChecks(msg) {
 
 module.exports = async (msg) => {
   if (!msg.guild) return console.log('noguild');
-  if (msg.channel.type !== 0) return console.log('channel type nonzero');
+  if (msg.type !== 0) return console.log('message type nonzero');
+  if (!(msg.channel instanceof TextChannel)) return console.log('channel type nonzero');
 
 
   if (msg.guild.customResponses) {
