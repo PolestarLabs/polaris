@@ -47,9 +47,14 @@
     "parserOptions": {
         "ecmaVersion": 2020
     },
-    "plugins": ["@typescript-eslint"],
+    "plugins": [
+        "@typescript-eslint"
+    ],
     "rules": {
-        "quotes": ["warn", "double"],
+        "quotes": [
+            "warn",
+            "double"
+        ],
         "no-param-reassign": "off",
         "global-require": "off",
         "import/no-dynamic-require": "off",
@@ -57,22 +62,58 @@
         "disable-next-line": "off",
         "no-console": "off",
         "no-underscore-dangle": "off",
-        "no-multi-spaces": ["warning", { "exceptions": { "VariableDeclarator": true, "Property": true } }],
-        "max-len": ["error", 150],
+        "no-multi-spaces": [
+            "warning",
+            {
+                "exceptions": {
+                    "VariableDeclarator": true,
+                    "Property": true
+                }
+            }
+        ],
+        "max-len": [
+            "error",
+            150
+        ],
         "no-bitwise": "off",
         "class-methods-use-this": "off",
         "no-plusplus": "off",
-        "radix": ["error", "as-needed"],
-        "no-return-assign": ["error", "except-parens"],
-        "no-cond-assign": ["error", "except-parens"],
+        "radix": [
+            "error",
+            "as-needed"
+        ],
+        "no-return-assign": [
+            "error",
+            "except-parens"
+        ],
+        "no-cond-assign": [
+            "error",
+            "except-parens"
+        ],
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
-        "prefer-const": ["warning", { "destructuring": "all" }],
+        "prefer-const": [
+            "warning",
+            {
+                "destructuring": "all"
+            }
+        ],
         "no-continue": "off",
-        "no-empty": ["error", { "allowEmptyCatch": true }],
+        "no-empty": [
+            "error",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
         "no-multi-assign": "off",
         "@typescript-eslint/no-unused-vars": "error",
-        "@typescript-eslint/no-unused-expressions": ["error", { "allowShortCircuit": true, "allowTernary": true }],
+        "@typescript-eslint/no-unused-expressions": [
+            "error",
+            {
+                "allowShortCircuit": true,
+                "allowTernary": true
+            }
+        ],
         "@typescript-eslint/no-shadow": "error",
         "@typescript-eslint/no-use-before-define": "error",
         "@typescript-eslint/no-useless-constructor": "error",

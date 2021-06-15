@@ -16,7 +16,7 @@ exports.run = () => {
     BUILD: `${CDN}/build/`,
     PROFILE: `${CDN}/build/profile/`,
     LOCALES: `${appRoot}/locales/`,
-    
+
     //LEGACY
     Build: `${CDN}/build/`,
     SKINS: `${CDN}/build//profile/skins/`,

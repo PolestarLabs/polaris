@@ -10,7 +10,7 @@ Promise = require("bluebird");
 
 console.log("Sidecar Started".blue);
 
-global.PLX = new Client(`Bot ${isPRIME  ? cfg.token_prime : cfg.token}`, { restMode: true, intents: 0 });
+global.PLX = new Client(`Bot ${isPRIME ? cfg.token_prime : cfg.token}`, { restMode: true, intents: 0 });
 PLX.cluster = { id: "-1", name: "[SIDECAR]" };
 
 PLX.tempRoleTimers = new Map();
