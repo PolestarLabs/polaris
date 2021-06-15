@@ -61,7 +61,7 @@ const init = async (message, args) => {
 module.exports = {
   argsRequired: true,
   //TODO[epic=Unfinished Commands] Still needs other tipes of synth;
-  disabled: true, 
+  disabled: false, 
   pub: true,
   cmd,
   perms: 3,

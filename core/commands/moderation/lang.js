@@ -11,6 +11,18 @@ const init = async (msg, args) => {
 
   console.log(args);
 
+  msg.channel.send({
+    content: "Changing Language; Select Scope:",
+    components: [
+      {type:1,components:[
+        {type:2,label:"Channel",style:1,custom_id:`langsel:channel:${msg.author.id}`},
+        {type:2,label:"Server",style:4,custom_id:`langsel:server:${msg.author.id}`},
+      ]}
+    ]
+  })
+
+  return;
+
   if (language === "refresh") {
     msg.guild.LANG = serverData.modules.LANGUAGE;
     return msg.addReaction(_emoji("yep").reaction);
