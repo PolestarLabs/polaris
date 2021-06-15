@@ -18,10 +18,10 @@ async function levelChecks(msg) {
 
 
   if (msg.author.bot) return;
-  
+
   if (msg.guild.id === "110373943822540800") return;
 
-  let servData = await DB.servers.findOne({id:msg.guild.id}).noCache();
+  let servData = await DB.servers.findOne({ id: msg.guild.id }).noCache();
   if (!servData) return;
 
   if (servData.switches?.chLvlUpOff?.includes(msg.channel.id)) {
@@ -33,9 +33,9 @@ async function levelChecks(msg) {
   const _FACTOR = servData.modules.UPFACTOR || 0.5;
 
   const LOCAL_RANK = (await DB.localranks.findOne({ user: msg.author.id, server: msg.guild.id }).noCache())
-                    || {
-                      user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
-                    };
+    || {
+    user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
+  };
 
 
   const curLevelLocal = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
@@ -53,26 +53,26 @@ async function levelChecks(msg) {
   /// =======  [LOCAL LVUP] ========///
   if (curLevelLocal < LOCAL_RANK.level) {
     // console.log("DELEVEL");
- 
-    await DB.localranks.set({ server: msg.guild.id, user: msg.author.id }, { $set: {level: LOCAL_RANK.level, exp: LOCAL_RANK.exp} });
+
+    await DB.localranks.set({ server: msg.guild.id, user: msg.author.id }, { $set: { level: LOCAL_RANK.level, exp: LOCAL_RANK.exp } });
   }
 
   //TODO[epic=anyone] Add level up image
   if (curLevelLocal > LOCAL_RANK.level) {
-   
+
     await DB.localranks.set({ user: msg.author.id, server: msg.guild.id }, { $set: { level: curLevelLocal } });
 
     console.log({
       "!!servData.modules.LVUP_local": !!servData.modules.LVUP_local,
       "!servData.switches?.chLvlUpOff?.includes(msg.channel.id)": !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
-      ,servData
+      , servData
     });
 
-    const lvupText =  (servData._doc||servData).modules?.LVUP_text?.replaceAll('%lv%',curLevelLocal);
+    const lvupText = (servData._doc || servData).modules?.LVUP_text?.replaceAll('%lv%', curLevelLocal);
 
     if (
       !!servData.modules.LVUP_local
-        && !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
+      && !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
     ) {
       const embed = {
         color: 0x6699FF,
@@ -85,14 +85,14 @@ async function levelChecks(msg) {
     if (servData.modules.AUTOROLES) {
       // ADD AUTOROLES
       const AUTOS = servData.modules.AUTOROLES;
-      const sorting = function sorting( a, b ) { return b[1] - a[1]; };
+      const sorting = function sorting(a, b) { return b[1] - a[1]; };
       AUTOS.sort(sorting);
       const levels = AUTOS.map((r) => r[1]);
 
       const roleStack = servData.modules.autoRoleStack !== false;
 
       for (let i = 0; i < levels.length; i += 1) {
-        if(!AUTOS || !AUTOS.length) return;
+        if (!AUTOS || !AUTOS.length) return;
         msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() => "noperms");
         if (roleStack === true) {
           const autorole = AUTOS.find((r) => r[1] <= curLevelLocal);
@@ -108,10 +108,10 @@ async function levelChecks(msg) {
   }
 
   if (servData.modules.LVUP === true) {
-    globalLevelUp(msg,servData)
+    globalLevelUp(msg, servData)
   }
 
- 
+
   servData = null;
 }
 
@@ -119,11 +119,11 @@ module.exports = async (msg) => {
   if (!msg.guild) return console.log('noguild');
   if (msg.channel.type !== 0) return console.log('channel type nonzero');
 
-  
-  if (msg.guild.customResponses){
+
+  if (msg.guild.customResponses) {
     activateResponse(msg)
-  }else{
-    let gResps = (await DB.responses.find({server: msg.guild.id}).noCache()) || [];
+  } else {
+    let gResps = (await DB.responses.find({ server: msg.guild.id }).noCache()) || [];
     msg.guild.customResponses = gResps;
     activateResponse(msg)
   }
@@ -134,78 +134,78 @@ module.exports = async (msg) => {
       /* Do Stuff when there is image */
     }
   }
-  
+
   PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise && itm.isFulfilled() !== true);
   PLX.execQueue.push(
     Promise.all([
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
-    ]).then(x=>  true ).timeout(25000).catch((err) => console.error(err)),
+    ]).then(x => true).timeout(25000).catch((err) => console.error(err)),
   );
 };
 
 /**
  * @param {{ author: { id: any; tag: any; getDMChannel: () => Promise<any>; }; }} msg
  */
-async function globalLevelUp(msg){
-      /// ======= [GLOBAL LVUP] ========///
-      await wait(2);
-      let { curLevelG, userData } = (await checkGlobalLevel(msg)) || {};
-      if (!curLevelG || !userData) return;
-      if (curLevelG < userData.modules.level) {
-        return;
-        // console.log("DELEVEL");
-        // await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
-      }else if (curLevelG > userData.modules.level) {
-        await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
+async function globalLevelUp(msg) {
+  /// ======= [GLOBAL LVUP] ========///
+  await wait(2);
+  let { curLevelG, userData } = (await checkGlobalLevel(msg)) || {};
+  if (!curLevelG || !userData) return;
+  if (curLevelG < userData.modules.level) {
+    return;
+    // console.log("DELEVEL");
+    // await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
+  } else if (curLevelG > userData.modules.level) {
+    await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
 
-        await wait(2);
-        
-        await msg.channel.send({
-          messageReferenceID:msg.id
-        },{
-          file: await resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`),
-          name: "levelUp.gif"
-        });       
-        
-        console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).yellow, msg.author.id);
-  
-        /** @type {string} */
-        let polizei;
-        if (curLevelG % 25 === 0) {
-          polizei = "UR";
-          await userData.addItem("lootbox_UR_O");
-        } else if (curLevelG % 15 === 0) {
-          polizei = "SR";
-          await userData.addItem("lootbox_SR_O");
-        } else if (curLevelG % 10 === 0) {
-          polizei = "R";
-          await userData.addItem("lootbox_R_O");
-        } else if (curLevelG % 5 === 0) {
-          polizei = "U";
-          await userData.addItem("lootbox_U_O");
-        } else {
-          polizei = "C";
-          await userData.addItem("lootbox_C_O");
-        }
-  
-        servData = null;
-  
-        // delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
-        msg.author.getDMChannel().then(async dmChan => {
-          if (!userData?.switches || userData.switches?.LVUPDMoptout === true) return;
-          
-          if ( await PLX.redis.aget("noDMs."+userData.id) ) return;
-          
-          dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch(err=>{
-            PLX.redis.set("noDMs."+userData.id,true);
-            PLX.redis.expire("noDMs."+userData.id, 15*60);
-          });
-        });
-        // require("./modules/dev/levelUp_infra.js").init(msg);
-      }
-      // -------------------------------//
+    await wait(2);
+
+    await msg.channel.send({
+      messageReferenceID: msg.id
+    }, {
+      file: await resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`),
+      name: "levelUp.gif"
+    });
+
+    console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).yellow, msg.author.id);
+
+    /** @type {string} */
+    let polizei;
+    if (curLevelG % 25 === 0) {
+      polizei = "UR";
+      await userData.addItem("lootbox_UR_O");
+    } else if (curLevelG % 15 === 0) {
+      polizei = "SR";
+      await userData.addItem("lootbox_SR_O");
+    } else if (curLevelG % 10 === 0) {
+      polizei = "R";
+      await userData.addItem("lootbox_R_O");
+    } else if (curLevelG % 5 === 0) {
+      polizei = "U";
+      await userData.addItem("lootbox_U_O");
+    } else {
+      polizei = "C";
+      await userData.addItem("lootbox_C_O");
+    }
+
+    servData = null;
+
+    // delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
+    msg.author.getDMChannel().then(async dmChan => {
+      if (!userData?.switches || userData.switches?.LVUPDMoptout === true) return;
+
+      if (await PLX.redis.aget("noDMs." + userData.id)) return;
+
+      dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch(err => {
+        PLX.redis.set("noDMs." + userData.id, true);
+        PLX.redis.expire("noDMs." + userData.id, 15 * 60);
+      });
+    });
+    // require("./modules/dev/levelUp_infra.js").init(msg);
+  }
+  // -------------------------------//
 }
 /**
  * @param {{ author: { id: any; }; }} msg
@@ -244,11 +244,11 @@ function EXPtoLEVEL(LEVEL){
 
 */
 
-const {executeCustomResponse}  = require('../commands/fun/responses.js');
+const { executeCustomResponse } = require('../commands/fun/responses.js');
 
-function activateResponse(msg){
-  const response = msg.guild.customResponses.find(res=> res.trigger === msg.content);
-    if ( response ){
-      executeCustomResponse(response,msg);
-    }
+function activateResponse(msg) {
+  const response = msg.guild.customResponses.find(res => res.trigger === msg.content);
+  if (response) {
+    executeCustomResponse(response, msg);
+  }
 }

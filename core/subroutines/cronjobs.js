@@ -1,8 +1,8 @@
 // _PLX[epic=Utilities] Per-Shard Cronjobs
 
-const moment            = require("moment");
+const moment = require("moment");
 
-const { CronJob }       = require("cron");
+const { CronJob } = require("cron");
 
 //= =====================================================================================
 //= =====================================================================================
@@ -24,16 +24,16 @@ exports.run = async function run() {
   /* EVERY 5 MINUTES */
   //= =====================================================================================
   const FIVE_MINUTES = new CronJob("*/5  * * * *", async () => {
-    
+
     PLX.gamechange();
-    
+
   }, null, true);
-  
+
   //= =====================================================================================
   /* EVERY 1 HOUR */
   //= =====================================================================================
   const ONE_HOUR = new CronJob("0 */1 * * *", async () => {
-    
+
   });
 
   //= =====================================================================================
@@ -42,12 +42,12 @@ exports.run = async function run() {
   const FIFTEEN_MINUTE = new CronJob("*/15 * * * *", async () => {
 
     PLX.updateBlacklists(DB)
-      .then(()=>{console.report("•".green+" Blacklist updated")});
-      
-    try{
+      .then(() => { console.report("•".green + " Blacklist updated") });
+
+    try {
       PLX.microserver.microtasks.updateServerCache("all")
-        .then(()=>{console.report("•".green+" Server cache updated")});
-    }catch(err){
+        .then(() => { console.report("•".green + " Server cache updated") });
+    } catch (err) {
       console.error("•".red + " Microserver update failed. Restarting...");
       PLX.microserverStart();
     }

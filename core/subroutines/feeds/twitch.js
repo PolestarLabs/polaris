@@ -35,8 +35,8 @@ exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
   if (
     !(
       feed.last.type === StreamData.type
-        && feed.last.title === StreamData.title
-        && feed.last.started_at === StreamData.started_at
+      && feed.last.title === StreamData.title
+      && feed.last.started_at === StreamData.started_at
     )
   ) {
     // @ts-expect-error axios
