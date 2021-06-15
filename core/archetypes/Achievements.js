@@ -90,7 +90,7 @@ class AchievementsManager extends EventEmitter {
         } else C2 = true;
         C2 = true;
 
-        const awarded = userData.modules.achievements.find((b) => b.id === achiev.id)?.unlocked;
+        const awarded = userData.modules?.achievements?.find((b) => b.id === achiev.id)?.unlocked;
 
         const switcher = (c) => (c ? "✔️" : "❌");
 
