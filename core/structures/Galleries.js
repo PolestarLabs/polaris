@@ -49,7 +49,7 @@ module.exports = {
       headers: { Accept: "json" },
       responseType: "json",
     });
-    return response.data;
+    return encodeURI(response.data);
   },
 
 };
