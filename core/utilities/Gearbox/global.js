@@ -94,14 +94,12 @@ module.exports = {
               return `${stash[0] + numstringExtra}K`;
             case 3:
               if (stash[2] !== "000") break;
-              return `${
-                stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
-              }Mi`;
+              return `${stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
+                }Mi`;
             case 4:
               if (stash[3] !== "000") break;
-              return `${
-                stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
-              }Bi`;
+              return `${stash[0] + char + stash[1][0] + stash[1][1] + numstringExtra
+                }Bi`;
             default:
               break;
           }
@@ -159,7 +157,7 @@ module.exports = {
 
     if (typeof resource === "string") {
       if (/^https?:\/\//.test(resource)) {
-        return axios(resource, {responseType: "arraybuffer"}).then((res) => res.data);
+        return axios(resource, { responseType: "arraybuffer" }).then((res) => res.data);
       }
       return new Promise((resolve, reject) => {
         const file = path.resolve(resource);

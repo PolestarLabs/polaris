@@ -32,10 +32,10 @@ function RGBstring(rgbColor) {
   return arrRGB.join(",");
 }
 
-const blur = function Blur(rad=10,x=0,y=0,w,h){
+const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
   w = w || this.canvas.width;
   h = h || this.canvas.height;
-  return StackBlur.canvasRGB(this.canvas,x,y,w,h,rad);
+  return StackBlur.canvasRGB(this.canvas, x, y, w, h, rad);
 }
 
 module.exports = {
@@ -50,11 +50,11 @@ module.exports = {
 
   getCanvas: function getCanvas(img_path) {
     return Canvas.loadImage(img_path).catch((err) => {
-      let errorMsg = "• ".red + (img_path.toString().replace("undefined","?")).split('/').map(w=>w.includes('.')?w.yellow:w).join("/") + " not loaded.".gray;
-      
-      if (!KnownErrors.get( errorMsg )){
+      let errorMsg = "• ".red + (img_path.toString().replace("undefined", "?")).split('/').map(w => w.includes('.') ? w.yellow : w).join("/") + " not loaded.".gray;
+
+      if (!KnownErrors.get(errorMsg)) {
         console.error(errorMsg);
-        KnownErrors.set( errorMsg , 1);
+        KnownErrors.set(errorMsg, 1);
       }
 
       const canvas = Canvas.createCanvas(250, 250);
@@ -207,8 +207,7 @@ module.exports = {
     rgb.b = ~~(rgb.b / count);
 
     return (
-      `#${
-        (`0${parseInt(rgb.r, 10).toString(16)}`).slice(-2)
+      `#${(`0${parseInt(rgb.r, 10).toString(16)}`).slice(-2)
       }${(`0${parseInt(rgb.g, 10).toString(16)}`).slice(-2)
       }${(`0${parseInt(rgb.b, 10).toString(16)}`).slice(-2)}`
     );
@@ -235,7 +234,7 @@ module.exports = {
       };
       Object.keys(defaultRadius).forEach((side) => { radius[side] = radius[side] || defaultRadius[side]; });
     }
-    
+
     ctx.beginPath();
     ctx.moveTo(x + radius.tl, y);
     ctx.lineTo(x + width - radius.tr, y);
@@ -251,12 +250,12 @@ module.exports = {
     ctx.quadraticCurveTo(x, y + height, x, y + height - radius.bl);
     ctx.lineTo(x, y + radius.tl);
     ctx.quadraticCurveTo(x, y, x + radius.tl, y);
-    if (fill && typeof fill === "object" && !(fill instanceof Canvas.CanvasGradient) ) {
-        ctx.save();
-        ctx.clip();
-        ctx.drawImage(fill, x, y, width, height);
-        ctx.closePath();
-        ctx.restore();
+    if (fill && typeof fill === "object" && !(fill instanceof Canvas.CanvasGradient)) {
+      ctx.save();
+      ctx.clip();
+      ctx.drawImage(fill, x, y, width, height);
+      ctx.closePath();
+      ctx.restore();
     } else {
       ctx.closePath();
     }

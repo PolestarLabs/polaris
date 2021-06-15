@@ -7,7 +7,7 @@ module.exports = {
   resolveUser: async function resolveUser(user, options) {
     const enforceDB = options?.enforceDB || false;
     user = user?.id || user;
-    console.log({user})
+    console.log({ user })
     if (typeof user === "string") {
       const ID = user.replace(CLEAN_ID_REGEX, "");
       const isID = ID_REGEX.test(ID);
@@ -15,11 +15,11 @@ module.exports = {
         if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
         const userObject = PLX.users.find((u) => u.id === ID) || (await PLX.getRESTUser(ID));
         if (!userObject) return Promise.reject("USER NOT FOUND");
-        PLX.users.set(userObject.id,userObject);
+        PLX.users.set(userObject.id, userObject);
         return Promise.resolve(userObject);
       }
     } else {
-      
+
       return Promise.reject("USER MUST BE A STRING");
     }
   },
@@ -118,15 +118,15 @@ module.exports = {
     }
     return false;
   },
-  modPass: function modPass(member, extra= null, sData = {}, channel = null) {
+  modPass: function modPass(member, extra = null, sData = {}, channel = null) {
     // is owner
     if (member.guild.ownerID === member.id) return true;
     // is adm or manager
-    if (member.permission.has("manageGuild") || member.permission.has("administrator")) return true;    
+    if (member.permission.has("manageGuild") || member.permission.has("administrator")) return true;
     // has explicit extra perms
     if (extra && member.permission.has(extra) || channel?.permissionsOf?.(member.id).has(extra)) return true;
     // has modrole assined
-    if ( sData?.modules.MODROLE && member.hasRole(sData.modules.MODROLE)) return true;    
+    if (sData?.modules.MODROLE && member.hasRole(sData.modules.MODROLE)) return true;
 
     // fuck you
     return false;

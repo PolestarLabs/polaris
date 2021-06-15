@@ -4,14 +4,14 @@ const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
 const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
 const StackBlur = require('stackblur-canvas');
 
-const BLUR = function Blur(rad=10,x=0,y=0,w,h){
+const BLUR = function Blur(rad = 10, x = 0, y = 0, w, h) {
     w ||= this.canvas.width;
     h ||= this.canvas.height;
-    return StackBlur.canvasRGB(this.canvas,x,y,w,h,rad);
+    return StackBlur.canvasRGB(this.canvas, x, y, w, h, rad);
 }
 
-class Picto{
-    constructor(width=800, height=600){
+class Picto {
+    constructor(width = 800, height = 600) {
         const canvas = Canvas.createCanvas(width, height);
         const c = canvas.getContext("2d");
         c.antialias = "subpixel";
@@ -20,10 +20,10 @@ class Picto{
         return canvas;
     }
 
-    getCanvas(img_path){
+    getCanvas(img_path) {
         return Canvas.loadImage(img_path)
             .catch((err) => {
-                console.error("• ".red + (img_path.toString()).yellow + " not loaded." );
+                console.error("• ".red + (img_path.toString()).yellow + " not loaded.");
                 console.error(err);
                 const canvas = Canvas.createCanvas(250, 250);
                 const c = canvas.getContext("2d");
@@ -44,7 +44,7 @@ module.exports = {
     Picto,
 
     //legacy
-    new(w,h){
-        return new Picto(w,h);
+    new(w, h) {
+        return new Picto(w, h);
     }
 }
