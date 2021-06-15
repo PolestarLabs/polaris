@@ -103,7 +103,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
       finalMessage += ("\n***Next imports will cost you 5 Sapphires each***");
     }
     last = await msg.channel.send(finalMessage);
-    console.log(newMARRIAGES, x.transferred)
+    console.log(newMARRIAGES/*, x.transferred*/)
     if (!newMARRIAGES.find((x) => !x.transferred)) return Collector.stop();
   });
   Collector.on("end", async (m, r) => {
