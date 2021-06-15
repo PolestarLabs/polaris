@@ -16,7 +16,7 @@ class InventoryCommand {
   async listItems(uD) {
     if (!uD || !uD.modules) uD = await this.getUserData();
     const inv = (await this.Items).map((itm) => {
-      const thisItem = uD.modules[this.db].find((it) => it.id === itm.id && it.count > 0);
+      const thisItem = uD.modules[this.db]?.find((it) => it.id === itm.id && it.count > 0);
       return thisItem ? ((itm.count = thisItem.count), itm) : null;
     }).filter((i) => i != null);
     return inv;
