@@ -297,16 +297,16 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   /** @type {string} */
   let postmortem;
   if (timedUsage.streakStatus === "first") {
-    P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
+    P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.firstDaily", P);
   }
   if (timedUsage.streakStatus === "recovered") {
-    P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
+    P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.insuranceConsumed", P);
   }
   if (timedUsage.streakStatus === "lost") {
     if (timedUsage.userDaily.lastStreak <= 1) {
-      P.insuCount = userData.modules.inventory.find((i) => i.id === "keepstreak")?.count || 0;
+      P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.firstDaily", P);
       postmortem += `
       
@@ -320,7 +320,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     } else {
 
       P.oldStreak = timedUsage.userDaily.lastStreak;
-      const streakfixes = userData.modules.inventory.find((i) => i.id === "streakfix")?.count || 0;
+      const streakfixes = userData.modules?.inventory?.find((i) => i.id === "streakfix")?.count || 0;
       postmortem = `${$t("responses.daily.streakLost", P)
         }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;
     }
