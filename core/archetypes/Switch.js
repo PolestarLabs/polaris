@@ -319,7 +319,7 @@ module.exports = class Switch {
 
   guildCategoryDisable(category) {
     this.gd = [...this.gd,
-      ...this.categories[category].cmds.filter((cmd) => !this.gd.includes(cmd))];
+    ...this.categories[category].cmds.filter((cmd) => !this.gd.includes(cmd))];
   }
 
   guildCommandEnable(command) {

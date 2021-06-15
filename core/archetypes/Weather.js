@@ -18,7 +18,7 @@ class Weather {
 	/**
 	 * Creates a weather report based on input location
 	 */
-	constructor() {	}
+	constructor() { }
 
 	/**
 	 * Returns today's weather forecast object
@@ -84,8 +84,8 @@ class Weather {
 				const charArr2 = name.split("");
 
 				let diff = 0;
-				for (let i = 0; i < charArr1.length; i++) 
-					if (!charArr2[i] || charArr1[i] != charArr2[i]) 
+				for (let i = 0; i < charArr1.length; i++)
+					if (!charArr2[i] || charArr1[i] != charArr2[i])
 						diff += 1;
 
 				possibilities.push({ name: country, toRet: countries[country], diff });

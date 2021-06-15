@@ -7,7 +7,7 @@ const LootboxItem = require("./LootboxItem");
 
 const itmODDS = LootRates.LootItemType;
 const rarODDS = LootRates.LootRarity;
-const COLORS  = require("@polestar/constants/ui-colors").RarityColors;
+const COLORS = require("@polestar/constants/ui-colors").RarityColors;
 
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 

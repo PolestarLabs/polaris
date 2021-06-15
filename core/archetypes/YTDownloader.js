@@ -24,7 +24,7 @@ function grabYTMusic(URL, user) {
 
     ytdl.getInfo(URL).then((a, b) => {
       const { title } = a.videoDetails;
-      const max15  = a.formats[0].approxDurationMs < 900000;
+      const max15 = a.formats[0].approxDurationMs < 900000;
 
       if (!max15) return reject("MAXTIME");
       ratelimit(user);

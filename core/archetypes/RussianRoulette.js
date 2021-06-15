@@ -1,4 +1,4 @@
- 
+
 
 module.exports = class RussianRoulette {
   constructor(message, value) {
@@ -14,7 +14,7 @@ module.exports = class RussianRoulette {
   }
 
   // NOTE: finish russian roulette arch
-  async renderCard() {} // eslint-disable-line no-empty-function
+  async renderCard() { } // eslint-disable-line no-empty-function
 
   willSurvive() {
     return !shuffle(this.handgunBarrel)[0];

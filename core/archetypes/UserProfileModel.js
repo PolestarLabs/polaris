@@ -36,7 +36,7 @@ class UserProfileModel {
     this.sapphires = userDBData.modules.SPH || 0;
     this.medals = userDBData.modules.medals || [];
     this.marriage = userDBData.marriageData || null;
-    this.commend =  0;
+    this.commend = 0;
     this.countryFlag = userDBData.personal?.country || null;
     this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
 
@@ -48,8 +48,8 @@ class UserProfileModel {
   }
 
   get globalRank() {
-    return  DB.users
-      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res=>{
+    return DB.users
+      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res => {
         this.rank = res;
       });
 
@@ -58,7 +58,7 @@ class UserProfileModel {
   get commends() {
     return new Promise((resolve) => {
       DB.commends.parseFull(this.ID)
-        .then(res=>{
+        .then(res => {
           this.commend = res.totalIn;
           resolve(res.totalIn)
         })
@@ -102,9 +102,9 @@ class UserProfileModel {
         wifeName: discordWife.username,
         wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
       };
-       
+
       return resolve(this.wife);
-       
+
     });
   }
 }

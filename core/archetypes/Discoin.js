@@ -16,7 +16,7 @@ module.exports = class Discoin {
           url: `${ROOT}/${route}${query ? `?s=${encodeURIComponent(query)}` : ""}`,
           headers: { Authorization: `Bearer ${this.token}` },
           json: payload,
-        }).then( (res) => {
+        }).then((res) => {
           const body = res.data;
           if (err || rescodes.indexOf(res.status) === -1) return reject(new Error(`[${res.status}] :: API failure`));
           if (![200, 201].includes(res.status)) {
@@ -31,7 +31,7 @@ module.exports = class Discoin {
       axios.get({ url: "https://pollux.gg/api/discoin/currencies" }).then((res) => {
         if (res.status === 200) resolve(JSON.parse(res.data));
         else reject(res.status);
-      }).catch(res=> reject(res.status) );
+      }).catch(res => reject(res.status));
     });
   }
 

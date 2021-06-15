@@ -241,7 +241,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     from: userFrom,
     to: userTo,
     timestamp: now,
-    transactionId: `${curr}${(now + randomize(-1000,1000) + arbitraryIncrementer++ ).toString(32).toUpperCase()}`,
+    transactionId: `${curr}${(now + randomize(-1000, 1000) + arbitraryIncrementer++).toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
 
@@ -316,7 +316,7 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
   } else if (amt.length !== curr.length) return Promise.reject("amt & curr arrays need to be equal length");
 
   /** @type {number} */
-  
+
   let incomeType;
   if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) > -1) {
     curr.forEach((CURR, i) => {
@@ -335,7 +335,7 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
   // Fill DB calls
   for (let i in curr) {
     let absAmount = Math.abs(amt[i]);
-    if (typeof absAmount !== "number") return Promise.reject( new TypeError("Amounts should be of type number.") );
+    if (typeof absAmount !== "number") return Promise.reject(new TypeError("Amounts should be of type number."));
     if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
     fromUpdate[`modules.${curr[i]}`] = -absAmount;
     toUpdate[`modules.${curr[i]}`] = absAmount;
@@ -343,7 +343,7 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
   }
 
   // If every amt was zero
-  if (!payloads.length) return Promise.resolve( true ); // Return true signaling success even if zero
+  if (!payloads.length) return Promise.resolve(true); // Return true signaling success even if zero
 
   // Setup v2.0
   const toWrite = [
@@ -355,9 +355,9 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
   await DB.users.bulkWrite(toWrite);
   await DB.audits.collection.insertMany(payloads);
   payloads.forEach(logTransaction)
-  
+
   return payloads.length === 1 ? payloads[0] : payloads;
-      
+
 }
 
 /**
@@ -394,23 +394,21 @@ module.exports = {
 };
 
 
-function logTransaction(t){
+function logTransaction(t) {
   //if()
   let cleanString = `-------${t.amt}---${t.currency}-${t.type}-${t.from}----${t.to}--${t.transactionId}--`
-  let fullString = `${
-    t.subtype === "PAYMENT" ? " [-] ".red : t.subtype === "TRANSFER" ?  " [>] ".yellow : " [+] ".green 
-  } ${(" "+t.amt+" ").inverse}${
-    t.currency=="RBN" 
+  let fullString = `${t.subtype === "PAYMENT" ? " [-] ".red : t.subtype === "TRANSFER" ? " [>] ".yellow : " [+] ".green
+    } ${(" " + t.amt + " ").inverse}${t.currency == "RBN"
       ? " RBN ".bgRed
-      : t.currency=="JDE" 
+      : t.currency == "JDE"
         ? " JDE ".bgCyan
-        : t.currency=="SPH" 
+        : t.currency == "SPH"
           ? " SPH ".bgBlue
           : t.currency.yellow
 
-  } ${t.type.cyan} ${t.from[t.from==PLX.user.id?'white':'magenta']} ${"->".gray} ${t.to[t.to==PLX.user.id?'white':'magenta']} [${t.transactionId.gray}]`;
+    } ${t.type.cyan} ${t.from[t.from == PLX.user.id ? 'white' : 'magenta']} ${"->".gray} ${t.to[t.to == PLX.user.id ? 'white' : 'magenta']} [${t.transactionId.gray}]`;
 
-  let line = "┌" + cleanString.replace(/./g,"─") + "┐\n"
-  let line2 = "\n└" + cleanString.replace(/./g,"─") + "┘"
-  console.log(line + "│"+ fullString +" │"+ line2);
+  let line = "┌" + cleanString.replace(/./g, "─") + "┐\n"
+  let line2 = "\n└" + cleanString.replace(/./g, "─") + "┘"
+  console.log(line + "│" + fullString + " │" + line2);
 }
