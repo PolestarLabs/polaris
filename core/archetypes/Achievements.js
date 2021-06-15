@@ -53,7 +53,7 @@ class AchievementsManager extends EventEmitter {
     return new Promise(async (resolve, reject) => {
 
       if ((!userData?.modules && userData.id) || typeof userData === "string") userData = await DB.users.findOne({ id: userData.id || userData }).noCache().lean();
-      if (!userData) reject(new Error("[AchievementsManager] UserData is Null"));
+      if (!userData) return reject(new Error("[AchievementsManager] UserData is Null"));
       const user = userData;
       const statistics = (await DB.control.findOne({ id: userData.id }).noCache())?.data?.statistics;
 
