@@ -28,8 +28,6 @@ const EasterEggs = {
 
 };
 const init = async (msg, args) => {
-  const obj = {}; Error.captureStackTrace(obj); PLX.createMessage("792176688070918194", obj.stack);
-  return msg.channel.send(Array(2002).join('a'))
   const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
   let J; let EasterEgg;
   switch (args[0]?.toLowerCase()) {
