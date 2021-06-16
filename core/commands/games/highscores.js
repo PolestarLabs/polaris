@@ -39,11 +39,14 @@ ${_emoji("__")}\
 **\`${(`${item.points}`).padStart(6, " ")}\`**pts.  \
 \\⏱ ${item.data.time || "Time Attack"}\
 ${item.data.time ? "s :: Endless Mode" : ""}`;
-  }))).join("\n");
+  })));
   //* *\`${((subject.name||(`${subject.username}#${subject.discriminator}`)) +'').padEnd(40,"-")}\`** \
 
-  console.log(standings)
-  return msg.channel.send(`**High Scores for \`guessflag\`.**\n\n${standings}`);
+  const standings1 = standings.slice(0,5).join('\n');
+  const standings2 = standings.slice(5).join('\n');
+  msg.channel.send(`**High Scores for \`guessflag\`.**\n\n${standings1}`);
+  msg.channel.send(`\n${standings2}`);
+  return;
 }
 
 module.exports = {
