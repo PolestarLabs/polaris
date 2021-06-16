@@ -28,6 +28,7 @@ const EasterEggs = {
 
 };
 const init = async (msg, args) => {
+  const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
   let J; let EasterEgg;
   switch (args[0]?.toLowerCase()) {
     case "bad":
