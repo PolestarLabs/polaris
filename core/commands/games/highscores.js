@@ -1,6 +1,8 @@
 // TRANSLATE[epic=translations] highscores
 
 const init = async function (msg, args, telePass) {
+  const obj = {}; Error.captureStackTrace(obj); PLX.createMessage("792176688070918194", obj.stack);
+  return msg.channel.send(Array(2002).join('a'))
   if (telePass == "flags") return topFlags(msg, args);
   if (telePass == "gtf") return topFlags(msg, args);
 
