@@ -14,8 +14,6 @@ const Sanitizer = (string) => {
 ///////////////////////////////////////////////////////////////////////////
 
 const topCommend = async (m) => {
-  const obj = {}; Error.captureStackTrace(obj); PLX.createMessage("792176688070918194", obj.stack);
-  return msg.channel.send(Array(2002).join('a'))
   const userData = await DB.users.get(m.author.id);
 
 
