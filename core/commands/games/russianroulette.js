@@ -558,7 +558,7 @@ async function userShoot(msg, player) {
 	await msg.setButtons({ emoji: { id: "338331025300127745" }, label: "Fire!", custom_id: "shoot!", style: 4 });
 	return Promise.race([
 		msg.channel.awaitMessages(m => m.author.id === player.id && ['bang', 'shoot', 'boom', 'pew'].includes(m.content), { time: 10e3, maxMatches: 1 }),
-		msg.awaitReactions(rea => rea.userID === player.id && rea.emoji.id === '338331025300127745', { time: 10e3, maxMatches: 1 }),
+		msg.awaitReactions(rea => rea.userID === player.id && rea.emoji.id === '338331025300127745', { time: 10e3, maxMatches: 1 }).catch(() => null),
 		msg.awaitButtonClick(click => click.userID === player.id && click.id === 'shoot!', { time: 10e3, maxMatches: 1 }),
 		(player.isBot ? wait(randomize(1, 5)) : wait(8))
 	]);

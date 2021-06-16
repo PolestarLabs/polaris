@@ -61,7 +61,7 @@ async function vere(base64, message, cmdPiece) {
     message.channel.send({ embed }).then(async (mes) => {
 
       //FUTURE[epic=anyone] (Low Priority) - GTranslate Reaction prompts user to type language
-      const reas = await mes.awaitReactions({ maxMatches: 1, time: 30000 });
+      const reas = await mes.awaitReactions({ maxMatches: 1, time: 30000 }).catch(() => []);
       if (reas.length === 0) return;
       const Rea = reas[0];
       const LF = TranslateBlob.LANGFLAGS;
