@@ -8,7 +8,7 @@ module.exports = async (interaction, data) => {
     m.user = PLX.users.get(interaction.userID);
     const member = new Member(m, interaction.guild, PLX);
     if (!PLX.modPass(member, "manageRoles", serverData)) {
-        return interaction.reply({ content: "Shoo!" });
+        return interaction.reply({ content: "Shoo!", flags: 64 });
     }
     interaction.reply({
         content: "Select Language",
