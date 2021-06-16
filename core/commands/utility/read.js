@@ -55,7 +55,7 @@ async function vere(base64, message, cmdPiece) {
     const embed = new Embed();
     embed.title("Read Results");
     embed.setColor("#6167b8");
-    embed.description(`*React with a flag to translate it.*  \`\`\`${detections}\`\`\``);
+    embed.description(`*React with a flag within 30 seconds to translate it.*  \`\`\`${detections}\`\`\``);
     L = TranslateBlob.flagFromLang(lang);
     embed.field("Detected Language", `${L.flag} ${L.name}`);
     message.channel.send({ embed }).then(async (mes) => {
