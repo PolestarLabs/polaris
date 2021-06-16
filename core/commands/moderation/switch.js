@@ -274,11 +274,11 @@ async function init(msg) {
       msg.channel.send({ embed: { color: 0x33D, title: embedTitle, description: "Do you want to save your changes? (yes|no)" } }).then((savemsg) => {
         savemsg.addReaction(R_YEP);
         savemsg.addReaction(R_NOPE);
-        Promise.race([ // TODO[epic=bsian] Improve this bit
-          msg.channel.awaitMessages((m) => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: INPUT_TIMEOUT }),
-          savemsg.awaitReactions((r) => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: INPUT_TIMEOUT }),
-          new Promise((resolve) => setTimeout(() => resolve([]), 2 * INPUT_TIMEOUT)),
-        ]).then((r) => {
+        new Promise((res) => {
+          setTimeout(() => res([]), 2 * INPUT_TIMEOUT);
+          msg.channel.awaitMessages((m) => msg.author.id === m.author.id && /yes|no/.test(m.content), { maxMatches: 1, time: INPUT_TIMEOUT }).then(res);
+          savemsg.awaitReactions((r) => msg.author.id === r.userID && [N_YEP, N_NOPE].includes(r.emoji.name), { maxMatches: 1, time: INPUT_TIMEOUT }).then(res);
+        }).then((r) => {
           if (r.length && (r[0].content?.toLowerCase() === "yes" || r[0].emoji?.name === N_YEP)) {
             savemsg.edit(savingEmbed);
             Switch.save().then(() => {
