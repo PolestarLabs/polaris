@@ -189,8 +189,12 @@ module.exports = {
     const langsAvailable = Object.fromEntries(Object.keys(translate.languages).map((l) => [l.toLowerCase(), l]));
     msg.args[0] = this.replaceLang(msg.args[0]);
     if (langsAvailable[msg.args[0].toLowerCase()]) {
-      msg.args[1] = this.replaceLang(msg.args[1]);
-      langFrom = langsAvailable[msg.args[1].toLowerCase()] ? langsAvailable[msg.args.shift().toLowerCase()] : "auto";
+      if (msg.args[1]) {
+        msg.args[1] = this.replaceLang(msg.args[1]);
+        langFrom = langsAvailable[msg.args[1].toLowerCase()] ? langsAvailable[msg.args.shift().toLowerCase()] : "auto";
+      } else {
+        langFrom = "auto";
+      }
       langTo = langsAvailable[msg.args.shift().toLowerCase()];
     } else {
       langFrom = "auto";
