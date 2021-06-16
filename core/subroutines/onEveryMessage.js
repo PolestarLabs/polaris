@@ -1,4 +1,5 @@
 const Drops = require("./boxDrops").lootbox;
+const { TextChannel } = require("eris");
 
 /**
  * @param {{ author: { id: any; }; guild: { id: any; }; }} msg

@@ -1,6 +1,15 @@
+const { Member } = require("eris");
 const Languages = require("../../core/structures/Locales.js");
 
 module.exports = async (interaction, data) => {
+    const serverData = await DB.servers.get(interaction.guild.id, { "modules.MODROLE": 1 });
+    const m = interaction.member;
+    m.id = interaction.userID;
+    m.user = PLX.users.get(interaction.userID);
+    const member = new Member(m, interaction.guild, PLX);
+    if (!PLX.modPass(member, "manageRoles", serverData)) {
+        return interaction.reply({ content: "Shoo!" });
+    }
     interaction.reply({
         content: "Select Language",
         flags: 64,

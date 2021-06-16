@@ -25,8 +25,7 @@ const LANGFLAGS = {
   ceb: "🇵🇭",
   co: "🇫🇷",
   cs: "🇨🇿",
-  //cy: "<:flag_gb_wal:802940624306569246>",
-  cy: "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+  cy: "🏴󠁧󠁢󠁷󠁬󠁳󠁿", // Cymru (Welsh)
   //da: "🇩🇰/🇫🇴",
   da: "🇩🇰",
   //el: "🇬🇷/🇨🇾",
@@ -37,10 +36,9 @@ const LANGFLAGS = {
   fa: "🇮🇷",
   fi: "🇫🇮",
   fy: "🇳🇱",
-  //ga: "🇮🇪/🇬🇧",
+  //ga: "🇮🇪",
   ga: "🇮🇪",
-  //gd: "<:flag_sct:802945254075662357>",
-  gd: "🏴󠁧󠁢󠁳󠁣󠁴󠁿",
+  gd: "🏴󠁧󠁢󠁳󠁣󠁴󠁿", // Scottish Gaelic
   gl: "🇪🇸",
   gu: "🇮🇳",
   //ha: "🇳🇬/🇳🇪/🇬🇭",
@@ -191,8 +189,12 @@ module.exports = {
     const langsAvailable = Object.fromEntries(Object.keys(translate.languages).map((l) => [l.toLowerCase(), l]));
     msg.args[0] = this.replaceLang(msg.args[0]);
     if (langsAvailable[msg.args[0].toLowerCase()]) {
-      msg.args[1] = this.replaceLang(msg.args[1]);
-      langFrom = langsAvailable[msg.args[1].toLowerCase()] ? langsAvailable[msg.args.shift().toLowerCase()] : "auto";
+      if (msg.args[1]) {
+        msg.args[1] = this.replaceLang(msg.args[1]);
+        langFrom = langsAvailable[msg.args[1].toLowerCase()] ? langsAvailable[msg.args.shift().toLowerCase()] : "auto";
+      } else {
+        langFrom = "auto";
+      }
       langTo = langsAvailable[msg.args.shift().toLowerCase()];
     } else {
       langFrom = "auto";
