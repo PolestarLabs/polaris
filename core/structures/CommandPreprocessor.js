@@ -214,7 +214,7 @@ function QUEUED_COMMAND(commandFile) {
     const execCommand = typeof commandFile.init == 'function' ? commandFile.init(...args) : typeof commandFile.gen == 'function' ? commandFile.gen(...args) : null;
     if (!execCommand) return commandFile.init;
 
-    PLX.execQueue.push(new Promise((res, rej) => execCommand.then(res).catch(rej)));
+    PLX.execQueue.push(new Promise((res, rej) => execCommand.then(res).catch((e) => process.emit('unhandledRejection', e, execCommand))));
     return execCommand;
   };
 }
