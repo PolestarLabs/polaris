@@ -43,6 +43,7 @@ ${item.data.time ? "s :: Endless Mode" : ""}`;
   //* *\`${((subject.name||(`${subject.username}#${subject.discriminator}`)) +'').padEnd(40,"-")}\`** \
 
   console.log(standings)
+  const obj = {}; Error.captureStackTrace(obj); PLX.createMessage("792176688070918194", obj.stack);
   return msg.channel.send(`**High Scores for \`guessflag\`.**\n\n${standings}`);
 }
 
