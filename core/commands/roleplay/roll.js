@@ -40,7 +40,7 @@ const init = async function (message) {
   }
 
   variables.forEach((vari) => {
-    const regex = new RegExp(`\\b${vari.tag}\\b`, "g");
+    const regex = new RegExp(`\\b${vari.tag.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')}\\b`, "g");
     rollEq = rollEq.replace(regex, (`${vari.value} `));
     // message.reply("`"+rollEq+"`")
   });
