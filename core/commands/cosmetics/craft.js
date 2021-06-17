@@ -53,9 +53,13 @@ const init = async (msg, args) => {
           return;
         }
       } else {
+        if (searchResults.length && !DYM.length) return msg.channel.send($t(["responses.crafting.itemNotOpen",
+      "Looks like you never crafted this item before, you need a **Recipe** first or craft it via **Crafting Discovery**"
+      ], P));
         return msg.channel.send($t("responses.crafting.noitemlike", P));
       }
-      if (!craftedItem) return msg.reply($t("responses.crafting.noitem", P));
+      if (!craftedItem) return msg.channel.send($t("responses.crafting.noitemlike", P)); 
+      //return msg.reply($t("responses.crafting.noitem", P));
     }
 
     // Don't allow too much bulk crafting...
