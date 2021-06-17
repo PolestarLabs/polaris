@@ -457,17 +457,17 @@ class Crafter extends EventEmitter {
    * @returns {object[]} Sorted array of items that (partially) matched search.
    * @memberof Crafter
    */
-  static searchItems(search) {
+  static async searchItems(search, openOnly ) {
     if (!search) throw new Error("Need a string to search for");
-    //const entries = allItems.entries();
-    //const items = [];
+    const entries = allItems.entries();
+    const items = [];
     const searchRegex = new RegExp(`.*${search}.*`, 'i');
 
-    return DB.items.find({
+    let initialItems = await DB.items.find({
       $and: [
         {
           crafted: true,
-          open: true,
+          //open: openOnly, // can be undefined
         },
         {
           $or: [
@@ -480,7 +480,10 @@ class Crafter extends EventEmitter {
     });
 
     // calc diff and add if <5
-    /*
+    ///*
+
+    if (initialItems.length) return initialItems;
+
     for (const entry of entries) {
       const itm = entry[1];
 
@@ -502,8 +505,9 @@ class Crafter extends EventEmitter {
 
      
       if (itm.diffScore < 5) items.push(itm);
-    }/*/
+    }//*/
     // sort and return
+    console.log({items},"DYM".yellow)
     items.sort((a, b) => a.diffScore - b.diffScore);
     return items;
   }
