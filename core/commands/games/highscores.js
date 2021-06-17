@@ -18,8 +18,6 @@ const init = async function (msg, args, telePass) {
 };
 
 async function topFlags(msg, args) {
-  const obj = {}; Error.captureStackTrace(obj); PLX.createMessage("792176688070918194", obj.stack);
-  return msg.channel.send(Array(2002).join('a'))
   const RANKS = await DB.rankings.find({ type: { $in: [args[0] == "server" || !args[0] ? "guessflag-server" : "", args[0] == "solo" || !args[0] ? "guessflag-solo" : ""] } }).sort({ points: -1 }).limit(10);
 
   const standings = (await Promise.all(RANKS.map(async (item, i) => {
