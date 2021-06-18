@@ -33,22 +33,28 @@ const init = async (msg) => {
 
     const POLid = PLX.user.id;
 
-    const ts = moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
+    const ts = `<t:${~~(x.timestamp/1000)}:R>`; //moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
     if (x.type === "SEND") x.type = "TRANSFER";
-    if (x.to === POLid || x.to === 'DASHBOARD') return `🔴 \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
-    if (x.from === POLid || x.from === 'DASHBOARD') return `🟢 \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   *${x.type}*`;
+    if (x.to === POLid || x.to === 'DASHBOARD') return `🔴 *${ts}*\u2002 ${_emoji(x.currency, x.currency)}\u2002×\u2002**${x.amt}**\n\u200b `
+                                                     + `╰ |   *\`${x.type}\`*`;
+    if (x.from === POLid || x.from === 'DASHBOARD') return `🟢 *${ts}*\u2002 ${_emoji(x.currency, x.currency)}\u2002×\u2002**${x.amt}**\n\u200b `
+                                                     + `╰ |   *\`${x.type}\`*`;
 
     if (x.from && (x.to === TARGETDATA.id && x.from !== POLid)) {
       othPart = (await PLX.getTarget(x.from, null, true)) || { tag: x.from };
-      if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
-      return `↔ \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   `
-        + `*\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})   `;
+
+      if (!othPart) return ` *${ts}* **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* from ${x.to}`;
+     
+      return `↔ *${ts}*\u2002 ${_emoji(x.currency, _emoji('JUNK'))}\u2002×\u2002**${x.amt || 1}**\n\u200b `
+           + `╰ |   *\`${x.type}\`* from [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})   `;
     }
     if (x.to && (x.from === TARGETDATA.id && x.to !== POLid)) {
       othPart = (await PLX.getTarget(x.to, null, true)) || { tag: x.to };
-      if (!othPart) return ` \`${ts}\` **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
-      return `↔  \`${ts}\` ${_emoji(x.currency, x.currency)} **${x.amt}**\n\u200b ╰ |   `
-        + `*\`${x.type}\`* to [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})  `;
+
+      if (!othPart) return ` *${ts}* **${x.amt}** ${x.currency}\n\u200b\u2003\u2003|   *\`${x.type}\`* to ${x.to}`;
+      
+      return `↔  *${ts}*\u2002 ${_emoji(x.currency, _emoji('JUNK'))}\u2002×\u2002**${x.amt || 1}**\n\u200b `
+           + `╰ |   *\`${x.type}\`* to [${othPart?.tag}](${paths.DASH}/p/${othPart?.id})  `;
     }
 
     return "";
