@@ -154,6 +154,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             const currItem = newInventory.find((sub) => sub.id === item);
 
             if (currItem) {
+              if (!currItem.id.includes("lootbox")) currItem.count++;
               if (currItem.id.includes("lootbox") && currItem.count < 10) currItem.count++;
               else if (currItem.id.includes("lootbox") && currItem.count >= 10) exceedingBoxBonus++;
             } else newInventory.push({ id: item, count: 1 });
