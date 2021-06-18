@@ -1,7 +1,7 @@
 module.exports = async (interaction, data) => {
 
     const { name: cmd } = data;
-    console.log(data, "DATA".green)
+
     try {
         const response = await Promise.race([
             PLX.commands[cmd].execute(interaction.message, interaction.message.args || []).catch(err => {

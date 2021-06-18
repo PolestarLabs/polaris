@@ -20,7 +20,6 @@ exports.run = function run(cat, msg, perms) {
         //
       }
 
-      console.log({ perm, permsi: perms[i] })
       const hasChannelPermissions = msg.channel.permissionsOf(PLX.user.id).has(perm);
       const hasGuildPermissions = msg.guild.member(PLX.user.id).hasPermission(perm);
 

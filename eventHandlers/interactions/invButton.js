@@ -1,5 +1,4 @@
 module.exports = async (interaction, data) => {
-    console.log({ data })
     const [, , ownerID] = data.custom_id?.split(':') || [];
 
     if (ownerID != interaction.userID) {

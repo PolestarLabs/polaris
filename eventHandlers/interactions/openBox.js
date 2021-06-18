@@ -3,7 +3,7 @@ const { createInventoryEmbed } = require("../../core/commands/inventory/lootbox.
 const GENERATOR = require("../../core/commands/cosmetics/lootbox_generator.js");
 module.exports = async (interaction, data) => {
     const buttonArgs = data.custom_id.split(':');
-    console.log({ buttonArgs });
+
     const [, boxType, originalAuthor, primaryLang] = buttonArgs;
 
     const { userID, message } = interaction;
