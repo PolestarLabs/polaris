@@ -61,8 +61,6 @@ const init = async (msg) => {
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
-  console.log({ dailyPLXMember })
-
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(msg.author);
@@ -260,7 +258,6 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
     if (itm === "cosmo_fragment") {
       itemName = $t("items:cosmo_fragment.name", P);
-      console.log(daily.myDaily);
       fragAction = userData.addItem("cosmo_fragment", daily.myDaily[itm]);
       itemoji = _emoji("COS");
     }
