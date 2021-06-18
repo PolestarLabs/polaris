@@ -11,26 +11,35 @@ const disableCommand = (commandID, guild) => {
 }
 
 const createCommand = (payload, guild) => {
-    console.log(payload, 'payload')
     if (guild) return PLX.requestHandler.request("POST", `/applications/${PLX.user.id}/guilds/${guild}/commands`, true, payload);
     else return PLX.requestHandler.request("POST", `/applications/${PLX.user.id}/commands`, true, payload);
 }
 const updateCommand = (cmdID, payload, guild) => {
-    console.log(payload, 'payload')
     if (guild) return PLX.requestHandler.request("PATCH", `/applications/${PLX.user.id}/guilds/${guild}/commands/${cmdID}`, true, payload);
     else return PLX.requestHandler.request("PATCH", `/applications/${PLX.user.id}/commands/${cmdID}`, true, payload);
 }
 
 exports.proc = async function (cmdFile) {
-
+    
+    console.log('•'.blue, "Register Slash CMD for",cmdFile.cmd?.inverse);
+    
     if (cmdFile?.slashOptions?.guilds) {
+        
+        console.log('    •'.cyan, "Local:".blue);
+        
         cmdFile.slashOptions.guilds.forEach(async guild => {
             let guildCommands = await getAllCommands(guild);
+            
+            console.log('        -', guild?.gray);
+
             let currentCommand = guildCommands.find(c => c.name === cmdFile.cmd);
             if (currentCommand) {
                 if (cmdFile.disabled) {
+                    console.log('        •'.red, "Disable...".gray,guild);
                     await disableCommand(currentCommand.id, guild);
                 } else {
+                    console.log('        •'.yellow, "Update...".gray,guild);
+
                     updateCommand(currentCommand.id, {
                         name: cmdFile.cmd,
                         description: cmdFile.slashOptions.description || $t(`commands:help.${cmdFile.cmd}`, "No Command Description"),
@@ -39,6 +48,7 @@ exports.proc = async function (cmdFile) {
                     }, guild);
                 }
             } else {
+                console.log('        •'.green, "Create...".gray,guild);
                 await createCommand({
                     name: cmdFile.cmd,
                     description: cmdFile.slashOptions.description || $t(`commands:help.${cmdFile.cmd}`, "No Command Description"),
@@ -50,13 +60,17 @@ exports.proc = async function (cmdFile) {
     }
 
     if (cmdFile?.slashOptions?.global) {
-        console.log('global');
+        
+        console.log('    •'.cyan, "Global:".yellow);
+
         let globalCommands = await getAllCommands();
         let currentCommand = globalCommands.find(c => c.name === cmdFile.cmd);
         if (currentCommand) {
             if (cmdFile.disabled) {
+                console.log('       ••'.red, "Disable...".gray);
                 await disableCommand(currentCommand.id);
             } else {
+                console.log('       ••'.yellow, "Update...".gray);
                 updateCommand(currentCommand.id, {
                     name: cmdFile.cmd,
                     description: cmdFile.slashOptions.description || $t(`commands:help.${cmdFile.cmd}`, "No Command Description"),
@@ -65,6 +79,7 @@ exports.proc = async function (cmdFile) {
                 });
             }
         } else {
+            console.log('       ••'.green, "Create...".gray);
             await createCommand({
                 name: cmdFile.cmd,
                 description: cmdFile.slashOptions.description || $t(`commands:help.${cmdFile.cmd}`, "No Command Description"),
