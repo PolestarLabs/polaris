@@ -137,7 +137,7 @@ const init = async (msg, args) => {
         ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         // FIXME [epic=flicky] Boosterpacks not being added
-        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))).then(console.log),
+        Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
         wait(1)
       ]);
 
@@ -285,8 +285,6 @@ function renderDupeTag(rarity, P) {
 }
 function getPrize(loot, USERDATA) {
 
-  console.log({ loot })
-  console.log("loot".red)
   if (loot.type === "gems") return ECO.receive(USERDATA.id, loot.amount, "lootbox_rewards", loot.currency || "RBN");
 
   if (loot.collection === "items") return USERDATA.addItem(loot.id);

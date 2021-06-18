@@ -23,7 +23,6 @@ const init = async function (msg, args, reactionMember) {
     icon_url: (args[12] || msg).author.avatarURL,
   };
 
-  console.log("POINT");
   return { content: `${_emoji("BOOSTER")} ${$t("responses.inventory.browsingBooster", P)}`, embed };
 };
 

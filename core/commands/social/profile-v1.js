@@ -175,8 +175,6 @@ init = async (msg) => {
   // Strictly accepts UDBData and DiscordUser/DiscordMember
   const USERPROFILE = new UserProfileModel(Target_Database, Target);
 
-  console.log({ USERPROFILE });
-
   try {
     //= ===========================  CANVAS START   ===================//
 
