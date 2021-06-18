@@ -7,7 +7,6 @@ class DisposableHook {
   }
 
   destroy() {
-    console.log(this.hook);
     this.hook && PLX.deleteWebhook(this.hook.id, this.hook.token, "Expired");
   }
 

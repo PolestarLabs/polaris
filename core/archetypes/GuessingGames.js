@@ -97,7 +97,7 @@ class GuessingGame {
   async generate() {
     if (this.type === "image") {
       const response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
-      console.log(response);
+ 
       this.imageFile = await resolveFile(response.url);
 
       if (this.gamemode === "endless") this.embed.footer.text = `Endless Mode | Round ${this.round || 1}`;
@@ -152,7 +152,7 @@ class GuessingGame {
                 Collector.stop();
               }
             });
-            Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) && this.progressionStreak(m, /*RESET*/ true) : console.log({ reason })));
+            Collector.on("end", (col, reason) => (reason === "time" ? msg.channel.send(this.timeout) && resolve(true) && this.progressionStreak(m, /*RESET*/ true) : null));
           }
 
           if (this.gamemode === "endless") {

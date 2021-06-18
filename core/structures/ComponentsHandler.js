@@ -33,9 +33,7 @@ module.exports = function (Eris) {
       };
     });
 
-    console.log({ dry });
     if (dry) return components;
-    console.log("past drycheck");
 
     return this.edit({
       content: this.content,
@@ -98,27 +96,26 @@ module.exports = function (Eris) {
     return this.edit({ content: this.content, components: newComps });
   };
   Eris.Message.prototype.updateButtons = async function (btnData) {
-    console.log("-------BUTTON UPDATE-------------------------".yellow);
+
     let currentComps = await this.getComponents();
     let newComps = currentComps.map((row, i) => {
       row.components.forEach((btn, ii) => {
-        console.log(`ROW ${i}, BUTTON ${ii}`.gray);
-        console.log("BTN".red, btn);
+
         const matchButton = btnData.find((b) =>
           btn.custom_id.match(b.custom_id)
         );
-        console.log("matchButton".yellow, matchButton);
+
 
         if (matchButton) {
           let oldname = btn.custom_id;
           Object.assign(btn, matchButton);
           btn.custom_id = oldname;
-          console.log("NEWBTN".green, btn);
+
         }
       });
       return row;
     });
-    console.log("-------BUTTON UPDATE END-------------------------\n\n.".gray);
+
     return this.edit({ content: this.content, components: newComps });
   };
 };

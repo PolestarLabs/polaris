@@ -136,11 +136,10 @@ class ProgressionManager extends EventEmitter {
     }
 
     async checkStatusAll(userID, msg) {
-
-        console.log("ENTER ALL".yellow)
+ 
         //if (this.userCheckQueue.get(userID) === true) return console.log('rejected'.red);
         this.userCheckQueue.set(userID, true);
-        console.log('entering'.green);
+ 
 
         let userQuests = await this.getUserQuests(userID);
 
@@ -148,10 +147,9 @@ class ProgressionManager extends EventEmitter {
             for (let i in userQuests) {
 
                 let quest = userQuests[i];
-
-                console.log('quest #', i)
+ 
                 await setImmediate(0, { ref: false });
-                console.log('post immed'.gray)
+ 
 
 
                 if (quest.progress >= quest.target) {
@@ -165,7 +163,7 @@ class ProgressionManager extends EventEmitter {
             }
         };
         this.userCheckQueue.set(userID, false);
-        console.log('•••exit'.blue);
+ 
         return userQuests;
     }
     async checkStatusOne(questID, userID, msg) {

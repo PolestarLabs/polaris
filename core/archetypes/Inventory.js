@@ -11,7 +11,7 @@ class InventoryCommand {
     });
   }
 
-  getUserData() { console.log(this.userID); return DB.users.get(this.userID); }
+  getUserData() { return DB.users.get(this.userID); }
 
   async listItems(uD) {
     if (!uD || !uD.modules) uD = await this.getUserData();

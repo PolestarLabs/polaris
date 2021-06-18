@@ -71,7 +71,6 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
   let responses = [];
 
   if (useButtons) {
-    console.log({ buttonSettings })
     await promptMessage.edit({
       content: promptMessage.content,
       components: [{
@@ -106,7 +105,6 @@ module.exports = async function yesNo(promptMessage, commandMessage, yesFunction
 
   if (!responses?.length) return null;
 
-  console.log({ responses })
 
   if (
     (responses.length === 1 && responses[0]?.emoji?.id === NA.id) ||

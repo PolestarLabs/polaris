@@ -203,7 +203,6 @@ function QUEUED_COMMAND(commandFile) {
   return (...args) => {
     if (PLX.maintenance) {
       if (args[0]?.guild.id == "277391723322408960" && args[0]?.channel.id != "488142034776096772") {
-        console.log('nope'.red)
         return args[0]?.reply(('🔧') + " • Maintenance ongoing.");
       }
       if (![cfg.STAFF_GUILD, cfg.OFFICIAL_GUILD].includes(args[0]?.guild.id)) return args[0]?.reply(('🔧') + " • Maintenance ongoing.");
@@ -297,10 +296,8 @@ const registerCommands = (rel) => {
       modules.map(async (folder) => {
         const commands = (await readdirAsync(`./core/commands/${folder}`)).map((_c) => _c.split(".")[0]);
         results = results.concat(commands.map((_cmd) => registerOne(folder, _cmd)).filter((x) => !!x));
-        // console.log({folder},{results})
       }),
     ).then((res) => {
-      // console.log({res,results})
       hook.info(`
       **Commands Reloaded**
 ${_emoji("yep")} **${results.filter((_) => !!_.pass).length}** / ${results.length} commands registered.
