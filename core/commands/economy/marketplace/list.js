@@ -39,6 +39,7 @@ const init = async (msg, args) => {
         break;
       case "material":
       case "materials":
+      case "-m":
         query = { item_type: "material" };
         break;
       case "item":
@@ -51,6 +52,7 @@ const init = async (msg, args) => {
         query = { author: msg.author.id };
         break;
       case "user":
+      case "-u":
         if (msg.args[2]) {
           Target = await PLX.resolveUser(msg.args[2]);
           if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
