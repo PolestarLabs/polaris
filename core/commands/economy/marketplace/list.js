@@ -46,11 +46,13 @@ const init = async (msg, args) => {
         query = { item_type: { $in: ["key", "junk", "material"] } };
         break;
       case "mine":
+      case "me":
+      case "@me":
         query = { author: msg.author.id };
         break;
       case "user":
         if (msg.args[2]) {
-          Target = await PLX.getTarget(msg.args[2]);
+          Target = await PLX.resolveUser(msg.args[2]);
           if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
           query = { author: Target.id };
         } else {
@@ -62,6 +64,8 @@ const init = async (msg, args) => {
         break;
     }
   }
+
+  query.lock = {$exists:false};
 
   const [marketbase, itemcount] = await Promise.all(
     [
