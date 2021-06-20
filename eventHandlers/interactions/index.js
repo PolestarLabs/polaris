@@ -51,12 +51,12 @@ module.exports = async function (payload) {
         token: payload.d.token,
         type: interaction_type,
         ack: function () {
-            PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, {
+            return PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, {
                 "type": this.type === 3 ? 6 : 1
             });
         },
         defer: function () {
-            PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, {
+            return PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, {
                 "type": 5
             });
         },
@@ -64,19 +64,19 @@ module.exports = async function (payload) {
             //if (this.type === 3) return null;
             const response = { data };
             response.type = 7;
-            PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response);
+            return PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response);
         },
         editOriginal: function (data, file) {
-            PLX.requestHandler.request('PATCH', `/webhooks/${PLX.user.id}/${this.token}/messages/@original`, true, data, file);
+            return PLX.requestHandler.request('PATCH', `/webhooks/${PLX.user.id}/${this.token}/messages/@original`, true, data, file);
         },
         reply: function (data, file) {
             const response = { data };
             response.type = 4;
-            PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response, file);
+            return PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response, file);
         },
         followup: function (data, file) {
             if (data.embed) data.embeds = [data.embed];
-            PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}`, true, data, file);
+            return PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}`, true, data, file);
         },
     }
 
