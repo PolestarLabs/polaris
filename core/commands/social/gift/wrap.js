@@ -1,6 +1,6 @@
 const ReactionMenu = require("../../../structures/ReactionMenu");
 const {ITEM_TYPES} = require("./_meta.js");
-
+const randomShitGenerator = require("../../../utilities/randomGenerator");
 
 const init = async (msg, args) => {
 
@@ -83,10 +83,81 @@ async function createGiftWrap(msg, giftItem, destroystring) {
     _emoji("gift_P_B"),
   ]).slice(0, 4);
 
-  const menuMessage = await msg.channel.send("**Choose your wrapping**");
-  const res = await ReactionMenu(menuMessage, msg, wrapChoices, { time: 10000 });
+  const buttonWraps = wrapChoices.map(wrap=>{
+    return {
+      type: 2,
+      style: 2,
+      emoji: {id: wrap.id},
+      custom_id: wrap,
+    }
+  });
+  const components = [{type:1, components: buttonWraps}];
+
+
+  const menuMessage = await msg.channel.send({
+    content: "**Choose your wrapping**",
+    components
+  });
+  
+  const wrappingCollector = menuMessage.createButtonCollector(c=>c.userID === msg.author.id, {
+    maxMatches:1,
+    time:15e3,
+    removeButtons: 1,
+  });
+
+  wrappingCollector.on("click", async ({interaction,id}) => {
+    console.log({id})
+    await wait(.5);
+    await menuMessage.edit(`${id}`);
+    const noteMessage = await interaction.followup({
+      content: "**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*"
+    });
+    const responses = await msg.channel.awaitMessages((msg2) => {
+      const res = msg2.author.id === msg.author.id;
+      if (res) msg2.delete().catch(e=>null);
+      return res;
+    }, {
+      maxMatches: 1,
+      time: 30e3,
+    });
+console.log({noteMessage})
+    PLX.deleteMessage(msg.channel.id,noteMessage.id).catch(e=>null);
+    giftItem.message = responses.length > 0 ? responses[0].content : null;
+    giftItem.friendlyID = randomShitGenerator(["adjective","color",["animal","fruit"],"number"])
+
+    await interaction.followup(
+      {
+        content: "\u200b",
+        flags: 64, 
+        embed: {
+          title: "Gift Preview",
+          description: `This is how your gift will look like when opened:\n*\`\`\`${giftItem.message}\`\`\`*`,
+          thumbnail: { url: `https://cdn.discordapp.com/emojis/${id.replace(/[^0-9]/g,'')}.png` },
+          image: { url: `${paths.CDN}/${giftItem.type}s/${giftItem.item}.png` },
+        },
+      }
+    );
+
+    msg.channel.send( `${id} • Done! Gift wrapped and ready to be delivered. This gift's ID is: \`${giftItem.friendlyID}\`` )
+
+   
+
+    /*
+    const noteMessage = await msg.channel.send("**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*");
+    const responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id, {
+      maxMatches: 1,
+      time: 30e3,
+    });
+    */
+    return msg.reply(".",{file:JSON.stringify({ giftItem },0,2),name:'test.json'});
+  })
+
+  return;
+  //const res = await ReactionMenu(menuMessage, msg, wrapChoices, { time: 10000 });
 
   const emoji = res ? wrapChoices[res.index] : shuffle(wrapChoices)[0];
+
+
 
   giftItem.emoji = emoji;
 
