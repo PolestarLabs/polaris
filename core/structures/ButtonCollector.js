@@ -50,7 +50,12 @@ class ButtonCollector extends EventEmitter {
     if (this.ended) return;
     this.ended = true;
     this.bot.removeListener("messageComponent", this.listener);
-    if (!this.options.removeButtons) this.message.edit({ content: this.message.content, components: [] }).catch(err => null)
+
+    //FIXME[epic=bsian] This is waiting Eris to be able to edit messages with only components and no content or embed field
+    //if (this.options?.removeButtons === false) this.message.disableButtons('all').catch(err => null);
+    
+    if (this.options?.removeButtons === false) null;
+    else this.message.edit({ content: this.message.content, components: [] }).catch(err => null);
     this.emit("end", this.collected, reason);
   }
 }
