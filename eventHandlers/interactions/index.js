@@ -74,6 +74,10 @@ module.exports = async function (payload) {
             response.type = 4;
             PLX.requestHandler.request('POST', `/interactions/${this.id}/${this.token}/callback`, true, response, file);
         },
+        followup: function (data, file) {
+            if (data.embed) data.embeds = [data.embed];
+            PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}`, true, data, file);
+        },
     }
 
     if (interaction_type === 2) {
