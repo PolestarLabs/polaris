@@ -7,5 +7,5 @@ module.exports = {
   botPerms: ["attachFiles", "embedLinks", "manageMessages"],
   aliases: [],
   argsRequired: true,
-  subs: ["wrap", "inventory", "open", "give"],
+  subs: ["wrap", "inventory", "open", "give","peek"],
 };
