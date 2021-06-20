@@ -76,7 +76,7 @@ module.exports = async function (payload) {
         },
         followup: function (data, file) {
             if (data.embed) data.embeds = [data.embed];
-            return PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}`, true, data, file);
+            return PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}?wait=true`, true, data, file);
         },
     }
 
