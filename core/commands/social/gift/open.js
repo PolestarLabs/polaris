@@ -45,7 +45,7 @@ const init = async (msg, args) => {
       break;
   }
 
-  const emojiId = gift.emoji.replace(">", "").split(":")[2].trim();
+  const emojiId = gift.emoji?.replace(/[^0-9]/g, "") || "648769995613929472";
 
   if (gift.type != "item" && gift.type != "gems") {
     if (!userData.modules[giftMetadata.inv].includes(gift.item)) {
