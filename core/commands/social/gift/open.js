@@ -1,46 +1,43 @@
+const {ITEM_TYPES} = require("./_meta.js");
+
 const init = async (msg, args) => {
   const inventory = await DB.gifts.find({ holder: msg.author.id }).lean().exec();
 
   if (inventory.length < 1) return "No gifts to be opened!";
 
   const userData = await DB.users.get(msg.author.id);
-  const gift = inventory[Number(args[1] || 1) - 1 || inventory.length - 1];
+  const gift = inventory.find(g=>g.friendlyID?.toLowerCase() == args[0]?.toLowerCase()) || inventory[Number(args[0] || 1) - 1 || inventory.length - 1];
 
-  const giftMetadata = {};
-  let metaData;
+  const giftMetadata = ITEM_TYPES.find(t=>t.type===gift.type);
+  const dbItemData = await DB.cosmetics.get({[giftMetadata.finder]:gift.item});
+
+  if (!dbItemData) return _emoji('nope') + " Invalid Item";
+
   switch (gift.type) {
     case "background":
-      metaData = await DB.cosmetics.get({ code: gift.item });
-      giftMetadata.name = metaData.name;
-      giftMetadata.rarity = metaData.rarity;
-      giftMetadata.inv = "bgInventory";
+      giftMetadata.name = dbItemData.name;
+      giftMetadata.rarity = dbItemData.rarity;
       giftMetadata.img = `${paths.CDN}/backdrops/${gift.item}.png`;
       break;
     case "medal":
-      metaData = await DB.cosmetics.get({ icon: gift.item });
-      giftMetadata.name = metaData.name;
-      giftMetadata.rarity = metaData.rarity;
-      giftMetadata.inv = "medalInventory";
+      giftMetadata.name = dbItemData.name;
+      giftMetadata.rarity = dbItemData.rarity;
       giftMetadata.thumb = `${paths.CDN}/medal/${gift.item}.png`;
       break;
     case "sticker":
-      metaData = await DB.cosmetics.get({ id: gift.item });
-      giftMetadata.name = metaData.name;
-      giftMetadata.rarity = metaData.rarity;
-      giftMetadata.inv = "stickerInventory";
+      giftMetadata.name = dbItemData.name;
+      giftMetadata.rarity = dbItemData.rarity;
       giftMetadata.img = `${paths.CDN}/stickers/${gift.item}.png`;
       break;
     case "item":
-      metaData = await DB.items.get({ id: gift.item });
-      giftMetadata.name = metaData.name;
-      giftMetadata.rarity = metaData.rarity;
-      giftMetadata.inv = "inventory";
+      giftMetadata.name = dbItemData.name;
+      giftMetadata.rarity = dbItemData.rarity;
       giftMetadata.thumb = `${paths.CDN}/items/${gift.item}.png`;
       break;
     case "gems":
       giftMetadata.name = gift.item[2];
       giftMetadata.rarity = gift.item[1];
-      giftMetadata.inv = gift.item[0];
+      giftMetadata.inventory = gift.item[0];
       // giftMetadata.thumb
       break;
   }
@@ -48,27 +45,53 @@ const init = async (msg, args) => {
   const emojiId = gift.emoji?.replace(/[^0-9]/g, "") || "648769995613929472";
 
   if (gift.type != "item" && gift.type != "gems") {
-    if (!userData.modules[giftMetadata.inv].includes(gift.item)) {
-      await DB.gifts.remove({ _id: gift._id });
-      Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
-      await DB.users.set(msg.author.id, { $addToSet: { [`modules.${giftMetadata.inv}`]: gift.item } });
+    if (!userData.modules[ giftMetadata.inventory].includes(gift.item)) {
+      
+      if (!msg.content.includes('--dry-run')){
+        await DB.gifts.remove({ _id: gift._id });
+        Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
+        await DB.users.set(msg.author.id, { $addToSet: { [`modules.${ giftMetadata.inventory}`]: gift.item } });
+      }
 
-      return {
+      const giftContents = await msg.channel.send({
         embed: {
           color: 0x7dffff,
-          description: `Opened ${gift._id}
-                    Contents: ${gift.type}
-                    **${giftMetadata.rarity}** ${giftMetadata.name}
-                    Message:*\`\`\`
-${gift.message || "- - -"}
-                    \`\`\`*
-                    `,
+          description: `Gift **${gift.friendlyID || gift._id}** sent by <@${gift.previous||gift.creator}>\n\n`+
+            `Contents: \`${gift.type}\`\n${
+              _emoji(giftMetadata.rarity)} **${giftMetadata.name
+            }**\n\nMessage Attached:\n*\`\`\`\n${
+              (gift.private ? "--This gift's message is private--" : gift.message) || "- - -"
+            }\`\`\`*`,
           thumbnail: { url: `https://cdn.discordapp.com/emojis/${emojiId}.png` },
           image: giftMetadata.img ? { url: giftMetadata.img } : null,
         },
-      };
+      });
+
+      if (gift.private){
+        await giftContents.setButtons([{label:"Check private content",custom_id:"chkPrivate"}]);
+        await giftContents.awaitButtonClick(({interaction,userID})=>{
+          console.log({userID})
+            if (userID === msg.author.id){
+              interaction.followup({
+                content: "This message will never be shown again. If the contents of it are important, be sure to save it.",
+                flags: 64,
+                embed: {
+                  description: `*\`\`\`\n${ gift.message || "- - -" }\`\`\`*`
+                }
+              });
+              return true;
+            } else{
+              return false;
+            }
+        },{
+          time: 60e3,
+          maxMatches: 1
+        })
+      }
+
+    }else{
+      return "You can't open this gift because you already own the contents!"; // TRANSLATE[epic=translations] open
     }
-    return "You can't open this gift because you already own the contents!"; // TRANSLATE[epic=translations] open
   }
 };
 
