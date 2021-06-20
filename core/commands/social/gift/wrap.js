@@ -123,7 +123,8 @@ async function createGiftWrap(msg, giftItem, destroystring) {
 console.log({noteMessage})
     PLX.deleteMessage(msg.channel.id,noteMessage.id).catch(e=>null);
     giftItem.message = responses.length > 0 ? responses[0].content : null;
-    giftItem.friendlyID = randomShitGenerator(["adjective","color",["animal","fruit"],"number"])
+    giftItem.friendlyID = randomShitGenerator(["adjective","color",["animal","fruit"],"number"]);
+    giftItem.emoji = id;
 
     await interaction.followup(
       {
