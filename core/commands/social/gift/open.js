@@ -7,7 +7,7 @@ const init = async (msg, args) => {
   const gift = inventory[Number(args[1] || 1) - 1 || inventory.length - 1];
 
   const giftMetadata = {};
-  let metadata;
+  let metaData;
   switch (gift.type) {
     case "background":
       metaData = await DB.cosmetics.get({ code: gift.item });
