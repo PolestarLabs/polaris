@@ -1,4 +1,5 @@
 const { EventEmitter } = require("events");
+const collectors = [];
 
 class ButtonCollector extends EventEmitter {
   constructor(message, filter, options = {}) {
@@ -8,9 +9,10 @@ class ButtonCollector extends EventEmitter {
     this.message = message;
     this.ended = false;
     this.collected = [];
-    this.bot = message.channel.guild?.shard.client || message.channel._client || PLX;
-    this.listener = (interaction, data) => this.verify(interaction, data, interaction.member.user.id);
-    this.bot.on("messageComponent", this.listener);
+    //this.bot = message.channel.guild?.shard.client || message.channel._client || PLX;
+    //this.listener = (interaction, data) => this.verify(interaction, data, interaction.member.user.id);
+    //this.bot.on("messageComponent", this.listener);
+    collectors.push(this);
     if (this.options.time) setTimeout(() => this.stop("time"), this.options.time);
     else setTimeout(() => this.stop("time"), 10000);
     if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
@@ -49,20 +51,28 @@ class ButtonCollector extends EventEmitter {
   stop(reason) {
     if (this.ended) return;
     this.ended = true;
-    this.bot.removeListener("messageComponent", this.listener);
+    collectors.splice(collectors.indexOf(this), 1);
+    //this.bot.removeListener("messageComponent", this.listener);
 
     //FIXME[epic=bsian] This is waiting Eris to be able to edit messages with only components and no content or embed field
     //if (this.options?.removeButtons === false) this.message.disableButtons('all').catch(err => null);
     
     if (this.options?.removeButtons === false) null;
-    else this.message.edit({ content: this.message.content, components: [] }).catch(err => null);
+    else this.message.edit?.({ content: this.message.content, components: [] })?.catch(err => null);
     this.emit("end", this.collected, reason);
   }
 }
-
+let listening = false;
 module.exports = (Eris) => {
+  if (Eris === "createRogue") {
+    return function createButtonCollector(msg, filter, options) {
+      checkListener()
+      return new ButtonCollector(msg, filter, options);
+    };
+  }
   Eris.Message.prototype.awaitButtonClick = function awaitButtonClick(filter, options) {
-    //FIXME[epic=flicky] uncomment this when bsian's PR is merged
+    checkListener()
+    //FIXME[epic=flicky] uncomment this when bsian's eris PR is merged
     //if (!this.components?.length) return Promise.reject(new Error("No components in message!"));
     const collector = new ButtonCollector(this, filter, options);
     return new Promise((resolve, reject) => collector.on("end", (col, reason) => {
@@ -72,6 +82,18 @@ module.exports = (Eris) => {
   };
 
   Eris.Message.prototype.createButtonCollector = function createButtonCollector(filter, options) {
+    checkListener()
     return new ButtonCollector(this, filter, options);
   };
 };
+
+
+function checkListener(){
+	if(!listening) {
+		PLX.on("messageComponent", (interaction, data) => {
+			for(const collector of collectors) collector.verify(interaction, data, interaction.member.user.id);
+		});
+
+		listening = true;
+	}
+}
