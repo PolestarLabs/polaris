@@ -4,7 +4,7 @@ const randomShitGenerator = require("../../../utilities/randomGenerator");
 
 const init = async (msg, args) => {
 
-  if (msg.guild.id !== '789382326680551455') return "Temp. Disabled. Try again in 24hs";
+  if (msg.guild.id !== '789382326680551455') return "Wrapping gifts is disabled for the next few hours.";
   
   let selectedItemType = ITEM_TYPES.find(type=>{
     const query = args[0].toLowerCase();
@@ -138,54 +138,15 @@ console.log({noteMessage})
       }
     );
 
-    msg.channel.send( `${id} • Done! Gift wrapped and ready to be delivered. This gift's ID is: \`${giftItem.friendlyID}\`` )
-
-   
-
-    /*
-    const noteMessage = await msg.channel.send("**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*");
-    const responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id, {
-      maxMatches: 1,
-      time: 30e3,
-    });
-    */
-    return msg.reply(".",{file:JSON.stringify({ giftItem },0,2),name:'test.json'});
+    await DB.users.set(msg.author.id, destroystring);
+    await DB.gifts.set(Date.now(), giftItem);
+    Progression.emit("action.gift.pack", { msg, value: 1, userID: msg.author.id });
+    
+    msg.channel.send( `${_emoji('yep')} **Done!** Gift wrapped and ready to be delivered. This gift's ID is: ${id} \`${giftItem.friendlyID}\`` )
+    //return msg.reply(".",{file:JSON.stringify({ giftItem },0,2),name:'test.json'});
   })
+ 
 
-  return;
-  //const res = await ReactionMenu(menuMessage, msg, wrapChoices, { time: 10000 });
-
-  const emoji = res ? wrapChoices[res.index] : shuffle(wrapChoices)[0];
-
-
-
-  giftItem.emoji = emoji;
-
-  menuMessage.edit(`${emoji}`);
-  const noteMessage = await msg.channel.send("**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*");
-  const responses = await msg.channel.awaitMessages((msg2) => msg2.author.id === msg.author.id, {
-    maxMatches: 1,
-    time: 30e3,
-  });
-
-  menuMessage.delete();
-  giftItem.message = responses.length > 0 ? responses[0].content : null;
-  noteMessage.edit(
-    {
-      content: "\u200b",
-      embed: {
-        description: `*\`\`\`${giftItem.message}\`\`\`*`,
-        thumbnail: { url: `https://cdn.discordapp.com/emojis/${emoji.id}.png` },
-      },
-    }
-  );
-
-  if (responses[0])
-    responses[0].delete();
-
-  await DB.users.set(msg.author.id, destroystring);
-  Progression.emit("action.gift.pack", { msg, value: 1, userID: msg.author.id });
-  await DB.gifts.set(Date.now(), giftItem);
-  msg.addReaction(_emoji("yep").reaction);
+ 
 }
 
