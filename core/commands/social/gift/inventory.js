@@ -11,7 +11,7 @@ const init = async (msg, args) => {
 
   let description = "";
   inventory.map((it, ind) => {
-    description += `\n**${++ind}. ${it.emoji} ${it._id}** Packed by <@${it.creator}>`;
+    description += `\n**${++ind}. ${it.emoji} ${it.friendlyID||it._id}** Packed by <@${it.creator}>`;
     if (it.previous?.length) {
       description += `\nPrevious owner(s): ${it.previous.map((prev, ind, arr) => `<@${prev}>${ind == arr.length - 1 ? "" : ", "}`).join("")}`;
     }
@@ -23,5 +23,5 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   argsRequired: false,
-  aliases: ["inv"],
+  aliases: ["inv","list","ls","i"],
 };
