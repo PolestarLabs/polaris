@@ -1,4 +1,4 @@
-const ReactionMenu = require("../../../structures/ReactionMenu");
+const ButtonCollector = require("../../../structures/ButtonCollector.js")("createRogue");
 const {ITEM_TYPES} = require("./_meta.js");
 const randomShitGenerator = require("../../../utilities/randomGenerator");
 
@@ -71,6 +71,128 @@ module.exports = {
 
 
 async function createGiftWrap(msg, giftItem, destroystring) {
+  
+
+  let buttonWraps = createWrapChoices();
+  const row2 = [
+    {
+      type: 2,
+      style: 4,
+      emoji: { id: _emoji('nope').id },
+      custom_id: "giftMakeCancel",    
+    },
+    {
+      type: 2,
+      style: 1,
+      emoji: { name:"🔁" },
+      custom_id: "rerollWraps",
+    }
+  ]
+
+ 
+  const components = [{type:1, components: buttonWraps},{type:1, components: row2}];
+
+
+  const menuMessage = await msg.channel.send({
+    content: "**Choose your wrapping**",
+    components
+  });
+  
+  const wrappingCollector = menuMessage.createButtonCollector(c=>c.userID === msg.author.id, {
+    //maxMatches:1,
+    time:25e3,
+    removeButtons: 1,
+  });
+
+  wrappingCollector.on("click", async ({interaction,id}) => {
+    if (id === 'rerollWraps') {
+      const newWraps = createWrapChoices();
+      return menuMessage.setButtons([newWraps,row2]);
+    }
+    if (id === 'giftMakeCancel') return msg.channel.send( `${_emoji('nope')} Gift creation cancelled.` );
+    wrappingCollector.stop("action");
+    
+    await wait(.5);
+    await menuMessage.edit(`${id}`);
+    const noteMessage = await interaction.followup({
+      content: "**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*"
+    });
+    const responses = await msg.channel.awaitMessages((msg2) => {
+      const res = msg2.author.id === msg.author.id;
+      if (res) msg2.delete().catch(e=>null);
+      return res;
+    }, {
+      maxMatches: 1,
+      time: 30e3,
+    });
+
+    PLX.deleteMessage(msg.channel.id,noteMessage.id).catch(e=>null);
+    giftItem.message = responses.length > 0 ? responses[0].content : null;
+    giftItem.friendlyID = randomShitGenerator(["adjective","color",["animal","fruit"],"number"]);
+    giftItem.emoji = id;
+
+    const confirmation = await interaction.followup(
+      {
+        content: "This is how your gift will look like when opened. Confirm if the message should be private or open.",
+        flags: 64, 
+        embed: {
+          title: "Gift Preview",
+          description: `\n*\`\`\`${giftItem.message}\`\`\`*`,
+          thumbnail: { url: `https://cdn.discordapp.com/emojis/${id.replace(/[^0-9]/g,'')}.png` },
+          image: { url: `${paths.CDN}/${giftItem.type}s/${giftItem.item}.png` },
+        },
+        components: [{
+            type: 1,
+            components: [
+              {
+                type: 2,
+                style: 1,
+                emoji: { id: _emoji('yep').id },
+                label: "Make message open",
+                custom_id: "giftMakePublic"
+              },
+              {
+                type: 2,
+                style: 2,
+                emoji: { id: _emoji('yep').id },
+                label:  "Make message private",
+                custom_id: "giftMakePrivate"
+              },
+              {
+                type: 2,
+                style: 4,
+                emoji: { id: _emoji('nope').id },
+                label:  "Cancel",
+                custom_id: "giftMakeCancel"
+              }
+            ]
+        }]         
+      }
+    );
+
+    const ephCollector = ButtonCollector(
+      confirmation,
+      r=>r.userID === msg.author.id,
+      { time: 50e3, maxMatches: 5 }
+    );
+    
+    ephCollector.on("click", async ({interaction,id}) => {
+      if (id === 'giftMakeCancel') return msg.channel.send( `${_emoji('nope')} Gift creation cancelled.` );
+      if (id === 'giftMakePrivate') giftItem.private = true;
+      await DB.users.set(msg.author.id, destroystring);
+      await DB.gifts.set(Date.now(), giftItem);
+      Progression.emit("action.gift.pack", { msg, value: 1, userID: msg.author.id });
+      msg.channel.send( `${_emoji('yep')} **Done!** Gift wrapped and ready to be delivered. This gift's ID is: ${id} \`${giftItem.friendlyID}\`` );
+    })
+    
+    //return msg.reply(".",{file:JSON.stringify({ giftItem },0,2),name:'test.json'});
+  })
+ 
+
+ 
+}
+
+function createWrapChoices(){
   const wrapChoices = shuffle([
     _emoji("gift_Y_S"),
     _emoji("gift_Y_R"),
@@ -91,63 +213,5 @@ async function createGiftWrap(msg, giftItem, destroystring) {
       custom_id: wrap,
     }
   });
-  const components = [{type:1, components: buttonWraps}];
-
-
-  const menuMessage = await msg.channel.send({
-    content: "**Choose your wrapping**",
-    components
-  });
-  
-  const wrappingCollector = menuMessage.createButtonCollector(c=>c.userID === msg.author.id, {
-    maxMatches:1,
-    time:15e3,
-    removeButtons: 1,
-  });
-
-  wrappingCollector.on("click", async ({interaction,id}) => {
-    console.log({id})
-    await wait(.5);
-    await menuMessage.edit(`${id}`);
-    const noteMessage = await interaction.followup({
-      content: "**Please add a message to your gift!**\n*(Once you wrap it you can't see it anymore!)*"
-    });
-    const responses = await msg.channel.awaitMessages((msg2) => {
-      const res = msg2.author.id === msg.author.id;
-      if (res) msg2.delete().catch(e=>null);
-      return res;
-    }, {
-      maxMatches: 1,
-      time: 30e3,
-    });
-console.log({noteMessage})
-    PLX.deleteMessage(msg.channel.id,noteMessage.id).catch(e=>null);
-    giftItem.message = responses.length > 0 ? responses[0].content : null;
-    giftItem.friendlyID = randomShitGenerator(["adjective","color",["animal","fruit"],"number"]);
-    giftItem.emoji = id;
-
-    await interaction.followup(
-      {
-        content: "\u200b",
-        flags: 64, 
-        embed: {
-          title: "Gift Preview",
-          description: `This is how your gift will look like when opened:\n*\`\`\`${giftItem.message}\`\`\`*`,
-          thumbnail: { url: `https://cdn.discordapp.com/emojis/${id.replace(/[^0-9]/g,'')}.png` },
-          image: { url: `${paths.CDN}/${giftItem.type}s/${giftItem.item}.png` },
-        },
-      }
-    );
-
-    await DB.users.set(msg.author.id, destroystring);
-    await DB.gifts.set(Date.now(), giftItem);
-    Progression.emit("action.gift.pack", { msg, value: 1, userID: msg.author.id });
-    
-    msg.channel.send( `${_emoji('yep')} **Done!** Gift wrapped and ready to be delivered. This gift's ID is: ${id} \`${giftItem.friendlyID}\`` )
-    //return msg.reply(".",{file:JSON.stringify({ giftItem },0,2),name:'test.json'});
-  })
- 
-
- 
+  return buttonWraps;
 }
-
