@@ -35,12 +35,9 @@ module.exports = function (Eris) {
 
     if (dry) return components;
 
-    return this.edit({
-      content: this.content,
-      components,
-    });
+    return this.edit({ components });
   };
-  Eris.Message.prototype.removeButtons = async function (buttonIDs) {
+  Eris.Message.prototype.removeButtons = async function (buttonIDs,options) {
     let currentComps = this.components || await this.getComponents();
     let newComps = currentComps
       .map((row) => {
@@ -51,15 +48,21 @@ module.exports = function (Eris) {
       })
       .filter((row) => row.components.length);
 
-    return this.edit({ content: this.content, components: newComps });
+    if (options?.returnObj) return newComps; 
+    if (currentComps === newComps) return;
+    return this.edit({ components: newComps });
   };
-  Eris.Message.prototype.removeComponentRow = async function (row) {
+  Eris.Message.prototype.removeComponentRow = async function (row,options) {
     let currentComps =  this.components || await this.getComponents();
-    currentComps[row] = null;
+    if (!currentComps[row]) return;
+    currentComps.splice(row,1);
     let newComps = currentComps.filter((c) => !!c);
 
-    return this.edit({ content: this.content, components: newComps });
+    if (options?.returnObj) return newComps; 
+    if (currentComps === newComps) return;
+    return this.edit({ components: newComps });
   };
+
   Eris.Message.prototype.addButtons = async function (buttons, row = 0) {
     let currentComps =  this.components || await this.getComponents();
 
@@ -70,7 +73,7 @@ module.exports = function (Eris) {
     return this.setButtons(newButtons);
   };
 
-  Eris.Message.prototype.disableButtons = async function (buttonIDs) {
+  Eris.Message.prototype.disableButtons = async function (buttonIDs,options) {
     let currentComps =  this.components || await this.getComponents();
     let newComps = currentComps.map((row) => {
       row.components.forEach((btn) =>
@@ -80,10 +83,13 @@ module.exports = function (Eris) {
       );
       return row;
     });
-    return this.edit({ content: this.content, components: newComps });
+
+    if (options?.returnObj) return newComps; 
+    if (currentComps === newComps) return;
+    return this.edit({ components: newComps });
   };
 
-  Eris.Message.prototype.enableButtons = async function (buttonIDs) {
+  Eris.Message.prototype.enableButtons = async function (buttonIDs,options) {
     let currentComps =  this.components || await this.getComponents();
     let newComps = currentComps.map((row) => {
       row.components.forEach((btn) =>
@@ -93,11 +99,14 @@ module.exports = function (Eris) {
       );
       return row;
     });
-    return this.edit({ content: this.content, components: newComps });
-  };
-  Eris.Message.prototype.updateButtons = async function (btnData) {
 
-    let currentComps = this.components || await this.getComponents();
+    if (options?.returnObj) return newComps; 
+    if (currentComps === newComps) return;
+    return this.edit({ components: newComps });
+  };
+  Eris.Message.prototype.updateButtons = function (btnData,options) {
+
+    let currentComps = this.components;
     let newComps = currentComps.map((row, i) => {
       row.components.forEach((btn, ii) => {
 
@@ -116,6 +125,8 @@ module.exports = function (Eris) {
       return row;
     });
 
-    return this.edit({ content: this.content, components: newComps });
+    if (options?.returnObj) return newComps; 
+    if (currentComps === newComps) return;
+    return this.edit({ components: newComps });
   };
 };
