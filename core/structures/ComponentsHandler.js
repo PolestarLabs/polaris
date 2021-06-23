@@ -41,7 +41,7 @@ module.exports = function (Eris) {
     });
   };
   Eris.Message.prototype.removeButtons = async function (buttonIDs) {
-    let currentComps = await this.getComponents();
+    let currentComps = this.components || await this.getComponents();
     let newComps = currentComps
       .map((row) => {
         row.components = row.components.filter(
@@ -54,14 +54,14 @@ module.exports = function (Eris) {
     return this.edit({ content: this.content, components: newComps });
   };
   Eris.Message.prototype.removeComponentRow = async function (row) {
-    let currentComps = await this.getComponents();
+    let currentComps =  this.components || await this.getComponents();
     currentComps[row] = null;
     let newComps = currentComps.filter((c) => !!c);
 
     return this.edit({ content: this.content, components: newComps });
   };
   Eris.Message.prototype.addButtons = async function (buttons, row = 0) {
-    let currentComps = await this.getComponents();
+    let currentComps =  this.components || await this.getComponents();
 
     newButtons = currentComps.map((row) => row.components || []);
     if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
@@ -71,7 +71,7 @@ module.exports = function (Eris) {
   };
 
   Eris.Message.prototype.disableButtons = async function (buttonIDs) {
-    let currentComps = await this.getComponents();
+    let currentComps =  this.components || await this.getComponents();
     let newComps = currentComps.map((row) => {
       row.components.forEach((btn) =>
         buttonIDs === "all" || buttonIDs.includes(btn.custom_id)
@@ -84,7 +84,7 @@ module.exports = function (Eris) {
   };
 
   Eris.Message.prototype.enableButtons = async function (buttonIDs) {
-    let currentComps = await this.getComponents();
+    let currentComps =  this.components || await this.getComponents();
     let newComps = currentComps.map((row) => {
       row.components.forEach((btn) =>
         buttonIDs === "all" || buttonIDs.includes(btn.custom_id)
@@ -97,7 +97,7 @@ module.exports = function (Eris) {
   };
   Eris.Message.prototype.updateButtons = async function (btnData) {
 
-    let currentComps = await this.getComponents();
+    let currentComps = this.components || await this.getComponents();
     let newComps = currentComps.map((row, i) => {
       row.components.forEach((btn, ii) => {
 
