@@ -231,7 +231,7 @@ class ProgressionManager extends EventEmitter {
         })
         //*/
         
-        if (questAction === "streak" && eventAction !== "streak") return false;
+        if (eventAction === "streak" && questAction !== "streak") return false;
 
         if(quest.tracker === eventTracker || quest.tracker === "*" || quest.tracker === "*.*" || quest.tracker === "*.*.*"  ) { // PERFECT MATCH
             console.log("[Progression]".blue, "Perfect Match".green, eventTracker,"/",quest.tracker )
