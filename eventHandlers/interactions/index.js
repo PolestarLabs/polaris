@@ -79,7 +79,7 @@ module.exports = async function (payload) {
             return PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}?wait=true`, true, data, file);
         },
     }
-
+    
     if (interaction_type === 2) {
         PLX.emit("applicationCommand", interaction, payload.d.data);
     }
