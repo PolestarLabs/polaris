@@ -74,7 +74,7 @@ module.exports = function (Eris) {
   };
 
   Eris.Message.prototype.disableButtons = async function (buttonIDs,options) {
-    let currentComps =  this.components || await this.getComponents();
+    let currentComps =  (this.components && !options?.enforce) || await this.getComponents();
     let newComps = currentComps.map((row) => {
       row.components.forEach((btn) =>
         buttonIDs === "all" || buttonIDs.includes(btn.custom_id)
