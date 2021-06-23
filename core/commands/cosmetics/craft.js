@@ -46,7 +46,7 @@ const init = async (msg, args) => {
       if (DYM.length > 0) {
         const stepMessage = await msg.channel.send(`${rand$t("responses.verbose.interjections.gomenasai", P)} ${res}\n> • ${DYM.join("\n> • ")}`);
         if (DYM.length > 1) return;
-        if ((await YesNo(stepMessage, msg, true, false, null)) === true) {
+        if ((await YesNo(stepMessage, msg, {deleteOriginal:true})) === true) {
           [craftedItem] = searchResults;
           console.log(`cr: ${inspect(craftedItem)} :: sr: ${inspect(searchResults)}`);
         } else {
