@@ -1,13 +1,6 @@
 
 module.exports = async (interaction, data) => {
 
-    const startimer = Date.now();
-
-    _benchmark = (s) => {
-    console.log(`${s.blue + (Date.now() - startimer)}ms`);
-    };
-
-
     const [, , ownerID] = data.custom_id?.split(':') || [];
 
     if (ownerID != interaction.userID) {
@@ -27,13 +20,12 @@ module.exports = async (interaction, data) => {
         interaction.ack();
         return interaction.message.disableButtons("all");
     }
-    _benchmark('-u1')
+    
     const fakeMsg = Object.assign({}, interaction.message, {
         author: await PLX.resolveUser(interaction.userID),
         prefix: PLX.guildPrefixes[interaction.guild.id][0]
     })
     
-    _benchmark('-u2')
     let args = [];
     args[10] = interaction.userID;
 
