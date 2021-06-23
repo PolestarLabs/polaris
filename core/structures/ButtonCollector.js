@@ -52,13 +52,10 @@ class ButtonCollector extends EventEmitter {
     if (this.ended) return;
     this.ended = true;
     collectors.splice(collectors.indexOf(this), 1);
-    //this.bot.removeListener("messageComponent", this.listener);
 
-    //FIXME[epic=bsian] This is waiting Eris to be able to edit messages with only components and no content or embed field
-    //if (this.options?.removeButtons === false) this.message.disableButtons('all').catch(err => null);
+    if (this.options?.removeButtons === false) this.message.disableButtons('all',{enforce:true}).catch(err => console.error(err));
+    else this.message.edit?.({ components: [] })?.catch(err => null);
     
-    if (this.options?.removeButtons === false) null;
-    else this.message.edit?.({ content: this.message.content, components: [] })?.catch(err => null);
     this.emit("end", this.collected, reason);
   }
 }
@@ -71,9 +68,10 @@ module.exports = (Eris) => {
     };
   }
   Eris.Message.prototype.awaitButtonClick = function awaitButtonClick(filter, options) {
-    checkListener()
-    //FIXME[epic=flicky] uncomment this when bsian's eris PR is merged
+    checkListener();
+    //console.log({x:this.message.components},'thiscomps')
     //if (!this.components?.length) return Promise.reject(new Error("No components in message!"));
+    
     const collector = new ButtonCollector(this, filter, options);
     return new Promise((resolve, reject) => collector.on("end", (col, reason) => {
       if (reason === "time" && col.length === 0) reject(new Error("timeOut--buttons"));
