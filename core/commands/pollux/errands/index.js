@@ -89,19 +89,22 @@ const init = async function (msg, args) {
     embedMini.description += userErrands.map(x => parseQuestItem(errandsData, x, true)).join('\n');
 
     const errandMessage = await msg.channel.send({ embed: embedMini, messageReferenceID: msg.id });
-    await errandMessage.addReaction('↗️');
-    const collector = errandMessage.createReactionCollector(r => r.userID === msg.author.id, { time: 60e3 });
+    await errandMessage.setButtons([{emoji:{name:'↗️'},label:"Expand Details",custom_id:"errand_dets",style:1}]);
+    const collector = errandMessage.createButtonCollector(r => r.userID === msg.author.id, { removeButtons:false, time: 6e3 });
 
-    collector.on("emoji", async () => {
+    collector.on("click", async () => {
         await errandMessage.removeReactions();
 
         if (isMini) await errandMessage.edit({ embed: embed });
         else await errandMessage.edit({ embed: embedMini });
 
-        !isMini ? errandMessage.addReaction('↗️') : errandMessage.addReaction('↙️');
+        !isMini 
+            ? await errandMessage.setButtons([{emoji:{name:'↗️'},label:"Expand Details",custom_id:"errand_dets",style:1}])
+            : await errandMessage.setButtons([{emoji:{name:'↙️'},label:"Collapse Details",custom_id:"errand_dets",style:2}]);
+            // errandMessage.addReaction('↗️') : errandMessage.addReaction('↙️');
         isMini = !isMini;
     })
-    collector.on("end", () => errandMessage.removeReactions())
+    collector.on("end", () => errandMessage.disableButtons('all',{enforce:true}));
 
 }
 module.exports = {
