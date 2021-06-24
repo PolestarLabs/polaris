@@ -854,7 +854,7 @@ const init = async (msg, args) => {
           await ECO.pay(msg.author.id, Math.abs(winnings), "blackjack", "RBN", { progressionOptions: { msg }, disableFundsCheck: true });
         }
       } else {
-        Progression.emit("streak.blackjack.win", { valueSet: 0, msg, userID: msg.author.id });
+        Progression.emit("streak.blackjack.win", { value: -1, msg, userID: msg.author.id });
         Progression.emit("play.blackjack.push", { msg, userID: msg.author.id });
       }
 
