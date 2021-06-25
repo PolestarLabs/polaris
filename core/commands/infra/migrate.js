@@ -59,7 +59,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
   embed.description = `
  • Your Lootboxes will be capped to **10 of each type**, any exceeding boxes will be **destroyed**.
- • Your **Rubines** will be reset. You'll get to keep 5% of what you have now, + your current Daily Streak × 15.
+ • Your **Rubines** will be reset. You'll get to keep 5% of what you have now, + your current Daily Streak × 10.
  • Your **Jades** will be halved.
  • Your **Sapphires** will be increased by **20%** *(if you have an active supporter tier you get +10% per tier level. Max +80%)*.
  • Your **Marriages** will be transferred unless they're with yourself or with a repeated person, if someone you're married to already did the transfer, they will be skipped.
@@ -386,6 +386,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
       msg.channel.send("All set! Your account has been migrated to the New Super Fancy Pollux Database™ successfully! Enjoy the new features~");
       await wait(1);
+      /*
       msg.channel.send("*Ah, also. Have this cake!*");
       await wait(1);
       msg.channel.send({
@@ -397,7 +398,8 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           ~~Try using \`${msg.prefix}food info\` to learn more!~~ **SOON**™️`,
         },
       });
-
+      */
+      await vDB.users.set(msg.author.id, { $set: { "switches.tokensMigrated": true } });
       let neodata = await DB.users.get(msg.author.id);
       console.log({ neodata })
 
