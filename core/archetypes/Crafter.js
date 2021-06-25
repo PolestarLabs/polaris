@@ -279,8 +279,8 @@ class Crafter extends EventEmitter {
       const payloads = this.gemsTotal
         .map((gem) => {
           Progression.emit(`spend.${gem[0]}.crafting`,{userID: this._userID, value: -gem[1]});
-          return generatePayload(this._userID, PLX.user.id, -gem[1], "crafting", gem[0], "PAYMENT", "-"))
-        };
+          return generatePayload(this._userID, PLX.user.id, -gem[1], "crafting", gem[0], "PAYMENT", "-")
+        });
       console.table(payloads);
       return DB.audits.collection.insertMany(payloads)
         .then(() => payloads);
