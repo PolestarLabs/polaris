@@ -5,6 +5,7 @@ const init = async function (msg) {
         return msg.addReaction(_emoji('nope').reaction);
 
     await DB.users.set(msg.author.id, { $set: { "eventGoodie": oldUser.eventGoodie } });
+    await vDB.users.set(msg.author.id, { $set: { "switches.tokensMigrated": true } });
 
     return msg.addReaction(_emoji('yep').reaction);
 
