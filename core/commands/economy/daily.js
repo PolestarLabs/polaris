@@ -146,7 +146,6 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       });
     })
     .once("guildBooster", () => {
-      msg.channel.createMessage("[DEBUG] Booster detected");
       processQueue.push(async () => ctx.drawImage(await constantAssets.boost, 0 - 50, 0));
     })
     .once("userDonator", (donoBoost) => {
@@ -179,7 +178,6 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
         /// //////////////////////////////////////////////
 
         if (myDaily.PSM) {
-          msg.channel.createMessage("[DEBUG] Prisms collected");
           ctx.drawImage(numberBoostPrize.item, 660 - 35, 540);
         }
 
