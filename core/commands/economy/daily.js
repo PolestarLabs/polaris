@@ -146,6 +146,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       });
     })
     .once("guildBooster", () => {
+      msg.channel.createMessage("[DEBUG] Booster detected");
       processQueue.push(async () => ctx.drawImage(await constantAssets.boost, 0 - 50, 0));
     })
     .once("userDonator", (donoBoost) => {
