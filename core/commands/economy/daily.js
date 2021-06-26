@@ -177,7 +177,10 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
         /// //////////////////////////////////////////////
 
-        if (myDaily.PSM) ctx.drawImage(numberBoostPrize.item, 660 - 35, 540);
+        if (myDaily.PSM) {
+          msg.channel.createMessage("[DEBUG] Prisms collected");
+          ctx.drawImage(numberBoostPrize.item, 660 - 35, 540);
+        }
 
         if (timedUsage.userDaily.insured) ctx.drawImage(await constantAssets.expTagInsu, 0, 0);
         else if (timedUsage.streakStatus === "recovered") {
