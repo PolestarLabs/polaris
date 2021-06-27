@@ -2,11 +2,9 @@
 
 const { inspect } = require("util");
 const os = require("os");
+const formatDuration = require("date-fns/formatDuration");
 
 const init = async function (msg) {
-  const moment = require("moment");
-  moment.locale(msg.lang[0] || "en");
-
   const emb = new Embed();
 
   emb.color("#e83774");
@@ -16,7 +14,7 @@ const init = async function (msg) {
   const server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
   const user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
   const ping = `${msg.guild.shard.latency}ms`;
-  const duration = moment(Date.now() + PLX.uptime) - moment();
+  const duration = formatDuration(PLX.uptime, 0);
   const s = Math.floor((duration / 1000) % 60);
   const m = Math.floor((duration / 1000 / 60) % 60);
   const h = Math.floor((duration / (1000 * 60 * 60)) % 24);

@@ -2,7 +2,7 @@
 const isPRIME = process.env.PRIME;
 const { Client } = require("eris");
 const cfg = require("./config.json");
-const moment = require("moment");
+const formatDistance = require("date-fns/formatDistance");
 const { CronJob } = require("cron");
 require("colors");
 
@@ -73,7 +73,7 @@ const FIFTEENminute = new CronJob("*/1 * * * *", async () => {
 
 const ONEminute = new CronJob("*/1 * * * *", async () => {
   console.log(`
-   ${"[SIDECAR]".blue} - Uptime: ${moment(Date.now() - PLX.uptime).fromNow(true)}
+   ${"[SIDECAR]".blue} - Uptime: ${formatDistance(PLX.uptime, 0)}
   `);
 
   //= =====================================================================================

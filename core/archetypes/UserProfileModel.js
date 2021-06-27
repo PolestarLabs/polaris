@@ -1,4 +1,4 @@
-const moment = require("moment");
+const formatDistance = require("date-fns/formatDistance");
 
 function XPercent(X, Lv, f = 0.0427899) {
   const toNEXT = Math.trunc(((Lv + 1) / f) ** 2);
@@ -98,7 +98,7 @@ class UserProfileModel {
         ring: marriage.ring,
         initiative: marriage.initiative === this.ID,
         lovepoints: marriage.lovepoints || 0,
-        since: moment.utc(marriage.since).fromNow(true),
+        since: formatDistance(Date.now(), marriage.since),
         wifeName: discordWife.username,
         wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
       };

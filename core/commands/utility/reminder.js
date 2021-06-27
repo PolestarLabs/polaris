@@ -1,18 +1,6 @@
 const chrono = require("chrono-node");
-const moment = require("moment");
-
-const longDateFormat = {
-  LTS: "h:mm:ss A",
-  LT: "h:mm:ss A",
-  L: "MM/DD/YYYY",
-  l: "M/D/YYYY",
-  LL: "MMMM Do YYYY",
-  ll: "MMM D YYYY",
-  LLL: "MMMM Do YYYY LT",
-  lll: "MMM D YYYY LT",
-  LLLL: "dddd, MMMM Do YYYY LT",
-  llll: "ddd, MMM D YYYY LT",
-};
+const format = require("date-fns/format");
+const formatDistanceToNow = require("date-fns/formatDistanceToNow")
 
 const parser = new chrono.Chrono();
 /*
@@ -30,7 +18,6 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
-  moment.locale(msg.lang[0] || "en", { longDateFormat });
   const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
   const P = { lngs: msg.lang };
 
@@ -43,11 +30,11 @@ const init = async (msg, args) => {
           icon_url: msg.author.avatarURL,
         },
         fields: userReminders.map((r) => ({
-          name: `<:future:446901833642934274> ${moment.utc(r.expires).format("DD/MM/YYYY - HH:mm:ss")} `,
+          name: `<:future:446901833642934274> ${format(r.expires, "dd/MM/yyyy - HH:mm:ss O")}`, // NOTE The "O" is reference to GMT timezone
           value: `\\🗓️ *${r.name.trim()}*\n\\📌 ${r.channel === "dm" ? "DM" : `<#${r.channel}>`}`,
           inline: false,
         })),
-        footer: { text: "All times are in UTC" },
+        // footer: { text: "All times are in UTC" },
       },
     };
   }
@@ -108,7 +95,7 @@ const init = async (msg, args) => {
     url: msg.author.id, type: "reminder", name: reminder, expires: timestamp, repeat: 0, channel: destination || "dm",
   });
 
-  P.time = moment.utc(timestamp).calendar();
+  P.time = formatDistanceToNow(timestamp);
   P.channel = `<#${destination}>`;
   P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
 
@@ -116,72 +103,6 @@ const init = async (msg, args) => {
 
   P.appointment = `\`${reminder}\``;
   return $t("interface.reminders.reminderOk", P);
-
-  /*
-  let preInput = null;
-
-  if (input.includes("|")) {
-    preInput = input.split("|")[0];
-    input = input.split("|").slice(1).join(" ").trim();
-  }
-
-  // const regex = /^@?([^\s]+)(?: to )?(.*)$/;
-
-  const options = { forwardDate: true, startOfDay: 9 };
-  const from = Date.now() - ((Date.now() + 30e3) % 60e3) + 60e3;
-
-  const regex = /([0-9]+)(wk?s?)?(ds?)?(hr?s?)?(ms?)?(s)?/gm;
-  let lastUnit;
-  input = input.replace(regex, (full, $1, $2, $3, $4, $5, $6) => { // TODO[epic=bsian] clean this up
-    if (lastUnit === " second") throw new Error("Unit exceeds seconds");
-    console.log($1, $2, $3);
-    if ($2) $2 = " week";
-    if ($3) $3 = " day";
-    if ($4) $4 = " hour";
-    if ($5) $5 = " minute";
-    if ($6) $6 = " second";
-    let unit = $6 || $5 || $4 || $3 || $2;
-    if (unit) lastUnit = unit;
-    else {
-      unit = lastUnit === " week"
-        ? " day"
-        : lastUnit === " day"
-          ? " hour"
-          : lastUnit === " hour"
-            ? " minute"
-            : lastUnit === " minute"
-              ? " second"
-              : " minute";
-    }
-
-    return $1 + unit;
-  });
-
-  let what = preInput || input;
-  const when = parser.parse(input, from, options);
-
-  if (when.length < 1) return $t("interface.reminders.errorWhen", P);
-
-  const timestamp = when[0].start.date().getTime(); // + 3600000 * 3;
-
-  if (timestamp < from) return $t("interface.reminders.errorTARDIS", P);
-
-  when.forEach((w) => {
-    what = what.replace(w.text, "");
-  });
-  what = what.trim();
-
-  await DB.feed.new({
-    url: msg.author.id, type: "reminder", name: preInput || what, expires: timestamp, repeat: 0, channel: destination || "dm",
-  });
-
-  P.appointment = `\`${preInput || what}\``;
-  P.time = moment.utc(timestamp).calendar();
-  P.channel = `<#${destination}>`;
-  P.location = destination ? $t("interface.reminders.reminderChannel", P) : $t("interface.reminders.reminderDMs", P);
-
-  return $t("interface.reminders.reminderOk", P);
-  */
 };
 module.exports = {
   init,

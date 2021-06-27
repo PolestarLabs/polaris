@@ -1,20 +1,16 @@
+const format = require("date-fns/format");
+const locale = require("date-fns/locale/en-GB");
+
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const moment = require("moment");
-  moment.locale(msg.lang[0]);
-
   const TG = await PLX.getTarget(msg.args[0] || msg.author.id, msg.guild);
   if (!TG) return msg.channel.send($t("responses.errors.kin404", P));
-  const joinMoment = moment.utc(msg.guild.member(TG).joinedAt);
-  moment.locale("en");
-  const joinMomentNeutral = moment.utc(msg.guild.member(TG).joinedAt);
   P.target = TG.username;
-  P.joinedstamp = joinMoment.format(moment.localeData().longDateFormat("LLLL"));
 
-  const wiki = `${joinMomentNeutral.format("YYYY")}_${joinMomentNeutral.format("MMMM")}_${joinMomentNeutral.format("D")}`;
-
-  P.joinedstamp = `[${P.joinedstamp}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} "${$t("interface.generic.alotWentOn", P)}")`;
+  const member = msg.guild.member(TG).joinedAt;
+  const wiki = format(member, "yyyy_MMMM_d")
+  P.joinedstamp = `[${format(member, "ccc PPpp", { locale })}](https://en.wikipedia.org/wiki/Portal:Current_events/${wiki} "${$t("interface.generic.alotWentOn", P)}")`; // TODO[epic=bsian] Proper localisation support
 
   msg.channel.send({ embed: { description: $t("misc.memberSince", P), color: 11237342 } });
 };

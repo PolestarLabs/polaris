@@ -3,6 +3,7 @@ const DAY = 22 * 60 * 60e3;
 const EXPIRE = 1 * DAY * 2.5;
 
 const { TimedUsage, Daily } = require("@polestar/timed-usage");
+const formatDistance = require("date-fns/formatDistance");
 
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
@@ -39,8 +40,6 @@ const constantAssets = {
  * @param {import("eris").Message} msg
  */
 const init = async (msg) => {
-  const moment = require("moment");
-  moment.locale(msg.lang[0] || "en");
 
   /** @type {import("i18next").TranslationOptions} */
   const P = { lngs: msg.lang, prefix: msg.prefix };
@@ -67,7 +66,7 @@ const init = async (msg) => {
   const timedUsage = daily.timedUsage;
 
   if (["status", "stats"].includes(msg.args[0]?.toLowerCase())) {
-    const { userDaily, dailyAvailable, keepStreak } = timedUsage;
+    const { userDaily, dailyAvailable, keepStreak, availableAt } = timedUsage;
     const { streak, insured, last } = userDaily;
 
     const powerups = [];
@@ -78,13 +77,9 @@ const init = async (msg) => {
       color: 0xE34555,
       title: "Daily Status",
       description: `
-${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}
-${_emoji("future")} ${dailyAvailable
-          ? _emoji("online")
-          : _emoji("dnd")} **${v.next}** ${moment.utc(timedUsage.availableAt).fromNow()}
-${_emoji("expired")} ${keepStreak ? _emoji("online") : _emoji("dnd")} **${v.expirestr}** ${keepStreak
-          ? ` ${moment.duration(-(Date.now() - last - (timedUsage.expiration || 0))).humanize({ h: 1000 })}!`
-          : "I have bad news for you..."}
+${_emoji("time")} ${_emoji("offline")} **${v.last}** <t:${~~(last/1000)}:R>
+${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** <t:${~~(availableAt/1000)}:R>
+${_emoji("expired")} ${keepStreak ? _emoji("online") : _emoji("dnd")} **${v.expirestr}** ${keepStreak ? ` <t:${~~((last + timedUsage.expiration)/1000)}:R>!` : "I have bad news for you..."}
 ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 `,
       fields: [
@@ -107,8 +102,8 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   }
 
   if (!timedUsage.available && msg.author.id !== "88120564400553984") {
-    P.remaining = moment.utc(timedUsage.availableAt).fromNow(true);
-    return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P));
+    P.remaining = `<t:${~~(timedUsage.availableAt/1000)}:R>`;
+    return msg.channel.send(_emoji("nope") + $t("responses.daily.dailyNope", P)); // FIXME[epic=bsian] Remove the "in" in the locale
   }
 
   // @ts-ignore

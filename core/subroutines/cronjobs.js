@@ -1,6 +1,5 @@
 // _PLX[epic=Utilities] Per-Shard Cronjobs
-
-const moment = require("moment");
+const formatDistance = require("date-fns/formatDistance");
 
 const { CronJob } = require("cron");
 
@@ -58,7 +57,7 @@ exports.run = async function run() {
   /* EVERY 1 MINUTE */
   //= =====================================================================================
   const ONE_MINUTE = new CronJob("*/1 * * * *", async () => {
-    console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${moment(Date.now() - PLX.uptime).fromNow(true)}
+    console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${formatDistance(PLX.uptime, 0)}
     `.gray);
 
   }, null, true);

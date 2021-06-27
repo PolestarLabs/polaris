@@ -1,4 +1,3 @@
-const moment = require("moment");
 const { TimedUsage } = require("@polestar/timed-usage");
 const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
@@ -25,8 +24,8 @@ const init = async (msg, args) => {
 
     const embed = new Embed();
     embed.setColor("#e35555");
-    embed.description(`${_emoji} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}\n`
-      + `${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(last).add(2, "hours").fromNow()}`);
+    embed.description(`${_emoji} ${_emoji("offline")} **${v.last}** <t:${~~(last/1000)}:R>\n`
+      + `${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** <t:${~~((last)/1000) + 7200}:R>`);
     return msg.channel.createMessage({ embed });
   }
 
@@ -176,7 +175,7 @@ const init = async (msg, args) => {
   };
 
   if (!Daily.available) {
-    P.remaining = moment.utc(Daily.availableAt).fromNow(true);
+    P.remaining = `<t:${~~(Daily.availableAt/1000)}:R>`;
     const dailyNope = $t("responses.give.cooldown", P);
     const embed = new Embed();
     embed.setColor("#e35555");

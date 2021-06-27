@@ -1,15 +1,13 @@
 const { FORFEIT, parseQuestItem } = require('./_meta.js');
 
 const { TimedUsage } = require("@polestar/timed-usage");
-const moment = require("moment");
+const formatDistanceToNow = require("date-fns/formatDistanceToNow");
 //const Progression = require("../../archetypes/Progression.js");
 
 const INTERVAL = 60e3 * 5 //8 * 60 * 60e3 // 8 Hours
 
 
 const init = async function (msg, args) {
-
-    moment.locale(msg.lang[0])
     let userErrands = await Progression.getUserQuests(msg.author.id);
     let completed = userErrands.filter(e => e.completed);
 
@@ -69,7 +67,7 @@ const init = async function (msg, args) {
 
     embed.fields.push({
         name: '\u200b', value: `
-\`${msg.prefix}errands forfeit\` Abandon one ongoing Errand ${newForfeit.available ? `${_emoji('ONL')} **Available**` : `${_emoji('AWY')}${moment.utc(newForfeit.availableAt).fromNow(true)}`}
+\`${msg.prefix}errands forfeit\` Abandon one ongoing Errand ${newForfeit.available ? `${_emoji('ONL')} **Available**` : `${_emoji('AWY')}${formatDistanceToNow(newForfeit.availableAt)}`}
     `, inline: false
     });
 
@@ -79,7 +77,7 @@ const init = async function (msg, args) {
         text:
             newErrand.available
                 ? `A new Errand is available now. You can have 5 active errands at a time`
-                : `A new errand will be available in ${moment.utc(newErrand.availableAt).fromNow(true)}. You can have 5 active errands at a time`
+                : `A new errand will be available <t:${~~(newErrand.availableAt/1000)}:R>. You can have 5 active errands at a time`
     }
 
     let isMini = true;

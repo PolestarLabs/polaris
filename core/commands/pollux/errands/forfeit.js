@@ -1,12 +1,10 @@
 const { FORFEIT, parseQuestItem } = require("./_meta.js");
 const { TimedUsage } = require("@polestar/timed-usage");
-const moment = require("moment");
+const formatDistanceToNow = require("date-fns/formatDistanceToNow");
 const ReactionMenu = require("../../../structures/ReactionMenu.js");
 const ECO = require("../../../archetypes/Economy.js");
 
 const init = async function (msg, args) {
-
-    moment.locale(msg.lang[0]);
     const userData = await DB.users.get(msg.author.id);
     const newForfeit = await new TimedUsage("errandForfeit", { day: FORFEIT }).loadUser(msg.author);
 
@@ -64,7 +62,7 @@ ${userData.modules.SPH >= 5
     } else {
         return {
             embed: {
-                description: `${_emoji('AWY')}${moment.utc(newForfeit.availableAt).fromNow(true)} until you can forfeit an ongoing Errand`
+                description: `${_emoji('AWY')}${formatDistanceToNow(newForfeit.availableAt)} until you can forfeit an ongoing Errand`
             }, messageReferenceID: msg.id
         }
     }

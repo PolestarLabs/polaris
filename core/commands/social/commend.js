@@ -1,4 +1,3 @@
-const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
 const init = async function (msg) {
@@ -48,7 +47,7 @@ const init = async function (msg) {
   };
 
   const reject = function (msg, Daily, r) {
-    P.remaining = moment.utc(r).fromNow(true);
+    P.remaining = `<t:${~~((Date.now() + (Math.abs(r - Date.now()))) / 1000)}:R>`; // TODO[epic=bsian] Clean up the Math.abs
     const dailyNope = $t("responses.commend.cooldown", P);
     const embed = new Embed();
     embed.setColor("#e35555");
@@ -59,7 +58,7 @@ const init = async function (msg) {
   const status = async function (msg, Daily) {
     const userDaily = await Daily.userData(msg.author);
     const dailyAvailable = await Daily.available(msg.author);
-    P.remaining = moment.utc(userDaily.last).add(Daily.day, "milliseconds").fromNow(true);
+    P.remaining = `<t:${~~((userDaily.last + Daily.day) / 1000)}:R>`
     const embed = new Embed();
     embed.setColor("#3b9ea5");
     embed.description(

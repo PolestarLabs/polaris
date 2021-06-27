@@ -1,6 +1,6 @@
 const EventEmitter = require("events");
 let { ACHIEVEMENTS } = require("./Achievements.js");
-const moment = require("moment");
+const formatDistanceToNow = require("date-fns/formatDistanceToNow");
 const { setImmediate } = require("timers/promises");
 class ProgressionManager extends EventEmitter {
     constructor() {
@@ -74,7 +74,6 @@ class ProgressionManager extends EventEmitter {
 
         this.on("QUEST_COMPLETED", async (event, quest, opts) => {
             const { msg, userQuests } = opts;
-            moment.locale(msg.lang?.[0] || 'en');
             //award rewards;
             msg.reply(await questCompletedMsg(quest, msg.author.id))
                 .catch((err) => {
@@ -298,7 +297,7 @@ async function questCompletedMsg(userQuest, userID) {
         }
     });
     const createdAt = new Date(parseInt(userQuest._id.toString().substring(0, 8), 16) * 1000).getTime();
-    const completion = moment.utc(createdAt).from(Date.now(), true);
+    const completion = formatDistanceToNow(createdAt);
 
     embed.footer = { text: `Completed in: ${completion}` };
     embed.timestamp = new Date();

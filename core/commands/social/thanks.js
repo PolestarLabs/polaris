@@ -1,7 +1,6 @@
 const { autoSubs: topAutoSubs } = require("./top.js");
 
 const DAY = 1 * 3.6e+6;
-const moment = require("moment");
 const Timed = require("../../structures/TimedUsage");
 
 const init = async function (msg, args) {
@@ -29,7 +28,7 @@ const init = async function (msg, args) {
   };
 
   const reject = function (msg, timer, r) {
-    P.remaining = moment.utc(r).fromNow(true);
+    P.remaining = `<t:${~~(r / 1000)}:R>`;
     P.command = msg.prefix + msg.command.label;
     const dailyNope = $t("responses.timers_generic.cooldown", P);
     const embed = new Embed();
@@ -41,7 +40,7 @@ const init = async function (msg, args) {
   const status = async function (msg, timer) {
     const userDaily = await timer.userData(msg.author);
     const dailyAvailable = await timer.available(msg.author);
-    P.remaining = moment.utc(userDaily.last).add(timer.day, "milliseconds").fromNow(true);
+    P.remaining = `<t:${~~((userDaily.last + timer.day) / 1000)}:R>`
     P.command = msg.prefix + msg.command.label;
     const remainingEmbed = {};
     remainingEmbed.color = 0x3b9ea5;
