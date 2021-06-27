@@ -17,7 +17,7 @@ const init = async function (msg) {
     ? { title: data.name.value, hex, data }
     : { title: "Invalid Color (Defaults to Black)", hex: "#000000" };
 
-  if (!msg.args[0] || msg.args[0] === "npc") {
+  if (!msg.args[0] || msg.args[0]?.toLowerCase() === "npc") {
     const oneNPC = RPGen.NPCs.generate();
     const fs = require("fs");
     fs.readdir(`${appRoot}/resources/rpgen/pics/`, (err, files) => {
@@ -77,7 +77,7 @@ const init = async function (msg) {
     return;
   }
 
-  if (["plot", "hook", "story"].includes(msg.args[0])) {
+  if (["plot", "hook", "story"].includes(msg.args[0]?.toLowerCase())) {
     let flavor;
     if (!msg.args[1] || msg.args[1] === "player") {
       flavor = (RPGen.Storyhooks.pcRelated());
