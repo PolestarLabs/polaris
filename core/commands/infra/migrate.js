@@ -352,10 +352,10 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
     let result;
     if (TASKLIST.items[i].wait) {
-      result = await TASKLIST.items[i].action();
+      result = await TASKLIST.items[i].action().catch(e=>false);
       postTask(result, i);
     } else {
-      TASKLIST.items[i].action().then(r => postTask(r, i));
+      TASKLIST.items[i].action().then(r => postTask(r, i)).catch(console.error);
     }
 
     embed.description = TASKLIST.printList();
