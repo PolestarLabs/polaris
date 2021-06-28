@@ -55,7 +55,7 @@ const init = async (msg) => {
   if (code === "process.exit()") {
     const output = `<:maybe:476214608592633866>${invisibar}\`\`\`js\n${clean("Terminating Node Process...")}\`\`\``;
     const embed = { description: output };
-    await msg.channel.createMessage({ embed }).then(async () => {
+    await msg.reply({ embed }).then(async () => {
       await wait(1);
       process.exit(1);
     });
@@ -80,7 +80,7 @@ const init = async (msg) => {
     const output = `<:yep:339398829050953728> ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${out.full ? "// Check output file" : out}\`\`\``;
     const embed = { description: output };
     embed.color = 0x2bce64;
-    return msg.channel.createMessage({ embed }, (out.full ? { name: "output.js", file: out.full } : undefined));
+    return msg.reply({ embed }, (out.full ? { name: "output.js", file: out.full } : undefined));
   } catch (e) {
     runtime = performance.now() - runtime;
     const out = clean(e.stack || []);
@@ -89,7 +89,7 @@ const init = async (msg) => {
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
     console.error(e);
-    return msg.channel.createMessage({ embed }, (out.full ? { name: "error.js", file: out.full } : undefined));
+    return msg.reply({ embed }, (out.full ? { name: "error.js", file: out.full } : undefined));
   }
 };
 
