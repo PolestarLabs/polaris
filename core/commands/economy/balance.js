@@ -1,5 +1,3 @@
-const moment = require("moment");
-
 const init = async (msg) => {
   const Target = msg.author;
   const emb = new Embed();
@@ -21,7 +19,6 @@ const init = async (msg) => {
     const nope = $t('CMD.noDM',P);
     */
 
-  moment.locale(msg.lang[0]);
 
   const TARGETDATA = (await DB.users.get({ id: Target.id })) || (await DB.users.new(msg.author));
 
@@ -33,7 +30,7 @@ const init = async (msg) => {
 
     const POLid = PLX.user.id;
 
-    const ts = `<t:${~~(x.timestamp/1000)}:R>`; //moment(x.timestamp).format("hh:mma | DD/MMM").padStart(16, "\u200b ");
+    const ts = `<t:${~~(x.timestamp/1000)}:R>`;
     if (x.type === "SEND") x.type = "TRANSFER";
     if (x.to === POLid || x.to === 'DASHBOARD') return `🔴 *${ts}*\u2002 ${_emoji(x.currency, x.currency)}\u2002×\u2002**${x.amt}**\n\u200b `
                                                      + `╰ |   *\`${x.type}\`*`;

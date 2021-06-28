@@ -1,6 +1,5 @@
 // TRANSLATE[epic=translations] transfer
 
-const moment = require("moment");
 const ECO = require("../../archetypes/Economy");
 const Timed = require("../../structures/TimedUsage");
 
@@ -37,7 +36,7 @@ const init = async (msg) => {
   };
 
   const reject = (message, Daily, r) => {
-    P.remaining = moment.utc(r).fromNow(true);
+    P.remaining = `<t:${~~(r/1000)}:R>`;
     const dailyNope = $t("responses.give.cooldown", P);
     const embed = new Embed();
     embed.setColor("#e35555");
@@ -51,8 +50,8 @@ const init = async (msg) => {
     const embe2 = new Embed();
     embe2.setColor("#e35555");
     embe2.description = `
-    ${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(last).fromNow()}
-    ${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** ${moment.utc(last).add(4, "hours").fromNow()}
+    ${_emoji("time")} ${_emoji("offline")} **${v.last}** <t:${~~(last/1000)}:R>
+    ${_emoji("future")} ${dailyAvailable ? _emoji("online") : _emoji("dnd")} **${v.next}** <t:${~~((last)/1000) + 14400}:R>}
       `;
     return message.channel.send({ embed: embe2 });
   };

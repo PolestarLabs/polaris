@@ -1,4 +1,5 @@
-const moment = require("moment");
+const formatDistanceToNow = require("date-fns/formatDistanceToNow");
+const addHours = require("date-fns/addHours");
 
 class DailyCmd {
   /**
@@ -67,8 +68,6 @@ class DailyCmd {
 }
 exports.init = async function init(message, cmd, opts, success, reject, info, presuccess) {
   const P = { lngs: message.lang };
-  const lang = message.lang[0];
-  moment.locale(lang);
 
   const Daily = new DailyCmd(cmd, opts);
   const v = {
@@ -100,10 +99,10 @@ exports.init = async function init(message, cmd, opts, success, reject, info, pr
     const embe2 = new Embed();
     embe2.setColor("#e35555");
     embe2.description(`
-${_emoji("time")} ${_emoji("offline")} **${v.last}** ${moment.utc(userDaily).fromNow()}
+${_emoji("time")} ${_emoji("offline")} **${v.last}** ${formatDistanceToNow(userDaily)}
 ${_emoji("future")} ${dailyAvailable
         ? _emoji("online")
-        : _emoji("dnd")} **${v.next}** ${moment.utc(userDaily).add((DAY / 1000 / 60 / 60), "hours").fromNow()}
+        : _emoji("dnd")} **${v.next}** ${formatDistanceToNow(addHours(userDaily, DAY / 1000 / 60 / 60))}
   `);
     return message.channel.send({ embed: embe2 });
   }
