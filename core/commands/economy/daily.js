@@ -1,9 +1,5 @@
 //TODO[epic=Constants Module] Replace
-const DAY = 22 * 60 * 60e3;
-const EXPIRE = 1 * DAY * 2.5;
-
-const { TimedUsage, Daily } = require("@polestar/timed-usage");
-const formatDistance = require("date-fns/formatDistance");
+const { Daily } = require("@polestar/timed-usage");
 
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
