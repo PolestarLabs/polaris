@@ -4,7 +4,7 @@ const randomShitGenerator = require("../../../utilities/randomGenerator");
 
 const init = async (msg, args) => {
 
-  if (msg.guild.id !== '789382326680551455') return "Wrapping gifts is disabled for the next few hours.";
+  //if (msg.guild.id !== '789382326680551455') return "Wrapping gifts is disabled for the next few hours.";
   
   let selectedItemType = ITEM_TYPES.find(type=>{
     const query = args[0].toLowerCase();
