@@ -349,7 +349,7 @@ async function startMultiplayerGame(msg) {
 		}
 
 		verifiedPlayers?.forEach(player => {
-			Progression.emit("play.russianroulette.friends", {
+			Progression.emit("streak.russianroulette.friends", {
 				valueSet: verifiedPlayers.length,
 				userID: player.id,
 				msg,
