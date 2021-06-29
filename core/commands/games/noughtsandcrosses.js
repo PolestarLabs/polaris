@@ -166,7 +166,7 @@ const init = async (msg, args) => {
 
       PLX.off('rawWS', listener);
 
-      const content = `${players.map((p) => `<@${p}>}`).join(' and ')} drew!`; // Prevent useless double map
+      const content = `${players.map((p) => `<@${p}>`).join(' and ')} drew!`; // Prevent useless double map
 
       msg.channel.createMessage({
         content,
