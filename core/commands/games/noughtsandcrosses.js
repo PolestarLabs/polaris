@@ -87,7 +87,6 @@ const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
     });
 
     d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
-    d.message.components[y - 1].components[x - 1].label = '';
     d.message.components[y - 1].components[x - 1].emoji = playerTurnIndex ? { name: '✖️' } : { id: '851610730880303125' }; // { name: playerTurnIndex ? '❌' : '⭕' };
     d.message.components[y - 1].components[x - 1].disabled = true;
 
@@ -135,17 +134,17 @@ const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
             type: 2,
             style: 2,
             custom_id: '1,1',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '2,1',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '3,1',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }
         ]
       }, {
@@ -155,17 +154,17 @@ const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
             type: 2,
             style: 2,
             custom_id: '1,2',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '2,2',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '3,2',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }
         ]
       }, {
@@ -175,17 +174,17 @@ const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
             type: 2,
             style: 2,
             custom_id: '1,3',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '2,3',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }, {
             type: 2,
             style: 2,
             custom_id: '3,3',
-            label: '\u200b'
+            emoji: {id:"601288252867084318"}
           }
         ]
       }
