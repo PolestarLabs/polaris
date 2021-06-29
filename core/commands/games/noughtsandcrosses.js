@@ -113,6 +113,7 @@ const init = async (msg, args) => {
         winner = score / 3;
         return true;
       };
+      if (boardGrid.reduce((a, b) => [...a, ...b]).filter((a) => a === null).length === 0) return null;
     });
 
     d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
