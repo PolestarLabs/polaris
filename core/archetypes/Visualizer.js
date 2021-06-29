@@ -67,16 +67,18 @@ class Visualizer {
     return toret;
   }
 
-  _genRecursive(item, inventory, depth = 0, length = 1, index = 1, parentIndex = 1, maxdepth = 1) {
+  _genRecursive(item, inventory, depth = 0, length = 1, index = 1, parentIndex = 1, maxDepth = 1) {
     let str = "";
     let depthstr = "";
     const it = "\u2003\u2002";
+    let nakeddepthstr = it;
     const pipe = "║";
     const _T = "╠═";
     const _L = "╚═";
 
     for (let i = 0; i < depth; i++) {
-      depthstr += ((parentIndex < maxdepth && (maxdepth - (i + 1) === depth || parentIndex + i === maxdepth || depth === i + 1))
+      nakeddepthstr += it
+      depthstr += ((parentIndex < maxDepth && (maxDepth - (i + 1) === depth || parentIndex + i === maxDepth || depth === i + 1))
         ? pipe
         : "\u200b "
       ) + it;
@@ -96,7 +98,7 @@ class Visualizer {
 
     str += `${depthstr} ${emote} **${item.name}** ${miliarize(item.count) || 1}${item.count >= 10000 ? "" : "x"}`;
     if (item.craft) {
-      str += Object.keys(item.gems).map(
+      str += `\n${nakeddepthstr} ${ (depth==maxDepth?"  ":pipe) + _emoji('__') } `+Object.keys(item.gems).map(
         (gem, i) => `${i === 0 ? " :: " : ""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`,
       ).join(" ");
     }
