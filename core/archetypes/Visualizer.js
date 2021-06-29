@@ -89,7 +89,7 @@ class Visualizer {
     const emote = item.craft
       ? "🛠️"
       : item.id === this.crafter._item.id
-        ? " <:gooselike:678164792103534594>"
+        ? "<a:polluxloading:845940929625063466> "
         : (inventory[item.id] >= item.count)
           ? ((inventory[item.id] -= item.count) || true) && _emoji("yep")
           : _emoji("nope");
