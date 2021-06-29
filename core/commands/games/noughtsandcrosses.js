@@ -1,46 +1,39 @@
-/**
- * 
- * @param {import('eris').Message<import('eris').GuildTextableChannel>} msg 
- * @param {string[]} args 
- */
-
-
 const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
 
-  const res ={
-    r1  : { 
-      data: grid[0], 
-      coords: grid[0].map((r,i)=>([0,i]))
+  const res = {
+    r1: {
+      data: grid[0],
+      coords: grid[0].map((r, i) => ([0, i]))
     },
-    r2  : { 
-      data: grid[1], 
-      coords: grid[0].map((r,i)=>([1,i]))
+    r2: {
+      data: grid[1],
+      coords: grid[0].map((r, i) => ([1, i]))
     },
-    r3  : { 
-      data: grid[2], 
-      coords: grid[0].map((r,i)=>([2,i]))
-    },
-
-    c1  : { 
-      data: grid.map(r=>r[0]), 
-      coords: grid.map((r,i)=>([i,0]))
-    },
-    c2  : { 
-      data: grid.map(r=>r[1]),
-      coords: grid.map((r,i)=>([i,1]))
-    },
-    c3  : { 
-      data: grid.map(r=>r[2]), 
-      coords: grid.map((r,i)=>([i,1]))
+    r3: {
+      data: grid[2],
+      coords: grid[0].map((r, i) => ([2, i]))
     },
 
-    dLR : { 
-      data: grid.map((r,c)=>r[c]), 
-      coords: [0,1,2].map(p=>([p,p]))
+    c1: {
+      data: grid.map(r => r[0]),
+      coords: grid.map((r, i) => ([i, 0]))
     },
-    dRL : { 
-      data: grid.map((r,c)=>r[2-c]), 
-      coords: [2,1,0].map(p=>([p,p]))
+    c2: {
+      data: grid.map(r => r[1]),
+      coords: grid.map((r, i) => ([i, 1]))
+    },
+    c3: {
+      data: grid.map(r => r[2]),
+      coords: grid.map((r, i) => ([i, 1]))
+    },
+
+    dLR: {
+      data: grid.map((r, c) => r[c]),
+      coords: [0, 1, 2].map(p => ([p, p]))
+    },
+    dRL: {
+      data: grid.map((r, c) => r[2 - c]),
+      coords: [2, 1, 0].map(p => ([p, p]))
     },
 
   };
@@ -49,51 +42,29 @@ const scanlines = (grid) => { // grid = [[x,x,x],[x,x,x],[x,x,x]]
 
 }
 
-const init = async (msg, args) => {
+/**
+ * 
+ * @param {import('eris').Message<import('eris').GuildTextableChannel>} msg 
+ * @param {string[]} args 
+ */
+ const init = async (msg, args) => {
   if (!args[0]) return msg.channel.createMessage('Missing argument');
   const member = await PLX.getTarget(args[0], msg.guild, false, true);
   if (!member) return msg.channel.createMessage('Unresolved member')
+  if (member.id === msg.author.id) return msg.channel.createMessage('Cannot play yourself');
+  if (member.user.bot) return msg.channel.createMessage('Cannot play with bots');
   const players = [msg.author.id, member.id];
   let playerTurnIndex = 0;
   let PLXMessage;
 
-  // possible wins: top, middle, bottom, left, center, right, TLBR, TRBL
-  /*
-  const counters = [
-    Array(8).fill(0),
-    Array(8).fill(0),
-  ]
-
-  const addToCounter = (row, col) => {
-    counters[playerTurnIndex][row]++;
-    counters[playerTurnIndex][col]++;
-    if (row === col) {
-      counters[playerTurnIndex][6]++;
-    }
-    if (row + col === 2) { // 0,2 or 2,0 or 1,1
-      counters[playerTurnIndex][7]++; 
-    }
-  }
-  const hasWon = (counter) => {
-    const win = counter.indexOf(3);
-    if (win === -1) {
-      if (counters.map((c) => c.filter((d) => d !== 0).length).reduce((a, b) => a + b) === 9) return null;
-      return false;
-    }
-
-    return win;
-  }
-  */
-///
-
   const boardGrid = [
-    [null,null,null],
-    [null,null,null],
-    [null,null,null],
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
   ];
 
   const markToBoard = (col, row) => {
-    boardGrid[row-1][col-1] = playerTurnIndex +1;
+    boardGrid[row - 1][col - 1] = playerTurnIndex + 1;
   }
 
   const listener = async (d) => {
@@ -102,17 +73,17 @@ const init = async (msg, args) => {
     if (players[playerTurnIndex] !== d.member.user.id) return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 4, data: { content: 'Turn is currently other user', flags: 64 } });
 
     const [x, y] = d.data.custom_id.split(',');
-    //addToCounter(x, y);
 
     markToBoard(x, y);
     let winner = 0;
-    const finalResult = Object.values( scanlines(boardGrid) ).find(combo=>{
+    const finalResult = Object.values(scanlines(boardGrid)).find(combo => {
       if (combo.data.includes(null)) return false;
-      const score = combo.data.reduce((acc,val)=>acc+val,0);
-      if (~~(score/3) === score/3){
+      const score = combo.data.reduce((acc, val) => acc + val, 0);
+      if (~~(score / 3) === score / 3) {
         winner = score / 3;
         return true;
       };
+      if (boardGrid.reduce((a, b) => [...a, ...b]).filter((a) => a === null).length === 0) winner = null;
     });
 
     d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
@@ -120,52 +91,26 @@ const init = async (msg, args) => {
     d.message.components[y - 1].components[x - 1].emoji = playerTurnIndex ? { name: '✖️' } : { id: '851610730880303125' }; // { name: playerTurnIndex ? '❌' : '⭕' };
     d.message.components[y - 1].components[x - 1].disabled = true;
 
-    //const winStatus = hasWon(counters[playerTurnIndex]);
-    
-    const winStatus = winner;
-    if (winStatus) {
+    if (winner) {
       PLX.off('rawWS', listener);
 
-      finalResult.coords.forEach( ([x,y]) => d.message.components[x].components[y].style = 3 );  
- 
-      /*
-      if (winStatus < 3) { // horizontal win (0, 1, 2 possible, 0, 1, 2 on y axis)
-        d.message.components[winStatus].components = d.message.components[winStatus].components.map((c) => {
-          c.style = 3;
-          return c;
-        });
-      } else if (winStatus < 6) { // vertical win (3, 4, 5 possible, 0, 1, 2 on x axis)
-        d.message.components = d.message.components.map((c) => {
-          c.components[winStatus - 3].style = 3;
-          return c;
-        });
-      } else if (winStatus === 6) { // TLBR
-        d.message.components[0].components[0].style = 3;
-        d.message.components[1].components[1].style = 3;
-        d.message.components[2].components[2].style = 3;
-      } else { // TRBL
-        d.message.components[0].components[2].style = 3;
-        d.message.components[1].components[1].style = 3;
-        d.message.components[2].components[0].style = 3;
-      }*/
- 
-
+      finalResult.coords.forEach(([x, y]) => d.message.components[x].components[y].style = 3);
       d.message.components = d.message.components.map((a) => { a.components = a.components.map((b) => { b.disabled = true; return b; }); return a; });
-      
+
       msg.channel.createMessage({
         content: `<@${players[playerTurnIndex]}> has won!`,
         messageReference: { messageID: PLXMessage },
       });
-      return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `<@${players[playerTurnIndex]}> has won!`, components: d.message.components }});
+      return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `<@${players[playerTurnIndex]}> has won!`, components: d.message.components } });
 
     }
 
-    if (winStatus === null) { // Draw
+    if (winner === null) { // Draw
       d.message.components = d.message.components.map((a) => { a.components = a.components.map((b) => { b.disabled = true; return b; }); return a; });
 
       PLX.off('rawWS', listener);
 
-      const content = `${players.map((p) => `<@${p}>}`).join(' and ')} drew!`; // Prevent useless double map
+      const content = `${players.map((p) => `<@${p}>`).join(' and ')} drew!`; // Prevent useless double map
 
       msg.channel.createMessage({
         content,
@@ -173,7 +118,7 @@ const init = async (msg, args) => {
           messageID: PLXMessage,
         },
       });
-      return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content, components: d.message.components }});
+      return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content, components: d.message.components } });
     }
 
     playerTurnIndex = playerTurnIndex ? 0 : 1;
