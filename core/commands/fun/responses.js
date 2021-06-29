@@ -8,10 +8,15 @@ const init = async function (msg, args) {
 }
 function checkForEmbedResponse(msg, respondError = false) {
   let userEmbed;
-  let embedstr = msg.content.substr(msg.content.indexOf("{") - 1).trim();
+  const bracketIndex = msg.content.indexOf("{") - 1;
+
+  console.log({bracketIndex})
+  if (bracketIndex < 0) return null;
+  let embedstr = msg.content.substr(bracketIndex).trim();
   try {
     userEmbed = JSON.parse(embedstr);
   } catch (err) {
+    console.error(err)
     if (respondError) msg.reply(_emoji("nope") + " Invalid Embed")
   }
   return userEmbed;
@@ -138,6 +143,7 @@ module.exports = {
   init
   , pub: true
   , cmd: 'responses'
+  , argsRequired: true
   , executeCustomResponse
   , cat: 'fun'
   , botPerms: ['attachFiles', 'embedLinks']
@@ -145,8 +151,10 @@ module.exports = {
   , autoSubs: [
     {
       label: 'add',
-      gen: sub_add,
-      options: {}
+      gen: sub_add,      
+      options: {
+        argsRequired: true,
+      }
     }
   ]
 }
