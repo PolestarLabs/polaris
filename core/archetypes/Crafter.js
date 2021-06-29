@@ -110,6 +110,8 @@ class Crafter extends EventEmitter {
   get gemsTotal() {
     const toret = [];
     const gemsTotal = this._gemsTotal;
+    console.log("_gemsTotal",this._gemsTotal)
+
     for (const gem of Object.keys(gemsTotal)) {
       toret.push([
         gem,
@@ -143,10 +145,14 @@ class Crafter extends EventEmitter {
   get itemsTotal() {
     const toret = [];
     const itemsTotal = {};
+    
+  
 
     for (const item of Object.keys(this._itemsCrafting)) itemsTotal[item] = (itemsTotal[item] || 0) + this._itemsCrafting[item];
     for (const item of Object.keys(this._itemsInventory)) itemsTotal[item] = (itemsTotal[item] || 0) + this._itemsInventory[item];
     for (const item of Object.keys(this._itemsMissing)) itemsTotal[item] = (itemsTotal[item] || 0) + this._itemsMissing[item];
+    
+    
 
     for (const item of Object.keys(itemsTotal)) {
       toret.push([
@@ -228,6 +234,8 @@ class Crafter extends EventEmitter {
 
     // ITEMS CRAFTED
     const { itemsCrafted } = this;
+    
+
     for (; i < itemsCrafted.length; i++) {
       const [itemID, amount] = itemsCrafted[i];
       arrayFilters.push({ [`i${i}.id`]: itemID });
@@ -249,6 +257,8 @@ class Crafter extends EventEmitter {
     }
 
     // GEMS
+    
+    console.log(this._gemsTotal,'_gtotal')
     for (const gemArr of this.gemsTotal) {
       user[`modules.${gemArr[0]}`] = -gemArr[1];
       plx[`modules.${gemArr[0]}`] = gemArr[1];
@@ -271,8 +281,6 @@ class Crafter extends EventEmitter {
     console.log("USER");
     console.table(user);
     console.log(inspect(arrayFilters));
-    console.log("PLX");
-    console.table(plx);
 
     // EXECUTE
     return DB.users.bulkWrite(toWrite).then(() => {
@@ -281,7 +289,7 @@ class Crafter extends EventEmitter {
           Progression.emit(`spend.${gem[0]}.crafting`,{userID: this._userID, value: Math.abs(gem[1]) });
           return generatePayload(this._userID, PLX.user.id, -gem[1], "crafting", gem[0], "PAYMENT", "-")
         });
-      console.table(payloads);
+      //console.table(payloads);
       return DB.audits.collection.insertMany(payloads)
         .then(() => payloads);
     });
@@ -309,7 +317,7 @@ class Crafter extends EventEmitter {
   }
 
   _clear() {
-    this._gemsTotal = {};
+    //this._gemsTotal = {};
     this._itemsTotal = {};
     this._itemsCrafting = {};
     this._itemsInventory = {};
@@ -443,12 +451,6 @@ class Crafter extends EventEmitter {
    * @memberof Crafter
    */
   static getItem(name) {
-
-    console.log(allItemsCode.get(name), 'item by code'.red)
-    console.log(allItems.get(name), 'just get'.red)
-    console.log(allItemsName.get(name), 'item by name'.red)
-
-
     return (allItems.get(name) || allItems.get(allItemsCode.get(name)) || allItems.get(allItemsName.get(name)) || null);
   }
 

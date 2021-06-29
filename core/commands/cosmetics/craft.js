@@ -20,9 +20,9 @@ const init = async (msg, args) => {
     if (msg.author.crafting) return;
 
     // Check arguments
-    console.log(`args: ${args}`);
+    
     const depsOnly = args.some((arg, i) => (arg.toLowerCase() === "-deps" || arg.toLowerCase() === "-d") && args.splice(i, 1));
-    console.log(`only: ${depsOnly}, args: ${args}`);
+    
 
     let amount = 1;
     args.some((arg, i) => !isNaN(Number(arg)) && (amount = Math.abs(~~args.splice(i, 1)) || 1))
@@ -48,7 +48,7 @@ const init = async (msg, args) => {
         if (DYM.length > 1) return;
         if ((await YesNo(stepMessage, msg, {deleteOriginal:true})) === true) {
           [craftedItem] = searchResults;
-          console.log(`cr: ${inspect(craftedItem)} :: sr: ${inspect(searchResults)}`);
+          
         } else {
           return;
         }
@@ -104,7 +104,7 @@ const init = async (msg, args) => {
       }
       // Not enough gems; fatal to crafting.
       if (crafter.isMissingGems) {
-        console.log("this is some point 1");
+        
         embed.color = 0xed3a19;
         craftExplan = `\n\n${$t("responses.crafting.gemsMissing", P)}`;
         embed.description = gemDisplay + matDisplay;
