@@ -58,6 +58,7 @@ const init = async (msg, args) => {
   let PLXMessage;
 
   // possible wins: top, middle, bottom, left, center, right, TLBR, TRBL
+  /*
   const counters = [
     Array(8).fill(0),
     Array(8).fill(0),
@@ -73,19 +74,6 @@ const init = async (msg, args) => {
       counters[playerTurnIndex][7]++; 
     }
   }
-///
-
-const boardGrid = [
-  [null,null,null],
-  [null,null,null],
-  [null,null,null],  
-]
-const markToBoard = (col, row) => {
-  console.log({row,col})
-  boardGrid[row-1][col-1] = playerTurnIndex +1;
-}
-
-
   const hasWon = (counter) => {
     const win = counter.indexOf(3);
     if (win === -1) {
@@ -94,6 +82,19 @@ const markToBoard = (col, row) => {
     }
 
     return win;
+  }
+  */
+///
+
+  const boardGrid = [
+    [null,null,null],
+    [null,null,null],
+    [null,null,null],  
+  ];
+
+  const markToBoard = (col, row) => {
+    console.log({row,col})
+    boardGrid[row-1][col-1] = playerTurnIndex +1;
   }
 
   const listener = async (d) => {
@@ -108,8 +109,7 @@ const markToBoard = (col, row) => {
 
     const scanlinesResult = scanlines(boardGrid);
     let winner = 0;
-    const finalResult = Object.keys(scanlinesResult).find(key=>{
-      const combo = scanlinesResult[key];
+    const finalResult = Object.values(scanlinesResult).find(combo=>{
       if (combo.data.includes(null)) return false;
       const score = combo.data.reduce((acc,val)=>acc+val,0);
       if (~~(score/3) === score/3){
@@ -118,14 +118,6 @@ const markToBoard = (col, row) => {
       };
       return false;
     });
-
-    const winChecks = {
-      finalResult,
-      scan:scanlinesResult[finalResult],
-      winner
-    };
-
-    //msg.channel.send("```"+JSON.stringify({boardGrid, winChecks})+"```")
 
     d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
     d.message.components[y - 1].components[x - 1].label = '';
@@ -138,13 +130,7 @@ const markToBoard = (col, row) => {
     if (winStatus) {
       PLX.off('rawWS', listener);
 
-      console.log( d.message.components )
-      winChecks.scan.coords.forEach( ([x,y]) =>{
-         
-        console.log({x,y},'scan scan')
-        d.message.components[x].components[y].style = 3;
-      })
-  
+      finalResult.coords.forEach( ([x,y]) => d.message.components[x].components[y].style = 3 );  
  
       /*
       if (winStatus < 3) { // horizontal win (0, 1, 2 possible, 0, 1, 2 on y axis)
@@ -166,16 +152,16 @@ const markToBoard = (col, row) => {
         d.message.components[1].components[1].style = 3;
         d.message.components[2].components[0].style = 3;
       }*/
-      try{
+ 
 
-        d.message.components = d.message.components.map((a) => { a.components = a.components.map((b) => { b.disabled = true; return b; }); return a; });
-        
-        msg.channel.createMessage({
-          content: `<@${players[playerTurnIndex]}> has won!`,
-          messageReference: { messageID: PLXMessage },
-        });
-        return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `<@${players[playerTurnIndex]}> has won!`, components: d.message.components }});
-      }catch(err){console.error(err)}
+      d.message.components = d.message.components.map((a) => { a.components = a.components.map((b) => { b.disabled = true; return b; }); return a; });
+      
+      msg.channel.createMessage({
+        content: `<@${players[playerTurnIndex]}> has won!`,
+        messageReference: { messageID: PLXMessage },
+      });
+      return PLX.requestHandler.request('POST', `/interactions/${d.id}/${d.token}/callback`, true, { type: 7, data: { content: `<@${players[playerTurnIndex]}> has won!`, components: d.message.components }});
+
     }
 
     if (winStatus === null) { // Draw
