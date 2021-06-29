@@ -89,11 +89,10 @@ const init = async (msg, args) => {
   const boardGrid = [
     [null,null,null],
     [null,null,null],
-    [null,null,null],  
+    [null,null,null],
   ];
 
   const markToBoard = (col, row) => {
-    console.log({row,col})
     boardGrid[row-1][col-1] = playerTurnIndex +1;
   }
 
@@ -106,17 +105,14 @@ const init = async (msg, args) => {
     //addToCounter(x, y);
 
     markToBoard(x, y);
-
-    const scanlinesResult = scanlines(boardGrid);
     let winner = 0;
-    const finalResult = Object.values(scanlinesResult).find(combo=>{
+    const finalResult = Object.values( scanlines(boardGrid) ).find(combo=>{
       if (combo.data.includes(null)) return false;
       const score = combo.data.reduce((acc,val)=>acc+val,0);
       if (~~(score/3) === score/3){
         winner = score / 3;
         return true;
       };
-      return false;
     });
 
     d.message.components[y - 1].components[x - 1].style = playerTurnIndex ? 4 : 1;
