@@ -68,44 +68,56 @@ class Visualizer {
   }
 
   _genRecursive(item, inventory, depth = 0, length = 1, index = 1, parentIndex = 1, maxDepth = 1) {
+    const thisMaxDepth = item.items?.length || 0;
     let str = "";
-    let depthstr = "";
-    const it = "\u2003\u2002";
-    let nakeddepthstr = it;
-    const pipe = "║";
-    const _T = "╠═";
-    const _L = "╚═";
+    const BLANK   = "\u2003\u2002";
+    const PIPE    =  "║\u2003";
+    const FORK    =  "╠═";
+    const DEND    =  "╚═";
+    const GS = "🟩";
+    const OS = "🟧";
+    const BS = "🟫";
+    let depthstr = !depth ?  "":BLANK;
+    
+    console.log({item,depth,length,index,parentIndex})
 
     for (let i = 0; i < depth; i++) {
-      nakeddepthstr += it
       depthstr += ((parentIndex < maxDepth && (maxDepth - (i + 1) === depth || parentIndex + i === maxDepth || depth === i + 1))
-        ? pipe
-        : "\u200b "
-      ) + it;
+        ? PIPE
+        : "\u200b"
+      )// + it;
     }
 
-    if (length === index) depthstr += _L;
-    else depthstr += _T;
+    const isLastOfTree = length === index;
+
+    if (isLastOfTree) depthstr += DEND;
+    else depthstr += FORK;
     
     const { items } = item;
     const emote = item.craft
       ? "🛠️"
       : item.id === this.crafter._item.id
-        ? "<a:polluxloading:845940929625063466> "
+        ? "<a:polluxloading:845940929625063466>"
         : (inventory[item.id] >= item.count)
           ? ((inventory[item.id] -= item.count) || true) && _emoji("yep")
           : _emoji("nope");
 
-    str += `${depthstr} ${emote} **${item.name}** ${miliarize(item.count) || 1}${item.count >= 10000 ? "" : "x"}`;
+    str += `${depthstr}${emote} **${item.name}** × \`${miliarize(item.count) || 1}\``;
     if (item.craft) {
-      str += `\n${nakeddepthstr} ${ (depth==maxDepth?"  ":pipe) + _emoji('__') } `+Object.keys(item.gems).map(
-        (gem, i) => `${i === 0 ? " :: " : ""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`,
+      str += `\n${
+        depthstr.replace(DEND,BLANK).replace(FORK,PIPE)
+      }${ thisMaxDepth ? PIPE : BLANK }`+Object.keys(item.gems).map(
+        (gem, i) => `${i === 0 
+          ? "• " 
+          : ""
+        }${_emoji(gem).trim()}\`${miliarize(item.gems[gem])}\``,
+
       ).join(" ");
     }
     str += "\n";
 
     if ((item.craft || item.id === this.crafter._item.id) && items?.length) {
-      if (depth === this.depth) str += `${depthstr}${it} and more...\n`;
+      if (depth === this.depth) str += `${depthstr}${BLANK} and more...\n`;
       else items.forEach((itm, i, arr) => (str += this._genRecursive(itm, inventory, depth + 1, arr.length, i + 1, index, length)));
     }
 
