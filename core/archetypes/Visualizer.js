@@ -74,7 +74,7 @@ class Visualizer {
     const pipe = "║";
     const _T = "╠═";
     const _L = "╚═";
-    console.log(` ${item.id} `.bgRed);
+
     for (let i = 0; i < depth; i++) {
       depthstr += ((parentIndex < maxdepth && (maxdepth - (i + 1) === depth || parentIndex + i === maxdepth || depth === i + 1))
         ? pipe
@@ -84,7 +84,7 @@ class Visualizer {
 
     if (length === index) depthstr += _L;
     else depthstr += _T;
-
+    
     const { items } = item;
     const emote = item.craft
       ? "🛠️"
@@ -94,7 +94,7 @@ class Visualizer {
           ? ((inventory[item.id] -= item.count) || true) && _emoji("yep")
           : _emoji("nope");
 
-    str += `${depthstr} ${emote} **${item.id}** ${miliarize(item.count) || 1}${item.count >= 10000 ? "" : "x"}`;
+    str += `${depthstr} ${emote} **${item.name}** ${miliarize(item.count) || 1}${item.count >= 10000 ? "" : "x"}`;
     if (item.craft) {
       str += Object.keys(item.gems).map(
         (gem, i) => `${i === 0 ? " :: " : ""}${_emoji(gem).trim()}${miliarize(item.gems[gem])}`,
