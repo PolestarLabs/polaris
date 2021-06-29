@@ -110,7 +110,6 @@ class Crafter extends EventEmitter {
   get gemsTotal() {
     const toret = [];
     const gemsTotal = this._gemsTotal;
-    console.log("_gemsTotal",this._gemsTotal)
 
     for (const gem of Object.keys(gemsTotal)) {
       toret.push([
@@ -257,8 +256,6 @@ class Crafter extends EventEmitter {
     }
 
     // GEMS
-    
-    console.log(this._gemsTotal,'_gtotal')
     for (const gemArr of this.gemsTotal) {
       user[`modules.${gemArr[0]}`] = -gemArr[1];
       plx[`modules.${gemArr[0]}`] = gemArr[1];
@@ -350,7 +347,7 @@ class Crafter extends EventEmitter {
 
     // Some initialization
     const toRet = {
-      craft: !ignore, id: item.id, count, gems: {}, items: [],
+      craft: !ignore, id: item.id, name: item.name, count, gems: {}, items: [],
     };
 
     // add gem cost
@@ -380,7 +377,7 @@ class Crafter extends EventEmitter {
 
         // The item can't be crafted, or we have some left.
         if (!material.crafted || amountLeft) {
-          toRet.items.push({ id: materialID, count: material.crafted ? Math.min(amountLeft, need) : need });
+          toRet.items.push({ id: materialID,name:material.name, count: material.crafted ? Math.min(amountLeft, need) : need });
           if (amountLeft) this._itemsInventory[materialID] = (this._itemsInventory[materialID] ?? 0) + Math.min(amountLeft, need);
           if (!material.crafted) this._itemsMissing[materialID] = (this._itemsMissing[materialID] ?? 0) + Math.max((need - amountLeft), 0);
         }
