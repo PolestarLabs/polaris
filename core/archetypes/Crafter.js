@@ -214,7 +214,9 @@ class Crafter extends EventEmitter {
   confirm() {
     // First add the item we're making to crafting items.
     // Supports circular dependency just in case.
-    this._itemsCrafting[this._item.id] = (this._itemsCrafting[this._item.id] ?? 0) + this._count;
+    if (this._mode !== 2) {
+      this._itemsCrafting[this._item.id] = (this._itemsCrafting[this._item.id] ?? 0) + this._count;
+    }
 
 
     /**
@@ -314,7 +316,7 @@ class Crafter extends EventEmitter {
   }
 
   _clear() {
-    //this._gemsTotal = {};
+    this._gemsTotal = {};
     this._itemsTotal = {};
     this._itemsCrafting = {};
     this._itemsInventory = {};
@@ -327,7 +329,7 @@ class Crafter extends EventEmitter {
    * @memberof Crafter
    */
   autoGen() {
-    this._report = this._autoGenHelper(this._item, this._count, true);
+    this._report = this._autoGenHelper(this._item, this._count, this._mode === 2);
     this._setPenalties();
   }
 
@@ -336,22 +338,22 @@ class Crafter extends EventEmitter {
    *
    * @param {*} item the item to be auto crafted
    * @param {number} [count=1] the amount of the item to be auto crafted
-   * @param {boolean} [ignore=false] if true, only dependency costs will be added.
+   * @param {boolean} [depsOnly=false] if true, only dependency costs will be added.
    * @return {{craft: boolean?, id: string, count: number, gems: {}, items: object[]}} gems in format of { XXX: number }.
    * @memberof Crafter
    */
-  _autoGenHelper(item, count = 1, ignore = false) {
+  _autoGenHelper(item, count = 1, depsOnly = false) {
     if (!item) throw new Error(`autoGen did not receive an item: ${item}`);
     if (!item.crafted) throw new Error(`Item ${item} not craftable`);
-    if (!ignore) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] ?? 0) + count;
+    if (!depsOnly) this._itemsCrafting[item.id] = (this._itemsCrafting[item.id] ?? 0) + count;
 
     // Some initialization
     const toRet = {
-      craft: !ignore, id: item.id, name: item.name, count, gems: {}, items: [],
+      craft: !depsOnly, id: item.id, name: item.name, count, gems: {}, items: [],
     };
 
     // add gem cost
-    if (!ignore) {
+    if (!depsOnly) {
       for (const gem of Object.keys(item.gemcraft)) {
         if (item.gemcraft[gem]) toRet.gems[gem] = (toRet.gems[gem] ?? 0) + (item.gemcraft[gem] * count);
         if (toRet.gems[gem]) this._gemsTotal[gem] = (this._gemsTotal[gem] ?? 0) + toRet.gems[gem];
