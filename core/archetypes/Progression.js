@@ -153,11 +153,11 @@ class ProgressionManager extends EventEmitter {
 
                 if (quest.progress >= quest.target) {
                     await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
-                    if (msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests });
+                    if (msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
                 };
                 if (quest.progress && !quest.target) {
                     await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
-                    if (msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests });
+                    if (msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
                 }
             }
         };
@@ -279,7 +279,7 @@ const init = () => {
 }
 
 async function questCompletedMsg(userQuest, userID) {
-
+    if (!userID) return;
     let disUser = PLX.resolveUser(userID);
     const quest = await DB.quests.get(userQuest.id);
     const currentUserQuests = (await DB.users.findOne({ id: userID }, { quest: 1 }).noCache())?.quests || [];
