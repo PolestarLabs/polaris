@@ -39,13 +39,14 @@ exports.run = async function run() {
   /* EVERY 15 MINUTES */
   //= =====================================================================================
   const FIFTEEN_MINUTE = new CronJob("*/15 * * * *", async () => {
-
+    const blstart = Date.now();
     PLX.updateBlacklists(DB)
-      .then(() => { console.report("•".green + " Blacklist updated") });
+      .then(() => { console.report("•".green + ` Blacklist updated (${ Date.now() - blstart }ms)`) });
 
     try {
+      const start = Date.now();
       PLX.microserver.microtasks.updateServerCache("all")
-        .then(() => { console.report("•".green + " Server cache updated") });
+        .then(() => { console.report("•".green + ` Server cache updated (${ Date.now() - start }ms)`) });
     } catch (err) {
       console.error("•".red + " Microserver update failed. Restarting...");
       PLX.microserverStart();
