@@ -86,7 +86,7 @@ const init = async (msg, args) => {
         },{
           time: 60e3,
           maxMatches: 1
-        })
+        }).catch(() => null);
       }
 
     }else{
