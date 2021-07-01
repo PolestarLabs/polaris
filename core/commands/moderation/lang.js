@@ -1,29 +1,33 @@
-// const gear = require('../../utilities/Gearbox');
-// const DB = require('../../database/db_ops');
-const i18n = require("../../structures/Locales.js");
+const Languages = require("../../structures/Locales.js");
 
 const init = async (msg, args) => {
   const P = { lngs: msg.lang };
+  const language = args[0];
+  
 
-  const language = args[0].toString();
-  const flag = args[1];
-  const serverData = await DB.servers.get(msg.guild.id);
+  const langOptions = shuffle(Languages.i18n).map(lang => {
+    const emj = typeof lang.flag.id === 'string'
+    ? { id: lang.flag.id }
+    : { name: lang.flag.name || lang.flag };
 
-  console.log(args);
-
-  msg.channel.send({
-    content: "Changing Language; Select Scope:",
-    components: [
-      {type:1,components:[
-        {type:2,label:"Channel",style:1,custom_id:`langsel:channel:${msg.author.id}`},
-        {type:2,label:"Server",style:4,custom_id:`langsel:server:${msg.author.id}`},
-      ]}
-    ]
+      return {
+          "label": capitalize(lang.name),
+          "description": capitalize(lang["name-e"]),
+          "value": lang.iso,
+          "emoji": emj,
+          "default": msg.channel.LANG === lang.iso || msg.guild.LANG === lang.iso
+      }
+  }).slice(0, 25);
+  langOptions.forEach((v,i,a)=>{     
+    if (msg.channel.LANG === v.value) v.default = true;
+    else v.default = false;
+    if (msg.guild.LANG === v.value && !a.filter(x=>x.default).length ) return v.default = true;
+    else v.default = false;
   })
-
-  return;
+  if ( !langOptions.filter(x=>x.default).length ) langOptions.find(x=>x.value==='en').default = true;
 
   if (language === "refresh") {
+    const serverData = await DB.servers.get(msg.guild.id);
     msg.guild.LANG = serverData.modules.LANGUAGE;
     return msg.addReaction(_emoji("yep").reaction);
   }
@@ -34,24 +38,60 @@ const init = async (msg, args) => {
   }
 
   if (language) {
-    const langTo = i18n.i18n.find((lang) => lang.iso === language || lang.code.includes(language) || [lang.iso.toLowerCase(), lang.name, lang["name-e"].toLowerCase(), lang.flag].includes(language.toLowerCase()));
-    console.log(langTo);
-    if (langTo) {
-      P.lngs[0] = langTo.iso;
-      P.LANGUAGE = langTo.nameContext || langTo.name;
-      let langJok = $t(["responses.langIntro.language_joke", ""], P);
-      if (langJok.length > 50) langJok = "";
-      if (["channel", "-c"].includes(flag)) {
-        await DB.channels.set(msg.channel.id, { "modules.LANGUAGE": langTo.iso });
-        msg.channel.LANG = langTo.iso;
-        return msg.channel.send(`${langTo.flag} ${$t("responses.langIntro.channel", P)} ${langJok}`);
-      }
-      await DB.servers.set(msg.guild.id, { "modules.LANGUAGE": langTo.iso });
-      msg.guild.LANG = langTo.iso;
-      return msg.channel.send(`${langTo.flag} ${$t("responses.langIntro.global", P)} ${langJok}`);
-    }
-    return { embed: { description: i18n.langlist.join("\n") } };
+    const langTo = Languages.i18n.find((lang) => lang.iso === language || lang.code.includes(language) || [lang.iso.toLowerCase(), lang.name, lang["name-e"].toLowerCase(), lang.flag].includes(language.toLowerCase()));
+    return await saveLanguage(langTo,args[1]==='-c'?'channel':'server',message,P);
   }
+
+  msg.reply({
+    content: "Changing Language; Select Scope:",
+    components: [
+      {
+        "type": 1,
+        "components": [
+            {
+                "type": 3,
+                "placeholder": "Select a scope...",
+                "custom_id": "langsel:scope",
+                "min_values": 1,
+                "max_values": 1,
+                "options":  [
+                  {
+                    "label": "Channel",
+                    "description": `Use this language only in #${msg.channel.name}`.slice(0,50),
+                    "value": "channel",                    
+                    "default": false
+                  },
+                  {
+                    "label": "Server",
+                    "description": "Use this language in the entire server.",
+                    "value": "server",                    
+                    "default": true
+                  }
+                ]
+                     
+                
+            }
+        ]
+    },
+      {
+        "type": 1,
+        "components": [
+            {
+                "type": 3,
+                "placeholder": "Select a language...",
+                "custom_id": "langsel:language",
+                "min_values": 1,
+                "max_values": 1,
+                "options": langOptions
+            }
+        ]
+    }
+    ]
+  }) 
+
+
+  
+  
 };
 module.exports = {
   init,
@@ -61,5 +101,22 @@ module.exports = {
   cat: "moderation",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["speak"],
-  argsRequired: true,
+  async saveLanguage(langTo,scope,interaction,P){     
+    if (langTo) {
+        
+        P.LANGUAGE = langTo.nameContext || langTo.name;
+        let langJok = $t(["responses.langIntro.language_joke", ""], P);
+        if (langJok.length > 50) langJok = "";
+        if (scope === "channel") {
+            await DB.channels.set(interaction.message.channel.id, { "modules.LANGUAGE": langTo.iso });
+            interaction.channel.LANG = langTo.iso;
+            return `${langTo.flag} ${$t("responses.langIntro.channel", P)} ${langJok}`;
+        }
+        await DB.servers.set(interaction.guild.id, { "modules.LANGUAGE": langTo.iso });
+        interaction.guild.LANG = langTo.iso;
+        return `${langTo.flag} ${$t("responses.langIntro.global", P)} ${langJok}`;
+    }
+  }
 };
+
+
