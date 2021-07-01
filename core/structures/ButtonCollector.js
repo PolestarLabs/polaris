@@ -19,7 +19,8 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-    if (interaction.message.id !== this.message.id) return false;
+   
+    if (interaction?.message?.id !== this.message?.id) return false;
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
       if (this.options.authorOnly !== userID) return false;
@@ -29,14 +30,15 @@ class ButtonCollector extends EventEmitter {
       interaction, id: data.custom_id, userID, message: interaction.message,
     };
 
-    console.log("verify",data)
     if (!this.filter || this.filter(buttonPress)) {
       if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(buttonPress);
       this.emit("click", buttonPress);
-      if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
+      if (this.options.maxMatches && this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
-      interaction.ack();
+      if (!this.options.preventAck) interaction.ack().catch(err=>null);
+      else wait(2).then( _=> interaction.ack().catch(err=>null) );
+      
       return true;
     } else {
       if (!this.filter(buttonPress)) {
