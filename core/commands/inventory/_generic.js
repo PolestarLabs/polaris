@@ -1,9 +1,7 @@
 const ComponentPaginator = require("../../structures/ComponentPaginator.js");
 
 const INVENTORY = require("../../archetypes/Inventory");
-
-// const gear = require('../../utilities/Gearbox');
-const navigator = require("../../structures/ReactionNavigator");
+ 
 
 const ATTR = (i) => `${
   i.buyable ? _emoji("market_ready").no_space : _emoji("__").no_space
@@ -21,10 +19,10 @@ const ATTR = (i) => `${
 
 const displayItem = (invItm, embed, P) => {
   embed.field(
-    `${invItm.emoji}  **${$t(
+    `${invItm.emoji||_emoji(invItm.type,"📦")}  **${$t(
       [`items:${invItm.id}.name`, invItm.name],
       P
-    )}** × ${invItm.count}`,
+    )}** × \`${invItm.count}\``,
     `
         \u2003 *${$t([`items:${invItm.id}.description`, "---"], P)}* 
         \u2003 ${ATTR(invItm)}\
@@ -75,18 +73,17 @@ class GenericItemInventory {
         };
         return response;
       }
-      const itemsPerPage = 10;
-      //const tot_pages = Math.ceil(Inventory.length / itemsPerPage);
-
+      const itemsPerPage = 5;
       const procedure = function (...args) {
-        if (originalPolluxMessage?.edit)
-          return originalPolluxMessage.edit(...args);
         if (originalPolluxMessage?.updateMessage)
           return originalPolluxMessage.updateMessage(...args);
+        if (originalPolluxMessage?.edit)
+          return originalPolluxMessage.edit(...args);
         return msg.channel.send(...args);
       };
 
-      const generateItemPage = async (PAGE, IPP, TOT) => {
+      const generateItemPage = async (PAGE, IPP, TOT, FIRST) => {
+
         const pace = IPP * ((PAGE || 1) - 1);
         const pagecontent = Inventory.slice(pace, pace + IPP);
         const embed = new Embed();
@@ -121,13 +118,10 @@ class GenericItemInventory {
           displayItem(invItm, embed, P);
         }
 
-        let mes = await procedure({ content: response.content, embed });
- 
-        return mes;
-  
+        return  procedure( { content: response.content, embed });  
       }
       
-      return generateItemPage(1, itemsPerPage, Inventory.length).then(
+      return generateItemPage(1, itemsPerPage, Inventory.length, 1).then(
          (initialMessage) => {
 
           const pagi = new ComponentPaginator(
@@ -138,9 +132,10 @@ class GenericItemInventory {
             { userMessage: msg }
           );
 
-          pagi.on("page", async ([m, pag, rpp, tot]) => {
+          pagi.on("page", async (m, pag, rpp, tot, inter) => {
             originalPolluxMessage = m;
-            generateItemPage(pag, rpp, tot);
+            await generateItemPage(pag, rpp, tot);
+            
           });
            
           return  pagi.ready;
