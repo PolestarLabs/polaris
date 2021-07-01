@@ -1,3 +1,5 @@
+const { emoji } = require('../commands/inventory/consumable.js');
+
 const {ButtonCollector,checkListener} = (require('./ButtonCollector.js'))();
  
 class Paginator extends ButtonCollector {
@@ -6,15 +8,15 @@ class Paginator extends ButtonCollector {
         checkListener();
         super(botMessage, (m)=> {
             return m.userID === userMessage.author.id
-        }, {time: 60e6,maxMatches:1000,removeButtons:false});
+        }, {idle: 60e6, time: 60e6,maxMatches:1000,removeButtons:false});
         this.book = botMessage;
         this.page = startPage;
         this.total = totalItems;
         this.lastPage = Math.ceil(totalItems / itemsPerPage);
         this.rpp = itemsPerPage;
         this.userMessage = userMessage;
-        this.buttonsRow = botMessage.components.length;
-
+        this.buttonsRow = botMessage?.components?.length||0;
+        
         this.VALID_BUTTONS = [
             "first",
             "previous",
@@ -22,37 +24,44 @@ class Paginator extends ButtonCollector {
             "last"
         ];
 
-        this.book.addButtons([
-            { label: "First", custom_id: "first", style: 2, disabled: this.page === 1 },
-            { label: "Previous", custom_id: "previous", style: 2, disabled: this.page === 1 },
-            { label: this.page, custom_id: "current", style: 2, disabled: true },
-            { label: "Next", custom_id: "next", style: 2, disabled: this.page >= this.lastPage },
-            { label: "Last", custom_id: "last", style: 2, disabled: this.page >= this.lastPage },
+        //if (this.lastPage === 1) return this.stop();
+        this.ready =  this.book.addButtons([
+                { emoji: {name:"⏪"}, label: "First", custom_id: "first", style: 2, disabled: this.page === 1 },
+                { emoji: {name:"◀️"}, label: "Previous", custom_id: "previous", style: 1, disabled: this.page === 1 },
+                { emoji: {name:"📄"}, label: `${this.page}/${this.lastPage}`, custom_id: "current", style: 2, disabled: true },
+                { emoji: {name:"▶️"}, label: "Next", custom_id: "next", style: 1, disabled: this.page >= this.lastPage },
+                { emoji: {name:"⏩"}, label: "Last", custom_id: "last", style: 2, disabled: this.page >= this.lastPage },
 
-        ], this.buttonsRow)
+            ],this.buttonsRow)
+    
 
-
-        this.on("click", ({ interaction, id, userID, message }) => {
-            console.log('click')
-            this.userMessage.channel.createMessage('Click');
+        this.on("click", async ({ interaction, id, userID, message }) => {
             if (!this.VALID_BUTTONS.includes(id)) {
-                this.userMessage.channel.createMessage('1');
-                message.removeComponentRow(this.buttonsRow);
-                return this.stop("Clicked Alien Button");
+                this.book = await message.removeButtons(this.VALID_BUTTONS);
+                this.buttonsRow = this.book?.components?.length||0;
+                return this.emit("end", this.collected, "Clicked Alien Button");
+
             }
             if (userID !== this.userMessage.author.id) {
-                this.userMessage.channel.createMessage('2');
                 return interaction.reply({ content: "Shoo!", flags: 64 });
             }
-            this.userMessage.channel.createMessage('3');
 
             if (id === "next") this.page = Math.min(this.page + 1, this.lastPage);
-            if (id === "previous") this.page = Math.min(this.page - 1, 1);
+            if (id === "previous") this.page = Math.max(this.page - 1, 1);
             if (id === "last") this.page = this.lastPage;
             if (id === "first") this.page = 1;
+            
+            await this.book.updateButtons([
+                {  custom_id: "first", disabled: this.page === 1 },
+                {  custom_id: "previous",  disabled: this.page === 1 },
+                {  custom_id: "next", disabled: this.page >= this.lastPage },
+                {  custom_id: "last", disabled: this.page >= this.lastPage },
 
-            this.book.updateButtons([{ custom_id: 'current', label: this.page }]).then(msg => {
+                { custom_id: 'current', label: `${this.page}/${this.lastPage}` }
+            ]).then(msg => {
+                
                 this.book = msg;
+                console.log('new page')
                 this.emit("page", [msg, this.page, this.rpp, this.total]);
             });
         })

@@ -35,6 +35,7 @@ module.exports = function (Eris) {
 
     if (dry) return components;
 
+    this.components = components;
     return this.edit({ components });
   };
   Eris.Message.prototype.removeButtons = async function (buttonIDs,options) {
@@ -50,6 +51,8 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+    
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
   Eris.Message.prototype.removeComponentRow = async function (row,options) {
@@ -86,6 +89,7 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
 
@@ -102,11 +106,13 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
   Eris.Message.prototype.updateButtons = function (btnData,options) {
-
     let currentComps = this.components;
+
     let newComps = currentComps.map((row, i) => {
       row.components.forEach((btn, ii) => {
 
@@ -127,6 +133,8 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
 };
