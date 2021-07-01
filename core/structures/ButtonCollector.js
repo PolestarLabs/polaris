@@ -61,6 +61,11 @@ class ButtonCollector extends EventEmitter {
 }
 let listening = false;
 module.exports = (Eris) => {
+  
+  if (!Eris) {
+    return ButtonCollector;
+  }
+
   if (Eris === "createRogue") {
     return function createButtonCollector(msg, filter, options) {
       checkListener()
