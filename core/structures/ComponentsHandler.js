@@ -21,6 +21,7 @@ module.exports = function (Eris) {
       return {
         type: 1,
         components: row.map?.((btn, i) => {
+          if (btn.type === 3) return btn;
           return {
             type: 2,
             label: btn.label,
@@ -72,7 +73,7 @@ module.exports = function (Eris) {
     newButtons = currentComps.map((row) => row.components || []);
     if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
     else newButtons[newButtons.length] = [...buttons];
-
+console.log(newButtons)
     return this.setButtons(newButtons);
   };
 
