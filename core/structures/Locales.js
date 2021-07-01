@@ -146,7 +146,7 @@ const i18n = [{
   iso: "owo",
   name: "OwO",
   "name-e": "OwO",
-  flag: _emoji("owo"),
+  flag: _emoji("owo","🏳"),
   "site-flag": "OWO",
 },
 ];
