@@ -5,8 +5,8 @@ const init = async function (msg){
 let mess = await msg.channel.send("---");
 const pagi = new ComponentPaginator(mess,1,150,25,{userMessage:msg});
 
-pagi.on("page", (m,pag,rpp,tot)=>{
-    console.table(pag,rpp,tot);
+pagi.on("page", ([m,pag,rpp,tot])=>{
+    console.log(m,pag,rpp,tot);
     m.edit(`${pag}/${tot}`);
 });
 

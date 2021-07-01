@@ -29,6 +29,7 @@ class ButtonCollector extends EventEmitter {
       interaction, id: data.custom_id, userID, message: interaction.message,
     };
 
+    console.log("verify",data)
     if (!this.filter || this.filter(buttonPress)) {
       if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(buttonPress);
@@ -63,7 +64,10 @@ let listening = false;
 module.exports = (Eris) => {
   
   if (!Eris) {
-    return ButtonCollector;
+    return {
+      ButtonCollector,
+      checkListener
+    };
   }
 
   if (Eris === "createRogue") {

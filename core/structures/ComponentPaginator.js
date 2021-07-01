@@ -1,14 +1,12 @@
-const ButtonCollector = (require('./ButtonCollector.js'))();
+const {ButtonCollector,checkListener} = (require('./ButtonCollector.js'))();
+ 
 class Paginator extends ButtonCollector {
 
     constructor(botMessage, startPage, totalItems, itemsPerPage, {userMessage}){
-
+        checkListener();
         super(botMessage, (m)=> {
-            console.log('woa',userMessage.author.id);
-            console.log('woa',m);
-
-            m.author.id === userMessage.author.id
-        }, {time: 60e6});
+            return m.userID === userMessage.author.id
+        }, {time: 60e6,maxMatches:1000,removeButtons:false});
         this.book = botMessage;
         this.page = startPage;
         this.total = totalItems;
@@ -51,7 +49,7 @@ class Paginator extends ButtonCollector {
 
             this.book.updateButtons([{custom_id:'current', label: this.page}]).then(msg=>{
                 this.book = msg;
-                this.emit("page", msg, this.page, this.rpp, this.total);
+                this.emit("page", [msg, this.page, this.rpp, this.total]);
             });
         })
 
@@ -59,7 +57,7 @@ class Paginator extends ButtonCollector {
 
     setPage(n) {
         this.page = n;
-        this.emit("page", this.book, this.page, this.rpp, this.total)
+       // this.emit("page", this.book, this.page, this.rpp, this.total)
     }
 
 }
