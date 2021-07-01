@@ -8,7 +8,7 @@ class Paginator extends ButtonCollector {
         checkListener();
         super(botMessage, (m)=> {
             return m.userID === userMessage.author.id
-        }, {idle: 60e6, time: 60e6,maxMatches:1000,removeButtons:false});
+        }, {idle: 60e6, time: 60e6,maxMatches:1000,removeButtons:false,preventAck:true});
         this.book = botMessage;
         this.page = startPage;
         this.total = totalItems;
@@ -20,26 +20,32 @@ class Paginator extends ButtonCollector {
         this.VALID_BUTTONS = [
             "first",
             "previous",
+            "current",
             "next",
             "last"
         ];
 
         //if (this.lastPage === 1) return this.stop();
-        this.ready =  this.book.addButtons([
+        this.ready = this.book.addButtons([
                 { emoji: {name:"⏪"}, label: "First", custom_id: "first", style: 2, disabled: this.page === 1 },
                 { emoji: {name:"◀️"}, label: "Previous", custom_id: "previous", style: 1, disabled: this.page === 1 },
                 { emoji: {name:"📄"}, label: `${this.page}/${this.lastPage}`, custom_id: "current", style: 2, disabled: true },
                 { emoji: {name:"▶️"}, label: "Next", custom_id: "next", style: 1, disabled: this.page >= this.lastPage },
                 { emoji: {name:"⏩"}, label: "Last", custom_id: "last", style: 2, disabled: this.page >= this.lastPage },
+        ],this.buttonsRow).then(r=>{
+           // this.book =r;
+            return r;
+        })
 
-            ],this.buttonsRow)
     
 
         this.on("click", async ({ interaction, id, userID, message }) => {
+            console.log("click",id)
             if (!this.VALID_BUTTONS.includes(id)) {
-                this.book = await message.removeButtons(this.VALID_BUTTONS);
+                console.log("ALIEN",id)
+               // this.book = await message.removeButtons(this.VALID_BUTTONS);
                 this.buttonsRow = this.book?.components?.length||0;
-                return this.emit("end", this.collected, "Clicked Alien Button");
+                return this.stop( "Clicked Alien Button");
 
             }
             if (userID !== this.userMessage.author.id) {
@@ -59,10 +65,9 @@ class Paginator extends ButtonCollector {
 
                 { custom_id: 'current', label: `${this.page}/${this.lastPage}` }
             ]).then(msg => {
-                
+                interaction.ack().catch(e=>null)
                 this.book = msg;
-                console.log('new page')
-                this.emit("page", [msg, this.page, this.rpp, this.total]);
+                this.emit("page", this.book, this.page, this.rpp, this.total, interaction);
             });
         })
 
