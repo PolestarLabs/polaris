@@ -92,6 +92,8 @@ module.exports = (Eris) => {
     checkListener()
     return new ButtonCollector(this, filter, options);
   };
+
+  return ButtonCollector; // Fallback
 };
 
 
