@@ -8,7 +8,7 @@ const INV_STATUS = new Map();
 const createInventoryEmbed = function createInventoryEmbed(Inventory, { author, lang = "en", prefix = "p!" }) {
   const embed = { color: 0xd14362, thumbnail: { url: `${paths.CDN}/build/LOOT/lootbox_trans_80.png` } };
   embed.description = Inventory.length > 0
-    ? Inventory.map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${prefix}open box ${i.rarity}\``).join("\n")
+    ? Inventory.slice(0,25).map((i) => `${_emoji(i.rarity)} ${_emoji(i.emoji || i.emoji_alt)} **${i.name}** × ${i.count} \`${prefix}open box ${i.rarity}\``).join("\n")
     : `*${rand$t("responses.inventory.emptyJokes", { lngs: lang })}*`;
 
   embed.footer = {
