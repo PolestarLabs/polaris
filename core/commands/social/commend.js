@@ -47,7 +47,7 @@ const init = async function (msg) {
   };
 
   const reject = function (msg, Daily, r) {
-    P.remaining = `<t:${~~((Date.now() + (Math.abs(r - Date.now()))) / 1000)}:R>`; // TODO[epic=bsian] Clean up the Math.abs
+    P.remaining = `<t:${~~(r / 1000)}:R>`; // TODO[epic=bsian] Clean up the Math.abs
     const dailyNope = $t("responses.commend.cooldown", P);
     const embed = new Embed();
     embed.setColor("#e35555");
