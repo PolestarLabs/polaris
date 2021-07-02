@@ -38,7 +38,8 @@ const init = async function (msg,args){
 					min_values: 0,
 					max_values: 10,
 					disabled: false,
-					options: OPTIONS.map((O) => {						
+					options: OPTIONS.map((O) => {		
+                        O.disabled =true;				
 						return O
 					}).slice(0,25)
 
