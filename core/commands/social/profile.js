@@ -762,7 +762,9 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
     name: "profile.png",
   });
 
-
+  const MigrationNotice = require("../../archetypes/MigrationNotice");
+  MigrationNotice.notice(msg);
+  
 
   if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
 }
