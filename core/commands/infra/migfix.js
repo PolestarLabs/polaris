@@ -27,10 +27,8 @@ const init = async function (msg,args){
     }
 
     if (args[0] === 'marriage'){
-        const rships = await DB.relationships.find({users: msg.author.id});
+    
         const marryFixes = 1+userData_NEW.switches?.migrateFix?.marry;
-        if (marryFixes) return msg.reply(`${_emoji('nope')} • Your marriages have already been fixed!`);
-        if (rships.length >= 3) return msg.reply(`${_emoji('nope')} • You already got 3 marriages ported, you can't use this command!`);
 
         const m = await msg.reply(" • Fixing Marriages...");
 
@@ -59,7 +57,7 @@ const init = async function (msg,args){
         this.name += ` (${imported}/${size} - ${_emoji('SPH')}**-${cost+(5*marryFixes||0)}**)`;
         marriage_message = marriage_transfer_res.res;
         
-        await DB.users.set(msg.author.id, { $inc: { "switches.migrateFix.marry":1} }).catch(console.error);
+     
         m.edit(" • Fixing Marriages... **Done**" + _emoji('yep'));
     }
 
