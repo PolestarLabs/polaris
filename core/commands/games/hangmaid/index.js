@@ -161,8 +161,9 @@ const startCollector = async (Game, msg, mode) => {
 module.exports = {
   init,
   cmd: "hangmaid",
+  pub: true,
   perms: 3,
   cat: "games",
   botPerms: ["attachFiles"],
-  aliases: ["hangman", "forca", "hm"],
+  aliases: ["forca", "hm"],
 };
