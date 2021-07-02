@@ -19,7 +19,6 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-   
     if (interaction?.message?.id !== this.message?.id) return false;
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
@@ -27,7 +26,7 @@ class ButtonCollector extends EventEmitter {
     }
 
     const buttonPress = {
-      interaction, id: data.custom_id, userID, message: interaction.message,
+      interaction, id: data.custom_id, userID, message: interaction.message, data
     };
 
     if (!this.filter || this.filter(buttonPress)) {
@@ -38,7 +37,7 @@ class ButtonCollector extends EventEmitter {
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
       if (!this.options.preventAck) interaction.ack().catch(err=>null);
       else wait(2).then( _=> interaction.ack().catch(err=>null) );
-      
+
       return true;
     } else {
       if (!this.filter(buttonPress)) {
