@@ -49,7 +49,9 @@ const init = async (msg, args) => {
       
       if (!msg.content.includes('--dry-run')){
         await DB.gifts.remove({ _id: gift._id });
-        Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
+        if ( ![gift.creator,gift.holder].includes(msg.author.id) ) 
+          Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
+          
         await DB.users.set(msg.author.id, { $addToSet: { [`modules.${ giftMetadata.inventory}`]: gift.item } });
       }
 
