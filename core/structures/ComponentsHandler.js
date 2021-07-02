@@ -118,7 +118,7 @@ console.log(newButtons)
       row.components.forEach((btn, ii) => {
 
         const matchButton = btnData.find((b) =>
-          btn.custom_id.match(b.custom_id)
+          b.custom_id instanceof RegExp ? btn.custom_id.match(b.custom_id) : btn.custom_id === b.custom_id
         );
 
 
