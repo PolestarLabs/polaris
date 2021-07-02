@@ -37,7 +37,8 @@ class UserProfileModel {
     this.medals = userDBData.modules.medals || [];
     this.marriage = userDBData.marriageData || null;
     this.commend = 0;
-    this.countryFlag = userDBData.personal?.country || null;
+    const flagOverride = userDBData.switches?.flagOverride === "hidden" ? null : userDBData.switches?.flagOverride;
+    this.countryFlag = flagOverride || userDBData.personal?.country || null;
     this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
 
     if (this.medals.length > 0) {
