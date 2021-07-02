@@ -858,7 +858,7 @@ const init = async (msg, args) => {
         }
       } else {
         Progression.emit("play.blackjack.push", { msg, userID: msg.author.id });
-        Progression.emit("streak.blackjack.win", { value: -1, msg, userID: msg.author.id });
+        Progression.emit("streak.blackjack.win", { value: 0, msg, userID: msg.author.id });
       }
 
       drawOptions.b = bet * playerHands.length + doubles * bet;
