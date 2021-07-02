@@ -12,6 +12,9 @@ const init = async function (msg) {
     messageGrab = await PLX.getPreviousMessage(msg);
   }
   const messagebyID = [msg.args[0], msg.args[1], msg.args[2]].filter((arg) => arg && !isNaN(arg) && arg.length > 10);
+  
+  if (msg.referencedMessage) messageGrab = msg.referencedMessage;
+  
   if (messagebyID.length > 0) {
     messageGrab = await PLX.getPreviousMessage(msg, messagebyID[0]);
   }
