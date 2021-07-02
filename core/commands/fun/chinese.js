@@ -4,7 +4,9 @@
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const phrase = msg.args.join(" ");
+  let phrase = msg.args.join(" ");
+  if (msg.referencedMessage) phrase = msg.referencedMessage.content;
+  
   let decomp = phrase.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 
   decomp = decomp.replace(/A/g, "丹");
