@@ -19,6 +19,16 @@ const init = async (msg) => {
     DB.users.get(TARGET.id),
   ]);
 
+  if (!USERDATA.prime?.active){
+    return msg.reply({
+      embed:{
+        //color: _UI.red,
+        color: 0xFF0000,
+        description: "Direct-transfers are exclusive to Prime players"
+      }
+    });
+  }
+
   if (USERDATA.modules.RBN < TARGETDATA.modules.RBN) {
     //      return msg.reply("you cannot send Rubines to an account with a higher balance.");
   }
