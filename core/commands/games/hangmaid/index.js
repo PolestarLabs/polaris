@@ -109,6 +109,7 @@ const startCollector = async (Game, msg, mode) => {
       };
 
       if (Game.ENDGAME) {
+        Game.finish();
         Collector.stop(Game.ENDGAME);
         switch (Game.ENDGAME) {
           case "attempts":
