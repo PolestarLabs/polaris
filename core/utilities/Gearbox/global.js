@@ -9,8 +9,21 @@ if (Eris.Embed) {
   Eris.Embed.prototype.setDescription = Eris.Embed.prototype.description;
   Eris.Embed.prototype.addField = Eris.Embed.prototype.field;
 }
+const UI_COLORS = require("@polestar/constants/ui-colors");
 
 module.exports = {
+  _UI: {
+    colors: Object.assign({},
+      UI_COLORS.Branding,
+      UI_COLORS.Interface,
+      UI_COLORS.Misc,
+      {branding: UI_COLORS.Branding},
+      {interface: UI_COLORS.Interface},
+    )
+  },
+  numColor: function (color){
+    return parseInt(color.replace(/^#/, ""), 16)
+  },
   img2base64: function ImageToBase64(resource) {
     return new Promise((resolve, reject) => {
       axios(resource, { responseType: 'arraybuffer' }).then((res) => {

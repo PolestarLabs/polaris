@@ -49,13 +49,15 @@ const init = async (msg, args) => {
       
       if (!msg.content.includes('--dry-run')){
         await DB.gifts.remove({ _id: gift._id });
-        Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
+        if ( ![gift.creator,gift.holder].includes(msg.author.id) ) 
+          Progression.emit("action.gift.open", { msg, value: 1, userID: msg.author.id });
+          
         await DB.users.set(msg.author.id, { $addToSet: { [`modules.${ giftMetadata.inventory}`]: gift.item } });
       }
 
       const giftContents = await msg.channel.send({
         embed: {
-          color: 0x7dffff,
+          color: numColor(_UI.colors.cyan),
           description: `Gift **${gift.friendlyID || gift._id}** sent by <@${gift.previous||gift.creator}>\n\n`+
             `Contents: \`${gift.type}\`\n${
               _emoji(giftMetadata.rarity)} **${giftMetadata.name

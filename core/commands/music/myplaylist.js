@@ -11,7 +11,7 @@ const init = async function (msg, args) {
 
     msg.channel.send({
         embed: {
-            color: 0xff3355,
+            color: numColor(_UI.colors.cyan),
             description: res.data.map(makeItPretty).join('\n')
         }
     })

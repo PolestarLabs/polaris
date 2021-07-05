@@ -19,23 +19,25 @@ class ButtonCollector extends EventEmitter {
   }
 
   verify(interaction, data, userID) {
-    if (interaction.message.id !== this.message.id) return false;
+    if (interaction?.message?.id !== this.message?.id) return false;
     if (this.options.authorOnly) {
       if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
       if (this.options.authorOnly !== userID) return false;
     }
 
     const buttonPress = {
-      interaction, id: data.custom_id, userID, message: interaction.message,
+      interaction, id: data.custom_id, userID, message: interaction.message, data
     };
 
     if (!this.filter || this.filter(buttonPress)) {
       if (this.options.idle) clearTimeout(this.idleTimer);
       this.collected.push(buttonPress);
       this.emit("click", buttonPress);
-      if (this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
+      if (this.options.maxMatches && this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
-      interaction.ack();
+      if (!this.options.preventAck) interaction.ack().catch(err=>null);
+      else wait(2).then( _=> interaction.ack().catch(err=>null) );
+
       return true;
     } else {
       if (!this.filter(buttonPress)) {
@@ -61,6 +63,14 @@ class ButtonCollector extends EventEmitter {
 }
 let listening = false;
 module.exports = (Eris) => {
+  
+  if (!Eris) {
+    return {
+      ButtonCollector,
+      checkListener
+    };
+  }
+
   if (Eris === "createRogue") {
     return function createButtonCollector(msg, filter, options) {
       checkListener()
@@ -83,6 +93,8 @@ module.exports = (Eris) => {
     checkListener()
     return new ButtonCollector(this, filter, options);
   };
+
+  return ButtonCollector; // Fallback
 };
 
 

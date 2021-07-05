@@ -34,6 +34,8 @@ global.appRoot = path.resolve(__dirname);
 Promise.config({ longStackTraces: true });
 require("./utils/paths").run();
 
+
+// ERIS MODS
 Eris.Guild.prototype.member = function member(user) {
   if (!user) return null;
   user = user.id || user;
@@ -44,6 +46,53 @@ Eris.Embed.prototype.setColor = function setColor(color) {
   return this;
 };
 
+
+/* NOTE:  
+    FUTURE: In case cleanContent is removed 
+get cleanContent() {
+        let cleanContent = this.content && this.content.replace(/<a?(:\w+:)[0-9]+>/g, "$1") || "";
+
+        let authorName = this.author.username;
+        if(this.channel.guild) {
+            const member = this.channel.guild.members.get(this.author.id);
+            if(member && member.nick) {
+                authorName = member.nick;
+            }
+        }
+        cleanContent = cleanContent.replace(new RegExp(`<@!?${this.author.id}>`, "g"), "@\u200b" + authorName);
+
+        if(this.mentions) {
+            this.mentions.forEach((mention) => {
+                if(this.channel.guild) {
+                    const member = this.channel.guild.members.get(mention.id);
+                    if(member && member.nick) {
+                        cleanContent = cleanContent.replace(new RegExp(`<@!?${mention.id}>`, "g"), "@\u200b" + member.nick);
+                    }
+                }
+                cleanContent = cleanContent.replace(new RegExp(`<@!?${mention.id}>`, "g"), "@\u200b" + mention.username);
+            });
+        }
+
+        if(this.channel.guild && this.roleMentions) {
+            for(const roleID of this.roleMentions) {
+                const role = this.channel.guild.roles.get(roleID);
+                const roleName = role ? role.name : "deleted-role";
+                cleanContent = cleanContent.replace(new RegExp(`<@&${roleID}>`, "g"), "@\u200b" + roleName);
+            }
+        }
+
+        this.channelMentions.forEach((id) => {
+            const channel = this._client.getChannel(id);
+            if(channel && channel.name && channel.mention) {
+                cleanContent = cleanContent.replace(channel.mention, "#" + channel.name);
+            }
+        });
+
+        return cleanContent.replace(/@everyone/g, "@\u200beveryone").replace(/@here/g, "@\u200bhere");
+    }
+*/
+
+//-------------------------------------------------------
 
 
 Sentry.init({

@@ -40,7 +40,7 @@ const init = async (msg, args) => {
   }
 
   if ((args[0] === "delete" || args[0] === "remove") && args.length < 3) {
-    if (userReminders.length < 1) return { embed: { description: ` ${_emoji("nope")} **${$t("interface.reminders.noneToDelete", P)}**`, color: 0xcc2233 } };
+    if (userReminders.length < 1) return { embed: { description: ` ${_emoji("nope")} **${$t("interface.reminders.noneToDelete", P)}**`, color: numColor(_UI.colors.danger) } };
 
     let index = (userReminders.length || 1) - 1;
     if (Number(args[1])) index = (parseInt(args[1]) || 1) - 1;
@@ -50,12 +50,12 @@ const init = async (msg, args) => {
     //clearTimeout(PLX.reminderTimers.get(targetReminder._id));
     //PLX.reminderTimers.delete(targetReminder._id);
 
-    return { embed: { description: ` ${_emoji("nope")} **${$t("interface.generic.deleted", P)}** *${targetReminder.name}.*`, color: 0xcc2233 } };
+    return { embed: { description: ` ${_emoji("nope")} **${$t("interface.generic.deleted", P)}** *${targetReminder.name}.*`, color: numColor(_UI.colors.danger) } };
   }
 
   if (userReminders.length > 10) {
     P.count = 10;
-    return { embed: { description: `⚠ ${$t("interface.reminders.maxActive", P)}`, color: 0xcc8811 } };
+    return { embed: { description: `⚠ ${$t("interface.reminders.maxActive", P)}`, color: numColor(_UI.colors.warning) } };
   }
 
   /** @type {string} */

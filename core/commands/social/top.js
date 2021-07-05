@@ -82,7 +82,7 @@ const topCommend = async (m) => {
 
   const embed = {
     thumbnail: { url: `${paths.DASH}/build/rank.png` },
-    color: 0x3b9ea5,
+    color: numColor(_UI.colors.cyan),
     description: `**Your Score** \u2003 :reminder_ribbon: **#${myRankIn}** (${myCommends.totalIn}) \u2003 | \u2003  ${_emoji("plxcoin")}**#${myRankOut}** (${myCommends.totalOut})`,
     fields: [
       { name: "Top Commended", value: `${(listCommend).join("\n").slice(0, 1024)}\u200b`, inline: true },

@@ -14,7 +14,7 @@ const init = async function (msg) {
   const server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
   const user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
   const ping = `${msg.guild.shard.latency}ms`;
-  const duration = formatDuration(PLX.uptime, 0);
+  const duration =  PLX.uptime;
   const s = Math.floor((duration / 1000) % 60);
   const m = Math.floor((duration / 1000 / 60) % 60);
   const h = Math.floor((duration / (1000 * 60 * 60)) % 24);
@@ -40,14 +40,25 @@ const init = async function (msg) {
   emb.field(`${_emoji("cpu")}   Cluster Uptime`, `\`\`\`ml\n${uptime}\`\`\``, true);
 
   emb.field("\u200b", "𝙻𝚒𝚗𝚔𝚜 ", false);
-  emb.field("Donate", "<a:polluxYAY:482436838523404288>  [Pollux on Patreon](https://patreon.com/Pollux)", true);
-  emb.field("Invite", `:love_letter:  [Pollux.gg/invite](${paths.DASH}/invite)     \u200b`, true);
-  emb.field("Commands", `:gear:  [Pollux.gg/commands](${paths.DASH}/commands)`, true);
-  emb.field("Support Server", `:question:  [Pollux's Mansion](${paths.DASH}/support)    \u200b`, true);
+  emb.field("Dashboard", `🌐   [${paths.DASH}](${paths.DASH}?ref=status_embed)     \u200b`, true);
+  emb.field("Invite", `:love_letter:  [pollux.gg/invite](${paths.DASH}/invite)     \u200b`, true);
   emb.field("Twitter", "<:twitter:510526878139023380>  [@maidPollux](https://twitter.com/maidPollux)    \u200b", true);
-  emb.field("Subreddit", "<:reddit:510526878038360074>   [/r/Pollux](https://reddit.com/r/Pollux)    \u200b", true);
+  emb.field("Community/Support", 
+  "<:reddit:510526878038360074>   [/r/Pollux](https://reddit.com/r/Pollux)    \u200b\n"+
+  `:star:  [Pollux's Mansion](${paths.DASH}/support)    \u200b`, true);
+  
+  emb.field("How to", 
+  `\n:book:  [Wiki](https://wiki.pollux.gg)`
+  +
+  `\n:gear:  [Command List](${paths.DASH}/commands)`
+  , true);
+  emb.field("Get **Prime**", 
+    `<:patreon:684734175986712613> [Patreon](https://patreon.com/Pollux)`
+    +`\n<:Paypal:338329328947429378> [Paypal](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=8JDLAY5TFU9D6&source=url)`
+    //`<:pix:845985531162525736> [Pix](https://media.discordapp.net/attachments/277392117167292417/808354942138056764/unknown.png)`
+  , true);
 
-  emb.footer(`Falkenstein - DE\u2003❤ Powered by ${os.cpus().length}x ${os.cpus()[1].model}`, `${paths.CDN}/build/guessing/guessflags/germany.png`);
+  emb.footer(`Nuremberg - DE\u2003❤ Powered by ${os.cpus().length}x ${os.cpus()[1].model}`, `${paths.CDN}/build/guessing/guessflags/germany.png`);
 
   msg.channel.send({ embed: emb });
 };

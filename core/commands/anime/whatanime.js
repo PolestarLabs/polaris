@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 const init = async function (msg, args) {
-  let imgUrl = args[0] || (await PLX.getChannelImg(msg));
+  let imgUrl = args[0] || (await PLX.getChannelImg(msg.referencedMessage||msg));
 
   if (!imgUrl) return msg.command.invalidUsageMessage(msg);
 

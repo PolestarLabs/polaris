@@ -844,18 +844,21 @@ const init = async (msg, args) => {
 
       if (winnings !== 0) {
         if (winnings > 0) {
-          Progression.emit("play.blackjack.win", { msg, userID: msg.author.id });
+          
+          if (playerHand.doubled) Progression.emit("play.blackjack.windouble", { msg, userID: msg.author.id});
+
           Progression.emit("streak.blackjack.win", { value: 1, msg, userID: msg.author.id });
+          Progression.emit("play.blackjack.win", { msg, userID: msg.author.id});
           await ECO.receive(msg.author.id, winnings, "blackjack", "RBN", { progressionOptions: { msg } });
         }
         else {
-          Progression.emit("play.blackjack.lose", { msg, userID: msg.author.id });
           Progression.emit("streak.blackjack.win", { valueSet: 0, msg, userID: msg.author.id });
+          Progression.emit("play.blackjack.lose", { msg, userID: msg.author.id });
           await ECO.pay(msg.author.id, Math.abs(winnings), "blackjack", "RBN", { progressionOptions: { msg }, disableFundsCheck: true });
         }
       } else {
-        Progression.emit("streak.blackjack.win", { value: -1, msg, userID: msg.author.id });
         Progression.emit("play.blackjack.push", { msg, userID: msg.author.id });
+        Progression.emit("streak.blackjack.win", { value: 0, msg, userID: msg.author.id });
       }
 
       drawOptions.b = bet * playerHands.length + doubles * bet;

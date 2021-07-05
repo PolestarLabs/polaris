@@ -81,7 +81,7 @@ const init = async function (msg) {
 
   function serverColor() {
     const roles = msg.guild.member(TARGET).roles.map((r) => msg.guild.roles.get(r)).filter((x) => x.color).sort((a, b) => b.position - a.position);
-    const color = roles[0]?.color || 0xf53258;
+    const color = roles[0]?.color || numColor(_UI.colors.red);
     return `#${Number(color).toString(16)}`;
   }
 };

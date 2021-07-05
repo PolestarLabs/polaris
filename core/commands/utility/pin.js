@@ -12,6 +12,9 @@ const init = async function (msg) {
     messageGrab = await PLX.getPreviousMessage(msg);
   }
   const messagebyID = [msg.args[0], msg.args[1], msg.args[2]].filter((arg) => arg && !isNaN(arg) && arg.length > 10);
+  
+  if (msg.referencedMessage) messageGrab = msg.referencedMessage;
+  
   if (messagebyID.length > 0) {
     messageGrab = await PLX.getPreviousMessage(msg, messagebyID[0]);
   }
@@ -28,7 +31,7 @@ const init = async function (msg) {
   }
 
   const embed = {
-    color: 0xcc2233,
+    color: numColor(_UI.colors.red),
     description: `📌 Message [${messageGrab.id}](https://discordapp.com/channels/${messageGrab.guild.id}/${messageGrab.channel.id}/${messageGrab.id}) has been pinned!`,
   };
   messageGrab.pin().then((ok) => {
