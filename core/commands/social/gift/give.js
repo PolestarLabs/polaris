@@ -25,7 +25,7 @@ const init = async (msg, args) => {
 
   return {
     embed: {
-      color: 0x6a44b9,
+      color: numColor(_UI.colors.purple2),
       description: $t("responses.gift.sent", P),
       thumbnail: { url: `https://cdn.discordapp.com/emojis/${emojiID}.png` },
     },

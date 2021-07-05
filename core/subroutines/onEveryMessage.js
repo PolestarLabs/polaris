@@ -76,7 +76,7 @@ async function levelChecks(msg) {
       && !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
     ) {
       const embed = {
-        color: 0x6699FF,
+        color: numColor(_UI.colors.blue),
         description: lvupText || `:tada: **Level Up!** >> ${curLevelLocal}`,
         footer: { icon_url: msg.author.avatarURL, text: msg.author.tag },
       };

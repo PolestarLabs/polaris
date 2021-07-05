@@ -13,7 +13,7 @@ const init = async (msg, args) => {
 
   if (!selectedItemType) {
     return {embed:{
-      color: 0xF02540,
+      color: numColor(_UI.colors.red),
       description: `**Item Type Invalid.** Valid types are:\n ${
         ITEM_TYPES.map(type=> ` • ${capitalize(type.type)} (${
           type.aliases.map(a=> `\`${a}\``).join(', ')

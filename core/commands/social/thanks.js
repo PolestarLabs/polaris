@@ -43,7 +43,7 @@ const init = async function (msg, args) {
     P.remaining = `<t:${~~((userDaily.last + timer.day) / 1000)}:R>`
     P.command = msg.prefix + msg.command.label;
     const remainingEmbed = {};
-    remainingEmbed.color = 0x3b9ea5;
+    remainingEmbed.color = numColor(_UI.colors.jade);
     remainingEmbed.description = `
     ${_emoji("THX")} ${dailyAvailable ? _emoji("online") + $t("responses.timers_generic.check_yes", P) : _emoji("dnd") + $t("responses.timers_generic.check_no", P)} 
     `;
@@ -84,7 +84,7 @@ module.exports = {
         P.user = `<@${Target.id}>`;
         const embed = {
           description: $t("responses.thx.wipe", P),
-          color: 0xEE5522,
+          color: numColor(_UI.colors.orange),
         };
         const prompt = await msg.channel.send({ embed });
 

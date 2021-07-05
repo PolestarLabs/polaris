@@ -4,7 +4,7 @@ const init = async function (msg) {
 
   msg.channel.send({
     embed: {
-      color: 0x285691,
+      color: numColor(_UI.colors.blue),
       image: {
         url:
           `http://www.placecage.com/${cage % 2 === 0 ? "c/" : ""

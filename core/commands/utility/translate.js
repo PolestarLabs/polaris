@@ -11,6 +11,9 @@ const init = async function (msg) {
     if (messageGrab) ttt = messageGrab.content;
   }
   const messagebyID = [msg.args[0], msg.args[1], msg.args[2]].filter((arg) => arg && !isNaN(arg) && arg.length > 10);
+  
+  if (msg.referencedMessage) ttt = msg.referencedMessage.content;
+  
   if (messagebyID.length > 0) {
     newmes = await PLX.getPreviousMessage(msg, messagebyID[0]);
     if (newmes) ttt = newmes.content;

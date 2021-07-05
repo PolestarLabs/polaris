@@ -4,7 +4,10 @@
 const init = async (msg) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const phrase = msg.args.join(" ");
+  let phrase = msg.args.join(" ");
+  if (msg.referencedMessage) phrase = msg.referencedMessage.content;
+  if (!args) return msg.command.invalidUsageMessage(msg);
+
   let decomp = phrase.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase();
 
   decomp = decomp.replace(/A/g, "丹");
@@ -37,11 +40,10 @@ const init = async (msg) => {
 module.exports = {
   init,
   pub: true,
-  argsRequired: true,
   cmd: "chinese",
   perms: 3,
   cat: "fun",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: [],
-  argsRequired: true,
+ 
 };

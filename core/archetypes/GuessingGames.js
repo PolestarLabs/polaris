@@ -53,7 +53,7 @@ class GuessingGame {
   constructor(name, type = "image", {
     title, prompt, guessed, timeout, gamemode, imgPosition, time, color, solo,
   }) {
-    color = color || 0x5080AA;
+    color = color || numColor("#5080AA"); // numColor(_UI.colors.silver)
     imgPosition = imgPosition || "thumbnail";
     this.gamemode = gamemode || "normal";
     this.time = this.gamemode === "endless" ? 0

@@ -26,7 +26,7 @@ const init = async function (msg, args) {
 
   const mansionMember = await PLX.resolveMember("277391723322408960", msg.author.id, { softMatch: false }).catch(e => msg.member);
 
-  if (PLX.user.id === '354285599588483082') return;
+  //if (PLX.user.id === '354285599588483082') return;
 
   if (!mansionMember.roles.includes('278985430844833792') && !mansionMember.roles.includes('278985430844833792')) {
     // return msg.reply(`${_emoji('nope')} • Migration is in testing phase for supporters & staff only`); 
@@ -128,8 +128,8 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           });
 
           if (!marriage_transfer_res) {
-            msg.channel.send("Something went wrong with your migration process. Please try again.");
-            return false;
+            msg.channel.send("Marriage Transfer was aborted. Skipping...");
+            return marriage_transfer_res;
           }
 
           const { size, imported, cost } = marriage_transfer_res;

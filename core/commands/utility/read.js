@@ -13,7 +13,7 @@ const init = async function (message, cmdPiece = false) {
 
     }).catch(async err => {
 
-      let nwurl = await PLX.getChannelImg(message);
+      let nwurl = await PLX.getChannelImg(message.referencedMessage||message);
       if (nwurl?.includes(".discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
       if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
       return img2base64(nwurl).then(img => {

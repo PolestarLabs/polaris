@@ -20,7 +20,7 @@ const init = async function (msg, args) {
   const embed = { // TRANSLATE[epic=translations] ?? morse
     author: { name: "We get signal!" },
     footer: { text: "Radio Operator | Zero Wing", icon_url: "http://i.imgur.com/tda07NK.png" },
-    color: 0x5745a3,
+    color: numColor(_UI.colors.purple2),
     thumbnail: { url: "https://telegraph.p3k.io/assets/telegraph-icon-white.png" },
     description: `${"*\"WHAT?\"*\n```" + ` ${outputTX.replace(/-/g, dash).replace(/\./g, dot).replace(/ /g, space).slice(0, 1500)}` + "```\n" + "📡 "}${$t("forFun.transmittedVc", P)}`,
   };

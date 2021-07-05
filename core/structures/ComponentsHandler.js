@@ -21,6 +21,7 @@ module.exports = function (Eris) {
       return {
         type: 1,
         components: row.map?.((btn, i) => {
+          if (btn.type === 3) return btn;
           return {
             type: 2,
             label: btn.label,
@@ -35,6 +36,7 @@ module.exports = function (Eris) {
 
     if (dry) return components;
 
+    this.components = components;
     return this.edit({ components });
   };
   Eris.Message.prototype.removeButtons = async function (buttonIDs,options) {
@@ -50,6 +52,8 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+    
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
   Eris.Message.prototype.removeComponentRow = async function (row,options) {
@@ -69,7 +73,7 @@ module.exports = function (Eris) {
     newButtons = currentComps.map((row) => row.components || []);
     if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
     else newButtons[newButtons.length] = [...buttons];
-
+console.log(newButtons)
     return this.setButtons(newButtons);
   };
 
@@ -86,6 +90,7 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
 
@@ -102,16 +107,18 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
   Eris.Message.prototype.updateButtons = function (btnData,options) {
-
     let currentComps = this.components;
+
     let newComps = currentComps.map((row, i) => {
       row.components.forEach((btn, ii) => {
 
         const matchButton = btnData.find((b) =>
-          btn.custom_id.match(b.custom_id)
+          b.custom_id instanceof RegExp ? btn.custom_id.match(b.custom_id) : btn.custom_id === b.custom_id
         );
 
 
@@ -127,6 +134,8 @@ module.exports = function (Eris) {
 
     if (options?.returnObj) return newComps; 
     if (currentComps === newComps) return;
+
+    this.components = newComps;
     return this.edit({ components: newComps });
   };
 };
