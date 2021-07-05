@@ -18,7 +18,7 @@ module.exports = {
                     +`\n• blacklisted users can't migrate.`
                     +`\n• did I mention read instructions? yeah, **read** the instructions`,
 
-                    color: 0xFF0000
+                    color: numColor(_UI.colors.red)
                 }
             });
             
@@ -32,7 +32,7 @@ module.exports = {
         msg.reply({
             embed: {
                 description: `**Notice:** Daily streaks are now lost after **40 hours**.`,
-                color: 0xFF0000
+                color: numColor(_UI.colors.red)
             }
         });
     }

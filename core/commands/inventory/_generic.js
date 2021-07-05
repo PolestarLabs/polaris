@@ -39,7 +39,7 @@ class GenericItemInventory {
     this.cmd = type || optionals.cmd;
     this.aliases = aliases || [];
     this.img = img || "";
-    this.color = color || 0xebbeff;
+    this.color = color || 0xebbeff; // numColor(_UI.colors.lilac_lite)
     this.pub = pub || true;
 
     this.init = async (msg, args, reactionMember, originalPolluxMessage) => {

@@ -128,7 +128,7 @@ const DEFAULT_CMD_OPTS = {
       if (m.content.includes("--bmk")) {
         m.channel.send({
           embed: {
-            description: `⏱ ${runtimeOutput(performance.now() - m.runtime)}`, color: status ? 0x3355cc : 0xFF0000,
+            description: `⏱ ${runtimeOutput(performance.now() - m.runtime)}`, color: status ? 0x3355cc : numColor(_UI.colors.red),
           },
         });
       }

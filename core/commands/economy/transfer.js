@@ -23,7 +23,7 @@ const init = async (msg) => {
     return msg.reply({
       embed:{
         //color: _UI.red,
-        color: 0xFF0000,
+        color: numColor(_UI.colors.red),
         description: "Direct-transfers are exclusive to Prime players"
       }
     });

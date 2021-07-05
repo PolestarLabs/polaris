@@ -124,7 +124,7 @@ const init = async function (msg) {
 
   const locationEmbed = {
     embed: {
-      color: 0x6080F0,
+      color: numColor(_UI.colors.blue),
       description: "**Select location:**",
       fields: LOCATIONS_B.map((l) => ({ inline: !0, name: `\`${l.type.toUpperCase()}\``, value: `${_emoji(l.type)} **${l.name}** \`\`\` ${l._id}\`\`\`\n` })),
 

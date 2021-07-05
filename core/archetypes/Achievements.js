@@ -148,7 +148,7 @@ async function init() {
       description: `**${awarded.name}**\n> *${$t([`achievements:${awarded.id}.description`, awarded.description], { lngs: msg.lang || ["dev"] })}*`,
       thumbnail: { url: `${paths.CDN}/build/achievements/${awarded.icon}.png` },
       timestamp: new Date(),
-      color: awarded.color || 0xEf9f8a,
+      color: awarded.color || numColor(_UI.colors.salmon),
       footer: msg.author ? { text: msg.author.tag, icon_url: msg.author.avatarURL } : {},
     };
 

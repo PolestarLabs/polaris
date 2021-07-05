@@ -4,7 +4,7 @@ const init = async (msg, args) => {
 
   if (!inventory?.length) {
     return {
-      color: 0xc776c5,
+      color: numColor(_UI.colors.purple),
       embed: { description: $t("responses.gift.invEmpty", P) },
     };
   }
@@ -17,7 +17,7 @@ const init = async (msg, args) => {
     }
   });
 
-  return { embed: { color: 0xc776c5, description } };
+  return { embed: { color: numColor(_UI.colors.purple), description } };
 };
 
 module.exports = {

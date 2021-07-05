@@ -25,7 +25,7 @@ const init = async function (msg, args) {
       url: `${paths.DASH}/generators/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`
     },
     title: "Game's on!",
-    color: 0x5A90F5
+    color: numColor(_UI.colors.cyan)
   };
 
   const mainMessage = await msg.channel.send({ embed: embed });
@@ -99,7 +99,7 @@ const startCollector = async (Game, msg, mode) => {
       await Game.handleInput(guess);
 
       const newEmbed = {
-        color: 0x5A90F5,
+        color: numColor(_UI.colors.cyan),
         title: "Game's on!",
         description: `The word's theme is \`${Game.HINT}\`\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
         image: {
@@ -114,17 +114,17 @@ const startCollector = async (Game, msg, mode) => {
           case "attempts":
             newEmbed.title = _emoji("NOPE").no_space + " Oopsie... you're out of attempts!";
             newEmbed.description = "";
-            newEmbed.color = 0xFC5065;
+            newEmbed.color = numColor(_UI.colors.warning);
             break;
           case "win":
             newEmbed.title = ":tada: Congratulations! You guessed it!";
             newEmbed.description = `You scored ${Game.SCORE} points.`;
-            newEmbed.color = 0x2BE0AF;
+            newEmbed.color = numColor(_UI.colors.success);
             break;
           case "lose":
             newEmbed.title = _emoji("NOPE").no_space + " Oh, dear, you missed it... better luck next time~";
             newEmbed.description = "";
-            newEmbed.color = 0xFC5065;
+            newEmbed.color = numColor(_UI.colors.danger);
         }
       }
 

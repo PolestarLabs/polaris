@@ -57,7 +57,7 @@ const init = async (msg, args) => {
 
       const giftContents = await msg.channel.send({
         embed: {
-          color: 0x7dffff,
+          color: numColor(_UI.colors.cyan),
           description: `Gift **${gift.friendlyID || gift._id}** sent by <@${gift.previous||gift.creator}>\n\n`+
             `Contents: \`${gift.type}\`\n${
               _emoji(giftMetadata.rarity)} **${giftMetadata.name

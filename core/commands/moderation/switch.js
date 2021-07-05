@@ -1,6 +1,7 @@
 // TRANSLATE[epic=translations] switch
 
 const SwitchArch = require("../../archetypes/Switch");
+const { numColor } = require("../../utilities/Gearbox/global");
 const INPUT_TIMEOUT = 2 * 60e3;
 
 let cats;
@@ -44,7 +45,7 @@ const switches = new Map();
 // Embed during time it takes to save changes
 const savingEmbed = {
   embed: {
-    color: 0xFC5065, // NOTE replaced with branded red
+    color: numColor(_UI.colors.red), // NOTE replaced with branded red
     title: "Standby, saving changes...",
     description: "Both server and channel changes will be saved.",
   },

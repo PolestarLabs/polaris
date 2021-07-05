@@ -31,7 +31,7 @@ const init = async function (msg) {
   }
 
   const embed = {
-    color: 0xcc2233,
+    color: numColor(_UI.colors.red),
     description: `📌 Message [${messageGrab.id}](https://discordapp.com/channels/${messageGrab.guild.id}/${messageGrab.channel.id}/${messageGrab.id}) has been pinned!`,
   };
   messageGrab.pin().then((ok) => {
