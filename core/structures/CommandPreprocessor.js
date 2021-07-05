@@ -21,6 +21,11 @@ const POST_EXEC = function CommandPostExecution(msg, args, success) {
 */
 
 const PERMS_CALC = function CommandPermission(msg) {
+  if (  process.env.PRIME && msg.guild.prime === false){
+    msg.addReaction(":UNAUTHORIZED:773091703464525844");
+    return false;
+  }
+
   if (PLX.blacklistedUsers?.includes(msg.author.id)) {
     msg.addReaction(":BLACKLISTED_USER:406192511070240780");
     return false;
@@ -102,6 +107,13 @@ const DEFAULT_CMD_OPTS = {
   },
   hooks: {
     preCommand: (m, a) => {
+
+      if (m.guild && m.guild?.prime === undefined){
+        DB.users.get({'prime.servers': m.guild.id }).then(usr=>{
+          m.guild.prime = !!usr?.id;
+        })
+      }
+
       m.args = a;
       m.lang = [m.channel.LANG || m.guild?.LANG || "en", "dev"];
       m.runtime = performance.now();
