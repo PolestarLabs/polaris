@@ -14,6 +14,7 @@ cooking:
     - git reset --hard origin/beta
     - git pull
     - npm install
+    - npm install @polestar/i18n
 
 baking:
   stage: test
