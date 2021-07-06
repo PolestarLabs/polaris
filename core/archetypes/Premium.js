@@ -6,7 +6,7 @@ const RUNNING_MONTH_SHORT = new Date().toLocaleString('en', { month: 'short' }).
 const RUNNING_MONTH_LONG = new Date().toLocaleString('en', { month: 'long' }).toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 5; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 6; // JANUARY = 0;
 
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
@@ -421,6 +421,8 @@ async function checkPrimeStatus(mansionMember) {
     let STATUS = "ok";
 
     let interTier;
+    console.log({highestPremiumRoleTier,currentTier})
+    // if claiming after rollout
     if (new Date(rewardsLastClaimed) > REWARDS_ROLLOUT()) {
         if (currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier) {
             interTier = tierDiff(PREMIUM_INFO[currentTier], PREMIUM_INFO[highestPremiumRoleTier]);
@@ -432,6 +434,12 @@ async function checkPrimeStatus(mansionMember) {
             return Promise.reject("already-claimed");
         }
     }
+    
+    currentTier = highestPremiumRoleTier;
+
+    console.log(new Date(rewardsLastClaimed) , REWARDS_ROLLOUT(),"new Date(rewardsLastClaimed) > REWARDS_ROLLOUT()")
+    console.log( currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier, "currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier")
+    console.log({interTier,STATUS})
 
     if (!currentTier || !userData) STATUS = "not-prime";
 
@@ -445,8 +453,10 @@ async function processRewards(userID, options) {
 
     const userData = await DB.users.findOne({ id: userID }).noCache();
 
-    let currentTier = userData.prime?.tier || userData.donator || options?.currentTier;
+    let currentTier = options?.currentTier // || userData.prime?.tier || userData.donator;
     const tierPrizes = Object.assign({}, getTierBonus(currentTier));
+
+    console.log({interTier, options,userID});
 
     if (interTier) {
         Object.assign(tierPrizes, interTier);
@@ -473,7 +483,7 @@ async function processRewards(userID, options) {
             "prime.lastClaimed": Date.now(),
             "prime.tier": currentTier,
             "prime.active": true,
-            "prime.maxServers": (tierPrizes.prime_servers || isStaffMember ? 1 : 0) + (isLegacy ? 1 : 0),
+            "prime.maxServers": (tierPrizes.prime_servers || (isStaffMember ? 1 : 0) ) + (isLegacy ? 1 : 0),
             "prime.canReallocate": tierPrizes.prime_reallocation || isStaffMember || isLegacy,
             "prime.custom_background": tierPrizes.custom_background || isStaffMember || isLegacy,
             "prime.custom_handle": tierPrizes.custom_handle || isStaffMember || isLegacy,
@@ -604,8 +614,11 @@ async function processRewards(userID, options) {
         return { data, bulkWriteQuery, regularQuery, report };
     }
 
-    const q1 = await DB.users.bulkWrite(bulkWriteQuery).catchReturn();
-    const q2 = await DB.users.set(userID, regularQuery).catchReturn();
+    console.log("bulkWriteQuery".bgYellow);
+    console.log(require('util').inspect({bulkWriteQuery,regularQuery,amts},0,5,1) ) ;
+ 
+    const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch(err=> { console.error(err); return null });
+    const q2 = await DB.users.set(userID, regularQuery).catch(err=> { console.error(err); return null });
     const q3 = await ECO.receive(userID, amts, "dono_rewards", currs, { details: { tier: currentTier, month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR } });
 
     return { data, report, success: !!q1 && !!q2 && !!q3, qBreakdown: { q1, q2, q3 } };

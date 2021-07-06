@@ -45,7 +45,8 @@ const init = async function (msg, args) {
             `}
         });
     }
-
+    console.log("PRIMESTATS")
+    console.log( require('util').inspect({primeStatus},0,5,1)  )
     const { interTier, currentTier, isStaff, isLegacy } = primeStatus;
     let PROCESS_RWD = await Premium.processRewards(msg.author.id, { isLegacy, isStaff, currentTier, interTier, mansionMember: msg.member, dry_run: args[0] == "--dry-run" ? args[1] || true : false });
     if (args[0] == "--dry-run") {
