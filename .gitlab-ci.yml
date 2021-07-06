@@ -4,14 +4,14 @@ before_script:
 cooking:
   stage: build
   rules:
-    - if: $CI_COMMIT_BRANCH == "beta"
+    - if: $CI_COMMIT_BRANCH == "dev"
 
   tags:
     - polestar
   script:
-    - cd /home/pollux/polaris/LIVE/beta/
+    - cd /home/pollux/polaris/DEV/bot/
     - git clean -f
-    - git reset --hard origin/beta
+    - git reset --hard origin/dev
     - git pull
     - npm install
     - npm install @polestar/i18n
@@ -24,9 +24,16 @@ baking:
     - echo "Pls send help"
 catapulting:
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_BRANCH == "beta"
   tags:
     - polestar
   script:
     - cd /home/pollux/polaris/LIVE/beta/
-    - echo "Did this work idk"
+    - echo "Did this work idk"    
+    - git clean -f
+    - git reset --hard origin/beta
+    - git pull
+    - npm install
+    - npm install @polestar/i18n
     - pm2 restart Pollux.Premium
