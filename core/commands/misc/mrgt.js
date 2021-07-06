@@ -90,7 +90,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 	const component = {
 		type: 3,
 		placeholder: `Select the marriages you want to import... ( Up to ${3+canBuyThisMuch}, each slot after 3 costs 5 Sapphires )`,
-		max_values: 3 + canBuyThisMuch,
+		max_values: Math.min(3 + canBuyThisMuch, newMARRIAGES.length),
 		min_values: 0,
 		custom_id: "marriageDdwn",
 		options: await Promise.all(newMARRIAGES.slice(0,25).map(marriageToDdownOption))
