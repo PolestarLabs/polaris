@@ -1,5 +1,5 @@
 const init = async function (msg,args){
-
+    let embed = {};
     const userData_OLD = await vDB.users.findOne({ id: msg.author.id }).noCache().lean();
     const userData_NEW = await DB.users.findOne({ id: msg.author.id }).noCache().lean();
     //return "Not ready Yet";
@@ -11,6 +11,8 @@ const init = async function (msg,args){
 
         const oldInventory = userData_OLD.modules.inventory;
         const newInventory = [];
+       
+
 
         oldInventory.forEach((item) => {
             if (item.id) return;
@@ -30,7 +32,7 @@ const init = async function (msg,args){
     
         const marryFixes = 1+userData_NEW.switches?.migrateFix?.marry;
 
-        const m = await msg.reply(" • Fixing Marriages...");
+        const prompt = await msg.reply(" • Fixing Marriages...");
 
         const marr_mig = require("../misc/mrgt.js");
         const marriage_transfer_res = await new Promise(async (res, rej) => {
@@ -42,7 +44,7 @@ const init = async function (msg,args){
         }).timeout(15e4).catch((err) => {
             embed.color = 0xFF5500;
             embed.title = "Migration Aborted!";
-            embed.footer.text = "TIMEOUT";
+            embed.footer = {text : "TIMEOUT"};
             prompt.edit({ embed });
             return null;
         });
@@ -58,7 +60,7 @@ const init = async function (msg,args){
         marriage_message = marriage_transfer_res.res;
         
      
-        m.edit(" • Fixing Marriages... **Done**" + _emoji('yep'));
+        prompt.edit(" • Fixing Marriages... **Done**" + _emoji('yep'));
     }
 
 

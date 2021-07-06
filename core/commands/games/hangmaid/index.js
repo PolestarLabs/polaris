@@ -109,6 +109,7 @@ const startCollector = async (Game, msg, mode) => {
       };
 
       if (Game.ENDGAME) {
+        Game.finish();
         Collector.stop(Game.ENDGAME);
         switch (Game.ENDGAME) {
           case "attempts":
@@ -135,6 +136,7 @@ const startCollector = async (Game, msg, mode) => {
   });
 
   Collector.on("end", async (col, reason) => {
+    Game.finish();
     clearInterval(activity);
     if (reason === "time") return commandMsg.channel.send(":hourglass: Ah, you took too long.");
     if (reason === "win") {
@@ -153,7 +155,6 @@ const startCollector = async (Game, msg, mode) => {
       }
 
       await DB.rankings.collection.insert(data);
-      Game.finish();
     }
   });
 };
