@@ -21,7 +21,7 @@ const POST_EXEC = function CommandPostExecution(msg, args, success) {
 */
 
 const PERMS_CALC = function CommandPermission(msg) {
-  if (  process.env.PRIME && msg.guild.prime === false){
+  if ( !msg.content.includes("ev") && !msg.content.includes("activate") &&  process.env.PRIME && msg.guild.prime === false){
     msg.addReaction(":UNAUTHORIZED:773091703464525844");
     return false;
   }
@@ -106,12 +106,18 @@ const DEFAULT_CMD_OPTS = {
       : null;
   },
   hooks: {
-    preCommand: (m, a) => {
+    preCommand: async (m, a) => {
 
-      if (m.guild && m.guild?.prime === undefined){
-        DB.users.get({'prime.servers': m.guild.id }).then(usr=>{
+      console.log('precommand')
+      const noAdmin = (!m.content.includes("activate")&&!m.content.includes("ev"));
+      console.log({noAdmin})
+
+      if (  m.guild &&  !m.guild?.prime ){
+        console.log('no prime'.red)
+        await DB.users.get({'prime.servers': m.guild.id }).then(usr=>{
+          console.log('post save'.green)
           m.guild.prime = !!usr?.id;
-        })
+        });
       }
 
       m.args = a;
