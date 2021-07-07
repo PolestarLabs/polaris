@@ -104,14 +104,14 @@ const init = async function (msg) {
 };
 
 async function feedEmbed(item, data) {
-  const embed = new Embed();
-  embed.color("#ee1010");
+  const embed = {};
+  embed.color= numColor("#ee1010");
   embed.title = `**${item.title}**`;
   embed.url = item.link;
-  embed.author(item.author, null, data.link);
-  embed.timestamp(item.pubDate);
+  embed.author = {name:item.author, url: data.link};
+  embed.timestamp = new Date(item.pubDate);
   embed.description = (item.media["media:description"][0] || "").split("\n")[0];
-  embed.footer("YouTube", "https://unixtitan.net/images/youtube-clipart-gta-5.png");
+  embed.footer = {text:"YouTube", icon_url: "https://unixtitan.net/images/youtube-clipart-gta-5.png"};
 
   const ogs = require("open-graph-scraper");
   const results = await ogs({ url: data.link }).catch((e) => { console.error(e); return false; });

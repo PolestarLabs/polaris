@@ -86,15 +86,17 @@ const init = async function (msg) {
 };
 
 async function feedEmbed(item, data) {
-  const embed = new Embed();
+  const embed = {};
   const ogs = require("open-graph-scraper");
-  embed.color("#ff8a42");
+  embed.color= numColor("#ff8a42");
   embed.title = item.title;
   embed.url = item.url || item.link || item.guid;
-  embed.footer(item.author || item.creator || "Pollux RSS Feed Tool");
-  embed.timestamp(item.isoDate);
+  embed.footer = {
+    text: item.author || item.creator || "Pollux RSS Feed Tool"
+  };
+  embed.timestamp = new Date(item.isoDate);
   embed.description = (item.contentSnippet || item.content || "").split("\n")[0];
-  embed.author(data.title);
+  embed.author = {name: data.title};
 
   const [results, res_thumb] = await Promise.all([
     ogs({ url: embed.url }).catch((e) => { console.error(e); return false; }),
