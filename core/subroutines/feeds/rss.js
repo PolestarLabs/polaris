@@ -30,16 +30,26 @@ exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME
 
   if ((feed.last?.guid || feed.last?.id) !== (data.items[0]?.guid || data.items[0]?.id)) {
     const embed = await RSSembedGenerator(data.items[0], data);
-    const newFeed = data.items[0];
+    let newFeed = data.items[0];
+    let thumbnail = newFeed["media:thumbnail"]?.$;
     newFeed.media = newFeed["media:content"]?.$;
-    delete newFeed["media:content"]?.$;
+    delete newFeed["media:content"];
+    delete newFeed["media:thumbnail"];
+
+    console.log({newFeed});
 
     await DB.feed.updateOne(
       { server: feed.server, url: feed.url },
-      { $set: { last: newFeed, thumb: embed.thumbnail.url } },
+      { $set: { last: newFeed, thumb: thumbnail?.url||embed.thumbnail.url } },
     ).catch(console.error);
 
     // @ts-expect-error eris-additions
-    PLX.getChannel(feed.channel).send({ embed });
+    try{
+      PLX.getChannel(feed.channel).send({ embed });
+    }catch(err){
+      console.log("Error sending to ",feed.channel);
+      
+    }
+
   }
 };
