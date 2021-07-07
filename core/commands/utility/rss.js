@@ -48,7 +48,7 @@ const init = async function (msg) {
     const toDelete = feedData[target] || feedData.find((f) => f.type === "rss" && (f.url === target || f.url.includes(target)));
     if (!toDelete) return msg.channel.send($t("interface.feed.stateIDorURL", P));
 
-    const embed = new Embed();
+    const embed = {};
     embed.description = `
                 URL: \`${toDelete.url}\`
                 ${$t("terms.discord.channel")}: <#${toDelete.channel}>
