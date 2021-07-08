@@ -111,6 +111,8 @@ console.log(preview)
     const msg_collector = prompt.channel.createMessageCollector( (m)=> m.author.id === msg.author.id ,{idle:5*60e3});
     const emoji_collector = prompt.createReactionCollector( (m)=> m.userID === msg.author.id ,{time: 10*60e3});
 
+    embed.color = numColor(_UI.colors.blue);
+
     embed.description = `Multis create a message with options that can be seen privately by everyone that selects one of the options. First option is the default one and always visible. Other options will be shown only for people that choose them from the dropdown menu. You can use embeds in all of them. Create them with [Pollux Embed Architect](${paths.DASH}/embedarchitect) and paste in the \`description\` step.
 
     To see examples of this feature try \`${msg.prefix}multi demo (1 or 2)\`
@@ -324,18 +326,20 @@ async function init(msg,args){
         return msg.reply({
             embed: {
                 title: "Deleted",
+                color: numColor(_UI.colors.danger),
                 description: parseEntry(dropMultiObjects[index],index,true)
             }
         })
                 
     }
 
-    if (args[0] === "list"){
-        
+    if (args[0] === "list"||args[0] === "ls"){        
 
         msg.reply({
             embed: {
-                description: dropMultiObjects.map(parseEntry).join('\n')
+                title: "Multis in this server",
+                color: numColor(_UI.colors.blue),
+                description: `Use \`${msg.prefix}multi delete [Number]\` to remove one.\n\n` + dropMultiObjects.map(parseEntry).join('\n')
             }
         })
 
