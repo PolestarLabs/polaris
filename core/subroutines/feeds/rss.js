@@ -45,7 +45,7 @@ exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME
 
     // @ts-expect-error eris-additions
     try{
-      PLX.getChannel(feed.channel).send({ embed }).catch(err=>{
+      PLX.getChannel(feed.channel).send({ embed }).catch(async err=>{
         if (feed.errors >= 5) {
           await DB.feed.remove( { server: feed.server, url: feed.url } ).catch(console.error);
         }else{
