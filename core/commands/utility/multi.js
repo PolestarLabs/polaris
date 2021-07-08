@@ -309,7 +309,7 @@ async function init(msg,args){
         ${entry.options.map(({componentOption:opt})=>
             `\u2002 • **${opt.label}** - ${opt.description||"--no description--"}`
         ).join('\n')}\n` + 
-        nolink===true ? "" : `**[LINK](https://discord.com/channels/${entry.server}/${entry.channel}/${entry.message})**\n`
+        (nolink===true ? "" : `**[LINK](https://discord.com/channels/${entry.server}/${entry.channel}/${entry.message})**\n`)
     }
 
     const dropMultiObjects = (await DB.reactRoles.find({server: msg.guild.id,type:"drop-multi"})).map(x=>x?._doc||x);
@@ -320,7 +320,7 @@ async function init(msg,args){
             dropMultiObjects[index].channel,
             dropMultiObjects[index].message,
         ).catch(err=>null);
-        
+
         return msg.reply({
             embed: {
                 title: "Deleted",
