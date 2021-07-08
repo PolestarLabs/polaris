@@ -19,4 +19,5 @@ module.exports = {
   perms: 8,
   init,
   cat: "infra",
+  aliases: ["prime"]
 };
