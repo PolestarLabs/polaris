@@ -25,10 +25,12 @@ const init = async (msg, args) => {
 
     if (!msg.args[1])
       return msg.reply({
-        content:
-          `\`${msg.prefix}prime add [SERVER ID]\` Register a new Prime server.` +
-          `\`${msg.prefix}prime remove [SERVER ID]\` Unegister an existing Prime server.` +
+        embed: {
+          description:
+          `\`${msg.prefix}prime add [SERVER ID]\` Register a new Prime server.\n` +
+          `\`${msg.prefix}prime remove [SERVER ID]\` Unegister an existing Prime server.\n` +
           `\`${msg.prefix}prime info\` Check Prime servers information.`,
+        }
       });
 
     const primeServerId = msg.args[1];
@@ -91,9 +93,8 @@ const init = async (msg, args) => {
       },
     });
 
-    
   };
-  
+
 
   const embed = new Embed();
   embed.description = `:heart: **Buy Pollux a cup of tea!**
