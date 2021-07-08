@@ -2,7 +2,7 @@
 const init = async (msg, args) => {
   const USERDATA = await DB.users.findOne({ id: msg.author.id }).lean().exec();
 
-  if (USERDATA.prime.tier) {
+  if (USERDATA.prime.tier && !msg.content.includes('donate')) {
     const UNCLAIMED =
       new Date().getMonth() !==
       new Date(USERDATA.prime?.lastClaimed).getMonth();
@@ -92,7 +92,8 @@ const init = async (msg, args) => {
     });
 
     
-  }
+  };
+  
 
   const embed = new Embed();
   embed.description = `:heart: **Buy Pollux a cup of tea!**
