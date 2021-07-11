@@ -66,7 +66,7 @@ module.exports = {
     return i || -1;
   },
 
-  randomize: function randomize(min, max, seed = Date.now() * Math.random()) {
+  randomize: function randomize(min=0, max=100, seed = Date.now() * Math.random()) {
     const RAND = new MersenneTwister(seed);
     return Math.floor(RAND.random() * (max - min + 1) + min);
   },
@@ -140,13 +140,13 @@ module.exports = {
       return "---";
     }
   },
-  shuffle: function shuffle(array) {
+  shuffle: function shuffle(array, seed= Math.random() ) {
     // console.warn("Deprecation warning: This is a Legacy Function")
     let currentIndex = array.length;
     let temporaryValue;
     let randomIndex;
     while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
+      randomIndex = Math.floor( (this.randomize(1,10e10,seed)/10e10) * currentIndex );
       currentIndex -= 1;
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
