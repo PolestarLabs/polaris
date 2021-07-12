@@ -242,7 +242,9 @@ function QUEUED_COMMAND(commandFile) {
 }
 
 const registerOne = (folder, _cmd) => {
+  //console.log("Register",folder,"/",_cmd)
   try {
+
     delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))];
     const commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
     if (commandFile.slashable) {
