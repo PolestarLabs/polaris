@@ -25,7 +25,6 @@ async function CHK() {
          sv.id === feed.server)?.modules?.LANGUAGE || 'en';
       
       if (feed.type === "rss") {
-        console.log("RSS")
         delete require.cache[require.resolve("./rss.js")];
         let RSS = require("./rss.js");
         RSS.run(feed);
@@ -41,5 +40,3 @@ async function CHK() {
     });
   });
 }
-
-global.CHK = CHK
