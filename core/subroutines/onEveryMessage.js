@@ -143,7 +143,11 @@ module.exports = async (msg) => {
       // @ts-ignore
       levelChecks(msg),
       Drops(msg),
-    ]).then(x => true).timeout(25000).catch((err) => console.error(err)),
+    ]).then(x => true).timeout(5000).catch((err) => {
+      console.error(" QUEUE ERROR ".bgYellow)
+      console.error( PLX.execQueue );
+      console.error(err);
+    }),
   );
 };
 

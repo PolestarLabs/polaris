@@ -23,7 +23,10 @@ const parser = new RSS({
 const RSSembedGenerator = require("../../commands/utility/rss.js").embedGenerator;
 
 exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME[epic=bsian] timeout
-  const data = await parser.parseURL(feed.url).timeout(1200).catch(console.error);
+  const data = await parser.parseURL(feed.url).timeout(1200).catch(err=>{
+    console.error(err)
+    console.error(" FEED ERROR ON URL ".bgRed, feed.url)
+  });
 
   if (!data) return console.warn(`${"[RSS]: ".yellow}Failed to parse DATA object.`);
   data.items = data.items?.filter((/** @type {{ link: string }}  */ x) => x.link.startsWith("http"));
