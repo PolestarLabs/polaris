@@ -22,7 +22,7 @@ const updateCommand = (cmdID, payload, guild) => {
 exports.proc = async function (cmdFile) {
     
     console.log('•'.blue, "Register Slash CMD for",cmdFile.cmd?.inverse);
-    
+    //return;
     if (cmdFile?.slashOptions?.guilds) {
         
         console.log('    •'.cyan, "Local:".blue);
