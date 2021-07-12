@@ -12,7 +12,9 @@ module.exports = class Hangmaid {
     this.incorrectLetters = [];
     this.startedAt = Date.now();
     this.originalMessage = message;
+    this.userMessage = message;
     this.end = false;
+    this.shots = 0;
     this.mode = mode
     this.channel = message.channel.id;
     games.set(message.channel.id, message.id);
@@ -51,6 +53,8 @@ module.exports = class Hangmaid {
   }
 
   handleInput(guess) {
+    this.shots++;
+
     if (this.isFullGuess(guess)) return this.terminate("win");
     //If a full guess is attepmted without triggering a correct answer, game is automatically lost
     if (guess.length > 1) return this.terminate("lose");
@@ -93,10 +97,12 @@ module.exports = class Hangmaid {
 
   get SCORE() {
     const referenceDate = Date.now();    
-    if ( (referenceDate - this.startedAt) < 30e3) return ~~ (1500 / (.5 + this.incorrectLetters?.length||0) ); // 30s
-    if ( (referenceDate - this.startedAt) < 60e3) return ~~ (900 / (.5 + this.incorrectLetters?.length||0) ); // 1m
-    if ( (referenceDate - this.startedAt) < 180e3) return ~~ (500 / (.5 + this.incorrectLetters?.length||0) ); // 3m
-    if ( (referenceDate - this.startedAt) < 240e3) return ~~ (300 / (.5 + this.incorrectLetters?.length||0) ); // 4m
+    const diffTime = referenceDate - this.startedAt;
+   
+    if ( (diffTime) < 30e3) return ~~ (diffTime/20 * 15   / (.5 + this.incorrectLetters?.length||0) ); // 30s
+    if ( (diffTime) < 60e3) return ~~ (diffTime/20 * 9    / (.5 + this.incorrectLetters?.length||0) ); // 1m
+    if ( (diffTime) < 180e3) return ~~ (diffTime/20 * 5   / (.5 + this.incorrectLetters?.length||0) ); // 3m
+    if ( (diffTime) < 240e3) return ~~ (diffTime/20 * 3   / (.5 + this.incorrectLetters?.length||0) ); // 4m
     else return 0;
   }
 

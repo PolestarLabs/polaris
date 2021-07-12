@@ -18,6 +18,7 @@ const init = async function (msg, args) {
   }
   const MODE = args[0] === "server" ? "server" : "solo";
   const GAME = new Hangmaid(msg, WORDS, MODE);
+  console.log(GAME.word)
 
   const embed = {
     description: `The word's theme is ${GAME.HINT}\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
@@ -149,15 +150,16 @@ const startCollector = async (Game, msg, mode) => {
         points: Game.SCORE,
         timestamp: Date.now(),
         data: {
-          rounds: Game.GUESSES,
+          rounds: Game.shots,
+          word: Game.GUESSES,
           score: Game.SCORE,
           grade: Game.GRADE,
-          time: Date.now() - Game.startedAt,
+          time: ~~((Date.now() - Game.startedAt) / 1000),
         },
       };
       console.log(Game)
       if (Game.MODE === "solo") {
-        payload.id = `${commandMsg.author.id}`;
+        payload.id = `${Game.userMessage.author.id}`;
         payload.type = "hangmaid-solo";
       } else if (Game.MODE === "server") {
         payload.id = `${commandMsg.guild.id}`;
