@@ -13,7 +13,7 @@ const init = async function (msg, args, telePass, telePassArgs) {
       title: "**Here are the currently available Highscores Tables:**",
       description: `
         • \`${msg.prefix}highscores flags\` - for the \`${msg.prefix}guessflag\` minigame.
-        • ~~\`${msg.prefix}highscores hangmaid\` - for the \`${msg.prefix}hangmaid\` minigame.~~ (SOON™)
+        • \`${msg.prefix}highscores hangmaid\` - for the \`${msg.prefix}hangmaid\` minigame.
         `,
     },
   };
