@@ -140,13 +140,14 @@ module.exports = {
       return "---";
     }
   },
-  shuffle: function shuffle(array, seed= Math.random() ) {
+  shuffle: function shuffle(array, seed= Math.random()*Date.now() ) {
     // console.warn("Deprecation warning: This is a Legacy Function")
     let currentIndex = array.length;
     let temporaryValue;
     let randomIndex;
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor( (this.randomize(1,10e10,seed)/10e10) * currentIndex );
+    while (currentIndex > 0) {
+     
+      randomIndex = this.randomize(1,currentIndex,seed);
       currentIndex -= 1;
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
