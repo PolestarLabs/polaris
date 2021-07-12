@@ -93,10 +93,10 @@ module.exports = class Hangmaid {
 
   get SCORE() {
     const referenceDate = Date.now();    
-    if ( (referenceDate - this.startedAt) < 30e3) return 1500 / (.5 + this.incorrectLetters?.length||0); // 30s
-    if ( (referenceDate - this.startedAt) < 60e3) return 900 / (.5 + this.incorrectLetters?.length||0); // 1m
-    if ( (referenceDate - this.startedAt) < 180e3) return 500 / (.5 + this.incorrectLetters?.length||0); // 3m
-    if ( (referenceDate - this.startedAt) < 240e3) return 300 / (.5 + this.incorrectLetters?.length||0); // 4m
+    if ( (referenceDate - this.startedAt) < 30e3) return ~~ (1500 / (.5 + this.incorrectLetters?.length||0) ); // 30s
+    if ( (referenceDate - this.startedAt) < 60e3) return ~~ (900 / (.5 + this.incorrectLetters?.length||0) ); // 1m
+    if ( (referenceDate - this.startedAt) < 180e3) return ~~ (500 / (.5 + this.incorrectLetters?.length||0) ); // 3m
+    if ( (referenceDate - this.startedAt) < 240e3) return ~~ (300 / (.5 + this.incorrectLetters?.length||0) ); // 4m
     else return 0;
   }
 
