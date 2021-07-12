@@ -1,7 +1,7 @@
 // TRANSLATE[epic=translations] highscores
 
-const init = async function (msg, args, telePass) {
-  if (telePass == "hangmaid") return topGeneric(msg, args,{command:'hangmaid',group:'hangmaid-group',solo:'hangmaid-solo'});
+const init = async function (msg, args, telePass,telePassArgs) {
+  if (telePass == "hangmaid") return topGeneric(msg, args,telePassArgs);
   if (telePass == "flags") return topFlags(msg, args);
   if (telePass == "gtf") return topFlags(msg, args);
 
@@ -52,9 +52,10 @@ ${item.data.time ? "s :: Endless Mode" : ""}`;
 
 
 
-async function topGeneric(msg, args, rank) {
+async function topGeneric(msg, args, telePass,rank) {
   const RANKS = await DB.rankings.find({ type: { $in: [args[0] == "server" || !args[0] ? rank.group||rank : "", args[0] == "solo" || !args[0] ? rank.solo||rank : ""] } }).sort({ points: -1 }).limit(10);
-
+  console.log({RANKS})
+  
   const standings = (await Promise.all(RANKS.map(async (item, i) => {
     if (i === 5) return '';
     let subject;
@@ -79,7 +80,7 @@ ${item.data.time ? "s :: Endless Mode" : ""}`;
 
   const standings1 = standings.slice(0,5).join('\n');
   const standings2 = standings.slice(5).join('\n');
-  msg.channel.send(`**High Scores for \`${rank.cmd || rank}\`.**\n\n${standings1}`);
+  msg.channel.send(`**High Scores for \`${rank.cmd || telePass}\`.**\n\n${standings1}`);
   msg.channel.send(`\n${standings2}`);
   return;
 }
@@ -101,7 +102,7 @@ module.exports = {
       },
     },
     {
-      label: "hm", gen: topGeneric, options: {
+      label: "hm", gen: (a,b,c)=>topGeneric(a,b,c,{cmd:'hangmaid',group:'hangmaid-group',solo:'hangmaid-solo'}), options: {
         aliases: ["hangmaid"],
         // invalidUsageMessage: (msg) => { PLX.autoHelper("force", { msg, cmd: "commend", opt: "social" }); },
       },
