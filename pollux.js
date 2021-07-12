@@ -219,7 +219,7 @@ DBSchema(dbConnectionData, {
     PLX.connect().then(postConnect).catch(console.error);
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
 }).catch((err) => {
-  console.error();
+  console.error(err);
 });
 
 
@@ -291,7 +291,6 @@ PLX.once("ready", async () => {
     }
   };
   PLX.microserverStart();
-
   hook.info(`**INFO:** Cluster connected and all shards reported online!
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
 
