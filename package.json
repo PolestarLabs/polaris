@@ -1,6 +1,6 @@
 {
   "name": "polaris",
-  "version": "1.1.0",
+  "version": "1.2.1",
   "description": "Pollux on Eris",
   "main": "pollux.js",
   "scripts": {
@@ -27,7 +27,7 @@
     "colors": "^1.4.0",
     "cron": "^1.5.1",
     "date-fns": "^2.22.1",
-    "eris": "github:PolestarLabs/eris#dev",
+    "eris": "github:PolestarLabs/eris#bfb0e1b2d2338f6f6fdd8c74e3ad7644d250106b",
     "eris-additions": "github:PolestarLabs/eris-additions-plus",
     "fast-diff": "^1.2.0",
     "gif-encoder": "^0.7.2",
