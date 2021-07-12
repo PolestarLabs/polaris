@@ -1,3 +1,4 @@
+const { standingsPrinter } = require("./_meta");
 
   async function topFlags(msg, args) {
     const RANKS = await DB.rankings.find({ type: { $in: [args[0] == "server" || !args[0] ? "guessflag-server" : "", args[0] == "solo" || !args[0] ? "guessflag-solo" : ""] } }).sort({ points: -1 }).limit(10);
@@ -19,14 +20,17 @@
         }
   
   
-    const standings = (await Promise.all(RANKS.map(async (item, i) => { await standingsPrinter(item,i,standFun) } ) ) );
+    const standings = (await Promise.all(RANKS.map(async (item, i) => { return standingsPrinter(item,i,standFun) } ) ) );
+
+    console.log({standings})
   
-    msg.channel.send({
+    return msg.channel.send({
       content:`**High Scores for \`${"guessflag"}\`.**`,
       embed: {
         description: `\n${standings.join('\n')}`
       }
     });
-    return;
+    
   }
   
+  module.exports = topFlags

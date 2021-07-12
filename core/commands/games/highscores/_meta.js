@@ -1,5 +1,5 @@
 async function standingsPrinter(item, i, standFun) {
-  if (i === 5) return "";
+  
   let subject;
   if (item.type.includes("solo")) subject = await PLX.resolveUser(item.id);
   else
