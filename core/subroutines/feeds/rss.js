@@ -36,7 +36,7 @@ exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME
     delete newFeed["media:content"];
     delete newFeed["media:thumbnail"];
 
-    console.log({newFeed});
+    
 
     await DB.feed.updateOne(
       { server: feed.server, url: feed.url },
