@@ -12,9 +12,11 @@ const COLORS = require("@polestar/constants/ui-colors").RarityColors;
 const POPULATE = (pile, no, pushee) => { while (no--) shuffle(pile).push(pushee); return shuffle(pile); };
 
 const itmPILE = [];
-Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
 const rarPILE = [];
-Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
+setImmediate(()=>{
+  Object.keys(itmODDS).forEach((i) => POPULATE(itmPILE, itmODDS[i], i));
+  Object.keys(rarODDS).forEach((i) => POPULATE(rarPILE, rarODDS[i], i));
+})
 //= ================================================================
 
 function legacyEmblem(ct, mini) {
