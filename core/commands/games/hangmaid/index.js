@@ -121,11 +121,16 @@ const startCollector = async (Game, msg, mode) => {
             newEmbed.title = ":tada: Congratulations! You guessed it!";
             newEmbed.description = `You scored ${Game.SCORE} points.`;
             newEmbed.color = numColor(_UI.colors.success);
+            Progression.emit("play.hangmaid.win", { msg, userID: msg.author.id });
+            Progression.emit("streak.hangmaid.win", { msg, userID: msg.author.id });
+
             break;
           case "lose":
             newEmbed.title = _emoji("NOPE").no_space + " Oh, dear, you missed it... better luck next time~";
             newEmbed.description = "";
             newEmbed.color = numColor(_UI.colors.danger);
+            Progression.emit("play.hangmaid.lose", { msg, userID: msg.author.id });
+            Progression.emit("streak.hangmaid.win", { valueSet:0,msg, userID: msg.author.id });
         }
       }
 
