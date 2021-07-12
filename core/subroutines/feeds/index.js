@@ -16,13 +16,11 @@ const { checkPrimeSync } = require("crypto");
 
 async function CHK() {
   let allGuilds = PLX.guilds.map((g) => g.id);
-  console.log({allGuilds})
   DB.feed.find({ server: {$in: allGuilds } }).lean().then(async (/** @type {Feed[]} */serverFeeds) => {
     console.info(`${"RSS: ".blue}Starting...${serverFeeds.length}`);
     const servers = await DB.servers.find({ id: { $in: serverFeeds.map((f) => f.server) } }, { "modules.LANGUAGE": 1, id: 1 }).lean();
     serverFeeds.forEach((feed) => {
 
-      console.log({feed})
       const serverLang = servers.find(sv =>
          sv.id === feed.server)?.modules?.LANGUAGE || 'en';
       
