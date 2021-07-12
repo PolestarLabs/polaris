@@ -16,7 +16,7 @@ const init = async function (msg, args) {
     }, "There's already a game going on here.");
     return;
   }
-  const MODE = args[0] === "server" ? "server" : "solo";
+  const MODE = args[0] === "solo" ? "solo" : "server";
   const GAME = new Hangmaid(msg, WORDS, MODE);
   console.log(GAME.word)
 
