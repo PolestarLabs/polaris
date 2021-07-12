@@ -16,7 +16,7 @@ const init = async function (msg, args) {
     }, "There's already a game going on here.");
     return;
   }
-  const MODE = args[0] === "group" ? "group" : "solo";
+  const MODE = args[0] === "server" ? "server" : "solo";
   const GAME = new Hangmaid(msg, WORDS, MODE);
 
   const embed = {
@@ -44,7 +44,7 @@ const init = async function (msg, args) {
 // Need msg for the collector filter in solo mode
 const startCollector = async (Game, msg, mode) => {
   let paused = false;
-  const filter = mode === "group" ? (m) => m.author.id !== PLX.user.id : (m) => m.author.id === msg.author.id;
+  const filter = mode === "server" ? (m) => m.author.id !== PLX.user.id : (m) => m.author.id === msg.author.id;
   const commandMsg = Game.originalMessage;
 
   const Collector = commandMsg.channel.createMessageCollector(filter, { time: 5 * 60e3 }); // 5 Minutes
@@ -154,9 +154,9 @@ const startCollector = async (Game, msg, mode) => {
       if (Game.MODE === "solo") {
         data.id = `${commandMsg.author.id}`;
         data.type = "hangmaid-solo";
-      } else if (Game.MODE === "group") {
+      } else if (Game.MODE === "server") {
         data.id = `${commandMsg.guild.id}`;
-        data.type = "hangmaid-group";
+        data.type = "hangmaid-server";
       }
 
       await DB.rankings.collection.insert(data);
