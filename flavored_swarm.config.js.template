@@ -1,0 +1,11 @@
+
+  module.exports = [
+    {
+      name: "",             // Internal Name
+      category: "",         // 'alpha' | 'main' | 'premium'
+      fname: "",            // Friendly Name
+      token: "Bot {TOKEN}", // Prefixed Token
+      id: "{ID}",           // Client ID
+      secret: "{SECRET}"    // Client OAuth2 Secret
+    },
+  ]
