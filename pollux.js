@@ -1,3 +1,4 @@
+const cfg = require("./config.json");
 process.env.UV_THREADPOOL_SIZE = 256;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
@@ -13,10 +14,21 @@ const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
 
 const isPRIME               = process.env.PRIME;
-const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT || isPRIME ? "prime" : "main";
-const FLAVOR_SWARM_CONFIG   = process.env.FLAVOR_SWARM_CONFIG // sample data on index;
-const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT);
+const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT;// || isPRIME ? "prime" : "main";
 
+
+
+const DummyFlavorDefault = {
+  token: cfg.token,
+  fname: "Dummy",
+  category: "alpha",
+  name: "dummy_default"
+}
+
+const FLAVOR_SWARM_CONFIG   = JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]") // sample data on index;
+const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
+
+//return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
 
 global.Sentry         = require("@sentry/node");
 const { performance } = require("perf_hooks");
@@ -26,7 +38,6 @@ const axios           = require("axios");
 const Eris            = require("eris-additions")(ERIS);
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const cmdPreproc      = require("./core/structures/CommandPreprocessor");
-const cfg             = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
@@ -112,7 +123,9 @@ console.table({
   SHARDS_PER_CLUSTER,
   CLUSTER_ID,
   TOTAL_SHARDS,
+  FLAVORED_CLIENT_DATA
 });
+
 
 global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   maxShards: TOTAL_SHARDS,
@@ -179,6 +192,7 @@ PLX.updateBlacklists = (DB) => Promise.all([
 });
 
 const DBSchema = require("@polestar/database_schema");
+const { config } = require("bluebird");
 
 const dbConnectionData = {
   hook,
@@ -413,3 +427,9 @@ PLX.getOrCreateUser = async (user) => {
   if (!udata) udata = await DB.users.new(user);
   return udata;
 }
+
+
+
+
+
+
