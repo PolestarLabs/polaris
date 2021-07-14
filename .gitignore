@@ -11,6 +11,7 @@ config.json
 *.mp3
 *.wav
 *.png
+*.config.js
 tunnel.js
 rewinder.js
 pollux-172700-4fc2e6c49940.json

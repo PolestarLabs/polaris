@@ -218,6 +218,8 @@ function processReminders() {
                 },
               });
             } catch (e) {
+              await DB.feed.updateOne({ _id: rem._id }, {$inc:{failed:1}});
+
               await DB.feed.deleteOne({ _id: rem._id });
               console.error("REMOVED FAULTY REMINDER");
               console.error(e);

@@ -66,9 +66,10 @@ module.exports = {
     return i || -1;
   },
 
-  randomize: function randomize(min, max, seed = Date.now() * Math.random()) {
+  randomize: function randomize(min=0, max=100, seed) {
+    if (seed === false) return ~~(Math.random() * (max - min + 1) + min);
     const RAND = new MersenneTwister(seed);
-    return Math.floor(RAND.random() * (max - min + 1) + min);
+    return ~~(RAND.random() * (max - min + 1) + min);
   },
   wait: function wait(time) {
     time = typeof time === "number" ? time : 1000;
@@ -140,18 +141,33 @@ module.exports = {
       return "---";
     }
   },
-  shuffle: function shuffle(array) {
-    // console.warn("Deprecation warning: This is a Legacy Function")
+  shuffle: function shuffle(array, seed ) {
+
     let currentIndex = array.length;
-    let temporaryValue;
-    let randomIndex;
-    while (currentIndex !== 0) {
-      randomIndex = Math.floor(Math.random() * currentIndex);
+    
+    if (seed){
+      while (currentIndex !== 0) {
+        let randomIndex = ~~(this.randomize(0,currentIndex,seed));  
+        currentIndex -= 1;
+        mutateRandom(array, currentIndex, randomIndex);
+      }
+    }else{
+      while (currentIndex !== 0) {
+        let randomIndex = ~~(Math.random() * currentIndex);
+        currentIndex -= 1; 
+        mutateRandom(array, currentIndex, randomIndex);  
+      }
+    }
+    
+    /*
+    while (currentIndex > 0) {
+      console.log('    -  C index',currentIndex)
+      randomIndex = this.randomize(1,currentIndex,seed);
       currentIndex -= 1;
       temporaryValue = array[currentIndex];
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
-    }
+    }*/
     return array;
   },
   capitalize: function capitalize(string) {
@@ -231,3 +247,11 @@ module.exports = {
     });
   },
 };
+
+
+function mutateRandom( array, currentIndex, randomIndex) {
+  temporaryValue = array[currentIndex];
+  array[currentIndex] = array[randomIndex];
+  array[randomIndex] = temporaryValue;
+}
+

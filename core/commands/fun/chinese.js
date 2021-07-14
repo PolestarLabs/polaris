@@ -1,7 +1,7 @@
 // const gear = require('../../utilities/Gearbox');
 // const DB = require('../../database/db_ops');
 
-const init = async (msg) => {
+const init = async (msg,args) => {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   let phrase = msg.args.join(" ");
