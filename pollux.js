@@ -1,4 +1,4 @@
-process.env.UV_THREADPOOL_SIZE = 128;
+process.env.UV_THREADPOOL_SIZE = 256;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
 
@@ -11,7 +11,12 @@ global.clusterNames = require("@polestar/constants/clusters");
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
-const isPRIME             = process.env.PRIME;
+
+const isPRIME               = process.env.PRIME;
+const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT || isPRIME ? "prime" : "main";
+const FLAVOR_SWARM_CONFIG   = process.env.FLAVOR_SWARM_CONFIG // sample data on index;
+const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT);
+
 
 global.Sentry         = require("@sentry/node");
 const { performance } = require("perf_hooks");
@@ -109,7 +114,7 @@ console.table({
   TOTAL_SHARDS,
 });
 
-global.PLX = new Eris.CommandClient(isPRIME ? cfg.token_prime : cfg.token, {
+global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   maxShards: TOTAL_SHARDS,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID),
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
@@ -137,8 +142,12 @@ PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.isPRIME = isPRIME;
+PLX._flavordata = FLAVORED_CLIENT_DATA;
 
-PLX.cluster = isPRIME ? { id: 0, name: "Polaris Prime" } : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+PLX.cluster = isPRIME 
+  ? { id: 0, name: "Prime: "+FLAVORED_CLIENT_DATA.fname } 
+  : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+
 console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 global.hook = new WebhookDigester(PLX);
 
