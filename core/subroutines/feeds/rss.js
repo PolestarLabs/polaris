@@ -49,18 +49,18 @@ exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME
     // @ts-expect-error eris-additions
     try{
       PLX.getChannel(feed.channel).send({ embed }).catch(async err=>{
-        if (feed.errors >= 5) {
+        if (feed.erroredCount >= 5) {
           await DB.feed.remove( { server: feed.server, url: feed.url } ).catch(console.error);
         }else{
-          await DB.feed.updateOne({ server: feed.server, url: feed.url },{ $inc: { errors: 1} },).catch(console.error);
+          await DB.feed.updateOne({ server: feed.server, url: feed.url },{ $inc: { erroredCount: 1} },).catch(console.error);
         }
       });
     }catch(err){
       console.log("Error sending to ",feed.channel, err);
-      if (feed.errors >= 5) {
+      if (feed.erroredCount >= 5) {
         await DB.feed.remove( { server: feed.server, url: feed.url } ).catch(console.error);
       }else{
-        await DB.feed.updateOne({ server: feed.server, url: feed.url },{ $inc: { errors: 1} },).catch(console.error);
+        await DB.feed.updateOne({ server: feed.server, url: feed.url },{ $inc: { erroredCount: 1} },).catch(console.error);
       }
       
     }
