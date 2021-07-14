@@ -33,7 +33,7 @@ class Paginator extends ButtonCollector {
                 { emoji: {name:"▶️"}, label: "Next", custom_id: "next", style: 1, disabled: this.page >= this.lastPage },
                 { emoji: {name:"⏩"}, label: "Last", custom_id: "last", style: 2, disabled: this.page >= this.lastPage },
         ],this.buttonsRow).then(r=>{
-           // this.book =r;
+            this.book =r;
             return r;
         })
 
@@ -43,7 +43,7 @@ class Paginator extends ButtonCollector {
             console.log("click",id)
             if (!this.VALID_BUTTONS.includes(id)) {
                 console.log("ALIEN",id)
-               // this.book = await message.removeButtons(this.VALID_BUTTONS);
+                this.book = await message.removeButtons(this.VALID_BUTTONS);
                 this.buttonsRow = this.book?.components?.length||0;
                 return this.stop( "Clicked Alien Button");
 
@@ -75,7 +75,7 @@ class Paginator extends ButtonCollector {
 
     setPage(n) {
         this.page = n;
-       // this.emit("page", this.book, this.page, this.rpp, this.total)
+        this.emit("page", this.book, this.page, this.rpp, this.total)
     }
 
 }

@@ -16,8 +16,9 @@ const init = async function (msg, args) {
     }, "There's already a game going on here.");
     return;
   }
-  const MODE = args[0] === "group" ? "group" : "solo";
+  const MODE = args[0] === "solo" ? "solo" : "server";
   const GAME = new Hangmaid(msg, WORDS, MODE);
+  console.log(GAME.word)
 
   const embed = {
     description: `The word's theme is ${GAME.HINT}\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
@@ -44,7 +45,7 @@ const init = async function (msg, args) {
 // Need msg for the collector filter in solo mode
 const startCollector = async (Game, msg, mode) => {
   let paused = false;
-  const filter = mode === "group" ? (m) => m.author.id !== PLX.user.id : (m) => m.author.id === msg.author.id;
+  const filter = mode === "server" ? (m) => m.author.id !== PLX.user.id : (m) => m.author.id === msg.author.id;
   const commandMsg = Game.originalMessage;
 
   const Collector = commandMsg.channel.createMessageCollector(filter, { time: 5 * 60e3 }); // 5 Minutes
@@ -119,13 +120,18 @@ const startCollector = async (Game, msg, mode) => {
             break;
           case "win":
             newEmbed.title = ":tada: Congratulations! You guessed it!";
-            newEmbed.description = `You scored ${Game.SCORE} points.`;
+            newEmbed.description = `You scored ${Game.SCORE} points with grade ${Game.GRADE}.`;
             newEmbed.color = numColor(_UI.colors.success);
+            Progression.emit("play.hangmaid.win", { msg, userID: msg.author.id });
+            Progression.emit("streak.hangmaid.win", { msg, userID: msg.author.id });
+
             break;
           case "lose":
             newEmbed.title = _emoji("NOPE").no_space + " Oh, dear, you missed it... better luck next time~";
             newEmbed.description = "";
             newEmbed.color = numColor(_UI.colors.danger);
+            Progression.emit("play.hangmaid.lose", { msg, userID: msg.author.id });
+            Progression.emit("streak.hangmaid.win", { valueSet:0,msg, userID: msg.author.id });
         }
       }
 
@@ -140,21 +146,27 @@ const startCollector = async (Game, msg, mode) => {
     clearInterval(activity);
     if (reason === "time") return commandMsg.channel.send(":hourglass: Ah, you took too long.");
     if (reason === "win") {
-      const data = {
-        points: results.score,
+      const payload = {
+        points: Game.SCORE,
         timestamp: Date.now(),
-        data: results,
+        data: {
+          rounds: Game.shots,
+          word: Game.GUESSES,
+          score: Game.SCORE,
+          grade: Game.GRADE,
+          time: ~~((Date.now() - Game.startedAt) / 1000),
+        },
       };
-
+      console.log(Game)
       if (Game.MODE === "solo") {
-        data.id = `${commandMsg.author.id}`;
-        data.type = "hangmaid-solo";
-      } else if (Game.MODE === "group") {
-        data.id = `${commandMsg.guild.id}`;
-        data.type = "hangmaid-group";
+        payload.id = `${Game.userMessage.author.id}`;
+        payload.type = "hangmaid-solo";
+      } else if (Game.MODE === "server") {
+        payload.id = `${commandMsg.guild.id}`;
+        payload.type = "hangmaid-server";
       }
 
-      await DB.rankings.collection.insert(data);
+      await DB.rankings.collection.insert(payload);
     }
   });
 };

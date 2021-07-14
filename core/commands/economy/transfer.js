@@ -24,7 +24,7 @@ const init = async (msg) => {
       embed:{
         //color: _UI.red,
         color: numColor(_UI.colors.red),
-        description: "Direct-transfers are exclusive to Prime players"
+        description: "Direct-transfers are exclusive to Prime players. Try `plx!prime` for more info."
       }
     });
   }

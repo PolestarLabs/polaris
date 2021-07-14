@@ -10,6 +10,7 @@ const { CronJob } = require("cron");
 //= =====================================================================================
 
 exports.run = async function run() {
+
   console.log("• ".blue, "Loading CRON subroutines...");
 
   //= =====================================================================================
@@ -58,6 +59,13 @@ exports.run = async function run() {
   /* EVERY 1 MINUTE */
   //= =====================================================================================
   const ONE_MINUTE = new CronJob("*/1 * * * *", async () => {
+
+    delete require.cache[require.resolve("./feeds")];
+    const feeds = require("./feeds");
+    feeds.check();
+
+
+
     console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${formatDistance(PLX.uptime, 0)}
     `.gray);
 

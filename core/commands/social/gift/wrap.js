@@ -173,10 +173,10 @@ async function createGiftWrap(msg, giftItem, destroystring) {
     const ephCollector = ButtonCollector(
       confirmation,
       r=>r.userID === msg.author.id,
-      { time: 50e3, maxMatches: 5 }
+      { time: 50e3, maxMatches: 1 }
     );
     
-    ephCollector.on("click", async ({interaction,id}) => {
+    ephCollector.once("click", async ({interaction,id}) => {
       if (id === 'giftMakeCancel') return msg.channel.send( `${_emoji('nope')} Gift creation cancelled.` );
       if (id === 'giftMakePrivate') giftItem.private = true;
       await DB.users.set(msg.author.id, destroystring);

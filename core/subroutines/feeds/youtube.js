@@ -38,7 +38,7 @@ exports.run = async (/** @type {YoutubeFeed} */feed, serverLang = "en") => {
     data.items[0].media = null;
     await DB.feed.updateOne(
       { server: feed.server, url: feed.url },
-      { $set: { last: data.items[0], thumb: embed.thumbnail.url } },
+      { $set: { last: data.items[0], thumb: embed?.thumbnail?.url } },
     ).catch(console.error);
 
     const ping = feed.pings || feed.pings || "";

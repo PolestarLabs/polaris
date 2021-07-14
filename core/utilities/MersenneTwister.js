@@ -1,11 +1,13 @@
+const {randomInt} = require("crypto");
+
 class MersenneTwister {
   constructor(seed) {
     if (seed === undefined) {
-      seed = new Date().getTime();
+      seed = randomInt(7777);
     }
 
-    this.N = 624;
-    this.M = 397;
+    this.N = 62; //624
+    this.M = 39; //397
     this.MATRIXA = 0x9908b0df;
     this.UPPERMASK = 0x80000000;
     this.LOWERMASK = 0x7fffffff;
