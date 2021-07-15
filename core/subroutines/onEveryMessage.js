@@ -1,5 +1,7 @@
 const Drops = require("./boxDrops").lootbox;
 const { TextChannel } = require("eris");
+const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
+const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
 
 /**
  * @param {{ author: { id: any; }; guild: { id: any; }; }} msg
@@ -31,16 +33,17 @@ async function levelChecks(msg) {
   }
 
 
-  const _FACTOR = servData.modules.UPFACTOR || 0.5;
+  const {upfactorA, upfactorB} = servData.progression || {upfactorA: 280, upfactorB: 9};
 
   const LOCAL_RANK = (await DB.localranks.findOne({ user: msg.author.id, server: msg.guild.id }).noCache())
     || {
     user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
   };
+  
+  
 
-
-  const curLevelLocal = Math.floor(_FACTOR * Math.sqrt(LOCAL_RANK.exp));
-  // let forNext_local = Math.trunc(Math.pow(((LOCAL_RANK.level||0) + 1) / _FACTOR, 2));
+  const curLevelLocal = xp_to_level(LOCAL_RANK.exp, upfactorA,upfactorB);
+  const forNext_local =   level_to_xp(LOCAL_RANK.level, upfactorA,upfactorB);
 
 
   if (!servData.switches?.chExpOff?.includes(msg.channel.id)) {
@@ -52,6 +55,7 @@ async function levelChecks(msg) {
   if (global.piggyback) return;
 
   /// =======  [LOCAL LVUP] ========///
+  console.log({curLevelLocal,LOCAL_RANK})
   if (curLevelLocal < LOCAL_RANK.level) {
     // console.log("DELEVEL");
 
