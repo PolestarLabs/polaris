@@ -27,6 +27,7 @@ const init = async (msg, args) => {
 
 module.exports = {
   init,
+  pub: false,
   //TODO[epic=Unfinished Commands] Deprecate?
   disabled: true,
   cmd,
