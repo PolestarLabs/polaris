@@ -181,7 +181,7 @@ const init = async function (msg, args) {
         })
     }
 
-    msg.channel.send({ embed }, PROCESS_RWD.data.tier == 'plastic' ? undefined : { file: canvas.toBuffer(), name: "rewards.png" })
+    msg.channel.send({ embed }, PROCESS_RWD.data.tier == 'plastic' ? undefined : { file: await canvas.toBuffer(), name: "rewards.png" })
 
 
 
