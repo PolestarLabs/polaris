@@ -414,8 +414,8 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 
     if (currentHand.insuredLastTurn) {
       await msg.channel.send(`${_emoji("plxbjkinsu")} **Insurance has been placed for this match!**`, {
-        file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
-      }).then((mm) => {
+        file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
+      }).then(async (mm) => {
         // msg.channel.send(`Insurance has been placed for this match!`).then(mm=>{
         scene_msg = mm;
         if (tableMessageRound) tableMessageRound.delete();
@@ -426,7 +426,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     } else {
       let finalImage;
       try {
-        finalImage = scenario.toBuffer("image/png", imageOptions);
+        finalImage = await scenario.toBuffer("image/png", imageOptions);
       } catch (err) {
         finalImage = scenario.toBuffer();
       }
@@ -463,7 +463,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
 
     } else {
       msg.channel.send({
-        content: " intro_message ",
+        content: " \u200b ",
         components: [
           // {type:1,components: buttonsToAdd.row1.filter(x=>!!x)},
           // {type:1,components: buttonsToAdd.row2.filter(x=>!!x)},
@@ -648,10 +648,9 @@ const init = async (msg, args) => {
 
     const hitstandPre = hitStandMessage(P, canDoubleDown, canSplit, canInsurance);
 
-    msg.channel.send(v.NEWGAME);
+    //msg.channel.send(v.NEWGAME);
     //${hitstandPre}
-    return msg.channel.send(`.
-    `).then(async (introMessage) => {
+    return msg.channel.send( v.NEWGAME ).then(async (introMessage) => {
       // powerups.nojoker = false; // testing
       let playerHands;
 
@@ -878,7 +877,7 @@ const init = async (msg, args) => {
 
 
 
-      msg.channel.send(PLAY_RES, { file: scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
+      msg.channel.send(PLAY_RES, { file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
         .then((m) => {
           if (splitExplain.length) {
             log.embed.fields.push({
