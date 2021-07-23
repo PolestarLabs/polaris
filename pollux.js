@@ -7,7 +7,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
-global.clusterNames = require("@polestar/constants/clusters");
+global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
@@ -25,7 +25,8 @@ const DummyFlavorDefault = {
   name: "dummy_default"
 }
 
-const FLAVOR_SWARM_CONFIG   = JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]") // sample data on index;
+
+const FLAVOR_SWARM_CONFIG   = typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
 const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
 
 //return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
@@ -157,7 +158,7 @@ PLX.maintenance = process.env.maintenance;
 PLX.isPRIME = isPRIME;
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
-PLX.cluster = isPRIME 
+PLX.cluster = isPRIME === true
   ? { id: 0, name: "Prime: "+FLAVORED_CLIENT_DATA.fname } 
   : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 
@@ -233,7 +234,7 @@ DBSchema(dbConnectionData, {
     (require("./core/archetypes/Achievements.js")).init();
     (require("./core/archetypes/Progression.js")).init();
   } catch (err) {
-    console.log(err);
+    console.error(err);
     process.exit(1);
   }
 

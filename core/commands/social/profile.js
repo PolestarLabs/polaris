@@ -135,7 +135,6 @@ const TEXT = {
 };
 
 const { performance } = require("perf_hooks");
-const { Canvas, Image } = require("canvas");
 const { Message } = require("eris");
 
 
