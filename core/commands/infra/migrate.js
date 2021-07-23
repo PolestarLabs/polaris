@@ -160,6 +160,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
             } else newInventory.push({ id: item, count: 1 });
           });
 
+          newInventory.push({ id: "streakfix", count: 1 });
           await DB.users.set(msg.author.id, { $set: { "modules.inventory": newInventory } }).catch(console.error);
           userData_OLD.modules.inventory = newInventory;
 
