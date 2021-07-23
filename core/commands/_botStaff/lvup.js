@@ -12,7 +12,7 @@ const init = async function (msg, args) {
 
     if (argLv == 'fromgen')
         return msg.channel.send(
-            { messageReferenceID: msg.id }, { file: await resolveFile(`${paths.GENERATORS}/levelup.gif`), name: "levelUp.gif" }
+            { messageReferenceID: msg.id }, { file: await resolveFile(`${'https://hijola.pollux.gg/generators'}/levelup.gif?avatar=https%3A%2F%2Fcdn.discordapp.com%2Favatars%2F88120564400553984%2Fa_e66d42141feca78c1b107f48279c171e.gif%3Fsize%3D512%0D%0A&cache=1&level=320&uid=88120564400553984`), name: "levelUp.gif" }
         );
 
     const canvas = Picto.new(800, 300);
@@ -52,8 +52,8 @@ const init = async function (msg, args) {
         //ctx2 = canvas2.getContext('2d');
 
         ctx.drawImage(avatar, 15 + Math.min((10000 / Math.pow(20 + frame, 2)), 45), 0, 320, 320);
-        ctx.shadowColor = 'red'
-        ctx.shadowBlur = '15px'
+        ctx.shadowColor = '#2b2b3b'
+        ctx.shadowBlur = 5
 
         const FRAME = Picto.tag(ctx, "Frame: " + frame, "600 30px 'Quicksand'", "#F00").item;
 

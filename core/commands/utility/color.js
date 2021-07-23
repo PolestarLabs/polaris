@@ -64,19 +64,19 @@ const init = async function (msg, programatic) {
     if (programatic === true) {
       return {
         embed,
-        file: file(Canvas.toBuffer(), "color.png"),
+        file: file(await Canvas.toBuffer(), "color.png"),
         hex: result.hex,
         name: result.title,
       };
     }
 
-    msg.channel.send({ embed }, { file: Canvas.toBuffer(), name: "color.png" });
+    msg.channel.send({ embed }, { file: await Canvas.toBuffer(), name: "color.png" });
   } else {
     if (programatic === true) {
       Picto.roundRect(ctx, 10, 10, 120, 120, 20, "#000000");
       return {
         embed,
-        file: file(Canvas.toBuffer(), "color.png"),
+        file: file(await Canvas.toBuffer(), "color.png"),
         hex: "#000000",
         name: "INVALID COLOR",
       };

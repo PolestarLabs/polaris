@@ -97,8 +97,8 @@ function getBoard(userData, highlight) {
   let data = "";
 
   Object.keys(userData).forEach((k) => {
-    data += `${k}_`;
-    data += userData[k].hash += "_";
+    data += `${k}|`;
+    data += userData[k].hash += "|";
     for (const bet of userData[k].bets) {
       data += `+${toHex(bet)}-${bet.amount.toString(16)}`;
     }
@@ -106,7 +106,7 @@ function getBoard(userData, highlight) {
   });
   data = data.substring(0, data.length - 1);
 
-  const imageURL = `${paths.DASH}/generators/roulette.png?data=${data}`;
+  const imageURL = `${paths.GENERATORS}/roulette.png?data=${data}`;
 
   return imageURL + (highlight ? `&h=${highlight}` : "");
 }

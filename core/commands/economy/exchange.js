@@ -203,7 +203,7 @@ const init = async (msg, args) => {
   // embed.thumbnail = {url:"https://cdn.discordapp.com/attachments/488142034776096772/674882674287968266/piechart.gif"}
   embed.thumbnail = textMode ? { url: "https://cdn.discordapp.com/attachments/488142034776096772/674882599956643840/abacus.gif" } : {};
 
-  const image = !textMode ? file(canvas.toBuffer(), "discoin.png") : null;
+  const image = !textMode ? file(await canvas.toBuffer(), "discoin.png") : null;
   return msg.channel.send({ embed }, image);
 };
 
