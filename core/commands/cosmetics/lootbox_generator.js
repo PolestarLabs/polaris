@@ -5,7 +5,6 @@ const BUTTONS = {
 
 // TRANSLATE[epic=translations] lootbox
 
-const Canvas = require("canvas");
 const Lootbox = require("../../archetypes/Lootbox.js");
 const Picto = require("../../utilities/Picto.js");
 const ECO = require("../../archetypes/Economy");
@@ -319,7 +318,7 @@ function boxBonus(USERDATA, lootbox, options) {
 }
 async function compileBox(msg, lootbox, USERDATA, options) {
   await Promise.all(
-    lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => new Canvas.Image())) && VisualsCache.get(vis)),
+    lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => e )) && VisualsCache.get(vis)),
   );
 
   const {
