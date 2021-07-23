@@ -24,7 +24,7 @@ const DummyFlavorDefault = {
   category: "alpha",
   name: "dummy_default"
 }
-
+console.log(typeof process.env.FLAVOR_SWARM_CONFIG);
 const FLAVOR_SWARM_CONFIG   = typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
 const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
 
