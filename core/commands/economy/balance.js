@@ -67,7 +67,7 @@ const init = async (msg) => {
     emb.field("\u200bPolaris Gems", "\u200b"
       + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
       + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.PSM ?? 0, true)}**`
-      + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.eventGoodie || 0, true)}**`
+      + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.modules.EVT || 0, true)}**`
       + `\n${invisibar}`,
       true);
 

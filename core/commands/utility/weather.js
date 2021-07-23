@@ -87,7 +87,7 @@ const init = async (msg, args) => {
 	//FIXME[epic=anyone] do not use that hard coded link
 
 	msg.channel.send("", {
-		file: await resolveFile(`${ /*paths.DASH*/ "https://hijola.pollux.gg"}/generators/weather.png?furball=${encodeURIComponent(buffer)}`),
+		file: await resolveFile(`${ paths.GENERATORS}/weather.png?furball=${encodeURIComponent(buffer)}`),
 		name: 'weather.png'
 	})
 

@@ -6,11 +6,26 @@ const Picto = require("../../utilities/Picto");
 const userDB = DB.users;
 const serverDB = DB.servers;
 
+const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
+const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
+
+
 const cmd = "level";
 
-function XPercent(x, l, f = 0.0427899) {
-  const exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
-  const exptoThis = Math.trunc(Math.pow(l / f, 2));
+function XPercent(x, l, fa, fb) {
+
+  let exptoNex,  exptoThis;
+
+  if (fa==="OLD"){
+    let f = 0.0427899;
+     exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
+    exptoThis = Math.trunc(Math.pow(l / f, 2));
+  
+  }else{
+
+     exptoNex =  level_to_xp(l+1,fa,fb);
+     exptoThis = level_to_xp(l,fa,fb);
+  }
 
   const frameofact = exptoNex - exptoThis;
   const levelcoverage = x - exptoThis;
@@ -46,9 +61,9 @@ const init = async function (msg) {
   const exp = TARGET_DB.modules.exp || 0;
   const level = TARGET_DB.modules.level || 0;
 
-  const percent = XPercent(exp, level);
+  const percent = XPercent(exp, level,"OLD");
 
-  const SVFAC = SV_DB.modules.UPFACTOR || 0.11;
+  const SVFAC = SV_DB.progression || 0.11;
 
   let l_exp;
   let l_level;
@@ -63,7 +78,7 @@ const init = async function (msg) {
     l_exp = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).exp || 0;
     l_level = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).level || 0;
 
-    l_percent = XPercent(l_exp, l_level, SVFAC);
+    l_percent = XPercent(l_exp, l_level, SVFAC.upfactorA, SVFAC.upfactorB);
   } catch (e) {
     l_exp = 0;
     l_level = 0;

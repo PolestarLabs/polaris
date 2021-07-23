@@ -1,7 +1,7 @@
 [
   {
     "word": "Abruptly",
-    "theme": "other",
+    "theme": "adverb",
     "level": 3
   },
   {
@@ -16,7 +16,7 @@
   },
   {
     "word": "Affix",
-    "theme": "other",
+    "theme": "grammar",
     "level": 4
   },
   {
@@ -66,7 +66,7 @@
   },
   {
     "word": "Axiom",
-    "theme": "other",
+    "theme": "logic",
     "level": 4
   },
   {
@@ -91,7 +91,7 @@
   },
   {
     "word": "Bandwagon",
-    "theme": "other",
+    "theme": "expression",
     "level": 3
   },
   {
@@ -156,7 +156,7 @@
   },
   {
     "word": "Buckaroo",
-    "theme": "other",
+    "theme": "expression",
     "level": 4
   },
   {
@@ -166,7 +166,7 @@
   },
   {
     "word": "Buffoon",
-    "theme": "other",
+    "theme": "archaic",
     "level": 2
   },
   {
@@ -186,7 +186,7 @@
   },
   {
     "word": "Caliph",
-    "theme": "other",
+    "theme": "occupation",
     "level": 3
   },
   {
@@ -236,7 +236,7 @@
   },
   {
     "word": "Cycle",
-    "theme": "other",
+    "theme": "logic",
     "level": 3
   },
   {
@@ -281,7 +281,7 @@
   },
   {
     "word": "Dwarves",
-    "theme": "other",
+    "theme": "people",
     "level": 2
   },
   {
@@ -321,12 +321,12 @@
   },
   {
     "word": "Espionage",
-    "theme": "other",
+    "theme": "action",
     "level": 2
   },
   {
     "word": "Exodus",
-    "theme": "other",
+    "theme": "action",
     "level": 2
   },
   {
@@ -371,7 +371,7 @@
   },
   {
     "word": "Flyby",
-    "theme": "other",
+    "theme": "action",
     "level": 3
   },
   {
@@ -421,7 +421,7 @@
   },
   {
     "word": "Galvanize",
-    "theme": "other",
+    "theme": "action",
     "level": 3
   },
   {
@@ -451,7 +451,7 @@
   },
   {
     "word": "Glyph",
-    "theme": "other",
+    "theme": "writing",
     "level": 2
   },
   {
@@ -481,7 +481,7 @@
   },
   {
     "word": "Haiku",
-    "theme": "other",
+    "theme": "literature",
     "level": 3
   },
   {
@@ -521,7 +521,7 @@
   },
   {
     "word": "Hyphen",
-    "theme": "other",
+    "theme": "grammar",
     "level": 3
   },
   {
@@ -551,12 +551,12 @@
   },
   {
     "word": "Jackpot",
-    "theme": "other",
+    "theme": "games",
     "level": 4
   },
   {
     "word": "Jaywalk",
-    "theme": "other",
+    "theme": "expression",
     "level": 4
   },
   {
@@ -656,7 +656,7 @@
   },
   {
     "word": "Kitsch",
-    "theme": "other",
+    "theme": "culture",
     "level": 4
   },
   {
@@ -686,7 +686,7 @@
   },
   {
     "word": "Length",
-    "theme": "other",
+    "theme": "geometry",
     "level": 3
   },
   {
@@ -781,7 +781,7 @@
   },
   {
     "word": "Mnemonic",
-    "theme": "other",
+    "theme": "logic",
     "level": 5
   },
   {
@@ -821,7 +821,7 @@
   },
   {
     "word": "Nowadays",
-    "theme": "other",
+    "theme": "time",
     "level": 3
   },
   {
@@ -866,7 +866,7 @@
   },
   {
     "word": "Peekaboo",
-    "theme": "other",
+    "theme": "expression",
     "level": 2
   },
   {
@@ -896,7 +896,7 @@
   },
   {
     "word": "Pixel",
-    "theme": "other",
+    "theme": "technology",
     "level": 1
   },
   {
@@ -931,7 +931,7 @@
   },
   {
     "word": "Psyche",
-    "theme": "other",
+    "theme": "education",
     "level": 4
   },
   {
@@ -951,7 +951,7 @@
   },
   {
     "word": "Quartz",
-    "theme": "thing",
+    "theme": "geography",
     "level": 2
   },
   {
@@ -961,7 +961,7 @@
   },
   {
     "word": "Quips",
-    "theme": "other",
+    "theme": "noun",
     "level": 4
   },
   {
@@ -971,12 +971,12 @@
   },
   {
     "word": "Quiz",
-    "theme": "other",
+    "theme": "noun",
     "level": 2
   },
   {
     "word": "Quorum",
-    "theme": "other",
+    "theme": "noun",
     "level": 4
   },
   {
@@ -991,7 +991,7 @@
   },
   {
     "word": "Razzmatazz",
-    "theme": "other",
+    "theme": "expression",
     "level": 5
   },
   {
@@ -1106,7 +1106,7 @@
   },
   {
     "word": "Strength",
-    "theme": "other",
+    "theme": "noun",
     "level": 3
   },
   {
@@ -1131,7 +1131,7 @@
   },
   {
     "word": "Syndrome",
-    "theme": "other",
+    "theme": "medical",
     "level": 3
   },
   {
@@ -1171,7 +1171,7 @@
   },
   {
     "word": "Transcript",
-    "theme": "other",
+    "theme": "literature",
     "level": 3
   },
   {
@@ -1186,12 +1186,12 @@
   },
   {
     "word": "Triphthong",
-    "theme": "other",
+    "theme": "expression",
     "level": 4
   },
   {
     "word": "Twelfth",
-    "theme": "other",
+    "theme": "math",
     "level": 4
   },
   {
@@ -1241,7 +1241,7 @@
   },
   {
     "word": "Vixen",
-    "theme": "other",
+    "theme": "literature",
     "level": 3
   },
   {
@@ -1256,7 +1256,7 @@
   },
   {
     "word": "Voodoo",
-    "theme": "other",
+    "theme": "culture",
     "level": 1
   },
   {
@@ -1331,12 +1331,12 @@
   },
   {
     "word": "Witchcraft",
-    "theme": "other",
+    "theme": "culture",
     "level": 2
   },
   {
     "word": "Wizard",
-    "theme": "other",
+    "theme": "culture",
     "level": 2
   },
   {
@@ -1376,7 +1376,7 @@
   },
   {
     "word": "Yummy",
-    "theme": "other",
+    "theme": "expression",
     "level": 3
   },
   {
@@ -1386,7 +1386,7 @@
   },
   {
     "word": "Zigzag",
-    "theme": "other",
+    "theme": "expression",
     "level": 5
   },
   {
@@ -1396,12 +1396,12 @@
   },
   {
     "word": "Zodiac",
-    "theme": "other",
+    "theme": "thing",
     "level": 3
   },
   {
     "word": "Zombie",
-    "theme": "other",
+    "theme": "culture",
     "level": 3
   },
   {

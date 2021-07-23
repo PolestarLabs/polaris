@@ -66,7 +66,7 @@ const init = async function init(msg, args) {
   if (rand === 69) response = "Nice.";
   else if (rand === 24 && ["pt", "pt-BR"].includes(msg.lang[0] || msg.lang)) response = "Mas afinal qual dos dois vem de quatro?";
   else response = $t(`responses.ship.quotes.${Math.floor(rand / 10)}.${randomize(0, 1)}`, { lngs: msg.lang });
-  return msg.channel.send(response, file(Canvas.toBuffer(), "ship.png"));
+  return msg.channel.send(response, file(await Canvas.toBuffer(), "ship.png"));
 };
 
 module.exports = {

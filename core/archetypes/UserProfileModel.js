@@ -36,6 +36,7 @@ class UserProfileModel {
     this.sapphires = userDBData.modules.SPH || 0;
     this.medals = userDBData.modules.medals || [];
     this.marriage = userDBData.marriageData || null;
+    this.featMarriage = userDBData.featuredMarriage || null;
     this.commend = 0;
     const flagOverride = userDBData.switches?.flagOverride === "hidden" ? null : userDBData.switches?.flagOverride;
     this.countryFlag = flagOverride || userDBData.personal?.country || null;
@@ -86,8 +87,8 @@ class UserProfileModel {
   get wifeData() {
     return new Promise(async (resolve) => {
       if (this.wife) return resolve(this.wife);
-      let marriage = this.marriage || await DB.relationships.findOne({ type: "marriage", _id: this.marriage });
-      if (!this.marriage) return resolve(null);
+      let marriage = this.marriage || await DB.relationships.findOne({ type: "marriage", _id: this.featMarriage });
+      if (!marriage) return resolve(null);
 
       const wifeID = marriage?.users?.find((usr) => usr !== this.ID);
       if (!wifeID) return resolve(null);
@@ -103,6 +104,8 @@ class UserProfileModel {
         wifeName: discordWife.username,
         wifeAvatar: (discordWife.avatarURL || discordWife.avatar).replace("size=512", "size=64"),
       };
+
+      this.marriage = this.wife;
 
       return resolve(this.wife);
 

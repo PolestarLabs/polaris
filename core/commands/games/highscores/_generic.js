@@ -23,7 +23,7 @@ async function topGeneric(msg, args, telePass, rank) {
   return msg.channel.send({
     content: `**High Scores for \`${rank.cmd || telePass}\`.**`,
     embed: {
-      description: `\n${standings.join("\n")}`,
+      description: `\n${standings.join("\n")}.`,
     },
   });
 }
