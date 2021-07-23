@@ -13,7 +13,7 @@ const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
 
-const isPRIME               = process.env.PRIME;
+const isPRIME               = process.env.PRIME == "true" || process.env.PRIME == true;
 const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT;// || isPRIME ? "prime" : "main";
 
 
@@ -155,7 +155,9 @@ global.MARKET_TOKEN = cfg["pollux-api-token"];
 PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.isPRIME = isPRIME;
+PLX.isPRIME =  (isPRIME == "true" || isPRIME == true) ;
+
+
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
 PLX.cluster = isPRIME === true
