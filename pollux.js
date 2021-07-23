@@ -7,7 +7,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 global.Promise = require("bluebird");
-global.clusterNames = require("@polestar/constants/clusters");
+global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
@@ -24,8 +24,7 @@ const DummyFlavorDefault = {
   category: "alpha",
   name: "dummy_default"
 }
-console.log(typeof process.env.FLAVOR_SWARM_CONFIG);
-console.log(process.env.FLAVOR_SWARM_CONFIG);
+
 
 const FLAVOR_SWARM_CONFIG   = typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
 const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
@@ -156,7 +155,6 @@ global.MARKET_TOKEN = cfg["pollux-api-token"];
 PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-console.log({isPRIME});
 PLX.isPRIME = isPRIME;
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
@@ -236,7 +234,7 @@ DBSchema(dbConnectionData, {
     (require("./core/archetypes/Achievements.js")).init();
     (require("./core/archetypes/Progression.js")).init();
   } catch (err) {
-    console.log(err);
+    console.error(err);
     process.exit(1);
   }
 
