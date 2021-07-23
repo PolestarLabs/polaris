@@ -55,7 +55,6 @@ async function levelChecks(msg) {
   if (global.piggyback) return;
 
   /// =======  [LOCAL LVUP] ========///
-  console.log({curLevelLocal,LOCAL_RANK})
   if (curLevelLocal < LOCAL_RANK.level) {
     // console.log("DELEVEL");
 
@@ -66,12 +65,7 @@ async function levelChecks(msg) {
   if (curLevelLocal > LOCAL_RANK.level) {
 
     await DB.localranks.set({ user: msg.author.id, server: msg.guild.id }, { $set: { level: curLevelLocal } });
-
-    console.log({
-      "!!servData.modules.LVUP_local": !!servData.modules.LVUP_local,
-      "!servData.switches?.chLvlUpOff?.includes(msg.channel.id)": !servData.switches?.chLvlUpOff?.includes(msg.channel.id)
-      , servData
-    });
+ 
 
     const lvupText = (servData._doc || servData).modules?.LVUP_text?.replaceAll('%lv%', curLevelLocal);
 

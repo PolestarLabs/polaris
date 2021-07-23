@@ -156,10 +156,11 @@ global.MARKET_TOKEN = cfg["pollux-api-token"];
 PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
+console.log({isPRIME});
 PLX.isPRIME = isPRIME;
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
-PLX.cluster = isPRIME 
+PLX.cluster = isPRIME === true
   ? { id: 0, name: "Prime: "+FLAVORED_CLIENT_DATA.fname } 
   : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 
