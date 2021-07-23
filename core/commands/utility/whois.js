@@ -133,7 +133,7 @@ const init = async (msg, args) => {
 
   TARGET.bot ? ctx.drawImage(isbot, 250, 450) : null;
 
-  const buff = canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+  const buff = await canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
 
   return msg.channel.createMessage("", { file: buff, name: "whois.png" });
 };

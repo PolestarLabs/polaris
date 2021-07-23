@@ -78,7 +78,7 @@ const init = async (message) => {
 
     await message.channel.send($t("forFun.cancer", P));
     await wait(2);
-    await message.channel.send("", file(canvas.toBuffer(), "geiger.png"));
+    await message.channel.send("", file(await canvas.toBuffer(), "geiger.png"));
     await wait(1);
 
     await message.channel.send($t("forFun.geiger", P));
