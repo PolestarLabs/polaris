@@ -1,13 +1,14 @@
 const init = async function (msg,args){
     let embed = {};
     const userData_OLD = await vDB.users.findOne({ id: msg.author.id }).noCache().lean();
-    const userData_NEW = await DB.users.findOne({ id: msg.author.id }).noCache().lean();
+    const userData_NEW = await DB.users.findOne({ id: msg.author.id }).noCache();
     //return "Not ready Yet";
     if (userData_OLD.blacklisted?.length > 1 && userData_OLD.blacklisted != "false") return msg.reply(`${_emoji('nope')} • Blacklisted accounts will have to start over!`);  
 
     if (args[0] === "inv"){
         if (userData_NEW.switches?.migrateFix?.inv) return msg.reply(`${_emoji('nope')} • Your inventory has already been fixed!`);
         const m = await msg.reply(" • Fixing Inventory...");
+        
 
         const oldInventory = userData_OLD.modules.inventory;
         const newInventory = [];
@@ -22,9 +23,11 @@ const init = async function (msg,args){
                 if (!currItem.id.includes("lootbox")) currItem.count++;           
             } else newInventory.push({ id: item, count: 1 });
         });
-
+        await userData_NEW.addItem('streakfix',1);
+        await m.edit(" • Fixing Inventory... Streakfix added!" + _emoji('maybe'));
+        await wait(3);
         await DB.users.set(msg.author.id, { $set: { "switches.migrateFix.inv":true, "modules.inventory": newInventory } }).catch(console.error);
-        m.edit(" • Fixing Inventory... **Done**" + _emoji('yep'));
+        return m.edit(" • Fixing Inventory... **Done**" + _emoji('yep'));
         
     }
 
