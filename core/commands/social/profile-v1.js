@@ -592,7 +592,7 @@ module.exports = {
 
 async function FINALIZE(msg, canvas) {
   setImmediate(async () => {
-    const buff = canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+    const buff = await canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
 
     let messageToSend = "";
     let noimg = false;

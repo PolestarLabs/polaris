@@ -431,7 +431,7 @@ ${totalRerolls - currentRoll > 0
       timestamp: new Date(),
     },
   }, {
-    file: canvas.toBuffer(),
+    file: await canvas.toBuffer(),
     name: "Lootbox.png",
   }];
 }

@@ -24,6 +24,9 @@ const init = async function (msg, args) {
     embed.thumbnail = { url: `https://cdn.discordapp.com/emojis/${_emoji("THX").id}.png?size=64` };
     embed.footer = { icon_url: msg.guild.iconURL, text: msg.guild.name };
 
+    Progression.emit("command.thx.success", {msg,userID: msg.author.id});
+    
+
     msg.channel.send({ embed });
   };
 

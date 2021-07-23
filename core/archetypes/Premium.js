@@ -490,7 +490,7 @@ async function processRewards(userID, options) {
             "prime.custom_shop": tierPrizes.custom_shop,
         },
         $inc: {
-            "eventGoodie": tierPrizes.monthly_event_tkn,
+            "modules.EVT": tierPrizes.monthly_event_tkn,
         },
         $addToSet: {
             "modules.flairsInventory": currentTier
@@ -581,7 +581,7 @@ async function processRewards(userID, options) {
         JDE: amts[0],
         BOX: tierPrizes.box_bonus,
 
-        EVT: regularQuery.$inc.eventGoodie,
+        EVT: regularQuery.$inc.modules.EVT,
 
         //Booster
         IS_BOOSTER: isBooster,
@@ -616,9 +616,15 @@ async function processRewards(userID, options) {
 
     console.log("bulkWriteQuery".bgYellow);
     console.log(require('util').inspect({bulkWriteQuery,regularQuery,amts},0,5,1) ) ;
+
+    //FIXME replace this
+    if (!userData.modules.EVT){
+        await DB.users.set(userID, {"modules.EVT": 0 }).catch(err=> { console.error(err); return null });
+    }
+    
  
-    const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch(err=> { console.error(err); return null });
-    const q2 = await DB.users.set(userID, regularQuery).catch(err=> { console.error(err); return null });
+    const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch(err=> {console.error(err); return null; });
+    const q2 = await DB.users.set(userID, regularQuery).catch(err=> {console.error(err); return null; });
     const q3 = await ECO.receive(userID, amts, "dono_rewards", currs, { details: { tier: currentTier, month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR } });
 
     return { data, report, success: !!q1 && !!q2 && !!q3, qBreakdown: { q1, q2, q3 } };

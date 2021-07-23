@@ -4,7 +4,11 @@ const topFlags = require("./flags.js");
 // TRANSLATE[epic=translations] highscores
 
 const init = async function (msg, args, telePass, telePassArgs) {
-  if (telePass == "hangmaid") return topGeneric(msg, args, telePassArgs);
+  if (telePass == "hangmaid") return topGeneric(msg, args, telePassArgs, {
+    cmd: "hangmaid",
+    group: "hangmaid-server",
+    solo: "hangmaid-solo",
+  });
   if (telePass == "flags") return topFlags(msg, args);
   if (telePass == "gtf") return topFlags(msg, args);
 
@@ -40,7 +44,7 @@ module.exports = {
       gen: (a, b, c) =>
         topGeneric(a, b, c, {
           cmd: "hangmaid",
-          group: "hangmaid-group",
+          group: "hangmaid-server",
           solo: "hangmaid-solo",
         }),
       options: {

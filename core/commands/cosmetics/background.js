@@ -34,7 +34,7 @@ const init = async (msg, args) => {
   \`${selectedBG.code}\`
   [${$t("responses.equip.getMoreBG", P)}](${paths.DASH}/bgshop)
   `;
-  const _price = selectedBG.price || BackgroundPrices[selectedBG.rarity];
+  const _price = (selectedBG.price || BackgroundPrices[selectedBG.rarity]) * 5 ;
 
   embed.field(
     $t("terms.price", P),
@@ -95,7 +95,7 @@ const init = async (msg, args) => {
 };
 
 module.exports = {
-  pub: true,
+  pub: false,
   cmd,
   perms: 3,
   init,
