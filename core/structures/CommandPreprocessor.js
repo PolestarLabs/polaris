@@ -107,15 +107,12 @@ const DEFAULT_CMD_OPTS = {
   },
   hooks: {
     preCommand: async (m, a) => {
-
-      console.log('precommand')
+      
       const noAdmin = (!m.content.includes("activate")&&!m.content.includes("ev"));
       console.log({noAdmin})
 
-      if (  m.guild &&  !m.guild?.prime ){
-        console.log('no prime'.red)
+      if ( PLX.isPRIME && m.guild &&  !m.guild?.prime ){
         await DB.users.get({'prime.servers': m.guild.id }).then(usr=>{
-          console.log('post save'.green)
           m.guild.prime = !!usr?.id;
         });
       }
