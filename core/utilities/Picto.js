@@ -108,7 +108,8 @@ module.exports = {
     return { item, height: h + H, width: w }; // legacy
   },
 
-  tagMoji: async function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+  tagMoji: async function tagmoji(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+    return( this.tag( ...arguments ) );
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
