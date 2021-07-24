@@ -73,7 +73,7 @@ class GenericItemInventory {
         };
         return response;
       }
-      const itemsPerPage = 5;
+      const itemsPerPage = 50;
       const procedure = function (...args) {
         if (originalPolluxMessage?.updateMessage)
           return originalPolluxMessage.updateMessage(...args);
