@@ -21,7 +21,7 @@ const POST_EXEC = function CommandPostExecution(msg, args, success) {
 */
 
 const PERMS_CALC = function CommandPermission(msg) {
-  if ( !msg.content.includes("ev") && !msg.content.includes("activate") &&  process.env.PRIME && msg.guild.prime === false){
+  if ( !msg.content.includes("ev") && !msg.content.includes("activate") &&  PLX.isPRIME && msg.guild.prime === false){
     msg.addReaction(":UNAUTHORIZED:773091703464525844");
     return false;
   }
@@ -248,7 +248,7 @@ const registerOne = (folder, _cmd) => {
     delete require.cache[require.resolve((`${CMD_FOLDER}/${folder}/${_cmd}`))];
     const commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
     if (commandFile.slashable) {
-      require("./SlashCommandPreprocessor.js").proc(commandFile);
+      //require("./SlashCommandPreprocessor.js").proc(commandFile);
     }
     // commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };
     commandFile.hidden = !commandFile.pub;  // legacy port
