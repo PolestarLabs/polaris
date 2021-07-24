@@ -16,9 +16,6 @@ const init = async function (msg, args) {
     const newErrand = await new TimedUsage("errands", { day: DYN_TIMER }).loadUser(msg.author);
     const newForfeit = await new TimedUsage("errandForfeit", { day: FORFEIT }).loadUser(msg.author);
 
-    console.log(userErrands.length, "availableErrands") // 3
-    console.log(completed.length, "completed") // 1 
-    console.log(newErrand.available, " newErrand.available ")// false
 
     Progression.checkStatusAll(msg.author.id, msg);
 

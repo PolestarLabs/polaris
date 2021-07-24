@@ -72,7 +72,6 @@ const init = async (msg, args) => {
       if (gift.private){
         await giftContents.setButtons([{label:"Check private content",custom_id:"chkPrivate"}]);
         await giftContents.awaitButtonClick(({interaction,userID})=>{
-          console.log({userID})
             if (userID === msg.author.id){
               interaction.followup({
                 content: "This message will never be shown again. If the contents of it are important, be sure to save it.",

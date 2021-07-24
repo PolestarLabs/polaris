@@ -24,10 +24,6 @@ const createInventoryEmbed = function createInventoryEmbed(Inventory, { author, 
 const init = async function (msg, args, reactionMember) {
   const reactionUserID = reactionMember?.id || reactionMember;
 
-  console.log({ args });
-
-  console.log({ userID: reactionUserID, args10: args[10]?.id || args[10] }, "init");
-
   if (reactionUserID && args[10]?.id != reactionUserID && reactionUserID !== msg.author.id) return "Only the owner can see inside";
   msg.lang = msg.lang || [msg.channel.LANG || "en", "dev"];
 
@@ -61,15 +57,12 @@ const init = async function (msg, args, reactionMember) {
   if (reactionUserID) return response;
   const res = await msg.channel.send(response);
   INVOKERS.set(msg.author.id, res.id);
-  console.log("end");
   return res;
 };
 
 const open = async function (msg, args, memberObj) {
   const userID = memberObj?.id || memberObj;
   args = args.map((a) => (typeof a === "string" ? a.toUpperCase() : a));
-
-  console.log({ userID, args10: args[10]?.id }, "open");
 
   INVOKERS.delete(userID || msg.author.id);
   INV_STATUS.delete(userID || msg.author.id);

@@ -33,8 +33,6 @@ const topCommend = async (m) => {
 
   const isUsr = (x) => x.id === m.author.id;
 
-  console.log(usersDiscordData)
-
   const [listCommend, listCommenders, listCommend2, listCommenders2] = [
 
     (commendedSort.slice(0, 3).map(
@@ -78,7 +76,6 @@ const topCommend = async (m) => {
     ))
   ];
 
-  console.log(listCommend)
 
   const embed = {
     thumbnail: { url: `${paths.CDN}/build/rank.png` },
@@ -94,7 +91,6 @@ const topCommend = async (m) => {
     ],
   };
 
-  console.log({ listCommenders, embed });
   return { embed };
 };
 

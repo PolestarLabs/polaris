@@ -30,7 +30,6 @@ const init = async function (msg, args) {
 		const filteredRoles = msg.guild.roles.filter((role) => {
 			return !!SELFROLES.find((srole) => srole[0] === role.id);
 		});
-		console.log({ filteredRoles });
 		if (filteredRoles.length)
 			match = [filteredRoles.find((role) => role.name.includes(args[0]))?.id];
 	}

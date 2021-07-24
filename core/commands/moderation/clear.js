@@ -13,7 +13,7 @@ const init = async function (msg) {
 
   msg.channel.send("Deleting messages...").then((m) => m.delete());
   return msg.channel.deleteMessages(bucket).then((x) => {
-    console.log(x);
+
     msg.channel.send(`${_emoji("yep")} Deleted **${bucket.length}** messages${bucket.length < AMT
       ? `. The remaining ${AMT - bucket.length} messages are older than 14 days and could not be deleted` : ""}`);
   });

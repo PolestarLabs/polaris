@@ -12,7 +12,6 @@ async function topGeneric(msg, args, telePass, rank) {
     })
     .sort({ points: -1 })
     .limit(10);
-  console.log({ RANKS });
 
   const standings = await Promise.all(
     RANKS.map(async (item, i) => {

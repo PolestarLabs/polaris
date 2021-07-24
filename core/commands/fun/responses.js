@@ -10,7 +10,6 @@ function checkForEmbedResponse(msg, respondError = false) {
   let userEmbed;
   const bracketIndex = msg.content.indexOf("{") - 1;
 
-  console.log({bracketIndex})
   if (bracketIndex < 0) return null;
   let embedstr = msg.content.substr(bracketIndex).trim();
   try {

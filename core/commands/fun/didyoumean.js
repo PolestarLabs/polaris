@@ -46,7 +46,6 @@ const init = async (msg) => {
   }
 
   if (textop && textop.length > 50) {
-    console.log(textop);
     textop = `${textop.slice(0, 50)}...`;
   }
 
