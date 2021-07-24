@@ -31,7 +31,7 @@ const init = async (msg, args) => {
 
   Daily.precheck = async () => {
     const Target = msg.mentions[0] || await PLX.getTarget(args[1]);
-    console.log({ Target });
+
     if (!Target) return msg.channel.send($t("responses.errors.target404", P)).then(() => false);
     if (Target.id === msg.author.id) return msg.channel.send($t("responses.give.not2self", P)).then(() => false);
 

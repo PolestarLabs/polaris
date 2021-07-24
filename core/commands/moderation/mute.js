@@ -77,7 +77,7 @@ const init = async function (msg, args) {
     timeTx = unit + (unit === 1 ? " month" : " months");
   }
 
-  console.log({ time });
+
 
   const MUTED = "MUTED";
   const wasMUTED = "was Muted";
@@ -205,7 +205,7 @@ const init = async function (msg, args) {
     const now = Date.now();
     const time = minutes * 60000;
     const freedom = now + time;
-    console.log({ now, minutes, freedom });
+
     DB.mutes.add({ S: Mem.guild.id, U: Mem.id, E: freedom });
   }
 

@@ -85,9 +85,6 @@ const init = async (msg) => {
     ms2.edit({ embed });
   });
 
-
-
-  console.log(embed);
   await wait(0.5);
   ms2.edit({ embed });
   return null;

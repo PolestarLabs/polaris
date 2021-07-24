@@ -14,7 +14,6 @@ const init = async function (msg, programatic) {
       responseType: "json",
     })).data;
 
-    console.log({ pre_res });
     result = hexColor
       ? [{ title: pre_res.name.value, hex: hexColor, data: pre_res }]
       : [{
@@ -59,8 +58,6 @@ const init = async function (msg, programatic) {
       `;
 
     Picto.roundRect(ctx, 10, 10, 120, 120, 20, `#${hexColor}`);
-
-    console.log(Canvas);
     if (programatic === true) {
       return {
         embed,

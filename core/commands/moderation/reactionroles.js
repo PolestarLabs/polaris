@@ -60,7 +60,6 @@ const init = async (msg, args) => {
           }
         }).catch((e) => {
           msg.channel.send(nosuchrole);
-          console.log(e);
         });
       } else {
         return msg.channel.send(noChannelError);

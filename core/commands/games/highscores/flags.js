@@ -21,8 +21,6 @@ const { standingsPrinter } = require("./_meta");
   
   
     const standings = (await Promise.all(RANKS.map(async (item, i) => { return standingsPrinter(item,i,standFun) } ) ) );
-
-    console.log({standings})
   
     return msg.channel.send({
       content:`**High Scores for \`${"guessflag"}\`.**`,

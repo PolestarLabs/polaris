@@ -62,6 +62,12 @@ Eris.Embed.prototype.setColor = function setColor(color) {
   this.color = parseInt(color.replace(/^#/, ""), 16);
   return this;
 };
+const oldSend = Eris.Channel.createMessage;
+Eris.Channel.prototype.createMessage = function(...args) {
+  if ( !this.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+  return oldSend(...args);
+}
+
 
 
 /* NOTE:  

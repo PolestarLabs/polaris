@@ -73,7 +73,6 @@ const init = async function (msg) {
   let l_percent;
 
   try {
-    console.log(SVFAC);
 
     l_exp = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).exp || 0;
     l_level = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).level || 0;

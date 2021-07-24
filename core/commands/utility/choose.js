@@ -37,7 +37,6 @@ const init = async function (msg, args) {
       sendArgs(m2.array, 2, m2.msg).then(async (m3) => {
         await wait(2);
         const pick = shuffle(m3.array).slice(0, target).join(", ");
-        console.log({ pick });
         P.list_item = pick;
         embed.fields = [];
         embed.field("\u200b", $t("interface.shuffle.ichoose", P), true);
@@ -59,7 +58,6 @@ const init = async function (msg, args) {
   }
 
   async function sendArgs(a, i, m) {
-    console.log({ a });
     if (target === a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
     if (target > a.length) {
       a_len = target - a.length;

@@ -38,9 +38,7 @@ const init = async (msg, args) => {
     if (!craftedItem) {
 
       const searchResults = await Crafter.searchItems(toBeCrafted);
-      console.log({ searchResults })
       const DYM = searchResults.filter((x) => (x._doc || x).open || userDiscoveries.includes(x.id)).map((x) => `${x.name} (\`${x.code}\`)`);
-      console.log({ DYM })
       const res = DYM.length === 1 ? $t("responses.crafting.didyoumeanOne", P) : $t("responses.crafting.didyoumean", P);
 
       if (DYM.length > 0) {

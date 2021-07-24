@@ -69,7 +69,7 @@ const init = async function (msg) {
     if (res.index === 1) {
       const forward = msg;
       forward.content = "+cmd frame toggle";
-      require("./profile").init(forward, res.forward.args).then((r) => men.addReaction(yep).catch()).catch((err) => console.log(err));
+      require("./profile").init(forward, res.forward.args).then((r) => men.addReaction(yep).catch()).catch((err) => console.error(err));
       msg.channel.send({ embed: { description: `Launching command \`${msg.prefix}profile frame toggle\`` } });
       men.deleteAfter(3000);
     }
