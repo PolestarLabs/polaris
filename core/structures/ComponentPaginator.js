@@ -25,7 +25,7 @@ class Paginator extends ButtonCollector {
             "last"
         ];
 
-        //if (this.lastPage === 1) return this.stop();
+        if (this.lastPage === 1) return this.stop();
         this.ready = this.book.addButtons([
                 { emoji: {name:"⏪"}, label: "First", custom_id: "first", style: 2, disabled: this.page === 1 },
                 { emoji: {name:"◀️"}, label: "Previous", custom_id: "previous", style: 1, disabled: this.page === 1 },

@@ -140,29 +140,13 @@ const init = async (msg, args) => {
       //],[
       { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
       { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
-      { style: 2, custom_id: `BLANK}`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
       { style: 4, label: "" ?? "CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: { id: _emoji("nope").id } },
     ]
   ];
 
-  const inventoryDdown = {
-    type:3,
-    placeholder: "Select a pocket to look into...",
-    min_items:0,
-    max_items:1,
-    custom_id: `invButton:DD:${msg.author.id}`,
-    options:[
-      {label:"MATERIAL",description:"", value: "MATERIAL", emoji:{id:_emoji("MATERIAL").id} },
-      {label:"CONSUMABLE",description:"", value: "CONSUMABLE", emoji:{id:_emoji("CONSUMABLE").id} },
-      {label:"JUNK",description:"", value: "JUNK", emoji:{id:_emoji("JUNK").id} },
-      {label:"LOOTBOX",description:"", value: "LOOTBOX", emoji:{id:_emoji("LOOTBOX").id} },
-      {label:"BOOSTER",description:"", value: "BOOSTER", emoji:{id:_emoji("BOOSTER").id} },
-      {label:"KEY",description:"", value: "KEY", emoji:{id:_emoji("KEY").id} },
-    ]
-  }
-
   menumes = await msg.channel.send({
-    components: [{type: 1, components: [inventoryDdown]}]
+    components: msg.setButtons(inventoryButtons, 1)
   }, file(await canvas.toBuffer(), "inventory.png"));
   menumes.target = Target;
   args[10] = userData;
