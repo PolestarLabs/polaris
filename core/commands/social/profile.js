@@ -198,8 +198,6 @@ const init = async (msg) => {
   const USERPROFILE = new UserProfileModel(Target_Database, Target);
   const preprocessedParams = Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData, USERPROFILE.commends]);
 
-  console.log({ USERPROFILE });
-
   try {
     //= ===========================  CANVAS START   ===================//
 
@@ -685,7 +683,7 @@ const init = async (msg) => {
     });
     //});
   } catch (e) {
-    console.log("ERROR PROFILE");
+    console.log("ERROR PROFILE".red);
     console.error(e);
     msg.channel.send("```ml" + `
 

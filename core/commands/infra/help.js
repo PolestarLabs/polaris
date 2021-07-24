@@ -83,19 +83,19 @@ ${$t("interface.help.greetings", P)}
     `;
 
   if (msg.args[0] === "full") {
-    msg.channel.createMessage({ content: tex22, embed: hEmbed }).catch((e) => { console.log(e); "Fail Silently"; });
-    msg.channel.createMessage({ embed: currencyHelp }).catch((e) => { console.log(e); "Fail Silently"; });
-    msg.channel.createMessage($t("interface.help.end", P)).catch((e) => { console.log(e); "Fail Silently"; });
+    msg.channel.createMessage({ content: tex22, embed: hEmbed }).catch((e) => { /*console.error(e);*/ "Fail Silently"; });
+    msg.channel.createMessage({ embed: currencyHelp }).catch((e) => { /*console.error(e);*/ "Fail Silently"; });
+    msg.channel.createMessage($t("interface.help.end", P)).catch((e) => { /*console.error(e);*/ "Fail Silently"; });
     return;
   }
 
   if (msg.args[0] === "currency") {
-    msg.channel.createMessage({ embed: currencyHelp }).catch((e) => { console.log(e); "Fail Silently"; });
+    msg.channel.createMessage({ embed: currencyHelp }).catch((e) => { /*console.error(e);*/ "Fail Silently"; });
     return;
   }
 
   if (msg.args[0] === "links") {
-    msg.channel.createMessage($t("interface.help.end", P)).catch((e) => { console.log(e); "Fail Silently"; });
+    msg.channel.createMessage($t("interface.help.end", P)).catch((e) => { /*console.error(e);*/ "Fail Silently"; });
     return;
   }
 

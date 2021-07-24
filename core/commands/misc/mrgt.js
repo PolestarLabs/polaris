@@ -83,7 +83,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 			}
 		}
 	
-		console.log(newMARRIAGES)
+		console.log({newMARRIAGES})
 
 	const canBuyThisMuch = Math.min( ~~( newUserData.modules.SPH / 5 ), Math.max(0,newMARRIAGES.length-3) );
 
@@ -112,7 +112,6 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 		if (id === "cancel_mrg") return Collector.stop("ABORT");
 		if (id === "confirm_mrg") return Collector.stop("CONFIRM");
 
-		console.log({interaction, id,data})
 		const precomps = m.components;
 		const components = [
 			{type:2, label:"Confirm", style:3, custom_id:"confirm_mrg"},
