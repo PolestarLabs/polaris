@@ -41,7 +41,7 @@ async function isAllowed(user, amount) {
 
     return { allowed: true };
   }).catch((e) => {
-    console.log(e);
+    console.error(e);
     return { allowed: false, reason: "error" };
   });
 }
