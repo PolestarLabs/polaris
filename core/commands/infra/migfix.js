@@ -6,7 +6,7 @@ const init = async function (msg,args){
     if (userData_OLD.blacklisted?.length > 1 && userData_OLD.blacklisted != "false") return msg.reply(`${_emoji('nope')} • Blacklisted accounts will have to start over!`);  
 
     if (args[0] === "inv"){
-
+        return "Closed";
         if (userData_NEW.switches?.migrateFix?.inv) return msg.reply(`${_emoji('nope')} • Your inventory has already been fixed!`);
         const m = await msg.reply(" • Fixing Inventory...");
         
