@@ -1,5 +1,22 @@
 const Languages = require("../../structures/Locales.js");
 
+async function saveLanguage(langTo,scope,interaction,P){     
+  if (langTo) {
+      
+      P.LANGUAGE = langTo.nameContext || langTo.name;
+      let langJok = $t(["responses.langIntro.language_joke", ""], P);
+      if (langJok.length > 50) langJok = "";
+      if (scope === "channel") {
+          await DB.channels.set(interaction.message.channel.id, { "modules.LANGUAGE": langTo.iso });
+          interaction.channel.LANG = langTo.iso;
+          return `${langTo.flag} ${$t("responses.langIntro.channel", P)} ${langJok}`;
+      }
+      await DB.servers.set(interaction.guild.id, { "modules.LANGUAGE": langTo.iso });
+      interaction.guild.LANG = langTo.iso;
+      return `${langTo.flag} ${$t("responses.langIntro.global", P)} ${langJok}`;
+  }
+}
+
 const init = async (msg, args) => {
   const P = { lngs: msg.lang };
   const language = args[0];
@@ -101,22 +118,7 @@ module.exports = {
   cat: "moderation",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["speak"],
-  async saveLanguage(langTo,scope,interaction,P){     
-    if (langTo) {
-        
-        P.LANGUAGE = langTo.nameContext || langTo.name;
-        let langJok = $t(["responses.langIntro.language_joke", ""], P);
-        if (langJok.length > 50) langJok = "";
-        if (scope === "channel") {
-            await DB.channels.set(interaction.message.channel.id, { "modules.LANGUAGE": langTo.iso });
-            interaction.channel.LANG = langTo.iso;
-            return `${langTo.flag} ${$t("responses.langIntro.channel", P)} ${langJok}`;
-        }
-        await DB.servers.set(interaction.guild.id, { "modules.LANGUAGE": langTo.iso });
-        interaction.guild.LANG = langTo.iso;
-        return `${langTo.flag} ${$t("responses.langIntro.global", P)} ${langJok}`;
-    }
-  }
+  saveLanguage
 };
 
 
