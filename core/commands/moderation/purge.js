@@ -86,7 +86,6 @@ const init = async function (msg) {
 
   msg.channel.send("Deleting messages...");
   msg.channel.purge(count, newFilter, msg.id).then((x) => {
-    console.log(x);
     msg.channel.send(endMessage.replace("%X", x));
   });
 };

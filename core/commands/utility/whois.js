@@ -63,7 +63,6 @@ const init = async (msg, args) => {
   ctx.drawImage(frame, 0, 0, 870, 1080);
 
   ctx.rotate(0.14982);
-  console.log({ J });
   Picto.setAndDraw(ctx,
     Picto.tag(ctx, `#${J ? EasterEgg.sub : (TARGET.user || TARGET).discriminator}`, "600 20pt \"JMHTypewriter\"", typeColor),
     650, 160, 350, "right");

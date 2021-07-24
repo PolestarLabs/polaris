@@ -22,8 +22,6 @@ const init = async function (msg, args) {
       }&key=${"polestar4728"
       }`;
 
-    console.log(URL);
-
     const STREAM = ytdl(args[0], { quality: "lowestaudio" });
     const playingMessage = {
       embed: {

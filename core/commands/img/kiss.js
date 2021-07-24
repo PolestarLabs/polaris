@@ -29,7 +29,7 @@ const init = async function (msg) {
 
   P.user = msg.author.username;
   P.victim = Target?.username || false;
-  console.log(Target);
+
 
   if (randomize(1, 100) === 100) {
     const pic = await Gal.filteredOne("kiss", "slap");
@@ -48,7 +48,7 @@ const init = async function (msg) {
 
   const userData = Target ? await DB.users.findOne({ id: msg.author.id }).lean() : null;
   const marriedtarget = await DB.relationships.find({ users: msg.author.id });
-  console.log({ marriedtarget })
+
 
   if (marriedtarget && marriedtarget.find(x => x.users.includes(Target?.id))) {
     Progression.emit("command.kiss.isWife", { msg });
@@ -61,7 +61,7 @@ const init = async function (msg) {
   }
   if (randomize(0, 5) === 1) variation = "couple";
   if (randomize(0, 10) === 1) variation = "wet";
-  console.log(`${msg.args[0] || "_"}.${variation}`);
+
   const kissImg = await Gal.filteredOne(
     "kiss",
     `${filter || "_"}.${variation}`,

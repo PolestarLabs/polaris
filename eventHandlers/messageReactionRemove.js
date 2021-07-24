@@ -6,6 +6,7 @@ module.exports = async (msg, emoji, userID) => {
 
     const roleReaction = RCT.rolemoji.find((rlmj) => rlmj.emoji.includes(emoji.id) || rlmj.emoji.includes(emoji.name));
     if (roleReaction) {
+      if ( !msg.channel.permissionsOf(PLX.user.id).has('manageRoles') ) return;
       PLX.removeGuildMemberRole(msg.channel.guild.id, userID, roleReaction.role, "Reaction Role");
     }
   });

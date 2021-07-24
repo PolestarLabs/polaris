@@ -42,6 +42,8 @@ exports.run = async (/** @type {YoutubeFeed} */feed, serverLang = "en") => {
     ).catch(console.error);
 
     const ping = feed.pings || feed.pings || "";
+
+    if ( !msg.channel.permissionsOf(PLX.user.id).has('sendMessages') ) return;
     // @ts-expect-error eris-additions
     PLX.getChannel(feed.channel).send({
       content: ping + LastVideoLink,

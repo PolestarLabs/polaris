@@ -107,9 +107,9 @@ const init = async function (msg) {
   const sanitize = (x) => x.replace(/[\u{0080}-\u{FFFF}]/gu, "?");
 
   const postban = async (banned) => {
-    console.log("postban");
+
     await wait(1);
-    console.log("wawa");
+
     if (soft) {
       PLX.unbean(msg.guild.id, Target.id, "SOFTBAN REMOVAL");
     }
@@ -127,7 +127,6 @@ const init = async function (msg) {
 
   PLX.bean(msg.guild.id, Target.id, clear, post_reason).then(postban)
     .catch((err) => {
-      console.log(err);
       PLX.banGuildMember(msg.guild.id, Target.id, clear, "ERROR PARSING REASON - Usually due to special characters")
         .then(postban)
         .catch((err) => {

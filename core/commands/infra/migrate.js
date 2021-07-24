@@ -402,7 +402,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
       */
       await vDB.users.set(msg.author.id, { $set: { "switches.tokensMigrated": true } });
       let neodata = await DB.users.get(msg.author.id);
-      console.log({ neodata })
+
 
     };
   }

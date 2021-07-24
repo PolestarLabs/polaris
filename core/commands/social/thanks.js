@@ -92,7 +92,6 @@ module.exports = {
         const prompt = await msg.channel.send({ embed });
 
         YesNo(prompt, msg, false, false, false, { embed }).then(async (res) => {
-          console.log(res);
           if (res === true) {
             await DB.localranks.set({ user: Target.id, server: msg.guild.id }, { thx: 0 }).catch((err) => {
               console.error(err);

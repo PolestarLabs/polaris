@@ -58,6 +58,8 @@ exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
     embed.color = 0x6441A4;
     const ping = feed.pings || feed.pings || "";
 
+    if ( !msg.channel.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+
     await DB.feed.updateOne(
       { server: feed.server, url: feed.url },
       { $set: { last: StreamData, thumb: streamer.profile_image_url } },

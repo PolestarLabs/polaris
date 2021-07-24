@@ -97,7 +97,6 @@ const init = async function (msg, args) {
     let res = await prompt.awaitButtonClick(int => {
         let res = participants.includes(int.userID);
         participants = participants.filter(x => x !== int.userID);
-        console.log({ res })
         if (res) {
             embed.description = matchWaiting(...[
                 !participants.includes(msg.author.id),
@@ -131,7 +130,6 @@ const init = async function (msg, args) {
     embed.description = matchResults(res.find(b => b.userID === msg.author.id).id);
     await matchResultsMsg.edit({ embed });
     await wait(2);
-    console.log({ res });
     embed.description = matchResults(
         res.find(b => b.userID === msg.author.id).id,
         res.find(b => b.userID === Target.id).id

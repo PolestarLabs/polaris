@@ -610,8 +610,6 @@ const init = async (msg, args) => {
   v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 });
   v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"));
 
-  console.log(Blackjack.gameExists(msg.author.id));
-
   if (Blackjack.gameExists(msg.author.id)) {
     return msg.reply(v.ONGOING);
   }
