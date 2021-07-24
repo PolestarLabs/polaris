@@ -58,7 +58,9 @@ exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
     embed.color = 0x6441A4;
     const ping = feed.pings || feed.pings || "";
 
-    if ( !msg.channel.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+    const fChannel = PLX.getChannel(feed.channel);
+    if ( !fChannel.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+      
 
     await DB.feed.updateOne(
       { server: feed.server, url: feed.url },
@@ -66,7 +68,7 @@ exports.run = async (/** @type {TwitchFeed} */feed, serverLang = "en") => {
     ).catch(console.error);
 
     // @ts-expect-error eris-additions
-    PLX.getChannel(feed.channel).send({
+    fChannel.send({
       content: `${ping}${$t("interface.feed.newTwitchStatus", P)} <https://twitch.tv/${streamer.login}>`,
       embed,
     });
