@@ -164,6 +164,7 @@ async function globalLevelUp(msg) {
   } else if (curLevelG > userData.modules.level) {
     await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
 
+    if( !msg.channel.permissionsOf(PLX.user.id).has("sendMessages") ) return;
     await wait(2);
 
     await msg.channel.send({
