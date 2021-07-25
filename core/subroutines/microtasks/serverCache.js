@@ -1,3 +1,5 @@
+const updateGuildSettings = require("../updateGuildSettings");
+
 module.exports = {
 
   update: async function ServerCacheUPDATE(body, url, res) {
@@ -12,10 +14,9 @@ module.exports = {
       const map = servers.map((sv) => {
         const thisServer = PLX.guilds.find((_s) => _s.id === sv.id);
         if (!thisServer) return undefined;
-        thisServer.LANG = sv.modules.LANGUAGE;
-        thisServer.DISABLED = sv.modules.DISABLED;
-        thisServer.disaReply = sv.respondDisabled;
-        PLX.registerGuildPrefix(sv.id, [sv.modules.PREFIX || "+", (sv.globalPrefix ? "p!" : "plx!"), "plx!"]);
+
+        updateGuildSettings(sv.id,sv);
+
         if (!sv.cluster) DB.servers.set({ id: sv.id }, { cluster: PLX.cluster.id });
         return { meta: thisServer.name, id: sv.id };
       });
