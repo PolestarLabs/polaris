@@ -6,9 +6,9 @@ module.exports = async function(guildID,prefetchedSvData){
     const thisServer = PLX.guilds.find(g=>g.id===guildID);
     if (!thisServer) return;
 
-    thisServer.LANG = sv.modules.LANGUAGE;
-    thisServer.DISABLED = sv.modules.DISABLED;
-    thisServer.disaReply = sv.respondDisabled;
+    thisServer.LANG = serverData.modules.LANGUAGE;
+    thisServer.DISABLED = serverData.modules.DISABLED;
+    thisServer.disaReply = serverData.respondDisabled;
 
     PLX.registerGuildPrefix(
         serverData.id,
