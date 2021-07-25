@@ -39,11 +39,17 @@ exports.run = async function run() {
   //= =====================================================================================
   /* EVERY 15 MINUTES */
   //= =====================================================================================
+
+  const Feeds = require("./feeds");
+
   const FIFTEEN_MINUTE = new CronJob("*/15 * * * *", async () => {
+    
     const blstart = Date.now();
     PLX.updateBlacklists(DB)
       .then(() => { console.report("•".green + ` Blacklist updated (${ Date.now() - blstart }ms)`) });
-
+    
+    Feeds.check();
+    
     try {
       const start = Date.now();
       PLX.microserver.microtasks.updateServerCache("all")
@@ -60,9 +66,8 @@ exports.run = async function run() {
   //= =====================================================================================
   const ONE_MINUTE = new CronJob("*/1 * * * *", async () => {
 
-    delete require.cache[require.resolve("./feeds")];
-    const feeds = require("./feeds");
-    feeds.check();
+    
+    
 
 
 
