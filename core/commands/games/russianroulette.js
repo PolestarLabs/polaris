@@ -145,9 +145,9 @@ const playerRoulette = async (player, game) => {
 const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 	let v = STRINGS({ lngs: msg.lang, Game, players, verifiedPlayers: players });
-	let voiceChannel = msg.member.voiceState?.channelID;
+	let voiceChannel = null //msg.member.voiceState?.channelID;
 	try {
-		voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+		//voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
 	} catch (err) {
 
 	}
@@ -379,9 +379,9 @@ async function startMultiplayerGame(msg) {
 
 	async function processRound(Game, players, round = 1, initialMessage) {
 		// Initialise game
-		let voiceChannel = msg.member.voiceState?.channelID;
+		let voiceChannel = null //msg.member.voiceState?.channelID;
 		try {
-			voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
+			//voiceChannel = await PLX.joinVoiceChannel(voiceChannel).catch((err) => null);
 			if (voiceChannel) await voiceChannel.play(gunRoll);
 		} catch (err) {
 
