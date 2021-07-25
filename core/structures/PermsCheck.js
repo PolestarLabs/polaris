@@ -45,12 +45,15 @@ exports.run = function run(cat, msg, perms) {
   }
 
   if (["img", "social", "cosmetics"].includes(cat)) {
-    if (!msg.channel.permissionsOf(PLX.user.id).has("attachFiles")) {
-      msg.addReaction(":nope:339398829088571402");
-      msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })}
-• \`ATTACH_FILES\`
-`);
-      return "error2";
+    if (!msg.channel.permissionsOf(PLX.user.id).has("attachFiles")){
+      if(msg.channel.permissionsOf(PLX.user.id).has("sendMessages")){
+        if (msg.channel.permissionsOf(PLX.user.id).has("addReactions")){
+          msg.addReaction(":nope:339398829088571402");
+        }
+        msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })}`+
+        `\n• \`ATTACH_FILES\` `);
+        return "error2";
+      }
     }
   }
   return "ok";
