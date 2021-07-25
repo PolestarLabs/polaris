@@ -7,7 +7,6 @@
  * @property {"rss" | "twitch" | "youtube"} type
  */
 
-const { checkPrimeSync } = require("crypto");
 
 
  module.exports = {
