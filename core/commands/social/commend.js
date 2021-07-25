@@ -6,8 +6,9 @@ const init = async function (msg) {
   let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
   if (!Target) Target = msg.author;
 
-  const userData = await DB.users.findOne({ id: msg.author.id }).noCache();
+  const userData = await DB.users.get({ id: msg.author.id });
   const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
+  if (!userData || !targetData) return "Error, one of the users are not present in Database";
 
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
