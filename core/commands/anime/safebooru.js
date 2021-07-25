@@ -105,6 +105,7 @@ const init = async (msg, args, ext) => {
     embed.image(res.file_url);
     if (res.tags && ext?.tags) embed.field("Tags", `\`[${shuffle(res.tags.slice(1)).split(" ").slice(0, 10).join("]` `[")}]\``, true);
     msg.channel.send({ embed }).then((ms) => {
+      return;
       addReactions(ms, {
         url: (res.sample_url.includes("safebooru") ? res.file_url : res.sample_url.replace("/samples", "//samples")),
         saved: Date.now(),
