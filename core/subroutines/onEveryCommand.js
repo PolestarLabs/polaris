@@ -33,6 +33,7 @@ module.exports = {
         },
       }),
       DB.control.set(message.author.id, {
+        $set: { type: "user"},
         $inc: {
           [`data.statistics.commandUsage.CMD.${command.cmd}`]: 1,
           "data.statistics.commandUsage.TOTAL": 1,
@@ -41,11 +42,12 @@ module.exports = {
       }),
       (async () => {
         if (message.guild) {
-          DB.serverDB.set(message.guild.id, {
+          DB.control.set(message.guild.id, {
+            $set: { type: "server"},
             $inc: {
-              [`modules.statistics.commandUsage.CMD.${command.cmd}`]: 1,
-              "modules.statistics.commandUsage.TOTAL": 1,
-              [`modules.statistics.commandUsage.CAT.${(command.cat || "UNKNOWN").replace("$", "cash")}`]: 1,
+              [`data.statistics.commandUsage.CMD.${command.cmd}`]: 1,
+              "data.statistics.commandUsage.TOTAL": 1,
+              [`data.statistics.commandUsage.CAT.${(command.cat || "UNKNOWN").replace("$", "cash")}`]: 1,
             },
           });
         }
