@@ -56,7 +56,7 @@ const init = async (msg, args) => {
 
   if (language) {
     const langTo = Languages.i18n.find((lang) => lang.iso === language || lang.code.includes(language) || [lang.iso.toLowerCase(), lang.name, lang["name-e"].toLowerCase(), lang.flag].includes(language.toLowerCase()));
-    return await saveLanguage(langTo,args[1]==='-c'?'channel':'server',message,P);
+    return await saveLanguage(langTo,args[1]==='-c'?'channel':'server',msg,P);
   }
 
   msg.reply({
