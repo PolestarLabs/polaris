@@ -84,7 +84,7 @@ module.exports = (Eris) => {
     
     const collector = new ButtonCollector(this, filter, options);
     return new Promise((resolve, reject) => collector.on("end", (col, reason) => {
-      if (reason === "time" && col.length === 0) reject(new Error("timeOut--buttons"));
+      if (reason === "time" && col.length === 0) resolve( {error:"timeout"} );
       else resolve(col);
     }));
   };

@@ -50,7 +50,7 @@ module.exports = (Eris) => {
   Eris.Message.prototype.awaitReactions = function awaitReactions(filter, options) {
     const collector = new ReactionCollector(this, filter, options);
     return new Promise((resolve, reject) => collector.on("end", (col, reas) => {
-      if (reas === "time" && col.length === 0) reject(new Error("timeOut--"));
+      if (reas === "time" && col.length === 0) resolve( {error:"timeout"} );
       else resolve(col);
     }));
   };
