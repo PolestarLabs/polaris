@@ -14,7 +14,7 @@ const init = async function (message) {
   //------------
   message.channel.send(
     ":vs: **HEY VSAUCE!** Pollux here!",
-    file(await Gal.randomOne("vsauce"), "vsauce.mp4"),
+    { file: await Gal.randomOne("vsauce"), name: "vsauce.webm" }
   );
 };
 
