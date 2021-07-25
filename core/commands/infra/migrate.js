@@ -1,3 +1,4 @@
+//FIXME(epoc="post-migration-period") Delete this
 
 const YesNo = require("../../structures/YesNo.js");
 // TRANSLATE[epic=translations] ?? migrate

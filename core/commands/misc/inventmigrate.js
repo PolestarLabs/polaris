@@ -1,3 +1,4 @@
+//FIXME(epoc="post-migration-period") Delete this
 const init = async function (msg, args, silent) {
   const userData = await DB.users.get(msg.author.id);
 

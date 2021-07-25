@@ -1,3 +1,5 @@
+//FIXME(epoc="post-migration-period") Delete this
+
 const init = async function (msg,args){
     let embed = {};
     const userData_OLD = await vDB.users.findOne({ id: msg.author.id }).noCache().lean();
