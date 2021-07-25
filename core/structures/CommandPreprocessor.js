@@ -109,7 +109,7 @@ const DEFAULT_CMD_OPTS = {
     preCommand: async (m, a) => {
       
       if ( PLX.isPRIME && m.guild &&  !m.guild?.prime ){
-        await DB.users.get({'prime.servers': m.guild.id }).cache().then(usr=>{
+        await DB.users.findOne({'prime.servers': m.guild.id }).cache().then(usr=>{
           m.guild.prime = !!usr?.id;
         });
       }
