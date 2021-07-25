@@ -108,15 +108,12 @@ const DEFAULT_CMD_OPTS = {
   hooks: {
     preCommand: async (m, a) => {
       
-      const noAdmin = (!m.content.includes("activate")&&!m.content.includes("ev"));
-      console.log({noAdmin})
-
       if ( PLX.isPRIME && m.guild &&  !m.guild?.prime ){
-        await DB.users.get({'prime.servers': m.guild.id }).then(usr=>{
+        await DB.users.get({'prime.servers': m.guild.id }).cache().then(usr=>{
           m.guild.prime = !!usr?.id;
         });
       }
-
+      
       m.args = a;
       m.lang = [m.channel.LANG || m.guild?.LANG || "en", "dev"];
       m.runtime = performance.now();
