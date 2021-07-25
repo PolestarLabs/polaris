@@ -14,8 +14,6 @@ module.exports = async (interaction, data) => {
         flags: 64
     });
 
-    interaction.ack()
-
     const userInventory = new INVENTORY(userID, "box");
     let Inventory = await userInventory.listItems();
     const selectedBox = Inventory.find((bx) => bx.rarity === boxType);
@@ -24,6 +22,7 @@ module.exports = async (interaction, data) => {
         content: $t("responses.inventory.noSuchBox", { lngs: [primaryLang, 'dev'] }),
         flags: 64
     });
+    interaction.ack();
 
 
     const fakeMsg = interaction.message;
