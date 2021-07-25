@@ -87,7 +87,7 @@ module.exports = {
     const h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
     let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
 
-    if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
+    if (font.toLowerCase().includes("italic")) w += ((w / text?.length||1) * 0.32);
 
     const item = new Canvas.Canvas(w, h + H);
     const c = item.getContext("2d");
