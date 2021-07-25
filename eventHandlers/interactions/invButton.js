@@ -23,7 +23,7 @@ module.exports = async (interaction, data) => {
     
     const fakeMsg = Object.assign({}, interaction.message, {
         author: await PLX.resolveUser(interaction.userID),
-        prefix: PLX.guildPrefixes[interaction.guild.id][0]
+        prefix: PLX.guildPrefixes?.[interaction.guild.id]?.[0] || "+"
     })
     
     let args = [];
