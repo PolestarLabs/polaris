@@ -321,7 +321,7 @@ async function shiftCountdownRoles(Member) {
     let STATUS = "unknown";
     let i = PREMIUM_COUNTDOWN.length;
 
-    while (--i) {
+    while (--i > 0) {
         let roleID = PREMIUM_COUNTDOWN[i];
         let nextRoleID = PREMIUM_COUNTDOWN[i + 1];
 

@@ -216,7 +216,7 @@ const init = async function (msg, args) {
     const promiseBucket = [];
     chanLen = totChans.length;
     return new Promise(async (resolve) => {
-      while (chanLen--) {
+      while (chanLen-- > 0) {
         const chn = Server.channels.map((c) => c)[chanLen];
         promiseBucket.push(
           chn

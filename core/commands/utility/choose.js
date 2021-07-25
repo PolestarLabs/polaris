@@ -61,7 +61,7 @@ const init = async function (msg, args) {
     if (target === a.length) return { msg: await m.edit(phabricate(a)), array: shuffle(a) };
     if (target > a.length) {
       a_len = target - a.length;
-      while (a_len--) {
+      while (a_len-- > 0) {
         a.push(trueArgs.filter((x) => !a.includes(x))[a_len]);
       }
       return { msg: await m.edit(phabricate(a)), array: shuffle(a) };

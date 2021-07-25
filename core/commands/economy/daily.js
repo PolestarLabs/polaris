@@ -275,7 +275,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
   let sq = -10;
   let bar = "";
-  while (sq++) {
+  while (sq++ < 0) {
     if (10 + sq > daily.softStreak) bar += "⬛";
     else bar += "🟦";
   }
