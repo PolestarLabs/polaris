@@ -85,6 +85,8 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 	
 		console.log({newMARRIAGES})
 
+	if (!newMARRIAGES.length) return "No marriages found for this user";
+
 	const canBuyThisMuch = Math.min( ~~( newUserData.modules.SPH / 5 ), Math.max(0,newMARRIAGES.length-3) );
 
 	const component = {
@@ -102,7 +104,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 		description: buildDescription(newMARRIAGES),
 	};
 	const marriageBox = await msg.channel.send({ embed: marriageEmbed, 
-		components: [{type:1,components:[component]}]
+		components: [{type:1,components: [component]}]
 	 });
 	
 	const Collector = marriageBox.createButtonCollector((m) => m.userID === msg.author.id, { time: 600e3, idle: 120e3 });
