@@ -60,9 +60,9 @@ const init = async (message) => {
 
     ctx.drawImage(needle, 84, 77, 116, 116);
 
-    if (randomize(1, 10) === 10) msg.channel.cancer -= 10000;
+    if (randomize(1, 10) === 10) message.channel.cancer -= 10000;
 
-    setTimeout(() => (msg.channel.cancer = 0), 30000);
+    setTimeout(() => (message.channel.cancer = 0), 30000);
 
     const tagA = Picto.tag(ctx, 888888, "34px 'digital-7'", "#59652d");
     const tagB = Picto.tag(ctx, num, "34px 'digital-7'", "#111114");
