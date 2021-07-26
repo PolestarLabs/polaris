@@ -16,6 +16,8 @@ const init = async function (msg) {
 
     msg.channel.send(`${_emoji("yep")} Deleted **${bucket.length}** messages${bucket.length < AMT
       ? `. The remaining ${AMT - bucket.length} messages are older than 14 days and could not be deleted` : ""}`);
+  }).catch(err=>{
+    msg.channel.send(`${_emoji("nope")} **Incorrect Permissions** - Please ensure I have permission to delete messages in this channel!`);
   });
 };
 module.exports = {
