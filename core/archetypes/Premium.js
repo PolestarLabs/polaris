@@ -581,7 +581,7 @@ async function processRewards(userID, options) {
         JDE: amts[0],
         BOX: tierPrizes.box_bonus,
 
-        EVT: regularQuery.$inc.modules.EVT,
+        EVT: regularQuery.$inc["modules.EVT"],
 
         //Booster
         IS_BOOSTER: isBooster,
