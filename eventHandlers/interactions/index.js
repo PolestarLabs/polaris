@@ -7,7 +7,11 @@ module.exports = async function (payload) {
     const interaction_type = payload.d.type; //3= component
     const component_type = payload.d.data?.component_type; // 2 button 3 drop down
 
-
+    if (!payload.d.member){
+        console.log(payload.d);
+        console.log(interaction);
+        console.log("MEMBERLESS PAYLOAD INSPECT");
+    }
     try {
         message = new Eris.Message(payload.d.message, PLX);
     } catch (err) {
@@ -15,7 +19,7 @@ module.exports = async function (payload) {
             message = {
                 id: payload.d.id,
                 fake: true,
-                author: await PLX.resolveUser(payload.d.member.user.id),
+                author: await PLX.resolveUser(payload.d.member?.id || payload.d.member?.user?.id),
                 member: await PLX.resolveMember(payload.d.guild_id, payload.d.member.user.id),
                 guild: PLX.guilds.get(payload.d.guild_id) || (await PLX.getRESTGuild(payload.d.guild_id)),
                 channel: await PLX.getChannel(payload.d.channel_id),
