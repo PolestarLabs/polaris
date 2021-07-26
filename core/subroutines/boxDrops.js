@@ -153,7 +153,7 @@ module.exports = {
               balContent = newmsg.content;
             });
           }
-          pickMsg.addReaction(":loot:339957191027195905").catch();
+          //pickMsg.addReaction(":loot:339957191027195905").catch();
 
           pickers.push({ id: pickMsg.author.id, name: pickMsg.author.username, mention: `<@${pickMsg.author.id}>` });
         }
