@@ -207,7 +207,6 @@ PLX.updateBlacklists = (DB) => Promise.all([
 });
 
 const DBSchema = require("@polestar/database_schema");
-const { config } = require("bluebird");
 
 const dbConnectionData = {
   hook,
@@ -342,7 +341,7 @@ PLX.on("shardResume", (shard) => console.log("•".yellow, "Shard", (`${shard}`)
 PLX.on("shardDisconnect", (err, shard) => {
   console.warn("•".red, "Shard", (`${shard}`).blue, "Disconnected -");
   console.group();
-  console.error(err);
+  console.error(err," < Error");
   console.groupEnd();
 });
 
