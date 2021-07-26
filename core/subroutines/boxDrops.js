@@ -46,7 +46,7 @@ module.exports = {
 
     //FIXME This is pooling the DB on every message
     if (!trigger.guild.switches || !trigger.guild.event) {
-      const serverDATA = await DB.servers.findOne({ id: SVR.id }, { "modules.LOCALRANK": 0 }).lean().exec();
+      const serverDATA = await DB.servers.findOne({ id: SVR.id }).lean().exec();
       if (!serverDATA) return;
       trigger.guild.switches = serverDATA.switches;
       trigger.guild.event = serverDATA.event || {};
@@ -144,7 +144,7 @@ module.exports = {
       // COLLECT PICKERS
       let pickers = [];
       let balContent = ballotMessage.content;
-      const responses = await CHN.awaitMessages((pickMsg) => {
+      const responses = await CHN.awaitMessages(async (pickMsg) => {
         if (!pickMsg.author.bot
           && !pickers.find((u) => u.id === pickMsg.author.id)
           && pickMsg.content.toLowerCase().includes("pick")) {
