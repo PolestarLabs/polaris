@@ -14,14 +14,17 @@ const init = async function (msg) {
   const server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
   const user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
   const ping = `${msg.guild.shard.latency}ms`;
-  const duration =  PLX.uptime;
-  const s = Math.floor((duration / 1000) % 60);
-  const m = Math.floor((duration / 1000 / 60) % 60);
-  const h = Math.floor((duration / (1000 * 60 * 60)) % 24);
-  const d = Math.floor(duration / (1000 * 60 * 60 * 24));
-  const uptime = `${(d ? `${d}D ` : "") + (duration >= 3.6e+6 ? `${h}h ` : "") + (duration >= 60000 ? `${m}m ` : "") + s}s`;
+  function uptime(duration){
+    const s = Math.floor((duration / 1000) % 60);
+    const m = Math.floor((duration / 1000 / 60) % 60);
+    const h = Math.floor((duration / (1000 * 60 * 60)) % 24);
+    const d = Math.floor(duration / (1000 * 60 * 60 * 24));
+    const uptime = `${(d ? `${d}D ` : "") + (duration >= 3.6e+6 ? `${h}h ` : "") + (duration >= 60000 ? `${m}m ` : "") + s}s`;
+    return uptime; 
+  }
 
-  const ram_usage = `${Math.round(inspect(process.memoryUsage().heapUsed) / 1000000)}~${Math.round(inspect(process.memoryUsage().heapTotal) / 1000000)}`;
+    const ram_usage = `${Math.round(inspect(process.memoryUsage().heapUsed) / 1000000)}~${Math.round(inspect(process.memoryUsage().heapTotal) / 1000000)}`;
+    
 
   emb.thumbnail(PLX.user.avatarURL);
 
@@ -37,7 +40,7 @@ const init = async function (msg) {
   emb.field("\u200b", "\u200b", false);
   // emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
   emb.field(`${_emoji("mobo")}  Cluster Svs         \u200b`, "```css\n" + (`[${PLX.cluster.name}-${process.env.CLUSTER_ID}] ${PLX.guilds.size}`) + "```", true);
-  emb.field(`${_emoji("cpu")}   Cluster Uptime`, `\`\`\`ml\n${uptime}\`\`\``, true);
+  emb.field(`${_emoji("cpu")}   Uptimes`, `\`\`\`ml\n${uptime(PLX.uptime)}[S] ${uptime(process.uptime())}[C]\`\`\``, true);
 
   emb.field("\u200b", "𝙻𝚒𝚗𝚔𝚜 ", false);
   emb.field("Dashboard", `🌐   [${paths.DASH}](${paths.DASH}?ref=status_embed)     \u200b`, true);
