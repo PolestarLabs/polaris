@@ -149,11 +149,13 @@ module.exports = {
           && !pickers.find((u) => u.id === pickMsg.author.id)
           && pickMsg.content.toLowerCase().includes("pick")) {
           if (ballotMessage) {
+            const confirmBmessage = await PLX.getMessage(ballotMessage.channel?.id, ballotMessage.id);
+            if (!confirmBmessage) return false;
             ballotMessage.edit(`${balContent}\n${pickMsg.author.username}`).then((newmsg) => {
               balContent = newmsg.content;
             });
           }
-          //pickMsg.addReaction(":loot:339957191027195905").catch();
+          pickMsg.addReaction(":loot:339957191027195905").catch();
 
           pickers.push({ id: pickMsg.author.id, name: pickMsg.author.username, mention: `<@${pickMsg.author.id}>` });
         }

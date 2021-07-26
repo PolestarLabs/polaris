@@ -19,10 +19,15 @@ const init = async function (msg) {
 
   const exp = selfLocal.exp || 0;
   const level = selfLocal.level || 0;
-  const upfactor = serverData.modules.UPFACTOR || 0.1;
+  const upfactor = serverData.progression || 0.1;
+  const SVFAC = serverData.progression;
+  
+  const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
+  const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
 
-  const exptoNex = Math.trunc(Math.pow((level + 1) / upfactor, 2));
-  const exptoThis = Math.trunc(Math.pow(level / upfactor, 2));
+  const exptoNex =  level_to_xp(level+1,  SVFAC.upfactorA, SVFAC.upfactorB);
+  const exptoThis = level_to_xp(level,  SVFAC.upfactorA, SVFAC.upfactorB);
+
   const frameofact = exptoNex - exptoThis;
   const levelcoverage = exp - exptoThis;
   const percent = levelcoverage / frameofact;

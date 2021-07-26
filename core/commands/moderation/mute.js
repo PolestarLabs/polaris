@@ -12,7 +12,11 @@ const init = async function (msg, args) {
 
   const P = { lngs: msg.lang };
 
-  const ServerDATA = await DB.servers.get(Server.id);
+  let ServerDATA = await DB.servers.get(Server.id);
+  if (!ServerDATA) {
+    await DB.servers.new(msg.guild);
+    await DB.servers.get(Server.id);
+  }
 
   const modPass = PLX.modPass(Member, "kickMembers", ServerDATA);
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);

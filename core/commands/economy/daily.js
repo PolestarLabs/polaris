@@ -358,6 +358,6 @@ module.exports = {
   cmd: "daily",
   perms: 3,
   cat: "economy",
-  botPerms: ["attachFiles", "embedLinks"],
+  botPerms: ["attachFiles", "embedLinks", "sendMessages"],
   aliases: ["dly"],
 };
