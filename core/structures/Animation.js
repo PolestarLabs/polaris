@@ -45,7 +45,6 @@ class Animation extends EventEmitter {
         if (this.cacheAbort) return false;
         let currentFrame = 0;
         while (this.lastFrame > currentFrame++) {
-            console.log({ currentFrame })
             let frame = await setImmediate(fun(currentFrame), { ref: false });
             this.gif.addFrame(frame.getImageData(0, 0, this.options.w, this.options.h).data);
             await setImmediate();
