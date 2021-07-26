@@ -74,7 +74,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 	marriageToDdownOption = async (x) => {
 		let xid = x.users.find((x) => x != msg.author.id);
 		return {
-			label: (await PLX.resolveUser(xid)).tag || xid,
+			label: ((await PLX.resolveUser(xid)).tag || xid).slice(0,24),
 			value: xid,
 			description: `${x.transferred ?"(✅)":""} | Highest: ${x.ring.toUpperCase()} | Rings: ${x.ringCollection.length || 1}.`.slice(0,50),
 			emoji: 
@@ -93,7 +93,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 	const component = {
 		type: 3,
 		placeholder: `Select the marriages you want to import... ( Up to ${3+canBuyThisMuch}, each slot after 3 costs 5 Sapphires )`,
-		max_values: Math.min(3 + canBuyThisMuch, newMARRIAGES.length),
+		max_values: Math.min(3 + canBuyThisMuch, newMARRIAGES.length, 25),
 		min_values: 0,
 		custom_id: "marriageDdwn",
 		options: await Promise.all(newMARRIAGES.slice(0,25).map(marriageToDdownOption))
