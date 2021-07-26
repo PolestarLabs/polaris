@@ -8,6 +8,7 @@ const YesNo = require("../../structures/YesNo");
 const isEventBG = (bg) => (bg.event && bg.event !== "none");
 
 const init = async (msg, args) => {
+  return;
   let BGBASE = await DB.cosmetics.bgs();
 
   const P = { lngs: msg.lang, prefix: msg.prefix };
