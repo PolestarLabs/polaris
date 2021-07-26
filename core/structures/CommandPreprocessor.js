@@ -1,3 +1,4 @@
+const  crypto = require("crypto");
 const { performance } = require("perf_hooks");
 // const gear = require('../utilities/Gearbox/global');
 const readdirAsync = Promise.promisify(require("fs").readdir);
@@ -149,7 +150,8 @@ const DEFAULT_CMD_OPTS = {
   errorMessage: async function errorMessage(msg, err) {
     console.error(" COMMAND ERROR ".bgRed);
     console.error(err);
-    const errorCode = `0x${(Date.now()).toString(16).toUpperCase()}`;
+    const errorCode =  BigInt("0x"+crypto.createHash('md5').update( err.message + msg.command.label , 'utf8').digest('hex')).toString(24);
+    
 
 
     Sentry.setTag("module", msg.command.module);
@@ -261,7 +263,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
     PLX.commands[CMD.label].sendTyping = typeof commandFile.sendTyping === "boolean" ? commandFile.sendTyping : true;
-    PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "externalEmojis", "manageMessages"]
+    PLX.commands[CMD.label].botPerms = ["attachFiles", "embedLinks", "addReactions", "externalEmojis", "manageMessages"]
       .concat(commandFile.botPerms || []).filter((v, i, a) => a.indexOf(v) === i);
     if (commandFile.subs) {
       commandFile.subs.forEach((sub) => {
