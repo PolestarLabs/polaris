@@ -39,8 +39,8 @@ const init = async function (msg) {
 
   emb.field("\u200b", "\u200b", false);
   // emb.field(_emoji('mobo')+'   Servers in this Shard              \u200b',"```css\n"+(`[${getShardCodename(POLLUX,Number(msg.guild.shard.id)+1)} Shard] `)+(bot.guilds.filter(x=>x.shard.id==msg.guild.shard.id).size)+"```", true)
-  emb.field(`${_emoji("mobo")}  Cluster Svs         \u200b`, "```css\n" + (`[${PLX.cluster.name}-${process.env.CLUSTER_ID}] ${PLX.guilds.size}`) + "```", true);
-  emb.field(`${_emoji("cpu")}   Uptimes`, `\`\`\`ml\n${uptime(PLX.uptime)}[S] ${uptime(process.uptime())}[C]\`\`\``, true);
+  emb.field(`${_emoji("mobo")}  Cluster Svs         \u200b`, "```css\n" + (`[${PLX.cluster.name} - Shard: ${process.env.CLUSTER_ID}]\nSize: ${PLX.guilds.size}`) + "```", true);
+  emb.field(`${_emoji("cpu")}   Uptimes`, `\`\`\`ml\n${uptime(PLX.uptime)}[S]\n${uptime(process.uptime()*1e3)}[C]\`\`\``, true);
 
   emb.field("\u200b", "𝙻𝚒𝚗𝚔𝚜 ", false);
   emb.field("Dashboard", `🌐   [${paths.DASH}](${paths.DASH}?ref=status_embed)     \u200b`, true);
