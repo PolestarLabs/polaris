@@ -140,6 +140,12 @@ global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
   defaultImageSize: 512,
   restMode: true,
+  //ratelimiterOffset: 327,
+  rest:{
+    baseURL: "/api/v9",
+    latencyThreshold: 5000,
+    ratelimiterOffset: 327,    
+  },
   defaultImageFormat: "png",
   intents: 5767,
   disableEvents: {
