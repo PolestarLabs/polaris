@@ -243,7 +243,7 @@ DBSchema(dbConnectionData, {
     (require("./core/archetypes/Progression.js")).init();
   } catch (err) {
     console.error(err);
-    process.exit(1);
+    //process.exit(1);
   }
 
   setTimeout(() => {
@@ -319,7 +319,7 @@ PLX.once("ready", async () => {
       console.error(e);
       for (const i in new Int8Array(10)) console.error("ERROR MTASK");
 
-      process.exit(1);
+     // process.exit(1);
     }
   };
   PLX.microserverStart();
