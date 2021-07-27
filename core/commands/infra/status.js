@@ -75,7 +75,7 @@ const init = async function (msg){
 				value: `𝚂𝚘𝚌𝚒𝚊𝚕 𝙸𝚗𝚏𝚘𝚛𝚖𝚊𝚝𝚒𝚘𝚗\n`+
 						`${_emoji("comp")}   **Estimated Servers** \`${server_estimate_count}\`\n`+
 						`${_emoji("ethernet")}   **Active Users** \`${user_estimate_count}\`\n\n`+
-						`${_emoji("mobo")}   **Realm** \`\`\`cs\n[${process.env.CLUSTER_ID||(PLX.beta?"BETA":'')}:${PLX.cluster.name} ${msg.guild?.shard?.id||0}]\n${PLX.guilds.size} servers\n\`\`\` `,
+						`${_emoji("mobo")}   **Realm** \`\`\`cs\n[${process.env.CLUSTER_ID||(PLX.beta===true?"BETA":'')}:${PLX.cluster.name} ${msg.guild?.shard?.id||0}]\n${PLX.guilds.size} servers\n\`\`\` `,
 				inline: true
 			},
 			{
