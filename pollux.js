@@ -254,7 +254,7 @@ DBSchema(dbConnectionData, {
   setTimeout(() => {
     console.log("Discord connection start...");
     PLX.connect().then(postConnect).catch(console.error);
-  }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1200);
+  }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1500);
 }).catch((err) => {
   console.error(err);
 });
