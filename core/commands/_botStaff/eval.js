@@ -77,14 +77,14 @@ const init = async (msg) => {
       });
     }
     const out = clean(evaled);
-    const output = `<:yep:339398829050953728> ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${out.full ? "// Check output file" : out}\`\`\``;
+    const output = `${_emoji('yep')} ⏱ ${runtimeOutput(runtime)}${invisibar}\`\`\`js\n${out.full ? "// Check output file" : out}\`\`\``;
     const embed = { description: output };
     embed.color = 0x2bce64;
     return msg.reply({ embed }, (out.full ? { name: "output.js", file: out.full } : undefined));
   } catch (e) {
     runtime = performance.now() - runtime;
     const out = clean(e.stack || []);
-    const output = `<:nope:339398829088571402> ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${(out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
+    const output = `${_emoji('nope')} ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${(out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
     const embed = { description: output };
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
