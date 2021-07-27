@@ -35,8 +35,8 @@ class ButtonCollector extends EventEmitter {
       this.emit("click", buttonPress);
       if (this.options.maxMatches && this.collected.length >= this.options.maxMatches) this.stop("maxMatches");
       if (this.options.idle) this.idleTimer = setTimeout(() => this.stop("idle"), this.options.idle);
-      if (!this.options.preventAck) interaction.ack().catch(err=>null);
-      else wait(2).then( _=> interaction.ack().catch(err=>null) );
+      if (!this.options.preventAck) interaction.ack().catch(err=> console.error(err,"\n Button Collector Ack Error 1"));
+      else wait(2).then( _=> interaction.ack().catch(err=> console.error(err,"\n Button Collector Ack Error 2")) );
 
       return true;
     } else {
@@ -56,7 +56,7 @@ class ButtonCollector extends EventEmitter {
     collectors.splice(collectors.indexOf(this), 1);
 
     if (this.options?.removeButtons === false) this.message.disableButtons('all',{enforce:true}).catch(err => console.error(err));
-    else this.message.edit?.({ components: [] })?.catch(err => null);
+    else this.message.edit?.({ components: [] })?.catch(err => console.error(err,"Stop Button Collector Edit Error"));
     
     this.emit("end", this.collected, reason);
   }

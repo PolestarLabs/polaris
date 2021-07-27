@@ -65,7 +65,7 @@ class Paginator extends ButtonCollector {
 
                 { custom_id: 'current', label: `${this.page}/${this.lastPage}` }
             ]).then(msg => {
-                interaction.ack().catch(e=>null)
+                interaction.ack().catch(e=> console.log(err,"ERROR ACK INTERACTION COMP PAGINATOR") )
                 this.book = msg;
                 this.emit("page", this.book, this.page, this.rpp, this.total, interaction);
             });

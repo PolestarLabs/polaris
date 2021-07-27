@@ -154,8 +154,7 @@ async function init() {
 
     if (!((channel.DISABLED || []).includes("ACHIEVEMENTS")) || msg?.command) {
       channel.createMessage({ embed }).catch((e) => {
-        console.error(e);
-        return DMchannel.createMessage({ embed }).catch(() => null);
+        console.error(e);        
       });
     } else if (userData.allowDMs !== false) {
       console.log("X");

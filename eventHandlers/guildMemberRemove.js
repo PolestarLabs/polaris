@@ -49,5 +49,5 @@ module.exports = async (guild, member) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(() => null);
+  }).catch(console.error);
 };

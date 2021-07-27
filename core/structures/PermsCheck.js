@@ -35,10 +35,14 @@ exports.run = function run(cat, msg, perms) {
     });
 
     if (check1 == "error1") {
-      msg.addReaction(_emoji("nope")).catch((err) => null);
-      msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })
-        }\n${perms.map((p, i) => permsPass[i] + p).join("\n")
+      if (msg.channel.permissionsOf(PLX.user.id).has("addReactions")){
+        msg.addReaction(_emoji("nope")).catch((err) => null);
+      }
+      if(msg.channel.permissionsOf(PLX.user.id).has("sendMessages")){
+            msg.channel.send(`${$t("error.iNeedThesePerms", { lngs: msg.lang })
+          }\n${perms.map((p, i) => permsPass[i] + p).join("\n")
         }`).catch((err) => null);
+      }
     }
 
     if (check1) return check1;

@@ -92,13 +92,13 @@ async function levelChecks(msg) {
 
       for (let i = 0; i < levels.length; i += 1) {
         if (!AUTOS || !AUTOS.length) return;
-        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() => "noperms");
+        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
         if (roleStack === true) {
           const autorole = AUTOS.find((r) => r[1] <= curLevelLocal);
-          if (autorole) msg.member.addRole(autorole[0]).catch(() => "noperms");
+          if (autorole) msg.member.addRole(autorole[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
         } else if (roleStack === false) {
           const autorole = AUTOS.find((r) => r[1] !== curLevelLocal);
-          if (autorole) msg.member.removeRole(autorole[0]).catch(() => "noperms");
+          if (autorole) msg.member.removeRole(autorole[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
         }
       }
     }
@@ -205,7 +205,7 @@ async function globalLevelUp(msg) {
 
       dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch(err => {
         PLX.redis.set("noDMs." + userData.id, true);
-        PLX.redis.expire("noDMs." + userData.id, 15 * 60);
+        PLX.redis.expire("noDMs." + userData.id, 30 * 60);
       });
     });
     // require("./modules/dev/levelUp_infra.js").init(msg);

@@ -55,5 +55,5 @@ module.exports = async (guild, member) => {
         if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(err => null);
+  }).catch(console.error);
 };

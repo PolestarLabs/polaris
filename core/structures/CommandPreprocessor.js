@@ -62,7 +62,7 @@ const PERMS_CALC = function CommandPermission(msg) {
   if (perms && msg.channel.permissionsOf) {
     delete require.cache[require.resolve("./PermsCheck.js")];
     const permchk = require("./PermsCheck.js").run(msg.command.cat, msg, perms);
-    if (permchk !== "ok") return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch((err) => console.error(`Messed up perms at ${msg.guild.id}`)), false;
+    if (permchk !== "ok" && msg.channel.permissionsOf(PLX.user.id).has("addReactions") ) return msg.addReaction(_emoji("CHECK_PERMISSIONS").reaction).catch((err) => console.error(`Messed up perms at ${msg.guild.id}`)), false;
   }
   if (msg.commandDenyChn || msg.commandDenySer) return msg.addReaction(_emoji("COMMAND_DISABLED").reaction), false;
   if (msg.command.disabled && [...cfg.admins, cfg.owner].includes(msg.author.id)) return msg.addReaction(_emoji('COMMAND_DISABLED').reaction), false;

@@ -5,7 +5,7 @@ module.exports = async (interaction, data) => {
     try {
         const response = await Promise.race([
             PLX.commands[cmd].execute(interaction.message, interaction.message.args || []).catch(err => {
-                console.error(err, 'the err');
+                console.error(err, 'APP COMMAND ERROR');
                 return "ERROR"
             }),
             wait(2.5).then(x => "TIMEOUT")

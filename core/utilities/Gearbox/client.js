@@ -34,18 +34,18 @@ module.exports = {
       const isID = ID_REGEX.test(ID);
       let memberObject;
       if (isID) {
-        if (enforceDB && !(await DB.users.get(ID))) return Promise.reject("USER NOT IN DB");
+        if (enforceDB && !(await DB.users.get(ID))) return Promise.reject( new Error("USER NOT IN DB") );
         //memberObject = MEMBERS_CACHE.get(guildID+":"+ID) || await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
         memberObject = await PLX.getRESTGuildMember(guildID, ID).catch((err) => null);
       } else if (softMatch) {
         if (enforceDB) return Promise.reject("CANNOT SOFTMATCH WITH ENFORCEDB");
         [memberObject] = await PLX.searchGuildMembers(guildID, user, 1).catch((err) => [null]);
       }
-      if (!memberObject) return Promise.reject("MEMBER NOT FOUND");
+      if (!memberObject) return Promise.reject( new Error("MEMBER NOT FOUND") );
       //MEMBERS_CACHE.set(guildID+":"+memberObject.id,memberObject);
       return Promise.resolve(memberObject);
     }
-    return Promise.reject("USER MUST BE A STRING");
+    return Promise.reject( new Error("USER MUST BE A STRING") );
   },
 
   getTarget: async function getTarget(query, guild = null, strict = false, member = false) {
@@ -67,19 +67,19 @@ module.exports = {
 
     switch (true) {
       case guild && !strict:
-        user = isID ? await guild.getRESTMember(ID).catch(() => null) : null;
+        user = isID ? await guild.getRESTMember(ID).catch(() => console.error(new Error("legacy get target error")) ) : null;
         // if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && strict:
-        user = await PLX.getRESTUser(ID).catch(() => null);
+        user = await PLX.getRESTUser(ID).catch(() => console.error(new Error("legacy get target error")) );
         break;
       case guild && strict:
-        user = await guild.getRESTMember(ID).catch(() => null);
+        user = await guild.getRESTMember(ID).catch(() => console.error(new Error("legacy get target error")) );
         // if (user) user = Object.assign(PLX.findMember(ID, guild.members) || {}, user);
         break;
       case !guild && !strict:
       default:
-        user = isID ? await PLX.getRESTUser(ID).catch(() => null) : null;
+        user = isID ? await PLX.getRESTUser(ID).catch(() => console.error(new Error("legacy get target error")) ) : null;
     }
 
     if (user && member && guild) return user;
