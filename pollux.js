@@ -142,7 +142,7 @@ global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   restMode: true,
   //ratelimiterOffset: 327,
   rest:{
-    baseURL: "/api/v9",
+    baseURL: "/api/v8",
     latencyThreshold: 5000,
     ratelimiterOffset: 327,    
   },
