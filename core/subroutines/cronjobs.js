@@ -31,7 +31,7 @@ exports.run = async function run() {
       setImmediate(()=>updateGuildSettings(guild))
     })
 
-  }, null, true);
+  }, null, true, null /*TZ*/, null/*CONTEXT*/, true /*RUN ON INIT*/);
 
   //= =====================================================================================
   /* EVERY 1 HOUR */
