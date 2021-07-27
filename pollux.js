@@ -276,7 +276,11 @@ translateEngineStart();
 //= ======================================//
 
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
-
+let ReadyCount = 0;
+PLX.on("ready", () => {
+  console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
+  ReadyCount++;  
+})
 PLX.once("ready", async () => {
 
   PLX.on("rawREST", payload => {
