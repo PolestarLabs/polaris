@@ -193,7 +193,7 @@ FIFTEENminute.start();
 console.log("• ".green, "CRONs ready");
 
 function processReminders() {
-  DB.feed.find({ expires: { $lte: Date.now() + 45e3 } }).lean()
+  DB.feed.find({ expires: { $lte: Date.now() + 45e3 } }).limit(50).lean()
     .then((reminders) => {
       console.log({ reminders });
       reminders.forEach(async (rem) => {
