@@ -14,7 +14,7 @@ const init = async function (msg) {
   if (msg.args[0] === "add") {
     const str = msg.args[1];
     const destination = msg.channelMentions[0];
-    const feed = await parser.parseURL(str).catch((e) => false);
+    const feed = await parser.parseURL(str).timeout(5000).catch((e) => false);
     if (!feed) return msg.channel.send($t("interface.feed.invalidRSS", P));
     channel = destination || msg.channel.id; // feedData.defaultChannel;
     feed.items = feed.items.filter((x) => x.link.startsWith("http"));
