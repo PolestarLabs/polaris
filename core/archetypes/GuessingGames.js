@@ -217,7 +217,7 @@ class GuessingGame {
               });
 
               clearInterval(activity);
-              setTimeout(() => this.progressionStreak(m, /*RESET*/ true), 5000);
+              setTimeout(() => this.progressionStreak(msg, /*RESET*/ true), 5000);
 
               resolve({
                 rounds: this.round,
