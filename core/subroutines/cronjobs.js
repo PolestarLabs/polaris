@@ -23,9 +23,13 @@ exports.run = async function run() {
   //= =====================================================================================
   /* EVERY 5 MINUTES */
   //= =====================================================================================
+  const updateGuildSettings = require("./updateGuildSettings.js");
   const FIVE_MINUTES = new CronJob("*/5  * * * *", async () => {
 
     PLX.gamechange();
+    PLX.guilds.forEach(async guild => {
+      setImmediate(()=>updateGuildSettings(guild))
+    })
 
   }, null, true);
 
