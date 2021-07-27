@@ -6,7 +6,9 @@ module.exports = async function(guildID,prefetchedSvData){
 
     if (!thisServer) return;
 
-    const serverData = prefetchedSvData || await DB.servers.findOne(thisServer.id).cache();
+    const serverData = prefetchedSvData 
+        || await JSON.parse(PLX.redis.aget(`${DB.raw.db.databaseName}.serverdb.findOne.{"id":"${thisServer.id}"}`)||"null")
+        || await DB.servers.findOne(thisServer.id).cache();
     if (!serverData) return;
     
 
