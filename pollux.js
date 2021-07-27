@@ -288,9 +288,7 @@ PLX.once("ready", async () => {
     }
     if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload, 0, 2, 1));
   })
-  PLX.on("debug", payload => { 
-    if (PLX.logDebug) console.log(`${" DEBUG ".bgGray} }`, require('util').inspect(payload, 0, 2, 1));
-  })
+ 
 
 
   console.log(" READY ".bold.bgCyan);
@@ -337,10 +335,19 @@ PLX.once("ready", async () => {
   require("./core/utilities/debugTools");
 });
 
+PLX.on("debug", (payload,s) => { 
+  if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`,  payload );
+})
+PLX.on("hello", (trace, shard) => error && console.error(`${"[Pollux]".blue} ${shard !== undefined ? `Shard ${shard}` : "Hello!"}:`, trace));
+PLX.on("unknown", (pack, shard) => pack && console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`,pack) );
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
-PLX.on("disconnected", () => this.logger.warn(`${"[Pollux]".yellow} Disconnected from Discord`));
+PLX.on("warn", (message, shard) => message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
+PLX.on("disconnect", () => console.error(`${"[Pollux]".yellow} Disconnected from Discord`));
+PLX.on("guildUnavailable", (g) => console.error(`${"[Pollux]".yellow} Unavailable Guild Created`,g));
+PLX.on("unavailableGuildCreate", (g) => console.error(`${"[Pollux]".yellow} Guild unavailable [${g.id}]`));
+PLX.on("shardPreReady", (shard) => console.log("•".cyan, "Shard", (`${shard}`).blue, "getting ready..."));
 PLX.on("shardReady", (shard) => console.log("•".green, "Shard", (`${shard}`).magenta, "is Ready -"));
-PLX.on("shardResume", (shard) => console.log("•".yellow, "Shard", (`${shard}`).magenta, "resumed Activity -"));
+PLX.on("shardResume", (shard) => console.error("•".yellow, "Shard", (`${shard}`).magenta, "resumed Activity -"));
 PLX.on("shardDisconnect", (err, shard) => {
   console.warn("•".red, "Shard", (`${shard}`).blue, "Disconnected -");
   console.group();
