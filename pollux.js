@@ -288,10 +288,7 @@ PLX.once("ready", async () => {
     }
     if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload, 0, 2, 1));
   })
-  PLX.on("debug", payload => {
-    if (payload.t === "INTERACTION_CREATE") {
-      require(`./eventHandlers/interactions`)(payload);
-    }
+  PLX.on("debug", payload => { 
     if (PLX.logDebug) console.log(`${" DEBUG ".bgGray} }`, require('util').inspect(payload, 0, 2, 1));
   })
 
