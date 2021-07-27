@@ -43,7 +43,7 @@ require('@polestar/emoji-grimoire').initialize(PLX);
 
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
-  PLX.connect().then((_) => hook.info("Sidecar instance running")).catch(console.error);
+  //PLX.connect().then((_) => hook.info("Sidecar instance running")).catch(console.error);
 });
 
 //= =====================================================================================
