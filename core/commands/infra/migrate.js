@@ -76,7 +76,6 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
   embed.footer = { icon_url: msg.author.avatarURL, text: "Progress: 🟦🟦⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛⬛" };
 
   await prompt.edit({ embed });
-  await wait(3);
 
   step = await YesNo(prompt, msg, false, false, false, yesNoOptions);
   if (!step) return;
@@ -239,17 +238,11 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           this.name += ".";
           await wait(1);
           this.name += ".";
-          await wait(1);
-          this.name += ".";
-          await wait(1);
-          this.name += ".";
-          await wait(1);
-          this.name += ".";
-          await wait(1);
-          this.name += ".";
+
           return true;
         }
       },
+      /*
       {
         name: "Awarding **Touhou Classic** Deck Skin",
         wait: false,
@@ -259,7 +252,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           let result = await DB.users.set(msg.author.id, { $addToSet: { 'modules.skinInventory': 'casino_touhou-classic' } }).catch(err => null);
           return !!result;
         }
-      },
+      },*/
       {
         name: "Declaring Rubines Income Tax ",
         wait: true,
@@ -362,7 +355,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
     embed.description = TASKLIST.printList();
     await prompt.edit({ embed });
-    await wait(2);
+  
   };
 
   async function postTask(result, i) {
@@ -370,7 +363,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
     if (result) TASKLIST.complete(i);
     else TASKLIST.notcomplete(i);
 
-    await wait(1);
+
     actionsDone++;
     console.log({ actionsDone, totalActions, name: TASKLIST.items[i].name })
 
@@ -387,7 +380,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
       await wait(1);
 
       msg.channel.send("All set! Your account has been migrated to the New Super Fancy Pollux Database™ successfully! Enjoy the new features~");
-      await wait(1);
+    
       /*
       msg.channel.send("*Ah, also. Have this cake!*");
       await wait(1);
