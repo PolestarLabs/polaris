@@ -317,6 +317,7 @@ PLX.once("ready", async () => {
   PLX.registerCommands();
 
   PLX.microserverStart = () => {
+    return;
     try {
       PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
       PLX.microserver.microtasks.updateServerCache("all");
