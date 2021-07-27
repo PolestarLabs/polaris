@@ -8,7 +8,7 @@ module.exports = {
                 embed: {
                     description: `**ACCOUNT MIGRATION PENDING**\n`
                     +`\nPollux received a major update and all users are required to migrate their accounts. We found data for this account in our old Database so you must migrate if you want to keep your previous account!\n`
-                    +`\n__Please be sure to migrate it before September 25th 2021.__`
+                    +`\n__Please be sure to migrate it before August 10th 2021.__`
                     +`\n• **__read__ instructions carrefully, you only have one-shot**`
                     +`\n• use \`plx!migrate\` and follow the instructions.`
                     +`\n• be wary that **daily streak expiration is down to __40 hours__**`
