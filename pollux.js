@@ -31,7 +31,7 @@ const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORE
 
 //return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
 
-global.Sentry         = require("@sentry/node");
+//global.Sentry         = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
@@ -117,7 +117,7 @@ get cleanContent() {
 
 //-------------------------------------------------------
 
-
+/*
 Sentry.init({
   dsn: cfg.sentryDSN,
   environment: process.env.NODE_ENV,
@@ -125,6 +125,7 @@ Sentry.init({
   autoSessionTracking: false,
 
 });
+*/
 
 console.table({
   SHARDS_PER_CLUSTER,
@@ -424,7 +425,7 @@ function postConnect() {
 global.errorsHook = cfg.errorsHook;
 
 process.on("uncaughtException", (err) => {
-  Sentry.captureException(err);
+  //Sentry.captureException(err);
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
   hook.error(`
@@ -438,7 +439,7 @@ ${err.slice(0, 1900)}
 });
 
 process.on("unhandledRejection", (err) => {
-  Sentry.captureException(err);
+  //Sentry.captureException(err);
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
   hook.warn(`
