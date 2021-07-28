@@ -1,7 +1,8 @@
 const π = Math.PI;
 const Canvas = require("skia-canvas");
+const OGCanvas = require("canvas");
 const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
-const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
+const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
 const StackBlur = require('stackblur-canvas');
 const KnownErrors = new Map();
 
@@ -80,12 +81,15 @@ module.exports = {
   },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+    const ogc = OGCanvas.createCanvas(100,100);
+    const ogcctx = ogc.getContext("2d");
+
+    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
-    text = text?.toString();
-    const H = ctx.measureText(text).emHeightAscent;
-    const h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
-    let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
+    const H = ogcctx.measureText(text).emHeightAscent;
+    const h = ogcctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
+    let w = ogcctx.measureText(text).width + (stroke ? stroke.line : 0);
 
     if (font.toLowerCase().includes("italic")) w += ((w / text?.length||1) * 0.32);
 
@@ -109,13 +113,16 @@ module.exports = {
   },
 
   tagMoji: async function tagmoji(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
-    return( this.tag( ...arguments ) );
+    const ogc = OGCanvas.createCanvas(100,100);
+    const ogcctx = ogc.getContext("2d");
+
+    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     text = text?.toString();
-    const H = ctx.measureText(text).emHeightAscent;
-    const h = ctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
-    let w = ctx.measureText(text).width + (stroke ? stroke.line : 0);
+    const H = ogcctx.measureText(text).emHeightAscent;
+    const h = ogcctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
+    let w = ogcctx.measureText(text).width + (stroke ? stroke.line : 0);
 
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
 
