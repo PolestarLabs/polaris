@@ -56,11 +56,11 @@ exports.run = async function run() {
     
     try {
       const start = Date.now();
-      PLX.microserver.microtasks.updateServerCache("all")
-        .then(() => { console.report("•".green + ` Server cache updated (${ Date.now() - start }ms)`) });
+      //PLX.microserver.microtasks.updateServerCache("all")
+        //.then(() => { console.report("•".green + ` Server cache updated (${ Date.now() - start }ms)`) });
     } catch (err) {
       console.error("•".red + " Microserver update failed. Restarting...");
-      PLX.microserverStart();
+      //PLX.microserverStart();
     }
 
   });
