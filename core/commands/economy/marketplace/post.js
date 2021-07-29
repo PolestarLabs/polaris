@@ -31,7 +31,7 @@ const init = async (msg, args) => {
   const embed = new Embed();
   embed.title = "Marketplace Listing information";
   embed.description = `
-        ${_emoji("RBN")} **Rubine** Listings cost 50 RBN upfront
+        ${_emoji("RBN")} **Rubine** Listings cost 10% (min. 100) upfront
         ${_emoji("SPH")} **Sapphire** Listings cost 2 SPH upfront
         To sell for Sapphires you need a [Sapphire License](${`${paths.DASH}/crafting/#sph-license`}) that must be crafted 
         (Code: \`sph-license\`). It expires after 10 uses.
@@ -85,8 +85,8 @@ const init = async (msg, args) => {
     const checkSales = (uD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < 50) forRBN = false;
-      if (uD.amtItem("sph-license") < 1) forSPH = false;
+      if (uD.modules.RBN < ( price * .1)) forRBN = false;
+      if (uD.amtItem("sph-license") < 2) forSPH = false;
       if (uD.modules.SPH < 2) forSPH = false;
 
       return { forRBN, forSPH };
