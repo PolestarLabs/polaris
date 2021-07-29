@@ -347,7 +347,7 @@ PLX.on("debug", (payload,s) => {
 PLX.on("hello", (trace, shard) => console.error(`${"[Pollux]".blue} ${shard !== undefined ? `Shard ${shard}` : "Hello!"}:`, trace));
 PLX.on("unknown", (pack, shard) => PLX.logDebug && console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`,pack) );
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
-PLX.on("warn", (message, shard) => message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
+PLX.on("warn", (message, shard) => PLX.logDebug && message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
 PLX.on("disconnect", () => console.error(`${"[Pollux]".yellow} Disconnected from Discord`));
 PLX.on("guildUnavailable", (g) => console.error(`${"[Pollux]".yellow} Unavailable Guild Created`,g));
 PLX.on("unavailableGuildCreate", (g) => console.error(`${"[Pollux]".yellow} Guild unavailable [${g.id}]`));
