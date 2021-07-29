@@ -167,7 +167,7 @@ const DEFAULT_CMD_OPTS = {
     const errorCode =  BigInt("0x"+crypto.createHash('md5').update( err.message + msg.command.label , 'utf8').digest('hex')).toString(24);
     
 
-
+    /*
     Sentry.setTag("module", msg.command.module);
     Sentry.setTag("type", "USER-FACING ERROR");
     Sentry.setContext("Command", {
@@ -197,7 +197,7 @@ const DEFAULT_CMD_OPTS = {
     });
 
 
-
+    */
     const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js
