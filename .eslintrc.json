@@ -72,14 +72,14 @@
             }
         ],
         "max-len": [
-            "error",
+            "warn",
             150
         ],
         "no-bitwise": "off",
         "class-methods-use-this": "off",
         "no-plusplus": "off",
         "radix": [
-            "error",
+            "warn",
             "as-needed"
         ],
         "no-return-assign": [
@@ -114,7 +114,7 @@
                 "allowTernary": true
             }
         ],
-        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-shadow": "warn",
         "@typescript-eslint/no-use-before-define": "error",
         "@typescript-eslint/no-useless-constructor": "error",
         // ts conflicts
