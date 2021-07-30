@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(1800).then(([svData, userData]) => {
+  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).timeout(1800).then(([svData, userData]) => {
     if (!svData?.modules.FWELL.enabled) return;
 
     const fwellTimer = svData.modules.FWELL.timer;
@@ -49,5 +49,5 @@ module.exports = async (guild, member) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(console.error);
+  }).catch(err=>null);
 };

@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(2800).then(([svData, userData]) => {
+  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).timeout(1800).then(([svData, userData]) => {
     
     if (!svData?.modules.GREET.enabled) return;
 
@@ -55,5 +55,5 @@ module.exports = async (guild, member) => {
         if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(console.error);
+  }).catch(err=>null);
 };
