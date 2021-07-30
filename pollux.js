@@ -66,6 +66,7 @@ Eris.Embed.prototype.setColor = function setColor(color) {
 const oldSend = Eris.Channel.createMessage;
 Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
   if (!this.permissionsOf(PLX.user.id).has("sendMessages")) return;
+  // eslint-disable-next-line consistent-return
   return oldSend(...args);
 };
 
@@ -246,6 +247,7 @@ DBSchema(dbConnectionData, {
 
   setTimeout(() => {
     console.log("Discord connection start...");
+    // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1500);
 }).catch((err) => {
@@ -306,20 +308,22 @@ PLX.once("ready", async () => {
 
   PLX.registerCommands();
 
+  /*
   PLX.microserverStart = () => {
     return;
-    try {
-      PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
-      PLX.microserver.microtasks.updateServerCache("all");
-      PLX.microserver.microtasks.updateChannels("all");
-    } catch (e) {
-      console.error(e);
-      for (const i in new Int8Array(10)) console.error("ERROR MTASK");
+      try {
+        PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
+        PLX.microserver.microtasks.updateServerCache("all");
+        PLX.microserver.microtasks.updateChannels("all");
+      } catch (e) {
+        console.error(e);
+        for (const i in new Int8Array(10)) console.error("ERROR MTASK");
 
-      // process.exit(1);
-    }
-  };
-  PLX.microserverStart();
+        // process.exit(1);
+      }
+    };
+  */
+  PLX.microserverStart = () => null;
   hook.info(`**INFO:** Cluster connected and all shards reported online!
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
 
