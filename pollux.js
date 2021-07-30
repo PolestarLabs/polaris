@@ -1,4 +1,15 @@
-const cfg = require("./config.json");
+const readdirAsync    = Promise.promisify(require("fs").readdir);
+const { performance } = require("perf_hooks");
+const path            = require("path");
+const ERIS            = require("eris");
+const Eris            = require("eris-additions")(ERIS);
+const axios           = require("axios");
+const DBSchema        = require("@polestar/database_schema");
+const cmdPreproc      = require("./core/structures/CommandPreprocessor");
+const Gearbox         = require("./core/utilities/Gearbox");
+const cfg             = require("./config.json");
+const WebhookDigester = require("./utils/WebhookDigester.js");
+
 process.env.UV_THREADPOOL_SIZE = 256;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
@@ -9,37 +20,28 @@ console.log(require("./resources/asciiPollux.js").ascii());
 global.Promise = require("bluebird");
 global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 
-const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER, 10) || 1;
-const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID, 10) || 0;
-const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS, 10) || 1;
+const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
+const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
+const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
 
-const isPRIME               = process.env.PRIME == "true" || process.env.PRIME == true;
+const isPRIME               = process.env.PRIME === "true" || process.env.PRIME === true;
 const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT;// || isPRIME ? "prime" : "main";
-
-
 
 const DummyFlavorDefault = {
   token: cfg.token,
   fname: "Dummy",
   category: "alpha",
-  name: "dummy_default"
-}
+  name: "dummy_default",
+};
 
+const FLAVOR_SWARM_CONFIG   = require("./flavored_swarm.config.js");
+// typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
+const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find((cli) => cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
 
-const FLAVOR_SWARM_CONFIG   = require("./flavored_swarm.config.js"); //typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
-const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
+// return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
 
-//return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
+// global.Sentry         = require("@sentry/node");
 
-//global.Sentry         = require("@sentry/node");
-const { performance } = require("perf_hooks");
-const path            = require("path");
-const ERIS            = require("eris");
-const axios           = require("axios");
-const Eris            = require("eris-additions")(ERIS);
-const readdirAsync    = Promise.promisify(require("fs").readdir);
-const cmdPreproc      = require("./core/structures/CommandPreprocessor");
-const WebhookDigester = require("./utils/WebhookDigester.js");
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 require("./core/structures/ButtonCollector.js")(ERIS);
@@ -50,7 +52,6 @@ const runtime = performance.now();
 global.appRoot = path.resolve(__dirname);
 Promise.config({ longStackTraces: true });
 require("./utils/paths").run();
-
 
 // ERIS MODS
 Eris.Guild.prototype.member = function member(user) {
@@ -63,15 +64,13 @@ Eris.Embed.prototype.setColor = function setColor(color) {
   return this;
 };
 const oldSend = Eris.Channel.createMessage;
-Eris.Channel.prototype.createMessage = function(...args) {
-  if ( !this.permissionsOf(PLX.user.id).has('sendMessages') ) return;
+Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
+  if (!this.permissionsOf(PLX.user.id).has("sendMessages")) return;
   return oldSend(...args);
-}
+};
 
-
-
-/* NOTE:  
-    FUTURE: In case cleanContent is removed 
+/* NOTE:
+    FUTURE: In case cleanContent is removed
 get cleanContent() {
         let cleanContent = this.content && this.content.replace(/<a?(:\w+:)[0-9]+>/g, "$1") || "";
 
@@ -131,21 +130,20 @@ console.table({
   SHARDS_PER_CLUSTER,
   CLUSTER_ID,
   TOTAL_SHARDS,
-  FLAVORED_CLIENT_DATA
+  FLAVORED_CLIENT_DATA,
 });
 
-
-global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
+global.PLX = new Eris.CommandClient(FLAVORED_CLIENT_DATA.token, {
   maxShards: TOTAL_SHARDS,
   firstShardID: (SHARDS_PER_CLUSTER * CLUSTER_ID),
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
   defaultImageSize: 512,
   restMode: true,
-  //ratelimiterOffset: 327,
-  rest:{
+  // ratelimiterOffset: 327,
+  rest: {
     baseURL: "/api/v8",
     latencyThreshold: 5000,
-    ratelimiterOffset: 327,    
+    ratelimiterOffset: 327,
   },
   defaultImageFormat: "png",
   intents: 5767,
@@ -162,25 +160,21 @@ global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   prefix: ["+", "p!", "plx!", "@mention"],
 });
 
-
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
 PLX.engine = Eris;
 PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.isPRIME =  (isPRIME == "true" || isPRIME == true) ;
-
+PLX.isPRIME = (isPRIME === "true" || isPRIME === true);
 
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
 PLX.cluster = isPRIME === true
-  ? { id: 0, name: "Prime: "+FLAVORED_CLIENT_DATA.fname } 
+  ? { id: 0, name: `Prime: ${FLAVORED_CLIENT_DATA.fname}` }
   : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 
 console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 global.hook = new WebhookDigester(PLX);
-
-Gearbox = require("./core/utilities/Gearbox");
 
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
@@ -206,8 +200,6 @@ PLX.updateBlacklists = (DB) => Promise.all([
   PLX.blacklistedUsers = (users || []).map((usr) => usr.id);
   PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
 });
-
-const DBSchema = require("@polestar/database_schema");
 
 const dbConnectionData = {
   hook,
@@ -249,7 +241,7 @@ DBSchema(dbConnectionData, {
     (require("./core/archetypes/Progression.js")).init();
   } catch (err) {
     console.error(err);
-    //process.exit(1);
+    // process.exit(1);
   }
 
   setTimeout(() => {
@@ -260,16 +252,15 @@ DBSchema(dbConnectionData, {
   console.error(err);
 });
 
-
-DBSchema(vanillaConnection, { redis: null }).then(vConnection => {
+DBSchema(vanillaConnection, { redis: null }).then((vConnection) => {
   global.vDB = vConnection;
-  console.log("•".yellow, " Connected to Vanilla DB".blue)
-})
-
+  console.log("•".yellow, " Connected to Vanilla DB".blue);
+});
 
 // Translation Engine ------------- <
 
 global.translateEngineStart = require("@polestar/i18n").translateEngineStart;
+
 translateEngineStart();
 
 //= ======================================//
@@ -280,21 +271,15 @@ translateEngineStart();
 let ReadyCount = 0;
 PLX.on("ready", () => {
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
-  ReadyCount++;  
-})
+  ReadyCount++;
+});
 PLX.once("ready", async () => {
-
-  PLX.on("rawREST", payload => {
-    //if (PLX.logRaw) console.log(`${" RAW RE ".bgMagenta} }`, require('util').inspect(payload,0,2,1));
-  })
-  PLX.on("rawWS", payload => {
+  PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
-      require(`./eventHandlers/interactions`)(payload);
+      require("./eventHandlers/interactions")(payload);
     }
-    if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require('util').inspect(payload, 0, 2, 1));
-  })
- 
-
+    if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require("util").inspect(payload, 0, 2, 1));
+  });
 
   console.log(" READY ".bold.bgCyan);
   require("./core/subroutines/cronjobs.js").run();
@@ -331,7 +316,7 @@ PLX.once("ready", async () => {
       console.error(e);
       for (const i in new Int8Array(10)) console.error("ERROR MTASK");
 
-     // process.exit(1);
+      // process.exit(1);
     }
   };
   PLX.microserverStart();
@@ -341,15 +326,15 @@ PLX.once("ready", async () => {
   require("./core/utilities/debugTools");
 });
 
-PLX.on("debug", (payload,s) => { 
-  if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`,  payload );
-})
+PLX.on("debug", (payload, s) => {
+  if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`, payload);
+});
 PLX.on("hello", (trace, shard) => console.error(`${"[Pollux]".blue} ${shard !== undefined ? `Shard ${shard}` : "Hello!"}:`, trace));
-PLX.on("unknown", (pack, shard) => PLX.logDebug && console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`,pack) );
+PLX.on("unknown", (pack, shard) => PLX.logDebug && console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`, pack));
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
 PLX.on("warn", (message, shard) => PLX.logDebug && message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
 PLX.on("disconnect", () => console.error(`${"[Pollux]".yellow} Disconnected from Discord`));
-PLX.on("guildUnavailable", (g) => console.error(`${"[Pollux]".yellow} Unavailable Guild Created`,g));
+PLX.on("guildUnavailable", (g) => console.error(`${"[Pollux]".yellow} Unavailable Guild Created`, g));
 PLX.on("unavailableGuildCreate", (g) => console.error(`${"[Pollux]".yellow} Guild unavailable [${g.id}]`));
 PLX.on("shardPreReady", (shard) => console.log("•".cyan, "Shard", (`${shard}`).blue, "getting ready..."));
 PLX.on("shardReady", (shard) => console.log("•".green, "Shard", (`${shard}`).magenta, "is Ready -"));
@@ -357,7 +342,7 @@ PLX.on("shardResume", (shard) => console.error("•".yellow, "Shard", (`${shard}
 PLX.on("shardDisconnect", (err, shard) => {
   console.warn("•".red, "Shard", (`${shard}`).blue, "Disconnected -");
   console.group();
-  console.error(err," < Error");
+  console.error(err, " < Error");
   console.groupEnd();
 });
 
@@ -368,14 +353,14 @@ PLX.on("shardDisconnect", (err, shard) => {
 PLX.softKill = (msg) => {
   console.log("Soft killing".bgBlue);
   PLX.restarting = true;
-  PLX.removeListener('messageCreate', PLX.eventHandlerFunctions.messageCreate);
+  PLX.removeListener("messageCreate", PLX.eventHandlerFunctions.messageCreate);
 
   Promise.all(PLX.execQueue).then(async () => {
-    if (msg) await msg.reply(_emoji('yep') + " Queue consumed. Rebooting now...");
+    if (msg) await msg.reply(`${_emoji("yep")} Queue consumed. Rebooting now...`);
     PLX.disconnect({ reconnect: false });
     process.exit(0);
   }).timeout(30e3).catch(async (error) => {
-    if (msg) await msg.reply(_emoji('nope') + " Queue errored or timed out. Hard-rebooting now...");
+    if (msg) await msg.reply(`${_emoji("nope")} Queue errored or timed out. Hard-rebooting now...`);
     console.error(error);
     process.exit(1);
   });
@@ -425,7 +410,7 @@ function postConnect() {
 global.errorsHook = cfg.errorsHook;
 
 process.on("uncaughtException", (err) => {
-  //Sentry.captureException(err);
+  // Sentry.captureException(err);
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
   hook.error(`
@@ -439,7 +424,7 @@ ${err.slice(0, 1900)}
 });
 
 process.on("unhandledRejection", (err) => {
-  //Sentry.captureException(err);
+  // Sentry.captureException(err);
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
   hook.warn(`
@@ -456,10 +441,4 @@ PLX.getOrCreateUser = async (user) => {
   let udata = await DB.users.findOne({ id: user.id });
   if (!udata) udata = await DB.users.new(user);
   return udata;
-}
-
-
-
-
-
-
+};
