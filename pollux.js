@@ -142,9 +142,9 @@ global.PLX = new Eris.CommandClient(FLAVORED_CLIENT_DATA.token, {
   restMode: true,
   // ratelimiterOffset: 327,
   rest: {
-    baseURL: "/api/v8",
+    baseURL: "/api/v9",
     latencyThreshold: 5000,
-    ratelimiterOffset: 327,
+    ratelimiterOffset: 800,
   },
   defaultImageFormat: "png",
   intents: 5767,
