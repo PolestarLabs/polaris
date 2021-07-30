@@ -63,7 +63,7 @@
         "no-console": "off",
         "no-underscore-dangle": "off",
         "no-multi-spaces": [
-            "warning",
+            "warn",
             {
                 "exceptions": {
                     "VariableDeclarator": true,
@@ -93,7 +93,7 @@
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
         "prefer-const": [
-            "warning",
+            "warn",
             {
                 "destructuring": "all"
             }
