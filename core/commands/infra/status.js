@@ -67,7 +67,7 @@ const init = async function (msg){
 	const embed = {
 		title: "🎀 Pollux • Your new favorite assistant.",
 		url: paths.DASH,
-		description: `Patch \`#${commit.trim()}\` | Database \`${DB.version}\` | Engine \`Eris v${PLX.engine.VERSION}\` `,
+		description: `Patch \`${commit.trim()}\` | Database \`${DB.version}\` | Engine \`Eris v${PLX.engine.VERSION}\``,
 		color: parseInt(await (await Picto.avgColor(PLX.user.avatarURL).catch(e=>"0")).replace('#',''),16) || 16724821,
 		fields: [
 			{

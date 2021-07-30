@@ -10,6 +10,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
+    "@polestar/skia-twemoji": "github:PolestarLabs/skia-canvas-twemoji",
     "@polestar/constants": "github:PolestarLabs/constants",
     "@polestar/database_schema": "github:PolestarLabs/db-schema",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",

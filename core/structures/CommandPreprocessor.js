@@ -22,6 +22,13 @@ const POST_EXEC = function CommandPostExecution(msg, args, success) {
 */
 
 const PERMS_CALC = function CommandPermission(msg) {
+
+  if (msg.channel.members){
+    if (!msg.channel.members.has(PLX.user.id)) {
+      return null; //msg.addReaction( _emoji('channel').reaction  );
+    };
+  }
+
   if ( !msg.content.includes("ev") && !msg.content.includes("activate") &&  PLX.isPRIME && msg.guild.prime === false){
     msg.addReaction(":UNAUTHORIZED:773091703464525844");
     return false;
@@ -98,6 +105,13 @@ const DEFAULT_CMD_OPTS = {
   cooldownExclusions: { guildIDs: ["789382326680551455"] },
   requirements: { custom: PERMS_CALC },
   permissionMessage: (msg) => { // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+
+    if (msg.channel.members){
+      if (!msg.channel.members.has(PLX.user.id)) {  
+        return;// msg.addReaction( _emoji('channel').reaction  );
+      };
+    }
+
     msg.guild.disaReply
       ? msg.commandDenyChn
         ? msg.channel.send($t("responses.toggle.disabledComChn", { lngs: msg.lang, command: msg.command.label, channel: msg.channel.id }))
@@ -153,7 +167,7 @@ const DEFAULT_CMD_OPTS = {
     const errorCode =  BigInt("0x"+crypto.createHash('md5').update( err.message + msg.command.label , 'utf8').digest('hex')).toString(24);
     
 
-
+    /*
     Sentry.setTag("module", msg.command.module);
     Sentry.setTag("type", "USER-FACING ERROR");
     Sentry.setContext("Command", {
@@ -183,7 +197,7 @@ const DEFAULT_CMD_OPTS = {
     });
 
 
-
+    */
     const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js

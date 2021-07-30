@@ -1,6 +1,9 @@
 const DspHook = require("../../structures/DisposableWebhook.js");
 
 const init = async (msg) => {
+
+  if (msg.channel.type === 10 || msg.channel.type === 11) return msg.reply(_emoji('nope') + ' This command is not available in Thread Channels.');
+
   const avatars = [
     "https://www.folhamax.com/storage/webdisco/2019/05/11/395x253/63761de61ec13163ff1f2bb999dd30bd.jpg",
     "https://static.otvfoco.com.br/2019/03/Fausto.jpg",

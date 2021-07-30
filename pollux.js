@@ -31,7 +31,7 @@ const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find(cli=>cli.name === FLAVORE
 
 //return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
 
-global.Sentry         = require("@sentry/node");
+//global.Sentry         = require("@sentry/node");
 const { performance } = require("perf_hooks");
 const path            = require("path");
 const ERIS            = require("eris");
@@ -117,7 +117,7 @@ get cleanContent() {
 
 //-------------------------------------------------------
 
-
+/*
 Sentry.init({
   dsn: cfg.sentryDSN,
   environment: process.env.NODE_ENV,
@@ -125,6 +125,7 @@ Sentry.init({
   autoSessionTracking: false,
 
 });
+*/
 
 console.table({
   SHARDS_PER_CLUSTER,
@@ -142,7 +143,7 @@ global.PLX = new Eris.CommandClient( FLAVORED_CLIENT_DATA.token , {
   restMode: true,
   //ratelimiterOffset: 327,
   rest:{
-    baseURL: "/api/v9",
+    baseURL: "/api/v8",
     latencyThreshold: 5000,
     ratelimiterOffset: 327,    
   },
@@ -346,7 +347,7 @@ PLX.on("debug", (payload,s) => {
 PLX.on("hello", (trace, shard) => console.error(`${"[Pollux]".blue} ${shard !== undefined ? `Shard ${shard}` : "Hello!"}:`, trace));
 PLX.on("unknown", (pack, shard) => PLX.logDebug && console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`,pack) );
 PLX.on("error", (error, shard) => error && console.error(`${"[Pollux]".red} ${shard !== undefined ? `Shard ${shard} error` : "Error"}:`, error));
-PLX.on("warn", (message, shard) => message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
+PLX.on("warn", (message, shard) => PLX.logDebug && message && console.error(`${"[Pollux]".yellow} ${shard !== undefined ? `Shard ${shard} warning` : "WARNING"}:`, message));
 PLX.on("disconnect", () => console.error(`${"[Pollux]".yellow} Disconnected from Discord`));
 PLX.on("guildUnavailable", (g) => console.error(`${"[Pollux]".yellow} Unavailable Guild Created`,g));
 PLX.on("unavailableGuildCreate", (g) => console.error(`${"[Pollux]".yellow} Guild unavailable [${g.id}]`));
@@ -424,7 +425,7 @@ function postConnect() {
 global.errorsHook = cfg.errorsHook;
 
 process.on("uncaughtException", (err) => {
-  Sentry.captureException(err);
+  //Sentry.captureException(err);
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
   hook.error(`
@@ -438,7 +439,7 @@ ${err.slice(0, 1900)}
 });
 
 process.on("unhandledRejection", (err) => {
-  Sentry.captureException(err);
+  //Sentry.captureException(err);
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
   hook.warn(`

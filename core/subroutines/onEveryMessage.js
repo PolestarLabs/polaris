@@ -1,5 +1,5 @@
 const Drops = require("./boxDrops").lootbox;
-const { TextChannel } = require("eris");
+const { GuildChannel, TextChannel } = require("eris");
 const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
 const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
 
@@ -50,9 +50,6 @@ async function levelChecks(msg) {
     incrementLocal(msg);
     // incrementGlobal(msg);
   }
-
-  // @ts-ignore
-  if (global.piggyback) return;
 
   /// =======  [LOCAL LVUP] ========///
   if (curLevelLocal < LOCAL_RANK.level) {
@@ -106,7 +103,7 @@ async function levelChecks(msg) {
     // -------------------------------//
   }
 
-  if (servData.modules.LVUP === true) {
+  if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
     globalLevelUp(msg, servData)
   }
 
@@ -117,7 +114,7 @@ async function levelChecks(msg) {
 module.exports = async (msg) => {
   if (!msg.guild) return;
   if (msg.type !== 0) return;
-  if (!(msg.channel instanceof TextChannel)) return; 
+  if (!(msg.channel instanceof GuildChannel)) return; 
 
 
   if (msg.guild.customResponses) {
