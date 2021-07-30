@@ -27,14 +27,13 @@ function convertToEvent(i, box) {
 module.exports = {
   lootbox: async function loot(trigger) {
     // const $t = locale.getT();
-    if (PLX.beta && trigger.author.id !== "88120564400553984") {
-      if (trigger.channel.id !== "488142034776096772" && trigger.channel.id !== "488142183216709653") return false;
-    }
+ 
     if (PLX.restarting) return false;
 
     if (trigger.content === "pick" && !trigger.channel.natural) {
       return DB.users.set(trigger.author.id, { $inc: { "modules.exp": -10 } });
     }
+
 
     const checkRegex = /^_.*|^p!catch|^pick|\$w|\$m\b|^.!.*\s+|^.\/.*\s+|^\+.*\s+|^<.*[0-9]>$|^(.[A-Za-z]{10,})+$|(.)\2{4,}|(. ){4,}|(.{1,5})\4{3,}/g;
     const msg = trigger.content.toLowerCase();
