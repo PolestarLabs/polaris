@@ -38,6 +38,8 @@ class AchievementsManager extends EventEmitter {
     //user = userData; used in eval
     //statistics is also used in eval
 
+    return;
+
     if (!user || !user.modules) throw new Error("User must be a DB userData object");
     const achiev = this.get(achievementID);
     const conditions = achiev.condition?.split(">=") || 0;
@@ -49,6 +51,8 @@ class AchievementsManager extends EventEmitter {
   }
 
   check(userData, awardRightAway, opts = {}) {
+
+    return;
     const { debug, filter } = opts;
     return new Promise(async (resolve, reject) => {
 
@@ -121,7 +125,7 @@ class AchievementsManager extends EventEmitter {
 async function init() {
   await ACHIEVEMENTS;
   global.Achievements = new AchievementsManager();
-
+  return;
   Achievements.on("award", async (achievement, uID, options = { msg: {}, DM: false }) => {
 
     //if(uID !="88120564400553984") return;
