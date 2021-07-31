@@ -32,7 +32,7 @@ exports.run = async (/** @type {RSSFeed} */ feed) => { // @ts-expect-error FIXME
   data.items = data.items?.filter((/** @type {{ link: string }}  */ x) => x.link.startsWith("http"));
 
   if ((feed.last?.guid || feed.last?.id) !== (data.items[0]?.guid || data.items[0]?.id)) {
-    const embed = await RSSembedGenerator(data.items[0], data);
+    const embed = await RSSembedGenerator(data.items[0], data, feed);
     let newFeed = data.items[0];
     let thumbnail = newFeed["media:thumbnail"]?.$;
     newFeed.media = newFeed["media:content"]?.$;
