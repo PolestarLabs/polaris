@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint-disable consistent-return */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 // TRANSLATE[epic=translations] rpgen
 
 const axios = require("axios");
@@ -20,7 +23,7 @@ const init = async function (msg) {
   if (!msg.args[0] || msg.args[0]?.toLowerCase() === "npc") {
     const oneNPC = RPGen.NPCs.generate();
     const fs = require("fs");
-    fs.readdir(`${appRoot}/resources/rpgen/pics/`, (err, files) => {
+    fs.readdir("../../../../../DEV/bot/resources/rpgen/pics/", (err, files) => {
       const archetypes = {
         dragonborn: 4,
         dwarf: 2,
@@ -42,34 +45,26 @@ const init = async function (msg) {
       const embed = {};
       embed.title = capitalize(oneNPC.name);
       embed.fields = [];
-      embed.fields.push(
-        {
-          name: "Race",
-          value: capitalize(oneNPC.race),
-          inline: true,
-        },
-      );
-      embed.fields.push(
-        {
-          name: "Feature Color",
-          value: color.title,
-          inline: true,
-        },
-      );
-      embed.fields.push(
-        {
-          name: "Traits",
-          value: `\` • ${oneNPC.traits.join("`\n` • ")}\``,
-          inline: true,
-        },
-      );
-      embed.fields.push(
-        {
-          name: "Flaws",
-          value: `\` • ${oneNPC.flaws.join("`\n` • ")}\``,
-          inline: true,
-        },
-      );
+      embed.fields.push({
+        name: "Race",
+        value: capitalize(oneNPC.race),
+        inline: true,
+      });
+      embed.fields.push({
+        name: "Feature Color",
+        value: color.title,
+        inline: true,
+      });
+      embed.fields.push({
+        name: "Traits",
+        value: `\` • ${oneNPC.traits.join("`\n` • ")}\``,
+        inline: true,
+      });
+      embed.fields.push({
+        name: "Flaws",
+        value: `\` • ${oneNPC.flaws.join("`\n` • ")}\``,
+        inline: true,
+      });
       embed.color = parseInt(color.hex.replace(/^#/, ""), 16);
       embed.thumbnail = { url: "attachment://ava.gif" };
       msg.channel.send({ embed }, { file, name: "ava.gif" });
@@ -77,14 +72,14 @@ const init = async function (msg) {
     return;
   }
 
-  if (["plot", "hook", "story"].includes(msg.args[0]?.toLowerCase())) {
+  if ([ "plot", "hook", "story" ].includes(msg.args[0]?.toLowerCase())) {
     let flavor;
     if (!msg.args[1] || msg.args[1] === "player") {
-      flavor = (RPGen.Storyhooks.pcRelated());
+      flavor = RPGen.Storyhooks.pcRelated();
     } else if (msg.args[1] === "npc") {
-      flavor = (RPGen.Storyhooks.npcActs());
+      flavor = RPGen.Storyhooks.npcActs();
     } else {
-      flavor = (RPGen.Storyhooks.pcRelated());
+      flavor = RPGen.Storyhooks.pcRelated();
     }
     const embed = {};
     embed.color = parseInt(hex.replace(/^#/, ""), 16);
@@ -99,6 +94,6 @@ module.exports = {
   cmd: "rpgen",
   perms: 3,
   cat: "roleplay",
-  botPerms: ["attachFiles", "embedLinks"],
+  botPerms: [ "attachFiles", "embedLinks" ],
   aliases: ["rpgenerator"],
 };
