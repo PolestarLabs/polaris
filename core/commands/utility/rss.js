@@ -1,6 +1,7 @@
 const RSS = require("rss-parser");
 const OGS = require("open-graph-scraper");
 const YesNo = require("../../structures/YesNo");
+const Picto = require("../../utilities/Picto");
 
 const parser = new RSS();
 
@@ -112,7 +113,11 @@ async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload) {
 	const FACE_IMG = normalizeLink( ogImage?.url );
 
 	const embed = {};
-	embed.color = numColor("#ff8a42");
+	try{
+		embed.color = numColor( await Picto.avgColor( THUMB ) || "#ff8a42" );
+	}catch(err){
+		embed.color = numColor("#ff8a42");
+	}	
 
 	embed.title = ogTitle || feedFirstItem.title;
 	embed.author = { name: xmlFeedData.title || databaseFeedPayload.name || ogSiteName };
