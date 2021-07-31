@@ -239,7 +239,7 @@ DBSchema(dbConnectionData, {
 
   try {
     (require("./core/archetypes/Progression.js")).init();
-     (require("./core/archetypes/Achievements.js")).init();
+    (require("./core/archetypes/Achievements.js")).init();
   } catch (err) {
     console.error(err);
     // process.exit(1);
