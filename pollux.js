@@ -147,7 +147,7 @@ global.PLX = new Eris.CommandClient(FLAVORED_CLIENT_DATA.token, {
     ratelimiterOffset: 800,
   },
   defaultImageFormat: "png",
-  intents: 5767,
+  intents: 1927,
   disableEvents: {
     TYPING_START: true,
     TYPING_STOP: true,
