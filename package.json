@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node --max-old-space-size=2048 --harmony pollux.js",
     "lint:js": "eslint -c .eslintrc.json *.js",
-    "lint:js:fix": "eslint -c .eslintrc.json *.js --fix && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\""    
+    "lint:js:fix": "eslint -c .eslintrc.json --ext .js core/ --fix && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\""    
   },
   "author": "Flicky",
   "license": "UNLICENSED",
