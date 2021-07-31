@@ -1,3 +1,5 @@
+global.Promise = require("bluebird");
+global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
 const path            = require("path");
@@ -17,8 +19,6 @@ process.env.UV_THREADPOOL_SIZE = 256;
 console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
-global.Promise = require("bluebird");
-global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
