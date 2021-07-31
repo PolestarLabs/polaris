@@ -130,7 +130,7 @@ async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload) {
 }
 
 function normalizeLink(url){
-	return url.startsWith("//") ? url.replace("//", "http://") : url;
+	return url.startsWith("//") ? url.replace("//", "https://") : url;
 }
 
 module.exports = {
