@@ -1,14 +1,14 @@
-const Drops = require("./boxDrops").lootbox;
 const { GuildChannel, TextChannel } = require("eris");
-const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
-const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
+const Drops = require("./boxDrops").lootbox;
 
+const xp_to_level = (xp, A, B) => ~~Math.sqrt((xp * B) / A);
+const level_to_xp = (lv, A, B) => (A * (lv ** 2)) / B;
 /**
  * @param {{ author: { id: any; }; guild: { id: any; }; }} msg
  */
 async function incrementLocal(msg) {
   DB.localranks.get({ user: msg.author.id, server: msg.guild.id }).then(async (data) => {
-    if (!data) await DB.localranks.new({ U: msg.author, S: msg.guild });
+    if (!data) await DB.localranks["new"]({ U: msg.author, S: msg.guild });
     await DB.localranks.incrementExp({ U: msg.author.id, S: msg.guild.id });
   });
 }
@@ -17,14 +17,12 @@ async function incrementLocal(msg) {
  * @param {{ author: { bot: any; id: any; avatarURL: any; tag: any; }; guild: { id: string; }; channel: { id: any; send: (arg0: { embed: { color: number; description: string; footer: { icon_url: any; text: any; }; }; }) => void; }; member: { addRole: (arg0: any) => Promise<any>; removeRole: (arg0: any) => Promise<any>; }; }} msg
  */
 async function levelChecks(msg) {
-
-
-
   if (msg.author.bot) return;
 
   if (msg.guild.id === "110373943822540800") return;
 
-  let servData = await DB.servers.findOne({ id: msg.guild.id }).noCache();
+  DB.servers.findOne({ id: msg.guild.id }).cache().then(x=> msg.guild.serverData = x);
+  let servData = msg.guild.serverData;
   if (!servData) return;
 
   if (servData.switches?.chLvlUpOff?.includes(msg.channel.id)) {
@@ -32,19 +30,15 @@ async function levelChecks(msg) {
     return;
   }
 
+  const { upfactorA, upfactorB } = servData.progression || { upfactorA: 280, upfactorB: 9 };
 
-  const {upfactorA, upfactorB} = servData.progression || {upfactorA: 280, upfactorB: 9};
-
-  const LOCAL_RANK = (await DB.localranks.findOne({ user: msg.author.id, server: msg.guild.id }).noCache())
+  const LOCAL_RANK = await DB.localranks.findOne({ user: msg.author.id, server: msg.guild.id }).noCache()
     || {
-    user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
-  };
-  
-  
+      user: msg.author.id, server: msg.guild.id, exp: 0, level: 0,
+    };
 
-  const curLevelLocal = xp_to_level(LOCAL_RANK.exp, upfactorA,upfactorB);
-  const forNext_local =   level_to_xp(LOCAL_RANK.level, upfactorA,upfactorB);
-
+  const curLevelLocal = xp_to_level(LOCAL_RANK.exp, upfactorA, upfactorB);
+  //const forNext_local =   level_to_xp(LOCAL_RANK.level, upfactorA, upfactorB);
 
   if (!servData.switches?.chExpOff?.includes(msg.channel.id)) {
     incrementLocal(msg);
@@ -58,13 +52,11 @@ async function levelChecks(msg) {
     await DB.localranks.set({ server: msg.guild.id, user: msg.author.id }, { $set: { level: LOCAL_RANK.level, exp: LOCAL_RANK.exp } });
   }
 
-  //TODO[epic=anyone] Add level up image
+  // TODO[epic=anyone] Add level up image
   if (curLevelLocal > LOCAL_RANK.level) {
-
     await DB.localranks.set({ user: msg.author.id, server: msg.guild.id }, { $set: { level: curLevelLocal } });
- 
 
-    const lvupText = (servData._doc || servData).modules?.LVUP_text?.replaceAll('%lv%', curLevelLocal);
+    const lvupText = (servData._doc || servData).modules?.LVUP_text?.replaceAll("%lv%", curLevelLocal);
 
     if (
       !!servData.modules.LVUP_local
@@ -89,13 +81,13 @@ async function levelChecks(msg) {
 
       for (let i = 0; i < levels.length; i += 1) {
         if (!AUTOS || !AUTOS.length) return;
-        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
+        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0])["catch"](() => console.error("noperms > onevery message autoroles"));
         if (roleStack === true) {
           const autorole = AUTOS.find((r) => r[1] <= curLevelLocal);
-          if (autorole) msg.member.addRole(autorole[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
+          if (autorole) msg.member.addRole(autorole[0])["catch"](() => console.error("noperms > onevery message autoroles"));
         } else if (roleStack === false) {
           const autorole = AUTOS.find((r) => r[1] !== curLevelLocal);
-          if (autorole) msg.member.removeRole(autorole[0]).catch(() =>  console.error("noperms > onevery message autoroles") );
+          if (autorole) msg.member.removeRole(autorole[0])["catch"](() => console.error("noperms > onevery message autoroles"));
         }
       }
     }
@@ -104,9 +96,10 @@ async function levelChecks(msg) {
   }
 
   if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
-    globalLevelUp(msg, servData)
+    setImmediate(() => {
+      globalLevelUp(msg, servData);
+    })
   }
-
 
   servData = null;
 }
@@ -114,15 +107,14 @@ async function levelChecks(msg) {
 module.exports = async (msg) => {
   if (!msg.guild) return;
   if (msg.type !== 0) return;
-  if (!(msg.channel instanceof GuildChannel)) return; 
-
+  if (!(msg.channel instanceof GuildChannel)) return;
 
   if (msg.guild.customResponses) {
-    activateResponse(msg)
+    activateResponse(msg);
   } else {
-    let gResps = (await DB.responses.find({ server: msg.guild.id }).noCache()) || [];
+    const gResps = await DB.responses.find({ server: msg.guild.id }).noCache() || [];
     msg.guild.customResponses = gResps;
-    activateResponse(msg)
+    activateResponse(msg);
   }
 
   if (msg.guild.imagetracker && !msg.channel.nsfw) {
@@ -133,17 +125,17 @@ module.exports = async (msg) => {
   }
 
   PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise && itm.isFulfilled() !== true);
-  PLX.execQueue.push(
-    Promise.all([
-      // @ts-ignore
-      levelChecks(msg),
-      Drops(msg),
-    ]).then(x => true).timeout(15000).catch((err) => {
-      //console.error(" QUEUE ERROR ".bgYellow)
-      //console.error( PLX.execQueue );
-      //console.error(err);
-    }),
-  );
+  PLX.execQueue.push(Promise.all([
+    // @ts-ignore
+    levelChecks(msg),
+    Drops(msg),
+  ]).then((x) => true)
+    .timeout(15000)
+    ["catch"]((err) => {
+      // console.error(" QUEUE ERROR ".bgYellow)
+      // console.error( PLX.execQueue );
+      // console.error(err);
+    }));
 };
 
 /**
@@ -152,26 +144,27 @@ module.exports = async (msg) => {
 async function globalLevelUp(msg) {
   /// ======= [GLOBAL LVUP] ========///
   await wait(2);
-  let { curLevelG, userData } = (await checkGlobalLevel(msg)) || {};
+  const { curLevelG, userData } = await checkGlobalLevel(msg) || {};
   if (!curLevelG || !userData) return;
   if (curLevelG < userData.modules.level) {
-    return;
+
     // console.log("DELEVEL");
     // await userDB.set(message.author.id,{$set:{'modules.level':curLevel}});
   } else if (curLevelG > userData.modules.level) {
     await DB.users.set(msg.author.id, { $set: { "modules.level": curLevelG } });
 
-    if( !msg.channel.permissionsOf(PLX.user.id).has("sendMessages") ) return;
+    if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
     await wait(2);
 
     await msg.channel.send({
-      messageReferenceID: msg.id
+      messageReferenceID: msg.id,
     }, {
       file: await resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`),
-      name: "levelUp.gif"
+      name: "levelUp.gif",
     });
+    resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG+1}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`);
 
-    console.log("[GLOBAL LEVEL UP]".blue, (msg.author.tag).yellow, msg.author.id);
+    console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
 
     /** @type {string} */
     let polizei;
@@ -192,17 +185,15 @@ async function globalLevelUp(msg) {
       await userData.addItem("lootbox_C_O");
     }
 
-    servData = null;
-
     // delete require.cache[require.resolve("./modules/dev/levelUp_infra.js")]
-    msg.author.getDMChannel().then(async dmChan => {
+    msg.author.getDMChannel().then(async (dmChan) => {
       if (!userData?.switches || userData.switches?.LVUPDMoptout === true) return;
 
-      if (await PLX.redis.aget("noDMs." + userData.id)) return;
+      if (await PLX.redis.aget(`noDMs.${userData.id}`)) return;
 
-      dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch(err => {
-        PLX.redis.set("noDMs." + userData.id, true);
-        PLX.redis.expire("noDMs." + userData.id, 30 * 60);
+      dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`)["catch"]((err) => {
+        PLX.redis.set(`noDMs.${userData.id}`, true);
+        PLX.redis.expire(`noDMs.${userData.id}`, 30 * 60);
       });
     });
     // require("./modules/dev/levelUp_infra.js").init(msg);
@@ -213,7 +204,7 @@ async function globalLevelUp(msg) {
  * @param {{ author: { id: any; }; }} msg
  */
 async function checkGlobalLevel(msg) {
-  let userData = await DB.users.findOne({ id: msg.author.id }).noCache();
+  const userData = await DB.users.findOne({ id: msg.author.id }).noCache();
   if (!userData) return;
   const _CURVE = 0.0427899;
   const curLevelG = Math.floor(_CURVE * Math.sqrt(userData.modules.exp));
@@ -231,10 +222,7 @@ async function incrementGlobal(msg) {
 }
 */
 
-
-
-
-//TODO[epic=flicky] Use these functions later on the appropriate spots
+// TODO[epic=flicky] Use these functions later on the appropriate spots
 /*
 function EXPtoLEVEL(LEVEL){
   let baseline = ~~CURVE[0];
@@ -246,10 +234,10 @@ function EXPtoLEVEL(LEVEL){
 
 */
 
-const { executeCustomResponse } = require('../commands/fun/responses.js');
+const { executeCustomResponse } = require("../commands/fun/responses.js");
 
 function activateResponse(msg) {
-  const response = msg.guild.customResponses.find(res => res.trigger === msg.content);
+  const response = msg.guild.customResponses.find((res) => res.trigger === msg.content);
   if (response) {
     executeCustomResponse(response, msg);
   }
