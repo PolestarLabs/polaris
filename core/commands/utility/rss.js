@@ -115,10 +115,10 @@ async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload) {
 	embed.color = numColor("#ff8a42");
 
 	embed.title = ogTitle || feedFirstItem.title;
-	embed.author = { name: xmlFeedData.title || databaseFeedPayload.name };
+	embed.author = { name: xmlFeedData.title || databaseFeedPayload.name || ogSiteName };
 	embed.url 	= ogUrl || feedFirstItem.url || feedFirstItem.link || feedFirstItem.guid;
 	embed.footer = {
-		text: ogAuthor || feedFirstItem.author || feedFirstItem.creator || "Pollux RSS Feed Tool",
+		text: ogAuthor || feedFirstItem.author || feedFirstItem.creator || ogSiteName || "Pollux RSS Feed Tool",
 	};
 	embed.description = ogDescription || ( (feedFirstItem.contentSnippet || feedFirstItem.content || "").split("\n")[0] );
 	embed.timestamp = new Date(ogDate || feedFirstItem.isoDate);
