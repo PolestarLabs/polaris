@@ -81,13 +81,13 @@ async function levelChecks(msg) {
 
       for (let i = 0; i < levels.length; i += 1) {
         if (!AUTOS || !AUTOS.length) return;
-        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0])["catch"](() => console.error("noperms > onevery message autoroles"));
+        msg.member.addRole(AUTOS.find((r) => r[1] === curLevelLocal)[0]).catch(() => console.error("noperms > onevery message autoroles"));
         if (roleStack === true) {
           const autorole = AUTOS.find((r) => r[1] <= curLevelLocal);
-          if (autorole) msg.member.addRole(autorole[0])["catch"](() => console.error("noperms > onevery message autoroles"));
+          if (autorole) msg.member.addRole(autorole[0]).catch(() => console.error("noperms > onevery message autoroles"));
         } else if (roleStack === false) {
           const autorole = AUTOS.find((r) => r[1] !== curLevelLocal);
-          if (autorole) msg.member.removeRole(autorole[0])["catch"](() => console.error("noperms > onevery message autoroles"));
+          if (autorole) msg.member.removeRole(autorole[0]).catch(() => console.error("noperms > onevery message autoroles"));
         }
       }
     }
@@ -131,7 +131,7 @@ module.exports = async (msg) => {
     Drops(msg),
   ]).then((x) => true)
     .timeout(15000)
-    ["catch"]((err) => {
+    .catch((err) => {
       // console.error(" QUEUE ERROR ".bgYellow)
       // console.error( PLX.execQueue );
       // console.error(err);
@@ -191,7 +191,7 @@ async function globalLevelUp(msg) {
 
       if (await PLX.redis.aget(`noDMs.${userData.id}`)) return;
 
-      dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`)["catch"]((err) => {
+      dmChan.createMessage(`**+1** x ${_emoji("loot")}${_emoji(polizei)} Level Up Bonus!`).catch((err) => {
         PLX.redis.set(`noDMs.${userData.id}`, true);
         PLX.redis.expire(`noDMs.${userData.id}`, 30 * 60);
       });
