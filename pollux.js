@@ -345,9 +345,7 @@ PLX.on("shardReady", (shard) => console.log("•".green, "Shard", (`${shard}`).m
 PLX.on("shardResume", (shard) => console.error("•".yellow, "Shard", (`${shard}`).magenta, "resumed Activity -"));
 PLX.on("shardDisconnect", (err, shard) => {
   console.warn("•".red, "Shard", (`${shard}`).blue, "Disconnected -");
-  console.group();
   console.error(err, " < Error");
-  console.groupEnd();
 });
 
 //= ======================================//
