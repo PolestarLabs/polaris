@@ -5,21 +5,22 @@ const Picto = require("../../utilities/Picto");
 
 const parser = new RSS();
 
-const init = async function (msg) {
+const init = async function (msg, args) {
 	const P = { lngs: msg.lang, prefix: msg.prefix, command: this.cmd };
 
 	const feedData = await DB.feed.find({ server: msg.guild.id, type: "rss" }).lean()
 		.exec();
 
 	// +RSS add (LINK)
-	if (msg.args[0] === "add") {
-		const str = msg.args[1];
+	if (args[0] === "add") {
+		const str = args[1];
 		const destination = msg.channelMentions[0];
-		const feed = await parser.parseURL(str).timeout(5000)
-			["catch"]((e) => false);
+		const feed = await parser.parseURL(str).timeout(5000).catch((e) => false);
+		
 		if (!feed) return msg.channel.send($t("interface.feed.invalidRSS", P));
-		channel = destination || msg.channel.id; // feedData.defaultChannel;
 		feed.items = feed.items.filter((x) => x.link.startsWith("http"));
+		
+		channel = destination || msg.channel.id; // feedData.defaultChannel;
 		if (!channel) return msg.channel.send($t("interface.feed.noDefault", P));
 
 		const payload = {
@@ -43,9 +44,9 @@ const init = async function (msg) {
 	}
 
 	// +RSS remove (link || index)
-	if (msg.args[0] === "remove" || msg.args[0] === "delete") {
+	if (args[0] === "remove" || args[0] === "delete") {
 		if (!feedData || feedData.length === 0) return msg.channel.send($t("interface.feed.noFeed", P));
-		const target = msg.args[1];
+		const target = args[1];
 		if (!target) return msg.channel.send($t("interface.feed.stateIDorURL", P));
 		const toDelete = feedData[target] || feedData.find((f) => f.type === "rss" && (f.url === target || f.url.includes(target)));
 		if (!toDelete) return msg.channel.send($t("interface.feed.stateIDorURL", P));
@@ -66,7 +67,7 @@ const init = async function (msg) {
 		});
 	}
 
-	if (msg.args[0] === "list") {
+	if (args[0] === "list") {
 		if (feedData && feedData.length > 0) {
 			msg.channel.send(`
 						**${_emoji("todo") + $t("interface.feed.listShowRSS", P)}**
@@ -79,12 +80,24 @@ const init = async function (msg) {
 		}
 	}
 	// +RSS defaultchannel (#channel)
-	if (msg.args[0] === "channel") {
+	if (args[0] === "channel") {
 		const channel = msg.channelMentions[0];
 		await DB.servers.set({ id: msg.guild.id }, { $set: { "modules.defaultRSSChannel": channel } });
 		P.channelID = `<#${channel}>`;
 		msg.channel.send(rand$t("responses.verbose.interjections.acknowledged", P) + $t("interface.feed.channelUpdate", P));
 	}
+
+	if (args[0] === "test"){
+
+		feedData.forEach( async fitem=>{
+			const feed = await parser.parseURL(fitem.url).timeout(5000).catch((e) => false);
+			if (!feed) return;
+			feed.items = feed.items.filter((x) => x?.link?.startsWith("http"));
+			const embed = await feedEmbed(feed.items[0], feed);
+			return msg.reply({embed});
+		})
+	}
+
 };
 
 
@@ -104,9 +117,10 @@ async function testFeedLink(url,fallback){
 
 
 
-async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload) {
+async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload = {}) {
 
-	const ogScrape = await testFeedLink( embed.url, xmlFeedData.link || embed.url.split(`${"//"[1]}`).split("/")[0] );
+	const URL = feedFirstItem.url || feedFirstItem.link || feedFirstItem.guid;
+	const ogScrape = await testFeedLink( URL, xmlFeedData.link || URL.split(`${"//"[1]}`).split("/")[0] );
 	const { ogUrl, ogTitle, ogDescription, ogSiteName, ogImage, ogDate, author: ogAuthor} = ogScrape;
 	
 	const THUMB = normalizeLink( xmlFeedData.logo || xmlFeedData.image?.url || databaseFeedPayload.thumb || "https://img.icons8.com/dusk/344/rss.png" );
@@ -119,15 +133,15 @@ async function feedEmbed(feedFirstItem, xmlFeedData, databaseFeedPayload) {
 		embed.color = numColor("#ff8a42");
 	}	
 
-	embed.title = ogTitle || feedFirstItem.title;
-	embed.author = { name: xmlFeedData.title || databaseFeedPayload.name || ogSiteName };
-	embed.url 	= ogUrl || feedFirstItem.url || feedFirstItem.link || feedFirstItem.guid;
-	embed.footer = {
+	embed.title 	= ogTitle || feedFirstItem.title;
+	embed.author 	= { name: xmlFeedData.title || databaseFeedPayload.name || ogSiteName };
+	embed.url 		= ogUrl || feedFirstItem.url || feedFirstItem.link || feedFirstItem.guid;
+	embed.footer 	= {
 		text: ogAuthor || feedFirstItem.author || feedFirstItem.creator || ogSiteName || "Pollux RSS Feed Tool",
 	};
 	embed.description = ogDescription || ( (feedFirstItem.contentSnippet || feedFirstItem.content || "").split("\n")[0] );
 	embed.timestamp = new Date(ogDate || feedFirstItem.isoDate);
-	embed.thumbnail = THUMB;
+	embed.thumbnail = { url: THUMB };
 	embed.image = { url: FACE_IMG || feedFirstItem["media:content"]?.$?.url };
 	embed.author.icon_url = "https://img.icons8.com/dusk/344/rss.png";
 
