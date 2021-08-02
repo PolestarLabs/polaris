@@ -32,8 +32,11 @@ module.exports = async (msg) => {
   if (!msg.guild) return;
   if (msg.type !== 0) return;
   if (!(msg.channel instanceof GuildChannel)) return;
-  if (msg.channel instanceof ThreadChannel) return;
-  
+
+  customResponses(msg).then(_=>null).catch(console.error);
+
+  if (msg.channel instanceof ThreadChannel) return;  
+  levelChecks(msg);
 
   if (msg.guild.imagetracker && !msg.channel.nsfw) {
     const hasImageURL = msg.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
@@ -43,7 +46,6 @@ module.exports = async (msg) => {
   }
 
   PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise && itm.isFulfilled() !== true);
-  PLX.execQueue.push(Drops(msg));
-  levelChecks(msg); 
+  PLX.execQueue.push(Drops(msg));  
   
 };
