@@ -4,10 +4,11 @@ const getLocalRank = (UID,GID) => DB.localranks.findOne({ user: UID, server: GID
 
 module.exports = async (servData,msg) => {
 
+	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 	if (!servData || !servData.modules || !servData.switches) return;
 	if (servData.switches.chExpOff?.includes(channelID)) return;
 	//---
-	
+
 	const channelID = msg.channel.id,
 			serverID  = servData.id,
 			userID 	 = msg.author.id;
