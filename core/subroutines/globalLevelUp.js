@@ -4,8 +4,8 @@ const _CURVE = 0.0427899;
 const xp_to_lv = (xp) => Math.floor(_CURVE * Math.sqrt(xp));
 //Math.trunc(Math.pow((userData.modules.level + 1) / _CURVE, 2)); 			=> REVERSE
 
-const notifyUser = (userData,prize) => {
-	if (await PLX.redis.aget(`noDMs.${userData.id}`)) return;
+const notifyUser = async (userData,prize) => {
+	if ( await PLX.redis.aget(`noDMs.${userData.id}`) ) return;
 	if (!userData?.switches || userData.switches?.LVUPDMoptout === true) return;
 	
 	PLX.getDMChannel(userData.id).then(async (dmChan) => {
@@ -40,7 +40,7 @@ module.exports = async (msg,userData) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 
-	const userData = userData || await DB.users.get(msg.author.id);
+	userData ??= await DB.users.get(msg.author.id);
 	if (!userData) return;
 	const curLevelG = xp_to_lv(userData.modules.exp);
 
