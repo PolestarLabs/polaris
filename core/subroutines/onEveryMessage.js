@@ -14,14 +14,16 @@ const levelChecks = async (msg) => {
 
   if (levelUpQUeue.tokens > levelUpQUeue.tokenLimit) return;
 
+  let servData = msg.guild.serverData;
   levelUpQUeue.queue( async () => {
-    DB.servers.findOne({ id: msg.guild.id }).cache().then(x=> msg.guild.serverData = x);
+    servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
+    msg.guild.serverData = servData;
+
     if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
-      setImmediate( ()=> globalLevelUp(msg,userData) );
+      setImmediate( ()=> globalLevelUp(msg) );
     }
   });
   
-  let servData = msg.guild.serverData;
   if (!servData) return;
  
   setImmediate( ()=> localLevelUp(servData,msg) );
