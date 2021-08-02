@@ -12,7 +12,7 @@ const levelChecks = async (msg) => {
   if (msg.author.bot) return;
   if (msg.guild.id === "110373943822540800") return;
 
-  if (levelUpQUeue.tokens < levelUpQUeue.tokenLimit) return;
+  if (levelUpQUeue.tokens > levelUpQUeue.tokenLimit) return;
 
   levelUpQUeue.queue( async () => {
     DB.servers.findOne({ id: msg.guild.id }).cache().then(x=> msg.guild.serverData = x);

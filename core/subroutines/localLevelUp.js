@@ -1,13 +1,14 @@
 
 const { xp_to_level,	level_to_xp } = require("./_consts");
-const getLocalRank = (UID,GID) => DB.localranks.findOne({ user: UID, server: GID }).cache();
+const getLocalRank = (GID,UID) => DB.localranks.findOne({ user: UID, server: GID }).cache();
 const autoLevelRoles = require("./autoLevelRoles");
 
 module.exports = async (servData,msg) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
-	if (!servData || !servData.modules || !servData.switches) return;
-	if (servData.switches.chExpOff?.includes(channelID)) return;
+	
+	if (!servData || !servData.modules) return;
+	if (servData.switches?.chExpOff?.includes(channelID)) return;
 	//---
 
 	const channelID = msg.channel.id,
@@ -21,13 +22,14 @@ module.exports = async (servData,msg) => {
 	const { upfactorA, upfactorB } = servData.progression || { upfactorA: 280, upfactorB: 9 };
 	const currentCalculatedLevel = xp_to_level(LOCAL_RANK.exp, upfactorA, upfactorB);	
 
+
 	if (currentCalculatedLevel !== LOCAL_RANK.level) {
 		DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
 	}
 
 	DB.localranks.incrementExp({ U: userID, S: serverID });
 
-	if (!servData.modules.LVUP_local || !servData.switches.chLvlUpOff?.includes(channelID)) return;
+	if (!servData.modules.LVUP_local || servData.switches?.chLvlUpOff?.includes(channelID)) return;
 	//---
 
 	if (currentCalculatedLevel > LOCAL_RANK.level) {
