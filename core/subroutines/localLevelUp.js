@@ -1,6 +1,7 @@
 
 const { xp_to_level,	level_to_xp } = require("./_consts");
 const getLocalRank = (UID,GID) => DB.localranks.findOne({ user: UID, server: GID }).cache();
+const autoLevelRoles = require("./autoLevelRoles");
 
 module.exports = async (servData,msg) => {
 
@@ -30,7 +31,9 @@ module.exports = async (servData,msg) => {
 	//---
 
 	if (currentCalculatedLevel > LOCAL_RANK.level) {
-		DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
+		autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
+		await DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
+		
 		const lvupText = servData.modules.LVUP_text?.replaceAll("%lv%", currentCalculatedLevel);	
 
 		msg.reply({embed:{
