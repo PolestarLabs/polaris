@@ -55,8 +55,8 @@ class ButtonCollector extends EventEmitter {
     this.ended = true;
     collectors.splice(collectors.indexOf(this), 1);
 
-    if (this.options?.removeButtons === false) this.message.disableButtons('all',{enforce:true}).catch(err => console.error(err));
-    else this.message.edit?.({ components: [] })?.catch(err => console.error(err,"Stop Button Collector Edit Error"));
+    if (this.options?.removeButtons === false) this.message.disableButtons('all',{enforce:true}).catch(err => null );
+    else this.message.edit?.({ components: [] })?.catch(err => null );
     
     this.emit("end", this.collected, reason);
   }
