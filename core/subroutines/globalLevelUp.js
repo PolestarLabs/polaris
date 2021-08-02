@@ -34,8 +34,6 @@ const notifyUser = async (userData,prize) => {
 }
 const commitLevel = (U,L) => DB.users.set(U, { $set: { "modules.level": L } });
 
-
-
 module.exports = async (msg,userData) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
