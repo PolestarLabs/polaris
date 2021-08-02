@@ -43,18 +43,19 @@ module.exports = async (msg,userData) => {
 	userData ??= await DB.users.get(msg.author.id);
 	if (!userData) return;
 	const curLevelG = xp_to_lv(userData.modules.exp);
+	await commitLevel(userData.id,curLevelG);
 
 	setImmediate(()=>{
-		if (curLevelG > userData.modules.level){
-			commitLevel(userData.id,curLevelG);
+		if (curLevelG > userData.modules.level){			
 			Promise.all(levelUpPrizeMail(userData,curLevelG))
+			setImmediate(async ()=>{
+				console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
+				resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`)
+					.then(img=> msg.reply("",{ file: img, name: "level_up.gif" }) );
+			});
 		}
 	});
 
-	setImmediate(()=>{
-		console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
-		resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`)
-			.then(img=> msg.reply("",{ file: img, name: "level_up.gif" }) );
-	});
+	
 
 }
