@@ -31,7 +31,9 @@ module.exports = async (servData,msg) => {
 	//---
 
 	if (currentCalculatedLevel > LOCAL_RANK.level) {
-		autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
+		
+		if (servData.modules.AUTOROLES) autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
+
 		await DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
 		
 		const lvupText = servData.modules.LVUP_text?.replaceAll("%lv%", currentCalculatedLevel);	

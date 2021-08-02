@@ -16,7 +16,6 @@ const notifyUser = (userData,prize) => {
 		  });
 	});
 }
-
  const levelUpPrizeMail = (userData, level) => {
 	
 	let awardTier;
@@ -33,12 +32,11 @@ const notifyUser = (userData,prize) => {
 		userData.addItem(`lootbox_${awardTier}_O`),
 	];
 }
-
 const commitLevel = (U,L) => DB.users.set(U, { $set: { "modules.level": L } });
 
 
 
-async function globalLevelUp(msg,userData) {	
+module.exports = async (msg,userData) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 
