@@ -858,7 +858,7 @@ const init = async (msg, args) => {
       }
 
       if (splitWins) {
-        Progression.emit("streak.blackjack.win", { value: (splitWins), msg, userID: msg.author.id });
+        Progression.emit("streak.blackjack.win",    { value: splitWins, msg, userID: msg.author.id });
         Progression.emit("play.blackjack.winsplit", { value: splitWins, msg, userID: msg.author.id })
       }
 
