@@ -238,7 +238,7 @@ const PREMIUM_INFO = {
         },
         prime_servers: 1,
         prime_reallocation: true,
-        custom_background: true,
+        custom_background: false,
         custom_handle: true,
         custom_shop: false,
     },
