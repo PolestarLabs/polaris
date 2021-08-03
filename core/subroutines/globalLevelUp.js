@@ -40,7 +40,7 @@ module.exports = async (msg,userData) => {
 
 	userData ??= await DB.users.get(msg.author.id);
 	if (!userData) return;
-	const curLevelG = xp_to_lv(userData.modules.exp);
+	const curLevelG = xp_to_lv(userData.modules.exp) || 0;
 	await commitLevel(userData.id,curLevelG);
 
 	setImmediate(()=>{
