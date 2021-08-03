@@ -6,12 +6,12 @@ const autoLevelRoles = require("./autoLevelRoles");
 module.exports = async (servData,msg) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
+	if (!servData || !servData.modules) return;
 	
 	const channelID = msg.channel.id,
 			serverID  = servData.id,
 			userID 	 = msg.author.id;
 			
-	if (!servData || !servData.modules) return;
 	if (servData.switches?.chExpOff?.includes(channelID)) return;
 	//---
 
