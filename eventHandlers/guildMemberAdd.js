@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).timeout(2800).then(([svData, userData]) => {
+  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).then(([svData, userData]) => {
     
     if (!svData?.modules.GREET.enabled) return;
 
@@ -46,7 +46,7 @@ module.exports = async (guild, member) => {
     const P = { lngs: [svData.modules.LANGUAGE || "en", "dev"] };
     const txt = $t("logs.userJoin", P).replace(/\*/g, "");
 
-    const url = `${paths.GENERATORS}/userio/in/${member.id}/${welcomeSkin || "minimal"}.png?text=${encodeURIComponent(txt)}`;
+    const url = `${paths.GENERATORS}/userio/in/${member.id}/${welcomeSkin || "minimal"}.png?text=${encodeURIComponent(txt)}&ava=${member.user.avatarURL}`;
 
     resolveFile(url).then(async (buffer) => {
       const welcomeChannelObj = PLX.getChannel(welcomeChannel);
