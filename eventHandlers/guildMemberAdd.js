@@ -26,11 +26,12 @@ module.exports = async (guild, member) => {
       (m, p1) => `<#${(guild.channels.find((x) => x.name === p1) || { id: "0000000" }).id}>`);
 
     let embed;
-    console.log({welcomeText});
-    try {
-      embed = welcomeText[1] ? JSON.parse(welcomeText[1]) : {};
-    } catch (err) {
-      embed = undefined;
+    if (welcomeText[1]){
+      try {
+        embed = welcomeText[1] ? JSON.parse(welcomeText[1]) : {};
+      } catch (err) {
+        embed = undefined;
+      }
     }
 
     welcomeText = welcomeText[0] || welcomeText;

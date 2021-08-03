@@ -22,10 +22,12 @@ module.exports = async (guild, member) => {
       .split("%embed%");
 
     let embed;
-    try {
-      embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
-    } catch (err) {
-      embed = null;
+    if (welcomeText[1]){
+      try {
+        embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
+      } catch (err) {
+        embed = null;
+      }
     }
     fwellText = fwellText[0] || fwellText;
 
