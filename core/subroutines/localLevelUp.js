@@ -7,13 +7,15 @@ module.exports = async (servData,msg) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 	
+	const channelID = msg.channel.id,
+			serverID  = servData.id,
+			userID 	 = msg.author.id;
+			
 	if (!servData || !servData.modules) return;
 	if (servData.switches?.chExpOff?.includes(channelID)) return;
 	//---
 
-	const channelID = msg.channel.id,
-			serverID  = servData.id,
-			userID 	 = msg.author.id;
+	
 	
 	const LOCAL_RANK = await getLocalRank(serverID ,userID);
 	if (!LOCAL_RANK) return DB.localranks.new({ U: userID, S: serverID, level: 0, exp: 0 });
