@@ -397,7 +397,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     const [POLLUX_HAND_GFX, PLAYER_HAND_GFX] = await Promise.all([
       renderHand(hands, deck, bjkD, currentHand),
       renderHand([visibleHand], deck, bjkP),
-    ]).timeout(2000).catch((e) => { errored = true; return [e, 0]; });
+    ]).timeout(3000).catch((e) => { errored = true; return [e, 0]; });
     if (errored) Promise.reject(new Error(`Error during checks => \n${POLLUX_HAND_GFX}`));
 
     options.b = totalBet;

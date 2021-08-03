@@ -20,6 +20,10 @@ module.exports = {
         if (!sv.cluster) DB.servers.set({ id: sv.id }, { cluster: PLX.cluster.id });
         return { meta: thisServer.name, id: sv.id };
       });
+      console.log("SERVER CACHE STRINGIFY".bgRed)
+      console.log("SERVER CACHE STRINGIFY".bgYellow)
+      console.log("SERVER CACHE STRINGIFY".bgRed)
+      console.log("SERVER CACHE STRINGIFY".bgYellow)
       if (res) res.end(JSON.stringify(map));
     });
   },
