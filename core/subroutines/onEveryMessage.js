@@ -17,6 +17,7 @@ const levelChecks = async (msg) => {
   let servData = msg.guild.serverData;
   levelUpQUeue.queue( async () => {
     servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
+    if (!servData) return;
     msg.guild.serverData = servData;
 
     if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
