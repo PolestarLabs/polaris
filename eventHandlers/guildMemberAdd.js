@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).timeout(1800).then(([svData, userData]) => {
+  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).timeout(2800).then(([svData, userData]) => {
     
     if (!svData?.modules.GREET.enabled) return;
 
@@ -51,8 +51,13 @@ module.exports = async (guild, member) => {
     resolveFile(url).then(async (buffer) => {
       const welcomeChannelObj = PLX.getChannel(welcomeChannel);
       if (!welcomeChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !welcomeChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
-      welcomeChannelObj.send({ content: welcomeText, embed }, (welcomeImage ? file(buffer, "in.png") : null)).then((ms) => {
-        if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
+      console.log({embed})
+      welcomeChannelObj.send({
+        content: welcomeText,
+        embed
+      }, (welcomeImage ? file(buffer, "in.png") : null)).then((ms) => {
+          if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
+      
       }).catch(console.error);
     }).catch(console.error);
   }).catch(err=>null);
