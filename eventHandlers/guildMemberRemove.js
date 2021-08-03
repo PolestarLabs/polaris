@@ -22,14 +22,13 @@ module.exports = async (guild, member) => {
       .split("%embed%");
 
     let embed;
-    if (welcomeText[1]){
+    if (fwellText[1]){
       try {
         embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
       } catch (err) {
         embed = null;
       }
     }
-    fwellText = fwellText[0] || fwellText;
 
     const fwellChannel = svData.modules.FWELL.channel;
     const fwellSkin = svData.modules.FWELL.type;
@@ -47,7 +46,7 @@ module.exports = async (guild, member) => {
     resolveFile(url).then(async (buffer) => {
       const fwellChannelObj = PLX.getChannel(fwellChannel);
       if (!fwellChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !fwellChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
-      fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {
+      fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? {file:buffer,name: "out.png"} : null)).then((ms) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);

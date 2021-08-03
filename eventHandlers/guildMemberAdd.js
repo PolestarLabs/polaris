@@ -38,7 +38,7 @@ module.exports = async (guild, member) => {
 
     const welcomeChannel = svData.modules.GREET.channel;
     const welcomeSkin = svData.modules.GREET.type;
-    const welcomeImage = svData.modules.GREET.image;
+    const welcomeImage = true || svData.modules.GREET.image;
     if (embed) {
       embed.image = embed.image?.url ? embed.image : welcomeImage && embed ? { url: "attachment://in.png" } : undefined;
       embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
@@ -53,11 +53,11 @@ module.exports = async (guild, member) => {
     resolveFile(url).then(async (buffer) => {
       const welcomeChannelObj = PLX.getChannel(welcomeChannel);
       if (!welcomeChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !welcomeChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
-      console.log({embed})
+
       welcomeChannelObj.send({
         content: welcomeText,
         embed
-      }, (welcomeImage ? file(buffer, "in.png") : null)).then((ms) => {
+      }, (welcomeImage ? {file:buffer, name: "in.png" } : null)).then((ms) => {
           if (welcomeTimer) ms.deleteAfter(welcomeTimer).catch(() => null);
       
       }).catch(console.error);
