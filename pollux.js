@@ -1,4 +1,12 @@
+process.env.BLUEBIRD_DEBUG=1;
 global.Promise = require("bluebird");
+Promise.config({
+   longStackTraces: true,
+   warnings: true ,
+   monitoring: true,
+  });
+
+
 global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
@@ -50,7 +58,7 @@ require("./core/structures/ComponentsHandler.js")(Eris);
 
 const runtime = performance.now();
 global.appRoot = path.resolve(__dirname);
-Promise.config({ longStackTraces: true });
+
 require("./utils/paths").run();
 
 // ERIS MODS
