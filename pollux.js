@@ -1,4 +1,16 @@
+const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT;
+
+const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
+const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
+const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
+
+const isPRIME               = process.env.PRIME === "true" || process.env.PRIME === true;
+
+process.env.UV_THREADPOOL_SIZE = 256;
 process.env.BLUEBIRD_DEBUG=1;
+
+require("./instrumentation.js");
+
 global.Promise = require("bluebird");
 Promise.config({
    longStackTraces: true,
@@ -20,7 +32,6 @@ const Gearbox         = require("./core/utilities/Gearbox");
 const cfg             = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 
-process.env.UV_THREADPOOL_SIZE = 256;
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
 
@@ -28,12 +39,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 // ===========================================
 
 
-const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
-const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
-const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
-
-const isPRIME               = process.env.PRIME === "true" || process.env.PRIME === true;
-const FLAVORED_CLIENT       = process.env.PRIME_FLAVORED_CLIENT;// || isPRIME ? "prime" : "main";
+// || isPRIME ? "prime" : "main";
 
 const DummyFlavorDefault = {
   token: cfg.token,
