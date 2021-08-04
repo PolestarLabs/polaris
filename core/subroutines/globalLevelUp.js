@@ -38,7 +38,7 @@ module.exports = async (msg,userData) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 
-	userData ??= await DB.users.get(msg.author.id);
+	userData ??= await DB.users.getFull(msg.author.id);
 	if (!userData) return;
 	const curLevelG = xp_to_lv(userData.modules.exp) || 0;
 	await commitLevel(userData.id,curLevelG);
