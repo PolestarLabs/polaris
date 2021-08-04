@@ -7,7 +7,7 @@ module.exports = async (msg) => {
     console.log("Message not Ready".red);
     return; 
   }
-  INSTR.inc(`messages`, [`shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}` ] )
+  INSTR.inc(`messages`, [`shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}`,`guild_name:${msg.guild?.id}` ] )
 
   // DEBUG -----------------------------------------------------
 
