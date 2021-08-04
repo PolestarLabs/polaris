@@ -1,11 +1,13 @@
 const meSubs = require("../core/subroutines/onEveryMessage.js");
 
 module.exports = async (msg) => {
+    
   if (msg.author.bot) return;
   if (!PLX.ready) { 
     console.log("Message not Ready".red);
     return; 
   }
+  INSTR.inc(`messages`, [`shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}` ] )
 
   // DEBUG -----------------------------------------------------
 
