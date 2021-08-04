@@ -1,7 +1,6 @@
 // _PLX[epic=Utilities] Sidecar Instance / Cronjobs
 const isPRIME = process.env.PRIME;
 const { Client } = require("eris");
-const cfg = require("./config.json");
 const formatDistance = require("date-fns/formatDistance");
 const { CronJob } = require("cron");
 require("colors");
@@ -18,13 +17,14 @@ PLX.muteTimers = new Map();
 PLX.reminderTimers = new Map();
 
 const DBSchema = require("@polestar/database_schema");
+const cfg = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 
 const hook = new WebhookDigester(PLX);
 
 const dbConnectionData = {
   hook: null,
-  url: process.env.NODE_ENV === 'dev' ? cfg.dbURL_beta : cfg.dbURL,
+  url: process.env.NODE_ENV === "dev" ? cfg.dbURL_beta : cfg.dbURL,
   options: {
     useNewUrlParser: true,
     keepAlive: 1,
@@ -34,16 +34,16 @@ const dbConnectionData = {
   },
 };
 
-Gearbox = require("./core/utilities/Gearbox");
+const Gearbox = require("./core/utilities/Gearbox");
 
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
 
-require('@polestar/emoji-grimoire').initialize(PLX);
+require("@polestar/emoji-grimoire").initialize(PLX);
 
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
-  //PLX.connect().then((_) => hook.info("Sidecar instance running")).catch(console.error);
+  // PLX.connect().then((_) => hook.info("Sidecar instance running")).catch(console.error);
 });
 
 //= =====================================================================================
@@ -123,7 +123,7 @@ const ONEminute = new CronJob("*/1 * * * *", async () => {
 
   /* Manage Reminders */ //= ===============================
   processReminders();
-  //setTimeout(() => processReminders(), 30e3);
+  // setTimeout(() => processReminders(), 30e3);
 
   /* Manage Mutes */ //= ===============================
   DB.mutes.find({ expires: { $lte: Date.now() + 75e3 } })
@@ -218,7 +218,7 @@ function processReminders() {
                 },
               });
             } catch (e) {
-              await DB.feed.updateOne({ _id: rem._id }, {$inc:{failed:1}});
+              await DB.feed.updateOne({ _id: rem._id }, { $inc: { failed: 1 } });
 
               await DB.feed.deleteOne({ _id: rem._id });
               console.error("REMOVED FAULTY REMINDER");

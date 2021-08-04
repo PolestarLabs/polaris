@@ -1,6 +1,6 @@
 //STUB Transaction Types Table
 
-const { t } = require("i18next");
+
 
 // type = "<type>[.specifics]" 
 //or

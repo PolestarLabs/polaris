@@ -180,7 +180,7 @@ module.exports = {
       imgEl = await Canvas.loadImage(link);
     } catch (err) {
       console.error(err);
-      return "#000000";
+      return 0;
     }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 

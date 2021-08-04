@@ -1,7 +1,7 @@
 const decks = new Map();
 const games = new Map();
-const RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-const SUITS = ["C", "D", "H", "S"];
+const RANKS = [ "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
+const SUITS = [ "C", "D", "H", "S" ];
 const DECK_TEMPLATE = SUITS
   .map((suit) => RANKS.concat(RANKS)
     .concat(RANKS)
@@ -22,9 +22,8 @@ class Blackjack {
 
   hit(hand, powerups) {
     if (this.deck.length === 0) {
-      if ((decks.get(this.guildID)?.length || 0) !== 0) {
-        this.deck = decks.get(this.guildID);
-      } else {
+      if ((decks.get(this.guildID)?.length || 0) !== 0) this.deck = decks.get(this.guildID);
+      else {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
         decks.set(this.guildID, this.deck);
         this.deck.push("JOKER-default");
@@ -55,7 +54,7 @@ class Blackjack {
   }
 
   endGame() {
-    return games.delete(this.playerID);
+    return games["delete"](this.playerID);
   }
 
   cardsRemaining() {
@@ -67,9 +66,8 @@ class Blackjack {
   }
 
   static isSoft(hand) {
-    if (hand.find((card) => card.startsWith("JOKER"))) {
-      return false;
-    }
+    if (hand.find((card) => card.startsWith("JOKER"))) return false;
+
     let value = 0;
     let aces = 0;
     hand.forEach((card) => {
@@ -87,9 +85,8 @@ class Blackjack {
   static handValue(hand) {
     let value = 0;
     let aces = 0;
-    if (hand.find((card) => card && card.startsWith("JOKER"))) {
-      return hand.find((card) => card.startsWith("JOKER"));
-    }
+    if (hand.find((card) => card && card.startsWith("JOKER"))) return hand.find((card) => card.startsWith("JOKER"));
+
     hand.forEach((card) => {
       value += Blackjack._cardValue(card);
       if (Blackjack._cardValue(card) === 11) aces += 1;
@@ -103,9 +100,8 @@ class Blackjack {
   }
 
   static _cardValue(card) {
-    if (card === "JOKER") {
-      return 99;
-    }
+    if (card === "JOKER") return 99;
+
     const index = RANKS.indexOf(card.slice(0, -1));
     if (index === 0) return 11;
     return index >= 10 ? 10 : index + 1;

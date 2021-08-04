@@ -60,10 +60,28 @@
         "import/no-dynamic-require": "off",
         "linebreak-style": "warn",
         "disable-next-line": "off",
+        "no-extra-parens": "warn",
+        "no-extra-semi": "warn",
+        "no-regex-spaces": "warn",
+        //"curly":  ["warn", "multi"],
+        "dot-location": ["warn", "property"],
+        "dot-notation": ["error", { "allowKeywords": false }],
+        "no-unsafe-negation": "error",
+        "arrow-body-style": ["warn", "as-needed"],
+        "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],
+        //"array-bracket-newline": ["warn", "consistent"],
+        "array-bracket-spacing": ["warn", "always", { "singleValue": false }],
+        "block-spacing": "warn",
+        //"brace-style": ["warn", "stroustrup", { "allowSingleLine": true }],
+        "comma-spacing": ["warn", { "before": false, "after": true }],
+        //"no-tabs": 0,
+        //"indent": ["warn", "tab"],
+        "func-call-spacing": ["error", "never"],
+        "function-paren-newline": ["warn", "multiline"],
         "no-console": "off",
         "no-underscore-dangle": "off",
         "no-multi-spaces": [
-            "warning",
+            "warn",
             {
                 "exceptions": {
                     "VariableDeclarator": true,
@@ -72,14 +90,14 @@
             }
         ],
         "max-len": [
-            "error",
+            "warn",
             150
         ],
         "no-bitwise": "off",
         "class-methods-use-this": "off",
         "no-plusplus": "off",
         "radix": [
-            "error",
+            "warn",
             "as-needed"
         ],
         "no-return-assign": [
@@ -93,7 +111,7 @@
         "no-restricted-syntax": "off",
         "no-nested-ternary": "off",
         "prefer-const": [
-            "warning",
+            "warn",
             {
                 "destructuring": "all"
             }
@@ -114,7 +132,7 @@
                 "allowTernary": true
             }
         ],
-        "@typescript-eslint/no-shadow": "error",
+        "@typescript-eslint/no-shadow": "warn",
         "@typescript-eslint/no-use-before-define": "error",
         "@typescript-eslint/no-useless-constructor": "error",
         // ts conflicts

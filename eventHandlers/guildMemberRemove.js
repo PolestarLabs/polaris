@@ -1,5 +1,5 @@
 module.exports = async (guild, member) => {
-  Promise.all([DB.servers.get(guild.id), DB.users.get(member.id)]).timeout(1800).then(([svData, userData]) => {
+  Promise.all([DB.servers.findOne({id:guild.id}).cache(), DB.users.findOne({id:member.id}).cache()]).then(([svData, userData]) => {
     if (!svData?.modules.FWELL.enabled) return;
 
     const fwellTimer = svData.modules.FWELL.timer;
@@ -22,16 +22,17 @@ module.exports = async (guild, member) => {
       .split("%embed%");
 
     let embed;
-    try {
-      embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
-    } catch (err) {
-      embed = null;
+    if (fwellText[1]){
+      try {
+        embed = fwellText[1] ? JSON.parse(fwellText[1]) : null;
+      } catch (err) {
+        embed = null;
+      }
     }
-    fwellText = fwellText[0] || fwellText;
 
     const fwellChannel = svData.modules.FWELL.channel;
     const fwellSkin = svData.modules.FWELL.type;
-    const fwellImage = svData.modules.FWELL.image;
+    const fwellImage = true || svData.modules.GREET.image;
     if (embed) {
       embed.image = embed.image?.url ? embed.image : fwellImage && embed ? { url: "attachment://out.png" } : undefined;
       embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
@@ -45,9 +46,9 @@ module.exports = async (guild, member) => {
     resolveFile(url).then(async (buffer) => {
       const fwellChannelObj = PLX.getChannel(fwellChannel);
       if (!fwellChannelObj.permissionsOf(PLX.user.id).has('viewChannel') || !fwellChannelObj.permissionsOf(PLX.user.id).has('sendMessages')) return;
-      fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? file(buffer, "out.png") : null)).then((ms) => {
+      fwellChannelObj.send({ content: fwellText, embed }, (fwellImage ? {file:buffer,name: "out.png"} : null)).then((ms) => {
         if (fwellTimer) ms.deleteAfter(fwellTimer).catch(() => null);
       }).catch(console.error);
     }).catch(console.error);
-  }).catch(console.error);
+  }).catch(err=>null);
 };

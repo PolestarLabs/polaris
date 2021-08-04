@@ -85,8 +85,8 @@ const init = async (msg, args) => {
     const checkSales = (uD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < ( price * .1)) forRBN = false;
-      if (uD.amtItem("sph-license") < 2) forSPH = false;
+      if (uD.modules.RBN < ( price * .15)) forRBN = false;
+      if (uD.amtItem("sph-license") < 2 * ~~(price * .05) ) forSPH = false;
       if (uD.modules.SPH < 2) forSPH = false;
 
       return { forRBN, forSPH };
@@ -203,7 +203,8 @@ const init = async (msg, args) => {
       msg.channel.send({
         embed: {
           description: `${operation === "sell" ? "Selling" : "Buying"}: \`${itemType}\``
-            + `**${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}`,
+            + `**${(checkCosmetic || validItem).name}** for **${price}** ${_emoji(currency)}`+
+            `*Listing Upfront Fee: **${(price*.15)}** ${_emoji(currency)}*`,
         },
       }).then(async (ms) => {
         await YesNo(ms, msg, confirm);
