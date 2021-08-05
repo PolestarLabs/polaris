@@ -1,25 +1,4 @@
-const StatsD = require('hot-shots');
-const dogstatD = new StatsD();
 
-const tracer = require('dd-trace').init({
-	logInjection: true,
-	analytics: true,
-});
-tracer.use('bluebird', {service: 'bluebird'});
-tracer.use('mongoose', {service: 'mongoose'});
-tracer.use('grpc', {service: 'grpc'});
-
-
-const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "production" ? "main" : "beta";
-
-process.env.DD_ENV= process.env.NODE_ENV;
-process.env.DD_SERVICE="Pollux-" + INSTANCE;
-process.env.DD_LOGS_INJECTION=true;
-
-global.INSTR = {};
-
-
- 
 
 function exec(command, options) {
 	return new Promise((res, rej) => {
@@ -46,7 +25,31 @@ function exec(command, options) {
 
 (async () => {
 	
+	const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "production" ? "main" : "beta";
+	
 	process.env.DD_VERSION= (await exec("git rev-parse --short HEAD")).trim();
+	process.env.DD_ENV= process.env.NODE_ENV;
+	process.env.DD_SERVICE="Pollux-" + INSTANCE;
+	process.env.DD_LOGS_INJECTION=true;
+
+	global.INSTR = {};
+
+	const StatsD = require('hot-shots');
+	const dogstatD = new StatsD();
+
+	const tracer = require('dd-trace').init({
+		logInjection: true,
+		analytics: true,
+	});
+	tracer.use('bluebird', {service: 'bluebird'});
+	tracer.use('mongoose', {service: 'mongoose'});
+	tracer.use('grpc', {service: 'grpc'});
+
+
+
+
+
+
 	const DEFAULT_TAGS = ['client:'+ INSTANCE || "unknown", 'cluster:'+ PLX.cluster.name, "build:"+process.env.DD_VERSION]
 	
 	
