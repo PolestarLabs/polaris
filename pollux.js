@@ -11,14 +11,7 @@ process.env.BLUEBIRD_DEBUG=1;
 process.env.DD_TRACE_SAMPLE_RATE="1"
 
 require("./instrumentation.js");
-const tracer = require('dd-trace').init({
-	logInjection: true,
-	analytics: true,
-});
 
-tracer.use('bluebird', {service: 'bluebird'});
-tracer.use('mongoose', {service: 'mongoose'});
-tracer.use('grpc', {service: 'grpc'});
 
 
 global.Promise = require("bluebird");
@@ -36,11 +29,7 @@ const path            = require("path");
 
 
 
-const ERIS            = tracer.trace( "eris", (span) => {
-  span.setTag('service','eris');
-  return  require("eris") 
-});
-
+const ERIS            = require("eris");
 const Eris            = require("eris-additions")(ERIS);
 const axios           = require("axios");
 const DBSchema        = require("@polestar/database_schema");
