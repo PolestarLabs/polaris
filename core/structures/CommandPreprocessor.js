@@ -253,8 +253,11 @@ function QUEUED_COMMAND(commandFile) {
             : null;
     if (!execCommand) return commandFile.init || commandFile.gen;
 
-    PLX.execQueue.push(new Promise((res, rej) => execCommand.then(res).catch((e) => process.emit('unhandledRejection', e, execCommand))));
-    return execCommand;
+    //PLX.execQueue.push(new Promise((res, rej) => 
+      return execCommand.then(res).catch((e) => console.error(e) );
+    //));
+    
+    //return execCommand;
   };
 }
 
