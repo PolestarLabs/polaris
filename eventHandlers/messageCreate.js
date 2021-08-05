@@ -4,8 +4,8 @@ module.exports = async (msg) => {
     
   if (msg.author.bot) return;
   if (!PLX.ready) { 
-    console.log("Message not Ready".red);
-    return; 
+    //console.log("Message not Ready".red);
+    //return; 
   }
   INSTR.inc(`messages`, [`user:${msg.author.id}`, `shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}`,`guild_name:${msg.guild?.id}` ] )
 

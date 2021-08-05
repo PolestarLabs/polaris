@@ -269,7 +269,7 @@ DBSchema(dbConnectionData, {
     console.log("Discord connection start...");
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
-    initializeEvents()
+
   }, CLUSTER_ID * 1500);
 
 
@@ -322,6 +322,9 @@ PLX.once("ready", async () => {
   }).catch(console.error);
 });
 
+ 
+PLX.once("shardReady", initializeEvents );
+
   function initializeEvents(){
     PLX.eventHandlerFunctions = {};
     readdirAsync("./eventHandlers/").then((files) => {
@@ -334,6 +337,8 @@ PLX.once("ready", async () => {
         });
       });
     }).catch(console.error);
+
+ 
 
     /*
     PLX.microserverStart = () => {
