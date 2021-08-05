@@ -300,7 +300,7 @@ PLX.on("ready", () => {
 
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
-  INSERT.gauge("READY_count", ReadyCount);
+  INSTR.gauge("READY_count", ReadyCount);
 });
 PLX.once("ready", async () => {
   PLX.on("rawWS", (payload) => {
