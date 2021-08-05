@@ -8,6 +8,7 @@ const isPRIME               = process.env.PRIME === "true" || process.env.PRIME 
 
 process.env.UV_THREADPOOL_SIZE = 256;
 process.env.BLUEBIRD_DEBUG=1;
+process.env.DD_TRACE_SAMPLE_RATE="1"
 
 require("./instrumentation.js");
 const tracer = require('dd-trace').init({

@@ -8,7 +8,10 @@ const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "
 process.env.DD_ENV= process.env.NODE_ENV;
 process.env.DD_SERVICE="Pollux-" + INSTANCE;
 process.env.DD_LOGS_INJECTION=true;
+
 global.INSTR = {};
+
+
 
 
  
