@@ -7,8 +7,8 @@ module.exports = async function(guildID,prefetchedSvData){
     if (!thisServer) return;
 
     const serverData = prefetchedSvData 
-        || await JSON.parse( (await PLX.redis.aget(`${DB.raw.db.databaseName}.serverdb.findOne.{"id":"${thisServer.id}"}`))||"null" )
-        || await DB.servers.findOne({id:thisServer.id}).cache();
+        || await JSON.parse( (await PLX.redis.aget(`${DB.raw.db.databaseName}.serverdb.findOne.{"id":"${thisServer.id}"}`))||"null" );
+    //     || await DB.servers.findOne({id:thisServer.id}).cache();
     if (!serverData) return;
     
 
