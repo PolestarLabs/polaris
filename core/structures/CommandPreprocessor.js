@@ -152,10 +152,17 @@ const DEFAULT_CMD_OPTS = {
       Progression.emit(`command.${m.command.label}`, { msg: m });
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
+      let benchmark = performance.now() - m.runtime;
+      
+      
+      INSTR.inc(`command.usage`, [`shard:${m.guild?.shard?.id}`, `guild:${m.guild?.id}`, `command:${m.command.label}`, `status:executed` ] )
+      INSTR.gauge(`command.benchmark`,benchmark, [`shard:${m.guild?.shard?.id}`, `guild:${m.guild?.id}`, `command:${m.command.label}` ] )
+      INSTR.gauge(`command.${m.command.label}.bench`,benchmark )
+
       if (m.content.includes("--bmk")) {
         m.channel.send({
           embed: {
-            description: `⏱ ${runtimeOutput(performance.now() - m.runtime)}`, color: status ? 0x3355cc : numColor(_UI.colors.red),
+            description: `⏱ ${runtimeOutput(benchmark)}`, color: status ? 0x3355cc : numColor(_UI.colors.red),
           },
         });
       }
@@ -165,7 +172,7 @@ const DEFAULT_CMD_OPTS = {
     console.error(" COMMAND ERROR ".bgRed);
     console.error(err);
     const errorCode =  BigInt("0x"+crypto.createHash('md5').update( err.message + msg.command.label , 'utf8').digest('hex')).toString(24);
-    
+    INSTR.inc(`command.errors`, [`shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}`, `command:${msg.command.label}`, `status:error` ] )
 
     /*
     Sentry.setTag("module", msg.command.module);
@@ -246,7 +253,10 @@ function QUEUED_COMMAND(commandFile) {
             : null;
     if (!execCommand) return commandFile.init || commandFile.gen;
 
-    PLX.execQueue.push(new Promise((res, rej) => execCommand.then(res).catch((e) => process.emit('unhandledRejection', e, execCommand))));
+    //PLX.execQueue.push(new Promise((res, rej) => 
+      //return execCommand.then(res).catch((e) => console.error(e) );
+    //));
+    
     return execCommand;
   };
 }

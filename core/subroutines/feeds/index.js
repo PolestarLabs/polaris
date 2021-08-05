@@ -19,7 +19,7 @@ async function CHK() {
     console.info(`${"RSS: ".blue}Starting...${serverFeeds.length}`);
     const servers = await DB.servers.find({ id: { $in: serverFeeds.map((f) => f.server) } }, { "modules.LANGUAGE": 1, id: 1 }).lean();
     serverFeeds.forEach((feed) => {
-
+      INSTR.inc("feeds", {type: feed.type , server: feed.server, url: feed.url, status: "processed"})
       const serverLang = servers.find(sv =>
          sv.id === feed.server)?.modules?.LANGUAGE || 'en';
       

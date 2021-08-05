@@ -1,0 +1,62 @@
+{
+  "name": "polaris",
+  "version": "1.3.0",
+  "description": "Pollux on Eris",
+  "main": "pollux.js",
+  "scripts": {
+    "start": "node --max-old-space-size=2048 --harmony pollux.js",
+    "lint:js": "eslint -c .eslintrc.json *.js",
+    "lint:js:fix": "eslint -c .eslintrc.json --ext .js core/ --fix && echo \"\u001b[1m\u001b[32mOK\u001b[39m\u001b[22m\" || echo \"\u001b[1m\u001b[31mNot OK\u001b[39m\u001b[22m\""
+  },
+  "author": "Flicky",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@google-cloud/vision": "^2.1.2",
+    "@polestar/constants": "github:PolestarLabs/constants",
+    "@polestar/database_schema": "github:PolestarLabs/db-schema",
+    "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
+    "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
+    "@polestar/morse": "gitlab:PolestarLabs/morse",
+    "@polestar/skia-twemoji": "github:PolestarLabs/skia-canvas-twemoji",
+    "@polestar/timed-usage": "github:PolestarLabs/timed-usage",
+    "@sentry/node": "^5.15.4",
+    "@vitalets/google-translate-api": "^4.0.0",
+    "axios": "^0.21.1",
+    "bluebird": "^3.7.2",
+    "canvas": "^2.6.0",
+    "canvas-text-wrapper": "^0.10.2",
+    "cheerio": "^1.0.0-rc.2",
+    "chrono-node": "github:Mitchell3514/chrono#ff42f01c662073c9cb9c3d88f84d1754097f9581",
+    "colors": "^1.4.0",
+    "cron": "^1.5.1",
+    "date-fns": "^2.22.1",
+    "dd-trace": "^1.1.1",
+    "eris": "github:PolestarLabs/eris#dev",
+    "eris-additions": "github:PolestarLabs/eris-additions-plus",
+    "fast-diff": "^1.2.0",
+    "gif-encoder": "^0.7.2",
+    "hot-shots": "^8.5.0",
+    "mongoose": "^5.9.9",
+    "open-graph-scraper": "^4.6.0",
+    "rss-parser": "^3.7.2",
+    "skia-canvas": "^0.9.23",
+    "stackblur-canvas": "2.5.0",
+    "xml2js": "^0.4.23",
+    "ytdl-core": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/bluebird": "^3.5.33",
+    "@types/i18next": "^12.1.0",
+    "@types/node": "^14.14.16",
+    "@typescript-eslint/eslint-plugin": "^4.9.1",
+    "@typescript-eslint/parser": "^4.10.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.2.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.21.2",
+    "typescript": "^4.1.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

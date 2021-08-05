@@ -72,7 +72,12 @@ exports.run = async function run() {
 
     
     
-
+    PLX.shards.map(shard=>{
+      INSTR.gauge(`shards.id`, shard.id ,{shard: shard.id})
+      INSTR.gauge(`process.uptime`,process.uptime(),{shard: shard.id})
+      INSTR.gauge(`shards.latency`,shard.latency,{shard: shard.id})
+      INSTR.gauge(`shards.latency.${shard.id}`,shard.latency,{shard: shard.id})
+    })
 
 
     console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${formatDistance(PLX.uptime, 0)}
