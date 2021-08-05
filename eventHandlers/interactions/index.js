@@ -5,7 +5,9 @@ module.exports = async function (payload) {
 
     let message;
     const interaction_type = payload.d.type; //3= component
-    const component_type = payload.d.data?.component_type; // 2 button 3 drop down
+    const component_type = payload.d.data?.component_type;
+    
+    INSTR.inc("interactions",{ component_type, interaction_type })
 
     if (!payload.d.member){
         console.log(payload.d);
