@@ -15,6 +15,7 @@ class ProgressionManager extends EventEmitter {
             if (event === "QUEST_COMPLETED") return;
 
             let [action, scope, condition] = event.split('.');
+            INSTR.inc("progression.events", { action, scope, condition, value: opts.value, userID: opts.userID, valueSet: opts.valueSet });
             console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${typeof opts.valueSet == 'number' ? " RESET ".bgRed : `[+${value || 1}]`.cyan
                 }`);
 
