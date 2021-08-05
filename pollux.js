@@ -10,6 +10,15 @@ process.env.UV_THREADPOOL_SIZE = 256;
 process.env.BLUEBIRD_DEBUG=1;
 
 require("./instrumentation.js");
+const tracer = require('dd-trace').init({
+	logInjection: true,
+	analytics: true,
+});
+
+tracer.use('bluebird', {service: 'bluebird'});
+tracer.use('mongoose', {service: 'mongoose'});
+tracer.use('grpc', {service: 'grpc'});
+
 
 global.Promise = require("bluebird");
 Promise.config({
@@ -24,14 +33,6 @@ const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
 const path            = require("path");
 
-const tracer = require('dd-trace').init({
-	logInjection: true,
-	analytics: true,
-});
-
-tracer.use('bluebird', {service: 'bluebird'});
-tracer.use('mongoose', {service: 'mongoose'});
-tracer.use('grpc', {service: 'grpc'});
 
 
 const ERIS            = tracer.trace( "eris", (span) => {
