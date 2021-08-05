@@ -27,8 +27,11 @@ exports.run = async function run() {
   const FIVE_MINUTES = new CronJob("*/5  * * * *", async () => {
 
     PLX.gamechange();
-    PLX.guilds.forEach(async guild => {
-      setImmediate(()=>updateGuildSettings(guild))
+    PLX.guilds.forEach(async (guild,i) => {
+      setTimeout(()=>
+        setImmediate(()=>updateGuildSettings(guild)),
+        i*10
+      )
     })
 
   }, null, true, null /*TZ*/, null/*CONTEXT*/, true /*RUN ON INIT*/);
