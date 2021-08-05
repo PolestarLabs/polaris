@@ -23,7 +23,22 @@ global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
 const path            = require("path");
-const ERIS            = require("eris");
+
+const tracer = require('dd-trace').init({
+	logInjection: true,
+	analytics: true,
+});
+
+tracer.use('bluebird', {service: 'bluebird'});
+tracer.use('mongoose', {service: 'mongoose'});
+tracer.use('grpc', {service: 'grpc'});
+
+
+const ERIS            = tracer.trace( "eris", (span) => {
+  span.setTag('service','eris');
+  return  require("eris") 
+});
+
 const Eris            = require("eris-additions")(ERIS);
 const axios           = require("axios");
 const DBSchema        = require("@polestar/database_schema");
