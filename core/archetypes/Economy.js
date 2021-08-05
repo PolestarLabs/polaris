@@ -305,7 +305,10 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
 
   // Checks
   const hasFunds = await checkFunds(userFrom, amt, curr);
-  if (!hasFunds && !disableFundsCheck) return Promise.reject({ reason: "NO FUNDS" });
+  if (!hasFunds && !disableFundsCheck) {
+    INSTR.inc("eco.transactions",{ status: "error", currency: curr, type, description:"no-funds" });
+    return Promise.reject(new Error({ reason: "NO FUNDS" }));
+  }
 
   // Argument validation
   curr = parseCurrencies(curr);
@@ -319,7 +322,18 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
 
   let incomeType;
   if ((incomeType = ["INCOME", "PAYMENT"].indexOf(subtype)) > -1) {
+    
     curr.forEach((CURR, i) => {
+      INSTR.inc("eco.transactions",{
+        status: "ok",
+        currency: CURR,
+        type,
+        subtype,
+        amount: amt[i],
+        from: userFrom,
+        to: userTo,
+      });
+
       Progression.emit(`${["earn", "spend"][incomeType]}.${CURR}.${type}`, { value: amt[i], userID: ([userTo, userFrom][incomeType]), options: progressionOptions });
     });
   }
