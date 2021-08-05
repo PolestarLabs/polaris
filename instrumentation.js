@@ -1,3 +1,18 @@
+const StatsD = require('hot-shots');
+const dogstatD = new StatsD();
+const tracer = require('dd-trace').init({
+	logInjection: true,
+	analytics: true,
+});
+const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "production" ? "main" : "beta";
+process.env.DD_ENV= process.env.NODE_ENV;
+process.env.DD_SERVICE="Pollux-" + INSTANCE;
+process.env.DD_LOGS_INJECTION=true;
+global.INSTR = {};
+
+
+ 
+
 function exec(command, options) {
 	return new Promise((res, rej) => {
 	  let output = "";
@@ -22,23 +37,10 @@ function exec(command, options) {
  }
 
 (async () => {
-
-	const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "production" ? "main" : "beta";
-	process.env.DD_ENV= process.env.NODE_ENV;
-	process.env.DD_SERVICE="Pollux-" + INSTANCE;
-	process.env.DD_VERSION= (await exec("git rev-parse --short HEAD")).trim();
-	process.env.DD_LOGS_INJECTION=true;
 	
+	process.env.DD_VERSION= (await exec("git rev-parse --short HEAD")).trim();
 	const DEFAULT_TAGS = ['client:'+ INSTANCE || "unknown", 'cluster:'+ PLX.cluster.name, "build:"+process.env.DD_VERSION]
 	
-	const StatsD = require('hot-shots');
-	const dogstatD = new StatsD();
-	const tracer = require('dd-trace').init({
-		logInjection: true,
-		analytics: true,
-	});
-	
-	global.INSTR = {};
 	
 	global.INSTR.inc = (metric,tags=[],rate=1) => {
 		if (!(tags instanceof Array))
@@ -56,7 +58,7 @@ function exec(command, options) {
 		console.log(metric.blue,{exTags}, "g")
 		return dogstatD.decrement("plx."+metric,rate, exTags )
 	}
-	global.INSTR.gauge = (metric,value,tags) => {
+	global.INSTR.gauge = (metric,value,tags=[]) => {
 		if (!(tags instanceof Array))
 			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
 		
