@@ -33,24 +33,39 @@ function exec(command, options) {
 	
 	const StatsD = require('hot-shots');
 	const dogstatD = new StatsD();
-	const tracer = require('dd-trace').init();
+	const tracer = require('dd-trace').init({
+		logInjection: true,
+		analytics: true,
+	});
 	
 	global.INSTR = {};
 	
 	global.INSTR.inc = (metric,tags=[],rate=1) => {
+		if (!(tags instanceof Array))
+			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+		
 		let exTags = DEFAULT_TAGS.concat(tags);
 		console.log(metric.blue,{exTags}, "i")
 		return dogstatD.increment("plx."+metric,rate, exTags )
 	}
 	global.INSTR.dec = (metric,tags=[],rate=1) => {
+		if (!(tags instanceof Array))
+			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+		
 		let exTags = DEFAULT_TAGS.concat(tags);
 		console.log(metric.blue,{exTags}, "g")
 		return dogstatD.decrement("plx."+metric,rate, exTags )
 	}
 	global.INSTR.gauge = (metric,value,tags) => {
+		if (!(tags instanceof Array))
+			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+		
 		return dogstatD.gauge( "plx."+metric , value, tags )
 	}
 	global.INSTR.top_inc = (metric,tags=[],rate) => {
+		if (!(tags instanceof Array))
+			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+		
 		return dogstatD.increment(metric, DEFAULT_TAGS.concat(tags) )
 	}
 
