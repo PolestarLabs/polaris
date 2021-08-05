@@ -292,6 +292,9 @@ translateEngineStart();
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 let ReadyCount = 0;
 PLX.on("ready", () => {
+  
+  PLX.registerCommands();
+
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
   INSERT.gauge("READY_count", ReadyCount);
@@ -327,8 +330,6 @@ PLX.once("ready", async () => {
       });
     });
   }).catch(console.error);
-
-  PLX.registerCommands();
 
   /*
   PLX.microserverStart = () => {
