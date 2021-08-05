@@ -14,7 +14,7 @@ const init = async function (msg) {
 
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   cmd: "ahegao",
   perms: 3,
   cat: "nsfw",
