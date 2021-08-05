@@ -71,9 +71,10 @@ exports.run = async function run() {
   const ONE_MINUTE = new CronJob("*/1 * * * *", async () => {
 
     
-    INSTR.gauge(`process.uptime`,process.uptime())
     
     PLX.shards.map(shard=>{
+      INSTR.gauge(`shards.id`, shard.id ,{shard: shard.id})
+      INSTR.gauge(`process.uptime`,process.uptime(),{shard: shard.id})
       INSTR.gauge(`shards.latency`,shard.latency,{shard: shard.id})
       INSTR.gauge(`shards.latency.${shard.id}`,shard.latency,{shard: shard.id})
     })
