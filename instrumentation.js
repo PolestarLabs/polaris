@@ -47,7 +47,6 @@ function exec(command, options) {
 			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
 		
 		let exTags = DEFAULT_TAGS.concat(tags);
-		console.log(metric.blue,{exTags}, "i")
 		return dogstatD.increment("plx."+metric,rate, exTags )
 	}
 	global.INSTR.dec = (metric,tags=[],rate=1) => {
@@ -55,7 +54,6 @@ function exec(command, options) {
 			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
 		
 		let exTags = DEFAULT_TAGS.concat(tags);
-		console.log(metric.blue,{exTags}, "g")
 		return dogstatD.decrement("plx."+metric,rate, exTags )
 	}
 	global.INSTR.gauge = (metric,value,tags=[]) => {
