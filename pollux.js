@@ -54,6 +54,7 @@ const DummyFlavorDefault = {
 };
 
 const FLAVOR_SWARM_CONFIG   = require("./flavored_swarm.config.js");
+const { INSERT } = require("fast-diff");
 // typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
 const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find((cli) => cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
 
@@ -293,6 +294,7 @@ let ReadyCount = 0;
 PLX.on("ready", () => {
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
+  INSERT.gauge("READY_count", ReadyCount);
 });
 PLX.once("ready", async () => {
   PLX.on("rawWS", (payload) => {
@@ -312,6 +314,7 @@ PLX.once("ready", async () => {
   PLX.updateBlacklists(DB).then(() => {
     console.log("• ".blue, "Blacklist Loaded!");
   }).catch(console.error);
+});
 
   PLX.eventHandlerFunctions = {};
   readdirAsync("./eventHandlers/").then((files) => {
@@ -347,7 +350,7 @@ PLX.once("ready", async () => {
             Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
 
   require("./core/utilities/debugTools");
-});
+
 
 PLX.on("debug", (payload, s) => {
   if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`, payload);
