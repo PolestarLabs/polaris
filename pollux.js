@@ -270,7 +270,7 @@ DBSchema(dbConnectionData, {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
     initializeEvents()
-  }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1500);
+  }, CLUSTER_ID * 1500);
 
 
 }).catch((err) => {
