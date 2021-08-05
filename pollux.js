@@ -269,7 +269,10 @@ DBSchema(dbConnectionData, {
     console.log("Discord connection start...");
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
+    initializeEvents()
   }, CLUSTER_ID * SHARDS_PER_CLUSTER * 1500);
+
+
 }).catch((err) => {
   console.error(err);
 });
@@ -319,39 +322,40 @@ PLX.once("ready", async () => {
   }).catch(console.error);
 });
 
-  PLX.eventHandlerFunctions = {};
-  readdirAsync("./eventHandlers/").then((files) => {
-    files.forEach((file) => {
-      const eventide = file.split(".")[0];
-      PLX.on(eventide, (...args) => {
-        const eventor = require(`./eventHandlers/${file}`);
-        PLX.eventHandlerFunctions[eventide] = eventor;
-        return eventor(...args);
+  function initializeEvents(){
+    PLX.eventHandlerFunctions = {};
+    readdirAsync("./eventHandlers/").then((files) => {
+      files.forEach((file) => {
+        const eventide = file.split(".")[0];
+        PLX.on(eventide, (...args) => {
+          const eventor = require(`./eventHandlers/${file}`);
+          PLX.eventHandlerFunctions[eventide] = eventor;
+          return eventor(...args);
+        });
       });
-    });
-  }).catch(console.error);
+    }).catch(console.error);
 
-  /*
-  PLX.microserverStart = () => {
-    return;
-      try {
-        PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
-        PLX.microserver.microtasks.updateServerCache("all");
-        PLX.microserver.microtasks.updateChannels("all");
-      } catch (e) {
-        console.error(e);
-        for (const i in new Int8Array(10)) console.error("ERROR MTASK");
+    /*
+    PLX.microserverStart = () => {
+      return;
+        try {
+          PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
+          PLX.microserver.microtasks.updateServerCache("all");
+          PLX.microserver.microtasks.updateChannels("all");
+        } catch (e) {
+          console.error(e);
+          for (const i in new Int8Array(10)) console.error("ERROR MTASK");
 
-        // process.exit(1);
-      }
-    };
-  */
-  PLX.microserverStart = () => null;
-  hook.info(`**INFO:** Cluster connected and all shards reported online!
-            Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
+          // process.exit(1);
+        }
+      };
+    */
+    PLX.microserverStart = () => null;
+    hook.info(`**INFO:** Cluster connected and all shards reported online!
+              Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
 
-  require("./core/utilities/debugTools");
-
+    require("./core/utilities/debugTools");
+  }
 
 PLX.on("debug", (payload, s) => {
   if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`, payload);
