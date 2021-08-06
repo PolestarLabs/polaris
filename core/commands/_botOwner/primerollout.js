@@ -36,7 +36,7 @@ const init = async function (msg) {
         await prompt.edit({
             content: `
 ${_emoji('loading')} **Publishing & updating Sticker**
-        `, embed: {}
+        `, embeds: []
         });
 
         await wait(1);
