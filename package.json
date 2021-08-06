@@ -13,9 +13,9 @@
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
     "@polestar/constants": "github:PolestarLabs/constants",
-    "@polestar/database_schema": "github:PolestarLabs/db-schema",
-    "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
-    "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
+    "@polestar/database_schema": "github:PolestarLabs/db-schema#a40b279b32555291674c887b2bdb5b69231e1630",
+    "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire#630b35abfe46c3487081e6da5826428ab9b48e92",
+    "@polestar/i18n": "github:PolestarLabs/pollux-i18n#f5b971fd713aeeeaacae280b596545f7b9cd6585",
     "@polestar/morse": "gitlab:PolestarLabs/morse",
     "@polestar/skia-twemoji": "github:PolestarLabs/skia-canvas-twemoji",
     "@polestar/timed-usage": "github:PolestarLabs/timed-usage",
