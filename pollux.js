@@ -296,9 +296,13 @@ PLX.on("ready", () => {
   ReadyCount++;
   INSTR.gauge("READY_count", ReadyCount);
 });
+
 PLX.once("ready", async () => {
 
-  if (PLX.shards.size === 1 ) PLX.registerCommands();
+  if (PLX.shards.size === 1 ) {
+    PLX.registerCommands();
+    initializeEvents();
+  }
 
   PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
@@ -320,7 +324,7 @@ PLX.once("ready", async () => {
 });
 
  
-PLX.once("shardReady", initializeEvents );
+PLX.once("shardReady", ()=> PLX.shards.size>1?initializeEvents():null );
 
   function initializeEvents(){
     PLX.eventHandlerFunctions = {};
