@@ -265,10 +265,13 @@ DBSchema(dbConnectionData, {
     // process.exit(1);
   }
 
-
+  //setTimeout(() => {
     console.log("Discord connection start...");
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
+    initializeEvents()
+  //}, CLUSTER_ID * 1500);
+
 
 }).catch((err) => {
   console.error(err);
@@ -292,18 +295,14 @@ translateEngineStart();
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 let ReadyCount = 0;
 PLX.on("ready", () => {
+  
+  PLX.registerCommands();
+
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
   INSTR.gauge("READY_count", ReadyCount);
 });
-
 PLX.once("ready", async () => {
-
-  if (PLX.shards.size === 1 ) {
-    PLX.registerCommands();
-    initializeEvents();
-  }
-
   PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
       require("./eventHandlers/interactions")(payload);
@@ -323,9 +322,6 @@ PLX.once("ready", async () => {
   }).catch(console.error);
 });
 
- 
-PLX.once("shardReady", ()=> PLX.shards.size>1?initializeEvents():null );
-
   function initializeEvents(){
     PLX.eventHandlerFunctions = {};
     readdirAsync("./eventHandlers/").then((files) => {
@@ -338,9 +334,6 @@ PLX.once("shardReady", ()=> PLX.shards.size>1?initializeEvents():null );
         });
       });
     }).catch(console.error);
-
- 
-    if (PLX.shards.size !== 1 ) PLX.registerCommands();
 
     /*
     PLX.microserverStart = () => {
