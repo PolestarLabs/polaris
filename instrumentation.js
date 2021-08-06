@@ -91,7 +91,7 @@ function tagsCheck(tags){
 	}
 
 	global.INSTR.error = (t,m,ed,tg) => {
-		ed.alert_type = "error";
+		ed.alert_type = "error"; 
 		return global.INSTR.event(t,m,ed,tg)
 	}
 	global.INSTR.info = (t,m,ed,tg) => {
