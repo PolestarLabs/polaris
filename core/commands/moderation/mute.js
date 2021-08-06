@@ -101,6 +101,8 @@ const init = async function (msg, args) {
     || (!Server.roles.find((x) => x.id === MUTEROLE)
       && !Server.roles.find((x) => x.name.includes("POLLUX-MUTE")))
   ) {
+    return msg.reply("Please set up a mute role first!");
+
     Server.createRole(
       {
         name: "POLLUX-MUTE",
@@ -223,20 +225,15 @@ const init = async function (msg, args) {
       while (chanLen-- > 0) {
         const chn = Server.channels.map((c) => c)[chanLen];
         promiseBucket.push(
-          chn
-            .editPermission(
-              role,
-              0,
-              2048,
-              "role",
-              "UPDATING MUTE OVERRIDES",
-            )
-            .then()
-            .catch((err) => {
-
-
-              erroredChans++
-            }),
+          (async () => {
+            if (!chn.permissionsOf(PLX.user.id).has("manageChannel")){
+              erroredChans++;
+              return;
+            }
+            chn.editPermission(role,0,2048,"role","UPDATING MUTE OVERRIDES",)
+              .then()
+                .catch((err) => { erroredChans++ })
+          })()
         );
       }
       if (first === true) {
