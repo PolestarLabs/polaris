@@ -205,6 +205,20 @@ const DEFAULT_CMD_OPTS = {
 
 
     */
+
+
+    INSTR?.error("User Facing Error: "+errorCode , err?.stack || err?.message || err || "UNKNOWN ERROR", 
+    {
+      aggregation_key: errorCode,
+      tags: {
+        command: msg.command?.label || "unknown",
+        cluster: PLX.cluster.name,
+        shard: msg.guild?.shard?.id,
+        error_code: errorCode,
+        err_type: "UFE"
+      }
+    })
+    /*
     const hookResponse = await hook.error(`
     **User-Facing Error**
     \`\`\`js
@@ -213,7 +227,7 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
     **Command:** \`${msg.command.label || "NO-COMMAND-LABEL"}\`
     **CODE:** \`${errorCode}\`
     `, { hook: errorsHook });
-
+    */
     msg.channel.send({
       embed: {
         // description: "Oh **no**! Something went wrong...\n"
@@ -223,7 +237,7 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
           //PLX.beta || cfg.testChannels.includes(msg.channel.id)
           // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
           // ? 
-          `Error Code: [**\`${errorCode}\`**](${hookResponse.jumpLink})`
+          `Error Code: **\`${errorCode}\`**`
           // : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
