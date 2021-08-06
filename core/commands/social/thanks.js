@@ -6,8 +6,10 @@ const Timed = require("../../structures/TimedUsage");
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const Target = await PLX.getTarget(msg.args[0], msg.guild, false);
+  const Target = await PLX.resolveMember(msg.guild.id, args[0],{enforceDB:true, softMatch: true});
+  if (!Target) msg.reply("User not found!");
   if (Target && Target.id === msg.author.id) return `${_emoji("nope")} ${$t("responses.thx.noself", P)}`;
+
 
   const embed = {};
 

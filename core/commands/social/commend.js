@@ -1,10 +1,10 @@
 const Timed = require("../../structures/TimedUsage");
 
-const init = async function (msg) {
+const init = async function (msg,args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  let Target = await PLX.getTarget(msg.args[0] || msg.author, msg.guild, false);
-  if (!Target) Target = msg.author;
+  let Target =  await PLX.resolveMember(msg.guild.id, args[0],{enforceDB:true, softMatch: true});
+  if (!Target) return msg.reply("User not found");
 
   const userData = await DB.users.findOne({ id: msg.author.id });
   const targetData = (await DB.commends.parseFull({ id: Target.id })) || { id: Target.id, whoIn: [], whoOut: [] };
