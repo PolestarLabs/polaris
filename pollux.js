@@ -298,7 +298,7 @@ PLX.on("ready", () => {
 });
 PLX.once("ready", async () => {
 
-  PLX.registerCommands();
+  if (PLX.shards.size === 1 ) PLX.registerCommands();
 
   PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
@@ -336,6 +336,7 @@ PLX.once("shardReady", initializeEvents );
     }).catch(console.error);
 
  
+    if (PLX.shards.size !== 1 ) PLX.registerCommands();
 
     /*
     PLX.microserverStart = () => {
