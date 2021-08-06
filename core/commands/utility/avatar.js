@@ -22,6 +22,6 @@ module.exports = {
   cmd: "avatar",
   perms: 3,
   cat: "utility",
-  botPerms: ["embedLinks","uploadFiles"],
+  botPerms: ["embedLinks","attachFiles"],
   aliases: [],
 };
