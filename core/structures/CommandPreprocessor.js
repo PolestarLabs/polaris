@@ -327,16 +327,11 @@ const registerOne = (folder, _cmd) => {
     CMD.registerSubcommand("help", DEFAULT_CMD_OPTS.invalidUsageMessage);
     return { pass: true, cmd: _cmd, hidden: !commandFile.pub };
   } catch (e) {
+    
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
-    hook.error(`
-    **Command Soft Error**
-    \`\`\`js
-${e.stack.slice(0, 1900)}
-    \`\`\`
-    The command \`${_cmd}\` was **not** loaded!
-    `, { hook: errorsHook });
-    // console.info("Register command: ".blue, _cmd.padEnd(20, ' ').yellow, " ✘".red)
-    // console.error("\r                                " + e.message.red)
+    
+    INSTR.warn("Soft Error", e.stack, {tags:{command:_cmd, err_type: "soft"}});
+
     return { pass: false, cmd: _cmd };
   }
 };
@@ -352,18 +347,22 @@ const registerCommands = (rel) => {
         results = results.concat(commands.map((_cmd) => registerOne(folder, _cmd)).filter((x) => !!x));
       }),
     ).then((res) => {
-      hook.info(`
+      
+      INSTR.info("Commands Reloaded", 
+      (`
       **Commands Reloaded**
-${_emoji("yep")} **${results.filter((_) => !!_.pass).length}** / ${results.length} commands registered.
-${_emoji("maybe")} *(${results.filter((_) => _.hidden).length} hidden)*
-${_emoji("nope")} ${results.filter((_) => !_.pass).length} commands failed.
-${results.filter((_) => !_.pass).length
-          ? `
-\`\`\`js
-${results.filter((_) => !_.pass).map((c) => ` • ${c.cmd}`).join("\n")}
-\`\`\`
-` : ""
-        }  `);
+        **${results.filter((_) => !!_.pass).length}** / ${results.length} commands registered.
+        *(${results.filter((_) => _.hidden).length} hidden)*
+        ${results.filter((_) => !_.pass).length} commands failed.
+        ${results.filter((_) => !_.pass).length
+                  ? `
+        \`\`\`js
+        ${results.filter((_) => !_.pass).map((c) => ` • ${c.cmd}`).join("\n")}
+        \`\`\`
+        ` : ""
+        }  `)
+      , {tags:{command:_cmd, err_type: "soft"}});
+
     });
   });
 };
