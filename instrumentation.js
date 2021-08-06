@@ -23,6 +23,12 @@ function exec(command, options) {
 	});
  }
 
+function tagsCheck(tags){
+	if (!(tags instanceof Array))
+		return Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+	else return tags;
+}
+
 (async () => {
 	
 	const INSTANCE = process.env.PRIME_FLAVORED_CLIENT || process.env.NODE_ENV !== "production" ? "main" : "beta";
@@ -43,41 +49,47 @@ function exec(command, options) {
 	});
 	tracer.use('bluebird', {service: 'bluebird'});
 	tracer.use('mongoose', {service: 'mongoose'});
-	tracer.use('grpc', {service: 'grpc'});
-
-
-
-
 
 
 	const DEFAULT_TAGS = ['client:'+ INSTANCE || "unknown", 'cluster:'+ PLX.cluster.name, "build:"+process.env.DD_VERSION]
 	
 	
-	global.INSTR.inc = (metric,tags=[],rate=1) => {
-		if (!(tags instanceof Array))
-			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
-		
+	global.INSTR.inc = (metric,tags=[],rate=1) => {		
+		tags = tagsCheck(tags);
 		let exTags = DEFAULT_TAGS.concat(tags);
 		return dogstatD.increment("plx."+metric,rate, exTags )
 	}
-	global.INSTR.dec = (metric,tags=[],rate=1) => {
-		if (!(tags instanceof Array))
-			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
-		
+
+	global.INSTR.dec = (metric,tags=[],rate=1) => {		
+		tags = tagsCheck(tags);
 		let exTags = DEFAULT_TAGS.concat(tags);
 		return dogstatD.decrement("plx."+metric,rate, exTags )
 	}
-	global.INSTR.gauge = (metric,value,tags=[]) => {
-		if (!(tags instanceof Array))
-			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
-		
+
+	global.INSTR.gauge = (metric,value,tags=[]) => {		
+		tags = tagsCheck(tags);
 		return dogstatD.gauge( "plx."+metric , value, tags )
 	}
-	global.INSTR.top_inc = (metric,tags=[],rate) => {
-		if (!(tags instanceof Array))
-			tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
-		
+
+	global.INSTR.top_inc = (metric,tags=[],rate) => {		
+		tags = tagsCheck(tags);
 		return dogstatD.increment(metric, DEFAULT_TAGS.concat(tags) )
 	}
 
+	global.INSTR.event = (title, message, eventData, tags) => {
+		tags ??= eventData.tags
+		tags = tagsCheck(tags);
+
+		eventData.timestamp ??= Date.now();
+		eventData.tags ??= DEFAULT_TAGS.concat(tags);
+		//eventData.aggregation_key
+		//eventData.priority
+		//eventData.source_type
+		//eventData.alert_type // error, warning, success, or info
+
+		return dogstatD.event( title, message, eventData );
+	}
+
 })()
+
+
