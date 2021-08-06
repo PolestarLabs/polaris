@@ -76,6 +76,9 @@ function tagsCheck(tags){
 	}
 
 	global.INSTR.event = (title, message, eventData, tags) => {
+
+		if (PLX.logInstr) console.log({title,eventData});
+
 		tags ??= eventData.tags
 		tags = tagsCheck(tags,DEFAULT_TAGS);
 
