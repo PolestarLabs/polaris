@@ -25,8 +25,9 @@ function exec(command, options) {
 
 function tagsCheck(tags){
 	if (!(tags instanceof Array))
-		return Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
-	else return tags;
+		tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
+	
+	return DEFAULT_TAGS.concat(tags);
 }
 
 (async () => {
@@ -55,30 +56,28 @@ function tagsCheck(tags){
 	
 	
 	global.INSTR.inc = (metric,tags=[],rate=1) => {		
-		tags = tagsCheck(tags);
-		let exTags = DEFAULT_TAGS.concat(tags);
-		return dogstatD.increment("plx."+metric,rate, exTags )
+		tags = tagsCheck(tags,DEFAULT_TAGS);
+		return dogstatD.increment("plx."+metric,rate, tags )
 	}
 
 	global.INSTR.dec = (metric,tags=[],rate=1) => {		
-		tags = tagsCheck(tags);
-		let exTags = DEFAULT_TAGS.concat(tags);
-		return dogstatD.decrement("plx."+metric,rate, exTags )
+		tags = tagsCheck(tags,DEFAULT_TAGS);
+		return dogstatD.decrement("plx."+metric,rate, tags )
 	}
 
 	global.INSTR.gauge = (metric,value,tags=[]) => {		
-		tags = tagsCheck(tags);
+		tags = tagsCheck(tags,DEFAULT_TAGS);
 		return dogstatD.gauge( "plx."+metric , value, tags )
 	}
 
 	global.INSTR.top_inc = (metric,tags=[],rate) => {		
-		tags = tagsCheck(tags);
+		tags = tagsCheck(tags,DEFAULT_TAGS);
 		return dogstatD.increment(metric, DEFAULT_TAGS.concat(tags) )
 	}
 
 	global.INSTR.event = (title, message, eventData, tags) => {
 		tags ??= eventData.tags
-		tags = tagsCheck(tags);
+		tags = tagsCheck(tags,DEFAULT_TAGS);
 
 		eventData.timestamp ??= Date.now();
 		eventData.tags ??= DEFAULT_TAGS.concat(tags);
