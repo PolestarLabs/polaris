@@ -26,10 +26,10 @@ exports.run = async function run() {
   const updateGuildSettings = require("./updateGuildSettings.js");
   const FIVE_MINUTES = new CronJob("*/5  * * * *", async () => {
 
-    PLX.gamechange();
+    //PLX.gamechange();
     Array.from(PLX.guilds).forEach(async (guild,ind) => {
       setTimeout(()=>
-        setImmediate(()=>updateGuildSettings(guild)),
+        setImmediate(()=>updateGuildSettings(guild.id)),
         ind * 10
       )
     })
