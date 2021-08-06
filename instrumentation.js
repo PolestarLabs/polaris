@@ -90,23 +90,23 @@ function tagsCheck(tags){
 		return dogstatD.event( title, message, eventData );
 	}
 
-	global.INSTR.error = (t,m,ed,t) => {
+	global.INSTR.error = (t,m,ed,tg) => {
 		ed.alert_type = "error";
-		return global.INSTR.event(t,m,ed,t)
+		return global.INSTR.event(t,m,ed,tg)
 	}
-	global.INSTR.info = (t,m,ed,t) => {
+	global.INSTR.info = (t,m,ed,tg) => {
 		ed.alert_type = "info";
 		ed.priority ??= "low";
-		return global.INSTR.event(t,m,ed,t)
+		return global.INSTR.event(t,m,ed,tg)
 	}
-	global.INSTR.warn = (t,m,ed,t) => {
+	global.INSTR.warn = (t,m,ed,tg) => {
 		ed.alert_type = "warning";
-		return global.INSTR.event(t,m,ed,t)
+		return global.INSTR.event(t,m,ed,tg)
 	}
-	global.INSTR.success = (t,m,ed,t) => {
+	global.INSTR.success = (t,m,ed,tg) => {
 		ed.alert_type = "success";
 		ed.priority ??= "low";
-		return global.INSTR.event(t,m,ed,t)
+		return global.INSTR.event(t,m,ed,tg)
 	}
 
 })()
