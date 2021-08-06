@@ -361,7 +361,7 @@ const registerCommands = (rel) => {
         \`\`\`
         ` : ""
         }  `)
-      , {tags:{command:_cmd, err_type: "soft"}});
+      , {tags:{err_type: "soft"}});
 
     });
   });
