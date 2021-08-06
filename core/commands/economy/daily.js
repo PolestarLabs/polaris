@@ -42,7 +42,7 @@ const init = async (msg) => {
   MigrationNotice.streakAlert(msg);
 
 
-  /** @type {import("i18next").TranslationOptions} */
+
   const P = { lngs: msg.lang, prefix: msg.prefix };
   const v = {
     last: $t("interface.daily.lastdly", P),

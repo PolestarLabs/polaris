@@ -9,7 +9,7 @@ const day = 2 * 60 * 60e3;
  * @param {string[]} args
  */
 const init = async (msg, args) => {
-  /** @type {import("i18next").TranslationOptions} */
+
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const v = {
