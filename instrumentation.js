@@ -23,7 +23,7 @@ function exec(command, options) {
 	});
  }
 
-function tagsCheck(tags){
+function tagsCheck(tags,DEFAULT_TAGS){
 	if (!(tags instanceof Array))
 		tags = Object.keys(tags).map(tg=> `${tg}:${tags[tg]}` );
 	
