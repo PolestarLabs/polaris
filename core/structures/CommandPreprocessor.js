@@ -330,7 +330,7 @@ const registerOne = (folder, _cmd) => {
     
     console.info(" SoftERR ".bgYellow, _cmd.padEnd(20, " ").yellow, e.message.red);
     
-    INSTR.warn("Soft Error", e.stack, {tags:{command:_cmd, err_type: "soft"}});
+    INSTR.warn("Soft Error", e.stack, {aggregation_key:"soft_err", tags:{command:_cmd, err_type: "soft"}});
 
     return { pass: false, cmd: _cmd };
   }
