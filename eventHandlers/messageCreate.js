@@ -19,7 +19,7 @@ module.exports = async (msg) => {
   }
 
   if (1||(PLX.tapping && !global.piggyback)) {
-    const PEV = PLX.tapping;
+    const PEV = 'all' // PLX.tapping;
     if ([msg.channel.id, msg.guild.id, msg.author.id, "all"].includes(PEV) || PLX.beta) {
       console.log(
         msg.author.tag.blue + `(${msg.author.id})\n    `.gray,
