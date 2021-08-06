@@ -251,7 +251,7 @@ const vanillaConnection = {
 
 DBSchema(dbConnectionData, {
   redis: {
-    host: "127.0.0.1",
+    host: "10.0.1.2",
     port: 6379,
   },
 }).then((Connection) => {
