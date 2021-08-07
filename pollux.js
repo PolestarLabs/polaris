@@ -269,7 +269,9 @@ DBSchema(dbConnectionData, {
     console.log("Discord connection start...");
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
-    initializeEvents()
+    PLX.registerCommands();
+    initializeEvents();
+
   //}, CLUSTER_ID * 1500);
 
 
@@ -296,7 +298,7 @@ translateEngineStart();
 let ReadyCount = 0;
 PLX.on("ready", () => {
   
-  PLX.registerCommands();
+
 
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
