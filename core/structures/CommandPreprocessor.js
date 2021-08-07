@@ -363,7 +363,7 @@ const registerCommands = (rel) => {
         }  `)
       , {tags:{err_type: "soft"}});
 
-    });
+    }).catch(console.error);
   });
 };
 
