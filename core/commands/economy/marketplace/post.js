@@ -176,10 +176,10 @@ const init = async (msg, args) => {
       payload.pollux = MARKET_TOKEN;
 
       let submitMessage = await msg.channel.send(`${_emoji('loading')} Submitting Listing...`);
-      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err => console.error(err) && null);
+      let listingPOSTRequest = await axios.post(`${paths.DASH}/api/marketplace`, payload).catch(err => err);
+      //console.error(listingPOSTRequest);
 
-
-      if (listingPOSTRequest && listingPOSTRequest.data?.status == "OK" || listingPOSTRequest.data?.status == 200) {
+      if (listingPOSTRequest && listingPOSTRequest?.data?.status == "OK" || listingPOSTRequest?.data?.status == 200) {
 
         let entryId = listingPOSTRequest.data.payload?.id || listingPOSTRequest.data.payload.PAYLOAD.id;
 
@@ -192,6 +192,7 @@ const init = async (msg, args) => {
         return cancellation();
       }
     } else {
+      console.error( require('util').inspect(listingPOSTRequest,0,2,1) );
       msg.channel.send("Listing Invalidated");
       abort();
       cancellation();
