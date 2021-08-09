@@ -251,7 +251,7 @@ const vanillaConnection = {
 
 DBSchema(dbConnectionData, {
   redis: {
-    host: "10.0.1.2",
+    host: "127.0.0.1",
     port: 6379,
   },
 }).then((Connection) => {
@@ -270,7 +270,7 @@ DBSchema(dbConnectionData, {
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
     PLX.registerCommands();
-    initializeEvents();
+    
 
   //}, CLUSTER_ID * 1500);
 
@@ -296,14 +296,12 @@ translateEngineStart();
 
 // const {msgPreproc} = require('./core/subroutines/onEveryMessage');
 let ReadyCount = 0;
-PLX.on("ready", () => {
-  
-
-
+PLX.on("ready", () => { 
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
   ReadyCount++;
   INSTR.gauge("READY_count", ReadyCount);
 });
+
 PLX.once("ready", async () => {
   PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
@@ -311,6 +309,8 @@ PLX.once("ready", async () => {
     }
     if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require("util").inspect(payload, 0, 2, 1));
   });
+
+  initializeEvents();
 
   console.log(" READY ".bold.bgCyan);
   require("./core/subroutines/cronjobs.js").run();
@@ -349,13 +349,13 @@ PLX.once("ready", async () => {
           for (const i in new Int8Array(10)) console.error("ERROR MTASK");
 
           // process.exit(1);
-        }
+        }prefix
       };
     */
-    PLX.microserverStart = () => null;
+    PLX.microserverStart = () => null;/*
     hook.info(`**INFO:** Cluster connected and all shards reported online!
               Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
-
+  */
     require("./core/utilities/debugTools");
   }
 
