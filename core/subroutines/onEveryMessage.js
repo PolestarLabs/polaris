@@ -16,7 +16,6 @@ const levelChecks = async (msg) => {
 
   let servData = msg.guild.serverData;
   levelUpQueue.queue( async () => {
-    console.log("QUEUED ITEM",msg.id,msg.content);
     servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
     if (!servData) return;
     msg.guild.serverData = servData;
