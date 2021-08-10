@@ -5,7 +5,7 @@ const globalLevelUp = require("./globalLevelUp.js");
 const customResponses = require("./customResponses.js");
 
 const { Bucket } = require("eris");
-const levelUpQUeue = new Bucket( PLX.guilds.size, 60e3, { latencyRef: { latency: 30e3 } });
+global.levelUpQUeue = new Bucket( PLX.guilds.size, 60e3, { latencyRef: { latency: 30e3 } });
 
 
 const levelChecks = async (msg) => {
