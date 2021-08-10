@@ -20,7 +20,7 @@ const DBSchema = require("@polestar/database_schema");
 const cfg = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 
-const hook = new WebhookDigester(PLX);
+const debugHook = new WebhookDigester(PLX);
 
 const dbConnectionData = {
   hook: null,
@@ -43,7 +43,7 @@ require("@polestar/emoji-grimoire").initialize(PLX);
 
 DBSchema(dbConnectionData).then((Connection) => {
   global.DB = Connection;
-  // PLX.connect().then((_) => hook.info("Sidecar instance running")).catch(console.error);
+  // PLX.connect().then((_) => debugHook.info("Sidecar instance running")).catch(console.error);
 });
 
 //= =====================================================================================
