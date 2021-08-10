@@ -33,6 +33,10 @@ function RGBstring(rgbColor) {
   return arrRGB.join(",");
 }
 
+function unshitify(text){
+  text.replace(/[\u032A-\u034A\u20D0-\u20FF]/g,"");
+}
+
 const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
   w = w || this.canvas.width;
   h = h || this.canvas.height;
@@ -81,6 +85,7 @@ module.exports = {
   },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+    text = unshitify(text);
     const ogc = OGCanvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
@@ -113,6 +118,7 @@ module.exports = {
   },
 
   tagMoji: async function tagmoji(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
+    text = unshitify(text);
     const ogc = OGCanvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
@@ -145,6 +151,7 @@ module.exports = {
   },
 
   block: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
+    text = unshitify(text);
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
 
     const item = new Canvas.Canvas(W,H);
@@ -466,17 +473,8 @@ module.exports = {
   },
   circle: this.makeRound,
 
-  popOutTxt: function popOutTxt(
-    ctx,
-    TXT,
-    X = 0,
-    Y = 0,
-    font,
-    color,
-    maxWidth = 0,
-    stroke = { style: "#1b1b2b", line: 10 },
-    shadow = 0,
-  ) {
+  popOutTxt: function popOutTxt(ctx,TXT,X = 0,Y = 0,font,color,maxWidth = 0,stroke = { style: "#1b1b2b", line: 10 },shadow = 0,) {
+    TXT = unshitify(TXT);
     shadow = shadow || stroke.line / 2 - 1;
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
