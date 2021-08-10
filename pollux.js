@@ -7,26 +7,17 @@ const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
 const isPRIME               = process.env.PRIME === "true" || process.env.PRIME === true;
 
 process.env.UV_THREADPOOL_SIZE = 256;
-process.env.BLUEBIRD_DEBUG=1;
-
 require("./instrumentation.js");
 
 
-
 global.Promise = require("bluebird");
-Promise.config({
-   longStackTraces: true,
-   warnings: true ,
-   monitoring: true,
-  });
-
+Promise.config({ longStackTraces: true });
 
 global.clusterNames = (require("@polestar/constants/clusters"))?.default;
+
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
 const path            = require("path");
-
-
 
 const ERIS            = require("eris");
 const Eris            = require("eris-additions")(ERIS);
@@ -54,21 +45,15 @@ const DummyFlavorDefault = {
 };
 
 const FLAVOR_SWARM_CONFIG   = require("./flavored_swarm.config.js");
-const { INSERT } = require("fast-diff");
-// typeof process.env.FLAVOR_SWARM_CONFIG === 'object' ? process.env.FLAVOR_SWARM_CONFIG : JSON.parse(process.env.FLAVOR_SWARM_CONFIG||"[]"); // sample data on index;
 const FLAVORED_CLIENT_DATA  = FLAVOR_SWARM_CONFIG.find((cli) => cli.name === FLAVORED_CLIENT) || DummyFlavorDefault;
-
-// return console.log({isPRIME,FLAVORED_CLIENT,FLAVOR_SWARM_CONFIG ,FLAVORED_CLIENT_DATA});
 
 // global.Sentry         = require("@sentry/node");
 
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ERIS);
 require("./core/structures/ButtonCollector.js")(ERIS);
-
 require("./core/structures/ComponentsHandler.js")(Eris);
 
-const runtime = performance.now();
 global.appRoot = path.resolve(__dirname);
 
 require("./utils/paths").run();
@@ -160,7 +145,7 @@ global.PLX = new Eris.CommandClient(FLAVORED_CLIENT_DATA.token, {
   lastShardID: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
   defaultImageSize: 512,
   restMode: true,
-  // ratelimiterOffset: 327,
+  ratelimiterOffset: 128,
   rest: {
     baseURL: "/api/v9",
     latencyThreshold: 5000,
@@ -195,7 +180,7 @@ PLX.cluster = isPRIME === true
   : { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
 
 console.report = (...args) => console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
-global.hook = new WebhookDigester(PLX);
+const debugHook = new WebhookDigester(PLX);
 
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
@@ -223,7 +208,7 @@ PLX.updateBlacklists = (DB) => Promise.all([
 });
 
 const dbConnectionData = {
-  hook,
+  hook: debugHook,
   url: PLX.beta ? cfg.dbURL_beta : cfg.dbURL,
   options: {
 
@@ -237,7 +222,7 @@ const dbConnectionData = {
 };
 
 const vanillaConnection = {
-  hook,
+  hook: debugHook,
   url: cfg.vanillaDB,
   options: {
     useNewUrlParser: true,
@@ -337,25 +322,28 @@ PLX.once("ready", async () => {
       });
     }).catch(console.error);
 
-    /*
+    ///*
     PLX.microserverStart = () => {
-      return;
-        try {
+      //return;
+      try {
           PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth);
           PLX.microserver.microtasks.updateServerCache("all");
           PLX.microserver.microtasks.updateChannels("all");
-        } catch (e) {
-          console.error(e);
-          for (const i in new Int8Array(10)) console.error("ERROR MTASK");
+      } catch (e) {
+        console.error(" ERROR Microserver Start ".bgRed);
+        console.error(e);
+        console.error("--------------------------------------------");
+        
+        // process.exit(1);
+      }
+    };
 
-          // process.exit(1);
-        }prefix
-      };
-    */
-    PLX.microserverStart = () => null;/*
-    hook.info(`**INFO:** Cluster connected and all shards reported online!
-              Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
-  */
+    //*/
+    //PLX.microserverStart = () => null;/*
+    //debugHook.info(`**INFO:** Cluster connected and all shards reported online!
+    //          Startup Time: ${(((performance.now() - runtime - (CLUSTER_ID * 20000)) / 1000).toFixed(3))}s`);
+    //*/
+
     require("./core/utilities/debugTools");
   }
 
@@ -444,7 +432,7 @@ process.on("uncaughtException", (err) => {
   // Sentry.captureException(err);
   console.error(" UNCAUGHT EXCEPTION ".bgRed);
   console.error(err);
-  hook.error(`
+  debugHook.error(`
   **Uncaught Exception**
   \`\`\`js
 ${err.slice(0, 1900)}
@@ -458,7 +446,7 @@ process.on("unhandledRejection", (err) => {
   // Sentry.captureException(err);
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
-  hook.warn(`
+  debugHook.warn(`
   **Unhandled Rejection**
   \`\`\`js
 ${err?.stack?.slice(0, 1900)}
