@@ -118,12 +118,12 @@ ${_emoji("future")} ${dailyAvailable
   }
 
   // NOTE debug - delete later
-  const DEBUG_LOG = () => hook.info(`${Author.id} - dailing = ${Author.dailing}`);
+  //const DEBUG_LOG = () => debugHook.info(`${Author.id} - dailing = ${Author.dailing}`);
 
   Author.dailing = true; // end function is for scope
   const end = () => Author.dailing = false;
 
-  DEBUG_LOG();
+  //DEBUG_LOG();
   Author.dailing = false;
   try {
     await wait(.2);
