@@ -39,17 +39,18 @@ module.exports = async (msg,userData) => {
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 
 	userData ??= await DB.users.getFull(msg.author.id);
-	if (!userData) return;
+	if (!userData || !userData.addItem) return;
 	const curLevelG = xp_to_lv(userData.modules.exp) || 0;
 	await commitLevel(userData.id,curLevelG);
 
 	setImmediate(()=>{
 		if (curLevelG > userData.modules.level){			
-			Promise.all(levelUpPrizeMail(userData,curLevelG))
 			setImmediate(async ()=>{
 				console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
 				resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`)
-					.then(img=> msg.reply("",{ file: img, name: "level_up.gif" }) );
+					.then(img=> msg.reply("",{ file: img, name: "level_up.gif" }).catch(e=>null) )
+					.catch(e=>null)
+					.finally(()=> Promise.all(levelUpPrizeMail(userData,curLevelG)));
 			});
 		}
 	});

@@ -5,17 +5,18 @@ const globalLevelUp = require("./globalLevelUp.js");
 const customResponses = require("./customResponses.js");
 
 const { Bucket } = require("eris");
-global.levelUpQUeue = new Bucket( PLX.guilds.size, 60e3, { latencyRef: { latency: 30e3 } });
+global.levelUpQueue = new Bucket( PLX.guilds.size, 10e3, { latencyRef: { latency: 2e3 } });
 
 
 const levelChecks = async (msg) => {
   if (msg.author.bot) return;
   if (msg.guild.id === "110373943822540800") return;
 
-  if (levelUpQUeue.tokens > levelUpQUeue.tokenLimit) return;
+  if (levelUpQueue.tokens > levelUpQueue.tokenLimit) return;
 
   let servData = msg.guild.serverData;
-  levelUpQUeue.queue( async () => {
+  levelUpQueue.queue( async () => {
+    console.log("QUEUED ITEM",msg.id,msg.content);
     servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
     if (!servData) return;
     msg.guild.serverData = servData;
