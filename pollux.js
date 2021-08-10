@@ -254,7 +254,7 @@ DBSchema(dbConnectionData, {
     console.log("Discord connection start...");
     // eslint-disable-next-line @typescript-eslint/no-use-before-define
     PLX.connect().then(postConnect).catch(console.error);
-    PLX.registerCommands();
+    
     
 
   //}, CLUSTER_ID * 1500);
@@ -295,14 +295,14 @@ PLX.once("ready", async () => {
     if (PLX.logRaw) console.log(`${" RAW WS ".bgCyan} }`, require("util").inspect(payload, 0, 2, 1));
   });
 
-  initializeEvents();
-
   console.log(" READY ".bold.bgCyan);
   require("./core/subroutines/cronjobs.js").run();
   if (PLX.shard) {
     PLX.user.setStatus("online");
     console.log(`${"● ".green}Shard${1 + PLX.shard.id}/${PLX.shard.count} [ONLINE]`);
   }
+
+  PLX.registerCommands();
 
   PLX.updateBlacklists(DB).then(() => {
     console.log("• ".blue, "Blacklist Loaded!");
@@ -423,6 +423,9 @@ PLX.reply = (msg, content, ping = false) => {
 
 function postConnect() {
   console.log("Discord Client Connected".cyan);
+  initializeEvents();
+  console.log("•".cyan,"Events Listening");
+
   // POST STATS TO LISTS
 }
 
