@@ -34,7 +34,7 @@ function RGBstring(rgbColor) {
 }
 
 function unshitify(text){
-  text.replace(/[\u032A-\u034A\u20D0-\u20FF]/g,"");
+  return text.replace(/[\u032A-\u034A\u20D0-\u20FF]/g,"");
 }
 
 const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
