@@ -104,7 +104,6 @@ declare global {
   // In bot only
   export const clusterNames: Clusters[];
   export const GNums: GlobalNumbers;
-  export const hook: WebhookDigester;
   export const _emoji: ((E: string, F?: PolluxEmoji) => PolluxEmoji);
   export const translateEngineStart: (() => void);
   export const errorsHook: { id: string; token: string };
