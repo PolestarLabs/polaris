@@ -294,6 +294,7 @@ const registerOne = (folder, _cmd) => {
     const CMD = PLX.registerCommand(_cmd, cmdQ, commandFile)
     // console.info("Register command: ".blue, _cmd.padEnd(20, ' '), " ✓".green)
     PLX.commands[CMD.label].slashOptions = commandFile.slashOptions;
+    PLX.commands[CMD.label].contextMenu = commandFile.contextMenu;
     PLX.commands[CMD.label].cmd = commandFile.cmd;
     PLX.commands[CMD.label].cat = commandFile.cat;
     PLX.commands[CMD.label].scope = commandFile.scope;
