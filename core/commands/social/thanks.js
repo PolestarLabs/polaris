@@ -29,6 +29,7 @@ const init = async function (msg, args) {
     Progression.emit("command.thx.success", {msg,userID: msg.author.id});
     
 
+    
     msg.channel.send({ embed });
   };
 
@@ -39,6 +40,9 @@ const init = async function (msg, args) {
     const embed = new Embed();
     embed.setColor("#e35555");
     embed.description(_emoji("nope") + dailyNope);
+
+    console.log(msg.ack)
+    
     return msg.channel.send({ embed });
   };
 
@@ -53,6 +57,8 @@ const init = async function (msg, args) {
     ${_emoji("THX")} ${dailyAvailable ? _emoji("online") + $t("responses.timers_generic.check_yes", P) : _emoji("dnd") + $t("responses.timers_generic.check_no", P)} 
     `;
 
+    console.log(msg.ack);
+   
     return msg.channel.send({ embed: remainingEmbed });
   };
 
@@ -73,6 +79,14 @@ module.exports = {
   cat: "social",
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["thx", "obg", "svp"],
+  slashable: true,
+  contextMenu:{
+    name: "🌸 Say 'Thanks'",
+    type: 2
+  },
+  slashOptions:{
+    guilds: ["789382326680551455"]
+  },
   autoSubs: [
     topAutoSub,
     {
