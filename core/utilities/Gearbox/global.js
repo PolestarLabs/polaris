@@ -33,7 +33,7 @@ module.exports = {
           b64,
           dataUri: `data:${res.headers["content-type"]};base64,${b64}`,
         });
-      }).catch(err=>reject(err,console.log("IMAGE TO BASE64 ERROR")));
+      }).catch(err=>reject(err,console.error("IMAGE TO BASE64 ERROR",err)));
     });
   },
 

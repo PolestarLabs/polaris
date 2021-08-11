@@ -89,7 +89,7 @@ module.exports = {
   // Get IMG from Channel MSGs
   getChannelImg: async function getChannelImg(message, nopool) {
     const hasImageURL = message.content.match(/(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)/g);
-    if (hasImageURL) return `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(hasImageURL[0])}`;
+    if (hasImageURL) return hasImageURL[0] ;//`https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(hasImageURL[0])}`;
     if (message.attachments[0]) return message.attachments[0].url;
     const sevmesgs = message.channel.messages;
 
