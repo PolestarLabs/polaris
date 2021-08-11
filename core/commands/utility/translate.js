@@ -34,4 +34,12 @@ module.exports = {
   perms: 3,
   init,
   cat: "utility",
+  slashable: true,
+  contextMenu:{
+    name: "🌎 Translate to Sv. Language",
+    type: 3
+  },
+  slashOptions:{
+    guilds: ["789382326680551455"]
+  },
 };
