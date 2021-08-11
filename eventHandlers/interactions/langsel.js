@@ -1,6 +1,6 @@
 const { Member } = require("eris");
 const Languages = require("../../core/structures/Locales.js");
-const {saveLanguage} = require("../../core/commands/moderation/lang.js");
+const {saveLanguage} = require("../../core/commands/moderation/language.js");
 
 const currentForms = new Map();
 module.exports = async (interaction, data) => {
