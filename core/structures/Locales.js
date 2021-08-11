@@ -122,7 +122,7 @@ const i18n = [{
   "site-flag": "BG",
 }, {
   code: ["jp", "ja"],
-  iso: "jp",
+  iso: "ja",
   name: "Japanese",
   "name-e": "Japanese",
   flag: "🇯🇵",
