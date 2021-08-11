@@ -5,18 +5,21 @@ const Vision = require("@google-cloud/vision/");
 const cmd = "read";
 const init = async function (message, cmdPiece = false) {
   return new Promise(async (resolve, reject) => {
-    const url = `https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(message.args[0])}`;
+    
+    let url = message.args[0]//`https://proxy.pollux.workers.dev/?pollux_url=${encodeURIComponent(message.args[0])}`;
+    if (!url.startsWith('https://')) url = await PLX.getChannelImg(message.referencedMessage||message);
 
     img2base64(url).then(async (img) => {
-      if (img) resolve(vere(img.b64, message, cmdPiece)).catch(err => null);
+      console.log('a')
+      if (img) resolve(vere(img.b64, message, cmdPiece).catch(err => null) );
       else reject("NO IMAGE");
 
     }).catch(async err => {
-
+      console.log(err,'v')
       let nwurl = await PLX.getChannelImg(message.referencedMessage||message);
-      if (nwurl?.includes(".discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
+      if (nwurl?.includes("discord")) nwurl = decodeURIComponent(nwurl.replace("https://proxy.pollux.workers.dev/?pollux_url=", ""));
       if (!nwurl) return message.channel.send("`INVALID IMAGE URL`");
-      return img2base64(nwurl).then(img => {
+      img2base64(nwurl).then(img => {
         resolve(vere(img.b64, message, cmdPiece))
       }).catch(err => {
         message.channel.send("`INVALID IMAGE URL (2)`");
@@ -58,6 +61,7 @@ async function vere(base64, message, cmdPiece) {
     embed.description(`*React with a flag within 30 seconds to translate it.*  \`\`\`${detections}\`\`\``);
     L = TranslateBlob.flagFromLang(lang);
     embed.field("Detected Language", `${L.flag} ${L.name}`);
+
     message.channel.send({ embed }).then(async (mes) => {
 
       //FUTURE[epic=anyone] (Low Priority) - GTranslate Reaction prompts user to type language
@@ -71,6 +75,7 @@ async function vere(base64, message, cmdPiece) {
       embed.description = `\`\`\`${translated}\`\`\`(translated to ${TranslateBlob.LANGNAMES[rLang]})`;
       mes.edit({ embed });
     });
+    return;
   } catch (err) {
     console.error(err);
     message.channel.send("`Error::Could not process text from image`");
@@ -85,4 +90,12 @@ module.exports = {
   init,
   cat: "utility",
   aliases: ["ocr", "eye"],
+  slashable: true,
+  contextMenu:{
+    name: "👓 Read text from image (OCR)",
+    type: 3
+  },
+  slashOptions:{
+    guilds: ["789382326680551455"]
+  },
 };
