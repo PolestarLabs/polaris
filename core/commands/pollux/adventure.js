@@ -175,7 +175,7 @@ const init = async function (msg) {
 
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   //TODO[epic=Unfinished Commands] Needs venture processor and 3rd island;
   disabled: true,
   cmd: "adventure",

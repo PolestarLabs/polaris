@@ -37,12 +37,6 @@ const constantAssets = {
  */
 const init = async (msg) => {
 
-  const MigrationNotice = require("../../archetypes/MigrationNotice");
-  MigrationNotice.notice(msg);
-  MigrationNotice.streakAlert(msg);
-
-
-
   const P = { lngs: msg.lang, prefix: msg.prefix };
   const v = {
     last: $t("interface.daily.lastdly", P),
@@ -54,7 +48,6 @@ const init = async (msg) => {
   if (msg.args[0] === "info") {
     msg.args[0] = "status";
     msg.channel.send("*`INFO` is deprecated, please use `STATUS` to check remaining time*");
-    MigrationNotice.streakAlert(msg);
   }
 
   const [userData, dailyPLXMember] = await Promise.all([
