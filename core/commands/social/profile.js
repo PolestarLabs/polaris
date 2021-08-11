@@ -720,8 +720,12 @@ module.exports = {
   perms: 3,
 
   slashable: true,
+  contextMenu:{
+    name: "💳 Profile",
+    type: 2
+  },
   slashOptions: {
-    global: true,
+    global: false,
     args: ["player"],
     guilds: ["789382326680551455"],
     options: [
