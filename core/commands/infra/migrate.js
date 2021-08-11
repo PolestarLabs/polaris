@@ -407,7 +407,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   cmd: "migrate",
   cat: "infra",
   botPerms: ["attachFiles", "embedLinks"],
