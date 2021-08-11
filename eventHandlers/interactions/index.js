@@ -18,6 +18,8 @@ module.exports = async function (payload) {
         message = new Eris.Message(payload.d.message, PLX);
     } catch (err) {
         if (interaction_type === 2) {
+            
+            
             message = {
                 id: payload.d.id,
                 fake: true,
@@ -28,9 +30,23 @@ module.exports = async function (payload) {
                 timestamp: Date.now(),
                 content: `p!${payload.d.data.name}`,
                 embeds: [],
-                args: PLX.commands[payload.d.data.name].slashOptions?.args?.map(arg => {
+                
+            }
+            if (payload.d.data?.type === 1 ){
+                console.log(PLX.commands[payload.d.data.name],payload.d.data.name, )
+                message.args= PLX.commands[payload.d.data.name].slashOptions?.args?.map(arg => {
                     return payload.d.data.options?.find(x => x.name === arg)?.value
                 }) || []
+            }
+            if (payload.d.data?.type === 2||payload.d.data?.type === 3 ){
+                console.log('type ',payload.d.data)
+                message.args = [payload.d.data.target_id];
+                if (payload.d.data?.type === 3){
+                    console.log('type 3')
+                    Object.assign(message, payload.d.data.resolved.messages[payload.d.data.target_id] )
+                    message.author = await PLX.resolveUser( message.author.id );
+                    message.member.user = message.author;
+                }
             }
 
 
@@ -85,7 +101,10 @@ module.exports = async function (payload) {
             return PLX.requestHandler.request('POST', `/webhooks/${PLX.user.id}/${this.token}?wait=true`, true, data, file);
         },
     }
-    
+    interaction.message.ireply = interaction.reply;
+    interaction.message.iack = interaction.ack;
+
+
     if (interaction_type === 2) {
         PLX.emit("applicationCommand", interaction, payload.d.data);
     }

@@ -1,18 +1,37 @@
 module.exports = async (interaction, data) => {
 
-    const { name: cmd } = data;
 
+
+    const { name: cmd } = data;
+    const CURRENT_COMMAND = PLX.commands[cmd] || Object.values(PLX.commands).find(val=>{
+       
+        return val.contextMenu?.name === cmd;
+    });
+    
+    console.log({cmd});
+
+    if (!CURRENT_COMMAND) return;
+
+    interaction.message.command = CURRENT_COMMAND;
+    interaction.message.interaction = interaction
     try {
         const response = await Promise.race([
-            PLX.commands[cmd].execute(interaction.message, interaction.message.args || []).catch(err => {
+            CURRENT_COMMAND.execute(interaction.message, interaction.message.args || []).catch(err => {
                 console.error(err, 'APP COMMAND ERROR');
                 return "ERROR"
             }),
             wait(2.5).then(x => "TIMEOUT")
         ]);
 
+        console.log({response});
+        if (!response) return interaction.reply( {content: `\u200b${_emoji("yep")}`} );
+
         if (response === "TIMEOUT") {
             await interaction.defer();
+        }
+
+        if (response?.length && typeof response === 'string') {
+            return interaction.reply({content:response});
         }
 
         response.embeds = [response?.embed]
