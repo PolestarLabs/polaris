@@ -53,6 +53,7 @@ class UserProfileModel {
     return DB.users
       .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res => {
         this.rank = res;
+        return res;
       });
 
   }
