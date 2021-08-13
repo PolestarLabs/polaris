@@ -138,9 +138,9 @@ const init = async (msg, args) => {
     ], [
       { style: 2, label: "" ?? "KEY", custom_id: `invButton:KEY:${msg.author.id}`, emoji: { id: _emoji("KEY").id } },
       //],[
-      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
-      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
-      { style: 2, custom_id: `BLANK`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK_1`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK_2`, disabled: true, emoji: { id: _emoji("__").id } },
+      { style: 2, custom_id: `BLANK_3`, disabled: true, emoji: { id: _emoji("__").id } },
       { style: 4, label: "" ?? "CLOSE", custom_id: `invButton:CLOSE:${msg.author.id}`, emoji: { id: _emoji("nope").id } },
     ]
   ];
