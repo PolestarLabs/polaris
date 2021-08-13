@@ -89,8 +89,8 @@ module.exports = {
     const ogc = OGCanvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
-    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
-    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
 
     const H = ogcctx.measureText(text).emHeightAscent;
     const h = ogcctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
@@ -122,8 +122,8 @@ module.exports = {
     const ogc = OGCanvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
-    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
-    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
 
     text = text?.toString();
     const H = ogcctx.measureText(text).emHeightAscent;
@@ -150,9 +150,39 @@ module.exports = {
     return { item, height: h + H, width: w }; // legacy
   },
 
+  block2: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
+    text = unshitify(text);
+    
+    const item = new Canvas.Canvas(W,H);
+    const c = item.getContext("2d");
+    c.antialias = "subpixel";
+    c.filter = "best";
+    c.font = (`${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`).trim();
+    
+    const { stroke } = options;
+
+    if (stroke) {
+      c.strokeStyle = stroke.style;
+      c.lineWidth = stroke.line;
+    }
+
+    c.fillStyle = color;   
+ 
+    c.textWrap = true;
+    const initialH = ~~(1+c.measureText(text).fontBoundingBoxAscent);
+    console.log(c.font);
+    c.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
+    
+    console.log(c.font);
+    if (stroke) c.strokeText( text, 0, initialH, W );
+    c.fillText( text, 0, initialH, W );
+
+    return { item, height: H, width: W };
+  },
+
   block: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
     text = unshitify(text);
-    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`;
+    ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
 
     const item = new Canvas.Canvas(W,H);
     const c = item.getContext("2d");
@@ -361,7 +391,7 @@ module.exports = {
     ctx.fill();
     ctx.fillStyle = "color";
 
-    ctx.font = font || "900 18px Panton";
+    ctx.font = (font || "900 18px Panton").trim();
 
     const t = `${(pcent * 100).toFixed(0)}%`;
     const WW = ctx.measureText(`${t}%`).width;
@@ -478,7 +508,7 @@ module.exports = {
     shadow = shadow || stroke.line / 2 - 1;
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
-    const FONT = font || ctx.font || "20pt 'Corporate Logo Rounded'";
+    const FONT = (font || ctx.font || "20pt 'Corporate Logo Rounded'").trim();
     let ctx_2 = this.tag(ctx, TXT, FONT, stroke.style, stroke);
     ctx.drawImage(
       ctx_2.item, X, Y,
