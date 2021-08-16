@@ -1,3 +1,8 @@
+// ESSENTIAL INFORMATION
+// - member data > user data > db data (fallback path)
+// - db data 
+// - RETURNS <IMAGE>
+
 const UserProfileModel = require("../../archetypes/UserProfileModel");
 const Picto = require("../../utilities/Picto.js");
 
@@ -27,7 +32,7 @@ const XYZ = {
   },
 
   commend: {
-    X: 40, Y: 25, W: 80, A: "center",
+    X: 38, Y: 25, W: 80, A: "center",
   },
   name: {
     X: 290 + 403, Y: 505 - 7, W: 400, A: "right",
@@ -138,16 +143,9 @@ const { performance } = require("perf_hooks");
 const { Message } = require("eris");
 
 
-const init = async (msg) => {
+const init = async (msg,args) => {
   msg.runtime_internal = performance.now();
-
-  const startimer = Date.now();
-
-
-  const _benchmark = (s) => {
-    console.log(`${s.blue + (Date.now() - startimer)}ms`);
-  };
-
+console.log(msg.member)
   // PROFILE FRAME
   if (msg.content.split(/ +/).slice(1)[0] === "frame") {
     const ag = msg.content.split(/ +/).slice(1)[1];
@@ -184,17 +182,16 @@ const init = async (msg) => {
   // NORMAL PROFILE -->
   const P = { lngs: msg.lang };
 
-  const Target = ((await (PLX.resolveMember(msg.guild, msg.args[0]).catch((e) => null)) || (await PLX.resolveUser(msg.args[0]).catch((e) => console.error(e))))) || msg.member;
-
+  const Target = ((await (PLX.resolveMember(msg.guild, args[0]).catch((e) => null)) || (await PLX.resolveUser(args[0]).catch((e) => console.error(e))))) || msg.member;
   if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
+
   let Target_Database = (await DB.users.findOne({ id: Target.id }).noCache()) || (await DB.users.new(Target));
   if (Target_Database.featuredMarriage?.length) Target_Database = Target_Database.populate('marriageData');
-
   if (Target_Database) Target_Database.type = "udata";
-  const PFLD = Target_Database.switches?.profiled || false;
+  
+  const IS_PROFILED_BOT = Target_Database.switches?.profiled || false; // PROFILED BOTS
 
   // Strictly accepts UDBData and DiscordUser/DiscordMember
-  /** @type {any} */
   const USERPROFILE = new UserProfileModel(Target_Database, Target);
   const preprocessedParams = Promise.all([USERPROFILE.localData, USERPROFILE.globalRank, USERPROFILE.wifeData, USERPROFILE.commends]);
 
@@ -204,11 +201,10 @@ const init = async (msg) => {
     const canvas = Picto.new(800, 600);
     const ctx = canvas.getContext("2d");
 
-    //= ========================================
+    //==============================================================
     //                            Gather Images
-    //= ========================================
+    //==============================================================
 
-    // TODO[epic=bsian] help why doesn't wifeAvatar and wifeHeart show up?
     /** 
      * @typedef img
      * @property {string} wifeAvatar
@@ -233,62 +229,70 @@ const init = async (msg) => {
 
 
     let img /** @type {img} */ = {};
-    img.sidebar = Picto.getCanvas(`${paths.CDN}/build/profile/sidebar.png`);
-    img.ranks = Picto.getCanvas(`${paths.CDN}/build/profile/global-server-tag.png`);
-    img.defaultAvi = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
-    img.mainframe = Picto.getCanvas(`${paths.CDN}/build/profile/${Target.bot ? PFLD ? "mainframe_bot" : "mainframe_bot" : "mainframe-nex-2"}.png`);
-    img.background = Target.bot
-      ? Picto.getCanvas(`${paths.CDN}/build/profile/${PFLD ? Target.id : "generic-bot"
-        }.png`)
+    img.sidebar     = Picto.getCanvas(`${paths.CDN}/build/profile/sidebar.png`);
+    img.ranks       = Picto.getCanvas(`${paths.CDN}/build/profile/global-server-tag.png`);
+    img.defaultAvi  = Picto.getCanvas("https://cdn.discordapp.com/embed/avatars/0.png");
+
+    img.mainframe   = Picto.getCanvas(`${paths.CDN}/build/profile/${ Target.bot ? "mainframe_bot" : "mainframe-nex-2" }.png`);
+
+    img.background  = Target.bot
+      ? Picto.getCanvas(`${paths.CDN}/build/profile/${"generic-bot"}.png`)
       : Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png`);
+      
+    img.flair = Picto.getCanvas(`${paths.CDN}/flairs/${Target.bot ? "bot" : USERPROFILE.flair}.png`)
+      .catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`));
 
+    if (IS_PROFILED_BOT){
+      img.mainframe  = Picto.getCanvas(`${paths.CDN}/build/profile/${"mainframe_bot"}.png`);
+      img.background = Picto.getCanvas(`${paths.CDN}/build/profile/${ Target.id }.png`);
+    }
+    
+    img.sticker     = USERPROFILE.sticker && Picto.getCanvas(`${paths.CDN}/stickers/${USERPROFILE.sticker}.png`);
+    img.flag        = USERPROFILE.countryFlag && Picto.getCanvas(`${paths.CDN}/build/flags/${USERPROFILE.countryFlag}.png`);
+    img.aviFrame    = USERPROFILE.profileFrame && Picto.getCanvas(`${paths.CDN}/build/profile/frames/${USERPROFILE.profileFrame}.png`);
 
-    img.flair = Picto.getCanvas(`${paths.CDN}/flairs/${Target.bot ? "bot" : USERPROFILE.flair}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`));
-    img.sticker = USERPROFILE.sticker && Picto.getCanvas(`${paths.CDN}/stickers/${USERPROFILE.sticker}.png`);
-    img.flag = USERPROFILE.countryFlag && Picto.getCanvas(`${paths.CDN}/build/flags/${USERPROFILE.countryFlag}.png`);
-    img.aviFrame = USERPROFILE.profileFrame && Picto.getCanvas(`${paths.CDN}/build/profile/frames/${USERPROFILE.profileFrame}.png`);
-
-    img.medals = USERPROFILE.medals.map((mdl) => new Object({
+    img.medals = USERPROFILE.medals.map((mdl) => ({
       canvas: Picto.getCanvas(`${paths.CDN}/medals/${mdl}.png`),
       index: USERPROFILE.medals.indexOf(mdl),
     }));
-    img.iconRubine = Picto.getCanvas(`https://cdn.discordapp.com/emojis/${_emoji("RBN").id}.png`);
-    img.iconSapphire = Picto.getCanvas(`https://cdn.discordapp.com/emojis/${_emoji("SPH").id}.png`);
-    img.global_roundel = Picto.XChart(120, USERPROFILE.percent, USERPROFILE.favColor, false, USERPROFILE.level);
-    img.hex_frame = Picto.makeHex(250);
-    img.hex_pic = Picto.makeHex(210, USERPROFILE.avatar);
+
+    img.iconRubine      = Picto.getCanvas(`https://cdn.discordapp.com/emojis/${_emoji("RBN").id}.png`);
+    img.iconSapphire    = Picto.getCanvas(`https://cdn.discordapp.com/emojis/${_emoji("SPH").id}.png`);
+    img.global_roundel  = Picto.XChart(120, USERPROFILE.percent, USERPROFILE.favColor, false, USERPROFILE.level);
+    img.hex_frame       = Picto.makeHex(250);
+    img.hex_pic         = Picto.makeHex(210, USERPROFILE.avatar);
 
     if (!Target_Database) {
       USERPROFILE.tagline = "Not a Pollux user";
       USERPROFILE.personalText = "This user does not play with Pollux :c";
     }
     //= =========================================
-    //                      Gather Graphic Text
+    //                      Gather GFX Text
     //= =========================================
 
-    /** @type {any} */
+
     let txt = {};
-    /** @type {keyof TEXT} */
     let txt_type;
 
-    txt_type = "NAME";
 
-    // @ts-ignore
+    txt_type = "NAME";
     txt.name = await Picto.tagMoji(ctx, USERPROFILE.localName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
+    
     txt_type = "TAGLINE";
-
     txt.tagline = Picto.tag(ctx, USERPROFILE.tagline, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
+
     txt_type = "PERSOTEX";
-    txt.persotex = Picto.block(
+    txt.persotex = Picto.block2(
       ctx, USERPROFILE.personalText,
-
-      `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`,
-
+      
+      `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px "${TEXT[txt_type].FAMILY}"`,
+      
       TEXT[txt_type].COLOR,
       XYZ.persotex.W, XYZ.persotex.H, { lineHeight: "20px", paddingY: 5 }, // 255, 70
-    );
+      );
+
 
     txt_type = "RUBINES";
 
@@ -313,8 +317,6 @@ const init = async (msg) => {
 
     txt.thx = Picto.tag(ctx, USERPROFILE.thx, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
-
-    const REP = Picto.tag(ctx, "THX", "900 30px 'Whitney HTF',Sans", "#ffffff");
 
     const isMarried = (USERPROFILE.marriage && USERPROFILE.wife);
     if (isMarried) { // @ts-expect-error NOTE tsc
@@ -601,9 +603,9 @@ const init = async (msg) => {
     Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
 
     if (!Target.bot) {
-      const THX = Picto.tag(ctx, "THX", "900 30px 'Panton Black',Sans", "#ffffff");
+      const THX = Picto.tag(ctx, "🌸", "600 38px 'Panton',Sans", "#ffffff");
       ctx.globalAlpha = 0.5;
-      ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 425);
+      ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 410);
       ctx.globalAlpha = 0.8;
       ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
       ctx.globalAlpha = 1;
@@ -714,6 +716,30 @@ const init = async (msg) => {
   } // end catch 1
 };
 
+
+async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas) {
+  const buff = await canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+
+  let messageToSend = "";
+  let noimg = false;
+  let preBuffer = performance.now();
+
+  let postBuffer = performance.now() - preBuffer;
+
+  if (msg.content.includes("-ni")) noimg = true;
+  messageToSend += msg.content.includes('-bm') ? `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";
+
+  if (msg.fake) return ["", { file: buff, name: "profile.png" }];
+
+  msg.channel.createMessage(messageToSend, noimg ? undefined : {
+    file: buff,
+    name: "profile.png",
+  });
+
+  if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
+}
+
+
 module.exports = {
   pub: true,
   cmd: "profile",
@@ -739,25 +765,3 @@ module.exports = {
   aliases: ["ppc", "perfil"],
   cool: 800,
 };
-
-async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas) {
-  const buff = await canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
-
-  let messageToSend = "";
-  let noimg = false;
-  let preBuffer = performance.now();
-
-  let postBuffer = performance.now() - preBuffer;
-
-  if (msg.content.includes("-ni")) noimg = true;
-  messageToSend += msg.content.includes('-bm') ? `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";
-
-  if (msg.fake) return ["", { file: buff, name: "profile.png" }];
-
-  msg.channel.createMessage(messageToSend, noimg ? undefined : {
-    file: buff,
-    name: "profile.png",
-  });
-
-  if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;
-}
