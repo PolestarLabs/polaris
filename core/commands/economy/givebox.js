@@ -2,7 +2,7 @@ const { TimedUsage } = require("@polestar/timed-usage");
 const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
 
-const day = 2 * 60 * 60e3;
+const day = 12 * 60 * 60e3;
 
 /**
  * @param {import("eris").Message} msg
@@ -40,6 +40,16 @@ const init = async (msg, args) => {
       DB.users.getFull({ id: Target.id }),
       DB.items.find({ type: "box" }),
     ]);
+
+    if (!userData.prime?.active){
+      return msg.reply({
+        embed:{
+          //color: _UI.red,
+          color: numColor(_UI.colors.red),
+          description: "Direct-transfers are exclusive to Prime players. Try `plx!prime` for more info."
+        }
+      });
+    }
 
     const userBoxList = Boxes.filter((box) => userData.hasItem(box.id));
     const boxColor = ["⬜", "🟩", "🟦", "🟪", "🟧", "🟥"];

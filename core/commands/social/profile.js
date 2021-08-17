@@ -114,9 +114,9 @@ const TEXT = {
     COLOR: "#fdfdfd",
   },
   PERSOTEX: {
-    SIZE: 17,
-    WEIGHT: "",
-    FAMILY: " ",
+    SIZE: 18,
+    WEIGHT: "600",
+    FAMILY: "Quicksand",
     COLOR: "#AAC",
   },
   SIDEBAR: {
@@ -276,7 +276,7 @@ console.log(msg.member)
 
 
     txt_type = "NAME";
-    txt.name = await Picto.tagMoji(ctx, USERPROFILE.localName, `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
+    txt.name = await Picto.tagMoji(ctx, USERPROFILE.localName, `${ TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px '${TEXT[txt_type].FAMILY}'`, TEXT[txt_type].COLOR);
 
     
     txt_type = "TAGLINE";
@@ -284,7 +284,7 @@ console.log(msg.member)
 
 
     txt_type = "PERSOTEX";
-    txt.persotex = Picto.block2(
+    txt.persotex = Picto.block(
       ctx, USERPROFILE.personalText,
       
       `${TEXT[txt_type].WEIGHT} ${TEXT[txt_type].SIZE}px "${TEXT[txt_type].FAMILY}"`,
@@ -603,9 +603,12 @@ console.log(msg.member)
     Picto.setAndDraw(ctx, txt[z], XYZ[z].X - 2, XYZ[z].Y + 50, XYZ[z].W, XYZ[z].A);
 
     if (!Target.bot) {
-      const THX = Picto.tag(ctx, "🌸", "600 38px 'Panton',Sans", "#ffffff");
-      ctx.globalAlpha = 0.5;
-      ctx.drawImage(THX.item, XYZ.commend.X - THX.width / 2, 410);
+      const THX = await Picto.getCanvas(`https://cdn.discordapp.com/emojis/${_emoji("THX").id}.png?size=64`) //Picto.tag(ctx, "🌸", "600 38px 'Quicksand',Sans", "#ffffff");
+      ctx.globalAlpha = 0.6;
+      //ctx.drawImage(THX, XYZ.commend.X - THX.width / 2, 410);
+      ctx.globalCompositeOperation = "lighter"
+      ctx.drawImage(THX, XYZ.commend.X - 48 / 2, 410,48,48);
+      ctx.globalCompositeOperation = "source-over";
       ctx.globalAlpha = 0.8;
       ctx.drawImage(txt.thx.item, XYZ.commend.X - txt.thx.width / 2, 455);
       ctx.globalAlpha = 1;

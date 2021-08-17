@@ -1,8 +1,7 @@
 const π = Math.PI;
-const Canvas = require("skia-canvas");
-const OGCanvas = require("canvas");
+const Canvas = require("canvas");
 const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
-const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
+const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
 const StackBlur = require('stackblur-canvas');
 const KnownErrors = new Map();
 
@@ -33,8 +32,8 @@ function RGBstring(rgbColor) {
   return arrRGB.join(",");
 }
 
-function unshitify(text){
-  return text?.toString()?.replace(/[\u032A-\u034A\u20D0-\u20FF]/g,"");
+function sanitize(text){
+  return text.toString().normalize("NFC");
 }
 
 const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
@@ -45,7 +44,7 @@ const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
 
 module.exports = {
   new: function newPicto(w = 800, h = 600) {
-    const canvas = new Canvas.Canvas(w,h);
+    const canvas = Canvas.createCanvas(w,h);
     const c = canvas.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -62,7 +61,7 @@ module.exports = {
         KnownErrors.set(errorMsg, 1);
       }
 
-      const canvas = new Canvas.Canvas(250, 250);
+      const canvas = Canvas.createCanvas(250, 250);
       const c = canvas.getContext("2d");
       c.fillStyle = "#F0F";
       c.fillRect(0, 0, 250, 250);
@@ -76,7 +75,7 @@ module.exports = {
       console.error(...args);
       throw new Error(err);
     }).then((img) => {
-      const canvas = new Canvas.Canvas(img.width, img.height);
+      const canvas = Canvas.createCanvas(img.width, img.height);
       const c = canvas.getContext("2d");
       c.blur = blur;
       c.drawImage(img, 0, 0);
@@ -85,8 +84,8 @@ module.exports = {
   },
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
-    text = unshitify(text);
-    const ogc = OGCanvas.createCanvas(100,100);
+    text = sanitize(text);
+    const ogc = Canvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
     ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
@@ -98,7 +97,7 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text?.length||1) * 0.32);
 
-    const item = new Canvas.Canvas(w, h + H);
+    const item = Canvas.createCanvas(w, h + H);
     const c = item.getContext("2d");
 
     c.font = ctx.font;
@@ -118,8 +117,8 @@ module.exports = {
   },
 
   tagMoji: async function tagmoji(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
-    text = unshitify(text);
-    const ogc = OGCanvas.createCanvas(100,100);
+    text = sanitize(text);
+    const ogc = Canvas.createCanvas(100,100);
     const ogcctx = ogc.getContext("2d");
 
     ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
@@ -132,7 +131,7 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
 
-    const item = new Canvas.Canvas(w, 1.1 * (h + H));
+    const item = Canvas.createCanvas(w, 1.1 * (h + H));
     const c = item.getContext("2d");
     c.font = ctx.font;
 
@@ -151,9 +150,9 @@ module.exports = {
   },
 
   block2: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
-    text = unshitify(text);
+    text = sanitize(text);
     
-    const item = new Canvas.Canvas(W,H);
+    const item = Canvas.createCanvas(W,H);
     const c = item.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -181,10 +180,10 @@ module.exports = {
   },
 
   block: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
-    text = unshitify(text);
+    text = sanitize(text);
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
 
-    const item = new Canvas.Canvas(W,H);
+    const item = Canvas.createCanvas(W,H);
     const c = item.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -221,7 +220,7 @@ module.exports = {
     }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 
-    const canvas = new Canvas.Canvas(imgEl.width, imgEl.height);
+    const canvas = Canvas.createCanvas(imgEl.width, imgEl.height);
     const c = canvas.getContext("2d");
     const width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
     const height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
@@ -341,7 +340,7 @@ module.exports = {
     term = "level",
     font,
   ) {
-    const canvas = new Canvas.Canvas(size, size);
+    const canvas = Canvas.createCanvas(size, size);
     const ctx = canvas.getContext("2d");
     const rx = size / 2; const
       ry = rx;
@@ -421,7 +420,7 @@ module.exports = {
     const x = size + 10;
     const y = -size;
 
-    const hex = new Canvas.Canvas(size * 2 + 20, size * 2 + 20);
+    const hex = Canvas.createCanvas(size * 2 + 20, size * 2 + 20);
     const c = hex.getContext("2d");
     c.rotate(1.57);
     c.save();
@@ -475,7 +474,7 @@ module.exports = {
   makeRound: async function makeRound(size, pic) {
     const rx = size / 2; const
       ry = rx;
-    const canvas = new Canvas.Canvas(size, size);
+    const canvas = Canvas.createCanvas(size, size);
     const ctx = canvas.getContext("2d");
 
     const color = "#FFF";
@@ -504,7 +503,7 @@ module.exports = {
   circle: this.makeRound,
 
   popOutTxt: function popOutTxt(ctx,TXT,X = 0,Y = 0,font,color,maxWidth = 0,stroke = { style: "#1b1b2b", line: 10 },shadow = 0,) {
-    TXT = unshitify(TXT);
+    TXT = sanitize(TXT);
     shadow = shadow || stroke.line / 2 - 1;
     stroke.style = stroke.style || "#1b1b2b";
     stroke.line = stroke.line || 10;
