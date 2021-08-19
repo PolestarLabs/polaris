@@ -152,7 +152,7 @@ module.exports = {
       type: "edit",
       response: async (msg, args, u) => {
         if (["bad", "back"].includes(args[0]?.toLowerCase())) return;
-        const TARGET = (await PLX.resolveMember(msg.guild, args[0] || u)) || (await PLX.resolveUser(args[0] || u));
+        const TARGET = (await PLX.resolveMember(msg.guild, args[0] || u).catch(() => {})) || (await PLX.resolveUser(args[0] || u));
         if (msg.embeds.length > 0) return { content: "", embed: null };
         return {
           embed: {

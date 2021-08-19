@@ -5,7 +5,7 @@ const Gal = require("../../structures/Galleries");
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  let Target = await PLX.resolveMember(msg.guild, msg.args[0]);
+  let Target = await PLX.resolveMember(msg.guild, msg.args[0]).catch(() => {});
   if (!Target) {
     return msg.channel.send($t("responses.errors.kin404", P));
   }

@@ -3,8 +3,8 @@ const Timed = require("../../structures/TimedUsage");
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const Target = await PLX.resolveMember(msg.guild.id, args[0], { enforceDB: true });
-  if (!Target) return msg.reply("User not found");
+  const Target = await PLX.resolveMember(msg.guild.id, args[0], { enforceDB: true }).catch(() => {});
+  if (!Target) return msg.reply($t("responses.errors.kin404", P));
 
   const userData = await DB.users.findOne({ id: msg.author.id });
   const targetData = await DB.commends.parseFull({ id: Target.id }) || { id: Target.id, whoIn: [], whoOut: [] };

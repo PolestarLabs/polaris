@@ -6,10 +6,8 @@ const Timed = require("../../structures/TimedUsage");
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const Target = await PLX.resolveMember(msg.guild.id, args[0], { softMatch: true }).catch(() => {
-    msg.reply($t("responses.errors.kin404", P));
-  });
-  if (!Target) return;
+  const Target = await PLX.resolveMember(msg.guild.id, args[0], { softMatch: true }).catch(() => {});
+  if (!Target) return msg.reply($t("responses.errors.kin404", P));
   if (Target.id === msg.author.id) return `${_emoji("nope")} ${$t("responses.thx.noself", P)}`;
 
   const embed = {};

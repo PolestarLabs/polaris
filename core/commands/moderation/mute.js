@@ -3,14 +3,15 @@
 const cmd = "mute";
 
 const init = async function (msg, args) {
+  const P = { lngs: msg.lang };
   const Server = msg.guild;
   const Author = msg.author;
   const Member = Server.member(Author);
-  const Target = await PLX.resolveMember(msg.guild, args[0], { softMatch: true });
+  const Target = await PLX.resolveMember(msg.guild, args[0], { softMatch: true }).catch(() => {});
+  if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   if (msg.author.id === Target.id) return msg.channel.createMessage("[REQUIRES_TRANSLATION_STRING] SELF_USER");
   const bot = msg.botUser;
 
-  const P = { lngs: msg.lang };
 
   let ServerDATA = await DB.servers.get(Server.id);
   if (!ServerDATA) {
@@ -21,7 +22,6 @@ const init = async function (msg, args) {
   const modPass = PLX.modPass(Member, "kickMembers", ServerDATA);
   if (!modPass) return msg.reply($t("CMD.moderationNeeded", P)).catch(console.error);
 
-  if (!Target) return msg.channel.send($t("responses.errors.kin404", P));
   const MUTEROLE = msg.guild.roles.get(ServerDATA.modules.MUTEROLE);
 
   if (!!MUTEROLE && MUTEROLE.position >= msg.guild.me.highestRole.position) {
