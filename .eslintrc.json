@@ -65,7 +65,6 @@
         "no-regex-spaces": "warn",
         //"curly":  ["warn", "multi"],
         "dot-location": ["warn", "property"],
-        "dot-notation": ["error", { "allowKeywords": false }],
         "no-unsafe-negation": "error",
         "arrow-body-style": ["warn", "as-needed"],
         "newline-per-chained-call": ["error", { "ignoreChainWithDepth": 2 }],

@@ -6,25 +6,22 @@ const Picto = require("../../utilities/Picto");
 const userDB = DB.users;
 const serverDB = DB.servers;
 
-const xp_to_level = (xp, A,B) => ~~( Math.sqrt( (xp * B) / A ) );
-const level_to_xp = (lv, A,B) => ( A*Math.pow(lv,2)/B );
-
+const xp_to_level = (xp, A, B) => ~~Math.sqrt((xp * B) / A);
+const level_to_xp = (lv, A, B) => A * Math.pow(lv, 2) / B;
 
 const cmd = "level";
 
 function XPercent(x, l, fa, fb) {
+  let exptoNex; let
+    exptoThis;
 
-  let exptoNex,  exptoThis;
-
-  if (fa==="OLD"){
-    let f = 0.0427899;
-     exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
+  if (fa === "OLD") {
+    const f = 0.0427899;
+    exptoNex = Math.trunc(Math.pow((l + 1) / f, 2));
     exptoThis = Math.trunc(Math.pow(l / f, 2));
-  
-  }else{
-
-     exptoNex =  level_to_xp(l+1,fa,fb);
-     exptoThis = level_to_xp(l,fa,fb);
+  } else {
+    exptoNex = level_to_xp(l + 1, fa, fb);
+    exptoThis = level_to_xp(l, fa, fb);
   }
 
   const frameofact = exptoNex - exptoThis;
@@ -51,7 +48,7 @@ const init = async function (msg) {
   const TARGET_DB = await userDB.findOne({ id: Target.id });
   const SV_DB = await serverDB.findOne({ id: Server.id });
 
-  const favcolor = (TARGET_DB.modules.favcolor || "#eb11da");
+  const favcolor = TARGET_DB.modules.favcolor || "#eb11da";
 
   let avi = Target.displayAvatarURL;
   const propic = avi.replace(/gif/g, "png");
@@ -61,9 +58,9 @@ const init = async function (msg) {
   const exp = TARGET_DB.modules.exp || 0;
   const level = TARGET_DB.modules.level || 0;
 
-  const percent = XPercent(exp, level,"OLD");
+  const percent = XPercent(exp, level, "OLD");
 
-  const SVFAC = SV_DB.progression || 0.11;
+  const SVFAC = SV_DB?.progression || { upfactorA: 280, upfactorB: 9 };
 
   let l_exp;
   let l_level;
@@ -73,7 +70,6 @@ const init = async function (msg) {
   let l_percent;
 
   try {
-
     l_exp = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).exp || 0;
     l_level = (await DB.localranks.get({ user: Target.id, server: msg.guild.id })).level || 0;
 
@@ -109,12 +105,12 @@ const init = async function (msg) {
         {
           let j = 1;
           for (let i = 0; i < arrRGB.length; i++) {
-            arrRGB[i] = parseInt(rgbColor.substr((i + j), 2), 16);
+            arrRGB[i] = parseInt(rgbColor.substr(i + j, 2), 16);
             j += 1;
           }
         } else {
           for (let i = 0; i < arrRGB.length; i++) {
-            let t = rgbColor.substr((i + 1), 1);
+            let t = rgbColor.substr(i + 1, 1);
             t += t;
             arrRGB[i] = parseInt(t, 16);
           }
@@ -187,7 +183,7 @@ const init = async function (msg) {
   }
 
   const global_roundel = await XChart(100, percent, favcolor || "#dd5383", propic, level, v.GLOBAL);
-  const local_roundel = await XChart(100, l_percent, (Server.member(Target)?.displayHexColor || "#9459af"), serpic || false, l_level, v.SERVER);
+  const local_roundel = await XChart(100, l_percent, Server.member(Target)?.displayHexColor || "#9459af", serpic || false, l_level, v.SERVER);
 
   ctx.drawImage(local_roundel, 0, 0);
   ctx.drawImage(global_roundel, 120, 0);
@@ -196,5 +192,5 @@ const init = async function (msg) {
 };
 
 module.exports = {
-  pub: true, cmd, perms: 3, init, cat: "misc", aliases: ["lv", "lvl"],
+  pub: true, cmd, perms: 3, init, cat: "misc", aliases: [ "lv", "lvl" ],
 };
