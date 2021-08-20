@@ -54,7 +54,6 @@ const init = async (msg) => {
     DB.users.getFull(msg.author.id),
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
-console.log({dailyPLXMember});
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(dailyPLXMember || msg.author);
@@ -153,6 +152,8 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       });
     })
     .once("calculationComplete", async (myDaily) => {
+      console.log("calcomplete", Date.now() - msg.timestamp);
+
       processQueue.push(async () => {
         ctx.save();
         ctx.rotate(0.04490658503988659);
@@ -200,12 +201,11 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     });
 
   await daily.init();
-  //await Promise.all(processQueue);
+  await Promise.all( processQueue.map(x=>x()) );
+  
   while (processQueue.length) {
     // @ts-ignore
-
     await processQueue.shift()(); // eslint-disable-line no-await-in-loop
-
   }
 
   let lootAction = null;
@@ -238,12 +238,15 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       const tier = itm.substr(8);
       lootAction = userData.addItem(`lootbox_${tier}_D`);
       itemName = $t(`items:lootbox_${tier}_D.name`, P);
+      itemoji = _emoji("LOOTBOX");
+
     }
     if (itm === "boosterpack") {
+      itemoji = _emoji("BOOSTER");
       const newBooster = async () => {
         const BOOSTERS = await DB.items.find({ type: "boosterpack", rarity: { $in: ["C", "U", "R"] } });
         shuffle(BOOSTERS);
-        await userData.addItem(BOOSTERS[0], daily.myDaily[itm]);
+        await userData.addItem(BOOSTERS[0].id, daily.myDaily[itm]);
       };
       boosterAction = newBooster();
     }
@@ -327,7 +330,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   const actions = [lootAction, boosterAction, itemAction, fragAction, tokenAction];
   // @ts-ignore
   await daily.awardPrizes(ECO, actions);
-  await wait(1);
+
   P.username = msg.author.username;
   await msg.channel.send({
     embed: {
