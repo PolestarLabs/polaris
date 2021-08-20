@@ -54,7 +54,7 @@ const init = async (msg) => {
     DB.users.getFull(msg.author.id),
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
-
+console.log({dailyPLXMember});
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(dailyPLXMember || msg.author);
@@ -241,7 +241,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     }
     if (itm === "boosterpack") {
       const newBooster = async () => {
-        const BOOSTERS = await DB.items.find({ type: "booster", rarity: { $in: ["C", "U", "R"] } });
+        const BOOSTERS = await DB.items.find({ type: "boosterpack", rarity: { $in: ["C", "U", "R"] } });
         shuffle(BOOSTERS);
         await userData.addItem(BOOSTERS[0], daily.myDaily[itm]);
       };
