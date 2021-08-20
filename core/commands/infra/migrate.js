@@ -22,6 +22,8 @@ function SAPPHIREFACTOR(don, pastDon) {
 }
 
 const init = async function (msg, args) {
+  return "Migration Period Over";
+  
   const embed = {};
   const yesNoOptions = { embed, clearReacts: true, time: 120e3 };
 
