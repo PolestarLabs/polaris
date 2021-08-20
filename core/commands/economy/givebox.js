@@ -2,7 +2,7 @@ const { TimedUsage } = require("@polestar/timed-usage");
 const ECO = require("../../archetypes/Economy");
 const YesNo = require("../../structures/YesNo");
 
-const day = 2 * 60 * 60e3;
+const day = 24 * 60 * 60e3;
 
 /**
  * @param {import("eris").Message} msg
