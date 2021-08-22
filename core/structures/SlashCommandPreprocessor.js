@@ -45,7 +45,7 @@ exports.proc = async function (cmdFile) {
                         description: cmdFile.slashOptions.description || $t(`commands:help.${cmdFile.cmd}`, "No Command Description"),
                         options: cmdFile.slashOptions.options
 
-                    }, guild);
+                    }, guild).catchReturn();
                 }
             } else {
                 console.log('        •'.green, "Create...".gray,guild);
