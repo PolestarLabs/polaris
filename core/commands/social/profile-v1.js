@@ -249,7 +249,7 @@ init = async (msg) => {
     if (isMarried) {
       img.wifeAvatar = Picto.getCanvas(USERPROFILE.wife.wifeAvatar).catch;
       // img.wifeHeart = Picto.getCanvas( paths.CDN+"/build/profile/marriheart_"+USERPROFILE.wife.ring+".png")
-      img.wifeHeart = Picto.getCanvas(`${paths.CDN}/build/items/ring_${USERPROFILE.wife.ring}.png`);
+      img.wifeHeart = Picto.getCanvas(`${paths.CDN}/build/items/${USERPROFILE.wife.ring}.png`);
     }
     if (isMarried) {
       txt_type = "WIFENAME";
