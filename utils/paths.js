@@ -1,4 +1,4 @@
-const ROOT = process.env.name === "POLARIS" ? "hijola.pollux.gg" : "pollux.gg";
+const ROOT = process.env.name === "PLR" ? "hijola.pollux.gg" : "pollux.gg";
 const CDN = "https://cdn.pollux.gg";
 const GENERATORS = `https://${ROOT}/generators`;
 const API = `https://${ROOT}/api`;
