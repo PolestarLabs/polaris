@@ -1,5 +1,9 @@
 const { EventEmitter } = require("events");
 const collectors = [];
+const Shoo = (i) => i.reply({
+  content: "You were not supposed to be clicking here. Shoo!",
+  flags: 64
+});
 
 class ButtonCollector extends EventEmitter {
   constructor(message, filter, options = {}) {
@@ -21,8 +25,14 @@ class ButtonCollector extends EventEmitter {
   verify(interaction, data, userID) {
     if (interaction?.message?.id !== this.message?.id) return false;
     if (this.options.authorOnly) {
-      if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) return false;
-      if (this.options.authorOnly !== userID) return false;
+      if (this.options.authorOnly instanceof Array && !this.options.authorOnly.includes(userID)) {
+        Shoo(interaction);
+        return false;
+      }
+      if (this.options.authorOnly !== userID) {
+        Shoo(interaction);
+        return false;
+      }
     }
 
     const buttonPress = {
@@ -40,12 +50,7 @@ class ButtonCollector extends EventEmitter {
 
       return true;
     } else {
-      if (!this.filter(buttonPress)) {
-        interaction.reply({
-          content: "You were not supposed to be clicking here. Shoo!",
-          flags: 64
-        });
-      }
+      if (!this.filter(buttonPress)) Shoo(interaction);      
     }
     return false;
   }
