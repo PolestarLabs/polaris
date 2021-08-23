@@ -50,7 +50,7 @@ const init = async function (msg,args){
 			min_values: 0,
 			max_values: 1,
 			disabled: false,
-			options: availableRings(0,gPage)	 
+			options: availableRings(userInventoryFull, USERDATA,0,gPage)	 
 		}
 	  ]
 	 },
@@ -108,13 +108,13 @@ const init = async function (msg,args){
 
 		if (ring.startsWith("next") ){
 			let opts = ring.split(":");
-			components[0].components[0].options = availableRings( opts[1] * gPage , gPage );
+			components[0].components[0].options = availableRings( userInventoryFull, USERDATA,  opts[1] * gPage , gPage );
 			return interaction.message.edit({components});
 
 		}
 		if (ring.startsWith("prev") ){
 			let opts = ring.split(":");
-			components[0].components[0].options = availableRings( opts[1]-2 * gPage , gPage );
+			components[0].components[0].options = availableRings( userInventoryFull, USERDATA,  opts[1]-2 * gPage , gPage );
 			return interaction.message.edit({components});
 
 		}
@@ -139,39 +139,7 @@ const init = async function (msg,args){
 
 	});
 	
-	function availableRings(skip=0,size=23){
-
-		let options = userInventoryFull.slice(skip,skip+size).map(ring=>{
-			const partialEmoji = _emoji( ring.rarity || ring.emoji, "💍" );
-			return {
-				label: "💍 " + ring.name.slice(0,100),
-				description: `(x${USERDATA.modules.inventory.find(x=>x.id===ring.id)?.count || 0 })`,
-				emoji: partialEmoji.id ? {id:partialEmoji.id} : {name: partialEmoji.name },
-				value: ring.id,
-			};				
-			
-		});
-
-		let totalPages  = ~~(userInventoryFull.length / size);
-		let currentPage = ~~(skip / size) +1;
-
-
-		if (userInventoryFull.length - skip > size ) {
-			options.push({
-				label: `Next Page...`,
-				description: ` ${currentPage +1}/${totalPages} More options ahead`,
-				value: "next:" + currentPage + ":" + totalPages
-			})
-		}
-		if (skip) {
-			options.push({
-				label: `Previous Page...`,
-				description: ` ${currentPage -1}/${totalPages} The options you just skipped`,
-				value: "prev:" +  currentPage + ":" + totalPages
-			})
-		}
-		return options;
-	}
+	
 
 	async function execMarriage(){
 		P.userA = msg.member.nick || msg.author.username;
@@ -354,24 +322,24 @@ const init = async function (msg,args){
 
 }
 
-async function upgrade(msg,args){
-
-	const userMarriages = await DB.relationships.find({users: msg.author.id });
+async function getMarriagesDDown(user,prompt="Select...",id="mrgDdown",defaultFun){
+	const userMarriages = await DB.relationships.find({users: user });
+	if (!userMarriages) return null;
 	const components = [
 		{
 			type:1,
 			components:[
 			{
 				type: 3,
-				placeholder: "Select a marriage to upgrade...",
-				custom_id: `mrgUpgrade:${msg.id}`,
+				placeholder: prompt,
+				custom_id: `${id}:${user}`,
 				min_values: 0,
 				max_values: 1,
 				disabled: false,
-				options: await Promise.all(userMarriages.map( async mrg =>{					
+				options: await Promise.all(userMarriages.slice(0,25).map( async mrg =>{
 					let [mUser,ring] = await Promise.all(
 						[
-							PLX.resolveUser(mrg.users.find(u=>u!=msg.author.id)),
+							PLX.resolveUser(mrg.users.find(u=>u!=user)),
 							DB.items.findOne({id: mrg.ring })
 						]
 					);
@@ -379,9 +347,10 @@ async function upgrade(msg,args){
 					const ringsSize = mrg.ringCollection.length||0;
 					
 					return {
+						default: defaultFun ? defaultFun(mrg) : false,
 						label: mUser.username,
 						description: `💍 ${ring.name}  ${ ringsSize > 1 ? `(+${ringsSize-1})` : "" }`,
-						value: mrg._id,
+						value: mrg._id.toString(),
 						emoji: {name: shuffle(['💜','❤️','💙','💚','🤍','💛','🧡'])[0] }
 					}
 				}))
@@ -389,10 +358,124 @@ async function upgrade(msg,args){
 		 ]
 		}		
 	];
+	return components;
+}
+
+function availableRings(rings,USERDATA,skip=0,size=23,nodescription){
+
+	let options = rings.slice(skip,skip+size).map(ring=>{
+		const partialEmoji = _emoji( ring.rarity || ring.emoji, "💍" );
+		return {
+			label: "💍 " + ring.name.slice(0,100),
+			description: nodescription ? "" : `(x${USERDATA.modules.inventory.find(x=>x.id===ring.id)?.count || 0 })`,
+			emoji: partialEmoji.id ? {id:partialEmoji.id} : {name: partialEmoji.name },
+			value: ring.id,
+		};				
+		
+	});
+	let totalPages  = ~~(rings.length / size);
+	let currentPage = ~~(skip / size) +1;
+	
+	console.log({skip,size,currentPage,totalPages})
+
+	if (rings.length - skip > size ) {
+		options.push({
+			label: `Next Page...`,
+			description: ` ${currentPage +1}/${totalPages} More options ahead`,
+			value: "next:" + currentPage + ":" + totalPages
+		})
+	}
+	if (skip) {
+		options.push({
+			label: `Previous Page...`,
+			description: ` ${currentPage -1}/${totalPages} The options you just skipped`,
+			value: "prev:" +  currentPage + ":" + totalPages
+		})
+	}
+	return options;
+}
+
+
+async function upgrade(msg,args){
+
+	const components = await getMarriagesDDown(msg.author.id,"Choose a marriage to upgrade","mrgUpgrade");
+	if (!components) return "No marriages";
 
 	msg.reply({
 		content: "choose wawa",
 		components
+	})
+  
+
+}
+async function feature(msg,args){
+
+	const userData = await DB.users.get(msg.author.id);
+	//const userMarriages = await DB.relationships.find({users: user });
+
+	let components = await getMarriagesDDown(
+		msg.author.id,
+		"Choose your new featured marriage",
+		"mrgFeature",
+		(item) => {
+			return userData.featuredMarriage === item._id.toString()
+		}
+	);
+	if (!components) return "No marriages";
+
+
+	msg.reply({
+		embed: {description: "Choose one of your partners to be displayed in your Profile Card" },
+		components
+	}).then(menu=>{
+		const collector = menu.createButtonCollector((i)=> i.userID === msg.author.id,{time:25e3});
+		
+		let selectedRel, selectedRing;
+		collector.on('click', async (i) => {
+			
+			let [val] = i.data.values || [];
+			if (!val) return;
+			let isPaging = Number(val.split(":")[1] || 0);
+
+			if (val.startsWith("ring_")){
+				selectedRing = await DB.items.findOne({id: val});
+				components[1].components[0].options.forEach(x=> x.default = x.value === val );
+				if (!selectedRel||!selectedRing) return;
+				DB.relationships.set( {_id: selectedRel._id} , {$set: {ring: val }});
+			}
+
+			if (!val.startsWith("ring_") && !isPaging){
+				selectedRel = await DB.relationships.findOne({_id: val});
+				selectedRing = await DB.items.findOne({id: selectedRel.ring});
+				
+				components[0].components[0].options.forEach(x=> x.default = x.value === val.toString() );
+				DB.users.set(msg.author.id, {$set: {featuredMarriage: val }});				
+			}			
+
+			if (typeof isPaging === 'number'){
+				const ringsCol = await DB.items.find({id:{$in: selectedRel.ringCollection }});
+				const pgSize = 1;
+				const skip = val.startsWith('prev') ? isPaging-2 * pgSize : val.startsWith('next') ? isPaging * pgSize : 0;
+				const options = availableRings( ringsCol , userData, skip ,pgSize);
+				
+				components[1] = ({
+					type:1,
+					components: [{
+						type:3,
+						placeholder: "Select the ring...",
+						custom_id: `ringSelect2:${msg.id}`,
+						min_values: 0,
+						max_values: 1,
+						options
+					}]
+				});
+			}			
+			
+
+			menu.edit({embed: {
+				description: `${_emoji('yep')} Featuring <@${selectedRel.users.find(u=>u!==msg.author.id)}> with 💍 **${selectedRing.name}**`
+			} ,components});
+		})
 	})
   
 
@@ -440,6 +523,14 @@ module.exports = {
 		  gen: upgrade,
 		  options: {
 			 aliases: ["ug"],
+			
+		  },
+		},
+		{
+		  label: "feature",
+		  gen: feature,
+		  options: {
+			 aliases: ["fe"],
 			
 		  },
 		},
