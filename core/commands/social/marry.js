@@ -33,7 +33,7 @@ const init = async function (msg,args){
 
 	const USERDATA = await DB.users.getFull(msg.author.id);
 
-	const inventoryIDmap = USERDATA.modules.inventory.map(it=>it.id).filter(x=>typeof x === "string");
+	const inventoryIDmap = USERDATA.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	
 	if (!userInventoryFull.length) return _emoji("nope") + $t("responses.marry.needRing", P);
@@ -153,14 +153,12 @@ const init = async function (msg,args){
 		if (!marriageWithTarget) return marriageFlow();
 		
 		
-		
 		// Check if current ring is already present in collection (then deny)
-		
-		//  if ring present > deny
 		if (marriageWithTarget.ringCollection?.includes(selectedRing.id))
+			//  if ring present > deny
 			return "nope";
 		else
-			upgradeMarriage(msg, resmsg, marriageWithTarget._id,selectedRing);
+			upgradeMarriage(msg, resmsg, USERDATA,  marriageWithTarget._id,selectedRing);
 
 		
 
@@ -332,7 +330,7 @@ async function getMarriagesDDown(user,prompt="Select...",id="mrgDdown",defaultFu
 			{
 				type: 3,
 				placeholder: prompt,
-				custom_id: `${id}:${user}`,
+				custom_id: id,
 				min_values: 0,
 				max_values: 1,
 				disabled: false,
@@ -375,8 +373,6 @@ function availableRings(rings,USERDATA,skip=0,size=23,nodescription){
 	});
 	let totalPages  = ~~(rings.length / size);
 	let currentPage = ~~(skip / size) +1;
-	
-	console.log({skip,size,currentPage,totalPages})
 
 	if (rings.length - skip > size ) {
 		options.push({
@@ -401,9 +397,68 @@ async function upgrade(msg,args){
 	const components = await getMarriagesDDown(msg.author.id,"Choose a marriage to upgrade","mrgUpgrade");
 	if (!components) return "No marriages";
 
+	const userData = await DB.users.getFull(msg.author.id);
+
+	const inventoryIDmap = userData.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
+	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
+	if (!userInventoryFull.length) return _emoji("nope") + $t("responses.marry.needRing", P);
+
+	let skip = 0;
+	let pgSize = 10;
+
+	const options = availableRings( userInventoryFull , userData, skip ,pgSize);
+	components[1] = ({
+		type:1,
+		components: [{
+			type:3,
+			placeholder: "Select the ring...",
+			custom_id: `ringSelect3`,
+			min_values: 0,
+			max_values: 1,
+			options
+		}]
+	});
+
+
 	msg.reply({
-		content: "choose wawa",
+		content: "Choose a marriage to upgrade and a ring to use",
 		components
+	}).then(menu=>{
+		const collector = menu.createButtonCollector((i)=> i.userID === msg.author.id ,{time:25e3});
+		
+		let selectedRel, selectedRing;
+		collector.on('click', async (i) => {
+			
+			if  (i.data.custom_id === "commit_upgrade_mrg") {
+				collector.stop();
+				return upgradeMarriage(msg,menu, userData, selectedRel._id,selectedRing);
+			}
+			if  (i.data.custom_id === "abort_upgrade_mrg") {
+				menu.edit({
+					embed: {description: `${_emoji('nope')} Cancelled`, color: numColor(_UI.colors.danger)  }
+				})
+				return collector.stop();
+			}			
+			
+			const [val] = i.data.values || [];
+
+			if (i.data.custom_id === "ringSelect3"){
+				selectedRing = await DB.items.findOne({id: val});
+				components[1].components[0].options.forEach(x=>x.default = x.value == val)
+			}
+			if (i.data.custom_id === "mrgUpgrade"){
+				selectedRel = await DB.relationships.findOne({_id: val.toString()});
+				components[0].components[0].options.forEach(x=>x.default = x.value == val.toString())
+			}
+			components[2] = {type:1, components:[
+				{ disabled: !(selectedRing && selectedRel) ,type:2,label:"Confirm",style:1,custom_id:"commit_upgrade_mrg"},
+				{type:2,label:"Cancel",style:2,custom_id:"abort_upgrade_mrg"},
+			]}
+
+			menu.edit({components});
+
+		}) 
+
 	})
   
 
@@ -411,7 +466,6 @@ async function upgrade(msg,args){
 async function feature(msg,args){
 
 	const userData = await DB.users.get(msg.author.id);
-	//const userMarriages = await DB.relationships.find({users: user });
 
 	let components = await getMarriagesDDown(
 		msg.author.id,
@@ -428,7 +482,7 @@ async function feature(msg,args){
 		embed: {description: "Choose one of your partners to be displayed in your Profile Card" },
 		components
 	}).then(menu=>{
-		const collector = menu.createButtonCollector((i)=> i.userID === msg.author.id,{time:25e3});
+		const collector = menu.createButtonCollector((i)=> i.userID === msg.author.id ,{time:25e3});
 		
 		let selectedRel, selectedRing;
 		collector.on('click', async (i) => {
@@ -437,14 +491,14 @@ async function feature(msg,args){
 			if (!val) return;
 			let isPaging = Number(val.split(":")[1] || 0);
 
-			if (val.startsWith("ring_")){
+			if (val.includes("ring_")){
 				selectedRing = await DB.items.findOne({id: val});
 				components[1].components[0].options.forEach(x=> x.default = x.value === val );
 				if (!selectedRel||!selectedRing) return;
 				DB.relationships.set( {_id: selectedRel._id} , {$set: {ring: val }});
 			}
 
-			if (!val.startsWith("ring_") && !isPaging){
+			if (!val.includes("ring_") && !isPaging){
 				selectedRel = await DB.relationships.findOne({_id: val});
 				selectedRing = await DB.items.findOne({id: selectedRel.ring});
 				
@@ -454,7 +508,7 @@ async function feature(msg,args){
 
 			if (typeof isPaging === 'number'){
 				const ringsCol = await DB.items.find({id:{$in: selectedRel.ringCollection }});
-				const pgSize = 1;
+				const pgSize = 20;
 				const skip = val.startsWith('prev') ? isPaging-2 * pgSize : val.startsWith('next') ? isPaging * pgSize : 0;
 				const options = availableRings( ringsCol , userData, skip ,pgSize);
 				
@@ -481,7 +535,7 @@ async function feature(msg,args){
 
 }
 
-async function upgradeMarriage(msg,resmsg, THIS_MARRIAGE_ID, RING){
+async function upgradeMarriage(msg,resmsg, USERDATA, THIS_MARRIAGE_ID, RING){
 		
 	const P = {lngs:msg.lang};
 
@@ -493,8 +547,14 @@ async function upgradeMarriage(msg,resmsg, THIS_MARRIAGE_ID, RING){
 
 	switch (await YesNo(prompt,msg)){
 		case true:
-			//await USERDATA.removeItem(RING.id);
-			//await DB.relationships.set({ _id: THIS_MARRIAGE_ID }, { $addToSet: {ringCollection: RING.id }, $set: { ring: RING.id } });
+			if (! (await USERDATA.hasItem(RING.id)) ){
+				return prompt.edit({embed:{
+					description: "⚠ You do not own any more of this item!",
+					color: numColor(_UI.colors.warning)
+				}});
+			}
+			await USERDATA.removeItem(RING.id);
+			await DB.relationships.set({ _id: THIS_MARRIAGE_ID }, { $addToSet: {ringCollection: RING.id }, $set: { ring: RING.id } });
 			return "ok"
 			break;
 		case false:
@@ -522,7 +582,7 @@ module.exports = {
 		  label: "upgrade",
 		  gen: upgrade,
 		  options: {
-			 aliases: ["ug"],
+			 aliases: ["up"],
 			
 		  },
 		},
@@ -545,7 +605,7 @@ module.exports = {
 			description: "The person to display marry with.",
 			type: 6,
 			required: true,
-		 }
+		 },		 		
 	  ]
 	},
 }
