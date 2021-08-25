@@ -47,6 +47,9 @@ function tagsCheck(tags,DEFAULT_TAGS){
 	const tracer = require('dd-trace').init({
 		logInjection: true,
 		analytics: true,
+		tags: {
+			cluster:  process.env.PRIME_FLAVORED_CLIENT ? "-1: dev" : clusterNames[parseInt(process.env.CLUSTER_ID) || 0]
+		}
 	});
 	tracer.use('bluebird', {service: 'bluebird'});
 	tracer.use('mongoose', {service: 'mongoose'});

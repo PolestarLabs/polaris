@@ -7,13 +7,14 @@ const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
 const isPRIME               = process.env.PRIME === "true" || process.env.PRIME === true;
 
 process.env.UV_THREADPOOL_SIZE = 256;
+global.clusterNames = (require("@polestar/constants/clusters"))?.default;
+
 require("./instrumentation.js");
 
 
 global.Promise = require("bluebird");
 Promise.config({ longStackTraces: true });
 
-global.clusterNames = (require("@polestar/constants/clusters"))?.default;
 
 const readdirAsync    = Promise.promisify(require("fs").readdir);
 const { performance } = require("perf_hooks");
