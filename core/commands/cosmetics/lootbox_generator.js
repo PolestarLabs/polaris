@@ -236,7 +236,7 @@ function renderCard(item, visual, P) {
   ctx.shadowBlur = 5;
 
   const itemTitle = (item.name || `${item.amount}`).toUpperCase();
-  const itemFont = "900 italic 50px 'Panton Black'";
+  const itemFont = "50px 'Panton Black Italic Caps'";
   const itemOptions = {
     textAlign: "center",
     verticalAlign: "middle",
@@ -276,8 +276,8 @@ function renderDupeTag(rarity, P) {
   ctx.shadowBlur = 10;
   ctx.drawImage(staticAssets.dupe_tag, 0, 0);
   ctx.shadowBlur = 0;
-  Picto.setAndDraw(ctx, Picto.tag(ctx, `${$t("loot.duplicate", P)} ! `, "900 italic 32px 'PantonBlack'", "#ffca82", { line: 8, style: "#1b1b32" }), 49, 5, 235);
-  Picto.setAndDraw(ctx, Picto.tag(ctx, `+${cosmoAward}`, "900 italic 25px 'PantonBlack'", "#FFF", { line: 6, style: "#1b1b32" }), 175, 40, 125, "right");
+  Picto.setAndDraw(ctx, Picto.tag(ctx, `${$t("loot.duplicate", P)} ! `, " 32px 'Panton Black Italic Caps'", "#ffca82", { line: 8, style: "#1b1b32" }), 49, 5, 235);
+  Picto.setAndDraw(ctx, Picto.tag(ctx, `+${cosmoAward}`, " 25px 'Panton Black Italic Caps'", "#FFF", { line: 6, style: "#1b1b32" }), 175, 40, 125, "right");
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.cosmoFragment_plural", P).toUpperCase(), "900 17px 'Panton'", "#DDF8"), 175, 48, 150);
 
   return canvas;
@@ -376,7 +376,7 @@ async function compileBox(msg, lootbox, USERDATA, options) {
       loot.isDupe = true;
       const dupe = renderDupeTag(loot.rarity, P);
       if (a.length <= 3) ctx.drawImage(dupe, -6 + (a.length === 1 ? 1 : i) * (CARD_WIDTH - 15), -80, CARD_WIDTH + 40, CARD_WIDTH + 40);
-      else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton Black\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
+      else Picto.setAndDraw(ctx, Picto.tag(ctx, "DUPE", "600 italic 30px \"Panton\"", "#FA5", { style: "#22212b", line: 10 }), 100 + i * (750 / a.length) - 40 * (1 + i), 430 + Math.abs((i - 2) * 10));
     }
   });
 
@@ -387,8 +387,8 @@ async function compileBox(msg, lootbox, USERDATA, options) {
 
   lootbox.bonus = boxBonus(USERDATA, lootbox, options);
 
-  const bonusNum = Picto.tag(ctx, lootbox.bonus.label, "600 italic 42px 'Panton Black'", "#FFF");
-  const bonusName = Picto.tag(ctx, lootbox.bonus.unit, "600 italic 34px 'Panton'", "#FFF");
+  const bonusNum = Picto.tag(ctx, lootbox.bonus.label, "42px 'Panton Black Italic Caps'", "#FFF");
+  const bonusName = Picto.tag(ctx, lootbox.bonus.unit, "34px 'Panton Black Italic Caps'", "#FFF");
   ctx.drawImage(bonusNum.item, 620 - bonusName.width - bonusNum.width - 10, 525);
   ctx.drawImage(bonusName.item, 620 - bonusName.width, 535);
 
