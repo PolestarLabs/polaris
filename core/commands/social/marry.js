@@ -394,6 +394,8 @@ function availableRings(rings,USERDATA,skip=0,size=23,nodescription){
 
 async function upgrade(msg,args){
 
+	const P = { lngs: msg.lang, prefix: msg.prefix };
+
 	const components = await getMarriagesDDown(msg.author.id,"Choose a marriage to upgrade","mrgUpgrade");
 	if (!components) return "No marriages";
 
@@ -466,6 +468,7 @@ async function upgrade(msg,args){
 async function feature(msg,args){
 
 	const userData = await DB.users.get(msg.author.id);
+	const P = { lngs: msg.lang, prefix: msg.prefix };
 
 	let components = await getMarriagesDDown(
 		msg.author.id,
