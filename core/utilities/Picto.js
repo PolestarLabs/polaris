@@ -1,7 +1,7 @@
 const π = Math.PI;
 const Canvas = require("skia-canvas");
 const OGCanvas = require("canvas");
-const wrap = require("canvas-text-wrapper").CanvasTextWrapper;
+const wrap = require("./canvaswrapper");
 const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
 const StackBlur = require('stackblur-canvas');
 const KnownErrors = new Map();
@@ -91,6 +91,7 @@ module.exports = {
 
     ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
+
 
     const H = ogcctx.measureText(text).emHeightAscent;
     const h = ogcctx.measureText(text).emHeightDescent + (stroke ? stroke.line : 0);
@@ -184,11 +185,13 @@ module.exports = {
     text = unshitify(text);
     ctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
 
+    console.log(font,'---',ctx.font,{options})
+
     const item = new Canvas.Canvas(W,H);
     const c = item.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
-    c.font = font;
+    c.font = ctx.font;
 
     const { stroke } = options;
 
@@ -197,10 +200,11 @@ module.exports = {
       c.lineWidth = stroke.line;
     }
     c.fillStyle = color;
+    console.log({font},ctx.font)
 
     options = {
       strokeText: !!stroke,
-      font: font || "bold 25px Quicksand, sans-serif",
+      font: ctx.font || "bold 25px Quicksand, sans-serif",
       textAlign: "left",
       verticalAlign: "top",
       lineBreak: "auto",
