@@ -6,7 +6,8 @@ const autoLevelRoles = require("./autoLevelRoles");
 module.exports = async (servData,msg) => {
 
 	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
-	if (!servData || !servData.modules) return;
+	if (!servData) return;
+	if(!servData.modules) console.log("SERVDATA WITH NO MODULES".red, servData);
 	
 	const channelID = msg.channel.id,
 			serverID  = servData.id,
