@@ -136,7 +136,7 @@ const init = async (msg, args) => {
 
   function FULLCHECKS(complete = false) {
     if (complete) {
-      console.log(complete);
+      console.log({complete});
       return complete.validOperation && complete.validType && complete.item_id && (complete.validItem || complete.checkCosmetic)
         && complete.price && complete.validCurrency && complete.itemStatus.pass && complete.saleStatus[`for${currency}`];
     }
@@ -188,7 +188,8 @@ const init = async (msg, args) => {
         submitMessage.edit(`${_emoji("yep")} **Done!** You can find your entry here:\n`
           + `${`${paths.DASH}/shop/marketplace/entry/${entryId}`}\n Use it to share your listing elsewhere! `);
       } else {
-        submitMessage.edit(`${_emoji('nope')} Error! `);
+        
+        submitMessage.edit(`${_emoji('nope')} Error! \`${ listingPOSTRequest.response.data }\` `);
         return cancellation();
       }
     } else {
