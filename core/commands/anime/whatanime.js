@@ -60,6 +60,7 @@ ${is_adult ? "\n🔞 **Adult warning**\n" : ""}
 `;
   // embed.thumbnail = {url: `https://trace.moe/thumbnail.php?anilist_id=${res.anilist_id}&file=${encodeURIComponent(res.filename)}&t=${res.at}&token=${res.tokenthumb}`}
 
+  Progression.emit("action.whatanime.success",{userID:msg.author.id, msg});
   msg.channel.send(
     { embed },
     {
