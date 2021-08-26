@@ -23,7 +23,7 @@ class LootboxItem {
     collection = collection || this.collection || "cosmetics";
     this.loaded = new Promise((resolve) => {
       let query = { rarity: this.rarity };
-      query.event = this.event || "none";
+      query.event = this.event || null;
       query.filter = this.#filter;
 
       query.droppable = !this.#bypass.includes("droppable");
