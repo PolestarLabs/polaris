@@ -2,7 +2,7 @@ const ROOT = process.env.name === "PLR" ? "hijola.pollux.gg" : "pollux.gg";
 const CDN = "https://cdn.pollux.gg";
 const GENERATORS = `https://${ROOT}/generators`;
 const API = `https://${ROOT}/api`;
-const DASH = `https://pollux.gg`;
+const DASH = `https://${ROOT}`;
 
 exports.run = () => {
   global.paths = {
