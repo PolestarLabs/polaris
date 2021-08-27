@@ -42,7 +42,7 @@ const init = async function (msg) {
 };
 
 module.exports = {
-  pub: true,
+  pub: false,
   cmd,
   perms: 3,
   init,

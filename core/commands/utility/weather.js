@@ -129,7 +129,7 @@ const init = async (msg, args) => {
 
 module.exports = {
 	init,
-	pub: true,
+	pub: false,
 	cmd: "weather",
 	perms: 3,
 	cat: "utility",

@@ -89,7 +89,7 @@ const init = async function (msg) {
 };
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   argsRequired: true,
   cmd: "rpgen",
   perms: 3,

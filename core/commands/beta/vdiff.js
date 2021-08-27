@@ -55,7 +55,7 @@ const init = async function (msg) {
 }
 module.exports = {
     init
-    , pub: true
+    , pub: false
     , cmd: 'vdiff'
     , cat: 'beta'
     , botPerms: ['attachFiles', 'embedLinks']

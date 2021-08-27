@@ -146,7 +146,7 @@ module.exports = {
     aliases: ["twitch"],
     //REVIEW[epic=mitchell] does this work already?
     disabled: true,
-    pub: true,
+    pub: false,
     perms: 3,
 
     argsRequired: true,
