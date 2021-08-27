@@ -204,12 +204,12 @@ const init = async function (msg,args){
 		proposal.edit({ embed });
 
 		// Create
-		const THIS_MARRIAGE_ID = (await DB.relationships.create("marriage", [msg.author.id, Target.id], msg.author.id, RING.id))._id;
+		const THIS_MARRIAGE_ID = (await DB.relationships.create("marriage", [msg.author.id, Target.id], msg.author.id, selectedRing.id))._id;
 		// Remove Ring
-		await USERDATA.removeItem(RING.id);
+		await USERDATA.removeItem(selectedRing.id);
 
 		// Mutual Feature Prompt >>>
-			MutualFeatPrompt(selectedRing)
+			MutualFeatPrompt(THIS_MARRIAGE_ID)
 
 	}
 
@@ -254,15 +254,15 @@ const init = async function (msg,args){
 		pL = featPieceLEFT(`${_emoji("yep")} :sparkling_heart:`);
 		responseThem.embed.description = `${featPieceLEFT()}\u2003 \u2003${featPieceRIGHT()}`;
 		featurePromptState = responseThem;
+		DB.users.set(Target.id, { featuredMarriage: THIS_MARRIAGE_ID });
 		return mutateFeaturePrompt(responseThem);
-		//DB.users.set(Target.id, { featuredMarriage: THIS_MARRIAGE_ID });
 		};
 		const DoFeatThem = () => {
 		pR = featPieceRIGHT(`:sparkling_heart: ${_emoji("yep")}`);
 		responseMe.embed.description = `${featPieceLEFT()}\u2003 \u2003${featPieceRIGHT()}`;
 		featurePromptState = responseMe;
+		DB.users.set(msg.author.id, { featuredMarriage: THIS_MARRIAGE_ID });
 		return mutateFeaturePrompt(responseMe);
-		//DB.users.set(msg.author.id, { featuredMarriage: THIS_MARRIAGE_ID });
 		};
 		const DontFeat = (m) => {
 		const res = { content: featurePrompt.content, embed: featurePrompt.embeds[0] };
