@@ -36,7 +36,7 @@ const init = async function (msg,args){
 	const inventoryIDmap = USERDATA.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	
-	if (!userInventoryFull.length) return _emoji("nope") + $t("responses.marry.needRing", P);
+	if (!userInventoryFull.length) return _emoji("nope") + "There are no rings to propose in your inventory. Please try `plx!craft ring`";// $t("responses.marry.needRing", P);
 	
 	const gPage = 25;
 	const components = [

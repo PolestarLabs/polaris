@@ -74,7 +74,7 @@ const init = async (msg, args) => {
     P.item_name = craftedItem.name;
 
     // set up embed for if no failed checks
-    const ICON = craftedItem.icon || "";
+    const ICON = craftedItem.icon || craftedItem.id || "";
     embed.title = `${(craftedItem?.emoji || "📦") + $t("responses.crafting.craftingItem", P)} x ${amount}`;
     embed.thumbnail = { url: `${paths.CDN}/build/items/${ICON}.png` };
     let craftExplan = "";
