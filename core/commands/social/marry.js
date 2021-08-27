@@ -204,9 +204,9 @@ const init = async function (msg,args){
 		proposal.edit({ embed });
 
 		// Create
-			//const THIS_MARRIAGE_ID = (await DB.relationships.create("marriage", [msg.author.id, Target.id], msg.author.id, RING.id))._id;
+		const THIS_MARRIAGE_ID = (await DB.relationships.create("marriage", [msg.author.id, Target.id], msg.author.id, RING.id))._id;
 		// Remove Ring
-			//await USERDATA.removeItem(RING.id);
+		await USERDATA.removeItem(RING.id);
 
 		// Mutual Feature Prompt >>>
 			MutualFeatPrompt(selectedRing)
@@ -482,8 +482,7 @@ async function feature(msg,args){
 			return userData.featuredMarriage === item._id.toString()
 		}
 	);
-	if (!components) return "No marriages";
-
+	if (!components || !components?.[0]?.components?.[0]?.options?.length ) return "No marriages";
 
 	msg.reply({
 		embed: {description: "Choose one of your partners to be displayed in your Profile Card" },
