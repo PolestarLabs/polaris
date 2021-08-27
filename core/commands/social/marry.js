@@ -599,7 +599,7 @@ module.exports = {
 		},
 	],
 	slashOptions: {
-	  global: true,
+	  global: false,
 	  args: ["player"],
 	  guilds: ["789382326680551455"],
 	  options: [
