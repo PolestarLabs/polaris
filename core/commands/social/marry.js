@@ -21,6 +21,10 @@ const YesNo = require("../../structures/YesNo.js");
 
 const init = async function (msg,args){
 
+	const userMarriages = await DB.relationships.find({ type: "marriage", users: msg.author.id });
+
+	if (userMarriages.length > 2) return "You can't have more than **3** active relationships at a time. Relationship slots management is coming soon";
+
 	const Target = await PLX.resolveMember(msg.guild.id, args[0] || msg.mentions[0]?.id).catch(() => {});
 	if (!Target) return this.invalidUsageMessage(msg);
 	
