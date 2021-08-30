@@ -249,7 +249,7 @@ const init = async function (msg, args) {
 };
 
 module.exports = {
-  pub: true,
+  pub: false,
   argsRequired: true,
   cmd,
   perms: 3,

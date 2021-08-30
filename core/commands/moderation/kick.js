@@ -96,7 +96,7 @@ const init = async function (msg) {
 };
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   cmd: "kick",
   perms: 2,
   cat: "moderation",

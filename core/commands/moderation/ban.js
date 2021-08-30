@@ -138,7 +138,7 @@ const init = async function (msg) {
 
 module.exports = {
   init,
-  pub: true,
+  pub: false,
   cmd: "ban",
   argsRequired: true,
   perms: 2,
