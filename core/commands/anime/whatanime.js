@@ -23,7 +23,6 @@ const init = async function (msg, args) {
     mal_id,
     episode,
     season,
-    is_adult,
     filename,
     at,
     tokenthumb,
@@ -31,6 +30,8 @@ const init = async function (msg, args) {
     anilist,
 
   } = res;
+  
+  const is_adult = res.anilist.isAdult
   const title_native = res.anilist.title.native
   const title_english = res.anilist.title.english
   const title_romaji = res.anilist.title.romaji
