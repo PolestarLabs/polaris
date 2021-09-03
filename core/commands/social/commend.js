@@ -1,63 +1,73 @@
-const { TimedUsage } = require("@polestar/timed-usage");
+const Timed = require("../../structures/TimedUsage");
 
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const timed = await new TimedUsage("commend", { day: 3.6e+6 }).loadUser(msg.author);
-
-  if (args[0]?.toLowerCase() === "status") {
-    P.remaining = `<t:${~~((timed.userDaily.last + timed.day) / 1000)}:R>`;
-    const embed = new Embed();
-    embed.setColor("#3b9ea5");
-    embed.description(`${_emoji("future")} ${timed.available ? _emoji("online") + $t("responses.commend.check_yes", P) : _emoji("dnd") + $t("responses.commend.check_no", P)}\   
-      \n\n:reminder_ribbon: × **${timed.userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**`);
-    return msg.channel.send({ embed });
-  }
-
-  if (!timed.available) {
-    P.remaining = `<t:${~~((timed.availableAt - Date.now()) / 1000)}:R>`; // TODO[epic=bsian] Clean up the Math.abs
-    const dailyNope = $t("responses.commend.cooldown", P);
-    const embed = new Embed();
-    embed.setColor("#e35555");
-    embed.description(_emoji("nope") + dailyNope);
-    return msg.channel.send({ embed });
-  }
-
   const Target = await PLX.resolveMember(msg.guild.id, args[0], { enforceDB: true }).catch(() => {});
   if (!Target) return msg.reply($t("responses.errors.kin404", P));
-
-  if (Target.id === msg.author.id) {
-    return msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
-  }
-  if (timed.userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count < 1) {
-    return msg.reply($t("responses.commend.noItem", P));
-  }
 
   const userData = await DB.users.findOne({ id: msg.author.id });
   const targetData = await DB.commends.parseFull({ id: Target.id }) || { id: Target.id, whoIn: [], whoOut: [] };
   if (!userData || !targetData) return "Error, one of the users are not present in Database";
 
-  await Promise.all([
-    userData.removeItem("commendtoken"),
-    DB.commends.add(userData.id, Target.id, 1),
-  ]);
+  const preafter = async function preafter(M, D) {
+    if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
+      if (Target.id === msg.author.id) {
+        msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
+        return false;
+      }
+    } else {
+      msg.reply($t("responses.commend.noItem", P));
+      return false;
+    }
+    return true;
+  };
 
-  P.target = Target.nick || (Target.user || Target).username;
-  P.author = msg.member.nick || msg.author.username;
-  P.cmcount = (targetData.totalIn + 1) || 0;
-  P.pplcount = targetData.whoIn.length + 1;
+  const after = async function after(msg, Dly) {
+    await Promise.all([
+      userData.removeItem("commendtoken"),
+      DB.commends.add(userData.id, Target.id, 1),
+    ]);
 
-  const embed = new Embed()
-    .thumbnail(`${paths.DASH}/build/rank.png`)
-    .color("#3b9ea5")
-    .timestamp(new Date())
-    .description(`
-          ${$t("responses.commend.give", P)}
-          ${$t("responses.commend.totals", P)}
-          `);
+    P.target = Target.nick || (Target.user || Target).username;
+    P.author = msg.member.nick || msg.author.username;
+    P.cmcount = (targetData.totalIn + 1) || 0;
+    P.pplcount = targetData.whoIn.length + 1;
 
-  Progression.emit("command.commend.commit", { msg, userID: msg.author.id });
-  return msg.channel.send({ embed });
+    const embed = new Embed()
+      .thumbnail(`${paths.DASH}/build/rank.png`)
+      .color("#3b9ea5")
+      .timestamp(new Date())
+      .description(`
+            ${$t("responses.commend.give", P)}
+            ${$t("responses.commend.totals", P)}
+            `);
+
+    Progression.emit("command.commend.commit", { msg, userID: msg.author.id });
+    msg.channel.send({ embed });
+  };
+
+  const reject = function (msg, Daily, r) {
+    P.remaining = `<t:${~~(r / 1000)}:R>`; // TODO[epic=bsian] Clean up the Math.abs
+    const dailyNope = $t("responses.commend.cooldown", P);
+    const embed = new Embed();
+    embed.setColor("#e35555");
+    embed.description(_emoji("nope") + dailyNope);
+    return msg.channel.send({ embed });
+  };
+
+  const status = async function (msg, Daily) {
+    const userDaily = await Daily.userData(msg.author);
+    const dailyAvailable = await Daily.available(msg.author);
+    P.remaining = `<t:${~~((userDaily.last + Daily.day) / 1000)}:R>`;
+    const embed = new Embed();
+    embed.setColor("#3b9ea5");
+    embed.description(`${_emoji("future")} ${dailyAvailable ? _emoji("online") + $t("responses.commend.check_yes", P) : _emoji("dnd") + $t("responses.commend.check_no", P)}\   
+      \n\n:reminder_ribbon: × **${userData.modules.inventory.find((i) => i.id === "commendtoken")?.count || 0}**`);
+    return msg.channel.send({ embed });
+  };
+  // TODO[epic=Constants Module] Replace
+  Timed.init(msg, "commend", { day: 3.6e+6 }, after, reject, status, preafter);
 };
 
 const info = async (msg, args) => {
