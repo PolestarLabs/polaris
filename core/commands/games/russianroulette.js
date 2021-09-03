@@ -89,7 +89,7 @@ const startSinglePlayer = async (msg) => {
 		return msg.reply(v.singleplayer_no_bet);
 	}
 	if (BET < 100) return msg.reply(v.min_bet);
-	if (BET > 5000) return msg.reply(v.max_bet);
+	if (BET > 2000) return msg.reply(v.max_bet);
 
 	const hasFunds = await ECO.checkFunds(msg.author.id, BET);
 	if (!hasFunds) return msg.reply(v.singleplayer_no_funds);
