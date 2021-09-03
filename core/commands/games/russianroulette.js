@@ -233,11 +233,13 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 const init = async (msg, args) => {
 
+	return await startMultiplayerGame(msg);
+
 	const P = { lngs: msg.lang };
 
 	if (args[0] === "multiplayer" || args[0] === "mp" || args[0] === "start") {
 
-		return await startMultiplayerGame(msg);
+		
 	}
 
 
@@ -249,7 +251,7 @@ module.exports = {
 	init,
 	cmd: "russianroulette",
 	pub: true,
-	argsRequired: true,
+ 
 	perms: 3,
 	cat: "games",
 	botPerms: ["attachFiles", "embedLinks", "manageMessages"],
