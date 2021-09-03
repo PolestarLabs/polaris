@@ -1,3 +1,5 @@
+const MAX_BET = 1250;
+
 const BUTTONS = {
   hit: { type: 2, custom_id: 'hit', label: "Hit", style: 1, emoji: { id: "598784000353370113" } },
   stand: { type: 2, custom_id: 'stand', label: "Stand", style: 1, emoji: { id: "598784000353370113" } },
@@ -608,7 +610,7 @@ const init = async (msg, args) => {
   v.insu = $t("$.insuBet", { lngs: msg.lang, number: 25 });
   v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.RBN });
   v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 });
-  v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: 2500 }).replace("%emj%", _emoji("rubine"));
+  v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: MAX_BET }).replace("%emj%", _emoji("rubine"));
 
   if (Blackjack.gameExists(msg.author.id)) {
     return msg.reply(v.ONGOING);
@@ -628,8 +630,8 @@ const init = async (msg, args) => {
   }
 
   if (USERDATA.modules.RBN < bet) return msg.reply(v.nofunds);
-  if (bet > 2500) {
-    P.number = 2500;
+  if (bet > MAX_BET) {
+    P.number = MAX_BET;
     return msg.reply(v.ceiling);
   }
 
