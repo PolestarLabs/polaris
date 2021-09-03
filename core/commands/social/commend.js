@@ -67,7 +67,7 @@ const init = async function (msg, args) {
     return msg.channel.send({ embed });
   };
   // TODO[epic=Constants Module] Replace
-  Timed.init(msg, "commend", { day: 3.6e+6 }, after, reject, status, preafter);
+  Timed.init(msg, "commend", { day: 3.6e+6 * 4  }, after, reject, status, preafter);
 };
 
 const info = async (msg, args) => {
