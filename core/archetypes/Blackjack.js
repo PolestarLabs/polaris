@@ -29,7 +29,7 @@ class Blackjack {
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
         while (iterations-->0) this.push(Blackjack._shuffle(DECK_TEMPLATE));
         decks.set(this.guildID, this.deck);
-        this.deck.push("JOKER-default");
+        //this.deck.push("JOKER-default");
         this.deck = Blackjack._shuffle(this.deck);
       }
 
