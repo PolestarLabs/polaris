@@ -35,7 +35,8 @@ const init = async (msg, args) => {
       const target = await PLX.getTarget(args[0]);
       if (target) {
         const targetData = await DB.userDB.get(target.id);
-        if (targetData.timezone === "") {
+
+        if (targetData.timezone == null) {
           msg.channel.send(`*${target.tag}* hasn't set their timezone.`);
           return;
         }
