@@ -635,7 +635,7 @@ const init = async (msg, args) => {
     return msg.reply(v.ceiling);
   }
 
-  const blackjack = new Blackjack(msg);
+  const blackjack = new Blackjack(msg,6);
 
   try {
     const playerHand = blackjack.getHand(powerups);
