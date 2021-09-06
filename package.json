@@ -37,6 +37,7 @@
     "gif-encoder": "^0.7.2",
     "hot-shots": "^8.5.0",
     "mongoose": "^5.9.9",
+    "node-canvas-with-twemoji": "^0.1.6",
     "open-graph-scraper": "^4.6.0",
     "rss-parser": "^3.7.2",
     "skia-canvas": "^0.9.23",
