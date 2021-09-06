@@ -333,6 +333,8 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
   P.username = msg.author.username;
   await msg.channel.send({
+    //TRANSLATE daily errands upsell
+    content: `**Here are your daily rewards.**\nCheck also \`${msg.prefix}errands\` for daily progression tasks and get more bonuses!`,
     embed: {
       description: `☕ ${rand$t("responses.daily.dailyBonus", P)}`,
       fields,
