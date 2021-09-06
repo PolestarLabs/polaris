@@ -27,7 +27,7 @@ class Blackjack {
       else {
         let iterations = this.deckAmount;
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
-        while (iterations-- > 0) this.deck.push(Blackjack._shuffle(DECK_TEMPLATE));
+        while (iterations-- > 0) this.deck.concat( Blackjack._shuffle(DECK_TEMPLATE) );
         decks.set(this.guildID, this.deck);
         //this.deck.push("JOKER-default");
         this.deck = Blackjack._shuffle(this.deck);
@@ -88,7 +88,7 @@ class Blackjack {
   static handValue(hand) {
     let value = 0;
     let aces = 0;
-    if (hand.find((card) => card && card.startsWith("JOKER"))) return hand.find((card) => card.startsWith("JOKER"));
+    if (hand.find((card) => card && card?.startsWith("JOKER"))) return hand.find((card) => card?.startsWith("JOKER"));
 
     hand.forEach((card) => {
       value += Blackjack._cardValue(card);
