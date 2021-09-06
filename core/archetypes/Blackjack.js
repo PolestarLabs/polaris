@@ -25,9 +25,9 @@ class Blackjack {
     if (this.deck.length === 0) {
       if ((decks.get(this.guildID)?.length || 0) !== 0) this.deck = decks.get(this.guildID);
       else {
-        const iterations = this.deckAmount;
+        let iterations = this.deckAmount;
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
-        while (iterations-->0) this.push(Blackjack._shuffle(DECK_TEMPLATE));
+        while (iterations-- > 0) this.deck.push(Blackjack._shuffle(DECK_TEMPLATE));
         decks.set(this.guildID, this.deck);
         //this.deck.push("JOKER-default");
         this.deck = Blackjack._shuffle(this.deck);
