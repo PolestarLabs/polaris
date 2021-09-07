@@ -16,7 +16,16 @@ const init = async (msg, args) => {
     last: $t("responses.transfer.lastdly", P),
     next: $t("responses.transfer.next", P),
   };
-
+  const [USERDATA] = await DB.users.get(msg.author.id);
+  if (!USERDATA.prime?.active){
+    return msg.reply({
+      embed:{
+        //color: _UI.red,
+        color: numColor(_UI.colors.red),
+        description: "Direct-transfers are exclusive to Prime players. Try `plx!prime` for more info."
+      }
+    });
+  }
   const Daily = await new TimedUsage("transfer_box", { day }).loadUser(msg.author);
 
   if (["status", "stats"].includes(args[0].toLowerCase())) {

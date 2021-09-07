@@ -56,7 +56,7 @@ const init = async (msg) => {
   ]);
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
-  const daily = await Daily.load(dailyPLXMember || msg.author);
+  const daily = await Daily.load(dailyPLXMember);
   const timedUsage = daily.timedUsage;
 
   if (["status", "stats"].includes(msg.args[0]?.toLowerCase())) {
