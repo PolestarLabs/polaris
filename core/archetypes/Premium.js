@@ -8,7 +8,7 @@ const RUNNING_MONTH_LONG = new Date().toLocaleString("en", { month: "long" })
   .toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 7; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 8; // JANUARY = 0;
 
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
@@ -187,7 +187,7 @@ const PREMIUM_INFO = {
     sticker_prize: {
       LAST: 1,
       RANDOM: 1,
-      PACK: 0,
+      PACK: 1,
     },
     prime_servers: 2,
     prime_reallocation: true,
@@ -211,7 +211,7 @@ const PREMIUM_INFO = {
     sticker_prize: {
       LAST: 1,
       RANDOM: 1,
-      PACK: 0,
+      PACK: 1,
     },
     prime_servers: 2,
     prime_reallocation: true,
@@ -234,8 +234,8 @@ const PREMIUM_INFO = {
     booster_bonus_psm: 30,
     sticker_prize: {
       LAST: 1,
-      RANDOM: 0,
-      PACK: 0,
+      RANDOM: 1,
+      PACK: 1,
     },
     prime_servers: 1,
     prime_reallocation: true,
@@ -256,8 +256,8 @@ const PREMIUM_INFO = {
     booster_bonus_psm: 30,
     sticker_prize: {
       LAST: 1,
-      RANDOM: 0,
-      PACK: 0,
+      RANDOM: 1,
+      PACK: 1,
     },
     prime_servers: 1,
     prime_reallocation: true,
@@ -279,7 +279,7 @@ const PREMIUM_INFO = {
     sticker_prize: {
       LAST: 0,
       RANDOM: 1,
-      PACK: 0,
+      PACK: 1,
     },
     prime_servers: 1,
     prime_reallocation: true,
