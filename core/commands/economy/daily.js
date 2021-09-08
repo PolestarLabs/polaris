@@ -52,9 +52,8 @@ const init = async (msg) => {
 
   const [userData, dailyPLXMember] = await Promise.all([
     DB.users.getFull(msg.author.id),
-    PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
+    PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => msg.author),
   ]);
-
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(dailyPLXMember);
