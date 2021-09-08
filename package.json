@@ -21,7 +21,7 @@
     "@polestar/timed-usage": "github:PolestarLabs/timed-usage#6cdf7396b724ec311c8bd969dc409af5728b0fbe",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "bluebird": "^3.7.2",
     "canvas": "^2.6.0",
     "canvas-text-wrapper": "^0.10.2",
