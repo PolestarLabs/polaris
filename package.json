@@ -18,7 +18,7 @@
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n#f5b971fd713aeeeaacae280b596545f7b9cd6585",
     "@polestar/morse": "gitlab:PolestarLabs/morse",
     "@polestar/skia-twemoji": "github:PolestarLabs/skia-canvas-twemoji",
-    "@polestar/timed-usage": "github:PolestarLabs/timed-usage#6cdf7396b724ec311c8bd969dc409af5728b0fbe",
+    "@polestar/timed-usage": "github:PolestarLabs/timed-usage#ca7fa78a1ca9360cb9b5075d9e50bf3471fe9f36  ",
     "@sentry/node": "^5.15.4",
     "@vitalets/google-translate-api": "^4.0.0",
     "axios": "^0.21.1",
