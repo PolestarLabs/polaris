@@ -55,6 +55,7 @@ const init = async (msg) => {
     PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
   ]);
 
+
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
   const daily = await Daily.load(dailyPLXMember);
   const timedUsage = daily.timedUsage;
