@@ -12,7 +12,7 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
-    "@polestar/constants": "gitlab:PolestarLabs/constants",
+    "@polestar/constants": "gitlab:PolestarLabs/constants#cd9a0110b64df80bd92c9f437971d2d0a48c3233",
     "@polestar/database_schema": "github:PolestarLabs/db-schema#402fc5dd4944dd2c6cff069596a35445daa01e64",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire#630b35abfe46c3487081e6da5826428ab9b48e92",
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n#f5b971fd713aeeeaacae280b596545f7b9cd6585",
