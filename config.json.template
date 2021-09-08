@@ -13,6 +13,6 @@
     ,"testChannels" : [],
     "mainWebhook": {
         "id": "",
-        "token": "",
+        "token": ""
     }
 }
