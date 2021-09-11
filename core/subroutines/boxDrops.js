@@ -26,6 +26,7 @@ function convertToEvent(i, box) {
 
 module.exports = {
   lootbox: async function loot(trigger) {
+    return;
    
     // const $t = locale.getT();
  
