@@ -85,7 +85,7 @@ const init = async (msg) => {
     runtime = performance.now() - runtime;
     const out = clean(e.stack || []);
     const output = `${_emoji('nope')} ⏱ ${runtimeOutput(runtime)}\n**\`\`\`js\n${e.message || e}\`\`\`**\n*\`\`\`c\n${(out.full ? "// Check output file" : out).split("\n")[1]}\`\`\`*`;
-    const embed = { description: output };
+    const embed = { description: output.substr(0, 4096) };
     embed.color = 0xe03b3b;
     embed.footer = { text: "Check Logs for detailed Error stack" };
     console.error(e);
