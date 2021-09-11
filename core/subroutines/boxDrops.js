@@ -24,7 +24,7 @@ function convertToEvent(i, box) {
   return box;
 }
 
-module.exports = {
+module.exports = {  
   lootbox: async function loot(trigger) {
     return;
    
