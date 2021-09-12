@@ -24,38 +24,47 @@ function convertToEvent(i, box) {
   return box;
 }
 
-module.exports = {  
+module.exports = {
   lootbox: async function loot(trigger) {
-    return;
-   
     // const $t = locale.getT();
- 
+
     if (PLX.restarting) return false;
 
     if (trigger.content === "pick" && !trigger.channel.natural) {
       return DB.users.set(trigger.author.id, { $inc: { "modules.exp": -10 } });
     }
 
-
-    const checkRegex = /^_.*|^p!catch|^pick|\$w|\$m\b|^.!.*\s+|^.\/.*\s+|^\+.*\s+|^<.*[0-9]>$|^(.[A-Za-z]{10,})+$|(.)\2{4,}|(. ){4,}|(.{1,5})\4{3,}/g;
+    const regexes = [
+      /^[a-zA-Z0-9]{0,3}[`¬¦!"£$€%^&*()-_=+[{\]}#~;:'@,<.>/?|]/, // Possible bot prefixes
+      /([\s\S]+)\1{2,}/, // Duplicate text
+      "pick", // "pick" spam
+      /^([\s\S]){0,10}$/, // Extra short messages
+    ];
     const msg = trigger.content.toLowerCase();
 
-    if (msg.match(checkRegex)) return false;
+    if (regexes.some((r) => msg.match(r))) return false;
 
     const SVR = trigger.guild;
     const CHN = trigger.channel;
 
-    //FIXME This is pooling the DB on every message
+    const mC = SVR.memberCount;
+    const bC = SVR.members.filter((m) => m.bot).length;
+
+    if (mC - bC < 10) return false; // Guilds with few humans
+    if (bC / mC <= 0.1) return false; // Guilds with "excessive" human to bot ratio
+
+    // FIXME This is pooling the DB on every message
     if (!trigger.guild.switches || !trigger.guild.event) {
-      const serverDATA = await DB.servers.findOne({ id: SVR.id }).lean().exec();
-      if (!serverDATA) return;
+      const serverDATA = await DB.servers.findOne({ id: SVR.id }).lean()
+        .exec();
+      if (!serverDATA) return undefined;
       trigger.guild.switches = serverDATA.switches;
       trigger.guild.event = serverDATA.event || {};
-      setTimeout(() => trigger.guild.switches = false, 60e3 * 60)
+      setTimeout(() => (trigger.guild.switches = false), 60e3 * 60);
     }
     if (trigger.guild.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
 
-    const prerf = trigger.prefix
+    const prerf = trigger.prefix;
     const _DROPMIN = 1;
     const _DROPMAX = 1000;
     const _RAREMAX = 250;
@@ -83,7 +92,7 @@ module.exports = {
     // console.log(droprate)
 
     const iterations = eventChecks(trigger.guild.event);
-    for (i = 0; i < iterations / 5; i += 1) {
+    for (let i = 0; i < iterations / 5; i += 1) {
       droprate = randomize(_DROPMIN, _DROPMAX);
       if (droprate === 777) break;
     }
@@ -126,17 +135,19 @@ module.exports = {
     // if(trigger.channel.id=="426308107992563713") droprate= 777;
     const dropcondition = droprate === 777 || (trigger.content === "fdropt" && trigger.author.id === "88120564400553984");
 
-    if (dropcondition) console.log((`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `).red.bgYellow);
+    if (dropcondition) console.log(`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `.red.bgYellow);
     if (dropcondition) {
-      console.log(("DROPPE!!!").green);
+      console.log("DROPPE!!!".green);
 
       if (!BOX) return false;
       trigger.channel.natural = true;
 
-      const lootMessage = await CHN.send(BOX.text,
+      const lootMessage = await CHN.send(
+        BOX.text,
         // paths.BUILD + (BOX.pic || "chest.png")
         // {file: (paths.BUILD + (BOX.pic || "chest.png")),name:"LOOTBOX.png"}
-        file(await resolveFile(paths.BUILD + (BOX.pic || "chest.png")), "Lootbox.png")).catch(() => false);
+        file(await resolveFile(paths.BUILD + (BOX.pic || "chest.png")), "Lootbox.png"),
+      ).catch(() => false);
       if (!lootMessage) return false;
 
       const ballotMessage = await CHN.send(v.disputing).catch(() => false);
@@ -156,7 +167,7 @@ module.exports = {
               balContent = newmsg.content;
             });
           }
-          pickMsg.addReaction(_emoji('loot').reaction).catch();
+          pickMsg.addReaction(_emoji("loot").reaction).catch();
 
           pickers.push({ id: pickMsg.author.id, name: pickMsg.author.username, mention: `<@${pickMsg.author.id}>` });
         }
@@ -196,7 +207,7 @@ module.exports = {
 
       const goesto = await CHN.send(v.oscarGoesTo);
       const dramaMsg = await CHN.send(dramaMessage);
-      console.log(("WINNER PICKED!!!").green);
+      console.log("WINNER PICKED!!!".green);
       await wait(4);
 
       // dramaMsg.edit("||"+drama[rand]+"||");
@@ -216,7 +227,7 @@ Winner:\`${JSON.stringify(luckyOne)}\
       */
       trigger.channel.deleteMessages(responses.map((x) => x.id));
       await DB.users.getFull({ id: luckyOne.id }).then((userdata) => userdata.addItem(BOX.id));
-      console.log(("BOX ADDED!!!").green);
+      console.log("BOX ADDED!!!".green);
       goesto.delete().catch(() => false);
       dramaMsg.delete().catch(() => false);
       CHN.send(`||${drama[rand]}||, ${v.gratz}`);
