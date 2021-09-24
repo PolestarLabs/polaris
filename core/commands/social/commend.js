@@ -10,6 +10,17 @@ const init = async function (msg, args) {
   const targetData = await DB.commends.parseFull({ id: Target.id }) || { id: Target.id, whoIn: [], whoOut: [] };
   if (!userData || !targetData) return "Error, one of the users are not present in Database";
 
+
+  if (!userData.personal?.ip) {
+    return {embed: {description: `You have to Log-in at least once in our [Dashboard](https://pollux.gg) in order to give commends!` } };
+  }
+  if (!userData._doc.discordData?.verified && !userData._doc.connections?.discord?.verified) {
+    return {embed: {description: `You need a verified phone in your account in order to give commends!` } };
+  }
+  if (userData.personal?.ip === targetData.personal?.ip) {
+    return msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
+  }
+
   const preafter = async function preafter(M, D) {
     if (userData.modules.inventory.find((itm) => itm.id === "commendtoken")?.count >= 1) {
       if (Target.id === msg.author.id) {
@@ -23,6 +34,8 @@ const init = async function (msg, args) {
     return true;
   };
 
+
+  
   const after = async function after(msg, Dly) {
     await Promise.all([
       userData.removeItem("commendtoken"),
