@@ -5,7 +5,7 @@ const DICTS = {
     color: require('./colors.json'),    
 }
 
-module.exports = function (formation){    
+module.exports = function (formation,join=''){    
     // formation =  [dict, [dict,dict]]
     return formation.map(dict=>{
         DICTS.number = [randomize(100,999).toString()];
@@ -21,5 +21,5 @@ module.exports = function (formation){
         }else{
             return capitalize(shuffle( DICTS[dict] || ['wa'] )[0] );
         }
-    }).join('');
+    }).join(join);
 }

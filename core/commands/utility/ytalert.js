@@ -46,8 +46,8 @@ const init = async function (msg) {
     const embed = await feedEmbed(payload.last, youtubeChannel);
     payload.last.media = null;
     payload.server = msg.guild.id;
-    payload.thumb = embed.thumbnail.url;
-    payload.name = embed.author.name;
+    payload.thumb = embed?.thumbnail?.url;
+    payload.name = embed?.author?.name;
     await DB.feed.new(payload);
 
     P.tuber = embed.author.name;
