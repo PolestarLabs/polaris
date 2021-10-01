@@ -85,6 +85,7 @@ const init = async function (msg, args) {
 
 const info = async (msg, args) => {
   const Target = await PLX.getTarget(args[0] || msg.author, msg.guild);
+  if (!Target) return msg.reply($t("responses.errors.kin404", P));
 
   const targetData = await DB.commends.parseFull({ id: Target.id }) || { id: Target.id, whoIn: [], whoOut: [] };
 
