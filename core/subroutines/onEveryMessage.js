@@ -23,11 +23,10 @@ const levelChecks = async (msg) => {
     if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
       setImmediate( ()=> globalLevelUp(msg) );
     }
+
+    setImmediate( ()=> localLevelUp(servData,msg) );
   });
-  
-  if (!servData) return;
  
-  setImmediate( ()=> localLevelUp(servData,msg) );
  
 }
 
