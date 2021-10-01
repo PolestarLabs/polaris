@@ -15,7 +15,7 @@ const init = async function (msg, args) {
     return {embed: {description: `You have to Log-in at least once in our [Dashboard](https://pollux.gg) in order to give commends!` } };
   }
   if (!userData._doc.discordData?.verified && !userData._doc.connections?.discord?.verified) {
-    return {embed: {description: `You need a verified phone in your account in order to give commends!` } };
+    return {embed: {description: `You need a verified email in your account in order to give commends!` } };
   }
   if (userData.personal?.ip === targetData.personal?.ip) {
     return msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
