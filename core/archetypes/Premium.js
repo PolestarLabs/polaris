@@ -510,6 +510,7 @@ async function processRewards(userID, options) {
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
     const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id));
+    console.log({availableStickerList,stickerList});
     const availablePacks = packsList.filter((pkg) => !pkg.name.includes(RUNNING_YEAR));
 
     const lasts = [];
