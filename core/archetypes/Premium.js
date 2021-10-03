@@ -509,7 +509,7 @@ async function processRewards(userID, options) {
     const ownedStickers = userData.modules.stickerInventory;
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
-    const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id));
+    const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id)); ;
     console.log({availableStickerList,stickerList});
     const availablePacks = packsList.filter((pkg) => !pkg.name.includes(RUNNING_YEAR));
 
@@ -517,7 +517,11 @@ async function processRewards(userID, options) {
     if (tierPrizes.sticker_prize.LAST > 0) {
       let adds = tierPrizes.sticker_prize.LAST;
       while (adds-- > 0) {
-        const toPush = availableStickerList.pop();
+        const toPush = stickerList.pop();
+        if (!toPush) {
+          lasts.push( toPush.id );
+          break;
+        }
         stickersReport.push(toPush);
         lasts.push(toPush.id);
       }
