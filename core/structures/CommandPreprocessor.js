@@ -134,7 +134,7 @@ const DEFAULT_CMD_OPTS = {
     },
     postCheck: (m, a, chk) => {
       if (!chk) return null;
-      if (m.command.sendTyping !== false) m.channel?.sendTyping();
+      //if (m.command.sendTyping !== false) m.channel?.sendTyping();
       commandRoutine.commLog(m, m.command);
       commandRoutine.updateMeta(m, m.command);
       return undefined;
@@ -295,7 +295,7 @@ const registerOne = (folder, _cmd) => {
     PLX.commands[CMD.label].related = commandFile.related;
     PLX.commands[CMD.label].helpImage = commandFile.helpImage;
     PLX.commands[CMD.label].module = folder;
-    PLX.commands[CMD.label].sendTyping = typeof commandFile.sendTyping === "boolean" ? commandFile.sendTyping : true;
+    PLX.commands[CMD.label].sendTyping = typeof commandFile.sendTyping === "boolean" ? commandFile.sendTyping : false;
     PLX.commands[CMD.label].botPerms = [ "attachFiles", "embedLinks", "addReactions", "externalEmojis", "manageMessages" ]
       .concat(commandFile.botPerms || []).filter((v, i, a) => a.indexOf(v) === i);
     if (commandFile.subs) {
