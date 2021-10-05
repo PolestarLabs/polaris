@@ -55,16 +55,28 @@ function executeCustomResponse(response, msg, noReply = false) {
     });
   }
 }
+
+async function sub_remove(msg,[tag]){
+  if (!(msg.member.permissions.has('manageMessages') || await modPass(msg.member))) return $t('responses.error.insuPerms');
+  const serverResps = await DB.responses.findOne({ server:msg.guild.id, tag }).noCache();
+  if (!serverResps) msg.channel.send( `Tag \`${tag}\` not found!` );
+
+  await DB.responses.deleteOne({ server:msg.guild.id, tag });
+
+  return msg.channel.send( `Tag \`${tag}\` deleted!` )
+
+
+}
+
 async function sub_add(msg, args) {
 
   if (!(msg.member.permissions.has('manageMessages') || await modPass(msg.member))) return $t('responses.error.insuPerms');
 
-  if (!(msg.member.permissions.has('manageMessages') || await modPass(msg.member))) return $t('responses.error.insuPerms');
 
   const tag = args.join(' ');
   if (tag.length > 10) return msg.channel.send( "Tag names can't contain more than 10 characters" );
 
-  const serverResps = await DB.responses.findOne({ tag }).noCache();
+  const serverResps = await DB.responses.findOne({ server:msg.guild.id, tag }).noCache();
 
   console.log({serverResps})
 
@@ -164,6 +176,13 @@ module.exports = {
     {
       label: 'add',
       gen: sub_add,      
+      options: {
+        argsRequired: true,
+      }
+    },
+    {
+      label: 'remove',
+      gen: sub_remove,      
       options: {
         argsRequired: true,
       }
