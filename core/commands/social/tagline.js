@@ -23,5 +23,5 @@ module.exports = {
   perms: 3,
   cat: "social",
   botPerms: ["embedLinks"],
-  aliases: ["tag"],
+  aliases: ["tgln"],
 };
