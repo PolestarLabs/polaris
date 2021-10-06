@@ -628,7 +628,8 @@ async function processRewards(userID, options) {
 
   // FIXME replace this
   if (!userData.modules.EVT) {
-    await DB.users.set(userID, { "modules.EVT": 0 }).catch((err) => { console.error(err); return null; });
+    console.log("User has no EVT history");
+    //await DB.users.set(userID, { "modules.EVT": 0 }).catch((err) => { console.error(err); return null; });
   }
 
   const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; });
