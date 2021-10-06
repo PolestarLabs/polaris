@@ -2,7 +2,7 @@
 
 const init = async function (msg) {
 
-    const oldUser = await vDB.findOne({ id: msg.author.id });
+    const oldUser = await vDB.users.findOne({ id: msg.author.id });
     if (!oldUser || oldUser.switches?.tokensMigrated2)
         return msg.addReaction(_emoji('nope').reaction);
 
