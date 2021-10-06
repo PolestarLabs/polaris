@@ -13,10 +13,10 @@ module.exports = class Redeem {
   }
 
   async lock(){
-    return DB.promocodes.updateOne({ code: this.code, locked: true});
+    return DB.promocodes.updateOne({ code: this.code}, {locked: true});
   }
   async unlock(){
-    return DB.promocodes.updateOne({ code: this.code, locked: false});
+    return DB.promocodes.updateOne({ code: this.code}, {locked: false});
   }
   async consume(){
     let query = {};
@@ -124,12 +124,11 @@ module.exports = class Redeem {
       case "EVT":
         type = "currency";
         subject = "EVT";
-        keyword = "evToken"
+        keyword = "keywords.evToken"
         break;
     }
 
-    if (!keyword) keyword = subject;
-
+    if (!keyword) keyword = keyword = `keywords.${subject}`;
 
     
     let mergeQuery = {rarity};
