@@ -16,17 +16,17 @@ const init = async (msg, args) => {
   const validationResponse = (validationError) => {
     switch (validationError) {
       case "invalid":
-        return msg.reply(`${_emoji("nope")} Oopsie! This code is invalid. Please double-check it and try again.`);
+        return msg.channel.send(`${_emoji("nope")} Oopsie! This code is invalid. Please double-check it and try again.`);
       case "nonredeemable":
-        return msg.reply(`${_emoji("nope")} This code is not redeemable anymore.`);
+        return msg.channel.send(`${_emoji("nope")} This code is not redeemable anymore.`);
       case "already_redeemed":
-        return msg.reply(`${_emoji("nope")} You've already redeemed this code`);
+        return msg.channel.send(`${_emoji("nope")} You've already redeemed this code`);
       case "exhausted":
-        return msg.reply(`${_emoji("nope")} This code has been used the maximum amount of times.`);
+        return msg.channel.send(`${_emoji("nope")} This code has been used the maximum amount of times.`);
       case "expired":
-        return msg.reply(`${_emoji("nope")} This code redeem period is over.`);
+        return msg.channel.send(`${_emoji("nope")} This code redeem period is over.`);
       case "locked":
-        return msg.reply(`${_emoji("nope")} This code is not redeemable at the moment. Please try again later.`);
+        return msg.channel.send(`${_emoji("nope")} This code is not redeemable at the moment. Please try again later.`);
     }
   }
   
