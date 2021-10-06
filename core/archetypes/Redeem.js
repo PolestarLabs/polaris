@@ -57,7 +57,6 @@ module.exports = class Redeem {
     if (data.usedBy === this.user || data.usedBy?.includes(this.user)) return "already_redeemed";
     if (data.consumed) return "nonredeemable";
     if (data.locked) return "locked";
-    this.prize = data.prize;
     return false;
   }
 
