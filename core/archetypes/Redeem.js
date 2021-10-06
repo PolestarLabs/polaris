@@ -171,8 +171,11 @@ module.exports = class Redeem {
     if (!userData) return "User Not Found";
 
     const sPrize = this.prize;
+    console.log( {sPrize});
+
 
     if (sPrize.type === 'item') await userData.addItem(sPrize.subject,sPrize.amount);
+    console.log(this.user, sPrize.amount,"PROMO CODE", sPrize.subject)
     if (sPrize.type === 'currency') await ECO.receive( this.user, sPrize.amount,"PROMO CODE", sPrize.subject );
     if (sPrize.inventory){
       const prizeItem = DB.cosmetics.get( Object.assign({
