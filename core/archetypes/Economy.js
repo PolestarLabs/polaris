@@ -121,18 +121,20 @@ const TRANSACTION_TYPES = {
  * @property {"EMD"} EMERALD
  * @property {"TPZ"} TOPAZE
  * @property {"PSM"} PRISM
+ * @property {"EVT"} EVENT_TOKEN
  */
 /** @type {CurrencyMap} */
 const toCurrencies = {
   RUBINE: "RBN", JADE: "JDE", SAPPHIRE: "SPH",
   AMETHYST: "AMY", EMERALD: "EMD", TOPAZE: "TPZ", PRISM: "PSM",
 };
-/** @typedef {"RBN" | "JDE" | "SPH" | "AMY" | "EMD" | "TPZ" | "PSM"} Currency */
+/** @typedef {"RBN" | "JDE" | "SPH" | "AMY" | "EMD" | "TPZ" | "PSM" | "EVT"} Currency */
 /** @typedef {Currency[]} CurrencyArray*/
 /** @type {CurrencyArray} */
 const currencies = [
   "RBN", "JDE", "SPH",
-  "AMY", "EMD", "TPZ", "PSM"
+  "AMY", "EMD", "TPZ", "PSM",
+  "EVT"
 ];
 
 
