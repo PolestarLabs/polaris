@@ -65,7 +65,7 @@ staticAssets.load = Promise.all([
 });
 
 const init = async (msg, args) => {
-  if (!args.boxID && msg.author.id != "88120564400553984" && args[0] > 5) return;
+  if ( (!args.boxID && msg.author.id != "88120564400553984") || args[0] > 5 ) return;
   if (!staticAssets.loaded) await staticAssets.load;
   if (VisualsCache.size > 800) VisualsCache.clear();
 
