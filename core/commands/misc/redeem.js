@@ -6,13 +6,14 @@ const init = async (msg, args) => {
   const P = {lngs:msg.lang};
   const code = args[0];
   const prizeOperator = new Redeem(code, msg.author.id);
-  await prizeOperator.hydrate();
+  
   
   // LOCK when single-use (implicit or explicit)
 
+  await prizeOperator.hydrate();
   const validationError = prizeOperator.verify();
-
-  if (validationError) {
+  
+  const validationResponse = (validationError) => {
     switch (validationError) {
       case "invalid":
         return msg.reply(`${_emoji("nope")} Oopsie! This code is invalid. Please double-check it and try again.`);
@@ -29,6 +30,8 @@ const init = async (msg, args) => {
     }
   }
   
+  if (validationError) return validationResponse(validationError);
+
   if (!prizeOperator.data.maxUses || prizeOperator.data.maxUses === 1 ) await prizeOperator.lock();
 
 
@@ -58,8 +61,13 @@ const init = async (msg, args) => {
   });
 
   const prompt = await YesNo(confirmation, msg);
+  
 
   if (prompt) {
+    await prizeOperator.hydrate();
+    const validationError = prizeOperator.verify();
+    if (validationError) return validationResponse(validationError);
+
     const newEmbed = {
       fields: [
         {
