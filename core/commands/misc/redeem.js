@@ -9,7 +9,6 @@ const init = async (msg, args) => {
   await prizeOperator.hydrate();
   
   // LOCK when single-use (implicit or explicit)
-  if (!prizeOperator.data.maxUses || prizeOperator.data.maxUses === 1 ) await prizeOperator.lock();
 
   const validationError = prizeOperator.verify();
 
@@ -29,6 +28,10 @@ const init = async (msg, args) => {
         return msg.reply(`${_emoji("nope")} This code is not redeemable at the moment. Please try again later.`);
     }
   }
+  
+  if (!prizeOperator.data.maxUses || prizeOperator.data.maxUses === 1 ) await prizeOperator.lock();
+
+
 
   //TRANSLATE[epic=translations] redeem
 
