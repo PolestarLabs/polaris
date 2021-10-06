@@ -160,7 +160,7 @@ module.exports = class Redeem {
 
     if (data?.maxUses > 1) { // multi-redeem (only if maxUses is present and >1: increment uses, add redeemedUser to array
       let redata = await DB.promocodes.findOne({ code }).lean();
-      if (redata.maxUses <= data.uses) { // limit reached: set used
+      if (redata.maxUses <= (data.uses || 0)) { // limit reached: set used
         await DB.promocodes.updateOne({ code }, {
           $set: { consumed: true, locked: true }
         });
