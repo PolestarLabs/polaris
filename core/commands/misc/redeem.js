@@ -38,7 +38,7 @@ const init = async (msg, args) => {
 
   //TRANSLATE[epic=translations] redeem
 
-  await msg.delete();
+  await msg.delete().catch(err=>null);
   const prize = prizeOperator.parsePrize();
   P.count = prize.amount;
   
