@@ -31,7 +31,6 @@ const init = async (msg, args) => {
   }
   
   if (validationError) return validationResponse(validationError);
-
   if (!prizeOperator.data.maxUses || prizeOperator.data.maxUses === 1 ) await prizeOperator.lock();
 
 
@@ -64,9 +63,11 @@ const init = async (msg, args) => {
   
 
   if (prompt) {
-    await prizeOperator.hydrate();
-    const validationError = prizeOperator.verify();
-    if (validationError) return validationResponse(validationError);
+    if ( !(!prizeOperator.data.maxUses || prizeOperator.data.maxUses === 1 ) ){
+      await prizeOperator.hydrate();
+      const validationError = prizeOperator.verify();
+      if (validationError) return validationResponse(validationError);
+    }
 
     const newEmbed = {
       fields: [
