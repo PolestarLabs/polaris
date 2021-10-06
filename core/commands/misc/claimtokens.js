@@ -18,5 +18,5 @@ module.exports = {
     , cmd: 'claimtokens'
     , cat: 'misc'
     , botPerms: ['attachFiles', 'embedLinks']
-    , aliases: ["migratetoken"]
+    , aliases: ["migratetokens"]
 }
