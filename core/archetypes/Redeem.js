@@ -63,7 +63,6 @@ module.exports = class Redeem {
 
   parsePrize() {
 
-    this.lock();
     const [_amount, _subject, _filter, _extra] = this.data.prize.split(' ');
     let filter = _filter;
     let subject = _subject;
@@ -162,7 +161,7 @@ module.exports = class Redeem {
       let redata = await DB.promocodes.findOne({ code }).lean();
       if (redata.maxUses <= (data.uses || 0)) { // limit reached: set used
         await DB.promocodes.updateOne({ code }, {
-          $set: { consumed: true, locked: true }
+          $set: { consumed: true }
         });
       }
     }
