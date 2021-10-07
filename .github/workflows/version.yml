@@ -19,6 +19,7 @@ jobs:
           git commit -m "Auto update package-lock"      
     
   version:
+    needs: update-package
     runs-on: ubuntu-latest
     steps:      
       - name: Setup Node.js environment
@@ -31,6 +32,8 @@ jobs:
         
       - name: Update Package V
         run: | 
+          git config --global user.email "bot@pollux.gg"
+          git config --global user.name "Pollux Autoupdate"
           npm version patch -m "Autoupgrade to %s"
           git push
           
