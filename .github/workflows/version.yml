@@ -16,7 +16,8 @@ jobs:
         run: |
           npm install
           git add ./package-lock.json
-          git commit -m "Auto update package-lock"      
+          git commit -m "Auto update package-lock"
+          git push
     
   version:
     needs: update-package
