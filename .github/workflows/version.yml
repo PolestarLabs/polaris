@@ -18,7 +18,7 @@ jobs:
           git branch
           git config user.email "bot@pollux.gg"
           git config  user.name "Update Bot"
-          npm version patch -m "Autoupgrade to %s "
+          npm version patch -m "Autoupgrade to %s"
           git push
           
           
