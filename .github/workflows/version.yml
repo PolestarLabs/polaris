@@ -25,6 +25,7 @@ jobs:
       
       - name: Update Package Lock
         run: |
+          git config --global url."https://${{ secrets.PAT }}@github.com/".insteadOf ssh://git@github.com/
           npm install
           git add ./package-lock.json
           git commit -m "Auto update package-lock"
