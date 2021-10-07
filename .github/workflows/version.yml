@@ -10,10 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: goto
+        working-directory: ./
+        run: |          
+          ls
+          
       - name: Bump Node Version
         uses: neverendingqs/gh-action-node-bump-version-pr@v1.1.0
-        with:
-          
+        with:          
           git-user-email: ghactions@pollux.gg          
           git-user-name: Pollux GH Actions
           branch: dev
