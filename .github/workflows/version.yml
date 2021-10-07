@@ -9,11 +9,14 @@ jobs:
   update-package:
     runs-on: self-hosted
     steps:    
-    - name: Update Package Lock
-      run: |
-        npm install
-        git add ./package-lock.json
-        git commit -m "Auto update package-lock"      
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+        
+      - name: Update Package Lock
+        run: |
+          npm install
+          git add ./package-lock.json
+          git commit -m "Auto update package-lock"      
     
   version:
     runs-on: ubuntu-latest
