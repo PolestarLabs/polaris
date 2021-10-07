@@ -2,7 +2,7 @@ name: Version
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ test ]
 
 jobs:
   version:
@@ -13,8 +13,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
         
-      - name: goto
-        run: |
-          echo $PWD
-          ls
+      - name: Update Package V
+        run: npm version patch -m "Autoupgrade to %s" 
           
