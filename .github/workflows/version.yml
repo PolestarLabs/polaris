@@ -14,10 +14,16 @@ jobs:
         uses: actions/setup-node@v2.4.1
         with:
           node-version: '16.5'
-        
+          
       - name: Checkout
         uses: actions/checkout@v2.3.4
-      - name: Set Git Config
+        
+      - name: SSH
+        uses: webfactory/ssh-agent@v0.4.1
+        with:
+          ssh-private-key: ${{ secrets.SPK }}
+          
+      - name: Set Git Config      
         run: |
           git config user.email "bot@pollux.gg"
           git config  user.name "Update Bot"
@@ -28,7 +34,7 @@ jobs:
           git config --global url."https://${{ secrets.PAT }}@github.com/".insteadOf ssh://git@github.com/
           npm install
           git add ./package-lock.json
-          git commit -m "Auto update package-lock"
+          git commit -m "Auto update package-lock"          
           
       - name: Update Package V
         run: | 
