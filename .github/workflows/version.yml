@@ -1,0 +1,20 @@
+name: Git Version
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  version:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Bump Node Version
+        uses: neverendingqs/gh-action-node-bump-version-pr@v1.1.0
+        with:
+          
+          git-user-email: ghactions@pollux.gg          
+          git-user-name: Pollux GH Actions
+          branch: dev
+          description: Autobump
