@@ -39,7 +39,7 @@ jobs:
           run: cd $DIR        
         - name: Git Reset
           run: |
-            git reset --hard origin/dev
+            git reset --hard
             git pull
             
 
