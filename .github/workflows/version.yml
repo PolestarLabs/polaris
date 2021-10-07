@@ -20,7 +20,8 @@ jobs:
       - name: Set Git Config
         run: |
           git config user.email "bot@pollux.gg"
-          git config  user.name "Update Bot"          
+          git config  user.name "Update Bot"
+      - run: git config --global url."https://${{ secrets.PAT }}@github.com/".insteadOf ssh://git@github.com/
       
       - name: Update Package Lock
         run: |
