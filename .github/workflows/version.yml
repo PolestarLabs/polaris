@@ -6,20 +6,6 @@ on:
 
 jobs:
 
-  update-package:
-    runs-on: self-hosted
-    steps:    
-      - name: Checkout
-        uses: actions/checkout@v2.3.4
-        
-      - name: Update Package Lock
-        continue-on-error: true
-        run: |
-          npm install
-          git add ./package-lock.json
-          git commit -m "Auto update package-lock"
-          git push
-    
   version:
     needs: update-package
     runs-on: ubuntu-latest
@@ -54,8 +40,9 @@ jobs:
           run: cd $DIR        
         - name: Git Reset
           run: |
-            git reset --hard origin/master
+            git reset --hard origin/dev
             git pull
+            
 
   npm:
       runs-on: self-hosted
@@ -71,6 +58,13 @@ jobs:
 
         - name: Audit fix
           run: npm audit fix
+          continue-on-error: true
+        
+        - name: Update Package
+          run: |
+            git add ./package-lock.json
+            git commit -m "Auto update package-lock"
+            git push
           continue-on-error: true
 
 
