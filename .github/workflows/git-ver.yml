@@ -1,0 +1,17 @@
+name: Git Version
+
+on:
+  push:
+    branches: [ dev ]
+
+jobs:
+  version:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Git Version
+        uses: codacy/git-version@2.4.0
+        with:
+          release-branch: beta
+          dev-branch: dev
