@@ -41,3 +41,47 @@ jobs:
           git push
           
           
+
+  pull:
+      env:
+        DIR: ${{ secrets.DASH_DIR_DEV }}
+      name: 🔁 Sync with Repository    
+      needs: version
+      runs-on: self-hosted
+      steps:
+        - uses: actions/checkout@v2
+        - name: Go to directory
+          run: cd $DIR        
+        - name: Git Reset
+          run: |
+            git reset --hard origin/master
+            git pull
+
+  npm:
+      runs-on: self-hosted
+      needs: pull
+      env:
+        DIR: ${{ secrets.DASH_DIR_DEV }}  
+      name: 📦 Build (NPM)
+      steps:
+        - name: Running NPM install
+          run: |
+            cd $DIR
+            npm install
+
+        - name: Audit fix
+          run: npm audit fix
+          continue-on-error: true
+
+
+  deploy:
+      name: 🚀 Launch
+      needs: npm
+      runs-on: self-hosted
+      env:
+        DIR: ${{ secrets.DASH_DIR_DEV }}
+      steps:
+        - name: Go go Power Rangers
+          run: | 
+            pm2 restart PLR
+
