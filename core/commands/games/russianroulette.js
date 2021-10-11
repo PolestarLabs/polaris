@@ -89,7 +89,7 @@ const startSinglePlayer = async (msg) => {
 		return msg.reply(v.singleplayer_no_bet);
 	}
 	if (BET < 100) return msg.reply(v.min_bet);
-	if (BET > 5000) return msg.reply(v.max_bet);
+	if (BET > 2000) return msg.reply(v.max_bet);
 
 	const hasFunds = await ECO.checkFunds(msg.author.id, BET);
 	if (!hasFunds) return msg.reply(v.singleplayer_no_funds);
@@ -233,11 +233,13 @@ const handlePlayers = async (msg, players, Game, gameFrame) => {
 
 const init = async (msg, args) => {
 
+	return await startMultiplayerGame(msg);
+
 	const P = { lngs: msg.lang };
 
 	if (args[0] === "multiplayer" || args[0] === "mp" || args[0] === "start") {
 
-		return await startMultiplayerGame(msg);
+		
 	}
 
 
@@ -249,7 +251,7 @@ module.exports = {
 	init,
 	cmd: "russianroulette",
 	pub: true,
-	argsRequired: true,
+ 
 	perms: 3,
 	cat: "games",
 	botPerms: ["attachFiles", "embedLinks", "manageMessages"],

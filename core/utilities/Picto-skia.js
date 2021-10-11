@@ -1,8 +1,8 @@
 const π = Math.PI;
-const Canvas = require("canvas");
+const Canvas = require("skia-canvas");
 const OGCanvas = require("canvas");
 const wrap = require("./canvaswrapper");
-const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
+const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
 const StackBlur = require('stackblur-canvas');
 const KnownErrors = new Map();
 
@@ -45,7 +45,7 @@ const blur = function Blur(rad = 10, x = 0, y = 0, w, h) {
 
 module.exports = {
   new: function newPicto(w = 800, h = 600) {
-    const canvas = Canvas.createCanvas(w,h);
+    const canvas = new Canvas.Canvas(w,h);
     const c = canvas.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -62,7 +62,7 @@ module.exports = {
         KnownErrors.set(errorMsg, 1);
       }
 
-      const canvas = Canvas.createCanvas(250, 250);
+      const canvas = new Canvas.Canvas(250, 250);
       const c = canvas.getContext("2d");
       c.fillStyle = "#F0F";
       c.fillRect(0, 0, 250, 250);
@@ -76,7 +76,7 @@ module.exports = {
       console.error(...args);
       throw new Error(err);
     }).then((img) => {
-      const canvas = Canvas.createCanvas(img.width, img.height);
+      const canvas = new Canvas.Canvas(img.width, img.height);
       const c = canvas.getContext("2d");
       c.blur = blur;
       c.drawImage(img, 0, 0);
@@ -99,7 +99,7 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text?.length||1) * 0.32);
 
-    const item = Canvas.createCanvas(w, h + H);
+    const item = new Canvas.Canvas(w, h + H);
     const c = item.getContext("2d");
 
     c.font = ctx.font;
@@ -133,7 +133,7 @@ module.exports = {
 
     if (font.toLowerCase().includes("italic")) w += ((w / text.length) * 0.32);
 
-    const item = Canvas.createCanvas(w, 1.1 * (h + H));
+    const item = new Canvas.Canvas(w, 1.1 * (h + H));
     const c = item.getContext("2d");
     c.font = ctx.font;
 
@@ -154,7 +154,7 @@ module.exports = {
   block2: function block(ctx, text, font = "14px", color = "#b4b4b8", W = 300, H = 200, options = {}) {
     text = unshitify(text);
     
-    const item = Canvas.createCanvas(W,H);
+    const item = new Canvas.Canvas(W,H);
     const c = item.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -187,7 +187,7 @@ module.exports = {
 
     console.log(font,'---',ctx.font,{options})
 
-    const item = Canvas.createCanvas(W,H);
+    const item = new Canvas.Canvas(W,H);
     const c = item.getContext("2d");
     c.antialias = "subpixel";
     c.filter = "best";
@@ -225,7 +225,7 @@ module.exports = {
     }
     if (!imgEl || !imgEl.width) return "#2b2b3b";
 
-    const canvas = Canvas.createCanvas(imgEl.width, imgEl.height);
+    const canvas = new Canvas.Canvas(imgEl.width, imgEl.height);
     const c = canvas.getContext("2d");
     const width = imgEl.naturalWidth || imgEl.offsetWidth || imgEl.width;
     const height = imgEl.naturalHeight || imgEl.offsetHeight || imgEl.height;
@@ -345,7 +345,7 @@ module.exports = {
     term = "level",
     font,
   ) {
-    const canvas = Canvas.createCanvas(size, size);
+    const canvas = new Canvas.Canvas(size, size);
     const ctx = canvas.getContext("2d");
     const rx = size / 2; const
       ry = rx;
@@ -425,7 +425,7 @@ module.exports = {
     const x = size + 10;
     const y = -size;
 
-    const hex = Canvas.createCanvas(size * 2 + 20, size * 2 + 20);
+    const hex = new Canvas.Canvas(size * 2 + 20, size * 2 + 20);
     const c = hex.getContext("2d");
     c.rotate(1.57);
     c.save();
@@ -479,7 +479,7 @@ module.exports = {
   makeRound: async function makeRound(size, pic) {
     const rx = size / 2; const
       ry = rx;
-    const canvas = Canvas.createCanvas(size, size);
+    const canvas = new Canvas.Canvas(size, size);
     const ctx = canvas.getContext("2d");
 
     const color = "#FFF";

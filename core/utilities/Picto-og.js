@@ -2,7 +2,7 @@ const π = Math.PI;
 const Canvas = require("canvas");
 const OGCanvas = require("canvas");
 const wrap = require("./canvaswrapper");
-const { fillTextWithTwemoji } = require("node-canvas-with-twemoji");
+const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
 const StackBlur = require('stackblur-canvas');
 const KnownErrors = new Map();
 

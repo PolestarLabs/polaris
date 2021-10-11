@@ -23,7 +23,6 @@ const init = async function (msg, args) {
     mal_id,
     episode,
     season,
-    is_adult,
     filename,
     at,
     tokenthumb,
@@ -31,6 +30,8 @@ const init = async function (msg, args) {
     anilist,
 
   } = res;
+  
+  const is_adult = res.anilist.isAdult
   const title_native = res.anilist.title.native
   const title_english = res.anilist.title.english
   const title_romaji = res.anilist.title.romaji
@@ -60,13 +61,21 @@ ${is_adult ? "\n🔞 **Adult warning**\n" : ""}
 `;
   // embed.thumbnail = {url: `https://trace.moe/thumbnail.php?anilist_id=${res.anilist_id}&file=${encodeURIComponent(res.filename)}&t=${res.at}&token=${res.tokenthumb}`}
 
+  let fileobj;
+  try{
+    fileobj = {
+      file: await resolveFile(videoLink),
+      name: (is_adult ? "SPOILER_" : "") + "pollux_anime_preview.mp4",
+    };
+
+  }catch(err){
+   console.log(videoLink) 
+  }
+
   Progression.emit("action.whatanime.success",{userID:msg.author.id, msg});
   msg.channel.send(
     { embed },
-    {
-      file: await resolveFile(videoLink),
-      name: (is_adult ? "SPOILER_" : "") + "pollux_anime_preview.mp4",
-    }
+    fileobj
   );
 
 };

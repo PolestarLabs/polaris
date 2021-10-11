@@ -52,11 +52,11 @@ const init = async (msg) => {
 
   const [userData, dailyPLXMember] = await Promise.all([
     DB.users.getFull(msg.author.id),
-    PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => null),
+    PLX.resolveMember(Premium.OFFICIAL_GUILD, msg.author.id).catch(() => msg.author),
   ]);
 
   // eslint-disable-next-line max-len, @typescript-eslint/no-unused-vars
-  const daily = await Daily.load(dailyPLXMember || msg.author);
+  const daily = await Daily.load(dailyPLXMember);
   const timedUsage = daily.timedUsage;
 
   if (["status", "stats"].includes(msg.args[0]?.toLowerCase())) {
@@ -333,6 +333,8 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
 
   P.username = msg.author.username;
   await msg.channel.send({
+    //TRANSLATE daily errands upsell
+    content: `**Here are your daily rewards.**\nCheck also \`${msg.prefix}errands\` for daily progression tasks and get more bonuses!`,
     embed: {
       description: `☕ ${rand$t("responses.daily.dailyBonus", P)}`,
       fields,

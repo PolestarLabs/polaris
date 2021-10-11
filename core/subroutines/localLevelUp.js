@@ -5,7 +5,7 @@ const autoLevelRoles = require("./autoLevelRoles");
 
 module.exports = async (servData,msg) => {
 
-	if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
+	
 	if (!servData) return;
 	if(!servData.modules) console.log("SERVDATA WITH NO MODULES".red, servData);
 	
@@ -42,7 +42,8 @@ module.exports = async (servData,msg) => {
 		await DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
 		
 		const lvupText = servData.modules.LVUP_text?.replaceAll("%lv%", currentCalculatedLevel);	
-
+		
+		if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 		msg.reply({embed:{
 			color: numColor(_UI.colors.blue),
 			description: lvupText || `:tada: **Level Up!** >> ${currentCalculatedLevel}`,

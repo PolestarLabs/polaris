@@ -8,9 +8,9 @@ const RUNNING_MONTH_LONG = new Date().toLocaleString("en", { month: "long" })
   .toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 7; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 9; // JANUARY = 0;
 
-const TURNING_DAY = 5; // when Prime starts
+const TURNING_DAY = 3; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
 
@@ -509,14 +509,19 @@ async function processRewards(userID, options) {
     const ownedStickers = userData.modules.stickerInventory;
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
-    const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id));
+    const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id)); ;
+    console.log({availableStickerList,stickerList});
     const availablePacks = packsList.filter((pkg) => !pkg.name.includes(RUNNING_YEAR));
 
     const lasts = [];
     if (tierPrizes.sticker_prize.LAST > 0) {
       let adds = tierPrizes.sticker_prize.LAST;
       while (adds-- > 0) {
-        const toPush = availableStickerList.pop();
+        const toPush = stickerList.pop();
+        if (!toPush) {
+          lasts.push( toPush.id );
+          break;
+        }
         stickersReport.push(toPush);
         lasts.push(toPush.id);
       }
@@ -623,7 +628,8 @@ async function processRewards(userID, options) {
 
   // FIXME replace this
   if (!userData.modules.EVT) {
-    await DB.users.set(userID, { "modules.EVT": 0 }).catch((err) => { console.error(err); return null; });
+    console.log("User has no EVT history");
+    //await DB.users.set(userID, { "modules.EVT": 0 }).catch((err) => { console.error(err); return null; });
   }
 
   const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; });

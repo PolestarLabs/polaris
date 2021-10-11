@@ -5,7 +5,7 @@ const globalLevelUp = require("./globalLevelUp.js");
 const customResponses = require("./customResponses.js");
 
 const { Bucket } = require("eris");
-global.levelUpQueue = new Bucket( PLX.guilds.size, 10e3, { latencyRef: { latency: 2e3 } });
+global.levelUpQueue = new Bucket( PLX.guilds.size * 100 , 10e3, { latencyRef: { latency: .5e3 } });
 
 
 const levelChecks = async (msg) => {
@@ -23,11 +23,10 @@ const levelChecks = async (msg) => {
     if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
       setImmediate( ()=> globalLevelUp(msg) );
     }
+
+    setImmediate( ()=> localLevelUp(servData,msg) );
   });
-  
-  if (!servData) return;
  
-  setImmediate( ()=> localLevelUp(servData,msg) );
  
 }
 

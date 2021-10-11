@@ -142,11 +142,11 @@ ${_emoji("future")} ${dailyAvailable
 
     end();
     success(message, Daily);
-    DEBUG_LOG();
+    // DEBUG_LOG();
     return null;
   } catch (e) {
     end();
-    DEBUG_LOG();
+    // DEBUG_LOG();
     throw e;
   }
 
