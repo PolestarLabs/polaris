@@ -53,7 +53,7 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: function getCanvas(img_path,fallback_url) {
+  getCanvas: function getCanvas(img_path,fallback_url="") {
     return Canvas.loadImage(img_path).catch((err) => {
       return Canvas.loadImage(fallback_url).catch(err=> {      
 
