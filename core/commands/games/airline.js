@@ -115,7 +115,7 @@ const init = async (msg, args) => {
 module.exports = {
   init,
   cmd: "airline",
-  pub: true,
+  pub: false,
   perms: 3,
   cat: "games",
   botPerms: ["attachFiles", "embedLinks"],
