@@ -8,8 +8,14 @@ class Airline {
     const airportData = await DB.airlines.AIRPORT.findOne({ id: airport });
     if (!airportData) return Promise.reject("Invalid airport ID.");
 
-    return ECO.pay((await this.airline).user, airportData.slotPrice, "airlines_buy_slot").then(async () => {
-      return DB.airlines.SLOTS.new((await this.airline).id, airportData.id, time);
+    await DB.airlines.SLOTS.validate((await this.airline).id, airportData.id).then(ok=>{
+      return ECO.pay((await this.airline).user, airportData.slotPrice, "airlines_buy_slot").then(async () => {
+        return DB.airlines.SLOTS.new((await this.airline).id, airportData.id, time);
+      }).catch(err=>{
+        return Promise.reject("Insufficient Funds");
+      });
+    }).catch(err=>{
+      return Promise.reject("Validation Error:" + err);
     });
   }
 
