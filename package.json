@@ -13,7 +13,7 @@
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
     "@polestar/constants": "github:PolestarLabs/constants#b3e559e4d93db705cb080f2b8d3fc980d0a464e1",
-    "@polestar/database_schema": "github:PolestarLabs/db-schema#0b76fb5ddf10f0e894b0feedf8612c65d79831fa",
+    "@polestar/database_schema": "github:PolestarLabs/db-schema#14e54170f04fc63f8bf7b78aa8a32d57c015c35d",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
     "@polestar/morse": "github:PolestarLabs/morse",
