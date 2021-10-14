@@ -1,11 +1,20 @@
 const Airline = require("../../archetypes/Airline");
 const RegionalIndicators = require("../../utilities/RegionalIndicators");
+const RARS = ["C","U","R","SR","UR"];
 
 const STARTER_AIRPORTS_OPTIONS = DB.airlines.AIRPORT.find({starter:true});
 const STARTER_AIRPLANE_OPTIONS = DB.airlines.AIRPLANES.find({starter:true});
 
 
 const init = async (msg, args) => {
+
+  function serverColor() {
+    const roles = msg.member.roles.map((r) => msg.guild.roles.get(r)).filter((x) => x.color).sort((a, b) => b.position - a.position);
+    const color = roles[0]?.color || numColor(_UI.colors.red);
+    return `${Number(color).toString(16)}`;
+  }
+
+
   console.log(args);
 
   if (args[0] === "create" && args[1]?.match(/^([A-Z0-9]{4})$/)) {
@@ -51,23 +60,26 @@ const init = async (msg, args) => {
         max_values: 1,
         options: (await STARTER_AIRPLANE_OPTIONS).map(plane=> {
           return {
-            label: `${plane.name}`,
+            label: `${RegionalIndicators(plane.country)} ${plane.name}`,
             value: plane.id,
             description:  `Range: ${plane.range}km | Capacity: ${plane.capacity} • ${[...Array(plane.price).keys()].map(x=>"⭐").join('') } `,
-            emoji: { name: RegionalIndicators(plane.country) }  
+            emoji: { id:  _emoji( RARS[plane.price -1]).id }  
           }
   
         })
       };
 
+      let svc = serverColor()
+     console.log(svc)
 
       const embed = {
         title: "Choose your starter airport and your starter plane",
         description: `**${airlineName}** (${airlineID})`,
+        thumbnail: {url: `${paths.GENERATORS}/airlines/generic-logo.png?name=${airlineID}&c1=${svc}`},
         fields: [
-          {name:"Starter Hub",value:"\u200b",inline:true},
-          {name:"Starter Plane",value:"\u200b",inline:true},
-          {name:"Tally",value:"\u200b",inline:0}
+          {name:"🟣 Starter Hub",value:"\u200b",inline:true},
+          {name:"🔵 Starter Plane",value:"\u200b",inline:true},
+          {name:"Tally (Max 6)",value:"⚫⚫⚫⚫⚫⚫\n\u200b",inline:0}
         ]
       };
 
@@ -82,7 +94,7 @@ const init = async (msg, args) => {
         ],
       });
 
-      let collector = tray.createButtonCollector(int=>int.userID===msg.author.id,{idle:60e3,removeButtons:false});
+      let collector = tray.createButtonCollector(int=>int.userID===msg.author.id,{time:1000e3, idle:60e3,removeButtons:false,disableButtons:false});
       let planeScore =0, hubScore = 0;
 
       collector.on("click", async (i) => {
@@ -98,14 +110,26 @@ const init = async (msg, args) => {
           embed.fields[0].value = `${RegionalIndicators(air.country)} ${air.name}`
           hubScore = air.tier||0;
         }
-        
-        embed.fields[2].value = ` ${[...Array(hubScore + planeScore).keys()].map(x=>"⭐").join('') } \n`+
-        ( (hubScore + planeScore) > 6 ? `Score too high. Max is 6` : "" );
+
+
+
+        embed.fields[2].value = ` ${
+          
+          [...Array(hubScore).keys()].map(x=>"🟣").join('') +
+          [...Array( Math.min(planeScore, (6-hubScore) ) ).keys()].map(x=>"🔵").join('') +
+          [...Array( Math.max(0, hubScore+planeScore - 6)  ).keys()].map(x=>"🔴").join('') +
+          [...Array( Math.max(6 - (hubScore+planeScore),0)  ).keys()].map(x=>"⚫").join('')
+
+        } \n`+
+        ( (hubScore + planeScore) > 6 ? `Score too high. Max is 6` : "\u200b" );
 
 
         prompt.edit({embed});
         
       })
+
+
+
 
 
     }
@@ -121,3 +145,5 @@ module.exports = {
   botPerms: ["attachFiles", "embedLinks"],
   aliases: ["al"],
 };
+
+
