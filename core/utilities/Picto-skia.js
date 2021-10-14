@@ -69,6 +69,7 @@ module.exports = {
         c.fillStyle = "#F0F";
         c.fillRect(0, 0, 250, 250);
         c.blur = blur;
+        canvas.failed = true;
         return canvas;
       })
     });
