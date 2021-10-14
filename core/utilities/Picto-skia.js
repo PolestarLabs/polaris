@@ -53,21 +53,24 @@ module.exports = {
     return canvas;
   },
 
-  getCanvas: function getCanvas(img_path) {
+  getCanvas: function getCanvas(img_path,fallback_url) {
     return Canvas.loadImage(img_path).catch((err) => {
-      let errorMsg = "• ".red + (img_path.toString().replace("undefined", "?")).split('/').map(w => w.includes('.') ? w.yellow : w).join("/") + " not loaded.".gray;
+      return Canvas.loadImage(fallback_url).catch(err=> {      
 
-      if (!KnownErrors.get(errorMsg)) {
-        console.error(errorMsg);
-        KnownErrors.set(errorMsg, 1);
-      }
+        let errorMsg = "• ".red + (img_path.toString().replace("undefined", "?")).split('/').map(w => w.includes('.') ? w.yellow : w).join("/") + " not loaded.".gray;
 
-      const canvas = new Canvas.Canvas(250, 250);
-      const c = canvas.getContext("2d");
-      c.fillStyle = "#F0F";
-      c.fillRect(0, 0, 250, 250);
-      c.blur = blur;
-      return canvas;
+        if (!KnownErrors.get(errorMsg)) {
+          console.error(errorMsg);
+          KnownErrors.set(errorMsg, 1);
+        }
+
+        const canvas = new Canvas.Canvas(250, 250);
+        const c = canvas.getContext("2d");
+        c.fillStyle = "#F0F";
+        c.fillRect(0, 0, 250, 250);
+        c.blur = blur;
+        return canvas;
+      })
     });
   },
 
