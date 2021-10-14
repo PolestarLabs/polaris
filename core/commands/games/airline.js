@@ -1,8 +1,8 @@
 const Airline = require("../../archetypes/Airline");
 const RegionalIndicators = require("../../utilities/RegionalIndicators");
 
-const STARTER_AIRPORTS_OPTIONS = DB.airlines.AIRPORT.find({starer:true});
-const STARTER_AIRPLANE_OPTIONS = DB.airlines.AIRLINES.find({starer:true});
+const STARTER_AIRPORTS_OPTIONS = DB.airlines.AIRPORT.find({starter:true});
+const STARTER_AIRPLANE_OPTIONS = DB.airlines.AIRLINES.find({starter:true});
 
 
 const init = async (msg, args) => {
@@ -41,7 +41,7 @@ const init = async (msg, args) => {
   
         }))
       };
-      
+
 
       msg.channel.send({
         embed: { title: "Choose your starter airport and your starter plane" },
