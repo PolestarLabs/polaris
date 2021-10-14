@@ -76,7 +76,7 @@ const init = async (msg, args) => {
         max_values: 1,
         options: (await STARTER_AIRPLANE_OPTIONS).map(plane=> {
           return {
-            label: `${RegionalIndicators(plane.country)} ${plane.name}`,
+            label: `${plane.name}`,
             value: plane.id,
             description:  `Range: ${plane.range}km | Capacity: ${plane.capacity} • ${[...Array(plane.price).keys()].map(x=>"⭐").join('') } `,
             emoji:  { id: EMJ[plane.make] }   //{ id:  _emoji( RARS[plane.price -1]).id }  
@@ -112,13 +112,13 @@ const init = async (msg, args) => {
 
       let collector = tray.createButtonCollector(int=>int.userID===msg.author.id,{time:1000e3, idle:60e3,removeButtons:false,disableButtons:false});
       let planeScore =0, hubScore = 0;
-      let thisIATA, thisMake;
+      let thisIATA, planeID;
 
       collector.on("click", async (i) => {
         const [selection] = i.data.values || [null];
         if (i.data.custom_id === "airplane_select" ){
           let air = (await STARTER_AIRPLANE_OPTIONS).find(x=>x.id === selection);
-          thisMake = air.make;
+          planeID = air.id;
           embed.fields[1].value = `<:${air.make}:${EMJ[air.make]}> ${RegionalIndicators(air.country)} ${air.name}`
           planeScore = air.price||0;
 
@@ -142,7 +142,7 @@ const init = async (msg, args) => {
         } \n`+
         ( (hubScore + planeScore) > 6 ? `Score too high. Max is 6` : "\u200b" );
 
-        embed.image = {url: `${paths.GENERATORS}/airlines/starting.png?IATA=${thisIATA}&make=${thisMake}`}
+        embed.image = {url: `${paths.GENERATORS}/airlines/starting.png?IATA=${thisIATA}&id=${planeID}`}
 
         prompt.edit({embed});
         
