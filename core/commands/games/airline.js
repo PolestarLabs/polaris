@@ -26,12 +26,12 @@ const init = async (msg, args) => {
       break;
     case "create": {
       
-      msg.channel.send("Now, give your airline a name. Be nice and keep it shorter than 35 characters.");
+      msg.channel.send("Give your airline a name. Be nice and keep it shorter than 35 characters.");
       filter = (m) => m.author.id === msg.author.id && m.content.length <= 35;
       const c2 = await msg.channel.awaitMessages(filter, { time: 30e3, maxMatches: 1 });
       const airlineName = c2[0].content;
 
-      msg.channel.send("A new airline? Awesome! Tell me a 4-digit alphanumeric code for your new airline.");
+      msg.channel.send("Now give it a 4-digit alphanumeric code. This will be used in callsigns and flight numbers.");
       let filter = (m) => m.author.id === msg.author.id && m.content.match(/^([A-z0-9]{4})$/);
       const c1 = await msg.channel.awaitMessages(filter, { time: 30e3, maxMatches: 1 });
       const airlineID = c1[0].content.toUpperCase();
