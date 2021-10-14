@@ -6,6 +6,20 @@ const STARTER_AIRPORTS_OPTIONS = DB.airlines.AIRPORT.find({starter:true});
 const STARTER_AIRPLANE_OPTIONS = DB.airlines.AIRPLANES.find({starter:true});
 
 
+const EMJ = {
+  airbus: "898260332714291200",
+  fokker:"898260332739457096",
+  boeing: "898260332806565899",
+  bombardier: "898260332689096774",
+  cessna: "898260332957548565",
+  dassault: "898260332953362473",
+  embraer: "898260332764618763",
+  namc: "898260334832390174",
+  mcdonnel: "898260333016281098",
+  tupolev: "898260333066584104",
+  comac: "898261986096324618"
+}
+
 const init = async (msg, args) => {
 
   function serverColor() {
@@ -27,12 +41,12 @@ const init = async (msg, args) => {
     case "create": {
       
       msg.channel.send("Give your airline a name. Be nice and keep it shorter than 35 characters.");
-      filter = (m) => m.author.id === msg.author.id && m.content.length <= 35;
+      let filter = (m) => m.author.id === msg.author.id && m.content.length <= 35;
       const c2 = await msg.channel.awaitMessages(filter, { time: 30e3, maxMatches: 1 });
       const airlineName = c2[0].content;
 
       msg.channel.send("Now give it a 4-digit alphanumeric code. This will be used in callsigns and flight numbers.");
-      let filter = (m) => m.author.id === msg.author.id && m.content.match(/^([A-z0-9]{4})$/);
+      filter = (m) => m.author.id === msg.author.id && m.content.match(/^([A-z0-9]{4})$/);
       const c1 = await msg.channel.awaitMessages(filter, { time: 30e3, maxMatches: 1 });
       const airlineID = c1[0].content.toUpperCase();
 
@@ -65,7 +79,7 @@ const init = async (msg, args) => {
             label: `${RegionalIndicators(plane.country)} ${plane.name}`,
             value: plane.id,
             description:  `Range: ${plane.range}km | Capacity: ${plane.capacity} • ${[...Array(plane.price).keys()].map(x=>"⭐").join('') } `,
-            emoji: { id:  _emoji( RARS[plane.price -1]).id }  
+            emoji:  { id: EMJ[plane.make] }   //{ id:  _emoji( RARS[plane.price -1]).id }  
           }
   
         })
@@ -98,18 +112,21 @@ const init = async (msg, args) => {
 
       let collector = tray.createButtonCollector(int=>int.userID===msg.author.id,{time:1000e3, idle:60e3,removeButtons:false,disableButtons:false});
       let planeScore =0, hubScore = 0;
+      let thisIATA, thisMake;
 
       collector.on("click", async (i) => {
         const [selection] = i.data.values || [null];
         if (i.data.custom_id === "airplane_select" ){
           let air = (await STARTER_AIRPLANE_OPTIONS).find(x=>x.id === selection);
-          embed.fields[1].value = `${RegionalIndicators(air.country)} ${air.name}`
+          thisMake = air.make;
+          embed.fields[1].value = `<:${air.make}:${EMJ[air.make]}> ${RegionalIndicators(air.country)} ${air.name}`
           planeScore = air.price||0;
 
         }
         if (i.data.custom_id === "airline_select_hub" ){
           let air = (await STARTER_AIRPORTS_OPTIONS).find(x=>x.ICAO === selection);
           embed.fields[0].value = `${RegionalIndicators(air.country)} ${air.name}`
+          thisIATA = air.IATA;
           hubScore = air.tier||0;
         }
 
@@ -125,6 +142,7 @@ const init = async (msg, args) => {
         } \n`+
         ( (hubScore + planeScore) > 6 ? `Score too high. Max is 6` : "\u200b" );
 
+        embed.image = {url: `${paths.GENERATORS}/airlines/starting.png?IATA=${thisIATA}&make=${thisMake}`}
 
         prompt.edit({embed});
         
