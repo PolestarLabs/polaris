@@ -2,6 +2,7 @@ const ECO = require('./Economy');
 class Airline {
   constructor(id) {
     this.airline = DB.airlines.AIRLINES.findOne({ id });
+    this.id = id
   }
 
   async buySlot(airport, time) {
@@ -28,15 +29,12 @@ class Airline {
     });
   }
 
-  async createAirline(airlineID, airlineName, ownerID) {
-    if (airlineName.length > 20) return Promise.reject("Airline name can't be longer than 20 chars.");
-    if (airlineID.length !== 4) return Promise.reject("Airline ID should have 4 chars.");
-
+  createAirline(airlineID, airlineName, ownerID) {
     return DB.airlines.AIRLINES.new(ownerID, airlineID, airlineName);
   }
 
   async createRoute(departure, destination, airplane, ticketPrice) {
-    return DB.airlines.ROUTES.new(departure, destination, (await this.airline).id, airplane, ticketPrice);
+    return DB.airlines.ROUTES.new(departure, destination, this.id, airplane, ticketPrice);
   }
 
   deleteRoute(route) {
