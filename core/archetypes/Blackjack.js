@@ -1,5 +1,14 @@
 const decks = new Map();
-const games = new Map();
+const games = {
+  set(playerID) { 
+    const key = `blackjack-ongoing:${playerID}`;
+    PLX.redis.set( key, true); 
+    PLX.redis.expire( key , 30);
+  },
+  has(playerID) { return PLX.redis.aget(`blackjack-ongoing:${playerID}`) },
+  delete(playerID) { return PLX.redis.expire(`blackjack-ongoing:${playerID}`, 1) }
+};
+
 const RANKS = [ "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" ];
 const SUITS = [ "C", "D", "H", "S" ];
 const DECK_TEMPLATE = SUITS
@@ -57,7 +66,7 @@ class Blackjack {
   }
 
   endGame() {
-    return games["delete"](this.playerID);
+    return games.delete(this.playerID);
   }
 
   cardsRemaining() {
