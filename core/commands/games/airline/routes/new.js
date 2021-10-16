@@ -2,7 +2,7 @@ const RegionalIndicators = require("../../../../utilities/RegionalIndicators");
 
 const newRoute = async (msg, args, aData) => {
   if (aData) {
-    await promptDestinations(msg, aData.airlineName, aData.thisIATA, true);
+    await promptDestinations(msg, aData.airlineName, aData.thisIATA, true, false);
   } else {
     msg.channel.send("What airline would you like to create a new route in?");
     /* await promptDestinations(msg, aData.airlineName); */
