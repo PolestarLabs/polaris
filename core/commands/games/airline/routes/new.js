@@ -40,7 +40,7 @@ const promptDestinations = async (msg, name, iata, starter = false, fromPicker =
         label: port.name,
         emoji: { name: RegionalIndicators(port.country) },
         default: true,
-        value: port.thisIATA,
+        value: port.IATA,
       },
     ];
   } else {
@@ -56,8 +56,8 @@ const promptDestinations = async (msg, name, iata, starter = false, fromPicker =
 
   const embedMsg = fromPicker ? await msg.edit({ embed }) : await msg.channel.send({ embed });
   const prompt = await msg.channel.send({
-    content: "",
-    components: [ { type: 1, components: departureSelector }, { type: 1, components: arrivalSelector } ],
+    content: "\u200b",
+    components: [ { type: 1, components: [departureSelector] }, { type: 1, components: [arrivalSelector] } ],
   });
 
   prompt.createButtonCollector((i) => i.userID === msg.author.id, {
