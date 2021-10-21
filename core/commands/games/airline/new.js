@@ -128,6 +128,7 @@ const airlineNew = async (msg, args) => {
     time: 1000e5, idle: 60e3, removeButtons: true, disableButtons: false,
   });
 
+  // TODO switch to awaitButtonClick
   buttonInput.on("click", async (i) => {
     if (i.data.custom_id === "airline_cancel") {
       prompt.embeds[0].color = 16527440;
@@ -146,6 +147,8 @@ const airlineNew = async (msg, args) => {
       await prompt.delete();
       await tray.delete();
       await new Airline(airlineID).createAirline(airlineID, airlineName, msg.author.id);
+      await DB.airlines.AIRPLANES.buy(airlineID, planeID);
+      await DB.airlines.SLOTS.new(airlineID, (await DB.airlines.AIRPORT.findOne({ IATA: thisIATA }))._id, Date.now());
 
       const route = await msg.channel.send({
         content: `Gorgeous! Your airline **${airlineName}** (${airlineID}) has been created! Would you like to create your first route?`,
