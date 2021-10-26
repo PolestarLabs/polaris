@@ -26,7 +26,7 @@ function convertToEvent(i, box) {
 
 module.exports = {
   lootbox: async function loot(trigger) {
-    return;
+    //return;
     // const $t = locale.getT();
 
     if (PLX.restarting) return false;
