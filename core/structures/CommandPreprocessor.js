@@ -171,6 +171,12 @@ const DEFAULT_CMD_OPTS = {
       .digest("hex")}`).toString(24);
     INSTR.inc("command.errors", [ `shard:${msg.guild?.shard?.id}`, `guild:${msg.guild?.id}`, `command:${msg.command.label}`, "status:error" ]);
 
+    const knownError = await DB.globals.findOne({code: errorCode, type: "errorCode", known: true });
+    if (!knownError) await DB.globals.updateOne({code: errorCode},{ $set:{ known: false , type: "errorCode"},$inc:{ocurrences: 1} });
+    else await DB.globals.updateOne({code: errorCode}, { $inc:{ocurrences: 1} });
+
+
+
     /*
     Sentry.setTag("module", msg.command.module);
     Sentry.setTag("type", "USER-FACING ERROR");
@@ -234,7 +240,13 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
           // PLX.beta || cfg.testChannels.includes(msg.channel.id)
           // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
           // ?
-            `Error Code: **\`${errorCode}\`**`
+          `Error Code: **\`${errorCode}\`**` + 
+          knownError?.details ? "<:statOPL:712316874511351869> **This is a known error!**"+
+          `Root: ${knownError.details.cause}`+
+          "Course of action:" +
+          `${knownError.details.solution}`+
+          "*Contact Support if the solution above does not work or if there's no solution available.*" 
+          : ''
           // : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },

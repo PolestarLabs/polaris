@@ -612,7 +612,7 @@ const init = async (msg, args) => {
   v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 });
   v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: MAX_BET }).replace("%emj%", _emoji("rubine"));
 
-  if (Blackjack.gameExists(msg.author.id)) {
+  if ( await Blackjack.gameExists(msg.author.id)) {
     return msg.reply(v.ONGOING);
   }
 
@@ -860,6 +860,7 @@ const init = async (msg, args) => {
       }
 
       if (splitWins) {
+        console.log({splitWins})
         Progression.emit("streak.blackjack.win",    { value: splitWins, msg, userID: msg.author.id });
         Progression.emit("play.blackjack.winsplit", { value: splitWins, msg, userID: msg.author.id })
       }
