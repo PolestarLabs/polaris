@@ -12,6 +12,7 @@ function uptime(millis){
 
 const init = async function (msg){
 
+	const ver = require('../../../package.json').version;
 	const commit = await exec("git rev-parse --short HEAD");
 	const server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
 	const user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
@@ -67,7 +68,7 @@ const init = async function (msg){
 	const embed = {
 		title: "🎀 Pollux • Your new favorite assistant.",
 		url: paths.DASH,
-		description: `Patch \`${commit.trim()}\` | Database \`${DB.version}\` | Engine \`Eris v${PLX.engine.VERSION}\``,
+		description: `Patch [\`v${ver}\`](https://ptb.discord.com/channels/277391723322408960/712055672799232092 "See patch notes • ${commit}") | Database \`${DB.version}\` | Engine \`Eris v${PLX.engine.VERSION}\``,
 		color: parseInt(await (await Picto.avgColor(PLX.user.avatarURL).catch(e=>"0")).replace('#',''),16) || 16724821,
 		fields: [
 			{
@@ -83,7 +84,7 @@ const init = async function (msg){
 				value: `𝚃𝚎𝚌𝚑𝚗𝚒𝚌𝚊𝚕 𝚂𝚝𝚊𝚝𝚞𝚜\n`+
 				`${_emoji("cog")}   **Latency** \`${ping}\`\n`+
 				`${_emoji("memslot")}   **Memory** \`${ram_usage}\`\n\n`+
-				`${_emoji("cpu")}   **Uptimes** \`\`\`cs\n[ Shard ] ${uptime(PLX.uptime)}\n[Cluster] ${uptime(process.uptime()*1e3)}\n\`\`\` `,
+				`${_emoji("cpu")}   **Uptimes** \`\`\`cs\n[ Shard ] ${uptime(PLX.uptime)}\n[Cluster] ${uptime(process.uptime()*1e3).slice(0,11)}\n\`\`\` `,
 				inline: true
 			},
 		 
