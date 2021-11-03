@@ -28,6 +28,7 @@ const cmdPreproc      = require("./core/structures/CommandPreprocessor");
 const Gearbox         = require("./core/utilities/Gearbox");
 const cfg             = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
+const TopGG           = require("@top-gg/sdk");
 
 // STARTUP FLAIR
 // process.stdout.write("\x1Bc");
@@ -37,6 +38,7 @@ console.log(require("./resources/asciiPollux.js").ascii());
 
 
 // || isPRIME ? "prime" : "main";
+const TopGG_api = new TopGG.Api( cfg.topgg );
 
 const DummyFlavorDefault = {
   token: cfg.token,
@@ -289,6 +291,16 @@ PLX.on("ready", () => {
 });
 
 PLX.once("ready", async () => {
+
+  if (PLX._flavordata?.name === "main" ){
+    await TopGG_api.postStats({
+      serverCount: TOTAL_SHARDS * PLX.guilds.size ,
+      shardCount: TOTAL_SHARDS
+    });
+  }
+
+  PLX.topGG = TopGG_api;
+
   PLX.on("rawWS", (payload) => {
     if (payload.t === "INTERACTION_CREATE") {
       require("./eventHandlers/interactions")(payload);
@@ -426,6 +438,8 @@ function postConnect() {
   console.log("Discord Client Connected".cyan);
   initializeEvents();
   console.log("•".cyan,"Events Listening");
+  
+
 
   // POST STATS TO LISTS
 }
