@@ -5,7 +5,6 @@ const autoLevelRoles = require("./autoLevelRoles");
 
 module.exports = async (servData,msg) => {
 
-	
 	if (!servData) return;
 	if(!servData.modules) console.log("SERVDATA WITH NO MODULES".red, servData);
 	
@@ -13,7 +12,8 @@ module.exports = async (servData,msg) => {
 			serverID  = servData.id,
 			userID 	 = msg.author.id;
 			
-	if (servData.switches?.chExpOff?.includes(channelID)) return;
+
+	if (servData.switches?.chExpOff?.includes(channelID) === true) return;
 	//---
 
 	
@@ -23,32 +23,36 @@ module.exports = async (servData,msg) => {
 	//---
 	
 	const { upfactorA, upfactorB } = servData.progression || { upfactorA: 280, upfactorB: 9 };
-	const currentCalculatedLevel = xp_to_level(LOCAL_RANK.exp, upfactorA, upfactorB);	
+	const currentCalculatedLevel = xp_to_level(LOCAL_RANK.exp, upfactorA, upfactorB);
 
-
-	if (currentCalculatedLevel !== LOCAL_RANK.level) {
-		DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
-	}
 
 	DB.localranks.incrementExp({ U: userID, S: serverID });
 
-	if (!servData.modules.LVUP_local || servData.switches?.chLvlUpOff?.includes(channelID)) return;
+	if (!servData.modules.LVUP_local || servData.switches?.chLvlUpOff?.includes(channelID) === true) return;
 	//---
-
 	if (currentCalculatedLevel > LOCAL_RANK.level) {
+
+		console.log('ishi')
 		
-		if (servData.modules.AUTOROLES) autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
+		if (servData.modules.AUTOROLES && msg.guild.permissionsOf(PLX.user.id).has("manageRoles")) autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
+
+		console.log('pass test')
 
 		await DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
 		
 		const lvupText = servData.modules.LVUP_text?.replaceAll("%lv%", currentCalculatedLevel);	
 		
+		console.log('hassend')
 		if (!msg.channel.permissionsOf(PLX.user.id).has("sendMessages")) return;
 		msg.reply({embed:{
 			color: numColor(_UI.colors.blue),
 			description: lvupText || `:tada: **Level Up!** >> ${currentCalculatedLevel}`,
 			footer: { icon_url: msg.author.avatarURL, text: msg.author.tag },		
 		}});
+		return;
 	}
 
+	if (currentCalculatedLevel !== LOCAL_RANK.level) {
+		DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
+	}
 }
