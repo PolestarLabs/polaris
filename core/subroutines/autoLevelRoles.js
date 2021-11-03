@@ -7,9 +7,10 @@ module.exports = (servData,userID,curLevelLocal) => {
 	const roleStack = servData.modules.autoRoleStack !== false;
 	let errored = 0;
 
-	for (role in AUTOS){
-		const [Level,RoleID] = role;
-
+	
+	for (role of AUTOS){
+		const [RoleID,Level] = role;
+		
 		// Add Current
 		if (Level === curLevelLocal)
 			PLX.addGuildMemberRole(
