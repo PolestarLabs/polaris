@@ -23,10 +23,7 @@ const levelChecks = async (msg) => {
       setImmediate( ()=> localLevelUp(servData,msg) );
       return;
     };
-    servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
-    msg.guild.serverData = servData;
-
-
+    msg.guild.serverData = await DB.servers.findOne({ id: msg.guild.id }).cache();
   // });
  
  
