@@ -30,7 +30,7 @@ module.exports = {
     // const $t = locale.getT();
 
     if (PLX.restarting) return false;
-
+    
     if (trigger.content === "pick" && !trigger.channel.natural) {
       return DB.users.set(trigger.author.id, { $inc: { "modules.exp": -10 } });
     }
@@ -43,7 +43,7 @@ module.exports = {
     ];
     const msg = trigger.content.toLowerCase();
 
-    if (regexes.some((r) => msg.match(r))) return false;
+    if (regexes.some((r) => msg.match(r)) && (trigger.author.id !== "88120564400553984")) return false;
 
     const SVR = trigger.guild;
     const CHN = trigger.channel;
@@ -52,7 +52,8 @@ module.exports = {
     const bC = SVR.members.filter((m) => m.bot).length;
 
     if (mC - bC < 10) return false; // Guilds with few humans
-    if (bC / mC <= 0.1) return false; // Guilds with "excessive" human to bot ratio
+    if (bC / mC >= 0.1) return false; // Guilds with "excessive" human to bot ratio
+
 
     // FIXME This is pooling the DB on every message
     if (!trigger.guild.switches || !trigger.guild.event) {
@@ -134,6 +135,7 @@ module.exports = {
     }
 
     // if(trigger.channel.id=="426308107992563713") droprate= 777;
+    console.log(trigger.content)
     const dropcondition = droprate === 777 || (trigger.content === "fdropt" && trigger.author.id === "88120564400553984");
 
     if (dropcondition) console.log(`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `.red.bgYellow);
