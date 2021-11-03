@@ -139,8 +139,8 @@ const drawTable = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 
   const [fel, insurGlow, insurEnabled, dio, bWin, bLose, bJoker, stando, alphamask] = await constantAssets;
   const [chip, chipI, you, me, bjk, joker] = await Promise.all([
-    Picto.getCanvas(`${_ASSETS}chips-${chips}.png`),
-    insurance ? Picto.getCanvas(`${_ASSETS}chips-${Math.ceil(chips / 2)}.png`) : null,
+    Picto.getCanvas(`${_ASSETS}/chips-${chips}.png`),
+    insurance ? Picto.getCanvas(`${_ASSETS}/chips-${Math.ceil(chips / 2)}.png`) : null,
     drawOpts.enemyStando ? dio : Picto.getCanvas(PLX.user.displayAvatarURL),
     Picto.getCanvas(msg.author.displayAvatarURL),
     bjkWIN ? bWin
