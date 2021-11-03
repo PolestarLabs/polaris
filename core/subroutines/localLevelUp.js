@@ -1,6 +1,6 @@
 
 const { xp_to_level,	level_to_xp } = require("./_consts");
-const getLocalRank = (GID,UID) => DB.localranks.findOne({ user: UID, server: GID }).cache();
+const getLocalRank = (GID,UID) => DB.localranks.findOne({ user: UID, server: GID }).noCache();
 const autoLevelRoles = require("./autoLevelRoles");
 
 module.exports = async (servData,msg) => {
