@@ -17,19 +17,19 @@ const Picto = require("../../utilities/Picto");
 const deckManager = require("../inventory/decks.js");
 const Blackjack = require("../../archetypes/Blackjack.js");
 
-const _ASSETS = `${paths.BUILD}games/blackjack/`;
+const _ASSETS = `${paths.BUILD}games/blackjack`;
 const ECO = require("../../archetypes/Economy.js");
 
 const constantAssets = Promise.all([
-  Picto.getCanvas(`${paths.Build}/games/blackjack/feltro.png`),
-  Picto.getCanvas(`${paths.Build}/games/blackjack/ins_avail.png`),
-  Picto.getCanvas(`${paths.Build}/games/blackjack/ins_using.png`),
-  Picto.getCanvas(`${_ASSETS}dio.png`),
-  Picto.getCanvas(`${_ASSETS}BLACKJACK-win.png`),
-  Picto.getCanvas(`${_ASSETS}BLACKJACK-lost.png`),
-  Picto.getCanvas(`${paths.Build}games/blackjack/JOKER-win.png`),
+  Picto.getCanvas(`${_ASSETS}/feltro.png`),
+  Picto.getCanvas(`${_ASSETS}/ins_avail.png`),
+  Picto.getCanvas(`${_ASSETS}/ins_using.png`),
+  Picto.getCanvas(`${_ASSETS}/dio.png`),
+  Picto.getCanvas(`${_ASSETS}/BLACKJACK-win.png`),
+  Picto.getCanvas(`${_ASSETS}/BLACKJACK-lost.png`),
+  Picto.getCanvas(`${_ASSETS}/JOKER-win.png`),
   Picto.getCanvas(`${paths.BUILD}STANDO.png`),
-  Picto.getCanvas(`${_ASSETS}alphamask.png`),
+  Picto.getCanvas(`${_ASSETS}/alphamask.png`),
 ]);
 
 /**
