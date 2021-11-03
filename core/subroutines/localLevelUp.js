@@ -32,11 +32,7 @@ module.exports = async (servData,msg) => {
 	//---
 	if (currentCalculatedLevel > LOCAL_RANK.level) {
 
-		console.log('ishi')
-		
 		if (servData.modules.AUTOROLES && msg.guild.permissionsOf(PLX.user.id).has("manageRoles")) autoLevelRoles(servData,msg.author.id,currentCalculatedLevel);
-
-		console.log('pass test')
 
 		await DB.localranks.set({ user: userID, server: serverID }, { $set: { level: currentCalculatedLevel } });
 		
