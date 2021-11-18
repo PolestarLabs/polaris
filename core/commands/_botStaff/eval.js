@@ -21,7 +21,7 @@ const clean = (text) => {
   return output;
 };
 
-const devs = ["88120564400553984", "253600545972027394", "124989722668957700"];
+const devs = ["88120564400553984", "253600545972027394", "124989722668957700", "163200584189476865"];
 
 const init = async (msg) => {
   if (!devs.includes(msg.author.id)) {
