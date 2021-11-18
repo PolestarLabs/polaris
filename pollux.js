@@ -246,8 +246,10 @@ DBSchema(dbConnectionData, {
   global.DB = Connection;
 
   try {
-    (require("./core/archetypes/Progression.js")).init();
-    (require("./core/archetypes/Achievements.js")).init();
+    let ProgMgr = require("@polestar/progression");
+    ProgMgr.init(PLX)
+    //(require("./core/archetypes/Progression.js")).init();
+    // (require("./core/archetypes/Achievements.js")).init();
   } catch (err) {
     console.error(err);
     // process.exit(1);
