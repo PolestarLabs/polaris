@@ -171,7 +171,7 @@ module.exports = {
     return array;
   },
   capitalize: function capitalize(string) {
-    return (`${string ?? ""}`).charAt(0).toUpperCase() + string.slice(1);
+    return (`${string ?? ""}`).charAt(0).toUpperCase() + (`${string ?? ""}`).slice(1);
   },
   objCount: function count(array, what) {
     let it = 0; // go
