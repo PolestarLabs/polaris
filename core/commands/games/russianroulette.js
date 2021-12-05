@@ -83,13 +83,13 @@ const startSinglePlayer = async (msg) => {
 
 	let v = STRINGS({ lngs: msg.lang });
 
-	const BET = parseInt(msg.args[0]);
+	const BET = ~~(parseInt(msg.args[0]));
 
 	if (!BET) {
 		return msg.reply(v.singleplayer_no_bet);
 	}
 	if (BET < 100) return msg.reply(v.min_bet);
-	if (BET > 2000) return msg.reply(v.max_bet);
+	if (BET > 1000) return msg.reply(v.max_bet);
 
 	const hasFunds = await ECO.checkFunds(msg.author.id, BET);
 	if (!hasFunds) return msg.reply(v.singleplayer_no_funds);
@@ -316,8 +316,9 @@ async function startMultiplayerGame(msg) {
 
 		let userBet = parseInt(joinMsg.content.split(" ")[1]);
 
-		if ((minBet * .8) > userBet)
-			return joinMsg.reply(v.mp_no_20_under);
+		if (userBet > 1000) return msg.reply(v.max_bet);
+		if ((minBet * .8) > userBet) return joinMsg.reply(v.mp_no_20_under);
+		
 		const playerCanAfford = await ECO.checkFunds(joinMsg.author.id, userBet);
 
 		if (playerCanAfford) {
