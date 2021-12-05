@@ -111,7 +111,7 @@ const startSinglePlayer = async (msg) => {
 		const result = await Game.handleInput(response[0].content);
 
 		if (result.stopped) {
-			await ECO.receive(msg.author.id, Game.currentPayout - BET, "gambling_russroll");
+			await ECO.receive(msg.author.id, 1 + ~~(Game.currentPayout - BET)/3, "gambling_russroll");
 			return msg.channel.send(v.singleplayer_quit);
 			// return msg.channel.send(result.better
 			//   ? `You're a quitter!\n I added **${game.currentPayout} rubines** to your account. Sigh.`
@@ -123,7 +123,7 @@ const startSinglePlayer = async (msg) => {
 			await ECO.pay(msg.author.id, BET, "russianroulette.gambling");
 			return gameMessage.edit(v.singleplayer_ded);
 		} if (result.won) {
-			await ECO.receive(msg.author.id, Game.currentPayout - BET, "russianroulette.win");
+			await ECO.receive(msg.author.id, 1 + ~~(Game.currentPayout - BET)/3, "russianroulette.win");
 			return gameMessage.edit(v.singleplayer_no_bullet_final);
 		}
 
