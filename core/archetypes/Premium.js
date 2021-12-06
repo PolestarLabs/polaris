@@ -474,8 +474,10 @@ async function processRewards(userID, options) {
     await DB.users.set(userID, { $set: { "counters.prime_streak": {} } });
   }
   if (tierStreak === 1) await DB.users.set(userID, { $set: { [`counters.prime_streak.${currentTier}`]: 1 } });
+  else await DB.users.set(userID, { $inc: { [`counters.prime_streak.${currentTier}`]: 1 } });
   const totalStreak = userData.counters?.prime_streak?.total || 1;
   if (totalStreak === 1) await DB.users.set(userID, { $set: { "counters.prime_streak.total": 1 } });
+  else await DB.users.set(userID, { $inc: { "counters.prime_streak.total": 1 } });
 
   const bulkWriteQuery = [];
 
