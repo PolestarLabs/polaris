@@ -241,7 +241,7 @@ const init = async (msg) => {
     img.background = Target.bot
       ? Picto.getCanvas(`${paths.CDN}/build/profile/${PFLD ? Target.id : "generic-bot"
         }.png`)
-      : Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png?invalidate=${Date.now()/1000/30}`);
+      : Picto.getCanvas(`${paths.CDN}/backdrops/${USERPROFILE.background}.png${ USERPROFILE.background === USERPROFILE.id ? `?invalidate=${Date.now()/1000/30}` : ""} `);
 
 
     img.flair = Picto.getCanvas(`${paths.CDN}/flairs/${Target.bot ? "bot" : USERPROFILE.flair}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`));
