@@ -441,7 +441,7 @@ async function checkPrimeStatus(mansionMember) {
 
   console.log(new Date(rewardsLastClaimed), REWARDS_ROLLOUT(), "new Date(rewardsLastClaimed) > REWARDS_ROLLOUT()");
   console.log(currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier, "currentTier && highestPremiumRoleTier && currentTier != highestPremiumRoleTier");
-  console.log({ interTier, STATUS });
+  //console.log({ interTier, STATUS });
 
   if (!currentTier || !userData) STATUS = "not-prime";
 
@@ -460,7 +460,7 @@ async function processRewards(userID, options) {
   let currentTier = options?.currentTier; // || userData.prime?.tier || userData.donator;
   const tierPrizes = { ...getTierBonus(currentTier) };
 
-  console.log({ interTier, options, userID });
+  //console.log({ interTier, options, userID });
 
   if (interTier) {
     Object.assign(tierPrizes, interTier);
@@ -469,15 +469,25 @@ async function processRewards(userID, options) {
 
   if (!currentTier) return Promise.reject("NO TIER REGISTERED");
 
-  const tierStreak = userData.counters?.prime_streak;
+  const tierStreaks = userData.counters?.prime_streak;
+  let currentTierStreak = tierStreaks?.[currentTier] || 0;
+
   if (!userData.counters?.prime_streak) {
     await DB.users.set(userID, { $set: { "counters.prime_streak": {} } });
   }
-  if (tierStreak === 1) await DB.users.set(userID, { $set: { [`counters.prime_streak.${currentTier}`]: 1 } });
+  let totalStreak = userData.counters?.prime_streak?.total || 0;
+
+console.log({tierStreaks,totalStreak,currentTierStreak})
+  
+  if (!tierStreaks || !currentTierStreak)  await DB.users.set(userID, { $set: { [`counters.prime_streak.${currentTier}`]: 1 } });
   else await DB.users.set(userID, { $inc: { [`counters.prime_streak.${currentTier}`]: 1 } });
-  const totalStreak = userData.counters?.prime_streak?.total || 1;
-  if (totalStreak === 1) await DB.users.set(userID, { $set: { "counters.prime_streak.total": 1 } });
+
+  if (!totalStreak) await DB.users.set(userID, { $set: { "counters.prime_streak.total": 1 } });
   else await DB.users.set(userID, { $inc: { "counters.prime_streak.total": 1 } });
+
+  totalStreak++;
+  currentTierStreak++;
+  
 
   const bulkWriteQuery = [];
 
@@ -512,7 +522,7 @@ async function processRewards(userID, options) {
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
     const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id)); ;
-    console.log({availableStickerList,stickerList});
+
     const availablePacks = packsList.filter((pkg) => !pkg.name.includes(RUNNING_YEAR));
 
     const lasts = [];
@@ -578,13 +588,13 @@ async function processRewards(userID, options) {
     boxes.forEach((boostBox) => bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`, boostBox.n)));
   }
 
-  if (tierStreak >= 3) {
+  if (currentTierStreak >= 3) {
     regularQuery.$addToSet["modules.medalInventory"] = currentTier;
   }
 
   const amts = [ tierPrizes.monthly_jde, tierPrizes.monthly_sph ];
   const currs = [ "JDE", "SPH" ];
-  if (tierStreak == 1) amts.push(tierPrizes.immediate_sph) && currs.push("SPH");
+  if (currentTierStreak == 1) amts.push(tierPrizes.immediate_sph) && currs.push("SPH");
 
   const report = {
     SPH: amts[1] + (amts[2] || 0),
@@ -603,10 +613,10 @@ async function processRewards(userID, options) {
     FEAT_STICKER: stickersReport[0],
 
     STREAK: totalStreak,
-    AS_TIER: tierStreak,
+    AS_TIER: tierStreaks,
     HAS_FLAIR: userData.modules.flairsInventory.includes(currentTier),
     HAS_MEDAL: userData.modules.medalInventory.includes(currentTier),
-    AWARD_MEDAL: tierStreak >= 3 && !userData.modules.medalInventory.includes(currentTier),
+    AWARD_MEDAL: currentTierStreak >= 3 && !userData.modules.medalInventory.includes(currentTier),
 
     PRIME_COUNT: tierPrizes.prime_servers,
 
@@ -615,9 +625,9 @@ async function processRewards(userID, options) {
   const data = {
     tier: currentTier,
     info: tierPrizes,
-    tierStreak,
+    tierStreak: currentTierStreak,
     totalStreak,
-    immediate: tierStreak == 1,
+    immediate: currentTierStreak == 1,
   };
   if (dry_run) {
     if (dry_run === 2) return report;
@@ -626,8 +636,8 @@ async function processRewards(userID, options) {
     };
   }
 
-  console.log("bulkWriteQuery".bgYellow);
-  console.log(require("util").inspect({ bulkWriteQuery, regularQuery, amts }, 0, 5, 1));
+  //console.log("bulkWriteQuery".bgYellow);
+  //console.log(require("util").inspect({ bulkWriteQuery, regularQuery, amts }, 0, 5, 1));
 
   // FIXME replace this
   if (!userData.modules.EVT) {
