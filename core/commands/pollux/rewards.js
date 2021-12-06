@@ -186,7 +186,15 @@ const init = async function (msg, args) {
 
     msg.channel.send({ embed }, PROCESS_RWD.data.tier == 'plastic' ? undefined : { file: await canvas.toBuffer(), name: "rewards.png" })
 
-
+    if (REPORT.STREAK > 1) {
+        await DB.users.set(msg.author.id,{$addToSet:{'modules.stickerInventory': "australis21stk" }});
+        msg.reply({
+        embed: {
+            description: "Thank you for your continued support throughout the year!\nHave this extra holiday sticker as a bonus.",
+            thumbnail: {url: `${paths.CDN}/stickers/australis21stk.png` }
+        }
+        });        
+    }
 
 }
 
