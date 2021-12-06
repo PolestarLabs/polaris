@@ -8,9 +8,9 @@ const RUNNING_MONTH_LONG = new Date().toLocaleString("en", { month: "long" })
   .toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 10; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 11; // JANUARY = 0;
 
-const TURNING_DAY = 3; // when Prime starts
+const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
 
@@ -525,6 +525,7 @@ async function processRewards(userID, options) {
         stickersReport.push(toPush);
         lasts.push(toPush.id);
       }
+      stickersReport.sort((x,y)=> (x?.release_number || 0) - y?.release_number || 0 );
     }
 
     const randoms = [];
