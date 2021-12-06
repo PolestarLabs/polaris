@@ -58,6 +58,9 @@ const init = async function (msg, args) {
     const canvas = Picto.new(780, 385);
     const ctx = canvas.getContext('2d');
 
+
+    console.log({REPORT})
+
     if (!REPORT.FEAT_STICKER) REPORT.FEAT_STICKER = REPORT.STICKERS[0] || [...(await Premium.PREMIUM_STICKERS)].pop();
 
     const [base, overlay, sticker, tierIcon] = await Promise.all([
