@@ -1,10 +1,11 @@
+/* eslint-disable consistent-return */
 const axios = require("axios");
 
 // @ts-nocheck
 // TRANSLATE[epic=translations] hangmaid
 
 const WORDS = require("./words.json");
-const Hangmaid = require("../../../archetypes/Hangmaid.js");
+const Hangmaid = require("../../../archetypes/Hangmaid");
 
 const init = async function (msg, args) {
   const oldGame = Hangmaid.gameExists(msg.channel.id);
@@ -16,20 +17,27 @@ const init = async function (msg, args) {
     }, "There's already a game going on here.");
     return;
   }
-  const MODE = args[0] === "server" ? "server" : "solo";
+  let MODE;
+  let title;
+  if (args[0] && (args[0] === "server" || args[0] === "group")) {
+    title = "Hangmaid Multiplayer";
+    MODE = "server";
+  } else {
+    title = "Hangmaid Solo";
+    MODE = "solo";
+  }
   const GAME = new Hangmaid(msg, WORDS, MODE);
-
 
   const embed = {
     description: `The word's theme is ${GAME.HINT}\nYou have 30 seconds to guess a letter.\n`,
     image: {
-      url: `${paths.GENERATORS}/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`
+      url: `${paths.GENERATORS}/hangmaid?${encodeURI(`g=${GAME.GUESSES}&refresh=${Date.now()}&d=${GAME.level}&h=${GAME.HINT}`)}`,
     },
-    title: "Game's on!",
-    color: numColor(_UI.colors.cyan)
+    title,
+    color: numColor(_UI.colors.cyan),
   };
 
-  const mainMessage = await msg.channel.send({ embed: embed });
+  const mainMessage = await msg.channel.send({ embed });
   GAME.registerMessage(mainMessage);
   await startCollector(GAME, msg, MODE);
 };
@@ -70,9 +78,7 @@ const startCollector = async (Game, msg, mode) => {
       return attemptMsg.delete();
     }
 
-    if (Game.language === "ru" && !RegexCyrillic.test(guess)) {
-      return attemptMsg.addReaction(_emoji("nope").reaction);
-    }
+    if (Game.language === "ru" && !RegexCyrillic.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
     if (!RegexLatin.test(guess)) return attemptMsg.addReaction(_emoji("nope").reaction);
 
     let attemptFullWord = false;
@@ -85,7 +91,7 @@ const startCollector = async (Game, msg, mode) => {
 
     if (guess.length === 1 || guessClean.startsWith(">") || Game.isFullGuess(guess)) {
       attemptMsg.delete()
-        .catch((e) => 0);
+        .catch(() => 0);
 
       // TRANSLATE[epic=translations] Translation strings
 
@@ -95,23 +101,26 @@ const startCollector = async (Game, msg, mode) => {
       }
 
       await Game.originalMessage.delete()
-        .catch((e) => 0);
+        .catch(() => 0);
       Game.unregisterMessage();
       await Game.handleInput(guess);
 
+
+      const TITLE = Game.MODE === "server" ? "Hangmaid Multiplayer" : "Hangmaid Solo";
       const newEmbed = {
         color: numColor(_UI.colors.cyan),
-        title: "Game's on!",
+        title: TITLE,
         description: `The word's theme is \`${Game.HINT}\`\nYou have 30 seconds to guess a letter.\nUse \`> your answer here\` to guess the word. *Be aware: if you miss it, it's game over!*`,
         image: {
           url: `${paths.GENERATORS}/hangmaid?${encodeURI(`a=${Game.ATTEMPTS}&${Game.ENDGAME ? `e=${Game.ENDGAME === "win" ? "win" : "lose"}&` : ""}g=${Game.GUESSES}&refresh=${Date.now()}&h=${Game.theme}`)
-            }`
-        }
+          }`,
+        },
       };
 
       if (Game.ENDGAME) {
         Game.finish();
         Collector.stop(Game.ENDGAME);
+        // eslint-disable-next-line default-case
         switch (Game.ENDGAME) {
           case "attempts":
             newEmbed.title = _emoji("NOPE").no_space + " Oopsie... you're out of attempts!";
@@ -137,7 +146,6 @@ const startCollector = async (Game, msg, mode) => {
 
       const newMsg = await msg.channel.send({ embed: newEmbed });
       Game.registerMessage(newMsg);
-
     }
   });
 
@@ -178,5 +186,5 @@ module.exports = {
   perms: 3,
   cat: "games",
   botPerms: ["attachFiles"],
-  aliases: ["forca", "hm"],
+  aliases: [ "forca", "hm" ],
 };
