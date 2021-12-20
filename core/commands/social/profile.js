@@ -752,7 +752,7 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
   let postBuffer = performance.now() - preBuffer;
 
   if (msg.content.includes("-ni")) noimg = true;
-  messageToSend += msg.content.includes('-bm') ? `  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";
+  messageToSend += msg.content.includes('-bm') ? `${performance.now()-msg.runtime_internal}ms  (${(postBuffer).toFixed(3)}ms Buffer)\n` : "";
 
   if (msg.fake) return ["", { file: buff, name: "profile.png" }];
 
