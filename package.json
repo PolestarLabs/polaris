@@ -12,12 +12,12 @@
   "license": "UNLICENSED",
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
-    "@polestar/progression": "github:PolestarLabs/plx-progression",
     "@polestar/constants": "github:PolestarLabs/constants#b3e559e4d93db705cb080f2b8d3fc980d0a464e1",
     "@polestar/database_schema": "github:PolestarLabs/db-schema#14e54170f04fc63f8bf7b78aa8a32d57c015c35d",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
     "@polestar/morse": "github:PolestarLabs/morse",
+    "@polestar/progression": "github:PolestarLabs/plx-progression",
     "@polestar/skia-twemoji": "github:PolestarLabs/skia-canvas-twemoji",
     "@polestar/timed-usage": "github:PolestarLabs/timed-usage#c5dccb85a2118a8c41636663ed7dd8bd5a0cc671",
     "@sentry/node": "^5.15.4",
@@ -42,7 +42,7 @@
     "node-canvas-with-twemoji": "^0.1.6",
     "open-graph-scraper": "^4.6.0",
     "rss-parser": "^3.7.2",
-    "skia-canvas": "^0.9.23",
+    "skia-canvas": "^0.9.27",
     "stackblur-canvas": "2.5.0",
     "xml2js": "^0.4.23",
     "ytdl-core": "^4.0.0"
