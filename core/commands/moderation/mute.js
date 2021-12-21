@@ -3,6 +3,7 @@
 const cmd = "mute";
 
 const init = async function (msg, args) {
+  return "Mute has been disabled in favor of Discord's 'Timeout' feature. Please update your client.";
   const P = { lngs: msg.lang };
   const Server = msg.guild;
   const Author = msg.author;
@@ -250,7 +251,7 @@ const init = async function (msg, args) {
 
 module.exports = {
   pub: false,
-  argsRequired: true,
+  argsRequired: false,
   cmd,
   perms: 3,
   init,
