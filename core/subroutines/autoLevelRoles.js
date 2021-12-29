@@ -1,16 +1,16 @@
 const sorting = (a, b) => b[1] - a[1];
 module.exports = (servData,userID,curLevelLocal) => {
 
-	if (!msg.guild.permissionsOf(PLX.user.id).has("manageRoles")) return;
 	if (!servData.modules || !userID ) return;
 
 	const AUTOS = servData.modules.AUTOROLES.sort(sorting);
 	const roleStack = servData.modules.autoRoleStack !== false;
 	let errored = 0;
 
-	for (role in AUTOS){
-		const [Level,RoleID] = role;
-
+	
+	for (role of AUTOS){
+		const [RoleID,Level] = role;
+		
 		// Add Current
 		if (Level === curLevelLocal)
 			PLX.addGuildMemberRole(

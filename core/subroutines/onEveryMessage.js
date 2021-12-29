@@ -4,28 +4,27 @@ const localLevelUp = require("./localLevelUp.js");
 const globalLevelUp = require("./globalLevelUp.js");
 const customResponses = require("./customResponses.js");
 
-const { Bucket } = require("eris");
-global.levelUpQueue = new Bucket( PLX.guilds.size * 100 , 10e3, { latencyRef: { latency: .5e3 } });
+//const { Bucket } = require("eris");
+//global.levelUpQueue = new Bucket( PLX.guilds.size * 100 , 10e3, { latencyRef: { latency: .5e3 } });
 
 
 const levelChecks = async (msg) => {
   if (msg.author.bot) return;
   if (msg.guild.id === "110373943822540800") return;
 
-  if (levelUpQueue.tokens > levelUpQueue.tokenLimit) return;
+  //if (levelUpQueue.tokens > levelUpQueue.tokenLimit) return;
 
   let servData = msg.guild.serverData;
-  levelUpQueue.queue( async () => {
-    servData = await DB.servers.findOne({ id: msg.guild.id }).cache();
-    if (!servData) return;
-    msg.guild.serverData = servData;
-
-    if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
-      setImmediate( ()=> globalLevelUp(msg) );
-    }
-
-    setImmediate( ()=> localLevelUp(servData,msg) );
-  });
+  //levelUpQueue.queue( async () => {
+    if (servData) {
+      if (servData.modules.LVUP === true && msg.channel instanceof TextChannel) {
+        setImmediate( ()=> globalLevelUp(msg) );
+      }  
+      setImmediate( ()=> localLevelUp(servData,msg) );
+      return;
+    };
+    msg.guild.serverData = await DB.servers.findOne({ id: msg.guild.id }).cache();
+  // });
  
  
 }
@@ -37,7 +36,7 @@ module.exports = async (msg) => {
 
   customResponses(msg).then(_=>null).catch(console.error);
 
-  if (msg.channel instanceof ThreadChannel) return;  
+  //if (msg.channel instanceof ThreadChannel) return;  
   levelChecks(msg);
 
   if (msg.guild.imagetracker && !msg.channel.nsfw) {

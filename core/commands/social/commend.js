@@ -1,5 +1,6 @@
 const Timed = require("../../structures/TimedUsage");
 
+
 const init = async function (msg, args) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
@@ -11,6 +12,7 @@ const init = async function (msg, args) {
   if (!userData || !targetData) return "Error, one of the users are not present in Database";
 
 
+  /*
   if (!userData.personal?.ip) {
     return {embed: {description: `You have to Log-in at least once in our [Dashboard](https://pollux.gg) in order to give commends!` } };
   }
@@ -19,6 +21,11 @@ const init = async function (msg, args) {
   }
   if (userData.personal?.ip === targetData.personal?.ip) {
     return msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
+  }
+  */
+  const hasVoted = await PLX.topGG.hasVoted( msg.author.id );
+  if (!hasVoted && !userData.prime?.active){
+    return {embed: {description: `To commend globally you must have upvoted us in the last 12 hours!\n[Vote for Pollux here!](https://top.gg/bot/271394014358405121/vote)` } };
   }
 
   const preafter = async function preafter(M, D) {
