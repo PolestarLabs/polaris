@@ -1,8 +1,10 @@
+/* eslint-disable arrow-body-style */
 const ECO = require('./Economy');
+
 class Airline {
   constructor(id) {
     this.airline = DB.airlines.AIRLINES.findOne({ id });
-    this.id = id
+    this.id = id;
   }
 
   async buySlot(airport, time) {
@@ -12,7 +14,7 @@ class Airline {
     await DB.airlines.SLOTS.validate((await (this.airline)).id, airportData.id).then(ok=>{
       return ECO.pay( (await (this.airline)).user, airportData.slotPrice, "airlines_buy_slot").then(async () => {
         return DB.airlines.SLOTS.new((await (this.airline)).id, airportData.id, time);
-      }).catch(err=>{
+      }).catch(_ => {
         return Promise.reject("Insufficient Funds");
       });
     }).catch(err=>{

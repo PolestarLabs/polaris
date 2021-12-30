@@ -64,8 +64,8 @@ const promptDivorce = async (msg, userID) => {
   const user = await DB.users.getFull(msg.author.id);
   const partner = await DB.users.getFull(userID);
   try {
-    const choice = await prompt.awaitButtonClick((i) => i.userID === userID, { maxMatches: 1, time: 30000, disableButtons: true });
-    if (choice[0].data.custom_id === "divorce_accept") {
+    const [choice] = await prompt.awaitButtonClick((i) => i.userID === userID, { maxMatches: 1, time: 30000, disableButtons: true });
+    if (choice.data.custom_id === "divorce_accept") {
       if (user.modules.RBN < 2500) {
         return msg.channel.send(`<@${msg.author.id}>, you need at least ${_emoji("RBN")} 2500 to divorce.`);
       }
@@ -78,7 +78,7 @@ const promptDivorce = async (msg, userID) => {
       await ECO.pay(msg.author.id, 2500);
       await ECO.pay(userID, 2500);
       msg.channel.send(`The ending of a story: <@${msg.author.id}> and **${partner.username}** are now divorced. :broken_heart:`);
-    } else if (choice[0].data.custom_id === "divorce_reject") {
+    } else if (choice.data.custom_id === "divorce_reject") {
       const rejectPrompt = {
         title: "Divorce request denied",
         // eslint-disable-next-line max-len
