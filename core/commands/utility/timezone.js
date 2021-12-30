@@ -1,25 +1,34 @@
 const tzData = require("../../../resources/tzData.json");
 
-function capt(phrase) {
-  return phrase
-    .toLowerCase()
-    .split(" ")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
+function captTz(zone) {
+  let nextCapt = true;
+  let final = "";
+
+  for (let char of zone.toLowerCase()) {
+    if (nextCapt) {
+      char = char.toUpperCase();
+      nextCapt = false;
+    }
+
+    if ([ " ", "/", "_" ].includes(char)) {
+      nextCapt = true;
+    }
+
+    final += char;
+  }
+
+  return final;
 }
 
 function defaultFormat(timeZone, locale) {
-  return new Date().toLocaleString(
-    locale,
-    {
-      timeZone,
-      hour: "numeric",
-      minute: "numeric",
-    },
-  );
+  return new Date().toLocaleString(locale, {
+    timeZone,
+    hour: "numeric",
+    minute: "numeric",
+  });
 }
 
-const timeRegex = /([0-2]?[0-9])(?:(?::|(?: ?h(?:ours? )? ?))(?:and )?([0-5]?[0-9]|60)? ?(?:m(?:in(?:utes?)?)?)?)? ?(pm|am)?/i;
+const TIME_REGEX =  /([0-2]?[0-9])(?:(?::|(?: ?h(?:ours? )? ?))(?:and )?([0-5]?[0-9]|60)? ?(?:m(?:in(?:utes?)?)?)?)? ?(pm|am)?$/i;
 
 function lookupTzBy(keys, tz, array = false) {
   for (const key of keys) {
@@ -36,11 +45,9 @@ function lookupTzBy(keys, tz, array = false) {
 }
 
 function findTz(zoneName) {
-  const searchKeys = [
-    "timezone",
-    "country",
-    "iso2",
-  ];
+  zoneName = zoneName.toLowerCase();
+
+  const searchKeys = [ "timezone", "country", "iso2" ];
 
   const result = lookupTzBy(searchKeys, zoneName);
 
@@ -48,10 +55,7 @@ function findTz(zoneName) {
     return result;
   }
 
-  const searchKeysArray = [
-    "provinces",
-    "cities",
-  ];
+  const searchKeysArray = [ "provinces", "cities" ];
 
   const resultArray = lookupTzBy(searchKeysArray, zoneName, true);
   if (resultArray) {
@@ -73,10 +77,9 @@ function getTimezoneOffset(timeZone) {
 }
 
 function convertToTz(time, timeZone, offset = 0) {
-  return new Date(new Date(time.getTime() + offset)
-    .toLocaleString("en-US", {
-      timeZone,
-    }));
+  return new Date(new Date(time.getTime() + offset).toLocaleString("en-US", {
+    timeZone,
+  }));
 }
 
 function parseTime(match, locale, userTz, anotherTz) {
@@ -127,11 +130,11 @@ const init = async (msg, args) => {
 
   const sendMe = (targetData) => {
     if (targetData.timezone == null) {
-      msg.channel.send("You haven't set your timezone.");
+      msg.channel.send("You haven't set your timezone. You can set it using `+timezone set [country/city/timezone code]`.");
       return;
     }
 
-    msg.channel.send(`Your timezone is ${capt(targetData.timezone)}`);
+    msg.channel.send(`Your timezone is ${captTz(targetData.timezone)}.`);
   };
 
   switch (args[0]) {
@@ -143,15 +146,21 @@ const init = async (msg, args) => {
 
     case "set": {
       const zoneName = args.splice(1).join(" ");
+
+      if (!zoneName) {
+        msg.channel.send("You need to specify the zone name, country or city.");
+        return;
+      }
+
       const tz = findTz(zoneName);
 
       if (!tz) {
-        msg.channel.send("Couldn't find that place.");
+        msg.channel.send("Couldn't find that place. You can specify a city, a country or a timezone code.");
         return;
       }
 
       await DB.userDB.set(msg.author.id, { $set: { timezone: tz } });
-      msg.channel.send(`I've set your timezone to **${capt(zoneName)}**.`);
+      msg.channel.send(`I've set your timezone to **${captTz(zoneName)}**.`);
       break;
     }
 
@@ -159,53 +168,67 @@ const init = async (msg, args) => {
       const target = await PLX.getTarget(args[0]);
       if (target) {
         const match = args.slice(1).join(" ")
-          .match(timeRegex);
+          .match(TIME_REGEX);
 
         const targetData = await DB.userDB.get(target.id);
-
-        if (targetData.id === msg.author.id) {
-          sendMe(targetData);
-          return;
-        }
 
         if (!targetData.timezone) {
           msg.channel.send(`**${targetData.tag}** hasn't set their timezone.`);
           return;
         }
 
-        if (!match) {
-          msg.channel.send(`**${targetData.tag}**'s timezone is **${capt(targetData.timezone)}**.`);
+        if (args.length < 2) {
+          msg.channel.send(`**${targetData.tag}**'s timezone is **${captTz(targetData.timezone)}**.`);
+          return;
+        } if (!match) {
+          if (targetData.id === msg.author.id) {
+            sendMe(targetData);
+            return;
+          }
+
+          msg.channel.send("Couldn't understand that time. Use: `+timezone @someone [00:00/sometime]`.");
           return;
         }
 
         const userData = await DB.userDB.get(msg.author.id);
 
-        const [ userTime, anotherTime ] = parseTime(match, locale, userData.timezone, targetData.timezone);
+        const [ userTime, anotherTime ] = parseTime(
+          match,
+          locale,
+          userData.timezone,
+          targetData.timezone,
+        );
 
         msg.channel.send(`It's **${anotherTime}** where **${targetData.tag}** lives when it's **${userTime}** in your timezone.`);
 
         return;
       }
+
       const zoneName = args.join(" ");
 
-      const match = timeRegex.exec(zoneName);
+      if (!zoneName) {
+        msg.channel.send("You need to specify a city, a country or a timezone code.");
+        return;
+      }
+
+      const match = TIME_REGEX.exec(zoneName);
 
       if (!match) {
         const tz = findTz(zoneName);
 
         if (!tz) {
-          msg.channel.send("Couldn't find that place.");
+          msg.channel.send("Couldn't find that place. You can specify a city, a country or a timezone code.");
           return;
         }
 
-        msg.channel.send(`It's **${defaultFormat(tz, locale)}** in **${capt(zoneName)}**.`);
+        msg.channel.send(`It's **${defaultFormat(tz, locale)}** in **${captTz(zoneName)}**.`);
         return;
       }
 
       const userData = await DB.userDB.get(msg.author.id);
 
       if (userData.timezone == null) {
-        msg.channel.send("You haven't set your timezone.");
+        msg.channel.send("You haven't set your timezone. You can set it using `+timezone set [country/city/timezone code]`.");
         return;
       }
 
@@ -213,23 +236,28 @@ const init = async (msg, args) => {
       const timezone = findTz(timezoneText);
 
       if (!timezone) {
-        msg.channel.send("Couldn't find that place.");
+        msg.channel.send("Couldn't find that place. You can specify a city, a country or a timezone code.");
         return;
       }
 
-      const [ userTime, anotherTime ] = parseTime(match, locale, userData.timezone, timezone);
+      const [ userTime, anotherTime ] = parseTime(
+        match,
+        locale,
+        userData.timezone,
+        timezone,
+      );
 
-      msg.channel.send(`It's **${anotherTime}** in **${capt(timezoneText)}** when it's **${userTime}** in your timezone.`);
+      msg.channel.send(`It's **${anotherTime}** in **${captTz(timezoneText)}** when it's **${userTime}** in your timezone.`);
     }
   }
 };
 
 module.exports = {
-  init,
   pub: true,
+  argsRequired: true,
   cmd: "timezone",
-  perms: 0,
+  perms: 3,
+  init,
   cat: "utility",
-  botPerms: ["embedLinks"],
   aliases: ["tz"],
 };
