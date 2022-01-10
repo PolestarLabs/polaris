@@ -185,7 +185,8 @@ const init = async function (msg, args) {
     }
 
     msg.channel.send({ embed }, PROCESS_RWD.data.tier == 'plastic' ? undefined : { file: await canvas.toBuffer(), name: "rewards.png" })
-
+    return;
+    
     if (REPORT.STREAK > 1) {
         await DB.users.set(msg.author.id,{$addToSet:{'modules.stickerInventory': "australis21stk" }});
         msg.reply({
