@@ -5,14 +5,16 @@ const newRoute = async (msg, args, aData) => {
     await promptDestinations(msg, aData.airlineName, aData.thisIATA, true, false);
   } else {
     msg.channel.send("What airline would you like to create a new route in?");
+    // Select goes here and then promptDestinations
     /* await promptDestinations(msg, aData.airlineName); */
   }
 };
 
-const promptDestinations = async (msg, name, iata, starter = false, fromPicker = true) => {
+// starter = true only if the airline doesn't have any routes yet
+const promptDestinations = async (msg, name, airlineId, starter = false, fromPicker = true) => {
   const embed = {
     title: `New route for ${name}`,
-    description: iata ? "The first route is free." : "Cost: X",
+    description: starter ? "The first route is free." : "Cost: X",
     fields: [
       {
         name: "🛫 Departure",
@@ -33,7 +35,7 @@ const promptDestinations = async (msg, name, iata, starter = false, fromPicker =
     placeholder: "Select a departure airport...",
   };
   if (starter) {
-    const port = await DB.airlines.AIRPORT.findOne({ IATA: iata });
+    const port = await DB.airlines.AIRPORT.findOne({ IATA: airlineId });
     embed.fields[0].value = `${RegionalIndicators(port.country)} ${port.name}`;
     departureSelector.options = [
       {
@@ -43,6 +45,7 @@ const promptDestinations = async (msg, name, iata, starter = false, fromPicker =
         value: port.IATA,
       },
     ];
+    departureSelector.disabled = true;
   } else {
     departureSelector.options = null; // TODO map options
   }

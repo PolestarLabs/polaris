@@ -15,7 +15,7 @@ module.exports = class Hangmaid {
     this.userMessage = message;
     this.end = false;
     this.shots = 0;
-    this.mode = mode
+    this.mode = mode;
     this.channel = message.channel.id;
     games.set(message.channel.id, message.id);
   }

@@ -1,5 +1,6 @@
 const RegionalIndicators = require("../../../utilities/RegionalIndicators");
 const Airline = require("../../../archetypes/Airline");
+const yesNo = require("../../../structures/YesNo");
 
 const RARS = [ "C", "U", "R", "SR", "UR" ];
 const STARTER_AIRPORTS_OPTIONS = DB.airlines.AIRPORT.find({ starter: true });
@@ -65,7 +66,7 @@ const airlineNew = async (msg, args) => {
       return {
         label: `${plane.name}`,
         value: plane.id,
-        description: `Range: ${plane.range}km | Capacity: ${plane.capacity} • ${[...Array(plane.price).keys()].map(x => "⭐").join("")} `,
+        description: `Range: ${plane.range}km | Capacity: ${plane.capacity} • ${[...Array(plane.price).keys()].map((x) => "⭐").join("")} `,
         emoji: { id: EMJ[plane.make] }, // { id:  _emoji( RARS[plane.price -1]).id }
       };
     }),
@@ -137,40 +138,28 @@ const airlineNew = async (msg, args) => {
     }
 
     if (i.data.custom_id === "airline_confirm") {
-      CONFIRM.label = "Yes";
-      CONFIRM.custom_id = "route_confirm";
-      CONFIRM.disabled = false;
-      CANCEL.label = "No";
-      CANCEL.custom_id = "route_reject";
-      CANCEL.disabled = false;
       await prompt.delete();
       await tray.delete();
-      await new Airline(airlineID).createAirline(airlineID, airlineName, msg.author.id);
+      const airline = await new Airline(airlineID).createAirline(airlineID, airlineName, msg.author.id);
+      await airline.buyPlane(planeID);
 
       const route = await msg.channel.send({
         content: `Gorgeous! Your airline **${airlineName}** (${airlineID}) has been created! Would you like to create your first route?`,
-        components: [{ type: 1, components: [ CONFIRM, CANCEL ] }],
       });
 
-      const routeChoice = route.createButtonCollector((i) => i.userID === msg.author.id, {
-        time: 30e3, idle: 60e3, removeButtons: true, disableButtons: false,
-      });
-
-      routeChoice.on("click", async (interaction) => {
-        await route.edit({ components: [] });
-        if (interaction.data.custom_id === "route_reject") {
-          msg.channel.send("Ok. You can create a new route later with `+airline routes new`");
-        }
-
-        if (interaction.data.custom_id === "route_confirm") {
-          await newRoute(msg, args, {
-            airlineName,
-            airlineID,
-            thisIATA,
-            starter: true,
-          });
-        }
-      });
+      const r = await yesNo(route, msg);
+      if (r) {
+        await newRoute(msg, args, {
+          airlineName,
+          airlineID,
+          thisIATA,
+          starter: true,
+        });
+      } else if (r === false) {
+        await msg.channel.send("Ok. You can create a new route later with `+airline routes new`");
+      } else if (r === null) {
+        await msg.channel.send("Anyways, you can create a new route later with `+airline routes new`");
+      }
     }
   });
 
