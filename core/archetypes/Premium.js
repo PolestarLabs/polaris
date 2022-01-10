@@ -8,7 +8,7 @@ const RUNNING_MONTH_LONG = new Date().toLocaleString("en", { month: "long" })
   .toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 11; // JANUARY = 0;
+const CURRENT_VALID_MONTH = 0; // JANUARY = 0;
 
 const TURNING_DAY = 5; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
@@ -47,7 +47,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 10, t: "SR" }],
     booster_bonus_psm: 500,
     sticker_prize: {
-      LAST: 2,
+      //LAST: 2,
       RANDOM: 5,
       PACK: 8,
     },
@@ -70,7 +70,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 10, t: "SR" }],
     booster_bonus_psm: 500,
     sticker_prize: {
-      LAST: 2,
+      //LAST: 2,
       RANDOM: 5,
       PACK: 5,
     },
@@ -93,7 +93,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 5, t: "R" }],
     booster_bonus_psm: 200,
     sticker_prize: {
-      LAST: 2,
+      //LAST: 2,
       RANDOM: 3,
       PACK: 3,
     },
@@ -116,7 +116,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "C" }],
     booster_bonus_psm: 100,
     sticker_prize: {
-      LAST: 2,
+      //LAST: 2,
       RANDOM: 2,
       PACK: 3,
     },
@@ -139,7 +139,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "UR" }],
     booster_bonus_psm: 100,
     sticker_prize: {
-      LAST: 2,
+      //LAST: 2,
       RANDOM: 2,
       PACK: 2,
     },
@@ -162,7 +162,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "SR" }],
     booster_bonus_psm: 75,
     sticker_prize: {
-      LAST: 1,
+      //LAST: 1,
       RANDOM: 2,
       PACK: 1,
     },
@@ -185,7 +185,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "SR" }],
     booster_bonus_psm: 50,
     sticker_prize: {
-      LAST: 1,
+      //LAST: 1,
       RANDOM: 1,
       PACK: 0,
     },
@@ -209,7 +209,7 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "C" }],
     booster_bonus_psm: 50,
     sticker_prize: {
-      LAST: 1,
+      //LAST: 1,
       RANDOM: 1,
       PACK: 0,
     },
@@ -233,8 +233,8 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "SR" }],
     booster_bonus_psm: 30,
     sticker_prize: {
-      LAST: 1,
-      RANDOM: 0,
+      //LAST: 1,
+      RANDOM: 1,
       PACK: 0,
     },
     prime_servers: 1,
@@ -255,8 +255,8 @@ const PREMIUM_INFO = {
     booster_bonus_box: [{ n: 1, t: "SR" }],
     booster_bonus_psm: 30,
     sticker_prize: {
-      LAST: 1,
-      RANDOM: 0,
+      //LAST: 1,
+      RANDOM: 1,
       PACK: 0,
     },
     prime_servers: 1,
