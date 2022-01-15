@@ -2,6 +2,7 @@ const ECO = require("../../archetypes/Economy");
 
 /* eslint-disable arrow-body-style */
 const init = async (msg, args) => {
+  return;
   const marriages = await DB.relationships.find({ type: "marriage", users: msg.author.id });
   if (!marriages) return msg.channel.send(`<@${msg.author.id}> you are not married! :broken_heart:`);
 
