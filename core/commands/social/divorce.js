@@ -76,8 +76,8 @@ const promptDivorce = async (msg, userID) => {
       }
 
       // TODO user dashboard API to divorce
-      await ECO.pay(msg.author.id, 2500);
-      await ECO.pay(userID, 2500);
+      await ECO.pay(msg.author.id, 2500, "divorce");
+      await ECO.pay(userID, 2500, "divorce");
       msg.channel.send(`The ending of a story: <@${msg.author.id}> and **${partner.username}** are now divorced. :broken_heart:`);
     } else if (choice.data.custom_id === "divorce_reject") {
       const rejectPrompt = {
@@ -131,7 +131,7 @@ const rejectFlow = async (user, msg, partner) => {
   if (user.modules.RBN < 5000) {
     return msg.channel.send(`<@${msg.author.id}>, you need at least ${_emoji("RBN")} 5000.`);
   }
-  await ECO.pay(msg.author.id, 5000);
+  await ECO.pay(msg.author.id, 5000, "divorce.lawyer");
   // TODO use dashboard API to divorce
   // eslint-disable-next-line max-len
   msg.channel.send(`Happy loner: <@${msg.author.id}> has paid ${_emoji("RBN")} 5000 to find a lawyer and divorced **${partner.name}**. :broken_heart:`);
