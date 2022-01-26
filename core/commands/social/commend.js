@@ -23,9 +23,9 @@ const init = async function (msg, args) {
     return msg.channel.send(_emoji("nope") + $t("responses.commend.noSelf", P));
   }
   */
-  const hasVoted = await PLX.topGG.hasVoted( msg.author.id );
+  const hasVoted = await PLX.topGG.hasVoted( msg.author.id ).timeout(2000).catch(err=> true);
   if (!hasVoted && !userData.prime?.active){
-    return {embed: {description: `To commend globally you must have upvoted us in the last 12 hours!\n[Vote for Pollux here!](https://top.gg/bot/271394014358405121/vote)` } };
+    return {embeds: [{description: `To commend globally you must have upvoted us in the last 12 hours!\n[Vote for Pollux here!](https://top.gg/bot/271394014358405121/vote)` }] };
   }
 
   const preafter = async function preafter(M, D) {
