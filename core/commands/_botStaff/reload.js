@@ -17,7 +17,6 @@ const init = async (msg, args) => {
       }
     });
   }
-  require('../../archetypes/Progression.js').init();
 
   msg.addReaction(_emoji("yep").reaction);
 };
