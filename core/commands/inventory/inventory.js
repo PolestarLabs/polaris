@@ -147,7 +147,7 @@ const init = async (msg, args) => {
 
   menumes = await msg.channel.send({
     components: msg.setButtons(inventoryButtons, 1)
-  }, file(await canvas.toBuffer(), "inventory.png"));
+  }, {file: await canvas.toBuffer(), name: "inventory.png", description: `${Target.username}'s inventory.` });
   menumes.target = Target;
   args[10] = userData;
   args[11] = msg.prefix;

@@ -48,7 +48,7 @@ module.exports = async (msg,userData) => {
 			setImmediate(async ()=>{
 				console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
 				resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`)
-					.then(img=> msg.reply("",{ file: img, name: "level_up.gif" }).catch(e=>null) )
+					.then(img=> msg.reply("",{ file: img, name: "level_up.gif" , description: `A fancy gif telling ${msg.author.username} has just advanced to level ${curLevelG} globally.`}).catch(e=>null) )
 					.catch(e=>null)
 					.finally(()=> Promise.all(levelUpPrizeMail(userData,curLevelG)));
 			});

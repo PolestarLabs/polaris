@@ -417,6 +417,7 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
     if (currentHand.insuredLastTurn) {
       await msg.channel.send(`${_emoji("plxbjkinsu")} **Insurance has been placed for this match!**`, {
         file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
+        description: `Blackjack Round ${ 1 + (log?.length||0) }. Pollux has ${ POL_HAND.status + " " + POL_HAND.val }, ${msg.author.username} has ${ USR_HAND.status + " " + USR_HAND.val }`
       }).then(async (mm) => {
         // msg.channel.send(`Insurance has been placed for this match!`).then(mm=>{
         scene_msg = mm;
@@ -433,7 +434,9 @@ async function getFinalHand(blackjack, playerHand, dealerHand, deck, powerups, o
         finalImage = scenario.toBuffer();
       }
 
-      await msg.channel.send("", { file: finalImage, name: "blackjack.png" }).then((mm) => {
+      await msg.channel.send("", { file: finalImage, name: "blackjack.png", 
+          description: `Blackjack Round ${ 1 + (log?.length||0) }. Pollux has ${ POL_HAND.status + " " + POL_HAND.val }, ${msg.author.username} has ${ USR_HAND.status + " " + USR_HAND.val}. ` 
+        }).then((mm) => {
         scene_msg = mm;
         if (tableMessageRound) tableMessageRound.delete();
         tableMessageRound = mm;
@@ -878,7 +881,9 @@ const init = async (msg, args) => {
 
 
 
-      msg.channel.send(PLAY_RES, { file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png" })
+      msg.channel.send(PLAY_RES, { file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
+        description: `Blackjack Final Round. Pollux has ${ POL_HAND.status + " " + POL_HAND.val }, ${msg.author.username} has ${ USR_HAND.status + " " + USR_HAND.val}. ` 
+        })
         .then((m) => {
           if (splitExplain.length) {
             log.embed.fields.push({

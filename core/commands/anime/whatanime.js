@@ -66,6 +66,7 @@ ${is_adult ? "\n🔞 **Adult warning**\n" : ""}
     fileobj = {
       file: await resolveFile(videoLink),
       name: (is_adult ? "SPOILER_" : "") + "pollux_anime_preview.mp4",
+      description: `Short anime preview scene for ${title_english||title_romaji}.`
     };
 
   }catch(err){

@@ -337,7 +337,10 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
       color: 0x03dffc,
       image: { url: "attachment://daily.png" },
     },
-  }, { file: await dailyCard.toBuffer("image/png"), name: "daily.png" }).then(() => {
+  }, { 
+    file: await dailyCard.toBuffer("image/png"), name: "daily.png",
+    description: `Daily bonus contents, stage ${daily.softStreak}. Streak: ${ timedUsage.userDaily.streak } (${timedUsage.streakStatus})`
+  }).then(() => {
     if (postmortem) {
       msg.channel.send(postmortem);
     }

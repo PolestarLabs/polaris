@@ -759,6 +759,7 @@ async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas
   msg.channel.createMessage(messageToSend, noimg ? undefined : {
     file: buff,
     name: "profile.png",
+    description: `${msg.author.username}'s fancy profile`,
   });
 
   if (msg.content.includes("-bm")) messageToSend = `${noimg ? "**No-IMG**" : ""} \`⏱️${((performance.now() - msg.runtime_internal) / 1000).toFixed(3)}s\``;

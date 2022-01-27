@@ -149,7 +149,7 @@ module.exports = {
         BOX.text,
         // paths.BUILD + (BOX.pic || "chest.png")
         // {file: (paths.BUILD + (BOX.pic || "chest.png")),name:"LOOTBOX.png"}
-        file(await resolveFile(paths.BUILD + (BOX.pic || "chest.png")), "Lootbox.png"),
+        {file: await resolveFile(paths.BUILD + (BOX.pic || "chest.png")), name: "Lootbox.png", description:"A big fat Lootbox blocking half of the chat."},
       ).catch(() => false);
       if (!lootMessage) return false;
 

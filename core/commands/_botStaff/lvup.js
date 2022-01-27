@@ -25,7 +25,7 @@ const init = async function (msg, args) {
 
     let GIF = new Anim({
         w: 800, h: 300,
-        filename: 'test',
+        filename: 'lvup',
         lastFrame: 57 * 2 + 20,
         transparentColor: 0x00ff00,
         framerate: 35,
