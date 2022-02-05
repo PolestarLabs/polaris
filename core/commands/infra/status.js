@@ -17,7 +17,7 @@ const init = async function (msg){
 	const server_estimate_count = PLX.guilds.size / PLX.shards.size * PLX.options.maxShards;
 	const user_estimate_count = PLX.users.size / PLX.shards.size * PLX.options.maxShards;
 	const ping = `${Date.now() - msg.timestamp}ms`;
-	const ram_usage = `${~~(process.memoryUsage().heapUsed / 1000000)}mb / 128gb`;
+	const ram_usage = `${~~(process.memoryUsage().heapUsed / 1000000)}mb`;
 
 	const bottomFields = [
 		{

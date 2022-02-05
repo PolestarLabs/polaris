@@ -18,8 +18,8 @@ exports.run = (msg, args, userData, itemDetails) => new Promise(async (resolve) 
 
   YesNo(promptMessage, msg,
     async (cancel, prompt) => {
+      await ( await DB.users.getFull(userData.id) ).removeItem("streakfix", 1);
       await DB.users.set(userData.id, { [`counters.${TARGET}.streak`]: destinationCounter.lastStreak });
-      await (await DB.users.getFull(userData.id)).removeItem(userData.id, "streakfix", 1);
 
       resolve("OK");
     },

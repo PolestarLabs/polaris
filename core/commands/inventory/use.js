@@ -13,8 +13,9 @@ const init = async function (msg, args) {
     try {
       const itemDetails = DB.items.get(ITEM);
       const itemCommand = require(`${appRoot}/resources/items/${ITEM}.js`);
-
       await itemCommand.run(msg, ITEM_ARGUMENTS, userData, itemDetails);
+      
+
       msg.addReaction(_emoji("yep").reaction);
     } catch (err) {
       console.error(err);
