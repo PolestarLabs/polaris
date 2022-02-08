@@ -879,7 +879,9 @@ const init = async (msg, args) => {
 
       blackjack.endGame();
 
-
+      const      POL_HAND = {};
+      POL_HAND.val = Blackjack.handValue([dealerHand[0]]);
+      POL_HAND.status = Blackjack.isSoft([dealerHand[0]]) ? "SOFT" : "";
 
       msg.channel.send(PLAY_RES, { file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
         description: `Blackjack Final Round. Pollux has ${ POL_HAND.status + " " + POL_HAND.val }, ${msg.author.username} has ${ USR_HAND.status + " " + USR_HAND.val}. ` 
