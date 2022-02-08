@@ -882,10 +882,10 @@ const init = async (msg, args) => {
       const USR_HAND = {}; const
       POL_HAND = {};
 
-      USR_HAND.val = Blackjack.handValue(currentHand);
+      USR_HAND.val = Blackjack.handValue(playerHand[0]);
       POL_HAND.val = Blackjack.handValue([dealerHand[0]]);
 
-      USR_HAND.status = Blackjack.isSoft(currentHand) ? "SOFT" : "";
+      USR_HAND.status = Blackjack.isSoft(playerHand[0]) ? "SOFT" : "";
       POL_HAND.status = Blackjack.isSoft([dealerHand[0]]) ? "SOFT" : "";
 
       msg.channel.send(PLAY_RES, { file: await scenario.toBuffer("image/png", imageOptions), name: "blackjack.png",
