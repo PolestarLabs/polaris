@@ -135,7 +135,7 @@ module.exports = {
     }
 
     // if(trigger.channel.id=="426308107992563713") droprate= 777;
-    console.log(trigger.content)
+    
     const dropcondition = droprate === 777 || (trigger.content === "fdropt" && trigger.author.id === "88120564400553984");
 
     if (dropcondition) console.log(`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `.red.bgYellow);
