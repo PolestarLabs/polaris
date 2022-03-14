@@ -97,7 +97,7 @@ class GuessingGame {
   async generate() {
     if (this.type === "image") {
       const response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
- 
+      
       this.imageFile = await resolveFile(response.url);
 
       if (this.gamemode === "endless") this.embed.footer.text = `Endless Mode | Round ${this.round || 1}`;

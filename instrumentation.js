@@ -43,7 +43,7 @@ function tagsCheck(tags,DEFAULT_TAGS){
 
 	const StatsD = require('hot-shots');
 	const dogstatD = new StatsD();
-
+	/*
 	const tracer = require('dd-trace').init({
 		logInjection: true,
 		analytics: true,
@@ -53,7 +53,7 @@ function tagsCheck(tags,DEFAULT_TAGS){
 	});
 	tracer.use('bluebird', {service: 'bluebird'});
 	tracer.use('mongoose', {service: 'mongoose'});
-
+	*/
 
 	const DEFAULT_TAGS = ['client:'+ INSTANCE || "unknown", 'cluster:'+ PLX.cluster.name, "build:"+process.env.DD_VERSION]
 	
