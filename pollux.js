@@ -247,12 +247,13 @@ DBSchema(dbConnectionData, {
 
   try {
     let ProgMgr = require("@polestar/progression");
-    ProgMgr.init(PLX)
+    ProgMgr.init(PLX);
+    console.log("PROGRESSION MANAGER LOADED")
     //(require("./core/archetypes/Progression.js")).init();
     // (require("./core/archetypes/Achievements.js")).init();
   } catch (err) {
-    console.error(err);
-    // process.exit(1);
+    console.error("PROGRESSION MANAGER LOADED FAILED",err);
+    //process.exit(1);
   }
 
   //setTimeout(() => {

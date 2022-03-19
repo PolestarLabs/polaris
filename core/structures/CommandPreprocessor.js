@@ -146,7 +146,7 @@ const DEFAULT_CMD_OPTS = {
       if (!status) return;
       if (m.command.argsRequired && !a.length) return;
 
-      Progression.emit(`command.${m.command.label}`, { msg: m });
+      global?.Progression?.emit(`command.${m.command.label}`, { msg: m });
       commandRoutine.saveStatistics(m, m.command);
       commandRoutine.administrateExp(m.author.id, m.command);
       const benchmark = performance.now() - m.runtime;
