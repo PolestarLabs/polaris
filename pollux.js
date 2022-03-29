@@ -297,7 +297,7 @@ PLX.once("ready", async () => {
 
   if (PLX._flavordata?.name === "main" ){
     await TopGG_api.postStats({
-      serverCount: TOTAL_SHARDS * PLX.guilds.size ,
+      serverCount:   PLX.guilds.size ,
       shardCount: TOTAL_SHARDS
     });
   }
