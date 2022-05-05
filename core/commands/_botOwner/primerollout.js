@@ -86,7 +86,7 @@ module.exports = {
     , aliases: ['rollout']
 }
 
-function createEmbed(thisSticker) {
+function createEmbed(thisSticker = {}) {
     return {
         description: `Confirm this month's sticker:
         • Display Name: **${thisSticker.name}** *(send \`-ren [name]\` to rename it)*
