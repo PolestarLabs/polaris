@@ -9,7 +9,7 @@ const init = async function (msg) {
 
     const thisSticker = await DB.cosmetics.findOne({ id: composeStickerName() }).noCache();
 
-    if (!thisSticker) return msg.reply(`${_emoji('nope')} **Sticker \`${composeStickerName()}\` not found!** Can't release rewards.`);
+    //if (!thisSticker) return msg.reply(`${_emoji('nope')} **Sticker \`${composeStickerName()}\` not found!** Can't release rewards.`);
     console.log({ thisSticker })
     let embed = createEmbed(thisSticker);
 
