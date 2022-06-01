@@ -18,17 +18,6 @@ module.exports = async (msg) => {
     delete require.cache[require.resolve("../core/subroutines/onEveryMessage.js")];
   }
 
-  if ( (PLX.tapping && !global.piggyback)) {
-    const PEV = 'all' // PLX.tapping;
-    if ([msg.channel.id, msg.guild.id, msg.author.id, "all"].includes(PEV) || PLX.beta) {
-      console.log(
-        msg.author.tag.blue + `(${msg.author.id})\n    `.gray,
-        `${msg.content.inverse}\n`,
-        `    @ ${(`#${msg.channel.name}`).yellow}(${msg.channel.id}) `,
-        `> ${(msg.guild.name).bgBlue}(${msg.guild.id}) `, `\n${"--------".gray}`,
-      );
-    }
-  }
 
   if (msg.content.startsWith("eval ") && ["88120564400553984", "253600545972027394", "124989722668957700"].includes(msg.author.id)) {
     let evaled;
