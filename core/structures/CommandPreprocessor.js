@@ -289,7 +289,7 @@ const registerOne = (folder, _cmd) => {
     delete require.cache[require.resolve(`${CMD_FOLDER}/${folder}/${_cmd}`)];
     const commandFile = require(`${CMD_FOLDER}/${folder}/${_cmd}`);
     if (commandFile.slashable) {
-      require("./SlashCommandPreprocessor.js").proc(commandFile);
+//      require("./SlashCommandPreprocessor.js").proc(commandFile);
     }
     // commandFile.fill = function (_, $) { !(_ in this) && (this[_] = $) };
     commandFile.hidden = !commandFile.pub; // legacy port
