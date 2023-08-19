@@ -19,7 +19,7 @@ const init = async (msg) => {
   const ctx = canvas.getContext("2d");
 
   ctx.drawImage(subject, 0, 0);
-  ctx.drawImage(hand, 0, 0, subject.height, subject.height);
+  ctx.drawImage(hand, subject.height - 800, subject.height -800, subject.height, subject.height);
 
   //return msg.channel.send($t("responses.forFun.thatShit", { lngs: msg.lang } ), file(await canvas.toBuffer(), "latts.png"));
   return msg.channel.send( "Olha só **aquela** merda!", file(await canvas.toBuffer(), "latts.png"));
