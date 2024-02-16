@@ -21,6 +21,7 @@ const init = async (msg, args) => {
   const P = { lngs: msg.lang };
   const language = args[0];
 
+  const serverData = await DB.servers.get(msg.guild.id);
   if (!PLX.modPass(msg.member, "kickMembers", serverData)) return msg.channel.send($t("responses.errors.insuperms", P));
 
   const langOptions = shuffle(Languages.i18n).map(lang => {
@@ -45,7 +46,6 @@ const init = async (msg, args) => {
   if ( !langOptions.filter(x=>x.default).length ) langOptions.find(x=>x.value==='en').default = true;
 
   if (language === "refresh") {
-    const serverData = await DB.servers.get(msg.guild.id);
     msg.guild.LANG = serverData.modules.LANGUAGE;
     return msg.addReaction(_emoji("yep").reaction);
   }
