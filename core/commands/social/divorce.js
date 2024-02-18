@@ -158,7 +158,7 @@ async function divorce_accepted(msg, toDivorceId, user, toDivorceUser) {
   );
 }
 
-async function divorce_denied(msg, user, toDivorceUse, marriage) {
+async function divorce_denied(msg, user, toDivorceUser, marriage) {
   const rejectPrompt = {
     title: "Divorce request denied",
     // eslint-disable-next-line max-len
