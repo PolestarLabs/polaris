@@ -3,12 +3,15 @@ const ECO = require("../../archetypes/Economy");
 async function init(msg, args) {
   const marriages = await DB.relationships.find({
     type: "marriage",
-    users: msg.author.id,
+    users: `${msg.author.id}`,
   });
-  if (!marriages)
-    return msg.channel.send(
+
+  if (!marriages) {
+    await msg.channel.send(
       `<@${msg.author.id}> you are not married! :broken_heart:`
     );
+    return;
+  }
 
   if (marriages.length === 1) {
     await promptDivorce(msg, marriages[0]);
