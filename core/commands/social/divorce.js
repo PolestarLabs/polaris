@@ -13,11 +13,11 @@ async function init(msg, args) {
   if (marriages.length === 1) {
     await promptDivorce(msg, marriages[0]);
   } else {
-    await promptChoice(msg);
+    await promptChoice(msg, marriages);
   }
 }
 
-async function promptChoice(msg) {
+async function promptChoice(msg, marriages) {
   const select = {
     type: 3,
     custom_id: "divorce_select",
@@ -45,7 +45,10 @@ async function promptChoice(msg) {
   );
   prompt.delete();
 
-  promptDivorce(msg, choice[0]);
+  const marriageChosen = marriages.find(({ users }) =>
+    users.includes(choice[0].data.values[0])
+  );
+  promptDivorce(msg, marriageChosen);
 }
 
 async function promptDivorce(msg, marriage) {
@@ -136,7 +139,13 @@ async function promptDivorce(msg, marriage) {
   }
 }
 
-async function divorce_accepted(msg, toDivorceId, user, toDivorceUser) {
+async function divorce_accepted(
+  msg,
+  toDivorceId,
+  user,
+  toDivorceUser,
+  marriage
+) {
   if (user.modules.RBN < 2500) {
     return msg.channel.send(
       `<@${msg.author.id}>, you need at least ${_emoji("RBN")} 2500 to divorce.`
