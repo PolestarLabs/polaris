@@ -155,7 +155,7 @@ async function divorce_accepted(
     );
   }
 
-  if (partner.modules.RBN < 2500) {
+  if (toDivorceUser.modules.RBN < 2500) {
     return msg.channel.send(
       `<@${toDivorceId}>, you need at least ${_emoji("RBN")} 2500 to divorce.`
     );
@@ -183,6 +183,22 @@ async function divorce_denied(msg, user, toDivorceUser, marriage) {
     )}`,
     color: 0xe02850,
   };
+  const buttons = [
+    {
+      type: 2,
+      style: 3,
+      label: "Yes",
+      custom_id: "divorce_accept",
+      emoji: { name: "YEP", id: "763616714914922527" },
+    },
+    {
+      type: 2,
+      style: 4,
+      label: "No",
+      custom_id: "divorce_reject",
+      emoji: { name: "NOPE", id: "763616715036033084" },
+    },
+  ];
   buttons[0].custom_id = "divorce_lawyer_accept";
   buttons[1].custom_id = "divorce_lawyer_reject";
   const prompt2 = await prompt.edit({
