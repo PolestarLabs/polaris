@@ -149,9 +149,9 @@ async function divorce_accepted(msg, toDivorceId, user, toDivorceUser) {
     );
   }
 
+  await DB.relationships.findByIdAndDelete(marriage._id);
   await ECO.pay(msg.author.id, 2500, "divorce");
   await ECO.pay(toDivorceId, 2500, "divorce");
-  await DB.relationships.delete(marriage._id);
 
   await msg.channel.send(
     `The ending of a story: <@${msg.author.id}> and **${toDivorceUser.username}** are now divorced. :broken_heart:`
@@ -201,8 +201,8 @@ async function rejectFlow(user, msg, partner, marriage) {
     return;
   }
 
+  await DB.relationships.findByIdAndDelete(marriage._id);
   await ECO.pay(msg.author.id, 5000, "divorce.lawyer");
-  await DB.relationships.delete(marriage._id);
 
   await msg.channel.send(
     `Happy loner: <@${msg.author.id}> has paid ${_emoji(
