@@ -44,7 +44,7 @@
     "rss-parser": "^3.7.2",
     "skia-canvas": "^0.9.27",
     "stackblur-canvas": "2.5.0",
-    "xml2js": "^0.4.23",
+    "xml2js": "^0.5.0",
     "ytdl-core": "^4.0.0"
   },
   "devDependencies": {
