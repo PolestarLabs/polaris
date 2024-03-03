@@ -23,7 +23,7 @@
     "@sentry/node": "^5.15.4",
     "@top-gg/sdk": "^3.1.2",
     "@vitalets/google-translate-api": "^9.1.0",
-    "axios": "^0.21.1",
+    "axios": "^0.28.0",
     "bluebird": "^3.7.2",
     "canvas": "^2.6.0",
     "canvas-text-wrapper": "^0.10.2",
