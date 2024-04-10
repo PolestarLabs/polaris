@@ -39,7 +39,7 @@
     "gif-encoder": "^0.7.2",
     "hot-shots": "^8.5.0",
     "mongoose": "^5.13.20",
-    "node-canvas-with-twemoji": "^0.1.6",
+    "node-canvas-with-twemoji": "^0.1.8",
     "open-graph-scraper": "^5.0.5",
     "rss-parser": "^3.7.2",
     "skia-canvas": "^0.9.27",
