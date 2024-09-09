@@ -99,7 +99,7 @@ global.PLX = new Eris.CommandClient(
       ratelimiterOffset: 800,
     },
     defaultImageFormat: "png",
-    intents: 1927,
+    intents: ["guilds", "guildMembers", "guildBans", "guildWebhooks", "guildInvites", "guildVoiceStates", "guildPresences", "guildMessages", "guildMessageReactions", "guildMessageTyping", "messageContent"],
     disableEvents: {
       TYPING_START: true,
       TYPING_STOP: true,
