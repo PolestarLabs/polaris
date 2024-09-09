@@ -8,9 +8,9 @@ const RUNNING_MONTH_LONG = new Date().toLocaleString("en", { month: "long" })
   .toLowerCase();
 const RUNNING_YEAR = new Date().getUTCFullYear();
 
-const CURRENT_VALID_MONTH = 6; // JANUARY = 0; (JULY)
+const CURRENT_VALID_MONTH = new Date().getUTCMonth();// JANUARY = 0; (10 NOV
 
-const TURNING_DAY = 5; // when Prime starts
+const TURNING_DAY = 1; // when Prime starts
 const GRACE_WARNING_DAY = 10; // when Prime starts yelling
 const GRACE_TURNING_DAY = 15; // when Prime shuts down
 
