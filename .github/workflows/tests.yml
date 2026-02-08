@@ -19,10 +19,13 @@ jobs:
 
     steps:
       - name: Configure git for private dependencies
+        env:
+          TOKEN: ${{ secrets.PAT_PRIVATE_DEPS }}
         run: |
-          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "ssh://git@github.com/"
-          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
-          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "https://github.com/"
+          echo "machine github.com login x-access-token password ${TOKEN}" > ~/.netrc
+          chmod 600 ~/.netrc
+          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
+          git config --global url."https://github.com/".insteadOf "git@github.com:"
 
       - name: Checkout
         uses: actions/checkout@v4
