@@ -743,7 +743,7 @@ module.exports = {
 
 async function FINALIZE(/** @type {Message} */ msg, /** @type {Canvas} */ canvas) {
   let preBuffer = performance.now();
-  const buff = await canvas.toBuffer("image/png", { compressionLevel: 1, filters: canvas.PNG_FILTER_NONE });
+  const buff = await canvas.toBuffer("png");
 
   let messageToSend = "";
   let noimg = false;
