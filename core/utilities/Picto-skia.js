@@ -1,6 +1,5 @@
 const π = Math.PI;
 const Canvas = require("skia-canvas");
-const OGCanvas = require("canvas");
 const wrap = require("./canvaswrapper");
 const { fillTextWithTwemoji } = require("@polestar/skia-twemoji");
 const StackBlur = require('stackblur-canvas');
@@ -90,7 +89,7 @@ module.exports = {
 
   tag: function tag(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     text = unshitify(text);
-    const ogc = OGCanvas.createCanvas(100,100);
+    const ogc = new Canvas.Canvas(100, 100);
     const ogcctx = ogc.getContext("2d");
 
     ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
@@ -124,7 +123,7 @@ module.exports = {
 
   tagMoji: async function tagmoji(ctx, text, font = "14px", color = "#b4b4b8", stroke) {
     text = unshitify(text);
-    const ogc = OGCanvas.createCanvas(100,100);
+    const ogc = new Canvas.Canvas(100, 100);
     const ogcctx = ogc.getContext("2d");
 
     ogcctx.font = `${font}, "Quicksand", "DX아기사랑B", "Corporate Logo Rounded", sans-serif`.trim();
