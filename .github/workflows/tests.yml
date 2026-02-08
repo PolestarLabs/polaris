@@ -18,14 +18,10 @@ jobs:
         node-version: [18, 20]
 
     steps:
-      - name: Configure git for private dependencies
-        env:
-          TOKEN: ${{ secrets.PAT_PRIVATE_DEPS }}
-        run: |
-          echo "machine github.com login x-access-token password ${TOKEN}" > ~/.netrc
-          chmod 600 ~/.netrc
-          git config --global url."https://github.com/".insteadOf "ssh://git@github.com/"
-          git config --global url."https://github.com/".insteadOf "git@github.com:"
+      - name: Configure SSH for private dependencies
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -39,7 +35,9 @@ jobs:
         run: echo 'ignore-scripts=true' >> ~/.npmrc
 
       - name: Install dependencies
-        run: npm install --ignore-scripts
+        run: | 
+          git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf ssh://git@github.com/
+          npm install --ignore-scripts
 
       - name: Verify dependencies installed
         run: |
