@@ -168,7 +168,7 @@ Scope reviewed:
 - [ ] The `try/catch` around the dynamic `require` has an empty catch body — if a valid interaction handler throws, the error is silently eaten with no logging or user feedback. See [eventHandlers/messageComponent.js](eventHandlers/messageComponent.js#L8).
 
 **Progression.js — spent event returns immediately**
-- [ ] The `"spend"` listener starts with `return;` (L65), so no spend-based quest tracking ever runs. Probably left from debugging. See [core/archetypes/Progression.js](core/archetypes/Progression.js#L65).
+- [x] The `"spend"` listener starts with `return;` (L65), so no spend-based quest tracking ever runs. Probably left from debugging. See [core/archetypes/Progression.js](core/archetypes/Progression.js#L65).
 
 **WebhookDigester.js — API inconsistency**
 - [ ] `info()`, `warn()`, `error()`, `ok()` pass a 2nd positional arg as `options`, but `execute()` expects `options.hook` etc. Meanwhile `raw()` destructures `options` differently. If callers pass `(message, errStack, opts)` (3 args, as in `INSTR.error(…)`) the options object is silently dropped. See [utils/WebhookDigester.js](utils/WebhookDigester.js).
@@ -189,3 +189,7 @@ Scope reviewed:
 - 🐛 Fix global level-up detection order.
 - 🐛 Fix blackjack multi-deck composition and card count.
 - 🐛 Fix blackjack no-joker loop guard.
+- 🛡️ Restore spend quest tracking in progression.
+- 🛡️ Guard quest completion and quest lookup in progression.
+- 🧹 Gate noisy progression logs behind log level.
+- 🐛 Fix progression setImmediate usage for quest updates.
