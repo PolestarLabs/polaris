@@ -158,7 +158,7 @@ function parseCurrencies(curr) {
 
   // @ts-expect-error non-strict checks in other files
   if (typeof curr === "string") curr = [curr.toUpperCase()]; // @ts-expect-error non-strict checks in other files
-  else currarr = curr.map(c => c.toUpperCase());
+  else curr = curr.map(c => c.toUpperCase());
 
   // convert currencies to XXX format. eg. rubines/rubine → RBN.
   // @ts-expect-error can't handle this...
