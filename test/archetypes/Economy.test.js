@@ -80,11 +80,17 @@ describe("Economy", () => {
 
     it("generates unique transaction IDs", () => {
       const ids = new Set();
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 500; i++) {
         const p = Economy.generatePayload("a", "b", 10, "t", "RBN", "INCOME", "+");
         ids.add(p.transactionId);
       }
-      expect(ids.size).toBeGreaterThanOrEqual(100);
+      expect(ids.size).toBe(500);
+    });
+
+    it("transaction IDs contain currency prefix and shard", () => {
+      const p = Economy.generatePayload("a", "b", 10, "t", "JDE", "INCOME", "+");
+      expect(p.transactionId.startsWith("JDE")).toBe(true);
+      expect(p.transactionId.length).toBeGreaterThan(10);
     });
 
     it("throws on missing arguments", () => {
