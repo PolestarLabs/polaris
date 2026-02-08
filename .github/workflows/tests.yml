@@ -35,7 +35,7 @@ jobs:
           git config --global credential.helper store
           echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
           git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
-          npm install --ignore-scripts
+          npm ci --ignore-scripts
 
       - name: Verify dependencies installed
         run: |
