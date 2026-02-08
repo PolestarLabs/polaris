@@ -25,6 +25,15 @@ const path = require("path");
 
 const ERIS = require("eris");
 const Eris = require("eris-additions")(ERIS);
+
+const originalOnMessageCreate = ERIS.CommandClient.prototype.onMessageCreate;
+ERIS.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(msg) {
+  if (!msg) {
+    this.emit("warn", "MessageCreate received without a message object.");
+    return;
+  }
+  return originalOnMessageCreate.call(this, msg);
+};
 const axios = require("axios");
 const DBSchema = require("@polestar/database_schema");
 const cmdPreproc = require("./core/structures/CommandPreprocessor");
