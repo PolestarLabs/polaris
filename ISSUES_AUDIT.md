@@ -3,6 +3,13 @@
 Date: 2026-02-08
 
 Scope reviewed:
+- [pollux.js](pollux.js)
+- [sidecar.js](sidecar.js)
+- [core/structures/ReactionCollector.js](core/structures/ReactionCollector.js)
+- [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js)
+- [core/archetypes/GuessingGames.js](core/archetypes/GuessingGames.js)
+- [core/commands/moderation/switch.js](core/commands/moderation/switch.js)
+- [core/archetypes/Crafter.js](core/archetypes/Crafter.js)
 - TODO/FIXME markers surfaced in bot source code (core/, commands/, utils/, types/)
 
 ## Action items
@@ -59,3 +66,18 @@ Scope reviewed:
 - [ ] TODO: move `_consts` into constants module. See [core/subroutines/_consts.js](core/subroutines/_consts.js).
 - [ ] FIXME: booster packs not added in lootbox generator. See [core/commands/cosmetics/lootbox_generator.js](core/commands/cosmetics/lootbox_generator.js).
 - [ ] FIXME: `NameColor` appears unused; remove or wire it. See [core/structures/NameColor.js](core/structures/NameColor.js).
+
+### Deeper findings (memory leaks, bad practices, uncaught exceptions, bugs)
+- [ ] Fix `createMessage` override to preserve `this` context and guard DMs where `permissionsOf` is unavailable. See [pollux.js](pollux.js).
+- [ ] Align blacklist property naming (`blackListedUsers` vs `blacklistedUsers`) to avoid stale reads. See [pollux.js](pollux.js).
+- [ ] Harden crash handlers: `uncaughtException` uses `err.slice` which fails for Error objects; use `err.stack` or `String(err)`. See [pollux.js](pollux.js).
+- [ ] Wrap cron callbacks in try/catch to prevent unhandled rejections from crashing the sidecar. See [sidecar.js](sidecar.js).
+- [ ] Clamp negative timeout delays in sidecar timers (`expires - Date.now()`), otherwise large backlogs can flood the event loop. See [sidecar.js](sidecar.js).
+- [ ] Avoid implicit global `Promise` reassignment; use `const Promise = ...` to prevent unexpected library behavior. See [sidecar.js](sidecar.js).
+- [ ] Clear `setTimeout` handles on collector stop to avoid lingering references and leaks. See [core/structures/ReactionCollector.js](core/structures/ReactionCollector.js) and [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js).
+- [ ] Guard `interaction.member` access in button collector; use `interaction.user` when missing to avoid runtime errors. See [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js).
+- [ ] Fix normal-mode guessing game end handler using undefined `m`; should use `msg` and avoid chaining on promise return. See [core/archetypes/GuessingGames.js](core/archetypes/GuessingGames.js).
+- [ ] Replace `Collector.end` with `Collector.stop` if the collector API doesn’t expose `end`, and ensure cleanup paths always clear intervals. See [core/archetypes/GuessingGames.js](core/archetypes/GuessingGames.js).
+- [ ] Remove reaction-remove listeners from `listeners` map on exit to prevent leaks and stale handlers. See [core/commands/moderation/switch.js](core/commands/moderation/switch.js).
+- [ ] Reset cached item maps on periodic reload or handle deleted items to avoid stale craft data. See [core/archetypes/Crafter.js](core/archetypes/Crafter.js).
+- [ ] Add error handling around periodic `init()` refresh to avoid unhandled rejections. See [core/archetypes/Crafter.js](core/archetypes/Crafter.js).
