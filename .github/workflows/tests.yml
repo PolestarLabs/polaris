@@ -20,10 +20,9 @@ jobs:
     steps:
       - name: Configure git for private dependencies
         run: |
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "ssh://git@github.com/"
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".pushInsteadOf "ssh://git@github.com/"
-          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".pushInsteadOf "git@github.com:"
+          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "ssh://git@github.com/"
+          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
+          git config --global url."https://x-access-token:${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "https://github.com/"
 
       - name: Checkout
         uses: actions/checkout@v4
