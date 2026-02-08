@@ -105,19 +105,19 @@ Scope reviewed:
 - [ ] `command.disabled` check on L81 is inverted — it lets through staff users when `command.disabled` is true but blocks everyone else, meaning disabled commands are *only* accessible to staff (probably intended) but the emoji reaction suggests denial. Verify intent. See [core/structures/CommandPreprocessor.js](core/structures/CommandPreprocessor.js#L81).
 
 **ComponentPaginator.js — variable name typo**
-- [ ] `interaction.ack().catch(e => console.log(err, "ERROR ACK…"))` references `err` instead of `e` → `ReferenceError` at runtime, swallowing the real error. See [core/structures/ComponentPaginator.js](core/structures/ComponentPaginator.js#L80).
+- [x] `interaction.ack().catch(e => console.log(err, "ERROR ACK…"))` references `err` instead of `e` → `ReferenceError` at runtime, swallowing the real error. See [core/structures/ComponentPaginator.js](core/structures/ComponentPaginator.js#L80).
 
 **ComponentsHandler.js — implicit global `newButtons`**
-- [ ] `addButtons` assigns to bare `newButtons` without `let`/`const` → implicit global variable, causes race conditions when multiple messages add buttons concurrently. See [core/structures/ComponentsHandler.js](core/structures/ComponentsHandler.js#L75).
+- [x] `addButtons` assigns to bare `newButtons` without `let`/`const` → implicit global variable, causes race conditions when multiple messages add buttons concurrently. See [core/structures/ComponentsHandler.js](core/structures/ComponentsHandler.js#L75).
 - [ ] `removeButtons` / `enableButtons` / `disableButtons` compare `currentComps === newComps` by reference after `.map()`, which always creates a new array, so the equality check is dead code (never short-circuits). See [core/structures/ComponentsHandler.js](core/structures/ComponentsHandler.js).
-- [ ] Left-over `console.log(newButtons)` in production path. See [core/structures/ComponentsHandler.js](core/structures/ComponentsHandler.js#L76).
+- [x] Left-over `console.log(newButtons)` in production path. See [core/structures/ComponentsHandler.js](core/structures/ComponentsHandler.js#L76).
 
 **ButtonCollector.js — potential crash on DM interactions**
-- [ ] `checkListener` accesses `interaction.member.user.id` — in DMs `interaction.member` is `undefined` → crash. Guard with `interaction.member?.user?.id ?? interaction.user?.id`. See [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js#L107).
+- [x] `checkListener` accesses `interaction.member.user.id` — in DMs `interaction.member` is `undefined` → crash. Guard with `interaction.member?.user?.id ?? interaction.user?.id`. See [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js#L107).
 - [ ] `awaitButtonClick` resolves with `{error:"timeout"}` (an object) on timeout, but call sites (like YesNo.js) check `responses?.length` — objects have no `.length` so timeout is treated as "no response" rather than an explicit error. Unify the contract. See [core/structures/ButtonCollector.js](core/structures/ButtonCollector.js#L91).
 
 **Economy.js — undefined variable `currarr`**
-- [ ] `parseCurrencies` assigns to undefined `currarr` when `curr` is an array (`currarr = curr.map(...)`) instead of `curr = curr.map(...)` → the mapped result is lost, original array used untransformed. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L158).
+- [x] `parseCurrencies` assigns to undefined `currarr` when `curr` is an array (`currarr = curr.map(...)`) instead of `curr = curr.map(...)` → the mapped result is lost, original array used untransformed. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L158).
 - [ ] `new Error({ reason: "NO FUNDS" })` passes an object to `Error` constructor → error `.message` becomes `"[object Object]"`, useless for debugging. Use `new Error("NO FUNDS")`. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L331).
 - [ ] `transactionId` uses `randomize(-1000,1000)` which can be negative, producing an invalid base-32 string. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L256).
 
@@ -162,7 +162,7 @@ Scope reviewed:
 - [ ] `Object.assign(this, axios.create(...))` copies axios instance methods onto `SelfAPI` but loses the prototype chain — interceptors and internal state won't work correctly. Prefer composition (`this.client = axios.create(...)`) over mixin. See [core/utilities/SelfAPI.js](core/utilities/SelfAPI.js#L7-L12).
 
 **UtilityGearbox.js — `this` in module scope**
-- [ ] `RichEmbed: this.Embed` at module top-level: `this` is the module's `exports` object, and `this.Embed` hasn't been assigned yet at that point → `RichEmbed` is always `undefined`. See [core/structures/UtilityGearbox.js](core/structures/UtilityGearbox.js#L6).
+- [x] `RichEmbed: this.Embed` at module top-level: `this` is the module's `exports` object, and `this.Embed` hasn't been assigned yet at that point → `RichEmbed` is always `undefined`. See [core/structures/UtilityGearbox.js](core/structures/UtilityGearbox.js#L6).
 
 **messageComponent.js — silent catch swallows all errors**
 - [ ] The `try/catch` around the dynamic `require` has an empty catch body — if a valid interaction handler throws, the error is silently eaten with no logging or user feedback. See [eventHandlers/messageComponent.js](eventHandlers/messageComponent.js#L8).
@@ -172,3 +172,12 @@ Scope reviewed:
 
 **WebhookDigester.js — API inconsistency**
 - [ ] `info()`, `warn()`, `error()`, `ok()` pass a 2nd positional arg as `options`, but `execute()` expects `options.hook` etc. Meanwhile `raw()` destructures `options` differently. If callers pass `(message, errStack, opts)` (3 args, as in `INSTR.error(…)`) the options object is silently dropped. See [utils/WebhookDigester.js](utils/WebhookDigester.js).
+
+---
+
+### 1.5.102
+- 🐛 Fix ComponentPaginator ack error handler variable name.
+- 🧹 Remove implicit global `newButtons` and noisy log in `addButtons`.
+- 🛡️ Guard component collector user ID resolution for DMs.
+- 🐛 Fix currency array normalization in `Economy.parseCurrencies`.
+- 🧹 Fix `RichEmbed` export in UtilityGearbox.
