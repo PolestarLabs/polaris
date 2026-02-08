@@ -14,24 +14,7 @@ const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1;
 const isPRIME = process.env.PRIME === "true" || process.env.PRIME === true;
 
 process.env.UV_THREADPOOL_SIZE = 256;
-let clusterNames;
-try {
-  clusterNames = require("@polestar/constants/clusters")?.default;
-} catch (err) {
-  // TEMPFIX. Must stabilize constants repo
-  
-  try {
-    clusterNames = require("@polestar/constants/clusters.js")?.default;
-  } catch (innerErr) {
-    try {
-      clusterNames = require(require("path").join(__dirname, "..", "..", "internal_modules", "constants", "clusters.js"))?.default;
-    } catch (finalErr) {
-      console.error("Failed to load cluster names from @polestar/constants.", finalErr);
-      clusterNames = [];
-    }
-  }
-}
-global.clusterNames = clusterNames;
+global.clusterNames = require("@polestar/constants/clusters")?.default;
 
 require("./instrumentation.js");
 
