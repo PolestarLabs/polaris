@@ -32,7 +32,23 @@ ERIS.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(msg)
     this.emit("warn", "MessageCreate received without a message object.");
     return;
   }
+  if (!msg.author) {
+    this.emit("warn", "MessageCreate received without an author.");
+    return;
+  }
   return originalOnMessageCreate.call(this, msg);
+};
+const originalWsEvent = ERIS.Shard.prototype.wsEvent;
+ERIS.Shard.prototype.wsEvent = function safeWsEvent(packet) {
+  try {
+    return originalWsEvent.call(this, packet);
+  } catch (err) {
+    if (err instanceof TypeError && String(err.message || err).includes("reading 'remove'")) {
+      this.client?.emit?.("warn", `Shard wsEvent ignored: ${err.message}`);
+      return;
+    }
+    throw err;
+  }
 };
 const axios = require("axios");
 const DBSchema = require("@polestar/database_schema");
