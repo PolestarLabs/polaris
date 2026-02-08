@@ -2,6 +2,8 @@
 // const DB = require("../database/db_ops");
 // const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events");
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 
 function eventChecks(event) {
   if (!event) return 1;
@@ -138,9 +140,9 @@ module.exports = {
     
     const dropcondition = droprate === 777 || (trigger.content === "fdropt" && trigger.author.id === "88120564400553984");
 
-    if (dropcondition) console.log(`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `.red.bgYellow);
+    if (dropcondition && DEBUG_LOGS) console.log(`>> DROPRATE [${droprate}] >> ${trigger.guild.name} :: #${trigger.channel.name} `.red.bgYellow);
     if (dropcondition) {
-      console.log("DROPPE!!!".green);
+      if (DEBUG_LOGS) console.log("DROPPE!!!".green);
 
       if (!BOX) return false;
       trigger.channel.natural = true;
@@ -177,7 +179,7 @@ module.exports = {
         // pickMsg.delete().catch(e=>null);
       }, { time: 15000 });
 
-      console.log(pickers);
+      if (DEBUG_LOGS) console.log(pickers);
 
       if (pickers.length === 0) {
         CHN.send(v.morons);
@@ -210,7 +212,7 @@ module.exports = {
 
       const goesto = await CHN.send(v.oscarGoesTo);
       const dramaMsg = await CHN.send(dramaMessage);
-      console.log("WINNER PICKED!!!".green);
+      if (DEBUG_LOGS) console.log("WINNER PICKED!!!".green);
       await wait(4);
 
       // dramaMsg.edit("||"+drama[rand]+"||");
@@ -230,7 +232,7 @@ Winner:\`${JSON.stringify(luckyOne)}\
       */
       trigger.channel.deleteMessages(responses.map((x) => x.id));
       await DB.users.getFull({ id: luckyOne.id }).then((userdata) => userdata.addItem(BOX.id));
-      console.log("BOX ADDED!!!".green);
+      if (DEBUG_LOGS) console.log("BOX ADDED!!!".green);
       goesto.delete().catch(() => false);
       dramaMsg.delete().catch(() => false);
       CHN.send(`||${drama[rand]}||, ${v.gratz}`);

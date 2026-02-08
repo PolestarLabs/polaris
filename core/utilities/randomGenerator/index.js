@@ -1,3 +1,6 @@
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
+
 const DICTS = {
     adjective: require('./adjectives.json'),
     animal: require('./animals.json'),
@@ -14,7 +17,7 @@ module.exports = function (formation,join=''){
                 return capitalize(shuffle( DICTS[ shuffle(dict||["number"])[0] ])[0] );
             }catch(e){
                 console.error(e);
-                console.log({dict,formation});
+                if (DEBUG_LOGS) console.log({dict,formation});
                 return "Bonk"
             }
 

@@ -1,4 +1,7 @@
 // _PLX[epic=Utilities] Sidecar Instance / Cronjobs
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
+
 const isPRIME = process.env.PRIME;
 const { Client } = require("eris");
 const formatDistance = require("date-fns/formatDistance");
@@ -195,9 +198,9 @@ console.log("• ".green, "CRONs ready");
 function processReminders() {
   DB.feed.find({ expires: { $lte: Date.now() + 45e3 } }).limit(50).lean()
     .then((reminders) => {
-      console.log({ reminders });
+      if (DEBUG_LOGS) console.log({ reminders });
       reminders.forEach(async (rem) => {
-        console.log(rem);
+        if (DEBUG_LOGS) console.log(rem);
         if (PLX.reminderTimers.has(rem._id)) return;
         PLX.reminderTimers.set(
           rem._id,

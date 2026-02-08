@@ -1,4 +1,6 @@
 const Picto = require("../utilities/Picto.js");
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 
 /* eslint max-classes-per-file: ["error", 2] */
 const VENTURE_EVENTS = [
@@ -223,12 +225,12 @@ module.exports = {
     const ctx = canvas.getContext("2d");
 
     const LOC = await DB.advLocations.findOne({ id: location }).lean();
-    console.log(LOC);
+    if (DEBUG_LOGS) console.log(LOC);
     const NEI = await DB.advLocations.traceRoutes(location, 0);
     const LOCS = await DB.advLocations.find({ id: { $in: NEI.map((x) => x._id) } }).lean();
 
     const coords = LOC.coordinates;
-    console.log(LOCS);
+    if (DEBUG_LOGS) console.log(LOCS);
 
     const bigMap = await Picto.getCanvas("https://cdn.discordapp.com/attachments/488142034776096772/773752670418501652/unknown.png");
     const overlay = await Picto.getCanvas("https://cdn.discordapp.com/attachments/488142034776096772/774058122729488384/frame.png");
@@ -282,12 +284,12 @@ module.exports = {
 };
 
 function cardinalDirection(LocationA, LocationB) {
-  console.log(LocationA);
+  if (DEBUG_LOGS) console.log(LocationA);
   const dy = LocationB.y - LocationA.y;
   const dx = LocationB.x - LocationA.x;
   let θ = Math.atan2(dy, dx) * 180 / Math.PI;
 
-  console.log({
+  if (DEBUG_LOGS) console.log({
     LocationA, LocationB, dy, dx, θ,
   });
 

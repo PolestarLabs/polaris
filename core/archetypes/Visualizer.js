@@ -1,4 +1,6 @@
 const { Crafter } = require("./Crafter");
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 
 const yep = _emoji("yep");
 const nope = _emoji("nope");
@@ -79,7 +81,7 @@ class Visualizer {
     const BS = "🟫";
     let depthstr = !depth ?  "":BLANK;
     
-    console.log({item,depth,length,index,parentIndex})
+    if (DEBUG_LOGS) console.log({item,depth,length,index,parentIndex})
 
     for (let i = 0; i < depth; i++) {
       depthstr += ((parentIndex < maxDepth && (maxDepth - (i + 1) === depth || parentIndex + i === maxDepth || depth === i + 1))
