@@ -19,6 +19,7 @@ const init = async (msg, args) => {
   }
 
   msg.addReaction(_emoji("yep").reaction);
+  msg.channel.createMessage("done");
 };
 module.exports = {
   init,

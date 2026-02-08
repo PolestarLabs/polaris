@@ -1,7 +1,7 @@
 const meSubs = require("../core/subroutines/onEveryMessage.js");
 
 module.exports = async (msg) => {
-    
+  if (!msg) return;
   if (msg.author.bot) return;
   if (!PLX.ready) { 
     //console.log("Message not Ready".red);
