@@ -1,6 +1,6 @@
 {
   "name": "polaris",
-  "version": "1.5.122",
+  "version": "1.6.1",
   "description": "Pollux on Eris",
   "main": "pollux.js",
   "scripts": {
@@ -28,7 +28,6 @@
     "@vitalets/google-translate-api": "^9.1.0",
     "axios": "^0.28.0",
     "bluebird": "^3.7.2",
-    "canvas": "^2.6.0",
     "canvas-text-wrapper": "^0.10.2",
     "cheerio": "^1.0.0-rc.2",
     "chrono-node": "github:Mitchell3514/chrono#ff42f01c662073c9cb9c3d88f84d1754097f9581",
@@ -42,10 +41,9 @@
     "gif-encoder": "^0.7.2",
     "hot-shots": "^8.5.0",
     "mongoose": "^5.13.20",
-    "node-canvas-with-twemoji": "^0.1.6",
     "open-graph-scraper": "^5.0.5",
     "rss-parser": "^3.7.2",
-    "skia-canvas": "^0.9.27",
+    "skia-canvas": "^3.0.8",
     "stackblur-canvas": "2.5.0",
     "xml2js": "^0.5.0",
     "ytdl-core": "^4.0.0"
