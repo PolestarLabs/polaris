@@ -33,7 +33,7 @@ jobs:
         DIR: ${{ secrets.DASH_DIR_DEV }}
       name: 🔁 Sync with Repository    
       needs: version
-      runs-on: self-hosted
+      runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
         - name: Go to directory
@@ -45,7 +45,7 @@ jobs:
             
 
   npm:
-      runs-on: self-hosted
+      runs-on: ubuntu-latest
       needs: pull
       env:
         DIR: ${{ secrets.DASH_DIR_DEV }}  
@@ -71,7 +71,7 @@ jobs:
   deploy:
       name: 🚀 Launch
       needs: npm
-      runs-on: self-hosted
+      runs-on: ubuntu-latest
       env:
         DIR: ${{ secrets.DASH_DIR_DEV }}
       steps:
