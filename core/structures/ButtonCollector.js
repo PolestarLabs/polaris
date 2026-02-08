@@ -106,7 +106,8 @@ module.exports = (Eris) => {
 function checkListener(){
 	if(!listening) {
 		PLX.on("messageComponent", (interaction, data) => {
-			for(const collector of collectors) setImmediate(()=>collector.verify(interaction, data, interaction.member.user.id));
+      const userID = interaction.member?.user?.id ?? interaction.user?.id;
+      for(const collector of collectors) setImmediate(()=>collector.verify(interaction, data, userID));
 		});
 
 		listening = true;
