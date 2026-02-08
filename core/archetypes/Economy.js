@@ -243,7 +243,7 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     from: userFrom,
     to: userTo,
     timestamp: now,
-    transactionId: `${curr}${(now + randomize(-1000, 1000) + arbitraryIncrementer++).toString(32).toUpperCase()}`,
+    transactionId: `${curr}${(now + Math.abs(randomize(-1000, 1000)) + arbitraryIncrementer++).toString(32).toUpperCase()}`,
     amt: amt < 0 ? -amt : amt,
   };
 
@@ -309,7 +309,7 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
   const hasFunds = await checkFunds(userFrom, amt, curr);
   if (!hasFunds && !disableFundsCheck) {
     INSTR.inc("eco.transactions",{ status: "error", currency: curr, type, description:"no-funds" });
-    return Promise.reject(new Error({ reason: "NO FUNDS" }));
+    return Promise.reject(new Error("NO FUNDS"));
   }
 
   // Argument validation
