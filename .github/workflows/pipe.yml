@@ -1,8 +1,9 @@
 name: Version
 
 on:
-  push:
-    branches: [ dev ]
+  workflow_dispatch:
+    # Disabled - run manually only if needed
+    # Was: push to dev - now requires manual trigger
 
 jobs:
 
