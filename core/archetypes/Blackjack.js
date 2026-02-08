@@ -34,9 +34,9 @@ class Blackjack {
     if (this.deck.length === 0) {
       if ((decks.get(this.guildID)?.length || 0) !== 0) this.deck = decks.get(this.guildID);
       else {
-        let iterations = this.deckAmount;
+        let iterations = Math.max(0, this.deckAmount - 1);
         this.deck = Blackjack._shuffle(DECK_TEMPLATE);
-        while (iterations-- > 0) this.deck.concat( Blackjack._shuffle(DECK_TEMPLATE) );
+        while (iterations-- > 0) this.deck = this.deck.concat( Blackjack._shuffle(DECK_TEMPLATE) );
         decks.set(this.guildID, this.deck);
         //this.deck.push("JOKER-default");
         this.deck = Blackjack._shuffle(this.deck);
@@ -55,9 +55,10 @@ class Blackjack {
     }
 
     if (powerups?.nojoker) {
-      const incr = 0;
+      let incr = 0;
       while (this.deck[this.deck.length - 1].includes("JOKER")) {
         this.deck = Blackjack._shuffle(this.deck);
+        incr += 1;
         if (incr > 5) break;
       }
     }
@@ -70,7 +71,7 @@ class Blackjack {
   }
 
   cardsRemaining() {
-    return decks.get(this.guildID)?.length || this.decks.length;
+    return decks.get(this.guildID)?.length || this.deck.length;
   }
 
   static gameExists(playerID) {
