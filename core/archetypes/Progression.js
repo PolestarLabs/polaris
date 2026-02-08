@@ -1,8 +1,11 @@
-/*
 const EventEmitter = require("events");
 let { ACHIEVEMENTS } = require("./Achievements.js");
 const formatDistanceToNow = require("date-fns/formatDistanceToNow");
 const { setImmediate } = require("timers/promises");
+const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
+const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
+const getAchievements = () => global.Achievements;
+
 class ProgressionManager extends EventEmitter {
     constructor() {
         super();
@@ -17,15 +20,18 @@ class ProgressionManager extends EventEmitter {
 
             let [action, scope, condition] = event.split('.');
             INSTR.inc("progression.events", { action, scope, condition, value: opts.value, userID: opts.userID, valueSet: opts.valueSet });
-            console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${typeof opts.valueSet == 'number' ? " RESET ".bgRed : `[+${value || 1}]`.cyan
+            if (DEBUG_LOGS) {
+                console.log(`${"•".cyan} Progression:  ${action?.gray || "*".gray} -> ${scope?.yellow || "*".gray} -> ${condition?.blue || "*".gray} ${typeof opts.valueSet == 'number' ? " RESET ".bgRed : `[+${value || 1}]`.cyan
                 }`);
+            }
 
             await setImmediate(0, { ref: false });
             await this.updateQuestTracker(userID || msg?.author?.id, event, value, opts);
 
             if (!msg) return;
             if (!value && !value?.content && !msg?.content) return;
-            if (isPartOfAchievement(event)) Achievements.check(msg.author.id, true, { msg: msg || value });
+            const Achievements = getAchievements();
+            if (Achievements && isPartOfAchievement(event)) Achievements.check(msg.author.id, true, { msg: msg || value });
 
             await wait(1);
             //console.log({event,userID})
@@ -54,7 +60,6 @@ class ProgressionManager extends EventEmitter {
 
 
         this.on("spend", async (event, opts) => {
-            return;
             let { value, msg, userID } = opts;
             let [, currency] = event.split('.');
 
@@ -77,13 +82,19 @@ class ProgressionManager extends EventEmitter {
         this.on("QUEST_COMPLETED", async (event, quest, opts) => {
             const { msg, userQuests, userID } = opts;
             //award rewards;
-            msg.channel.send(await questCompletedMsg(quest, userID))
-                .catch((err) => {
-                    console.error(err)
-                    PLX.getDMChannel( userID ).then(async DM =>
-                        DM.createMessage(await questCompletedMsg(quest, userID)).catch(console.error)
-                    ).catchReturn(0);
-                });
+            if (msg?.channel) {
+                msg.channel.send(await questCompletedMsg(quest, userID))
+                    .catch((err) => {
+                        console.error(err)
+                        PLX.getDMChannel(userID).then(async DM =>
+                            DM.createMessage(await questCompletedMsg(quest, userID)).catch(console.error)
+                        ).catchReturn(0);
+                    });
+            } else {
+                PLX.getDMChannel(userID).then(async DM =>
+                    DM.createMessage(await questCompletedMsg(quest, userID)).catch(console.error)
+                ).catchReturn(0);
+            }
             if (userQuests?.every(q => q.completed)) {
                 await wait(4);
                 //award extra bonus
@@ -172,6 +183,7 @@ class ProgressionManager extends EventEmitter {
         if (!userQuests) return [];
 
         const quest = userQuests.find(q => q._id == questID.toString());
+        if (!quest) return [];
 
         await setImmediate(0, { ref: false });
 
@@ -216,6 +228,7 @@ class ProgressionManager extends EventEmitter {
 
     async available(userID) {
         const userData = await DB.users.findOne({ id: userID }).noCache().lean();
+        if (!userData?.modules) return [];
         return (await DB.quests.find({ public: true, reveal_level: { $lte: userData.modules.level } }).lean());
     }
 
@@ -235,13 +248,13 @@ class ProgressionManager extends EventEmitter {
         if (eventAction === "streak" && questAction !== "streak") return false;
 
         if(quest.tracker === eventTracker || quest.tracker === "*" || quest.tracker === "*.*" || quest.tracker === "*.*.*"  ) { // PERFECT MATCH
-            console.log("[Progression]".blue, "Perfect Match".green, eventTracker,"/",quest.tracker )
+            if (DEBUG_LOGS) console.log("[Progression]".blue, "Perfect Match".green, eventTracker,"/",quest.tracker )
             return true;
         } else if (questAction === eventAction && (((questScope || '*') === (eventScope || '*') && questCondition === eventCondition) || (questScope || '*') === '*')) {
-            console.log("[Progression]".blue, "Match Scope (arg 2)".green, eventTracker, "/", quest.tracker)
+            if (DEBUG_LOGS) console.log("[Progression]".blue, "Match Scope (arg 2)".green, eventTracker, "/", quest.tracker)
             return true;
         } else if (questAction === eventAction && questScope === eventScope && ((questCondition || '*') === (eventCondition || '*') || (questCondition || '*') === '*')) {
-            console.log("[Progression]".blue, "Match Condition (arg 3)".green, eventTracker, "/", quest.tracker)
+            if (DEBUG_LOGS) console.log("[Progression]".blue, "Match Condition (arg 3)".green, eventTracker, "/", quest.tracker)
             return true;
         }
         return false;
@@ -254,7 +267,8 @@ class ProgressionManager extends EventEmitter {
 
         for (let quest of userQuests) {
             if (this.fulfillsTracker(eventTracker, quest)) {
-                await setImmediate((await processQuest(this, quest)), { ref: false });
+                await setImmediate();
+                await processQuest(this, quest);
             }
         }
 
