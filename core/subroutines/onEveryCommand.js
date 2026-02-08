@@ -10,7 +10,7 @@ module.exports = {
   async commLog(message) {
     const commandname = message.content.substr(message.prefix.length).split(/ +/)[0];
 
-    if (!message.author.id === process.env.WATCHCMD || process.env.WATCHCMD === "all") {
+    if (message.author.id !== process.env.WATCHCMD || process.env.WATCHCMD === "all") {
       console.log(`SHARD ${(process.env.SHARD).black.bgYellow}${(`  --== ${commandname.toUpperCase()} ==--   `
         + ` || ${message.guild.name} || ${message.author.tag}  ${message.author.id}`).bgMagenta}`);
       console.log(` \x1b[37;1;91m |${message.content}| \x1b[0m ${new Date()}`);
