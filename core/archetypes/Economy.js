@@ -226,7 +226,17 @@ function checkFunds(user, amount, currency = "RBN") {
  * @param {object} [fields={}] Custom fields added to the Payload
  * @return {Transaction} The payload generated.
  */
-let arbitraryIncrementer = 0;
+const SHARD_NUMBER = Number(process.env.SHARD) || 0;
+const PID = process.pid || 0;
+
+// Snowflake-style transaction ID: deterministically unique, no randomness needed.
+// Format: {CURR}{timestamp_base36}{shard_hex}{sequence_base36}
+// - timestamp: ms since epoch (base36) → ~8 chars, naturally sortable
+// - shard:    2-digit hex shard identifier → differentiates across processes
+// - sequence: monotonic counter (base36), resets each ms → handles burst within same ms
+let _lastTs = 0;
+let _seq = 0;
+
 function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fields = {}) {
   if (!(userFrom && type && curr && subtype && symbol && userTo)) throw new Error("Missing arguments");
   if (typeof amt !== "number") throw new TypeError("Type of amount should be number.");
@@ -235,6 +245,9 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
   if (typeof userTo === "object") userTo = userTo["id"];
 
   const now = Date.now();
+  if (now === _lastTs) _seq++;
+  else { _lastTs = now; _seq = 0; }
+
   const payload = {
     subtype: subtype,
     type: type,
@@ -243,7 +256,13 @@ function generatePayload(userFrom, userTo, amt, type, curr, subtype, symbol, fie
     from: userFrom,
     to: userTo,
     timestamp: now,
-    transactionId: `${curr}${(now + Math.abs(randomize(-1000, 1000)) + arbitraryIncrementer++).toString(32).toUpperCase()}`,
+    transactionId: `${curr}${
+      SHARD_NUMBER.toString(16).padStart(2, "0").toUpperCase()
+    }${
+      now.toString(36).toUpperCase()
+    }${
+      _seq.toString(36).padStart(2, "0").toUpperCase()
+    }`,
     amt: amt < 0 ? -amt : amt,
   };
 
