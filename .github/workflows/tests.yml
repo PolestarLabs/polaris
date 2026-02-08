@@ -18,10 +18,6 @@ jobs:
         node-version: [18, 20]
 
     steps:
-      - name: Configure SSH for private dependencies
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v4
