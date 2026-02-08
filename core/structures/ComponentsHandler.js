@@ -70,10 +70,9 @@ module.exports = function (Eris) {
   Eris.Message.prototype.addButtons = async function (buttons, row = 0) {
     let currentComps =  this.components || await this.getComponents();
 
-    newButtons = currentComps.map((row) => row.components || []);
+    let newButtons = currentComps.map((row) => row.components || []);
     if (newButtons[row]) newButtons[row] = [...newButtons[row], ...buttons];
     else newButtons[newButtons.length] = [...buttons];
-console.log(newButtons)
     return this.setButtons(newButtons);
   };
 
