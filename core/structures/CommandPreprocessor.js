@@ -241,12 +241,12 @@ ${(err?.stack || err?.message || err || "UNKNOWN ERROR").slice(0, 1850)}
           // ? ` \`\`\`js\n${err?.stack || err?.message || "UNKNOWN ERROR"}\`\`\``
           // ?
           `Error Code: **\`${errorCode}\`**` + 
-          knownError?.details ? "<:statOPL:712316874511351869> **This is a known error!**"+
+          (knownError?.details ? "<:statOPL:712316874511351869> **This is a known error!**"+
           `Root: ${knownError.details.cause}`+
           "Course of action:" +
           `${knownError.details.solution}`+
           "*Contact Support if the solution above does not work or if there's no solution available.*" 
-          : ''
+          : '')
           // : ""
           }`,
         thumbnail: { url: `${paths.CDN}/build/assorted/error_aaa.gif?` },
