@@ -20,10 +20,10 @@ const notifyUser = async (userData,prize) => {
 	
 	let awardTier;
 	switch(true){
-		case level % 25: awardTier = "UR"; break;
-		case level % 15: awardTier = "SR"; break;
-		case level % 10: awardTier = "R";  break;
-		case level %  5: awardTier = "U";  break;
+		case level % 25 === 0: awardTier = "UR"; break;
+		case level % 15 === 0: awardTier = "SR"; break;
+		case level % 10 === 0: awardTier = "R";  break;
+		case level %  5 === 0: awardTier = "U";  break;
 		default: awardTier = "C"
 	}
 
@@ -41,10 +41,11 @@ module.exports = async (msg,userData) => {
 	userData ??= await DB.users.getFull(msg.author.id);
 	if (!userData || !userData.addItem) return;
 	const curLevelG = xp_to_lv(userData.modules.exp) || 0;
+	const prevLevel = userData.modules.level;
 	await commitLevel(userData.id,curLevelG);
 
 	setImmediate(()=>{
-		if (curLevelG > userData.modules.level){			
+		if (curLevelG > prevLevel){			
 			setImmediate(async ()=>{
 				console.log("[GLOBAL LEVEL UP]".blue, msg.author.tag.yellow, msg.author.id);
 				resolveFile(`${paths.GENERATORS}/levelup.gif?level=${curLevelG}&cache=1&avatar=${msg.author.avatarURL}&uid=${msg.author.id}`)
