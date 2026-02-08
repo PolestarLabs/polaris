@@ -6,6 +6,9 @@ on:
   push:
     branches: [dev]
 
+permissions:
+  contents: read
+
 jobs:
   test:
     name: Unit Tests
@@ -22,6 +25,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Configure git for private dependencies
+        run: |
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "ssh://git@github.com/"
+          git config --global url."https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
 
       - name: Configure npm to skip git dep builds
         run: echo 'ignore-scripts=true' >> ~/.npmrc
