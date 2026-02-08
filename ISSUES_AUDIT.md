@@ -97,11 +97,11 @@ Scope reviewed:
 - [ ] Image-tracker block (L44-L48) has an empty `/* Do Stuff when there is image */` body — dead code path taking up CPU for the regex match. Remove or implement. See [core/subroutines/onEveryMessage.js](core/subroutines/onEveryMessage.js#L44-L48).
 
 **onEveryCommand.js — logic inversion**
-- [ ] `commLog` condition `!message.author.id === process.env.WATCHCMD` is always `false` because `!string` is `false`, so watch-command logging never fires. Should be `message.author.id !== process.env.WATCHCMD`. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L10).
+- [x] `commLog` condition `!message.author.id === process.env.WATCHCMD` is always `false` because `!string` is `false`, so watch-command logging never fires. Should be `message.author.id !== process.env.WATCHCMD`. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L10).
 - [ ] `saveStatistics` calls `Promise.all` but never returns or awaits the result — any DB error is silently swallowed. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L23).
 
 **CommandPreprocessor.js — operator-precedence & error-message concatenation**
-- [ ] Error message embed uses `knownError?.details ? ... : ''` but the `+` operator binds tighter than `?:`, so the ternary condition is actually `"Error Code: **…**" + knownError?.details` (always truthy) → the "known error" block is always shown with `undefined` when there's no known error. Needs parentheses. See [core/structures/CommandPreprocessor.js](core/structures/CommandPreprocessor.js#L246-L254).
+- [x] Error message embed uses `knownError?.details ? ... : ''` but the `+` operator binds tighter than `?:`, so the ternary condition is actually `"Error Code: **…**" + knownError?.details` (always truthy) → the "known error" block is always shown with `undefined` when there's no known error. Needs parentheses. See [core/structures/CommandPreprocessor.js](core/structures/CommandPreprocessor.js#L246-L254).
 - [ ] `command.disabled` check on L81 is inverted — it lets through staff users when `command.disabled` is true but blocks everyone else, meaning disabled commands are *only* accessible to staff (probably intended) but the emoji reaction suggests denial. Verify intent. See [core/structures/CommandPreprocessor.js](core/structures/CommandPreprocessor.js#L81).
 
 **ComponentPaginator.js — variable name typo**
@@ -118,8 +118,8 @@ Scope reviewed:
 
 **Economy.js — undefined variable `currarr`**
 - [x] `parseCurrencies` assigns to undefined `currarr` when `curr` is an array (`currarr = curr.map(...)`) instead of `curr = curr.map(...)` → the mapped result is lost, original array used untransformed. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L158).
-- [ ] `new Error({ reason: "NO FUNDS" })` passes an object to `Error` constructor → error `.message` becomes `"[object Object]"`, useless for debugging. Use `new Error("NO FUNDS")`. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L331).
-- [ ] `transactionId` uses `randomize(-1000,1000)` which can be negative, producing an invalid base-32 string. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L256).
+- [x] `new Error({ reason: "NO FUNDS" })` passes an object to `Error` constructor → error `.message` becomes `"[object Object]"`, useless for debugging. Use `new Error("NO FUNDS")`. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L331).
+- [x] `transactionId` uses `randomize(-1000,1000)` which can be negative, producing an invalid base-32 string. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L256).
 
 **Blackjack.js — `.concat()` result discarded**
 - [ ] `this.deck.concat(Blackjack._shuffle(DECK_TEMPLATE))` does not mutate `this.deck` — the concatenated result is thrown away, so multi-deck games always play with a single deck. Should be `this.deck = this.deck.concat(...)`. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L37).
@@ -181,3 +181,7 @@ Scope reviewed:
 - 🛡️ Guard component collector user ID resolution for DMs.
 - 🐛 Fix currency array normalization in `Economy.parseCurrencies`.
 - 🧹 Fix `RichEmbed` export in UtilityGearbox.
+- 🐛 Fix known error details concatenation in command error embed.
+- 🐛 Fix watch-command logging condition.
+- 🐛 Use proper NO FUNDS error message in economy transfers.
+- 🐛 Make economy transaction IDs non-negative.
