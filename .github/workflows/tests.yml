@@ -8,7 +8,7 @@ on:
 
 jobs:
   test:
-    name: í·ª Unit Tests
+    name: Unit Tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,8 +33,8 @@ jobs:
       - name: Verify dependencies installed
         working-directory: ./DEV/bot
         run: |
-          test -f node_modules/@polestar/constants/countries.js && echo "âœ“ constants OK"
-          test -f node_modules/@polestar/timed-usage/dist/index.js && echo "âœ“ timed-usage OK"
+          test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
+          test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
 
       - name: Run tests
         working-directory: ./DEV/bot
