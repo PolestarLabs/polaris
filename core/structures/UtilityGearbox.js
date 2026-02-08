@@ -3,6 +3,6 @@ const Eris = require("eris");
 module.exports = {
 
   Embed: Eris.Embed,
-  RichEmbed: this.Embed,
+  RichEmbed: Eris.Embed,
 
 };
