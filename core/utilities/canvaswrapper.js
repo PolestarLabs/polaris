@@ -99,14 +99,13 @@ function CanvasTextWrapper(canvas, text, options) {
 
   console.log({ fontParts });
   function setFont(fontSize) {
-    console.log(opts.font, context.font);
     if (!fontParts)
       fontParts = !opts.sizeToFill
         ? opts.font.split(/\b\d+px\b/i)
         : context.font.split(/\b\d+px\b/i);
     context.font = fontParts[0] + fontSize + "px" + fontParts.slice(1).join(" ") ;
-    if (fontParts) console.log({ fontParts }, 2);
-    console.log(context.font.gray, "inside MODULE");
+    //if (fontParts) console.log({ fontParts }, 2);
+    //console.log(context.font.gray, "inside MODULE");
   }
 
   function setLineHeight() {
