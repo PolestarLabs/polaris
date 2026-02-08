@@ -122,10 +122,10 @@ Scope reviewed:
 - [x] `transactionId` uses `randomize(-1000,1000)` which can be negative, producing an invalid base-32 string. See [core/archetypes/Economy.js](core/archetypes/Economy.js#L256).
 
 **Blackjack.js — `.concat()` result discarded**
-- [ ] `this.deck.concat(Blackjack._shuffle(DECK_TEMPLATE))` does not mutate `this.deck` — the concatenated result is thrown away, so multi-deck games always play with a single deck. Should be `this.deck = this.deck.concat(...)`. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L37).
-- [ ] `this.decks.length` on L67 references `this.decks` (plural) which doesn't exist → `TypeError`. Should be `this.deck.length`. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L67).
+- [x] `this.deck.concat(Blackjack._shuffle(DECK_TEMPLATE))` does not mutate `this.deck` — the concatenated result is thrown away, so multi-deck games always play with a single deck. Should be `this.deck = this.deck.concat(...)`. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L37).
+- [x] `this.decks.length` on L67 references `this.decks` (plural) which doesn't exist → `TypeError`. Should be `this.deck.length`. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L67).
 - [ ] Guild-shared `decks` Map is never cleaned up → memory leak for long-running processes. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L1).
-- [ ] Infinite loop risk: `nojoker` option has `const incr = 0` that's never incremented, yet `incr > 5` is the break condition. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L52-L55).
+- [x] Infinite loop risk: `nojoker` option has `const incr = 0` that's never incremented, yet `incr > 5` is the break condition. See [core/archetypes/Blackjack.js](core/archetypes/Blackjack.js#L52-L55).
 
 **Venture.js — `switch` on string equality always falls to default**
 - [ ] `eventProcessor` switch-case uses `case "item" && supply.item.find(...)` which evaluates the `&&` first (producing `true`/`false`/object), so the case label is never the string `Criteria`. Every condition except `"rubines"` falls to `default: throw`. See [core/archetypes/Venture.js](core/archetypes/Venture.js#L89-L100).
@@ -136,8 +136,8 @@ Scope reviewed:
 - [ ] `randomOneIndexed` and `indexedOne` assign to bare `Url` without `let`/`const` → implicit global, race-condition prone. See [core/structures/Galleries.js](core/structures/Galleries.js#L22).
 
 **globalLevelUp.js — level-milestone modulo is inverted**
-- [ ] `levelUpPrizeMail` uses `level % 25` etc. as switch cases, but non-zero modulo is truthy — so `level % 25` is true for every level *except* multiples of 25. The first case that's truthy wins, meaning almost all levels get "UR" instead of "C". Needs `level % 25 === 0`. See [core/subroutines/globalLevelUp.js](core/subroutines/globalLevelUp.js#L19-L24).
-- [ ] `commitLevel` is called *before* the `curLevelG > userData.modules.level` check, so the level is overwritten even on non-level-up messages, losing the ability to detect the transition correctly if there's clock skew or reordering. See [core/subroutines/globalLevelUp.js](core/subroutines/globalLevelUp.js#L40-L41).
+- [x] `levelUpPrizeMail` uses `level % 25` etc. as switch cases, but non-zero modulo is truthy — so `level % 25` is true for every level *except* multiples of 25. The first case that's truthy wins, meaning almost all levels get "UR" instead of "C". Needs `level % 25 === 0`. See [core/subroutines/globalLevelUp.js](core/subroutines/globalLevelUp.js#L19-L24).
+- [x] `commitLevel` is called *before* the `curLevelG > userData.modules.level` check, so the level is overwritten even on non-level-up messages, losing the ability to detect the transition correctly if there's clock skew or reordering. See [core/subroutines/globalLevelUp.js](core/subroutines/globalLevelUp.js#L40-L41).
 
 **guildMemberAdd.js / guildMemberRemove.js — null dereference on missing user data**
 - [ ] Both handlers access `userData.modules.*` and `member.user.username` etc. without guarding `userData` or `member.user` being null. If the user isn't in DB yet, the template replacements crash. See [eventHandlers/guildMemberAdd.js](eventHandlers/guildMemberAdd.js) and [eventHandlers/guildMemberRemove.js](eventHandlers/guildMemberRemove.js).
@@ -185,3 +185,7 @@ Scope reviewed:
 - 🐛 Fix watch-command logging condition.
 - 🐛 Use proper NO FUNDS error message in economy transfers.
 - 🐛 Make economy transaction IDs non-negative.
+- 🐛 Fix level-up milestone rewards logic.
+- 🐛 Fix global level-up detection order.
+- 🐛 Fix blackjack multi-deck composition and card count.
+- 🐛 Fix blackjack no-joker loop guard.
