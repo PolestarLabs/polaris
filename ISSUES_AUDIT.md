@@ -16,7 +16,7 @@ Scope reviewed:
 
 ### TODO/FIXME markers to triage
 - [ ] FIXME: `MiscUtils` appears unused; remove or wire it. See [core/utilities/MiscUtils.js](core/utilities/MiscUtils.js).
-- [ ] FIXME: DB pooling on every message in box drops. See [core/subroutines/boxDrops.js](core/subroutines/boxDrops.js).
+- [x] FIXME: DB pooling on every message in box drops. See [core/subroutines/boxDrops.js](core/subroutines/boxDrops.js).
 - [ ] FIXME: Achievements USER/ACHIEVEMENT ordering consistency. See [core/archetypes/Achievements.js](core/archetypes/Achievements.js).
 - [ ] FIXME: remove temporary switch in achievements logic. See [core/archetypes/Achievements.js](core/archetypes/Achievements.js).
 - [ ] TODO: improve achievement output formatting. See [core/archetypes/Achievements.js](core/archetypes/Achievements.js).

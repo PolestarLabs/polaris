@@ -18,6 +18,41 @@ const EVENT = _EVT.ongoing || false;
 const EVENTBOX = _EVT.box_identification || "O";
 const EVENTICON = _EVT.box_picture || "chest";
 
+const SERVER_CACHE_TTL_MS = 60e3 * 60;
+const serverConfigCache = new Map();
+
+async function getServerConfig(guildId) {
+  const now = Date.now();
+  const cached = serverConfigCache.get(guildId);
+  if (cached?.data && cached.expiresAt > now) {
+    return cached.data;
+  }
+  if (cached?.inFlight) {
+    return cached.inFlight;
+  }
+
+  const inFlight = DB.servers.findOne({ id: guildId }).lean().exec()
+    .then((serverDATA) => {
+      if (!serverDATA) {
+        serverConfigCache.delete(guildId);
+        return null;
+      }
+      const data = {
+        switches: serverDATA.switches,
+        event: serverDATA.event || {},
+      };
+      serverConfigCache.set(guildId, { data, expiresAt: now + SERVER_CACHE_TTL_MS });
+      return data;
+    })
+    .catch((err) => {
+      serverConfigCache.delete(guildId);
+      throw err;
+    });
+
+  serverConfigCache.set(guildId, { data: cached?.data, expiresAt: now + 5000, inFlight });
+  return inFlight;
+}
+
 function convertToEvent(i, box) {
   box.id = box.id.replace("O", EVENTBOX);
   box.text += `\n${i.eventDrop}`;
@@ -57,14 +92,11 @@ module.exports = {
     if (bC / mC >= 0.1) return false; // Guilds with "excessive" human to bot ratio
 
 
-    // FIXME This is pooling the DB on every message
     if (!trigger.guild.switches || !trigger.guild.event) {
-      const serverDATA = await DB.servers.findOne({ id: SVR.id }).lean()
-        .exec();
-      if (!serverDATA) return undefined;
-      trigger.guild.switches = serverDATA.switches;
-      trigger.guild.event = serverDATA.event || {};
-      setTimeout(() => (trigger.guild.switches = false), 60e3 * 60);
+      const serverConfig = await getServerConfig(SVR.id);
+      if (!serverConfig) return undefined;
+      trigger.guild.switches = serverConfig.switches;
+      trigger.guild.event = serverConfig.event;
     }
     if (trigger.guild.switches?.chLootboxOff?.includes(trigger.channel.id)) return undefined;
 
