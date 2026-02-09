@@ -68,7 +68,7 @@ global.INSTR = {
 };
 
 // ── Database stubs ───────────────────────────────────────────────
-const mockCollection = {
+const createMockCollection = () => ({
   get: jest.fn().mockResolvedValue(null),
   set: jest.fn().mockResolvedValue(true),
   new: jest.fn().mockResolvedValue({}),
@@ -80,36 +80,56 @@ const mockCollection = {
   collection: {
     insertMany: jest.fn().mockResolvedValue({}),
   },
+});
+
+const ensureTestGlobals = () => {
+  if (!global.DB) {
+    const mockCollection = createMockCollection();
+    global.DB = {
+      users: { ...mockCollection },
+      servers: { ...mockCollection },
+      cosmetics: { ...mockCollection },
+      items: { ...mockCollection },
+      audits: { ...mockCollection },
+    };
+  } else if (!global.DB.servers) {
+    global.DB.servers = createMockCollection();
+  }
+
+  if (!global.REDIS) {
+    const redisStore = new Map();
+    global.REDIS = {
+      get: jest.fn((k) => redisStore.get(k) || null),
+      set: jest.fn((k, v) => redisStore.set(k, v)),
+      del: jest.fn((k) => redisStore.delete(k)),
+      aget: jest.fn(async (k) => redisStore.get(k) || null),
+      expire: jest.fn(),
+    };
+    global.__testRedisStore = redisStore;
+  }
+
+  if (!global.PLX) {
+    global.PLX = {
+      user: { id: "000000000000000000", username: "TestBot" },
+      cluster: { id: 0, name: "test-cluster" },
+      redis: { ...global.REDIS },
+      on: jest.fn(),
+      emit: jest.fn(),
+      emitAsync: jest.fn().mockResolvedValue(undefined),
+      timerBypass: [],
+    };
+  } else if (!global.PLX.redis) {
+    global.PLX.redis = { ...global.REDIS };
+  }
 };
 
-global.DB = {
-  users: { ...mockCollection },
-  servers: { ...mockCollection },
-  cosmetics: { ...mockCollection },
-  items: { ...mockCollection },
-  audits: { ...mockCollection },
-};
+ensureTestGlobals();
 
 // ── Redis stub ───────────────────────────────────────────────────
-const redisStore = new Map();
-global.REDIS = {
-  get: jest.fn((k) => redisStore.get(k) || null),
-  set: jest.fn((k, v) => redisStore.set(k, v)),
-  del: jest.fn((k) => redisStore.delete(k)),
-  aget: jest.fn(async (k) => redisStore.get(k) || null),
-  expire: jest.fn(),
-};
+// (provided via ensureTestGlobals)
 
 // ── PLX (bot client) stub ────────────────────────────────────────
-global.PLX = {
-  user: { id: "000000000000000000", username: "TestBot" },
-  cluster: { id: 0, name: "test-cluster" },
-  redis: { ...global.REDIS },
-  on: jest.fn(),
-  emit: jest.fn(),
-  emitAsync: jest.fn().mockResolvedValue(undefined),
-  timerBypass: [],
-};
+// (provided via ensureTestGlobals)
 
 // ── Progression stub ─────────────────────────────────────────────
 global.Progression = {
@@ -123,4 +143,8 @@ global.MARKET_TOKEN = "test-token";
 global.errorsHook = null;
 
 // ── Expose redisStore for cleanup in afterEach setup ─────────
-global.__testRedisStore = redisStore;
+// (provided via ensureTestGlobals)
+
+module.exports = {
+  ensureTestGlobals,
+};
