@@ -63,31 +63,38 @@ jobs:
             echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          
+
           # Get files changed since last tag
           git diff --name-only $PREV_TAG HEAD > /tmp/changed_files.txt
-          
-          # Check if package.json changed
+
+          # If package.json changed explicitly, consider it meaningful
           if grep -q '^package.json$' /tmp/changed_files.txt; then
             echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
-          
-          # Check if any non-config files changed
+
+          # Treat the following as trivial changes (do not trigger tags):
+          # - workflow files under .github/workflows
+          # - common config files: *.yml, *.yaml, *.config.js, tsconfig*, eslintrc*, crowdin*, .gitignore, package-lock.json, README.md
           while IFS= read -r file; do
-            # Skip config files
-            if [[ "$file" =~ \.(config|y|yml)\.js$ ]] || \
-               [[ "$file" =~ ^(config|crowdin|eslintrc|tsconfig|\.gitignore|package-lock) ]] || \
-               [[ "$file" == "README.md" ]] || \
-               [[ "$file" =~ ^\.github/workflows ]]; then
-              continue
-            fi
-            # Found a meaningful file
-            echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            case "$file" in
+              .github/workflows/*) 
+                ;; # trivial
+              *.yml|*.yaml)
+                ;; # trivial
+              *.config.js|*.config.cjs|config/*)
+                ;; # trivial
+              eslintrc*|tsconfig*|crowdin*|.gitignore|package-lock.json|README.md)
+                ;; # trivial
+              *)
+                # Found a meaningful (non-trivial) file
+                echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
+                exit 0
+                ;;
+            esac
           done < /tmp/changed_files.txt
-          
-          # Only config files changed
+
+          # Only trivial/config/workflow files changed
           echo "tag_worthy=false" >> "$GITHUB_OUTPUT"
 
       - name: Create tag
