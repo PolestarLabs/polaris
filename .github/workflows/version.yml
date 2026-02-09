@@ -4,7 +4,7 @@ on:
   workflow_call:
 
 jobs:
-  version:
+  bump:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js environment

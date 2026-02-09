@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  deploy:
+  ssh:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy via SSH
@@ -18,6 +18,11 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            echo "== DEPLOY BETA =="
             cd ${{ secrets.DEPLOY_PATH }}
+            git fetch origin
+            git checkout v${{ inputs.version }}
+            echo "== DEPLOY LIVE =="
+            cd ${{ secrets.DEPLOY_PATH_DELAYED }}
             git fetch origin
             git checkout v${{ inputs.version }}

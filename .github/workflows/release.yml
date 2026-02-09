@@ -8,7 +8,7 @@ on:
         type: string
 
 jobs:
-  release:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - name: Create GitHub release
