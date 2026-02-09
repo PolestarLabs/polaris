@@ -121,6 +121,10 @@ const ensureTestGlobals = () => {
   } else if (!global.PLX.redis) {
     global.PLX.redis = { ...global.REDIS };
   }
+
+  globalThis.DB = global.DB;
+  globalThis.REDIS = global.REDIS;
+  globalThis.PLX = global.PLX;
 };
 
 ensureTestGlobals();
