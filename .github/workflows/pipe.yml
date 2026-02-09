@@ -262,3 +262,20 @@ jobs:
         with:
           tag_name: v${{ needs.tag.outputs.version }}
           name: v${{ needs.tag.outputs.version }}
+
+  deploy:
+    name: 🚀 Deploy Release
+    needs: release
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.tag.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            git fetch origin
+            git checkout v${{ needs.release.outputs.version }}
