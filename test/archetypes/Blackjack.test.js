@@ -145,11 +145,26 @@ describe("Blackjack", () => {
   //  Game instance & deck management (uses Redis mock)
   // ────────────────────────────────────────────────────────
   describe("game instance", () => {
+    beforeEach(() => {
+      jest.clearAllMocks();
+    });
+
     it("constructs with correct player/guild IDs", () => {
       const game = new Blackjack(msg);
       expect(game.playerID).toBe("player-bj-test");
       expect(game.guildID).toBe("guild-bj-test");
       expect(game.deck).toEqual([]);
+    });
+
+    it("tracks game lifecycle in redis", () => {
+      const game = new Blackjack(msg);
+      const key = `blackjack-ongoing:${msg.author.id}`;
+
+      expect(PLX.redis.set).toHaveBeenCalledWith(key, true);
+      expect(PLX.redis.expire).toHaveBeenCalledWith(key, 30);
+
+      game.endGame();
+      expect(PLX.redis.expire).toHaveBeenCalledWith(key, 1);
     });
 
     it("builds and shuffles a deck on first hit", () => {
