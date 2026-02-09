@@ -122,9 +122,20 @@ const ensureTestGlobals = () => {
     global.PLX.redis = { ...global.REDIS };
   }
 
-  globalThis.DB = global.DB;
-  globalThis.REDIS = global.REDIS;
-  globalThis.PLX = global.PLX;
+  if (!global.Progression) {
+    global.Progression = {
+      emit: jest.fn(),
+    };
+  }
+
+  // eslint-disable-next-line no-undef
+  DB = global.DB;
+  // eslint-disable-next-line no-undef
+  REDIS = global.REDIS;
+  // eslint-disable-next-line no-undef
+  PLX = global.PLX;
+  // eslint-disable-next-line no-undef
+  Progression = global.Progression;
 };
 
 ensureTestGlobals();
@@ -136,9 +147,7 @@ ensureTestGlobals();
 // (provided via ensureTestGlobals)
 
 // ── Progression stub ─────────────────────────────────────────────
-global.Progression = {
-  emit: jest.fn(),
-};
+// (provided via ensureTestGlobals)
 
 // ── Misc globals ─────────────────────────────────────────────────
 global.appRoot = __dirname.replace(/test[\\/]helpers$/, "");
