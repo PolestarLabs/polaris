@@ -1,6 +1,6 @@
 {
   "name": "polaris",
-  "version": "1.6.17",
+  "version": "1.6.18",
   "description": "Pollux on Eris",
   "main": "pollux.js",
   "scripts": {
