@@ -165,7 +165,7 @@ Scope reviewed:
 - [x] `RichEmbed: this.Embed` at module top-level: `this` is the module's `exports` object, and `this.Embed` hasn't been assigned yet at that point → `RichEmbed` is always `undefined`. See [core/structures/UtilityGearbox.js](core/structures/UtilityGearbox.js#L6).
 
 **messageComponent.js — silent catch swallows all errors**
-- [ ] The `try/catch` around the dynamic `require` has an empty catch body — if a valid interaction handler throws, the error is silently eaten with no logging or user feedback. See [eventHandlers/messageComponent.js](eventHandlers/messageComponent.js#L8).
+- [x] The `try/catch` around the dynamic `require` has an empty catch body — if a valid interaction handler throws, the error is silently eaten with no logging or user feedback. See [eventHandlers/messageComponent.js](eventHandlers/messageComponent.js#L8).
 
 **Progression.js — spent event returns immediately**
 - [x] The `"spend"` listener starts with `return;` (L65), so no spend-based quest tracking ever runs. Probably left from debugging. See [core/archetypes/Progression.js](core/archetypes/Progression.js#L65).

@@ -6,6 +6,6 @@ module.exports = async (interaction, data) => {
         //if (data.component_type === 3) return (require(`./interactions/${data.custom_id.split(":")[0]}.js`))(interaction, data);
 
     } catch (err) {
- //console.error(err)
+      console.error("Component interaction handler failed", err);
     }
 }
