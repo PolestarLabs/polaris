@@ -67,10 +67,19 @@ jobs:
           # Get files changed since last tag
           git diff --name-only $PREV_TAG HEAD > /tmp/changed_files.txt
           
-          # Check if package.json changed (always tag-worthy)
+          # Check if package.json changed
           if grep -q '^package.json$' /tmp/changed_files.txt; then
-            echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
-            exit 0
+            # Fetch previous package.json and compare excluding the version field
+            git show $PREV_TAG:package.json > /tmp/prev_package.json
+            NODE_EQ=$(node -e "const fs=require('fs');const a=JSON.parse(fs.readFileSync('/tmp/prev_package.json','utf8'));const b=JSON.parse(fs.readFileSync('package.json','utf8'));delete a.version;delete b.version;process.stdout.write(JSON.stringify(a)===JSON.stringify(b))")
+            if [ "$NODE_EQ" = "true" ]; then
+              # Only version changed — not tag-worthy by itself, continue checking other files
+              :
+            else
+              # package.json changed meaningfully
+              echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
           fi
           
           # Check if any non-config files changed
