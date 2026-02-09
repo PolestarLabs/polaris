@@ -10,8 +10,8 @@ permissions:
   contents: write
 
 jobs:
-  build:
-    name: Build
+  deps:
+    name: Dependencies
     runs-on: ubuntu-latest
 
     steps:
@@ -32,14 +32,6 @@ jobs:
           restore-keys: |
             npm-${{ runner.os }}-
 
-      - name: Cache jest
-        uses: actions/cache@v4
-        with:
-          path: /tmp/jest_rt
-          key: jest-${{ runner.os }}-${{ github.ref }}
-          restore-keys: |
-            jest-${{ runner.os }}-
-
       - name: Configure npm to skip git dep builds
         run: echo 'ignore-scripts=true' >> ~/.npmrc
 
@@ -54,6 +46,42 @@ jobs:
         run: |
           test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
+
+      - name: Upload node_modules
+        uses: actions/upload-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+          retention-days: 1
+
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    needs: deps
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Cache jest
+        uses: actions/cache@v4
+        with:
+          path: /tmp/jest_rt
+          key: jest-${{ runner.os }}-${{ github.ref }}
+          restore-keys: |
+            jest-${{ runner.os }}-
+
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
       - name: Build
         run: npm run build
@@ -61,6 +89,7 @@ jobs:
   unit:
     name: Unit Tests
     runs-on: ubuntu-latest
+    needs: deps
 
     steps:
 
@@ -72,14 +101,6 @@ jobs:
         with:
           node-version: 24
 
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
-
       - name: Cache jest
         uses: actions/cache@v4
         with:
@@ -88,20 +109,11 @@ jobs:
           restore-keys: |
             jest-${{ runner.os }}-
 
-      - name: Configure npm to skip git dep builds
-        run: echo 'ignore-scripts=true' >> ~/.npmrc
-
-      - name: Install dependencies
-        run: | 
-          git config --global credential.helper store
-          echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
-          git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
-          npm ci
-
-      - name: Verify dependencies installed
-        run: |
-          test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
-          test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
       - name: Run unit tests
         run: npm test -- --forceExit --ci --testPathPatterns "test/(?!integration).*\.test\.js$"
@@ -109,6 +121,7 @@ jobs:
   integration:
     name: Integration Tests
     runs-on: ubuntu-latest
+    needs: deps
 
     steps:
 
@@ -120,14 +133,6 @@ jobs:
         with:
           node-version: 24
 
-      - name: Cache npm
-        uses: actions/cache@v4
-        with:
-          path: ~/.npm
-          key: npm-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
-          restore-keys: |
-            npm-${{ runner.os }}-
-
       - name: Cache jest
         uses: actions/cache@v4
         with:
@@ -136,27 +141,18 @@ jobs:
           restore-keys: |
             jest-${{ runner.os }}-
 
-      - name: Configure npm to skip git dep builds
-        run: echo 'ignore-scripts=true' >> ~/.npmrc
-
-      - name: Install dependencies
-        run: |
-          git config --global credential.helper store
-          echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
-          git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
-          npm ci
-
-      - name: Verify dependencies installed
-        run: |
-          test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
-          test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
 
       - name: Run integration tests
         run: npm test -- --forceExit --ci --testPathPatterns "test/integration/.*\.test\.js$"
 
   version:
     name: ⚛️ Update Canonical Version
-    needs: [unit, integration, build]
+    needs: [unit, integration, build, deps]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.unit.result == 'success' && needs.integration.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
