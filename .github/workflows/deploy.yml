@@ -36,6 +36,8 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH_DELAYED }}
             git fetch origin
             git checkout --force v${{ steps.version.outputs.resolved }}
+            echo ===
+            pm2 ls
       - name: Check Node & pm2 on remote
         uses: appleboy/ssh-action@v1.0.0
         with:
