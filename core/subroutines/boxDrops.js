@@ -19,7 +19,51 @@ const EVENTBOX = _EVT.box_identification || "O";
 const EVENTICON = _EVT.box_picture || "chest";
 
 const SERVER_CACHE_TTL_MS = 60e3 * 60;
+const SERVER_CONFIG_CHANNEL = "pollux:server-config-updated";
 const serverConfigCache = new Map();
+let serverConfigSubscriberReady = false;
+let serverConfigSubscriber = null;
+
+function invalidateServerConfig(guildId) {
+  if (!guildId) return;
+  serverConfigCache.delete(guildId);
+  const guild = PLX?.guilds?.get?.(guildId);
+  if (guild) {
+    guild.switches = undefined;
+    guild.event = undefined;
+  }
+}
+
+function initServerConfigSubscriber() {
+  if (serverConfigSubscriberReady) return;
+  serverConfigSubscriberReady = true;
+  if (!PLX?.redis) return;
+
+  try {
+    if (typeof PLX.redis.duplicate === "function") {
+      serverConfigSubscriber = PLX.redis.duplicate();
+    } else {
+      const redis = require("redis");
+      const options = PLX.redis.options || {};
+      serverConfigSubscriber = redis.createClient({
+        host: options.host || "127.0.0.1",
+        port: options.port || 6379,
+        retry_strategy: () => 1000,
+      });
+    }
+
+    serverConfigSubscriber.on("message", (channel, message) => {
+      if (channel !== SERVER_CONFIG_CHANNEL) return;
+      invalidateServerConfig(message);
+    });
+    serverConfigSubscriber.on("error", (err) => {
+      console.error("Server config subscriber error", err);
+    });
+    serverConfigSubscriber.subscribe(SERVER_CONFIG_CHANNEL);
+  } catch (err) {
+    console.error("Failed to init server config subscriber", err);
+  }
+}
 
 async function getServerConfig(guildId) {
   const now = Date.now();
@@ -67,6 +111,8 @@ module.exports = {
     // const $t = locale.getT();
 
     if (PLX.restarting) return false;
+
+    initServerConfigSubscriber();
     
     if (trigger.content === "pick" && !trigger.channel.natural) {
       return DB.users.set(trigger.author.id, { $inc: { "modules.exp": -10 } });
