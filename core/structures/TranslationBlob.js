@@ -142,7 +142,11 @@ const LANGFLAGS = {
 
 const translate = require("@vitalets/google-translate-api");
 // const DB = require("../database/db_ops");
-translate.languages.zh = "Chinese";
+const translateLanguages = (translate && typeof translate.languages === "object" && translate.languages)
+  ? translate.languages
+  : {};
+translate.languages = translateLanguages;
+if (!translate.languages.zh) translate.languages.zh = "Chinese";
 
 module.exports = {
   LANGNAMES: translate.languages,
