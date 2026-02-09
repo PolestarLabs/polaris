@@ -72,7 +72,7 @@ jobs:
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
 
       - name: Run unit tests
-        run: npm test -- --forceExit --ci --testPathPattern "test/(?!integration).*\.test\.js$"
+        run: npm test -- --forceExit --ci --testPathPatterns "test/(?!integration).*\.test\.js$"
 
   integration:
     name: Integration Tests
@@ -104,7 +104,7 @@ jobs:
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
 
       - name: Run integration tests
-        run: npm test -- --forceExit --ci --testPathPattern "test/integration/.*\.test\.js$"
+        run: npm test -- --forceExit --ci --testPathPatterns "test/integration/.*\.test\.js$"
 
   version:
     name: ⚛️ Update Canonical Version
