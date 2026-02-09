@@ -75,7 +75,7 @@ jobs:
   deploy:
     name: 🚀 Deploy to Server
     needs: tag
-    if: ${{ needs.tag.outputs.tag_created == 'true' }}
+    #if: ${{ needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:
