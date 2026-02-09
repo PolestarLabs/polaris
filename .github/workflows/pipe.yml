@@ -32,10 +32,26 @@ jobs:
           restore-keys: |
             npm-${{ runner.os }}-
 
+      - name: Compute lockfile hash
+        id: lockhash
+        run: |
+          node -e "const fs=require('fs');const crypto=require('crypto');const p='package-lock.json';const j=JSON.parse(fs.readFileSync(p,'utf8'));delete j.version;const h=crypto.createHash('sha256').update(JSON.stringify(j)).digest('hex');fs.writeFileSync('.lockhash',h);"
+          echo "hash=$(cat .lockhash)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache node_modules
+        id: node_modules_cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-${{ steps.lockhash.outputs.hash }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-
+
       - name: Configure npm to skip git dep builds
         run: echo 'ignore-scripts=true' >> ~/.npmrc
 
       - name: Install dependencies
+        if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' }}
         run: |
           git config --global credential.helper store
           echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
@@ -83,6 +99,9 @@ jobs:
           name: node_modules
           path: node_modules
 
+      - name: Install Jest
+        run: npm install --no-save jest
+
       - name: Build
         run: npm run build
 
@@ -114,6 +133,9 @@ jobs:
         with:
           name: node_modules
           path: node_modules
+
+      - name: Install Jest
+        run: npm install --no-save jest
 
       - name: Run unit tests
         run: npm test -- --forceExit --ci --testPathPatterns "test/(?!integration).*\.test\.js$"
