@@ -15,22 +15,22 @@ concurrency:
 
 jobs:
   deps:
-    uses: ./.github/workflows/jobs/deps.yml
+    uses: ./.github/workflows/deps.yml
     secrets: inherit
 
   build:
     needs: deps
-    uses: ./.github/workflows/jobs/build.yml
+    uses: ./.github/workflows/build.yml
     secrets: inherit
 
   unit:
     needs: deps
-    uses: ./.github/workflows/jobs/test-unit.yml
+    uses: ./.github/workflows/test-unit.yml
     secrets: inherit
 
   integration:
     needs: deps
-    uses: ./.github/workflows/jobs/test-integration.yml
+    uses: ./.github/workflows/test-integration.yml
     secrets: inherit
 
   gate:
@@ -42,25 +42,25 @@ jobs:
 
   version:
     needs: gate
-    uses: ./.github/workflows/jobs/version.yml
+    uses: ./.github/workflows/version.yml
     secrets: inherit
 
   tag:
     needs: version
-    uses: ./.github/workflows/jobs/tag.yml
+    uses: ./.github/workflows/tag.yml
     secrets: inherit
 
   release:
     needs: tag
     if: ${{ needs.tag.outputs.release == 'true' }}
-    uses: ./.github/workflows/jobs/release.yml
+    uses: ./.github/workflows/release.yml
     secrets: inherit
     with:
       version: ${{ needs.tag.outputs.version }}
 
   deploy:
     needs: tag
-    uses: ./.github/workflows/jobs/deploy.yml
+    uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:
       version: ${{ needs.tag.outputs.version }}
