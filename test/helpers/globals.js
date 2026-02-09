@@ -128,14 +128,10 @@ const ensureTestGlobals = () => {
     };
   }
 
-  // eslint-disable-next-line no-undef
-  DB = global.DB;
-  // eslint-disable-next-line no-undef
-  REDIS = global.REDIS;
-  // eslint-disable-next-line no-undef
-  PLX = global.PLX;
-  // eslint-disable-next-line no-undef
-  Progression = global.Progression;
+  global.eval("var DB = global.DB;");
+  global.eval("var REDIS = global.REDIS;");
+  global.eval("var PLX = global.PLX;");
+  global.eval("var Progression = global.Progression;");
 };
 
 ensureTestGlobals();
