@@ -119,8 +119,20 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for version change
+        id: version_check
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep -q '^package.json$'; then
+            echo "bump=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "bump=true" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Update Package V
+        if: ${{ steps.version_check.outputs.bump == 'true' }}
         run: |
           git config --global user.email "bot@pollux.gg"
           git config --global user.name "Pollux Autoupdate"
@@ -133,6 +145,11 @@ jobs:
     needs: version
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.version.result == 'success' }}
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      minor: ${{ steps.version.outputs.minor }}
+      prev_minor: ${{ steps.version.outputs.prev_minor }}
+      release: ${{ steps.version.outputs.release }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -143,9 +160,36 @@ jobs:
         id: version
         run: |
           VERSION=$(node -p "require('./package.json').version")
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+          PREV_TAG=$(git tag --list 'v*' --sort=-v:refname | head -n1)
+          if [ -n "$PREV_TAG" ]; then
+            PREV_MINOR=$(echo "$PREV_TAG" | sed 's/^v//' | cut -d. -f2)
+          else
+            PREV_MINOR=0
+          fi
+          if [ "$MINOR" -gt "$PREV_MINOR" ]; then
+            RELEASE=true
+          else
+            RELEASE=false
+          fi
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
+          echo "prev_minor=$PREV_MINOR" >> "$GITHUB_OUTPUT"
+          echo "release=$RELEASE" >> "$GITHUB_OUTPUT"
 
       - name: Create tag
         run: |
           git tag "v${{ steps.version.outputs.version }}"
           git push origin "v${{ steps.version.outputs.version }}"
+
+  release:
+    name: 📦 Create Release
+    needs: tag
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.tag.result == 'success' && needs.tag.outputs.release == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.tag.outputs.version }}
+          name: v${{ needs.tag.outputs.version }}
