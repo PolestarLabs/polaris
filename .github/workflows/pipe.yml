@@ -169,6 +169,9 @@ jobs:
           name: node_modules
           path: node_modules
 
+      - name: Install Jest
+        run: npm install --no-save jest
+
       - name: Run integration tests
         run: npm test -- --forceExit --ci --testPathPatterns "test/integration/.*\.test\.js$"
 
