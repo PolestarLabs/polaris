@@ -37,8 +37,21 @@ jobs:
             git fetch origin
             git checkout --force v${{ steps.version.outputs.resolved }}
       - name: Restart PRIME Instances
-        run: pm2 restart prime
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            pm2 restart prime
 
       - name: Rolling Restart of REGULAR Instances
+        uses: appleboy/ssh-action@v1.0.0
         if: ${{ inputs.delayed_restart == 'true' }}
-        run: pm2 reload reg
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            pm2 reload reg
+
