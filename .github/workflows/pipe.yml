@@ -60,7 +60,7 @@ jobs:
   release:
     name: 📦 Create Release
     needs: tag
-    if: ${{ needs.tag.outputs.release == 'true' && needs.tag.outputs.tag_created == 'true' }}
+    if: ${{ needs.tag.outputs.release == 'true'}}
     uses: ./.github/workflows/release.yml
     secrets: inherit
     with:
