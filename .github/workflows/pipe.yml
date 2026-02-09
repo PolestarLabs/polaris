@@ -15,25 +15,30 @@ concurrency:
 
 jobs:
   deps:
+    name: 📦 Install Dependencies
     uses: ./.github/workflows/deps.yml
     secrets: inherit
 
   build:
+    name: 🔨 Build
     needs: deps
     uses: ./.github/workflows/build.yml
     secrets: inherit
 
   unit:
+    name: ✅ Unit Tests
     needs: deps
     uses: ./.github/workflows/test-unit.yml
     secrets: inherit
 
   integration:
+    name: 🔗 Integration Tests
     needs: deps
     uses: ./.github/workflows/test-integration.yml
     secrets: inherit
 
   gate:
+    name: 🚪 Release Gate
     needs: [unit, integration, build]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.unit.result == 'success' && needs.integration.result == 'success' }}
     runs-on: ubuntu-latest
@@ -41,16 +46,19 @@ jobs:
       - run: echo "✓ Release gate opened"
 
   version:
+    name: ⚛️ Update Version
     needs: gate
     uses: ./.github/workflows/version.yml
     secrets: inherit
 
   tag:
+    name: 🏷️ Create Tag
     needs: version
     uses: ./.github/workflows/tag.yml
     secrets: inherit
 
   release:
+    name: 📦 Create Release
     needs: tag
     if: ${{ needs.tag.outputs.release == 'true' }}
     uses: ./.github/workflows/release.yml
@@ -59,6 +67,7 @@ jobs:
       version: ${{ needs.tag.outputs.version }}
 
   deploy:
+    name: 🚀 Deploy to Server
     needs: tag
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
