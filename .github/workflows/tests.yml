@@ -79,7 +79,7 @@ jobs:
 
   version:
     name: ⚛️ Update Canonical Version
-    needs: test
+    needs: [test, build]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.test.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
