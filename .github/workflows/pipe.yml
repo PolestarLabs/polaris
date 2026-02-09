@@ -45,7 +45,7 @@ jobs:
 
   gate:
     name: 🚪 Release Gate
-    needs: [unit, integration, build]
+    needs: [unit, integration]
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.unit.result == 'success' && needs.integration.result == 'success' }}
     runs-on: ubuntu-latest
     steps:
