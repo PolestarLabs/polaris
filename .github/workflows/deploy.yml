@@ -43,6 +43,9 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            cd ${{ secrets.DEPLOY_PATH }}
+            node -v
+            pm2 ls
             pm2 restart prime
 
       - name: Rolling Restart of REGULAR Instances
@@ -53,5 +56,6 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
+            cd ${{ secrets.DEPLOY_PATH }}
             pm2 reload reg
 
