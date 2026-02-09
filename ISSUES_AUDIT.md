@@ -133,7 +133,7 @@ Scope reviewed:
 - [ ] Constructor uses `time` and `i` as bare globals inside the while loop (`const time = i * TIME_SLICE + 5`), shadowing the constructor parameter and `for` index. See [core/archetypes/Venture.js](core/archetypes/Venture.js#L178-L179).
 
 **Galleries.js — implicit global `Url`**
-- [ ] `randomOneIndexed` and `indexedOne` assign to bare `Url` without `let`/`const` → implicit global, race-condition prone. See [core/structures/Galleries.js](core/structures/Galleries.js#L22).
+- [x] `randomOneIndexed` and `indexedOne` assign to bare `Url` without `let`/`const` → implicit global, race-condition prone. See [core/structures/Galleries.js](core/structures/Galleries.js#L22).
 
 **globalLevelUp.js — level-milestone modulo is inverted**
 - [x] `levelUpPrizeMail` uses `level % 25` etc. as switch cases, but non-zero modulo is truthy — so `level % 25` is true for every level *except* multiples of 25. The first case that's truthy wins, meaning almost all levels get "UR" instead of "C". Needs `level % 25 === 0`. See [core/subroutines/globalLevelUp.js](core/subroutines/globalLevelUp.js#L19-L24).

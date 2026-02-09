@@ -25,7 +25,7 @@ module.exports = {
   async saveStatistics(message, command) {
     // STATISTICS COLLECTION
 
-    Promise.all([
+    return Promise.all([
       DB.globalDB.set({
         $inc: {
           [`data.statistics.commandUsage.CMD.${command.cmd}`]: 1,
@@ -42,7 +42,7 @@ module.exports = {
       }),
       (async () => {
         if (message.guild) {
-          DB.control.set(message.guild.id, {
+          return DB.control.set(message.guild.id, {
             $set: { type: "server"},
             $inc: {
               [`data.statistics.commandUsage.CMD.${command.cmd}`]: 1,
@@ -51,6 +51,7 @@ module.exports = {
             },
           });
         }
+        return null;
       })(),
     ]);
   },
