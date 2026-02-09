@@ -1,0 +1,54 @@
+name: Tag
+
+on:
+  workflow_call:
+
+outputs:
+  version:
+    value: ${{ jobs.tag.outputs.version }}
+  minor:
+    value: ${{ jobs.tag.outputs.minor }}
+  prev_minor:
+    value: ${{ jobs.tag.outputs.prev_minor }}
+  release:
+    value: ${{ jobs.tag.outputs.release }}
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      minor: ${{ steps.version.outputs.minor }}
+      prev_minor: ${{ steps.version.outputs.prev_minor }}
+      release: ${{ steps.version.outputs.release }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          MINOR=$(echo "$VERSION" | cut -d. -f2)
+          PREV_TAG=$(git tag --list 'v*' --sort=-v:refname | head -n1)
+          if [ -n "$PREV_TAG" ]; then
+            PREV_MINOR=$(echo "$PREV_TAG" | sed 's/^v//' | cut -d. -f2)
+          else
+            PREV_MINOR=0
+          fi
+          if [ "$MINOR" -gt "$PREV_MINOR" ]; then
+            RELEASE=true
+          else
+            RELEASE=false
+          fi
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "minor=$MINOR" >> "$GITHUB_OUTPUT"
+          echo "prev_minor=$PREV_MINOR" >> "$GITHUB_OUTPUT"
+          echo "release=$RELEASE" >> "$GITHUB_OUTPUT"
+
+      - name: Create tag
+        run: |
+          git tag "v${{ steps.version.outputs.version }}"
+          git push origin "v${{ steps.version.outputs.version }}"

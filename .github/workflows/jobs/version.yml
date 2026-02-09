@@ -1,0 +1,36 @@
+name: Version
+
+on:
+  workflow_call:
+
+jobs:
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: "16.5"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check for version change
+        id: version_check
+        run: |
+          if git diff --name-only HEAD^ HEAD | grep -q '^package.json$'; then
+            echo "bump=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "bump=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update Package V
+        if: ${{ steps.version_check.outputs.bump == 'true' }}
+        run: |
+          git config --global user.email "bot@pollux.gg"
+          git config --global user.name "Pollux Autoupdate"
+          git pull
+          npm version patch -m "Autoupgrade to %s"
+          git push

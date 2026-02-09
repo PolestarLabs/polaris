@@ -1,0 +1,36 @@
+name: Integration Tests
+
+on:
+  workflow_call:
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Cache jest
+        uses: actions/cache@v4
+        with:
+          path: /tmp/jest_rt
+          key: jest-${{ runner.os }}-${{ github.ref }}
+          restore-keys: |
+            jest-${{ runner.os }}-
+
+      - name: Download node_modules
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+
+      - name: Install Jest
+        run: npm install --no-save jest
+
+      - name: Run integration tests
+        run: npm test -- --forceExit --ci --testPathPatterns "test/integration/.*\.test\.js$"
