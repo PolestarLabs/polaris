@@ -1,3 +1,7 @@
+const { PolluxEmoji } = require("@polestar/emoji-grimoire/PolluxEmojiClass");
+
+const _emoji = (name, fallback) => new PolluxEmoji(name, fallback);
+
 const i18n = [{
   code: ["en", "en-us", "en-gb", "en-uk", "en-ca"],
   iso: "en",

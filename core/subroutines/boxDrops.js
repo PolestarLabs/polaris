@@ -2,6 +2,7 @@
 // const DB = require("../database/db_ops");
 // const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events");
+const { randomize, shuffle } = require("../utilities/Gearbox").Global;
 const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
 const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 

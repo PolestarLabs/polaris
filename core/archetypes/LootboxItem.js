@@ -1,4 +1,5 @@
 const gemRATES = require("@polestar/constants/lootbox").LootGems;
+const { randomize } = require("../utilities/Gearbox").Global;
 
 class LootboxItem {
   #filter;

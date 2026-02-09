@@ -1,3 +1,5 @@
+const { randomize } = require("../utilities/Gearbox").Global;
+
 /*
   BETS
   dozen: offset = block# (1-3)

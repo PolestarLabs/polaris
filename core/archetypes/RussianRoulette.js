@@ -1,4 +1,5 @@
 
+const { shuffle } = require("../utilities/Gearbox").Global;
 
 module.exports = class RussianRoulette {
   constructor(message, value) {
