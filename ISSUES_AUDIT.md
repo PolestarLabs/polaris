@@ -92,13 +92,13 @@ Scope reviewed:
 - [ ] `delete require.cache` on every message when `PLX.refreshing` is true is a memory-churn risk under load. See [eventHandlers/messageCreate.js](eventHandlers/messageCreate.js#L18-L21).
 
 **onEveryMessage.js — unbounded execQueue & dead code**
-- [ ] `PLX.execQueue` grows each message by pushing `Drops(msg)` but only filters on `isFulfilled()`; settled-rejected promises remain forever → unbounded array growth / memory leak. See [core/subroutines/onEveryMessage.js](core/subroutines/onEveryMessage.js#L52-L53).
+- [x] `PLX.execQueue` grows each message by pushing `Drops(msg)` but only filters on `isFulfilled()`; settled-rejected promises remain forever → unbounded array growth / memory leak. See [core/subroutines/onEveryMessage.js](core/subroutines/onEveryMessage.js#L52-L53).
 - [ ] `levelChecks` will always call `localLevelUp` even when `servData` is undefined (it only guards `globalLevelUp`); this causes `servData.modules` crash next call since the fallback DB fetch doesn't re-enter. See [core/subroutines/onEveryMessage.js](core/subroutines/onEveryMessage.js#L20-L29).
 - [ ] Image-tracker block (L44-L48) has an empty `/* Do Stuff when there is image */` body — dead code path taking up CPU for the regex match. Remove or implement. See [core/subroutines/onEveryMessage.js](core/subroutines/onEveryMessage.js#L44-L48).
 
 **onEveryCommand.js — logic inversion**
 - [x] `commLog` condition `!message.author.id === process.env.WATCHCMD` is always `false` because `!string` is `false`, so watch-command logging never fires. Should be `message.author.id !== process.env.WATCHCMD`. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L10).
-- [ ] `saveStatistics` calls `Promise.all` but never returns or awaits the result — any DB error is silently swallowed. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L23).
+- [x] `saveStatistics` calls `Promise.all` but never returns or awaits the result — any DB error is silently swallowed. See [core/subroutines/onEveryCommand.js](core/subroutines/onEveryCommand.js#L23).
 
 **CommandPreprocessor.js — operator-precedence & error-message concatenation**
 - [x] Error message embed uses `knownError?.details ? ... : ''` but the `+` operator binds tighter than `?:`, so the ternary condition is actually `"Error Code: **…**" + knownError?.details` (always truthy) → the "known error" block is always shown with `undefined` when there's no known error. Needs parentheses. See [core/structures/CommandPreprocessor.js](core/structures/CommandPreprocessor.js#L246-L254).

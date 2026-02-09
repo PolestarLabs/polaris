@@ -46,7 +46,12 @@ module.exports = async (msg) => {
     }
   }
 
-  PLX.execQueue = PLX.execQueue.filter((itm) => itm?.constructor === Promise && itm.isFulfilled() !== true);
+  PLX.execQueue = PLX.execQueue.filter((itm) => {
+    if (itm?.constructor !== Promise) return false;
+    const isFulfilled = typeof itm.isFulfilled === "function" && itm.isFulfilled();
+    const isRejected = typeof itm.isRejected === "function" && itm.isRejected();
+    return !(isFulfilled || isRejected);
+  });
   PLX.execQueue.push(Drops(msg));  
   
 };
