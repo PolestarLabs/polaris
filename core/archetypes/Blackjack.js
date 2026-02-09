@@ -1,6 +1,6 @@
 const decks = new Map();
 const games = {
-  set(playerID) { 
+  set(playerID) {
     const key = `blackjack-ongoing:${playerID}`;
     PLX.redis.set( key, true); 
     PLX.redis.expire( key , 30);
