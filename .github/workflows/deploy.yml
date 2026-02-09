@@ -2,15 +2,21 @@ name: Deploy
 
 on:
   workflow_call:
-    inputs:
-      version:
-        required: true
-        type: string
+  workflow_dispatch:
 
 jobs:
   ssh:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "resolved=$VERSION" >> "$GITHUB_OUTPUT"
+
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -21,9 +27,9 @@ jobs:
             echo "== DEPLOY BETA =="
             cd ${{ secrets.DEPLOY_PATH }}
             git fetch origin
-            git checkout --force v${{ inputs.version }}
+            git checkout --force v${{ steps.version.outputs.resolved }}
             echo "== DEPLOY LIVE =="
             cd ${{ secrets.DEPLOY_PATH_DELAYED }}
             git fetch origin
-            git checkout --force v${{ inputs.version }}
+            git checkout --force v${{ steps.version.outputs.resolved }}
 

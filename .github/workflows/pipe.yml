@@ -72,5 +72,3 @@ jobs:
     if: ${{ needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
-    with:
-      version: ${{ needs.tag.outputs.version }}
