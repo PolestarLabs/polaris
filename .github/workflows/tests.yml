@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   test:
@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [22, 24]
+        node-version: 24
 
     steps:
 
@@ -48,3 +48,25 @@ jobs:
       - name: Run tests with coverage
         if: matrix.node-version == 20
         run: npm run test:coverage -- --forceExit --ci
+
+  version:
+    name: ⚛️ Update Canonical Version
+    needs: test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2.4.1
+        with:
+          node-version: "16.5"
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Update Package V
+        run: |
+          git config --global user.email "bot@pollux.gg"
+          git config --global user.name "Pollux Autoupdate"
+          git pull
+          npm version patch -m "Autoupgrade to %s"
+          git push
