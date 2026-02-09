@@ -21,8 +21,9 @@ jobs:
             echo "== DEPLOY BETA =="
             cd ${{ secrets.DEPLOY_PATH }}
             git fetch origin
-            git checkout v${{ inputs.version }}
+            git checkout --force v${{ inputs.version }}
             echo "== DEPLOY LIVE =="
             cd ${{ secrets.DEPLOY_PATH_DELAYED }}
             git fetch origin
-            git checkout v${{ inputs.version }}
+            git checkout --force v${{ inputs.version }}
+
