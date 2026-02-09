@@ -24,18 +24,24 @@ jobs:
     needs: deps
     uses: ./.github/workflows/build.yml
     secrets: inherit
+    with:
+      lockhash: ${{ needs.deps.outputs.lockhash }}
 
   unit:
     name: ✅ Unit Tests
     needs: deps
     uses: ./.github/workflows/test-unit.yml
     secrets: inherit
+    with:
+      lockhash: ${{ needs.deps.outputs.lockhash }}
 
   integration:
     name: 🔗 Integration Tests
     needs: deps
     uses: ./.github/workflows/test-integration.yml
     secrets: inherit
+    with:
+      lockhash: ${{ needs.deps.outputs.lockhash }}
 
   gate:
     name: 🚪 Release Gate

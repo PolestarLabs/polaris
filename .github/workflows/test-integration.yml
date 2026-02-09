@@ -2,6 +2,10 @@ name: Integration Tests
 
 on:
   workflow_call:
+    inputs:
+      lockhash:
+        required: false
+        type: string
 
 jobs:
   run:
@@ -23,7 +27,27 @@ jobs:
           restore-keys: |
             jest-${{ runner.os }}-
 
-      - name: Download node_modules
+      - name: Resolve lockfile hash
+        id: lockhash
+        run: |
+          if [ -n "${{ inputs.lockhash }}" ]; then
+            echo "hash=${{ inputs.lockhash }}" >> "$GITHUB_OUTPUT"
+          else
+            node -e "const fs=require('fs');const crypto=require('crypto');const p='package-lock.json';const j=JSON.parse(fs.readFileSync(p,'utf8'));delete j.version;const h=crypto.createHash('sha256').update(JSON.stringify(j)).digest('hex');fs.writeFileSync('.lockhash',h);"
+            echo "hash=$(cat .lockhash)" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Restore node_modules cache
+        id: node_modules_cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: node_modules-${{ runner.os }}-${{ steps.lockhash.outputs.hash }}
+          restore-keys: |
+            node_modules-${{ runner.os }}-
+
+      - name: Download node_modules (if cache missed)
+        if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' }}
         uses: actions/download-artifact@v4
         with:
           name: node_modules

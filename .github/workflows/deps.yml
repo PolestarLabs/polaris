@@ -2,10 +2,16 @@ name: Dependencies
 
 on:
   workflow_call:
+    outputs:
+      lockhash:
+        description: "Normalized package-lock.json hash"
+        value: ${{ jobs.install.outputs.lockhash }}
 
 jobs:
   install:
     runs-on: ubuntu-latest
+    outputs:
+      lockhash: ${{ steps.lockhash.outputs.hash }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
