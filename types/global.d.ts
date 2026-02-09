@@ -3,7 +3,7 @@ import { i18n, TranslationFunction } from "i18next";
 import Bluebird from "bluebird";
 import { ExecOptions } from "child_process";
 import { EventEmitter } from "events";
-import { NextFunction, Request, Response } from "express";
+// import { NextFunction, Request, Response } from "express";
 import Clusters from "@polestar/constants/clusters";
 
 declare class PolluxEmoji extends String {
