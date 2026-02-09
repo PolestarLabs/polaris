@@ -44,7 +44,11 @@ jobs:
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
             bash -lc "echo 'Checking node and pm2 on remote'"
+            # try to source common profile files and nvm so node/pm2 installed per-user are available
+            bash -lc "[ -f \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" || true; [ -f \"$HOME/.profile\" ] && . \"$HOME/.profile\" || true; [ -f \"$HOME/.bash_profile\" ] && . \"$HOME/.bash_profile\" || true; [ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\" || true"
             bash -lc "cd '${{ secrets.DEPLOY_PATH }}' || true"
+            # debug: show PATH and which for node/pm2
+            bash -lc "echo 'PATH='\"$PATH\"; which node || true; which pm2 || true"
             bash -lc "if ! command -v node >/dev/null 2>&1; then echo 'ERROR: node not found in PATH for the deploy user.'; echo 'Make Node.js available to the deploy user (system install or nvm).'; exit 1; fi"
             bash -lc "if ! command -v pm2 >/dev/null 2>&1; then echo 'ERROR: pm2 not found in PATH for the deploy user.'; echo 'Install pm2 (npm i -g pm2) or make it available to the deploy user.'; exit 1; fi"
             bash -lc "echo 'node and pm2 detected:' $(node -v) $(pm2 -v || true)"
@@ -55,7 +59,7 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            bash -lc "cd '${{ secrets.DEPLOY_PATH }}' && node -v && pm2 ls && pm2 restart prime"
+            bash -lc "[ -f \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" || true; [ -f \"$HOME/.profile\" ] && . \"$HOME/.profile\" || true; [ -f \"$HOME/.bash_profile\" ] && . \"$HOME/.bash_profile\" || true; [ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\" || true; cd '${{ secrets.DEPLOY_PATH }}' && node -v && pm2 ls && pm2 restart prime"
 
       - name: Rolling Restart of REGULAR Instances
         uses: appleboy/ssh-action@v1.0.0
@@ -65,5 +69,5 @@ jobs:
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            bash -lc "cd '${{ secrets.DEPLOY_PATH }}' && pm2 reload reg"
+            bash -lc "[ -f \"$HOME/.nvm/nvm.sh\" ] && . \"$HOME/.nvm/nvm.sh\" || true; [ -f \"$HOME/.profile\" ] && . \"$HOME/.profile\" || true; [ -f \"$HOME/.bash_profile\" ] && . \"$HOME/.bash_profile\" || true; [ -f \"$HOME/.bashrc\" ] && . \"$HOME/.bashrc\" || true; cd '${{ secrets.DEPLOY_PATH }}' && pm2 reload reg"
 
