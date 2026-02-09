@@ -96,6 +96,7 @@ jobs:
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
 
       - name: Upload node_modules
+        if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' }}
         uses: actions/upload-artifact@v4
         with:
           name: node_modules
