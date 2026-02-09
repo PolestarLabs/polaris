@@ -54,8 +54,8 @@ jobs:
       version: ${{ needs.tag.outputs.version }}
 
   deploy:
-    needs: [tag, release]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.release.result == 'success' }}
+    needs: tag
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.tag.result == 'success' }}
     uses: ./.github/workflows/jobs/deploy.yml
     secrets: inherit
     with:
