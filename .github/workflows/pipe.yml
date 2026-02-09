@@ -60,7 +60,7 @@ jobs:
   release:
     name: 📦 Create Release
     needs: tag
-    if: ${{ needs.tag.outputs.release == 'true' }}
+    if: ${{ needs.tag.outputs.release == 'true' && needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit
     with:
@@ -69,6 +69,7 @@ jobs:
   deploy:
     name: 🚀 Deploy to Server
     needs: tag
+    if: ${{ needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
     with:

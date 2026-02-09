@@ -15,6 +15,9 @@ on:
       release:
         description: "Release flag"
         value: ${{ jobs.create.outputs.release }}
+      tag_created:
+        description: "Whether tag was created"
+        value: ${{ jobs.create.outputs.tag_created }}
 
 jobs:
   create:
@@ -24,6 +27,7 @@ jobs:
       minor: ${{ steps.version.outputs.minor }}
       prev_minor: ${{ steps.version.outputs.prev_minor }}
       release: ${{ steps.version.outputs.release }}
+      tag_created: ${{ steps.meaningful.outputs.tag_worthy }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -51,7 +55,43 @@ jobs:
           echo "prev_minor=$PREV_MINOR" >> "$GITHUB_OUTPUT"
           echo "release=$RELEASE" >> "$GITHUB_OUTPUT"
 
+      - name: Check for meaningful changes
+        id: meaningful
+        run: |
+          PREV_TAG=$(git tag --list 'v*' --sort=-v:refname | head -n1)
+          if [ -z "$PREV_TAG" ]; then
+            echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          # Get files changed since last tag
+          git diff --name-only $PREV_TAG HEAD > /tmp/changed_files.txt
+          
+          # Check if package.json changed (always tag-worthy)
+          if grep -q '^package.json$' /tmp/changed_files.txt; then
+            echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          
+          # Check if any non-config files changed
+          while IFS= read -r file; do
+            # Skip config files
+            if [[ "$file" =~ \.(config|y|yml)\.js$ ]] || \
+               [[ "$file" =~ ^(config|crowdin|eslintrc|tsconfig|\.gitignore|package-lock) ]] || \
+               [[ "$file" == "README.md" ]] || \
+               [[ "$file" =~ ^\.github/workflows ]]; then
+              continue
+            fi
+            # Found a meaningful file
+            echo "tag_worthy=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          done < /tmp/changed_files.txt
+          
+          # Only config files changed
+          echo "tag_worthy=false" >> "$GITHUB_OUTPUT"
+
       - name: Create tag
+        if: ${{ steps.meaningful.outputs.tag_worthy == 'true' }}
         run: |
           git tag "v${{ steps.version.outputs.version }}"
           git push origin "v${{ steps.version.outputs.version }}"
