@@ -33,7 +33,7 @@
     "bluebird": "^3.7.2",
     "canvas-text-wrapper": "^0.10.2",
     "cheerio": "^1.0.0-rc.2",
-    "chrono-node": "github:Mitchell3514/chrono#ff42f01c662073c9cb9c3d88f84d1754097f9581",
+    "chrono-node": "github:https://github.com/PolestarLabs/chrono",
     "colors": "^1.4.0",
     "cron": "^1.5.1",
     "date-fns": "^2.22.1",
