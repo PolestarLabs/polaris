@@ -45,6 +45,8 @@ jobs:
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
+    env:
+      CI_DIAGNOSTICS: "1"
 
     steps:
 
@@ -70,6 +72,9 @@ jobs:
         run: |
           test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
+
+      - name: Show Jest config
+        run: npx jest --showConfig
 
       - name: Run tests
         run: npm test -- --forceExit --ci

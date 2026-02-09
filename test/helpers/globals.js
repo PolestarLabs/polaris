@@ -136,6 +136,15 @@ const ensureTestGlobals = () => {
 
 ensureTestGlobals();
 
+if (process.env.CI_DIAGNOSTICS === "1") {
+  console.log("[test-globals] loaded", {
+    hasGlobalDB: !!global.DB,
+    hasGlobalPLX: !!global.PLX,
+    hasGlobalRedis: !!global.REDIS,
+    hasGlobalProgression: !!global.Progression,
+  });
+}
+
 // ── Redis stub ───────────────────────────────────────────────────
 // (provided via ensureTestGlobals)
 
