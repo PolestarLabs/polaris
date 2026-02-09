@@ -22,5 +22,5 @@ core/commands/_botStaff/eval.js
 config_events.json
 shell.js
 eval.js
-secret.*deploy_key
-deploy_key.pub
+secret.*
+deploy_key*
