@@ -65,7 +65,11 @@
   },
   "overrides": {
     "typescript": "4.9.5",
-    "@types/node": "18.16.3"
+    "@types/node": "18.16.3",
+    "chrono-node": {
+      "typescript": "4.9.5",
+      "@types/node": "18.16.3"
+    }
   },
   "engines": {
     "node": ">=18.16.3"
