@@ -2,6 +2,10 @@ name: Deploy
 
 on:
   workflow_call:
+    inputs:
+      delayed_restart:
+        required: false
+        type: boolean
   workflow_dispatch:
 
 jobs:
@@ -32,4 +36,9 @@ jobs:
             cd ${{ secrets.DEPLOY_PATH_DELAYED }}
             git fetch origin
             git checkout --force v${{ steps.version.outputs.resolved }}
+      - name: Restart PRIME Instances
+        run: pm2 restart prime
 
+      - name: Rolling Restart of REGULAR Instances
+        if: ${{ inputs.delayed_restart == 'true' }}
+        run: pm2 reload reg

@@ -72,3 +72,5 @@ jobs:
     if: ${{ needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
+    with:
+      delayed_restart: ${{ needs.tag.outputs.release == 'true' }}
