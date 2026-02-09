@@ -5,12 +5,16 @@ on:
 
 outputs:
   version:
+    description: "Version number"
     value: ${{ jobs.tag.outputs.version }}
   minor:
+    description: "Minor version"
     value: ${{ jobs.tag.outputs.minor }}
   prev_minor:
+    description: "Previous minor version"
     value: ${{ jobs.tag.outputs.prev_minor }}
   release:
+    description: "Release flag"
     value: ${{ jobs.tag.outputs.release }}
 
 jobs:
