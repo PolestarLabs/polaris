@@ -44,12 +44,47 @@ jobs:
           restore-keys: |
             node_modules-${{ runner.os }}-
 
+      - name: Check if package files changed meaningfully
+        id: pkg_changed
+        run: |
+          git diff --name-only HEAD^ HEAD > /tmp/changed_files.txt || true
+          CHANGED=false
+
+          # Check package.json (ignore version-only changes)
+          if grep -q '^package.json$' /tmp/changed_files.txt; then
+            git show HEAD^:package.json > /tmp/prev_package.json || true
+            PKG_CHANGED=$(node -e "const fs=require('fs');const prev=JSON.parse(fs.readFileSync('/tmp/prev_package.json','utf8')||'{}');const cur=JSON.parse(fs.readFileSync('package.json','utf8'));delete prev.version;delete cur.version;process.stdout.write(JSON.stringify(prev)!==JSON.stringify(cur) ? 'true' : 'false')")
+            if [ "$PKG_CHANGED" = "true" ]; then CHANGED=true; fi
+          fi
+
+          # Check package-lock.json (ignore version-only changes)
+          if grep -q '^package-lock.json$' /tmp/changed_files.txt; then
+            git show HEAD^:package-lock.json > /tmp/prev_lock.json || true
+            LOCK_CHANGED=$(node -e "const fs=require('fs');const prev=JSON.parse(fs.readFileSync('/tmp/prev_lock.json','utf8')||'{}');const cur=JSON.parse(fs.readFileSync('package-lock.json','utf8'));if(prev && cur){delete prev.version;delete cur.version;}process.stdout.write(JSON.stringify(prev)!==JSON.stringify(cur) ? 'true' : 'false')")
+            if [ "$LOCK_CHANGED" = "true" ]; then CHANGED=true; fi
+          fi
+
+          echo "changed=$CHANGED" >> "$GITHUB_OUTPUT"
+
+      - name: Try download node_modules artifact (if cache missed & package unchanged)
+        if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' && steps.pkg_changed.outputs.changed == 'false' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: node_modules
+          path: node_modules
+        continue-on-error: true
+
       - name: Configure npm to skip git dep builds
         run: echo 'ignore-scripts=true' >> ~/.npmrc
 
-      - name: Install dependencies
+      - name: Install dependencies (if needed)
         if: ${{ steps.node_modules_cache.outputs.cache-hit != 'true' }}
         run: |
+          if [ -d node_modules ] && [ "$(ls -A node_modules)" ]; then
+            echo "node_modules restored from artifact, skipping npm ci"
+            exit 0
+          fi
+          echo "Running npm ci"
           git config --global credential.helper store
           echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
           git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
