@@ -1,11 +1,8 @@
 const { EventEmitter } = require("events");
-const { ensureTestGlobals } = require("../helpers/globals");
-
 const { lootbox } = require("../../core/subroutines/boxDrops");
 
 describe("boxDrops server config cache", () => {
   beforeEach(() => {
-    ensureTestGlobals();
     jest.clearAllMocks();
   });
 
