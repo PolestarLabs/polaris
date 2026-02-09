@@ -3,7 +3,6 @@ module.exports = {
   roots: ["<rootDir>/test"],
   testMatch: ["**/*.test.js"],
   setupFiles: ["<rootDir>/test/helpers/globals.js"],
-  setupFilesAfterEnv: ["<rootDir>/test/helpers/setupAfterEnv.js"],
   collectCoverageFrom: [
     "core/archetypes/**/*.js",
     "core/structures/**/*.js",

@@ -82,68 +82,38 @@ const createMockCollection = () => ({
   },
 });
 
-const ensureTestGlobals = () => {
-  if (!global.DB) {
-    const mockCollection = createMockCollection();
-    global.DB = {
-      users: { ...mockCollection },
-      servers: { ...mockCollection },
-      cosmetics: { ...mockCollection },
-      items: { ...mockCollection },
-      audits: { ...mockCollection },
-    };
-  } else if (!global.DB.servers) {
-    global.DB.servers = createMockCollection();
-  }
+const mockCollection = createMockCollection();
+const redisStore = new Map();
 
-  if (!global.REDIS) {
-    const redisStore = new Map();
-    global.REDIS = {
-      get: jest.fn((k) => redisStore.get(k) || null),
-      set: jest.fn((k, v) => redisStore.set(k, v)),
-      del: jest.fn((k) => redisStore.delete(k)),
-      aget: jest.fn(async (k) => redisStore.get(k) || null),
-      expire: jest.fn(),
-    };
-    global.__testRedisStore = redisStore;
-  }
-
-  if (!global.PLX) {
-    global.PLX = {
-      user: { id: "000000000000000000", username: "TestBot" },
-      cluster: { id: 0, name: "test-cluster" },
-      redis: { ...global.REDIS },
-      on: jest.fn(),
-      emit: jest.fn(),
-      emitAsync: jest.fn().mockResolvedValue(undefined),
-      timerBypass: [],
-    };
-  } else if (!global.PLX.redis) {
-    global.PLX.redis = { ...global.REDIS };
-  }
-
-  if (!global.Progression) {
-    global.Progression = {
-      emit: jest.fn(),
-    };
-  }
-
-  global.eval("var DB = global.DB;");
-  global.eval("var REDIS = global.REDIS;");
-  global.eval("var PLX = global.PLX;");
-  global.eval("var Progression = global.Progression;");
+global.DB = {
+  users: { ...mockCollection },
+  servers: { ...mockCollection },
+  cosmetics: { ...mockCollection },
+  items: { ...mockCollection },
+  audits: { ...mockCollection },
 };
 
-ensureTestGlobals();
+global.REDIS = {
+  get: jest.fn((k) => redisStore.get(k) || null),
+  set: jest.fn((k, v) => redisStore.set(k, v)),
+  del: jest.fn((k) => redisStore.delete(k)),
+  aget: jest.fn(async (k) => redisStore.get(k) || null),
+  expire: jest.fn(),
+};
 
-if (process.env.CI_DIAGNOSTICS === "1") {
-  console.log("[test-globals] loaded", {
-    hasGlobalDB: !!global.DB,
-    hasGlobalPLX: !!global.PLX,
-    hasGlobalRedis: !!global.REDIS,
-    hasGlobalProgression: !!global.Progression,
-  });
-}
+global.PLX = {
+  user: { id: "000000000000000000", username: "TestBot" },
+  cluster: { id: 0, name: "test-cluster" },
+  redis: { ...global.REDIS },
+  on: jest.fn(),
+  emit: jest.fn(),
+  emitAsync: jest.fn().mockResolvedValue(undefined),
+  timerBypass: [],
+};
+
+global.Progression = {
+  emit: jest.fn(),
+};
 
 // ── Redis stub ───────────────────────────────────────────────────
 // (provided via ensureTestGlobals)
@@ -163,6 +133,4 @@ global.errorsHook = null;
 // ── Expose redisStore for cleanup in afterEach setup ─────────
 // (provided via ensureTestGlobals)
 
-module.exports = {
-  ensureTestGlobals,
-};
+module.exports = {};
