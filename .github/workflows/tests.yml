@@ -10,6 +10,41 @@ permissions:
   contents: write
 
 jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24]
+
+    steps:
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Configure npm to skip git dep builds
+        run: echo 'ignore-scripts=true' >> ~/.npmrc
+
+      - name: Install dependencies
+        run: |
+          git config --global credential.helper store
+          echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
+          git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
+          npm ci
+
+      - name: Verify dependencies installed
+        run: |
+          test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
+          test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
+
+      - name: Build
+        run: npm run build
+
   test:
     name: Unit Tests
     runs-on: ubuntu-latest
@@ -41,9 +76,6 @@ jobs:
         run: |
           test -f node_modules/@polestar/constants/countries.js && echo "constants OK"
           test -f node_modules/@polestar/timed-usage/dist/index.js && echo "timed-usage OK"
-
-      - name: Build
-        run: npm run build
 
       - name: Run tests
         run: npm test -- --forceExit --ci
