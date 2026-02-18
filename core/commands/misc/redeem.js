@@ -77,7 +77,7 @@ const init = async (msg, args) => {
         }
       ],
       footer: {
-        text: `${msg.author.username}#${msg.author.discriminator}`,
+        text: msg.author.username,
         icon_url: msg.author.avatarURL
       },
       color: 0x1B1B2B

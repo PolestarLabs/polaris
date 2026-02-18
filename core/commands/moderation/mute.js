@@ -165,8 +165,7 @@ const init = async function (msg, args) {
       emb.setThumbnail(Target.user.avatarURL);
       emb.setTitle(`:mute: ${MUTED}`);
       emb.setDescription(
-        `**${`${Target.user.username}#${Target.user.discriminator}`
-        }** ${wasMUTED}`,
+        `**${Target.user.username}** ${wasMUTED}`,
       );
       // emb.addField("Channel",mess.channel,true)
       emb.addField(TIME, timeTx, true);
@@ -191,8 +190,7 @@ const init = async function (msg, args) {
       RevokeEmb.setThumbnail(Target.user.avatarURL);
       RevokeEmb.setTitle(`:mute: ${UNMUTE}`);
       RevokeEmb.setDescription(
-        `**${`${Target.user.username}#${Target.user.discriminator}`
-        }** ${wasAUTOUNMUTE}`,
+        `**${Target.user.username}** ${wasAUTOUNMUTE}`,
       );
       RevokeEmb.addField(RESPO, bot.user, true);
       RevokeEmb.setColor("#102af5");

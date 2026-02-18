@@ -186,8 +186,8 @@ const DEFAULT_CMD_OPTS = {
     });
     Sentry.setContext("Permissions", msg.channel.permissionsOf(PLX.user.id));
     {
-      const { id, username, discriminator, createdAt, publicFlags, bot } = msg.author;
-      Sentry.setContext("user", { id, username, discriminator, createdAt, publicFlags, bot });
+      const { id, username, createdAt, publicFlags, bot } = msg.author;
+      Sentry.setContext("user", { id, username, createdAt, publicFlags, bot });
     }
     {
       const { id, name, topic, nsfw } = msg.channel;

@@ -70,7 +70,7 @@ const init = async (msg, args) => {
 
   const fSize = 40;
   const uname_w = Picto.popOutTxt(ctx, Target.username, XYZ.uname.x - 10, XYZ.uname.y + 00, `${fSize}pt 'Panton Black','Corporate Logo Rounded' `, "#FFF", 400, { style: "#1f1d25", line: 14 }).w;
-  Picto.popOutTxt(ctx, `#${Target.discriminator}`, XYZ.uname.x + uname_w - 30, XYZ.uname.y + 20, "24pt 'Panton Light'", "#FFF", 100, { style: "#1f1d25", line: 8 }).w;
+  // discriminator removed (no longer displayed)
   ctx.rotate(0.10);
 
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.lootbox", P), "400 22pt 'Panton'", "#FFF"), XYZ.LBX.x, XYZ.LBX.y, XYZ.LBX.w, "right");
