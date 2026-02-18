@@ -46,13 +46,13 @@ declare module "eris" {
     sendEmbed(embed: EmbedOptions): Promise<Message<GuildTextableChannel>>;
     send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<GuildTextableChannel>>;
   }
-  interface PrivateChannel {
-    awaitMessages(filter: (m: Message<PrivateChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<PrivateChannel>[]>;
-    createCode(code: string, language: string): Promise<Message<PrivateChannel>>;
-    sendCode(code: string, language: string): Promise<Message<PrivateChannel>>;
-    createEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
-    sendEmbed(embed: EmbedOptions): Promise<Message<PrivateChannel>>;
-    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+  interface DMChannel {
+    awaitMessages(filter: (m: Message<DMChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<DMChannel>[]>;
+    createCode(code: string, language: string): Promise<Message<DMChannel>>;
+    sendCode(code: string, language: string): Promise<Message<DMChannel>>;
+    createEmbed(embed: EmbedOptions): Promise<Message<DMChannel>>;
+    sendEmbed(embed: EmbedOptions): Promise<Message<DMChannel>>;
+    send(content: MessageContent | { embed?: Embed }, file?: MessageFile | MessageFile[]): Promise<Message<DMChannel>>;
   }
   interface TextChannel {
     awaitMessages(filter: (m: Message<TextChannel>) => any, options: EA_awaitMessagesOptions): Promise<Message<TextChannel>[]>;
@@ -107,7 +107,7 @@ declare module "eris" {
 
   interface Member {
     bannable: boolean;
-    createMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+    createMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<DMChannel>>;
     effectiveName: string;
     hasPermission(permission: string): boolean;
     hasRole(roleID: Role | string): boolean;
@@ -116,7 +116,7 @@ declare module "eris" {
     kickable: boolean;
     punishable(member2: Member): boolean;
     roleObjects: Role[];
-    sendMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+    sendMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<DMChannel>>;
   }
 
   interface Message<T extends Textable = TextChannel> {
@@ -131,7 +131,7 @@ declare module "eris" {
   }
 
   interface User {
-    createMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<PrivateChannel>>;
+    createMessage(content: MessageContent, file?: MessageFile | MessageFile[]): Promise<Message<DMChannel>>;
     displayAvatarURL: string;
     dailing: boolean;
     tag: string;
