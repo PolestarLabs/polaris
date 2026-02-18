@@ -14,7 +14,7 @@ const defaultStandFun = (item, i, subject) => {
   return `\
 ${_emoji(`rank${i + 1}`)} \`\
 [${item.type.includes("solo") ? " SOLO " : "SERVER"}]\` \
-**${(subject.name || `${subject.username}#${subject.discriminator}`).slice(0,25)}** \ 
+**${(subject.name || `${subject.username}`).slice(0,25)}** \ \
 ${_emoji("__")}${_emoji("__")}  \
 Grade ${_emoji(`grade${item.data.grade}`)}\
 ${_emoji("__")}\
