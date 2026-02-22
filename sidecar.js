@@ -3,6 +3,7 @@ const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerC
 const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 
 const isPRIME = process.env.PRIME;
+const cfg = require("./config.json");
 const { Client } = require("eris");
 const formatDistance = require("date-fns/formatDistance");
 const { CronJob } = require("cron");
@@ -20,7 +21,6 @@ PLX.muteTimers = new Map();
 PLX.reminderTimers = new Map();
 
 const DBSchema = require("@polestar/database_schema");
-const cfg = require("./config.json");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 
 const debugHook = new WebhookDigester(PLX);
