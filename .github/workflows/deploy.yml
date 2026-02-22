@@ -3,14 +3,28 @@ name: Deploy
 on:
   workflow_call:
     inputs:
-      delayed_restart:
+      environment:
+        required: true
+        type: string
+        description: "Target environment: staging or production"
+      version:
         required: false
-        type: boolean
+        type: string
+        description: "Version tag to deploy (e.g. 1.2.3). Defaults to package.json version."
   workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        description: "Target environment"
+        options: [staging, production]
+        default: staging
 
 jobs:
   ssh:
+    name: 🚀 SSH Deploy (${{ inputs.environment }})
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,22 +32,41 @@ jobs:
       - name: Resolve version
         id: version
         run: |
-          VERSION=$(node -p "require('./package.json').version")
-          echo "resolved=$VERSION" >> "$GITHUB_OUTPUT"
+          if [ -n "${{ inputs.version }}" ]; then
+            echo "resolved=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          else
+            VERSION=$(node -p "require('./package.json').version")
+            echo "resolved=$VERSION" >> "$GITHUB_OUTPUT"
+          fi
 
-      - name: Deploy via SSH
+      - name: Deploy to Staging via SSH
+        if: ${{ inputs.environment == 'staging' }}
         uses: appleboy/ssh-action@v1.0.0
         with:
           host: ${{ secrets.DEPLOY_HOST }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           script: |
-            echo "== DEPLOY BETA =="
-            cd ${{ secrets.DEPLOY_PATH }}
+            set -e
+            echo "=== DEPLOY BOT (staging) · v${{ steps.version.outputs.resolved }} ==="
+            cd "${{ secrets.DEPLOY_PATH }}"
             git fetch origin
-            git checkout --force v${{ steps.version.outputs.resolved }}
-            echo "== DEPLOY LIVE =="
-            cd ${{ secrets.DEPLOY_PATH_DELAYED }}
+            git checkout --force "v${{ steps.version.outputs.resolved }}"
+            /home/pollux/polaris/scripts/server-deploy.sh bot staging
+            echo "=== Done ==="
+
+      - name: Deploy to Production via SSH
+        if: ${{ inputs.environment == 'production' }}
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          script: |
+            set -e
+            echo "=== DEPLOY BOT (production) · v${{ steps.version.outputs.resolved }} ==="
+            cd "${{ secrets.DEPLOY_PATH_LIVE }}"
             git fetch origin
-            git checkout --force v${{ steps.version.outputs.resolved }}
-            echo ===
+            git checkout --force "v${{ steps.version.outputs.resolved }}"
+            /home/pollux/polaris/scripts/server-deploy.sh bot production
+            echo "=== Done ==="

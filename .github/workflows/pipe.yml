@@ -2,9 +2,9 @@ name: Pipe
 
 on:
   pull_request:
-    branches: [dev, master]
+    branches: [dev, master, live]
   push:
-    branches: [dev]
+    branches: [dev, master, live]
 
 permissions:
   contents: write
@@ -43,17 +43,23 @@ jobs:
     with:
       lockhash: ${{ needs.deps.outputs.lockhash }}
 
-  gate:
-    name: 🚪 Release Gate
+  # ── Staging pipeline (dev branch only) ───────────────────────────────────
+
+  staging-gate:
+    name: 🚪 Staging Gate
     needs: [unit, integration]
-    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/dev' && needs.unit.result == 'success' && needs.integration.result == 'success' }}
+    if: >
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/dev' &&
+      needs.unit.result == 'success' &&
+      needs.integration.result == 'success'
     runs-on: ubuntu-latest
     steps:
-      - run: echo "✓ Release gate opened"
+      - run: echo "✓ Staging gate opened"
 
   version:
     name: ⚛️ Update Version
-    needs: gate
+    needs: staging-gate
     uses: ./.github/workflows/version.yml
     secrets: inherit
 
@@ -66,17 +72,41 @@ jobs:
   release:
     name: 📦 Create Release
     needs: tag
-    if: ${{ needs.tag.outputs.release == 'true'}}
+    if: ${{ needs.tag.outputs.release == 'true' }}
     uses: ./.github/workflows/release.yml
     secrets: inherit
     with:
       version: ${{ needs.tag.outputs.version }}
 
-  deploy:
-    name: 🚀 Deploy to Server
+  deploy-staging:
+    name: 🧪 Deploy → Staging
     needs: tag
-    #if: ${{ needs.tag.outputs.tag_created == 'true' }}
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
+    with:
+      environment: staging
+      version: ${{ needs.tag.outputs.version }}
+
+  # ── Production pipeline (master branch only) ─────────────────────────────
+
+  production-gate:
+    name: 🚪 Production Gate
+    needs: [unit, integration]
+    if: >
+      github.event_name == 'push' &&
+      (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/live') &&
+      needs.unit.result == 'success' &&
+      needs.integration.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "✓ Production gate opened"
+
+  deploy-production:
+    name: 🚀 Deploy → Production
+    needs: production-gate
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+    with:
+      environment: production
     with:
       delayed_restart: ${{ needs.tag.outputs.release == 'true' }}
