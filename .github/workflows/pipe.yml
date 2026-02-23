@@ -108,5 +108,4 @@ jobs:
     secrets: inherit
     with:
       environment: production
-    with:
       delayed_restart: ${{ needs.tag.outputs.release == 'true' }}
