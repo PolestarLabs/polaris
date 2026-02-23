@@ -96,8 +96,14 @@ class GuessingGame {
 
   async generate() {
     if (this.type === "image") {
-      const response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
-      
+      let response;
+      try {
+        response = (await axios.get(`${paths.DASH}/random/guess/${this.name}?json=1`)).data;
+      } catch (err) {
+        console.error(`[GuessingGame] generate() failed for ${this.name}: ${err.message}`);
+        throw err;
+      }
+
       this.imageFile = await resolveFile(response.url);
 
       if (this.gamemode === "endless") this.embed.footer.text = `Endless Mode | Round ${this.round || 1}`;
@@ -127,7 +133,14 @@ class GuessingGame {
 
       };
 
-      let { names } = await this.generate();
+      let generateResult;
+      try {
+        generateResult = await this.generate();
+      } catch (err) {
+        msg.channel.send("⚠️ Failed to load the game. Please try again later.");
+        return resolve(false);
+      }
+      let { names } = generateResult;
 
       msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` })
         .then(() => {
@@ -177,7 +190,12 @@ class GuessingGame {
                 msg.channel.send(v.next);
                 await wait(1);
 
-                names = (await this.generate()).names;
+                try {
+                  names = (await this.generate()).names;
+                } catch (err) {
+                  Collector.stop("error");
+                  return msg.channel.send("⚠️ Failed to load next round. Game ended.");
+                }
 
                 points += ((this.round * res.length) ** 2) / (totalTime / 1000);
 
@@ -240,7 +258,12 @@ class GuessingGame {
                 const totalTime = ~~(Date.now() - this.start);
                 this.round++;
 
-                names = (await this.generate()).names;
+                try {
+                  names = (await this.generate()).names;
+                } catch (err) {
+                  Collector.stop("error");
+                  return msg.channel.send("⚠️ Failed to load next round. Game ended.");
+                }
                 points += ((this.round * res.length) ** 2) / (totalTime / 1000);
 
                 this.embed.fields[0] = {
@@ -254,7 +277,12 @@ class GuessingGame {
 
                 await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
               } else if (m.content?.toLowerCase() === "skip") {
-                names = (await this.generate()).names;
+                try {
+                  names = (await this.generate()).names;
+                } catch (err) {
+                  Collector.stop("error");
+                  return msg.channel.send("⚠️ Failed to load next round. Game ended.");
+                }
                 await msg.channel.send({ embed: this.embed }, { file: this.imageFile, name: `${this.name}.png` });
               }
             });
