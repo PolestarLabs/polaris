@@ -6,7 +6,7 @@ on:
       environment:
         required: true
         type: string
-        description: "Target environment: staging or production"
+        description: "Target environment (staging/production or their aliases: dev/beta for staging, live for production)"
       version:
         required: false
         type: string
@@ -20,42 +20,26 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Determine target directory
-        id: target
+      - name: Debug inputs
         run: |
-          # choose the correct secret based on the environment
-          if [ "${{ inputs.environment }}" = "production" ]; then
-            echo "dir=${{ secrets.DEPLOY_PATH_LIVE }}" >> "$GITHUB_OUTPUT"
-          else
-            echo "dir=${{ secrets.DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
-          fi
-          # debug output: show resolved value (will be masked in logs)
-          echo "DEBUG: resolved dir='${{ steps.target.outputs.dir }}'"
-      - name: Validate directory
-        run: |
-          DIR="${{ steps.target.outputs.dir }}"
-          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
-            echo "ERROR: deployment path is empty or unset ($DIR)" >&2
-            exit 1
-          fi
-          echo "Using directory: $DIR"
+          echo "ENVIRONMENT=${{ inputs.environment }}"
+          echo "VERSION=${{ inputs.version || 'none' }}"
 
-      - name: Checkout requested version
+
+      - name: Compute canonical environment
+        id: canon
         run: |
-          DIR="${{ steps.target.outputs.dir }}"
-          cd "$DIR"
-          git fetch origin
-          if [ -n "${{ inputs.version }}" ]; then
-            git checkout --force "v${{ inputs.version }}"
-          else
-            git checkout --force origin/$(git rev-parse --abbrev-ref HEAD)
-          fi
+          env="${{ inputs.environment }}"
+          case "$env" in
+            dev|beta) env=staging ;; 
+            live) env=production ;;
+          esac
+          echo "canonical=$env" >> "$GITHUB_OUTPUT"
+          echo "DEBUG: canonical environment is $env"
 
       - name: Run deploy script
         run: |
-          DIR="${{ steps.target.outputs.dir }}"
-          cd "$DIR"
-          /home/pollux/polaris/scripts/server-deploy.sh bot ${{ inputs.environment }}
+          /home/pollux/polaris/scripts/server-deploy.sh bot ${{ steps.canon.outputs.canonical }} ${{ inputs.version }}
 
       - name: Completed
         run: echo "Deployment to ${{ inputs.environment }} finished"
