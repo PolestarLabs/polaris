@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy (minimal)
 
 on:
   workflow_call:
@@ -10,64 +10,50 @@ on:
       version:
         required: false
         type: string
-        description: "Version tag to deploy (e.g. 1.2.3). Defaults to package.json version."
-  workflow_dispatch:
-    inputs:
-      environment:
-        required: true
-        type: choice
-        description: "Target environment"
-        options: [staging, production]
-        default: staging
+        description: "Optional version identifier"
 
 jobs:
-  ssh:
-    name: 🚀 SSH Deploy (${{ inputs.environment }})
-    # execute deploy steps on our local self-hosted runner rather than
-    # the hosted `ubuntu-latest` pool
+  deploy:
+    name: Deploy Bot
     runs-on: [self-hosted, linux]
-    environment: ${{ inputs.environment }}
     steps:
-      - name: Checkout
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Resolve version
-        id: version
+      - name: Determine target directory
+        id: target
         run: |
-          if [ -n "${{ inputs.version }}" ]; then
-            echo "resolved=${{ inputs.version }}" >> "$GITHUB_OUTPUT"
+          if [ "${{ inputs.environment }}" = "production" ]; then
+            echo "dir=${{ secrets.DEPLOY_PATH_LIVE }}" >> "$GITHUB_OUTPUT"
           else
-            VERSION=$(node -p "require('./package.json').version")
-            echo "resolved=$VERSION" >> "$GITHUB_OUTPUT"
+            echo "dir=${{ secrets.DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Deploy locally
-        if: ${{ inputs.environment == 'staging' }}
+      - name: Validate directory
         run: |
-          set -e
-          echo "=== DEPLOY BOT (staging) · v${{ steps.version.outputs.resolved }} ==="
-          DIR="${{ secrets.DEPLOY_PATH }}"
-          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
-            echo "ERROR: DEPLOY_PATH secret is not set or empty ($DIR)" >&2
+          DIR="${{ steps.target.outputs.dir }}"
+          if [ -z "$DIR" ]; then
+            echo "ERROR: deployment path is empty" >&2
             exit 1
           fi
-          cd "$DIR"
-          git fetch origin
-          git checkout --force "v${{ steps.version.outputs.resolved }}"
-          /home/pollux/polaris/scripts/server-deploy.sh bot staging
-          echo "=== Done ==="
-      - name: Deploy locally
-        if: ${{ inputs.environment == 'production' }}
+          echo "Using directory: $DIR"
+
+      - name: Checkout requested version
         run: |
-          set -e
-          echo "=== DEPLOY BOT (production) · v${{ steps.version.outputs.resolved }} ==="
-          DIR="${{ secrets.DEPLOY_PATH_LIVE }}"
-          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
-            echo "ERROR: DEPLOY_PATH_LIVE secret is not set or empty ($DIR)" >&2
-            exit 1
-          fi
+          DIR="${{ steps.target.outputs.dir }}"
           cd "$DIR"
           git fetch origin
-          git checkout --force "v${{ steps.version.outputs.resolved }}"
-          /home/pollux/polaris/scripts/server-deploy.sh bot production
-          echo "=== Done ==="
+          if [ -n "${{ inputs.version }}" ]; then
+            git checkout --force "v${{ inputs.version }}"
+          else
+            git checkout --force origin/$(git rev-parse --abbrev-ref HEAD)
+          fi
+
+      - name: Run deploy script
+        run: |
+          DIR="${{ steps.target.outputs.dir }}"
+          cd "$DIR"
+          /home/pollux/polaris/scripts/server-deploy.sh bot ${{ inputs.environment }}
+
+      - name: Completed
+        run: echo "Deployment to ${{ inputs.environment }} finished"
