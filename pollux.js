@@ -43,13 +43,22 @@ ERIS.Shard.prototype.wsEvent = function safeWsEvent(packet) {
   try {
     return originalWsEvent.call(this, packet);
   } catch (err) {
-    if (err instanceof TypeError && String(err.message || err).includes("reading 'remove'")) {
+    // various eris bugs result in TypeErrors inside wsEvent when
+    // the packet data refers to undefined caches.  We want to ignore
+    // those instead of crashing the whole shard.
+    if (
+      err instanceof TypeError &&
+      /reading '(?:remove|get)'/.test(String(err.message || err))
+    ) {
       this.client?.emit?.("warn", `Shard wsEvent ignored: ${err.message}`);
       return;
     }
     throw err;
   }
 };
+// expose the original implementation for tests and potential external
+// overrides
+ERIS.Shard.prototype.wsEvent._original = originalWsEvent;
 const axios = require("axios");
 const DBSchema = require("@polestar/database_schema");
 const cmdPreproc = require("./core/structures/CommandPreprocessor");
