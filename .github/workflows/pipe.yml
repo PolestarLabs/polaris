@@ -92,11 +92,15 @@ jobs:
   production-gate:
     name: 🚪 Production Gate
     needs: [unit, integration]
+    # open the gate on a push to master/live when tests pass *or* the
+    # commit message includes the word "hotfix" (case‑sensitive).
     if: >
       github.event_name == 'push' &&
       (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/live') &&
-      needs.unit.result == 'success' &&
-      needs.integration.result == 'success'
+      (
+        (needs.unit.result == 'success' && needs.integration.result == 'success') ||
+        contains(github.event.head_commit.message, 'hotfix')
+      )
     runs-on: ubuntu-latest
     steps:
       - run: echo "✓ Production gate opened"

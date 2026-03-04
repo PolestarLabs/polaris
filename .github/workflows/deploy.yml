@@ -23,7 +23,9 @@ on:
 jobs:
   ssh:
     name: 🚀 SSH Deploy (${{ inputs.environment }})
-    runs-on: ubuntu-latest
+    # execute deploy steps on our local self-hosted runner rather than
+    # the hosted `ubuntu-latest` pool
+    runs-on: [self-hosted, linux]
     environment: ${{ inputs.environment }}
     steps:
       - name: Checkout
@@ -39,22 +41,17 @@ jobs:
             echo "resolved=$VERSION" >> "$GITHUB_OUTPUT"
           fi
 
-      - name: Deploy to Staging via SSH
+      - name: Deploy locally
         if: ${{ inputs.environment == 'staging' }}
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            set -e
-            echo "=== DEPLOY BOT (staging) · v${{ steps.version.outputs.resolved }} ==="
-            cd "${{ secrets.DEPLOY_PATH }}"
-            git fetch origin
-            git checkout --force "v${{ steps.version.outputs.resolved }}"
-            /home/pollux/polaris/scripts/server-deploy.sh bot staging
-            echo "=== Done ==="
-
+        run: |
+          set -e
+          echo "=== DEPLOY BOT (staging) · v${{ steps.version.outputs.resolved }} ==="
+          DIR="${{ secrets.DEPLOY_PATH }}"
+          cd "$DIR"
+          git fetch origin
+          git checkout --force "v${{ steps.version.outputs.resolved }}"
+          /home/pollux/polaris/scripts/server-deploy.sh bot staging
+          echo "=== Done ==="
       - name: Deploy to Production via SSH
         if: ${{ inputs.environment == 'production' }}
         uses: appleboy/ssh-action@v1.0.0
