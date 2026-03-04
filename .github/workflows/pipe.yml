@@ -1,6 +1,14 @@
 name: Pipe
 
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        description: "Target environment for manual run"
+        options: [staging, production]
+        default: production
   pull_request:
     branches: [dev, master, live]
   push:
