@@ -47,6 +47,10 @@ jobs:
           set -e
           echo "=== DEPLOY BOT (staging) · v${{ steps.version.outputs.resolved }} ==="
           DIR="${{ secrets.DEPLOY_PATH }}"
+          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
+            echo "ERROR: DEPLOY_PATH secret is not set or empty ($DIR)" >&2
+            exit 1
+          fi
           cd "$DIR"
           git fetch origin
           git checkout --force "v${{ steps.version.outputs.resolved }}"
@@ -58,6 +62,10 @@ jobs:
           set -e
           echo "=== DEPLOY BOT (production) · v${{ steps.version.outputs.resolved }} ==="
           DIR="${{ secrets.DEPLOY_PATH_LIVE }}"
+          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
+            echo "ERROR: DEPLOY_PATH_LIVE secret is not set or empty ($DIR)" >&2
+            exit 1
+          fi
           cd "$DIR"
           git fetch origin
           git checkout --force "v${{ steps.version.outputs.resolved }}"
