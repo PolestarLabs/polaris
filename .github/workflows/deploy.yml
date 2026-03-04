@@ -13,33 +13,44 @@ on:
         description: "Optional version identifier"
 
 jobs:
-  deploy:
-    name: Deploy Bot
+  deploy-staging:
+    name: í·ª Deploy Staging
     runs-on: [self-hosted, linux]
+    if: |
+      contains('staging dev beta', inputs.environment)
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
 
       - name: Debug inputs
         run: |
-          echo "ENVIRONMENT=${{ inputs.environment }}"
+          echo "ENVIRONMENT=${{ inputs.environment }} (staging job)"
           echo "VERSION=${{ inputs.version || 'none' }}"
-
-
-      - name: Compute canonical environment
-        id: canon
-        run: |
-          env="${{ inputs.environment }}"
-          case "$env" in
-            dev|beta) env=staging ;; 
-            live) env=production ;;
-          esac
-          echo "canonical=$env" >> "$GITHUB_OUTPUT"
-          echo "DEBUG: canonical environment is $env"
 
       - name: Run deploy script
         run: |
-          /home/pollux/polaris/scripts/server-deploy.sh bot ${{ steps.canon.outputs.canonical }} ${{ inputs.version }}
+          /home/pollux/polaris/scripts/server-deploy.sh bot staging ${{ inputs.version }}
 
       - name: Completed
-        run: echo "Deployment to ${{ inputs.environment }} finished"
+        run: echo "Staging deployment finished"
+
+  deploy-production:
+    name: íº€ Deploy Production
+    runs-on: [self-hosted, linux]
+    if: |
+      contains('production live', inputs.environment)
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Debug inputs
+        run: |
+          echo "ENVIRONMENT=${{ inputs.environment }} (production job)"
+          echo "VERSION=${{ inputs.version || 'none' }}"
+
+      - name: Run deploy script
+        run: |
+          /home/pollux/polaris/scripts/server-deploy.sh bot production ${{ inputs.version }}
+
+      - name: Completed
+        run: echo "Production deployment finished"
