@@ -1,0 +1,16 @@
+name: Restart Bot
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  restart:
+    name: Restart bot processes
+    runs-on: [self-hosted, polestar-bot]
+    steps:
+      - name: Checkout (for context)
+        uses: actions/checkout@v4
+      - name: Restart PM2 bot
+        run: |
+          echo "Restarting bot via PM2"
+          pm2 reload reg || pm2 reload prime || echo "bot process may not be running"
