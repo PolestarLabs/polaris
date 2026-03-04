@@ -14,7 +14,7 @@ on:
 
 jobs:
   deploy-staging:
-    name: í·ª Deploy Staging
+    name: Deploy Staging
     runs-on: [self-hosted, linux]
     if: |
       contains('staging dev beta', inputs.environment)
@@ -35,7 +35,7 @@ jobs:
         run: echo "Staging deployment finished"
 
   deploy-production:
-    name: íº€ Deploy Production
+    name: Deploy Production
     runs-on: [self-hosted, linux]
     if: |
       contains('production live', inputs.environment)
