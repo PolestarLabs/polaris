@@ -52,18 +52,14 @@ jobs:
           git checkout --force "v${{ steps.version.outputs.resolved }}"
           /home/pollux/polaris/scripts/server-deploy.sh bot staging
           echo "=== Done ==="
-      - name: Deploy to Production via SSH
+      - name: Deploy locally
         if: ${{ inputs.environment == 'production' }}
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.DEPLOY_HOST }}
-          username: ${{ secrets.DEPLOY_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            set -e
-            echo "=== DEPLOY BOT (production) · v${{ steps.version.outputs.resolved }} ==="
-            cd "${{ secrets.DEPLOY_PATH_LIVE }}"
-            git fetch origin
-            git checkout --force "v${{ steps.version.outputs.resolved }}"
-            /home/pollux/polaris/scripts/server-deploy.sh bot production
-            echo "=== Done ==="
+        run: |
+          set -e
+          echo "=== DEPLOY BOT (production) · v${{ steps.version.outputs.resolved }} ==="
+          DIR="${{ secrets.DEPLOY_PATH_LIVE }}"
+          cd "$DIR"
+          git fetch origin
+          git checkout --force "v${{ steps.version.outputs.resolved }}"
+          /home/pollux/polaris/scripts/server-deploy.sh bot production
+          echo "=== Done ==="
