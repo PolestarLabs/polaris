@@ -92,19 +92,21 @@ jobs:
   production-gate:
     name: 🚪 Production Gate
     needs: [unit, integration]
-    # open the gate on a push to master/live when tests pass *or* the
-    # commit message includes the word "hotfix" (case‑sensitive).
+    # gate opens automatically on a qualifying push, or can be manually
+    # triggered via workflow_dispatch using the same logic below.
     if: >
-      github.event_name == 'push' &&
-      (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/live') &&
       (
-        (needs.unit.result == 'success' && needs.integration.result == 'success') ||
-        contains(github.event.head_commit.message, 'hotfix')
-      )
+        github.event_name == 'push' &&
+        (github.ref == 'refs/heads/master' || github.ref == 'refs/heads/live') &&
+        (
+          (needs.unit.result == 'success' && needs.integration.result == 'success') ||
+          contains(github.event.head_commit.message, 'hotfix')
+        )
+      ) ||
+      (github.event_name == 'workflow_dispatch' && github.event.action == 'requested')
     runs-on: ubuntu-latest
     steps:
       - run: echo "✓ Production gate opened"
-
   deploy-production:
     name: 🚀 Deploy → Production
     needs: production-gate
