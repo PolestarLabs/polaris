@@ -23,17 +23,19 @@ jobs:
       - name: Determine target directory
         id: target
         run: |
+          # choose the correct secret based on the environment
           if [ "${{ inputs.environment }}" = "production" ]; then
             echo "dir=${{ secrets.DEPLOY_PATH_LIVE }}" >> "$GITHUB_OUTPUT"
           else
             echo "dir=${{ secrets.DEPLOY_PATH }}" >> "$GITHUB_OUTPUT"
           fi
-
+          # debug output: show resolved value (will be masked in logs)
+          echo "DEBUG: resolved dir='${{ steps.target.outputs.dir }}'"
       - name: Validate directory
         run: |
           DIR="${{ steps.target.outputs.dir }}"
-          if [ -z "$DIR" ]; then
-            echo "ERROR: deployment path is empty" >&2
+          if [ -z "$DIR" ] || [ "$DIR" = "***" ]; then
+            echo "ERROR: deployment path is empty or unset ($DIR)" >&2
             exit 1
           fi
           echo "Using directory: $DIR"
