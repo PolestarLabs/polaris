@@ -111,7 +111,7 @@ jobs:
           contains(github.event.head_commit.message, 'hotfix')
         )
       ) ||
-      (github.event_name == 'workflow_dispatch' && github.event.action == 'requested')
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
     runs-on: ubuntu-latest
     steps:
       - run: echo "✓ Production gate opened"
