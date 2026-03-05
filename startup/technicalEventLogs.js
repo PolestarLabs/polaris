@@ -1,5 +1,7 @@
 module.exports = technicalEventLogs;
 
+const { arrow } = require("../resources/consoleFluff");
+
 function technicalEventLogs(Client) {
     Client.on("disconnect", () => {
         console.error(`${"[Pollux]".yellow} Disconnected from Discord`);
@@ -22,15 +24,15 @@ function technicalEventLogs(Client) {
     });
 
     Client.on("shardReady", (shard) => {
-        console.log("•".green, "Shard", `${shard}`.magenta, "is Ready -");
+        console.log("•".green, arrow("green",3), "Shard", `${shard}`.magenta, "is Ready -");
     });
-
+ 
     Client.on("shardResume", (shard) => {
-        console.error("•".yellow, "Shard", `${shard}`.magenta, "resumed Activity -");
+        console.error("•".yellow, arrow("yellow",3), "Shard", `${shard}`.magenta, "resumed Activity -");
     });
 
     Client.on("shardDisconnect", (err, shard) => {
-        console.warn("•".red, "Shard", `${shard}`.blue, "Disconnected -");
+        console.warn("•".red, arrow("red",3), "Shard", `${shard}`.blue, "Disconnected -");
         console.error(err, " < Error");
     });
 
