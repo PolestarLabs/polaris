@@ -104,7 +104,7 @@ Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
 const TopGG_api = new TopGG.Api(cfg.topgg);
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 global.PLX = new Eris.CommandClient(
-  FLAVORED_CLIENT_DATA.token,
+  CLIENT_DATA.token,
   {
     maxShards: TOTAL_SHARDS,
     firstShardID: SHARDS_PER_CLUSTER * CLUSTER_ID,
@@ -140,10 +140,10 @@ PLX.engine      = Eris;
 PLX.staging     = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
 PLX.isPRIME     = Boolean(isPRIME);
-PLX._flavordata = FLAVORED_CLIENT_DATA;
+PLX._flavordata = CLIENT_DATA;
 
 if (isPRIME === true) {
-  PLX.cluster = { id: 0, name: `Prime: ${FLAVORED_CLIENT_DATA.fname}` };
+  PLX.cluster = { id: 0, name: `Prime: ${CLIENT_DATA.fname}` };
 } else {
   PLX.cluster = { id: CLUSTER_ID, name: CLUSTER_NAMES[CLUSTER_ID] };
 }
