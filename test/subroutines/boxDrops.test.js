@@ -32,6 +32,8 @@ describe("boxDrops server config cache", () => {
       id: channelId,
       nsfw: false,
       natural: false,
+      client: {},
+      send: jest.fn(),
     };
 
     const trigger = {
@@ -64,5 +66,64 @@ describe("boxDrops server config cache", () => {
     await lootbox(trigger);
 
     expect(global.DB.servers.findOne).toHaveBeenCalledTimes(2);
+  });
+
+  it("returns early when channel object has no client reference", async () => {
+    const guild = { id: "g1", memberCount: 20, members: [{ bot: false }, { bot: false }] };
+    const channel = { id: "c1" /* missing client intentionally */ };
+    const trigger = {
+      author: { id: "u1", bot: false },
+      content: "hello",
+      channel,
+      guild,
+      lang: "en",
+      prefix: "+",
+    };
+
+    // monkey-patch randomize so we don't accidentally hit other branches
+    const gearbox = require("../../core/utilities/Gearbox").Global;
+    jest.spyOn(gearbox, "randomize").mockReturnValue(1);
+
+    const result = await lootbox(trigger);
+    expect(result).toBe(false);
+  });
+
+  it("handles a deleted channel gracefully when collecting picks", async () => {
+    const guild = { id: "g2", memberCount: 20, members: [{ bot: false }, { bot: false }] };
+    const channel = {
+      id: "c2",
+      client: {},
+      send: jest.fn().mockResolvedValue({
+        channel: {}, // simulate the channel being stripped down (no awaitMessages)
+      }),
+      deleteMessages: jest.fn().mockResolvedValue(true),
+      natural: false,
+    };
+    const trigger = {
+      author: { id: "u2", bot: false },
+      content: "hello", // not "pick" so we don't hit the exp penalty early
+      channel,
+      guild,
+      lang: "en",
+      prefix: "+",
+    };
+
+    // stub server config lookup so we bypass database logic
+    global.DB.servers.findOne = jest.fn(() => ({
+      lean: () => ({
+        exec: () => Promise.resolve({ switches: {}, event: {} }),
+      }),
+    }));
+
+    // force a drop so we go through the awaitMessages section
+    const gearbox = require("../../core/utilities/Gearbox").Global;
+    jest.spyOn(gearbox, "randomize").mockReturnValue(777);
+
+    // stub the DB calls used after the collector
+    global.DB.users = { set: jest.fn().mockResolvedValue(true), getFull: jest.fn().mockResolvedValue({ addItem: jest.fn() }) };
+
+    const ret = await lootbox(trigger);
+    // should not throw; guard path returns true when it can't collect
+    expect(ret).toBe(true);
   });
 });
