@@ -217,7 +217,7 @@ DBSchema(DB_CONNECTION_DATA, {
       console.error("PROGRESSION MANAGER LOADED FAILED", err);
     }
 
-    const _tokenPreview = (FLAVORED_CLIENT_DATA.token || "").slice(0, 12) + "…";
+    const _tokenPreview = (CLIENT_DATA.token || "").slice(0, 12) + "…";
     console.log("Discord connection start...", {
       token: _tokenPreview,
       firstShard: SHARDS_PER_CLUSTER * CLUSTER_ID,
