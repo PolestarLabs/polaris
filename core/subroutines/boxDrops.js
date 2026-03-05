@@ -2,7 +2,7 @@
 // const DB = require("../database/db_ops");
 // const locale = require(appRoot+'/utils/i18node');
 const _EVT = require("../archetypes/Events");
-const { randomize, shuffle } = require("../utilities/Gearbox").Global;
+const G = require("../utilities/Gearbox").Global;
 const LOG_LEVEL = (process.env.LOG_LEVEL || process.env.LOGLEVEL || "").toLowerCase();
 const DEBUG_LOGS = LOG_LEVEL === "x-verbose";
 
@@ -111,6 +111,16 @@ module.exports = {
     //return;
     // const $t = locale.getT();
 
+    // ensure we have a valid channel object before doing anything that relies on Eris internals
+    if (!trigger || !trigger.channel) return false;
+    // some bugs in production have surfaced when the channel object loses its
+    // `.client` reference (see logs calling checkListener on undefined). bail out
+    // early instead of blowing up in eris-additions.
+    if (!trigger.channel.client) {
+      if (DEBUG_LOGS) console.warn("lootbox: channel missing client, aborting", trigger.channel);
+      return false;
+    }
+
     if (PLX.restarting) return false;
 
     initServerConfigSubscriber();
@@ -157,7 +167,7 @@ module.exports = {
     };
 
     const v = {
-      dropLoot: $t(`loot.lootDrop.${randomize(1, 5)}`, P) + $t("loot.lootPick", P).replace(prerf, ""),
+      dropLoot: $t(`loot.lootDrop.${G.randomize(1, 5)}`, P) + $t("loot.lootPick", P).replace(prerf, ""),
       disputing: $t("loot.contesting", P),
       oscarGoesTo: $t("loot.goesTo", P),
       gratz: $t("loot.congrats", P),
@@ -169,26 +179,26 @@ module.exports = {
     };
 
     let droprate = 777;
-    droprate = randomize(_DROPMIN, _DROPMAX);
+    droprate = G.randomize(_DROPMIN, _DROPMAX);
 
     let BOX = { id: "lootbox_C_O", text: v.dropLoot, pic: "chest.png" };
     // console.log(droprate)
 
     const iterations = eventChecks(trigger.guild.event);
     for (let i = 0; i < iterations / 5; i += 1) {
-      droprate = randomize(_DROPMIN, _DROPMAX);
+      droprate = G.randomize(_DROPMIN, _DROPMAX);
       if (droprate === 777) break;
     }
     if (droprate !== 777 && !trigger.guild.large) {
-      droprate = randomize(_DROPMIN, _DROPMAX);
+      droprate = G.randomize(_DROPMIN, _DROPMAX);
     }
 
     if (EVENT) {
-      const dropevent = randomize(1, 5);
+      const dropevent = G.randomize(1, 5);
       if (dropevent >= 2) BOX = convertToEvent(false, BOX);
     }
 
-    const rarity = randomize(0, _RAREMAX);
+    const rarity = G.randomize(0, _RAREMAX);
     switch (true) {
       case rarity <= 8:
         BOX.id = "lootbox_UR_O";
@@ -240,7 +250,19 @@ module.exports = {
       // COLLECT PICKERS
       let pickers = [];
       let balContent = ballotMessage.content;
-      const responses = await CHN.awaitMessages(async (pickMsg) => {
+
+      // choose the channel we will collect responses from. if the channel object
+      // has been invalidated (deleted) we may end up with a bare object that
+      // doesn't expose `awaitMessages`. fall back gracefully rather than crash in
+      // eris-additions.checkListener (which was the root of the error stack above).
+      const collectorChannel = (ballotMessage && ballotMessage.channel) ? ballotMessage.channel : CHN;
+      if (!collectorChannel || typeof collectorChannel.awaitMessages !== "function") {
+        if (DEBUG_LOGS) console.warn("lootbox: cannot await messages, channel invalid", collectorChannel);
+        CHN.send(v.morons);
+        return true;
+      }
+
+      const responses = await collectorChannel.awaitMessages(async (pickMsg) => {
         if (!pickMsg.author.bot
           && !pickers.find((u) => u.id === pickMsg.author.id)
           && pickMsg.content.toLowerCase().includes("pick")) {
@@ -275,10 +297,10 @@ module.exports = {
       ballotMessage.delete().catch(() => { });
 
       const pSz = pickers.length - 1;
-      let rand = randomize(0, pSz);
-      rand = randomize(0, pSz);
-      rand = randomize(0, pSz);
-      pickers = shuffle(pickers);
+      let rand = G.randomize(0, pSz);
+      rand = G.randomize(0, pSz);
+      rand = G.randomize(0, pSz);
+      pickers = G.shuffle(pickers);
 
       const luckyOne = pickers[rand];
 
