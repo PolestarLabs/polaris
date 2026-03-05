@@ -1,8 +1,9 @@
-const ROOT = process.env.name === "PLR" ? "hijola.pollux.gg" : "pollux.gg";
-const CDN = "https://cdn.pollux.gg";
-const GENERATORS = `https://${ROOT}/generators`;
-const API = `https://${ROOT}/api`;
-const DASH = `https://${ROOT}`;
+const HOST       = process.env.HOST || "https://staging.pollux.gg";
+const CWD        = process.cwd() + "/";
+const CDN        = "https://cdn.pollux.gg";
+const GENERATORS = `${HOST}/generators`;
+const API        = `${HOST}/api`;
+const DASH       = `${HOST}`;
 
 exports.run = () => {
   global.paths = {
