@@ -16,43 +16,33 @@ if (!CLIENT_DATA) {
   console.error("*** No CLIENT_DATA environment variable found. Proceeding in debug mode. ***");
 }
 
-const CLIENT_NAME = process.env.PRIME_FLAVORED_CLIENT;
+const CLIENT_NAME         = process.env.PRIME_FLAVORED_CLIENT;
+const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
+const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
+const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
+const isPRIME             = process.env.PRIME === "true" || process.env.PRIME === true;
+const BANNER              = require("./resources/asciiPollux.js");
+const DB_INFO             = process.env.DB_INFO;
+const VANILLA_DB_INFO     = process.env.VANILLA_DB_INFO;
 
-const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
-const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0;
-const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1;
+const { readdirSync }     = require("fs");
+const axios               = require("axios");
+const Bluebird            = require("bluebird");
+const TopGG               = require("@top-gg/sdk");
+const ErisLib             = require("eris");
+const Eris                = require("eris-additions")(ErisLib);
 
-const isPRIME = process.env.PRIME === "true" || process.env.PRIME === true;
-const BANNER = require("./resources/asciiPollux.js");
+const DBSchema            = require("@polestar/database_schema");
+const CLUSTER_NAMES       = require("@polestar/constants/clusters")?.default;
+const cfg                 = require("./config.json");
+const cmdPreproc          = require("./core/structures/CommandPreprocessor");
+const Gearbox             = require("./core/utilities/Gearbox");
+const WebhookDigester     = require("./utils/WebhookDigester.js");
 
-const DB_INFO = process.env.DB_INFO;
-const VANILLA_DB_INFO = process.env.VANILLA_DB_INFO;
-
-// built-in modules
-const path = require("path");
-const { readdirSync } = require("fs");
-
-// external dependencies
-const axios = require("axios");
-const Bluebird = require("bluebird");
-const ErisLib = require("eris");
-const Eris = require("eris-additions")(ErisLib);
-const TopGG = require("@top-gg/sdk");
-
-// internal / organization packages
-const DBSchema = require("@polestar/database_schema");
-const CLUSTER_NAMES = require("@polestar/constants/clusters")?.default;
-const cfg = require("./config.json");
-const cmdPreproc = require("./core/structures/CommandPreprocessor");
-const Gearbox = require("./core/utilities/Gearbox");
-const WebhookDigester = require("./utils/WebhookDigester.js");
-
-// side-effects
-require("./instrumentation.js");
 require("./utils/paths").run();
+require("./startup/instrumentation.js");
 require("./core/utilities/SelfAPI.js");
 
-// configure globals
 global.Promise = Bluebird;
 Promise.config({ longStackTraces: true });
 
@@ -70,6 +60,7 @@ ErisLib.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(m
   return originalOnMessageCreate.call(this, msg);
 };
 const originalWsEvent = ErisLib.Shard.prototype.wsEvent;
+ErisLib.Shard.prototype.wsEvent._original = originalWsEvent;
 ErisLib.Shard.prototype.wsEvent = function safeWsEvent(packet) {
   try {
     return originalWsEvent.call(this, packet);
@@ -87,10 +78,6 @@ ErisLib.Shard.prototype.wsEvent = function safeWsEvent(packet) {
     throw err;
   }
 };
-
-// expose the original implementation for tests and potential external
-// overrides
-ErisLib.Shard.prototype.wsEvent._original = originalWsEvent;
 
 // Eris Mods-----//
 require("./core/structures/ReactionCollector.js")(ErisLib);
@@ -114,14 +101,8 @@ Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
 };
 
 const TopGG_api = new TopGG.Api(cfg.topgg);
-global.appRoot = path.resolve(__dirname); // change with @ later?
-
-console.table({
-  PERCLUSTER: SHARDS_PER_CLUSTER,
-  CLUSTER_ID,
-  SHARDS: TOTAL_SHARDS,
-});
-
+global.appRoot = process.env.BOT_PATH;
+global.MARKET_TOKEN = cfg["pollux-api-token"];
 global.PLX = new Eris.CommandClient(
   FLAVORED_CLIENT_DATA.token,
   {
@@ -153,13 +134,10 @@ global.PLX = new Eris.CommandClient(
   }
 );
 
-global.MARKET_TOKEN = cfg["pollux-api-token"];
-
-PLX.engine = Eris;
-PLX.staging = process.env.NODE_ENV !== "production";
+PLX.engine      = Eris;
+PLX.staging     = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.isPRIME = Boolean(isPRIME);
-
+PLX.isPRIME     = Boolean(isPRIME);
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
 if (isPRIME === true) {
@@ -168,6 +146,11 @@ if (isPRIME === true) {
   PLX.cluster = { id: CLUSTER_ID, name: CLUSTER_NAMES[CLUSTER_ID] };
 }
 
+console.table({
+  PERCLUSTER: SHARDS_PER_CLUSTER,
+  CLUSTER_ID,
+  SHARDS: TOTAL_SHARDS,
+});
 console.report = (...args) => {
   console.log(
     ` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" ")
@@ -177,14 +160,8 @@ console.report = (...args) => {
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
 
-//= ======================================//
-//      INTERNAL POOLS
-//= ======================================//
-
 PLX.execQueue = [];
 PLX.commandPool = {};
-
-require("@polestar/emoji-grimoire").initialize(PLX);
 
 PLX.registerCommands = cmdPreproc.registerCommands;
 PLX.registerOne = cmdPreproc.registerOne;
@@ -284,7 +261,6 @@ DBSchema(vanillaConnection, { redis: null }).then((vConnection) => {
 global.translateEngineStart = require("@polestar/i18n").translateEngineStart;
 translateEngineStart();
 
-
 let ReadyCount = 0;
 PLX.on("ready", () => {
   console.log(" READY ".bold.bgYellow, "ReadyCount:", ReadyCount);
@@ -293,7 +269,6 @@ PLX.on("ready", () => {
   INSTR.gauge("READY_count", ReadyCount);
   console.log(BANNER.ascii());  
 });
-
 PLX.once("ready", async () => {
   if (PLX._flavordata?.name === "main") {
     await TopGG_api.postStats({
@@ -334,8 +309,9 @@ PLX.once("ready", async () => {
     .catch(console.error);
 });
 
-require("./technicalEventLogs")(PLX);
-require("./auxiliarySideFunctions")(PLX);
+require("./startup/technicalEventLogs.js")(PLX);
+require("./startup/auxiliarySideFunctions.js")(PLX);
+require("@polestar/emoji-grimoire").initialize(PLX);
 
 global.errorsHook = cfg.errorsHook;
 
@@ -353,7 +329,6 @@ ${err.slice(0, 1900)}
     { hook: cfg.errorsHook }
   );
 });
-
 process.on("unhandledRejection", (err) => {
   console.error(" UNHANDLED REJECTION ".bgYellow);
   console.error(err);
@@ -367,8 +342,6 @@ ${err?.stack?.slice(0, 1900)}
     { hook: cfg.errorsHook }
   );
 });
-//------------------------
-
 
 function debugHook() {
   return new WebhookDigester(PLX);
