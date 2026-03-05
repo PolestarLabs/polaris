@@ -1,5 +1,5 @@
 require("colors");
-const version = require("../../package.json").version;
+const version = require("../package.json").version;
 const CLUSTER_NAMES = require("@polestar/constants/clusters")?.default;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
