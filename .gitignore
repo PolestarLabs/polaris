@@ -24,3 +24,4 @@ shell.js
 eval.js
 secret.*
 deploy_key*
+!flavored_swarm.config.js
