@@ -24,4 +24,5 @@ shell.js
 eval.js
 secret.*
 deploy_key*
+.env
 !flavored_swarm.config.js
