@@ -2,6 +2,10 @@ const cfg = require("../config.json");
 
 class WebhookDigester {
   constructor(client) {
+    if (!client) throw new Error("WebhookDigester requires a client instance.");
+    if (this.constructor._instance) return this.constructor._instance;
+
+    this.constructor._instance = this;
     this.client = client;
     this.executed = [];
   }
