@@ -43,7 +43,6 @@ global.appRoot = process.env.BOT_PATH;
 
 require("./utils/paths").run();
 require("./startup/instrumentation.js");
-require("./core/utilities/SelfAPI.js");
 
 global.Promise = Bluebird;
 Promise.config({ longStackTraces: true });
@@ -134,6 +133,8 @@ global.PLX = new Eris.CommandClient(
     prefix: ["+", "p!", "plx!", "@mention"],
   }
 );
+
+require("./core/utilities/SelfAPI.js");
 
 PLX.engine      = Eris;
 PLX.staging     = process.env.NODE_ENV !== "production";
