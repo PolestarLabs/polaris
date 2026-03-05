@@ -1,3 +1,4 @@
+const Promise = require("bluebird");
 const readdirAsync = Promise.promisify(require("fs").readdir);
 
 /**

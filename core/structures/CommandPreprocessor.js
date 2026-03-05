@@ -1,6 +1,7 @@
 const crypto = require("crypto");
 const { performance } = require("perf_hooks");
 // const gear = require('../utilities/Gearbox/global');
+Promise = require("bluebird");
 const readdirAsync = Promise.promisify(require("fs").readdir);
 const cfg = require("../../config.json");
 

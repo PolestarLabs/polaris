@@ -1,3 +1,4 @@
+Promise = require("bluebird");
 /* eslint-disable consistent-return */
 const Timed = require("../../structures/TimedUsage");
 
