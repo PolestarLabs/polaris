@@ -39,6 +39,8 @@ const cmdPreproc          = require("./core/structures/CommandPreprocessor");
 const Gearbox             = require("./core/utilities/Gearbox");
 const WebhookDigester     = require("./utils/WebhookDigester.js");
 
+global.appRoot = process.env.BOT_PATH;
+
 require("./utils/paths").run();
 require("./startup/instrumentation.js");
 require("./core/utilities/SelfAPI.js");
@@ -101,7 +103,6 @@ Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
 };
 
 const TopGG_api = new TopGG.Api(cfg.topgg);
-global.appRoot = process.env.BOT_PATH;
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 global.PLX = new Eris.CommandClient(
   FLAVORED_CLIENT_DATA.token,
