@@ -254,11 +254,42 @@ DBSchema(dbConnectionData, {
       console.error("PROGRESSION MANAGER LOADED FAILED", err);
     }
 
-    console.log("Discord connection start...");
-    PLX.connect().then(postConnect).catch(console.error);
+    const _tokenPreview = (FLAVORED_CLIENT_DATA.token || "").slice(0, 12) + "…";
+    console.log("Discord connection start...", {
+      token: _tokenPreview,
+      firstShard: SHARDS_PER_CLUSTER * CLUSTER_ID,
+      lastShard: SHARDS_PER_CLUSTER * (CLUSTER_ID + 1) - 1,
+      totalShards: TOTAL_SHARDS,
+    });
+
+    // Temporarily force debug output so we can see gateway handshake
+    PLX.logDebug = true;
+
+    const _connectTimeout = setTimeout(() => {
+      console.error(
+        " CONNECT TIMEOUT ".bgRed,
+        "PLX.connect() did not resolve within 30s — likely stuck at gateway WS or token rejected"
+      );
+      // Log shard statuses for visibility
+      for (const [id, shard] of PLX.shards) {
+        console.error(`  Shard ${id}: status=${shard.status} seq=${shard.seq} sessionID=${shard.sessionID ?? "none"}`);
+      }
+    }, 30_000);
+
+    PLX.connect()
+      .then(() => {
+        clearTimeout(_connectTimeout);
+        PLX.logDebug = false;
+        postConnect();
+      })
+      .catch((err) => {
+        clearTimeout(_connectTimeout);
+        PLX.logDebug = false;
+        console.error(" PLX.connect() REJECTED ".bgRed, err);
+      });
   })
   .catch((err) => {
-    console.error(err);
+    console.error(" DBSchema connect FAILED ".bgRed, err);
   });
 
 DBSchema(vanillaConnection, { redis: null }).then((vConnection) => {
@@ -418,6 +449,9 @@ PLX.on("unavailableGuildCreate", (g) => {
 });
 PLX.on("shardPreReady", (shard) => {
   console.log("•".cyan, "Shard", `${shard}`.blue, "getting ready...");
+});
+PLX.on("shardConnect", (shard) => {
+  console.log("•".cyan, "Shard", `${shard}`.blue, "WebSocket opened — waiting for HELLO/READY");
 });
 PLX.on("shardReady", (shard) => {
   console.log("•".green, "Shard", `${shard}`.magenta, "is Ready -");

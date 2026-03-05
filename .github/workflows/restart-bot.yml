@@ -2,6 +2,10 @@ name: Restart Bot
 
 on:
   workflow_dispatch: {}
+  repository_dispatch:
+    types: [restart]
+
+# trigger via `gh api repos/:owner/:repo/dispatches -f event_type=restart`
 
 jobs:
   restart:
@@ -13,4 +17,4 @@ jobs:
       - name: Restart PM2 bot
         run: |
           echo "Restarting bot via PM2"
-          pm2 reload reg || pm2 reload prime || echo "bot process may not be running"
+          pm2 reload reg || pm2 restart prime || echo "bot process may not be running"
