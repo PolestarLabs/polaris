@@ -6,7 +6,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 
-const CLIENT_DATA = process.env.CLIENT_DATA;
+const CLIENT_DATA = JSON.parse(process.env.CLIENT_DATA );
 
 if (!CLIENT_DATA) {
   if (!process.env.DEBUG) {
@@ -254,7 +254,7 @@ DBSchema(DB_CONNECTION_DATA, {
     console.error(" DBSchema connect FAILED ".bgRed, err);
   });
 
-DBSchema(vanillaConnection, { redis: null }).then((vConnection) => {
+DBSchema(VANILLA_CONNECTION_DATA, { redis: null }).then((vConnection) => {
   global.vDB = vConnection;
   console.log("•".yellow, " Connected to Vanilla DB".blue);
 });
