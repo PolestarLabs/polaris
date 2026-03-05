@@ -9,7 +9,7 @@ const CLIENT_NAME         = process.env.PRIME_FLAVORED_CLIENT;
 const UNIT = isPRIME ? `⭐ PRIME (${CLIENT_NAME})` : CLUSTER_NAMES[CLUSTER_ID] || `Cluster ${CLUSTER_ID}`;
 
 const ascii = function () {
-  const a = "red";
+  const a = isPRIME ? "yellow" : "green";
   const b = "red";
 
   const text = `${"                                                                "[a][b]
