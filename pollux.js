@@ -5,29 +5,60 @@
 /* eslint-disable import/order */
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-const FLAVORED_CLIENT = process.env.PRIME_FLAVORED_CLIENT;
+
+const CLIENT_DATA = process.env.CLIENT_DATA;
+
+if (!CLIENT_DATA) {
+  if (!process.env.DEBUG) {
+    console.error("No CLIENT_DATA environment variable found. Exiting.");
+    process.exit(1);
+  }
+  console.error("*** No CLIENT_DATA environment variable found. Proceeding in debug mode. ***");
+}
+
+const CLIENT_NAME = process.env.PRIME_FLAVORED_CLIENT;
 
 const SHARDS_PER_CLUSTER = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
 const CLUSTER_ID = parseInt(process.env.CLUSTER_ID) || 0;
 const TOTAL_SHARDS = parseInt(process.env.TOTAL_SHARDS) || 1;
 
 const isPRIME = process.env.PRIME === "true" || process.env.PRIME === true;
+const BANNER = require("./resources/asciiPollux.js");
 
-process.env.UV_THREADPOOL_SIZE = 256;
-global.clusterNames = require("@polestar/constants/clusters")?.default;
+const DB_INFO = process.env.DB_INFO;
+const VANILLA_DB_INFO = process.env.VANILLA_DB_INFO;
 
+// built-in modules
+const path = require("path");
+const { readdirSync } = require("fs");
+
+// external dependencies
+const axios = require("axios");
+const Bluebird = require("bluebird");
+const ErisLib = require("eris");
+const Eris = require("eris-additions")(ErisLib);
+const TopGG = require("@top-gg/sdk");
+
+// internal / organization packages
+const DBSchema = require("@polestar/database_schema");
+const CLUSTER_NAMES = require("@polestar/constants/clusters")?.default;
+const cfg = require("./config.json");
+const cmdPreproc = require("./core/structures/CommandPreprocessor");
+const Gearbox = require("./core/utilities/Gearbox");
+const WebhookDigester = require("./utils/WebhookDigester.js");
+
+// side-effects
 require("./instrumentation.js");
+require("./utils/paths").run();
+require("./core/utilities/SelfAPI.js");
 
-global.Promise = require("bluebird");
+// configure globals
+global.Promise = Bluebird;
 Promise.config({ longStackTraces: true });
 
-const path = require("path");
-
-const ERIS = require("eris");
-const Eris = require("eris-additions")(ERIS);
-
-const originalOnMessageCreate = ERIS.CommandClient.prototype.onMessageCreate;
-ERIS.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(msg) {
+// safety wrappers for Eris
+const originalOnMessageCreate = ErisLib.CommandClient.prototype.onMessageCreate;
+ErisLib.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(msg) {
   if (!msg) {
     this.emit("warn", "MessageCreate received without a message object.");
     return;
@@ -38,8 +69,8 @@ ERIS.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(msg)
   }
   return originalOnMessageCreate.call(this, msg);
 };
-const originalWsEvent = ERIS.Shard.prototype.wsEvent;
-ERIS.Shard.prototype.wsEvent = function safeWsEvent(packet) {
+const originalWsEvent = ErisLib.Shard.prototype.wsEvent;
+ErisLib.Shard.prototype.wsEvent = function safeWsEvent(packet) {
   try {
     return originalWsEvent.call(this, packet);
   } catch (err) {
@@ -56,45 +87,16 @@ ERIS.Shard.prototype.wsEvent = function safeWsEvent(packet) {
     throw err;
   }
 };
+
 // expose the original implementation for tests and potential external
 // overrides
-ERIS.Shard.prototype.wsEvent._original = originalWsEvent;
-const axios = require("axios");
-const DBSchema = require("@polestar/database_schema");
-const cmdPreproc = require("./core/structures/CommandPreprocessor");
-const Gearbox = require("./core/utilities/Gearbox");
-const cfg = require("./config.json");
-const WebhookDigester = require("./utils/WebhookDigester.js");
-const TopGG = require("@top-gg/sdk");
-
-console.log(require("./resources/asciiPollux.js").ascii());
-
-const TopGG_api = new TopGG.Api(cfg.topgg);
-
-const DummyFlavorDefault = {
-  token: cfg.token,
-  fname: "Dummy",
-  category: "alpha",
-  name: "dummy_default",
-};
-
-const FLAVOR_SWARM_CONFIG = require("./flavored_swarm.config.js");
-const { readdirSync } = require("fs");
-
-const FLAVORED_CLIENT_DATA =
-  FLAVOR_SWARM_CONFIG.find((cli) => cli.name === FLAVORED_CLIENT) ||
-  DummyFlavorDefault;
+ErisLib.Shard.prototype.wsEvent._original = originalWsEvent;
 
 // Eris Mods-----//
-require("./core/structures/ReactionCollector.js")(ERIS);
-require("./core/structures/ButtonCollector.js")(ERIS);
+require("./core/structures/ReactionCollector.js")(ErisLib);
+require("./core/structures/ButtonCollector.js")(ErisLib);
 require("./core/structures/ComponentsHandler.js")(Eris);
 
-global.appRoot = path.resolve(__dirname);
-
-require("./utils/paths").run();
-
-// ERIS MODS
 Eris.Guild.prototype.member = function member(user) {
   if (!user) return null;
   user = user.id || user;
@@ -111,11 +113,13 @@ Eris.Channel.prototype.createMessage = function createMsgModded(...args) {
   return oldSend(...args);
 };
 
+const TopGG_api = new TopGG.Api(cfg.topgg);
+global.appRoot = path.resolve(__dirname); // change with @ later?
+
 console.table({
-  SHARDS_PER_CLUSTER,
+  PERCLUSTER: SHARDS_PER_CLUSTER,
   CLUSTER_ID,
-  TOTAL_SHARDS,
-  FLAVORED_CLIENT_DATA,
+  SHARDS: TOTAL_SHARDS,
 });
 
 global.PLX = new Eris.CommandClient(
@@ -152,16 +156,16 @@ global.PLX = new Eris.CommandClient(
 global.MARKET_TOKEN = cfg["pollux-api-token"];
 
 PLX.engine = Eris;
-PLX.beta = cfg.beta || process.env.NODE_ENV !== "production";
+PLX.staging = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.isPRIME = isPRIME === "true" || isPRIME === true;
+PLX.isPRIME = Boolean(isPRIME);
 
 PLX._flavordata = FLAVORED_CLIENT_DATA;
 
 if (isPRIME === true) {
   PLX.cluster = { id: 0, name: `Prime: ${FLAVORED_CLIENT_DATA.fname}` };
 } else {
-  PLX.cluster = { id: CLUSTER_ID, name: clusterNames[CLUSTER_ID] };
+  PLX.cluster = { id: CLUSTER_ID, name: CLUSTER_NAMES[CLUSTER_ID] };
 }
 
 console.report = (...args) => {
@@ -169,7 +173,6 @@ console.report = (...args) => {
     ` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" ")
   );
 };
-const debugHook = new WebhookDigester(PLX);
 
 Object.assign(global, Gearbox.Global);
 Object.assign(PLX, Gearbox.Client);
@@ -205,39 +208,20 @@ PLX.updateBlacklists = async (DB) => {
 
   return result;
 };
-const dbConnectionData = {
-  hook: debugHook,
-  url: PLX.beta ? cfg.dbURL_beta : cfg.dbURL,
-  options: {
-    useNewUrlParser: true,
-    keepAlive: true,
-    connectTimeoutMS: 8000,
-    useUnifiedTopology: true,
-    promiseLibrary: global.Promise,
-    poolSize: 16,
-  },
+
+const databaseConnectOptions = {
+  useNewUrlParser: true,
+  keepAlive: true,
+  connectTimeoutMS: 8000,
+  useUnifiedTopology: true,
+  promiseLibrary: global.Promise,
+  poolSize: 16,
 };
 
-const vanillaConnection = {
-  hook: debugHook,
-  url: cfg.vanillaDB,
-  options: {
-    useNewUrlParser: true,
-    keepAlive: true,
-    connectTimeoutMS: 8000,
-    useUnifiedTopology: true,
-    promiseLibrary: global.Promise,
-    poolSize: 16,
-  },
-};
+const DB_CONNECTION_DATA      = { url: DB_INFO, hook: debugHook(), options: databaseConnectOptions };
+const VANILLA_CONNECTION_DATA = { url: VANILLA_DB_INFO, hook: debugHook(), options: databaseConnectOptions };
 
-function postConnect() {
-  console.log("Discord Client Connected".cyan);
-  initializeEvents();
-  console.log("•".cyan, "Events Listening");
-}
-
-DBSchema(dbConnectionData, {
+DBSchema(DB_CONNECTION_DATA, {
   redis: {
     host: "127.0.0.1",
     port: 6379,
@@ -262,7 +246,6 @@ DBSchema(dbConnectionData, {
       totalShards: TOTAL_SHARDS,
     });
 
-    // Temporarily force debug output so we can see gateway handshake
     PLX.logDebug = true;
 
     const _connectTimeout = setTimeout(() => {
@@ -274,7 +257,7 @@ DBSchema(dbConnectionData, {
       for (const [id, shard] of PLX.shards) {
         console.error(`  Shard ${id}: status=${shard.status} seq=${shard.seq} sessionID=${shard.sessionID ?? "none"}`);
       }
-    }, 30_000);
+    }, 10_000);
 
     PLX.connect()
       .then(() => {
@@ -298,14 +281,9 @@ DBSchema(vanillaConnection, { redis: null }).then((vConnection) => {
 });
 
 // Translation Engine ------------- <
-
 global.translateEngineStart = require("@polestar/i18n").translateEngineStart;
-
 translateEngineStart();
 
-//= ======================================//
-//      BOT EVENT HANDLER
-//= ======================================//
 
 let ReadyCount = 0;
 PLX.on("ready", () => {
@@ -313,6 +291,7 @@ PLX.on("ready", () => {
   ReadyCount++;
   // eslint-disable-next-line no-undef
   INSTR.gauge("READY_count", ReadyCount);
+  console.log(BANNER.ascii());  
 });
 
 PLX.once("ready", async () => {
@@ -355,6 +334,52 @@ PLX.once("ready", async () => {
     .catch(console.error);
 });
 
+require("./technicalEventLogs")(PLX);
+require("./auxiliarySideFunctions")(PLX);
+
+global.errorsHook = cfg.errorsHook;
+
+// Global exception handlers
+process.on("uncaughtException", (err) => {
+  console.error(" UNCAUGHT EXCEPTION ".bgRed);
+  console.error(err);
+  debugHook().error(
+    `
+  **Uncaught Exception**
+  \`\`\`js
+${err.slice(0, 1900)}
+  \`\`\`
+  `,
+    { hook: cfg.errorsHook }
+  );
+});
+
+process.on("unhandledRejection", (err) => {
+  console.error(" UNHANDLED REJECTION ".bgYellow);
+  console.error(err);
+  debugHook().warn(
+    `
+  **Unhandled Rejection**
+  \`\`\`js
+${err?.stack?.slice(0, 1900)}
+  \`\`\`
+  `,
+    { hook: cfg.errorsHook }
+  );
+});
+//------------------------
+
+
+function debugHook() {
+  return new WebhookDigester(PLX);
+}
+
+function postConnect() {
+  console.log("Discord Client Connected".cyan);
+  initializeEvents();
+  console.log("•".cyan, "Events Listening");
+}
+
 function initializeEvents() {
   function handleEvent(eventide, file) {
     PLX.on(eventide, async (...args) => {
@@ -390,211 +415,16 @@ function initializeEvents() {
   PLX.microserverStart = () => {
     try {
       PLX.microserver = new (require("./core/archetypes/Microserver"))(
-        cfg.crossAuth
+        cfg.crossAuth // TODO: Replace with Env
       );
       PLX.microserver.microtasks.updateServerCache("all");
       PLX.microserver.microtasks.updateChannels("all");
     } catch (e) {
       console.error(" ERROR Microserver Start ".bgRed);
       console.error(e);
-      console.error("--------------------------------------------");
+      console.error("--------------------------------------------\n\n");
     }
   };
 
   require("./core/utilities/debugTools");
 }
-
-PLX.on("debug", (payload, s) => {
-  if (PLX.logDebug) console.log(`${s} -- ${" D E B U G ".bgGray} }`, payload);
-});
-PLX.on("hello", (trace, shard) =>
-  console.error(
-    `${"[Pollux]".blue} ${shard !== undefined ? `Shard ${shard}` : "Hello!"}:`,
-    trace
-  )
-);
-PLX.on("unknown", (pack, shard) => {
-  if (PLX.logDebug) {
-    console.error(`${"[Pollux]".bgRed} SHARD ${shard} :: UNKNOWN PACKET`, pack);
-  }
-});
-PLX.on("error", (error, shard) => {
-  if (!error) return;
-  console.error(
-    `${"[Pollux]".red} ${
-      shard !== undefined ? `Shard ${shard} error` : "Error"
-    }:`,
-    error
-  );
-});
-PLX.on("warn", (message, shard) => {
-  if (!PLX.logDebug || !message) return;
-
-  console.error(
-    `${"[Pollux]".yellow} ${
-      shard !== undefined ? `Shard ${shard} warning` : "WARNING"
-    }:`,
-    message
-  );
-});
-
-PLX.on("disconnect", () => {
-  console.error(`${"[Pollux]".yellow} Disconnected from Discord`);
-});
-PLX.on("guildUnavailable", (g) => {
-  console.error(`${"[Pollux]".yellow} Unavailable Guild Created`, g);
-});
-PLX.on("unavailableGuildCreate", (g) => {
-  console.error(`${"[Pollux]".yellow} Guild unavailable [${g.id}]`);
-});
-PLX.on("shardPreReady", (shard) => {
-  console.log("•".cyan, "Shard", `${shard}`.blue, "getting ready...");
-});
-PLX.on("shardConnect", (shard) => {
-  console.log("•".cyan, "Shard", `${shard}`.blue, "WebSocket opened — waiting for HELLO/READY");
-});
-PLX.on("shardReady", (shard) => {
-  console.log("•".green, "Shard", `${shard}`.magenta, "is Ready -");
-});
-PLX.on("shardResume", (shard) => {
-  console.error("•".yellow, "Shard", `${shard}`.magenta, "resumed Activity -");
-});
-PLX.on("shardDisconnect", (err, shard) => {
-  console.warn("•".red, "Shard", `${shard}`.blue, "Disconnected -");
-  console.error(err, " < Error");
-});
-
-//= ======================================//
-//      AUX SIDE FUNCTIONS
-//= ======================================//
-
-PLX.softKill = (msg) => {
-  console.log("Soft killing".bgBlue);
-  PLX.restarting = true;
-  PLX.removeListener("messageCreate", PLX.eventHandlerFunctions.messageCreate);
-
-  Promise.all(PLX.execQueue)
-    .then(async () => {
-      if (msg) {
-        await msg.reply(`${_emoji("yep")} Queue consumed. Rebooting now...`);
-      }
-      PLX.disconnect({ reconnect: false });
-      process.exit(0);
-    })
-    .timeout(30e3)
-    .catch(async (error) => {
-      if (msg) {
-        await msg.reply(
-          `${_emoji("nope")} Queue errored or timed out. Hard-rebooting now...`
-        );
-      }
-      console.error(error);
-      process.exit(1);
-    });
-};
-PLX.hardKill = () => {
-  console.log("Hard killing".red);
-  PLX.removeListener("messageCreate", () => null);
-  PLX.disconnect({ reconnect: false });
-  process.exit(1);
-};
-PLX.setAvatar = async (url) => {
-  try {
-    const response = await axios.get(url, {
-      headers: { Accept: "image/*" },
-      responseType: "arraybuffer",
-    });
-    await PLX.editSelf({
-      avatar: `data:${
-        response.headers["content-type"]
-      };base64,${response.data.toString("base64")}`,
-    });
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// eslint-disable-next-line import/extensions
-require("./core/utilities/SelfAPI.js");
-
-PLX.bean = async (
-  guild,
-  user,
-  delete_message_days = 0,
-  reason = "No reason specified"
-) => {
-  await axios.put(
-    `https://discord.com/api/guilds/${guild}/bans/${user}`,
-    { delete_message_days, reason },
-    { headers: { Authorization: PLX._token } }
-  );
-};
-
-PLX.unbean = async (
-  guild,
-  user,
-  delete_message_days = 0,
-  reason = "No reason specified"
-) => {
-  await axios.delete(
-    `https://discord.com/api/guilds/${guild}/bans/${user}`,
-    { delete_message_days, reason },
-    { headers: { Authorization: PLX._token } }
-  );
-};
-
-PLX.reply = async (msg, content, ping = false) => {
-  const payload = {
-    allowed_mentions: { replied_user: ping },
-    message_reference: {
-      channel_id: msg.channel.id,
-      guild_id: msg.guild.id,
-      message_id: msg.id,
-    },
-  };
-  if (typeof content === "string") payload.content = content;
-  else Object.assign(payload, content);
-
-  const result = await axios.post(
-    `https://discord.com/api/v8/channels/${msg.channel.id}/messages`,
-    payload,
-    { headers: { Authorization: PLX._token } }
-  );
-  return result;
-};
-
-global.errorsHook = cfg.errorsHook;
-
-process.on("uncaughtException", (err) => {
-  console.error(" UNCAUGHT EXCEPTION ".bgRed);
-  console.error(err);
-  debugHook.error(
-    `
-  **Uncaught Exception**
-  \`\`\`js
-${err.slice(0, 1900)}
-  \`\`\`
-  `,
-    { hook: cfg.errorsHook }
-  );
-});
-
-process.on("unhandledRejection", (err) => {
-  console.error(" UNHANDLED REJECTION ".bgYellow);
-  console.error(err);
-  debugHook.warn(
-    `
-  **Unhandled Rejection**
-  \`\`\`js
-${err?.stack?.slice(0, 1900)}
-  \`\`\`
-  `,
-    { hook: cfg.errorsHook }
-  );
-});
-
-PLX.getOrCreateUser = async (user) => {
-  let udata = await DB.users.findOne({ id: user.id });
-  if (!udata) udata = await DB.users.new(user);
-  return udata;
-};
