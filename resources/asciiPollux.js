@@ -1,4 +1,12 @@
 require("colors");
+const version = require("../../package.json").version;
+const CLUSTER_NAMES = require("@polestar/constants/clusters")?.default;
+const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
+const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
+const isPRIME             = process.env.PRIME === "true" || process.env.PRIME === true;
+const CLIENT_NAME         = process.env.PRIME_FLAVORED_CLIENT;
+
+const UNIT = isPRIME ? `⭐ PRIME (${CLIENT_NAME})` : CLUSTER_NAMES[CLUSTER_ID] || `Cluster ${CLUSTER_ID}`;
 
 const ascii = function () {
   const a = "red";
@@ -17,9 +25,9 @@ const ascii = function () {
     }\n${"      88  ,d8,   ,d8' ,d8b,_ ,d8b,_ ,d8b,  ,d8b,,dP  ,dP\"Y8,    "[a][b]
     }\n${"      88  P\"Y8888P\"   8P'\"Y888P'\"Y888P'\"Y88P\"`Y88\"  dP\"   \"Y8   "[a][b]
     }\n${"                                                                "[a][b]
-    }\n` + `     v8.0.alpha                                 ${"Powered by Eris".gray
+    }\n` + `     v${version}                                 ${"Powered by Eris".gray
     }\n${"                                                                "[a][b]
-    }\n${"> STARTING UP...                                                ".magenta
+    }\n${"> STARTING UP...  ${UNIT}                                              ".magenta
     }\n${"                                                                "[a][b]}`;
 
   return text;
