@@ -12,7 +12,7 @@ async function init(msg, args) {
 
   const [userData, cosmeticsDoc] = await Promise.all([
     DB.users.findOne({ id: msg.author.id }),
-    DB.userCosmetics.getFull(msg.author.id),
+    DB.userInventory.getFull(msg.author.id),
   ]);
   const targetData = (await DB.commends.parseFull({ id: Target.id })) || {
     id: Target.id,

@@ -20,7 +20,7 @@ const init = async (msg, args) => {
 
   const [userData, cosmeticsDoc] = await Promise.all([
     DB.users.get({ id: msg.author.id }),
-    DB.userCosmetics.getFull(msg.author.id),
+    DB.userInventory.getFull(msg.author.id),
   ]);
   if (!userData) return "User Not Registered";
   let BASE; let inventory; let param;
@@ -97,9 +97,9 @@ const init = async (msg, args) => {
     const YesNo = require("../../structures/YesNo");
     return msg.channel.send({ embed }).then((m) => {
       positive = async () => {
-        if (targetItem.type === "background") DB.userCosmetics.set(msg.author.id, { $pull: { bgInventory: targetItem.code } });
-        if (targetItem.type === "sticker") DB.userCosmetics.set(msg.author.id, { $pull: { stickerInventory: targetItem.id } });
-        if (targetItem.type === "medal") DB.userCosmetics.set(msg.author.id, { $pull: { medalInventory: targetItem.icon } });
+        if (targetItem.type === "background") DB.userInventory.set(msg.author.id, { $pull: { bgInventory: targetItem.code } });
+        if (targetItem.type === "sticker") DB.userInventory.set(msg.author.id, { $pull: { stickerInventory: targetItem.id } });
+        if (targetItem.type === "medal") DB.userInventory.set(msg.author.id, { $pull: { medalInventory: targetItem.icon } });
 
         cosmeticsDoc.addItem("cosmo_fragment", fragAmt);
 

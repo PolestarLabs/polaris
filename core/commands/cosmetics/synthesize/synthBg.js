@@ -2,7 +2,7 @@ const Picto = require(`${appRoot}/core/utilities/Picto`);
 const { SynthPrompt, Template } = require("./any.js");
 
 module.exports = async function synthBG(args, userData, embed, P, ctx) {
-  const cosmeticsData = await DB.userCosmetics.get(userData.id);
+  const cosmeticsData = await DB.userInventory.get(userData.id);
   const {
     payCoin, canBuy, affordsIt, obtainable,
   } = await Template("background", args, userData, cosmeticsData);
@@ -15,7 +15,7 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
     if (!affordsIt) return cancellation();
     return Promise.all([
       DB.users.set({ id: userData.id }, { $set: { "profile.bgID": selectedItem.code } }),
-      DB.userCosmetics.set(userData.id, { $addToSet: { bgInventory: selectedItem.code } }),
+      DB.userInventory.set(userData.id, { $addToSet: { bgInventory: selectedItem.code } }),
     ]).then(() => { });
   };
 

@@ -37,7 +37,7 @@ const init = async function (msg,args){
 
 	const [USERDATA, cosmeticsData] = await Promise.all([
 		DB.users.getFull(msg.author.id),
-		DB.userCosmetics.get(msg.author.id),
+		DB.userInventory.get(msg.author.id),
 	]);
 
 	const inventoryIDmap = cosmeticsData.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
@@ -408,7 +408,7 @@ async function upgrade(msg,args){
 
 	const [userData, cosmeticsData] = await Promise.all([
 		DB.users.getFull(msg.author.id),
-		DB.userCosmetics.get(msg.author.id),
+		DB.userInventory.get(msg.author.id),
 	]);
 
 	const inventoryIDmap = cosmeticsData.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");

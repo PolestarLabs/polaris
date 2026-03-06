@@ -163,9 +163,9 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           });
 
           newInventory.push({ id: "streakfix", count: 1 });
-          // TODO(sunset): migrate to DB.userCosmetics
+          // TODO(sunset): migrate to DB.userInventory
           await DB.users.set(msg.author.id, { $set: { "modules.inventory": newInventory } }).catch(console.error);
-          // TODO(sunset): migrate to DB.userCosmetics
+          // TODO(sunset): migrate to DB.userInventory
           userData_OLD.modules.inventory = newInventory;
 
 
@@ -324,7 +324,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
               "profile.tagline": userData_OLD.modules.tagline,
               "profile.persotext": userData_OLD.modules.persotext,
               "profile.favcolor": userData_OLD.modules.favcolor,
-              // TODO(sunset): migrate to DB.userCosmetics
+              // TODO(sunset): migrate to DB.userInventory
               "modules.medalInventory": userData_OLD.modules.medalInventory,
               "modules.flairsInventory": userData_OLD.modules.flairsInventory,
               "modules.bgInventory": userData_OLD.modules.bgInventory,

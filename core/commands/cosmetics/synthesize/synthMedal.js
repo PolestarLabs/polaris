@@ -2,7 +2,7 @@ const Picto = require(`${appRoot}/core/utilities/Picto`);
 const { SynthPrompt, Template } = require("./any.js");
 
 module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
-  const cosmeticsData = await DB.userCosmetics.get(userData.id);
+  const cosmeticsData = await DB.userInventory.get(userData.id);
   const {
     payCoin, canBuy, affordsIt, obtainable,
   } = await Template("medal", args, userData, cosmeticsData);
@@ -13,7 +13,7 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
       userData.removeItem(payCoin, 1);
     }
     if (!affordsIt) return cancellation();
-    return DB.userCosmetics.set(userData.id, { $addToSet: { medalInventory: selectedItem.icon } }).then(() => { });
+    return DB.userInventory.set(userData.id, { $addToSet: { medalInventory: selectedItem.icon } }).then(() => { });
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);

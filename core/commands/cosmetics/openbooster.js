@@ -7,7 +7,7 @@ const init = async (msg) => {
     DB.users.getFull({ id: msg.author.id }),
     DB.cosmetics.find({ type: "sticker" }),
     DB.items.find({ type: "boosterpack" }),
-    DB.userCosmetics.getFull(msg.author.id),
+    DB.userInventory.getFull(msg.author.id),
   ]);
   if (!userData) return "User Not Registered";
   const collection = msg.args[0];
@@ -42,7 +42,7 @@ const init = async (msg) => {
   embed.footer(msg.author.tag, msg.author.avatarURL);
 
   await Promise.all([
-    DB.userCosmetics.set(msg.author.id, { $addToSet: { stickerInventory: { $each: [stk1.id, stk2.id] } } }),
+    DB.userInventory.set(msg.author.id, { $addToSet: { stickerInventory: { $each: [stk1.id, stk2.id] } } }),
     cosmeticsDoc.removeItem(thisPack.id),
   ]);
   return msg.channel.send({ embed });

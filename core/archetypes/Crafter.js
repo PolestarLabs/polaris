@@ -93,7 +93,7 @@ class Crafter extends EventEmitter {
     Promise.all([
       DB.users.getFull({ id: userid }),
       DB.users.get(userid),
-      DB.userCosmetics.get(userid),
+      DB.userInventory.get(userid),
     ]).then(([dataFull, data, cosmeticsData]) => {
       if (!data) throw new Error(`Couldn't find user by ID: ${userid}`);
       this._modules = { ...data.currency };
@@ -287,7 +287,7 @@ class Crafter extends EventEmitter {
 
     // EXECUTE
     return Promise.all([
-      DB.userCosmetics.bulkWrite(cosmeticsToWrite),
+      DB.userInventory.bulkWrite(cosmeticsToWrite),
       DB.users.bulkWrite(toWrite),
     ]).then(() => {
       const payloads = this.gemsTotal

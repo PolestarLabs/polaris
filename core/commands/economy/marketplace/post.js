@@ -42,7 +42,7 @@ const init = async (msg, args) => {
   async function AllChecks() {
     const [userData, cosmeticsData] = await Promise.all([
       DB.users.getFull({ id: msg.author.id }),
-      DB.userCosmetics.getFull(msg.author.id),
+      DB.userInventory.getFull(msg.author.id),
     ]);
     if (!userData) return { pass: false, reason: "User Not Registered" };
 

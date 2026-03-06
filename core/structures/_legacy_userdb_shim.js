@@ -135,15 +135,15 @@ async function getUserFull(userId) {
 /**
  * Get user cosmetics, falling back to legacy userdb.modules.* fields.
  *
- * @deprecated Use DB.userCosmetics.get() directly when all users are migrated.
+ * @deprecated Use DB.userInventory.get() directly when all users are migrated.
  * @param {string} userId
  * @returns {Promise<object|null>}
  */
-async function getUserCosmetics(userId) {
+async function getUserInventory(userId) {
   if (typeof userId === "object" && userId.id) userId = userId.id;
   userId = String(userId);
 
-  const cosmetics = await DB.userCosmetics.get(userId);
+  const cosmetics = await DB.userInventory.get(userId);
   if (cosmetics) return cosmetics;
 
   // Fallback: read from legacy
@@ -187,23 +187,23 @@ async function getUserCosmetics(userId) {
 /**
  * Get full cosmetics Mongoose document with legacy fallback.
  *
- * @deprecated Use DB.userCosmetics.getFull() directly when all users are migrated.
+ * @deprecated Use DB.userInventory.getFull() directly when all users are migrated.
  * @param {string} userId
  * @returns {Promise<Document|null>}
  */
-async function getUserCosmeticsFull(userId) {
+async function getUserInventoryFull(userId) {
   if (typeof userId === "object" && userId.id) userId = userId.id;
   userId = String(userId);
 
-  let doc = await DB.userCosmetics.getFull(userId);
+  let doc = await DB.userInventory.getFull(userId);
   if (doc) return doc;
 
   // Bootstrap from legacy
-  const adapted = await getUserCosmetics(userId);
+  const adapted = await getUserInventory(userId);
   if (!adapted) return null;
 
   try {
-    await DB.userCosmetics.updateOne(
+    await DB.userInventory.updateOne(
       { userId },
       { $setOnInsert: adapted },
       { upsert: true }
@@ -211,7 +211,7 @@ async function getUserCosmeticsFull(userId) {
   } catch (e) {
     // Duplicate key
   }
-  return DB.userCosmetics.getFull(userId);
+  return DB.userInventory.getFull(userId);
 }
 
 /**
@@ -376,8 +376,8 @@ async function _markSunset(userId) {
 module.exports = {
   getUser,
   getUserFull,
-  getUserCosmetics,
-  getUserCosmeticsFull,
+  getUserInventory,
+  getUserInventoryFull,
   getUserOAuth,
   translateUpdate,
   FIELD_MAP,

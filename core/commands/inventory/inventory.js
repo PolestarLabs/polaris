@@ -51,7 +51,7 @@ const init = async (msg, args) => {
       id: 1,
     }),
     DB.items.find().lean().exec(),
-    DB.userCosmetics.get(Target.id),
+    DB.userInventory.get(Target.id),
   ]);
 
   ctx.fillStyle = userData.profile.favcolor || "#FFF";

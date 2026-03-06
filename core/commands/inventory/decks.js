@@ -6,7 +6,7 @@ const init = async function (msg, args, pollux) {
   const [DECKDATA, cosmeticsData] = await Promise.all(
     [
       DB.cosmetics.find({ type: "skin", for: "casino" }),
-      DB.userCosmetics.get(msg.author.id),
+      DB.userInventory.get(msg.author.id),
     ],
   );
 

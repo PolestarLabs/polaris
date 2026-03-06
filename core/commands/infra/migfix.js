@@ -13,7 +13,7 @@ const init = async function (msg,args){
         const m = await msg.reply(" • Fixing Inventory...");
         
 
-        // TODO(sunset): migrate to DB.userCosmetics
+        // TODO(sunset): migrate to DB.userInventory
         const oldInventory = userData_OLD.modules.inventory;
         const newInventory = userData_NEW.modules.inventory;
        
@@ -30,7 +30,7 @@ const init = async function (msg,args){
         await userData_NEW.addItem('streakfix',1);
         await m.edit(" • Fixing Inventory... Streakfix added!" + _emoji('maybe'));
         await wait(3);
-        // TODO(sunset): migrate to DB.userCosmetics
+        // TODO(sunset): migrate to DB.userInventory
         await DB.users.set(msg.author.id, { $set: { "switches.migrateFix.inv":true, "modules.inventory": Object.assign(newInventory,oldInventory) } }).catch(console.error);
         return m.edit(" • Fixing Inventory... **Done**" + _emoji('yep'));
         

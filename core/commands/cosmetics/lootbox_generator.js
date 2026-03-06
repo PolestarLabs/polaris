@@ -70,7 +70,7 @@ const init = async (msg, args) => {
   if (VisualsCache.size > 800) VisualsCache.clear();
 
   const USERDATA = (await DB.users.getFull({ id: msg.author.id })) || (await DB.users.new(msg.author));
-  const COSMETICSDATA = await DB.userCosmetics.get(msg.author.id);
+  const COSMETICSDATA = await DB.userInventory.get(msg.author.id);
 
   if (LootingUsers.get(msg.author.id)) {
     await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
@@ -289,9 +289,9 @@ function getPrize(loot, USERDATA) {
 
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
-  if (loot.type === "background") return DB.userCosmetics.set(USERDATA.id, { $addToSet: { bgInventory: (loot.code || loot.id) } });
+  if (loot.type === "background") return DB.userInventory.set(USERDATA.id, { $addToSet: { bgInventory: (loot.code || loot.id) } });
 
-  if (loot.type === "medal") return DB.userCosmetics.set(USERDATA.id, { $addToSet: { medalInventory: (loot.icon || loot.id) } });
+  if (loot.type === "medal") return DB.userInventory.set(USERDATA.id, { $addToSet: { medalInventory: (loot.icon || loot.id) } });
 }
 function determineRerollCost(box, rollNum, USERDATA, COSMETICSDATA) {
   let stake = Math.round(

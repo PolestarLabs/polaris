@@ -54,7 +54,7 @@ const init = async (msg, args) => {
 
   const [userData, cosmeticsData] = await Promise.all([
     DB.users.get(msg.author.id),
-    DB.userCosmetics.get(msg.author.id),
+    DB.userInventory.get(msg.author.id),
   ]);
   if (!userData) return "User Not Registered";
 
@@ -84,7 +84,7 @@ const init = async (msg, args) => {
       if (!affordsIt) return cancellation();
       return Promise.all([
         DB.users.set({ id: msg.author.id }, { $set: { "profile.bgID": selectedBG.code } }),
-        DB.userCosmetics.set(msg.author.id, { $addToSet: { bgInventory: selectedBG.code } }),
+        DB.userInventory.set(msg.author.id, { $addToSet: { bgInventory: selectedBG.code } }),
       ]).then(() => { });
     }
 

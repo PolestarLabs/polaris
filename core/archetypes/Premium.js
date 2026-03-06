@@ -456,7 +456,7 @@ async function processRewards(userID, options) {
   const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD, userID, { enforceDB: true, softMatch: false }).catch(() => {});
 
   const userData = await DB.users.findOne({ id: userID }).noCache();
-  const cosmeticsData = await DB.userCosmetics.get(userID);
+  const cosmeticsData = await DB.userInventory.get(userID);
 
   let currentTier = options?.currentTier; // || userData.prime?.tier || userData.donator;
   const tierPrizes = { ...getTierBonus(currentTier) };
@@ -511,7 +511,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
     },
   };
 
-  // cosmetics ops (inventory, flairs, medals) go to DB.userCosmetics separately
+  // cosmetics ops (inventory, flairs, medals) go to DB.userInventory separately
   const cosmeticsAddToSet = {
     flairInventory: currentTier,
   };
@@ -651,11 +651,11 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   const cosmeticsQuery = Object.keys(cosmeticsAddToSet).length ? { $addToSet: cosmeticsAddToSet } : null;
 
   const q1 = bulkWriteQuery.length
-    ? await DB.userCosmetics.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; })
+    ? await DB.userInventory.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; })
     : null;
   const q2 = await DB.users.set(userID, regularQuery).catch((err) => { console.error(err); return null; });
   const q2c = cosmeticsQuery
-    ? await DB.userCosmetics.set(userID, cosmeticsQuery).catch((err) => { console.error(err); return null; })
+    ? await DB.userInventory.set(userID, cosmeticsQuery).catch((err) => { console.error(err); return null; })
     : null;
   const q3 = await ECO.receive(userID, amts, "dono_rewards", currs, { details: { tier: currentTier, month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR } });
 

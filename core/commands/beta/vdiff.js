@@ -2,7 +2,7 @@ const init = async function (msg) {
 
     const [userDocResult, cosmeticsData] = await Promise.all([
         DB.users.findOne({ id: msg.author.id }).noCache(),
-        DB.userCosmetics.get(msg.author.id),
+        DB.userInventory.get(msg.author.id),
     ]);
     const userData = userDocResult._doc;
     const vanillaUserData = (await vDB.users.findOne({ id: msg.author.id }).noCache())._doc;

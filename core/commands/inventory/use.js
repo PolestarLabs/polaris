@@ -3,7 +3,7 @@
 const init = async function (msg, args) {
   const [userData, cosmeticsDoc] = await Promise.all([
     DB.users.getFull(msg.author.id),
-    DB.userCosmetics.getFull(msg.author.id),
+    DB.userInventory.getFull(msg.author.id),
   ]);
   const P = { lngs: msg.lang, prefix: msg.prefix };
 

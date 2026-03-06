@@ -188,8 +188,7 @@ const init = async function (msg, args) {
     return;
     
     if (REPORT.STREAK > 1) {
-        // TODO(sunset): migrate to DB.userCosmetics
-        await DB.users.set(msg.author.id,{$addToSet:{'profile.stickerInventory': "australis21stk" }});
+        await DB.users.set(msg.author.id,{$addToSet:{'modules.stickerInventory': "australis21stk" }});
         msg.reply({
         embed: {
             description: `Thank you for your continued support throughout the year!\nHave this extra holiday sticker as a bonus:\n\n${_emoji("XR")} **Holiday Australis** `,

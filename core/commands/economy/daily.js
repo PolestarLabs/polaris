@@ -289,18 +289,18 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   /** @type {string} */
   let postmortem;
   if (timedUsage.streakStatus === "first") {
-    // TODO(sunset): migrate to DB.userCosmetics
+    // TODO(sunset): migrate to DB.userInventory
     P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.firstDaily", P);
   }
   if (timedUsage.streakStatus === "recovered") {
-    // TODO(sunset): migrate to DB.userCosmetics
+    // TODO(sunset): migrate to DB.userInventory
     P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.insuranceConsumed", P);
   }
   if (timedUsage.streakStatus === "lost") {
     if (timedUsage.userDaily.lastStreak <= 1) {
-      // TODO(sunset): migrate to DB.userCosmetics
+      // TODO(sunset): migrate to DB.userInventory
       P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.firstDaily", P);
 
@@ -309,7 +309,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     } else {
 
       P.oldStreak = timedUsage.userDaily.lastStreak;
-      // TODO(sunset): migrate to DB.userCosmetics
+      // TODO(sunset): migrate to DB.userInventory
       const streakfixes = userData.modules?.inventory?.find((i) => i.id === "streakfix")?.count || 0;
       postmortem = `${$t("responses.daily.streakLost", P)
         }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;

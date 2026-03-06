@@ -257,7 +257,7 @@ const drawTable = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 const DECK = async (msg, args) => {
   const [USERDATA, cosmeticsData] = await Promise.all([
     DB.users.get(msg.author.id),
-    DB.userCosmetics.get(msg.author.id),
+    DB.userInventory.get(msg.author.id),
   ]);
   const P = { lngs: msg.lang };
   if (args[0] === "list") return deckManager.init(msg, args, "casino");
@@ -281,7 +281,7 @@ const DECK = async (msg, args) => {
   ) || null;
 
   if (targetDeck && cosmeticsData.skinInventory.includes(targetDeck.id)) {
-    await DB.users.set(msg.author.id, { "modules.skins.blackjack": targetDeck.localizer });
+    await DB.users.set(msg.author.id, { "profile.skins.blackjack": targetDeck.localizer });
     P.deckname = `${_emoji("plxcards").no_space}\`${targetDeck.name}\``;
     let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeck", P)}`
       + `${rand$t("responses.verbose.opinion_decks", P)}`;
