@@ -101,8 +101,8 @@ class ProgressionManager extends EventEmitter {
                 msg.channel.send("**Extra bonus:** `All Quests Completed` +100 EXP");
                 await DB.users.set(userID, {
                     $inc: {
-                        "modules.exp": 100,
-                        "modules.SPH": 0
+                        "progression.exp": 100,
+                        "currency.SPH": 0
                     }
                 });
 
@@ -228,8 +228,8 @@ class ProgressionManager extends EventEmitter {
 
     async available(userID) {
         const userData = await DB.users.findOne({ id: userID }).noCache().lean();
-        if (!userData?.modules) return [];
-        return (await DB.quests.find({ public: true, reveal_level: { $lte: userData.modules.level } }).lean());
+        if (!userData?.progression) return [];
+        return (await DB.quests.find({ public: true, reveal_level: { $lte: userData.progression.level } }).lean());
     }
 
     fulfillsTracker(eventTracker, quest) {
@@ -308,9 +308,9 @@ async function questCompletedMsg(userQuest, userID) {
     const embed = {};
     await DB.users.set(userID, {
         $inc: {
-            "modules.exp": quest.rewards?.exp || 0,
-            "modules.RBN": quest.rewards?.RBN || 0,
-            "modules.SPH": quest.rewards?.SPH || 0
+            "progression.exp": quest.rewards?.exp || 0,
+            "currency.RBN": quest.rewards?.RBN || 0,
+            "currency.SPH": quest.rewards?.SPH || 0
         }
     });
     const createdAt = new Date(parseInt(userQuest._id.toString().substring(0, 8), 16) * 1000).getTime();
