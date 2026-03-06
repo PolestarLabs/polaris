@@ -27,7 +27,7 @@ const ascii = function () {
     }\n${"                                                                "[a][b]
     }\n` + `     v${version}                                 ${"Powered by Eris".gray
     }\n${"                                                                "[a][b]
-    }\n${"> STARTING UP...  ${UNIT}                                              ".magenta
+    }\n${`> STARTING UP...  ${UNIT}                                              `.magenta
     }\n${"                                                                "[a][b]}`;
 
   return text;
