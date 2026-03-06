@@ -34,26 +34,4 @@ jobs:
       - name: Completed
         run: echo "Staging deployment finished"
 
-  deploy-production:
-    name: Deploy Production
-    runs-on: [self-hosted, linux]
-    environment:
-      name: "Live"
-      url: https://pollux.gg
-    if: |
-      contains('production live', inputs.environment)
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
 
-      - name: Debug inputs
-        run: |
-          echo "ENVIRONMENT=${{ inputs.environment }} (production job)"
-          echo "VERSION=${{ inputs.version || 'none' }}"
-
-      - name: Run deploy script
-        run: |
-          /home/pollux/polaris/scripts/server-deploy.sh bot production ${{ inputs.version }}
-
-      - name: Completed
-        run: echo "Production deployment finished"

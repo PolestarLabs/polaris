@@ -117,8 +117,26 @@ jobs:
       - run: echo "✓ Production gate opened"
   deploy-production:
     name: 🚀 Deploy → Production
-    needs: production-gate
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
-    with:
-      environment: production
+    runs-on: [self-hosted, linux]
+    needs: [production-gate, tag]
+    environment:
+      name: "Live"
+      url: https://pollux.gg
+    if: |
+      contains('production live', inputs.environment)
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Debug inputs
+        run: |
+          echo "ENVIRONMENT=production (production job)"
+          echo "VERSION=${{ needs.tag.outputs.version }}"
+
+      - name: Run deploy script
+        run: |
+          # use tag version if available, otherwise fall back to the current commit
+          /home/pollux/polaris/scripts/server-deploy.sh bot production ${{ needs.tag.outputs.version }}
+
+      - name: Completed
+        run: echo "Production deployment finished"
