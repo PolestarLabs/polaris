@@ -81,17 +81,18 @@ exports.run = async function run() {
       INSTR.gauge(`shards.latency`,shard.latency,{shard: shard.id})
       INSTR.gauge(`shards.latency.${shard.id}`,shard.latency,{shard: shard.id})
     })
+  }, null, true);
 
-
+  const TWENTY_FOUR_HOURS = new CronJob("0 0 */1 * *", async () => {
     console.report(`Latency: ${PLX.shards.map((x) => x.latency)} - Uptime: ${formatDistance(PLX.uptime, 0)}
     `.gray);
-
-  }, null, true);
+  });
 
   MIDNIGHT.start();
   FIVE_MINUTES.start();
   ONE_MINUTE.start();
   ONE_HOUR.start();
   FIFTEEN_MINUTE.start();
+  TWENTY_FOUR_HOURS.start();
   console.log("• ".green, "CRONs ready");
 };
