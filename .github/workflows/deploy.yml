@@ -37,6 +37,9 @@ jobs:
   deploy-production:
     name: Deploy Production
     runs-on: [self-hosted, linux]
+    environment:
+      name: "Live"
+      url: https://pollux.gg
     if: |
       contains('production live', inputs.environment)
     steps:
