@@ -9,7 +9,7 @@ const CLIENT_DATA         = JSON.parse(process.env.PRIME_FLAVORED_CLIENT);
 const UNIT = isPRIME ? `⭐ PRIME (${CLIENT_DATA.name})` : CLUSTER_NAMES[CLUSTER_ID] || `Cluster ${CLUSTER_ID}`;
 
 const ascii = function () {
-  const a = isPRIME ? "yellow" : "green";
+  const a = isPRIME ? "yellow" : "red";
   const b = "red";
 
   const text = `${"                                                                "[a][b]
