@@ -1,11 +1,11 @@
 const Picto = require("../../utilities/Picto");
 
 const PROJECTION = {
-  id: 1, "modules.level": 1, "modules.exp": 1, "modules.bgID": 1, "modules.favcolor": 1, "modules.tagline": 1,
+  id: 1, "progression.level": 1, "progression.exp": 1, "profile.bgID": 1, "profile.favcolor": 1, "profile.tagline": 1,
 };
 
 function fetchGlobalRanks() {
-  return DB.users.find({}, PROJECTION).sort({ "modules.exp": -1 })
+  return DB.users.find({}, PROJECTION).sort({ "progression.exp": -1 })
     .limit(5)
     .lean();
 }
@@ -16,8 +16,8 @@ async function fetchLocalRanks(server) {
   return lRanks.map((usr) => {
     const thisUser = dbRankData.find((u) => usr.user === u.id);
     if (!thisUser) return null;
-    thisUser.modules.exp = usr.exp;
-    thisUser.modules.level = usr.level;
+    thisUser.progression.exp = usr.exp;
+    thisUser.progression.level = usr.level;
     return thisUser;
   });
 }
@@ -44,7 +44,7 @@ const init = async (msg, args) => {
   async function parseUserPosition() {
     return 1 + (_LOCAL
       ? await DB.localranks.find({ server: msg.guild.id, exp: { $gt: selfLocal.exp } }, { _id: 1 }).count()
-      : await DB.users.find({ "modules.exp": { $gt: userData.modules.exp } }, { _id: 1 }).count());
+      : await DB.users.find({ "progression.exp": { $gt: userData.progression.exp } }, { _id: 1 }).count());
   }
 
   let localUserRanks; let userRanks;
@@ -76,17 +76,17 @@ const init = async (msg, args) => {
 
     const [ avatar, bg ] = await Promise.all([
       Picto.getCanvas(usr.discordData?.avatarURL || "https://cdn.discordapp.com/embed/avatars/0.png"),
-      Picto.getCanvas(`${paths.CDN}/backdrops/${usr.modules?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`),
+      Picto.getCanvas(`${paths.CDN}/backdrops/${usr.profile?.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6"}.png`),
     ]);
 
     return new Object({
       id: usr.id,
       name: _LOCAL ? usr.discordData?.nick || usr.discordData?.user?.username : usr.discordData?.username || "Unknown",
       avatar,
-      exp: self === "self" && _LOCAL ? selfLocal.exp : usr.modules.exp,
-      level: self === "self" && _LOCAL ? selfLocal.level : usr.modules.level,
-      tagline: usr.modules.tagline,
-      color: usr.modules.favcolor,
+      exp: self === "self" && _LOCAL ? selfLocal.exp : usr.progression.exp,
+      level: self === "self" && _LOCAL ? selfLocal.level : usr.progression.level,
+      tagline: usr.profile.tagline,
+      color: usr.profile.favcolor,
       rubines: 0, // usr.modules.RBN,
       bg,
       ACV: 0, // (usr?.modules.achievements || []).length,

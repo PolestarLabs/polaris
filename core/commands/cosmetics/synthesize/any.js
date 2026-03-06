@@ -25,6 +25,7 @@ module.exports = {
 
     const payCoin = `cosmo_gem_${selectedItem.rarity}`;
     const canBuy = selectedItem.buyable && !selectedItem.event;
+    // TODO(sunset): migrate to DB.userCosmetics
     const affordsIt = userData.modules.inventory.find((itm) => (itm.id === `cosmo_gem_${selectedItem.rarity}`) && itm.count >= 1) || false;
     const obtainable = selectedItem.buyable && !selectedItem.event;
     console.log({

@@ -48,15 +48,15 @@ const init = async function (msg) {
   const TARGET_DB = await userDB.findOne({ id: Target.id });
   const SV_DB = await serverDB.findOne({ id: Server.id });
 
-  const favcolor = TARGET_DB.modules.favcolor || "#eb11da";
+  const favcolor = TARGET_DB.profile.favcolor || "#eb11da";
 
   let avi = Target.displayAvatarURL;
   const propic = avi.replace(/gif/g, "png");
   avi = Server.iconURL;
   const serpic = typeof avi === "string" ? avi.replace(/jpg/g, "png") : false;
 
-  const exp = TARGET_DB.modules.exp || 0;
-  const level = TARGET_DB.modules.level || 0;
+  const exp = TARGET_DB.progression.exp || 0;
+  const level = TARGET_DB.progression.level || 0;
 
   const percent = XPercent(exp, level, "OLD");
 

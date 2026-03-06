@@ -47,18 +47,19 @@ const init = async (msg, args) => {
     Picto.getCanvas(`${paths.CDN}/build/invent/inventframe.png`),
     Picto.makeHex(175, Target.avatarURL),
     DB.users.getFull({ id: Target.id }, {
+      // TODO(sunset): migrate to DB.userCosmetics
       "modules.inventory": 1,
       "modules.flairsInventory": 1,
       "modules.bgInventory": 1,
       "modules.medalInventory": 1,
       "modules.stickerInventory": 1,
-      "modules.favcolor": 1,
+      "profile.favcolor": 1,
       id: 1,
     }),
     DB.items.find().lean().exec(),
   ]);
 
-  ctx.fillStyle = userData.modules.favcolor || "#FFF";
+  ctx.fillStyle = userData.profile.favcolor || "#FFF";
   ctx.fillRect(154, 127, 500, 408);
   ctx.fillRect(427, 516, 132, 60);
 
@@ -81,6 +82,7 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.key", P), "400 22pt 'Panton'", "#FFF"), XYZ.KEY.x, XYZ.KEY.y, XYZ.KEY.w, "right");
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.junk", P), "400 22pt 'Panton'", "#FFF"), XYZ.JNK.x, XYZ.JNK.y, XYZ.JNK.w, "left");
 
+  // TODO(sunset): migrate to DB.userCosmetics
   types = {};
   userData.modules.inventory.forEach((itm) => {
     let itemType;
@@ -108,6 +110,7 @@ const init = async (msg, args) => {
     return x;
   }
 
+  // TODO(sunset): migrate to DB.userCosmetics
   const a_bg = userData.modules.bgInventory.length;
   const a_md = userData.modules.medalInventory.length;
   const a_st = userData.modules.stickerInventory.length;

@@ -65,7 +65,7 @@ const init = async (msg) => {
 
     const powerups = [];
     if (dailyPLXMember?.premiumSince) powerups.push(_emoji("PSM"));
-    if (userData.donator) powerups.push(_emoji(userData.donator));
+    if (userData.prime?.tier) powerups.push(_emoji(userData.prime?.tier));
 
     const embed = {
       color: 0xE34555,
@@ -139,9 +139,9 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     })
     .once("userDonator", (donoBoost) => {
       processQueue.push(async () => {
-        const donoE = Picto.getCanvas(`${paths.CDN}/images/donate/icony/${userData.donator}-small.png`);
+        const donoE = Picto.getCanvas(`${paths.CDN}/images/donate/icony/${userData.prime?.tier}-small.png`);
         const numberDONOBOOST = Picto.tag(ctx, `+ ${donoBoost}`, "italic 900 38px 'Panton Black'", "#FFF", { line: 6, style: "#223" });
-        const textDONOBOOST = Picto.tag(ctx, (userData.donator?.toUpperCase() || "UNKNOWN"), "italic 900 15px 'Panton Black'", "#FFF");
+        const textDONOBOOST = Picto.tag(ctx, (userData.prime?.tier?.toUpperCase() || "UNKNOWN"), "italic 900 15px 'Panton Black'", "#FFF");
 
         const [donoTag, donoEmblem] = await Promise.all([constantAssets.donoT, donoE]);
 
@@ -289,15 +289,18 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
   /** @type {string} */
   let postmortem;
   if (timedUsage.streakStatus === "first") {
+    // TODO(sunset): migrate to DB.userCosmetics
     P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.firstDaily", P);
   }
   if (timedUsage.streakStatus === "recovered") {
+    // TODO(sunset): migrate to DB.userCosmetics
     P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
     postmortem = $t("responses.daily.insuranceConsumed", P);
   }
   if (timedUsage.streakStatus === "lost") {
     if (timedUsage.userDaily.lastStreak <= 1) {
+      // TODO(sunset): migrate to DB.userCosmetics
       P.insuCount = userData.modules?.inventory?.find((i) => i.id === "keepstreak")?.count || 0;
       postmortem = $t("responses.daily.firstDaily", P);
 
@@ -306,6 +309,7 @@ ${_emoji("expense")} ${_emoji("offline")} **${v.streakcurr}** \`${streak}x\`
     } else {
 
       P.oldStreak = timedUsage.userDaily.lastStreak;
+      // TODO(sunset): migrate to DB.userCosmetics
       const streakfixes = userData.modules?.inventory?.find((i) => i.id === "streakfix")?.count || 0;
       postmortem = `${$t("responses.daily.streakLost", P)
         }${streakfixes ? $t("responses.daily.yesRestorerInfo", P) : $t("responses.daily.noRestorerInfo", P)}`;

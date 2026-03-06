@@ -32,6 +32,7 @@ const init = async (msg, args) => {
     // If args === item.id
     let craftedItem = Crafter.getItem(toBeCrafted);
 
+    // TODO(sunset): migrate to DB.userCosmetics
     const userDiscoveries = (await DB.users.get(msg.author.id))?.modules.inventory.filter((itm) => itm.crafted).map((itm) => itm.id) || [];
     if (craftedItem && !userDiscoveries.includes(craftedItem.id) && !craftedItem.open) craftedItem = null;
     // Else find a partial match

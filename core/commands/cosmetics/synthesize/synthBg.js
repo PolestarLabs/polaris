@@ -6,6 +6,7 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
     payCoin, canBuy, affordsIt, obtainable,
   } = await Template("background", args, userData);
 
+  // TODO(sunset): migrate to DB.userCosmetics
   const hasIt = userData.modules.bgInventory.includes(selectedItem.code);
   const positive = async (cancellation) => {
     if (!hasIt && affordsIt) {
@@ -13,7 +14,8 @@ module.exports = async function synthBG(args, userData, embed, P, ctx) {
     }
     if (!affordsIt) return cancellation();
     return DB.users.set({ id: userData.id }, {
-      $set: { "modules.bgID": selectedItem.code },
+      $set: { "profile.bgID": selectedItem.code },
+      // TODO(sunset): migrate to DB.userCosmetics
       $addToSet: { "modules.bgInventory": selectedItem.code },
     }).then(() => { });
   };

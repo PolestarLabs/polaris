@@ -16,7 +16,7 @@ const init = async (msg) => {
 
     const embed = new Embed();
     let x;
-    if (uData) x = uData.modules.favcolor;
+    if (uData) x = uData.profile.favcolor;
     else {
       embed.footer("User not found in Database");
       x = "---";
@@ -39,7 +39,7 @@ const init = async (msg) => {
   res.embed.description = _emoji("yep") + colorChanged;
   res.embed.footer = {};
 
-  DB.users.set(msg.author.id, { $set: { "modules.favcolor": (`#${res.hex}`).replace("##", "#") } });
+  DB.users.set(msg.author.id, { $set: { "profile.favcolor": (`#${res.hex}`).replace("##", "#") } });
   return msg.channel.send({ embed: res.embed });
 };
 module.exports = {

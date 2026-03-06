@@ -22,7 +22,7 @@ const init = async function (msg, args) {
         const embed = { fields: [] };
         embed.description = `**Forfeit Errands**
 Forfeiting an Errand costs ${_emoji('SPH')} **5** Sapphire.
-${userData.modules.SPH >= 5
+${userData.currency.SPH >= 5
                 ? "Choose one errand to forfeit:"
                 : _emoji('nope') + "You don't have enough Sapphires for this"}
         `
@@ -33,7 +33,7 @@ ${userData.modules.SPH >= 5
             field.name = field.name.replace(/<:[A-z]+:[0-9]+>/, _emoji("swp_" + (i + 1)))
         })
         const menu = await msg.channel.send({ embed, messageReferenceID: msg.id });
-        if (userData.modules.SPH < 5) return;
+        if (userData.currency.SPH < 5) return;
 
         let res = await ReactionMenu(
             menu,

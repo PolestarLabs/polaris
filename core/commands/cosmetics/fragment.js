@@ -23,16 +23,19 @@ const init = async (msg, args) => {
   let BASE; let inventory; let param;
 
   if (itemType === "background") {
+    // TODO(sunset): migrate to DB.userCosmetics
     BASE = await DB.cosmetics.find({ type: "background", code: { $in: userData.modules.bgInventory } });
     inventory = "bgInventory";
     param = "code";
   }
   if (itemType === "medal") {
+    // TODO(sunset): migrate to DB.userCosmetics
     BASE = await DB.cosmetics.find({ type: "medal", icon: { $in: userData.modules.medalInventory } });
     inventory = "medalInventory";
     param = "icon";
   }
   if (itemType === "sticker") {
+    // TODO(sunset): migrate to DB.userCosmetics
     BASE = await DB.cosmetics.find({ type: "sticker", id: { $in: userData.modules.stickerInventory } });
     inventory = "stickerInventory";
     param = "id";
@@ -46,14 +49,17 @@ const init = async (msg, args) => {
 
   let targetItem;
   if (Target) targetItem = BASE.find((x) => x[param] === Target);
+  // TODO(sunset): migrate to DB.userCosmetics
   if (Target === "last") targetItem = BASE.find((x) => x[param] === userData.modules[inventory][userData.modules[inventory].length - 1]);
 
   console.log(
+    // TODO(sunset): migrate to DB.userCosmetics
     { Target, inventory, targetItem }, userData.modules[inventory][userData.modules[inventory].length - 1], userData.modules[inventory].length,
   );
 
   if (!targetItem) return "[REQUIRES_TRANSLATION] Target item not found";
 
+  // TODO(sunset): migrate to DB.userCosmetics
   if (userData.modules[inventory].includes(targetItem[param])) {
     P.rarity_emoji = _emoji(targetItem.rarity);
 
@@ -93,8 +99,11 @@ const init = async (msg, args) => {
     const YesNo = require("../../structures/YesNo");
     return msg.channel.send({ embed }).then((m) => {
       positive = async () => {
+        // TODO(sunset): migrate to DB.userCosmetics
         if (targetItem.type === "background") DB.users.set(msg.author.id, { $pull: { "modules.bgInventory": targetItem.code } });
+        // TODO(sunset): migrate to DB.userCosmetics
         if (targetItem.type === "sticker") DB.users.set(msg.author.id, { $pull: { "modules.stickerInventory": targetItem.id } });
+        // TODO(sunset): migrate to DB.userCosmetics
         if (targetItem.type === "medal") DB.users.set(msg.author.id, { $pull: { "modules.medalInventory": targetItem.icon } });
 
         userData.addItem("cosmo_fragment", fragAmt);

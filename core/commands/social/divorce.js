@@ -149,13 +149,13 @@ async function divorce_accepted(
   toDivorceUser,
   marriage
 ) {
-  if (user.modules.RBN < 2500) {
+  if (user.currency.RBN < 2500) {
     return msg.channel.send(
       `<@${msg.author.id}>, you need at least ${_emoji("RBN")} 2500 to divorce.`
     );
   }
 
-  if (toDivorceUser.modules.RBN < 2500) {
+  if (toDivorceUser.currency.RBN < 2500) {
     return msg.channel.send(
       `<@${toDivorceId}>, you need at least ${_emoji("RBN")} 2500 to divorce.`
     );
@@ -222,7 +222,7 @@ async function divorce_denied(msg, user, toDivorceUser, marriage) {
 }
 
 async function rejectFlow(user, msg, partner, marriage) {
-  if (user.modules.RBN < 5000) {
+  if (user.currency.RBN < 5000) {
     await msg.channel.send(
       `<@${msg.author.id}>, you need at least ${_emoji("RBN")} 5000.`
     );

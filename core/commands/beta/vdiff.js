@@ -10,20 +10,20 @@ const init = async function (msg) {
             fields: [
                 {
                     name: "Polaris DB", value: `
-                Rubines: \`${userData.modules.RBN}\`
-                Sapphires: \`${userData.modules.SPH}\`
-                Jades: \`${userData.modules.JDE}\`
-                Level: \`${userData.modules.level}\`
-                Exp: \`${userData.modules.exp}\`
-                Inventory: \`${userData.modules.inventory.length}\`
-                Backgrounds: \`${userData.modules.bgInventory.length}\`
-                Medals: \`${userData.modules.medalInventory.length}\`
-                Stickers: \`${userData.modules.stickerInventory.length}\`
-                Flairs: \`${userData.modules.flairsInventory.length}\`
-                Equipped BG: 
-                 • \`${userData.modules.bgID.padEnd(32, ' ')}\`
+                Rubines: \`${userData.currency.RBN}\`
+                Sapphires: \`${userData.currency.SPH}\`
+                Jades: \`${userData.currency.JDE}\`
+                Level: \`${userData.progression.level}\`
+                Exp: \`${userData.progression.exp}\`
+                Inventory: \`${userData.modules.inventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Backgrounds: \`${userData.modules.bgInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Medals: \`${userData.modules.medalInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Stickers: \`${userData.modules.stickerInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Flairs: \`${userData.modules.flairsInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Equipped BG:
+                 • \`${userData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
-                \u2003 • \`${userData.modules.medals.join('\`\n\u2003 • \`')}\`
+                \u2003 • \`${userData.profile.medals.join('\`\n\u2003 • \`')}\`
                 
                 `, inline: true
                 },

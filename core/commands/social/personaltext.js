@@ -4,10 +4,10 @@
 const init = async function (msg) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const userData = await DB.userDB.findOne({ id: msg.author.id });
+  const userData = await DB.users.findOne({ id: msg.author.id });
   const persotxt = msg.args.join(" ");
 
-  await DB.userDB.set(msg.author.id, { $set: { "modules.persotext": persotxt } });
+  await DB.users.set(msg.author.id, { $set: { "profile.persotext": persotxt } });
   P.pstext = `*\`\`\`css\n${persotxt}\`\`\`*`,
     P.prefix = msg.prefix,
     embed = new Embed();

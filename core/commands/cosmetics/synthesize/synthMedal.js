@@ -6,6 +6,7 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
     payCoin, canBuy, affordsIt, obtainable,
   } = await Template("medal", args, userData);
 
+  // TODO(sunset): migrate to DB.userCosmetics
   const hasIt = userData.modules.medalInventory.includes(selectedItem.icon);
   const positive = async (cancellation) => {
     if (!hasIt && affordsIt) {
@@ -13,6 +14,7 @@ module.exports = async function synthMEDAL(args, userData, embed, P, ctx) {
     }
     if (!affordsIt) return cancellation();
     return DB.users.set({ id: userData.id }, {
+      // TODO(sunset): migrate to DB.userCosmetics
       $addToSet: { "modules.medalInventory": selectedItem.icon },
     }).then(() => { });
   };

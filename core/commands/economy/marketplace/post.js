@@ -50,27 +50,34 @@ const init = async (msg, args) => {
       query = false;
 
       if (type === "background") {
+        // TODO(sunset): migrate to DB.userCosmetics
         if (!uD.modules.bgInventory.includes(id)) {
           pass = false;
           reason = "Background not in Inventory";
         } else {
+          // TODO(sunset): migrate to DB.userCosmetics
           query = { $pull: { "modules.bgInventory": id } };
         }
       }
       if (type === "medal") {
+        // TODO(sunset): migrate to DB.userCosmetics
         if (!uD.modules.medalInventory.includes(id)) {
           pass = false;
           reason = "Medal not in Inventory";
         } else {
+          // TODO(sunset): migrate to DB.userCosmetics
           query = { $pull: { "modules.medalInventory": id } };
         }
       }
       if (type === "boosterpack") {
+        // TODO(sunset): migrate to DB.userCosmetics
         if (!uD.modules.inventory.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
           pass = false;
           reason = "Booster not in Inventory";
         } else {
+          // TODO(sunset): migrate to DB.userCosmetics
           prequery = { id: uD.id, "modules.inventory.id": id };
+          // TODO(sunset): migrate to DB.userCosmetics
           query = { $inc: { "modules.inventory.$.count": -1 } };
         }
       }
@@ -85,9 +92,9 @@ const init = async (msg, args) => {
     const checkSales = (uD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < ( price * .15)) forRBN = false;
+      if (uD.currency.RBN < ( price * .15)) forRBN = false;
       if (uD.amtItem("sph-license") < 2 * ~~(price * .05) ) forSPH = false;
-      if (uD.modules.SPH < 2) forSPH = false;
+      if (uD.currency.SPH < 2) forSPH = false;
 
       return { forRBN, forSPH };
     };

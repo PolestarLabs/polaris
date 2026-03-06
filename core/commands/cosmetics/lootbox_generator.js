@@ -288,12 +288,15 @@ function getPrize(loot, USERDATA) {
 
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
+  // TODO(sunset): migrate to DB.userCosmetics
   if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
 
+  // TODO(sunset): migrate to DB.userCosmetics
   if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
 }
 function determineRerollCost(box, rollNum, USERDATA) {
   let stake = Math.round(
+    // TODO(sunset): migrate to DB.userCosmetics
     (USERDATA.modules.bgInventory.length || 100)
     + (USERDATA.modules.bgInventory.length || 100)
     + (USERDATA.modules.inventory.length || 100),
@@ -313,7 +316,7 @@ function boxBonus(USERDATA, lootbox, options) {
   return {
     label: prize,
     unit: "EXP",
-    query: { $inc: { "modules.exp": prize } },
+    query: { $inc: { "progression.exp": prize } },
   };
 }
 async function compileBox(msg, lootbox, USERDATA, options) {
@@ -368,7 +371,9 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   lootbox.content.forEach((loot, i, a) => {
     let isDupe = false;
 
+    // TODO(sunset): migrate to DB.userCosmetics
     if (loot.type === "background") isDupe = USERDATA.modules.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
+    // TODO(sunset): migrate to DB.userCosmetics
     if (loot.type === "medal") isDupe = USERDATA.modules.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
 
     if (isDupe) {

@@ -88,7 +88,7 @@ ${x.preexistent ? `PREEXISTENT: ${x.preexistent._id}\n` : ""}`)).join("")}
 
 	if (!newMARRIAGES.length) return "No marriages found for this user";
 
-	const canBuyThisMuch = Math.min( ~~( newUserData.modules.SPH / 5 ), Math.max(0,newMARRIAGES.length-3) );
+	const canBuyThisMuch = Math.min( ~~( newUserData.currency.SPH / 5 ), Math.max(0,newMARRIAGES.length-3) );
 
 	const component = {
 		type: 3,

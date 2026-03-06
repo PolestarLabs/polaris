@@ -46,7 +46,7 @@ const init = async (msg, args) => {
     inline: true,
   });
   if (log.to != "271394014358405121" && log.from != "271394014358405121") {
-    const ouser = (await DB.userDB.findOne({ id: log.to }))?.meta || log.to;
+    const ouser = (await DB.users.findOne({ id: log.to }))?.meta || log.to;
     embed.fields.push({
       name: "Recipient",
       value: `${ouser.tag || ""} \`${log.to}\``,

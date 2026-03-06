@@ -72,7 +72,7 @@ const init = async function (msg, args) {
         if (frame > 30) LV_SIZE = 52;
 
         const lvTag = Picto.tag(ctx, $t("terms.levelUp", { lngs: msg.lang }), "600 30px 'Quicksand'", "#223").item;
-        const Level = Picto.tag(ctx, argLv || userData.modules.level, "900 " + LV_SIZE + "px 'Panton Black'", "#223").item;
+        const Level = Picto.tag(ctx, argLv || userData.progression.level, "900 " + LV_SIZE + "px 'Panton Black'", "#223").item;
         const lvWidth = Math.min(118, Level.width);
         const lvtWidth = Math.min(150, lvTag.width);
 

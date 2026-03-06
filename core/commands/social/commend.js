@@ -45,6 +45,7 @@ async function init(msg, args) {
 
   const preafter = async function preafter(M, D) {
     if (
+      // TODO(sunset): migrate to DB.userCosmetics
       userData.modules.inventory.find((itm) => itm.id === "commendtoken")
         ?.count >= 1
     ) {
@@ -103,6 +104,7 @@ async function init(msg, args) {
         : _emoji("dnd") + $t("responses.commend.check_no", P)
     }\   
       \n\n:reminder_ribbon: × **${
+        // TODO(sunset): migrate to DB.userCosmetics
         userData.modules.inventory.find((i) => i.id === "commendtoken")
           ?.count || 0
       }**`);
