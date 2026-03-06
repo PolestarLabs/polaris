@@ -268,17 +268,17 @@ const DECK = async (msg, args) => {
 
   const DECKDATA = await DB.cosmetics.find({ type: "skin", for: "casino" });
   // TODO(sunset): migrate to DB.userCosmetics
-  if (!USERDATA.modules.skinInventory) {
+  if (!USERDATA.profile.skinInventory) {
     return msg.channel.send("You don't own any skins yet.");
   }
 
   const targetDeck = DECKDATA.find(
     (dck) => dck.localizer === args[0]
-      || dck.id === USERDATA.modules.skinInventory[args[0]]
+      || dck.id === USERDATA.profile.skinInventory[args[0]]
       || dck.name.toLowerCase().includes(args.join(" ").toLowerCase()),
   ) || null;
 
-  if (targetDeck && USERDATA.modules.skinInventory.includes(targetDeck.id)) {
+  if (targetDeck && USERDATA.profile.skinInventory.includes(targetDeck.id)) {
     await DB.users.set(msg.author.id, { "profile.skins.blackjack": targetDeck.localizer });
     P.deckname = `${_emoji("plxcards").no_space}\`${targetDeck.name}\``;
     let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeck", P)}`

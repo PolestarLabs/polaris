@@ -21,10 +21,8 @@ const init = async (msg) => {
   const stk1 = getRandomSticker(collection);
   if (!stk1) return "Collection does not exist!";
   const stk2 = getRandomSticker(collection, stk1.id);
-  // TODO(sunset): migrate to DB.userCosmetics
-  const stk1new = !userData.modules.stickerInventory.includes(stk1.id);
-  // TODO(sunset): migrate to DB.userCosmetics
-  const stk2new = !userData.modules.stickerInventory.includes(stk2.id);
+  const stk1new = !userData.profile.stickerInventory.includes(stk1.id);
+  const stk2new = !userData.profile.stickerInventory.includes(stk2.id);
 
   const embed = new Embed();
 
@@ -43,8 +41,7 @@ const init = async (msg) => {
   embed.footer(msg.author.tag, msg.author.avatarURL);
 
   await Promise.all([
-    // TODO(sunset): migrate to DB.userCosmetics
-    DB.users.set(userData.id, { $addToSet: { "modules.stickerInventory": { $each: [stk1.id, stk2.id] } } }),
+    DB.users.set(userData.id, { $addToSet: { "profile.stickerInventory": { $each: [stk1.id, stk2.id] } } }),
     userData.removeItem(thisPack.id),
   ]);
   return msg.channel.send({ embed });

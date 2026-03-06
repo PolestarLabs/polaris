@@ -65,8 +65,7 @@ const init = async (msg) => {
       true);
 
     emb.field("\u200bPolaris Gems", "\u200b"
-      // TODO(sunset): migrate to DB.userCosmetics
-      + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.modules.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
+      + `\u2003${_emoji("COS")} ${$t("keywords.COS_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.profile.inventory.find((i) => i.id === "cosmo_fragment")?.count || 0, true)}**`
       + `\n\u2003${_emoji("PSM")} ${$t("keywords.PSM_plural", { lngs: msg.lang })}: **${miliarize(TARGETDATA.currency.PSM ?? 0, true)}**`
       + `\n\u2003${_emoji("EVT")} ${"Event Tokens"}: **${miliarize(TARGETDATA.currency.EVT || 0, true)}**`
       + `\n${invisibar}`,

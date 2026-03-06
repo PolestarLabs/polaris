@@ -48,11 +48,11 @@ const init = async (msg, args) => {
     Picto.makeHex(175, Target.avatarURL),
     DB.users.getFull({ id: Target.id }, {
       // TODO(sunset): migrate to DB.userCosmetics
-      "modules.inventory": 1,
-      "modules.flairsInventory": 1,
-      "modules.bgInventory": 1,
-      "modules.medalInventory": 1,
-      "modules.stickerInventory": 1,
+      "profile.inventory": 1,
+      "profile.flairsInventory": 1,
+      "profile.bgInventory": 1,
+      "profile.medalInventory": 1,
+      "profile.stickerInventory": 1,
       "profile.favcolor": 1,
       id: 1,
     }),
@@ -84,7 +84,7 @@ const init = async (msg, args) => {
 
   // TODO(sunset): migrate to DB.userCosmetics
   types = {};
-  userData.modules.inventory.forEach((itm) => {
+  userData.profile.inventory.forEach((itm) => {
     let itemType;
     try {
       itemType = itemData.find((i) => (itm.id || itm) == i.id).type || "other";
@@ -111,10 +111,10 @@ const init = async (msg, args) => {
   }
 
   // TODO(sunset): migrate to DB.userCosmetics
-  const a_bg = userData.modules.bgInventory.length;
-  const a_md = userData.modules.medalInventory.length;
-  const a_st = userData.modules.stickerInventory.length;
-  const a_fl = userData.modules.flairsInventory.length;
+  const a_bg = userData.profile.bgInventory.length;
+  const a_md = userData.profile.medalInventory.length;
+  const a_st = userData.profile.stickerInventory.length;
+  const a_fl = userData.profile.flairsInventory.length;
 
   ctx.globalAlpha = 0.7;
   Picto.setAndDraw(ctx, Picto.tag(ctx, a_st, "600 18pt 'Panton'", "#FFF"), XYZ.mST.x, XYZ.mST.y, 100, "right");

@@ -509,7 +509,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
       "currency.EVT": tierPrizes.monthly_event_tkn,
     },
     $addToSet: {
-      "modules.flairsInventory": currentTier, // TODO(sunset): migrate to DB.userCosmetics.flairInventory
+      "profile.flairsInventory": currentTier,
     },
   };
 
@@ -518,7 +518,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   const stickersReport = [];
   const packsReport = [];
   if (tierPrizes.sticker_prize) {
-    const ownedStickers = userData.modules.stickerInventory; // TODO(sunset): migrate to DB.userCosmetics.stickerInventory
+    const ownedStickers = userData.profile.stickerInventory;
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
     const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id)); ;
@@ -573,7 +573,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
           filter: { id: userID },
           update: {
             $addToSet: {
-              "modules.stickerInventory": { $each: [ ...lasts, ...randoms ] }, // TODO(sunset): migrate to DB.userCosmetics.stickerInventory
+              "profile.stickerInventory": { $each: [ ...lasts, ...randoms ] },
             },
           },
         },
@@ -589,7 +589,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   }
 
   if (currentTierStreak >= 3) {
-    regularQuery.$addToSet["modules.medalInventory"] = currentTier; // TODO(sunset): migrate to DB.userCosmetics.medalInventory
+    regularQuery.$addToSet["profile.medalInventory"] = currentTier;
   }
 
   const amts = [ tierPrizes.monthly_jde, tierPrizes.monthly_sph ];
@@ -614,9 +614,9 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
 
     STREAK: totalStreak,
     AS_TIER: tierStreaks,
-    HAS_FLAIR: userData.modules.flairsInventory.includes(currentTier), // TODO(sunset): migrate to DB.userCosmetics.flairInventory
-    HAS_MEDAL: userData.modules.medalInventory.includes(currentTier), // TODO(sunset): migrate to DB.userCosmetics.medalInventory
-    AWARD_MEDAL: currentTierStreak >= 3 && !userData.modules.medalInventory.includes(currentTier), // TODO(sunset): migrate to DB.userCosmetics.medalInventory
+    HAS_FLAIR: userData.profile.flairsInventory.includes(currentTier),
+    HAS_MEDAL: userData.profile.medalInventory.includes(currentTier),
+    AWARD_MEDAL: currentTierStreak >= 3 && !userData.profile.medalInventory.includes(currentTier),
 
     PRIME_COUNT: tierPrizes.prime_servers,
 
@@ -654,17 +654,16 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   };
 
   function createAddItemQuery(toAdd, count = 1) {
-    // TODO(sunset): migrate inventory ops to DB.userCosmetics
-    return userData.modules.inventory.find((it) => it.id === toAdd)
+    return userData.profile.inventory.find((it) => it.id === toAdd)
       ? {
         updateOne: {
-          filter: { id: userID, "modules.inventory.id": toAdd }, // TODO(sunset): migrate to DB.userCosmetics
-          update: { $inc: { "modules.inventory.$.count": count } }, // TODO(sunset): migrate to DB.userCosmetics
+          filter: { id: userID, "profile.inventory.id": toAdd },
+          update: { $inc: { "profile.inventory.$.count": count } },
         },
       } : {
         updateOne: {
           filter: { id: userID },
-          update: { $addToSet: { "modules.inventory": { id: toAdd, count } } }, // TODO(sunset): migrate to DB.userCosmetics
+          update: { $addToSet: { "profile.inventory": { id: toAdd, count } } },
         },
       };
   }

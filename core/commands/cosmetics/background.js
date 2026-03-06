@@ -55,8 +55,7 @@ const init = async (msg, args) => {
   const userData = await DB.users.get(msg.author.id);
   if (!userData) return "User Not Registered";
 
-  // TODO(sunset): migrate to DB.userCosmetics
-  const hasIt = userData.modules.bgInventory.includes(selectedBG.code);
+  const hasIt = userData.profile.bgInventory.includes(selectedBG.code);
   const affordsIt = await ECO.checkFunds(msg.author, _price);
   const canBuy = selectedBG.buyable && !isEventBG(selectedBG);
   if (hasIt) {
@@ -81,8 +80,7 @@ const init = async (msg, args) => {
       }
       if (!affordsIt) return cancellation();
       return DB.users.set({ id: msg.author.id },
-        // TODO(sunset): migrate to DB.userCosmetics
-        { $set: { "profile.bgID": selectedBG.code }, $addToSet: { "modules.bgInventory": selectedBG.code } }).then(() => { });
+        { $set: { "profile.bgID": selectedBG.code }, $addToSet: { "profile.bgInventory": selectedBG.code } }).then(() => { });
     }
 
     if (hasIt || (affordsIt && canBuy)) {

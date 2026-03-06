@@ -154,7 +154,7 @@ module.exports = {
       this.prize = {};
       this.journey = [];
       this.supply = {
-        item: { ...player.modules.inventory }, // TODO(sunset): migrate inventory ops to DB.userCosmetics
+        item: { ...player.profile.inventory },
         rubines: this.insurance,
         jades: player.currency.JDE,
         rubines_bank: player.currency.RBN,

@@ -50,35 +50,28 @@ const init = async (msg, args) => {
       query = false;
 
       if (type === "background") {
-        // TODO(sunset): migrate to DB.userCosmetics
-        if (!uD.modules.bgInventory.includes(id)) {
+        if (!uD.profile.bgInventory.includes(id)) {
           pass = false;
           reason = "Background not in Inventory";
         } else {
-          // TODO(sunset): migrate to DB.userCosmetics
-          query = { $pull: { "modules.bgInventory": id } };
+          query = { $pull: { "profile.bgInventory": id } };
         }
       }
       if (type === "medal") {
-        // TODO(sunset): migrate to DB.userCosmetics
-        if (!uD.modules.medalInventory.includes(id)) {
+        if (!uD.profile.medalInventory.includes(id)) {
           pass = false;
           reason = "Medal not in Inventory";
         } else {
-          // TODO(sunset): migrate to DB.userCosmetics
-          query = { $pull: { "modules.medalInventory": id } };
+          query = { $pull: { "profile.medalInventory": id } };
         }
       }
       if (type === "boosterpack") {
-        // TODO(sunset): migrate to DB.userCosmetics
-        if (!uD.modules.inventory.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
+        if (!uD.profile.inventory.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
           pass = false;
           reason = "Booster not in Inventory";
         } else {
-          // TODO(sunset): migrate to DB.userCosmetics
-          prequery = { id: uD.id, "modules.inventory.id": id };
-          // TODO(sunset): migrate to DB.userCosmetics
-          query = { $inc: { "modules.inventory.$.count": -1 } };
+          prequery = { id: uD.id, "profile.inventory.id": id };
+          query = { $inc: { "profile.inventory.$.count": -1 } };
         }
       }
       if (transaction === "buy") {

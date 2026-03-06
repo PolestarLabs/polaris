@@ -38,7 +38,7 @@ const init = async function (msg,args){
 	const USERDATA = await DB.users.getFull(msg.author.id);
 
 	// TODO(sunset): migrate to DB.userCosmetics
-	const inventoryIDmap = USERDATA.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
+	const inventoryIDmap = USERDATA.profile.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	
 	if (!userInventoryFull.length) return _emoji("nope") + "There are no rings to propose in your inventory. Please try `plx!craft ring`";// $t("responses.marry.needRing", P);
@@ -370,7 +370,7 @@ function availableRings(rings,USERDATA,skip=0,size=23,nodescription){
 		const partialEmoji = _emoji( ring.rarity || ring.emoji, "💍" );
 		return {
 			label: "💍 " + ring.name.slice(0,100),
-			description: nodescription ? "" : `(x${USERDATA.modules.inventory.find(x=>x.id===ring.id)?.count || 0 })`, // TODO(sunset): migrate to DB.userCosmetics
+			description: nodescription ? "" : `(x${USERDATA.profile.inventory.find(x=>x.id===ring.id)?.count || 0 })`,
 			emoji: partialEmoji.id ? {id:partialEmoji.id} : {name: partialEmoji.name },
 			value: ring.id,
 		};				
@@ -407,7 +407,7 @@ async function upgrade(msg,args){
 	const userData = await DB.users.getFull(msg.author.id);
 
 	// TODO(sunset): migrate to DB.userCosmetics
-	const inventoryIDmap = userData.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
+	const inventoryIDmap = userData.profile.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	if (!userInventoryFull.length) return _emoji("nope") + $t("responses.marry.needRing", P);
 

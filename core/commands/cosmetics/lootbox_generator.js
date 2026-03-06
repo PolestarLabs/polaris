@@ -289,17 +289,17 @@ function getPrize(loot, USERDATA) {
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
   // TODO(sunset): migrate to DB.userCosmetics
-  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
+  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "profile.bgInventory": (loot.code || loot.id) } });
 
   // TODO(sunset): migrate to DB.userCosmetics
-  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
+  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "profile.medalInventory": (loot.icon || loot.id) } });
 }
 function determineRerollCost(box, rollNum, USERDATA) {
   let stake = Math.round(
     // TODO(sunset): migrate to DB.userCosmetics
-    (USERDATA.modules.bgInventory.length || 100)
-    + (USERDATA.modules.bgInventory.length || 100)
-    + (USERDATA.modules.inventory.length || 100),
+    (USERDATA.profile.bgInventory.length || 100)
+    + (USERDATA.profile.bgInventory.length || 100)
+    + (USERDATA.profile.inventory.length || 100),
   );
   stake = stake < 50 ? 50 : stake;
 
@@ -372,9 +372,9 @@ async function compileBox(msg, lootbox, USERDATA, options) {
     let isDupe = false;
 
     // TODO(sunset): migrate to DB.userCosmetics
-    if (loot.type === "background") isDupe = USERDATA.modules.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
+    if (loot.type === "background") isDupe = USERDATA.profile.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
     // TODO(sunset): migrate to DB.userCosmetics
-    if (loot.type === "medal") isDupe = USERDATA.modules.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
+    if (loot.type === "medal") isDupe = USERDATA.profile.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
 
     if (isDupe) {
       hasDupes = true;

@@ -16,7 +16,7 @@ const init = async function (msg, args, pollux) {
   const CASINO = []; const
     TAROT = [];
   // TODO(sunset): migrate to DB.userCosmetics
-  (USERDATA.modules.skinInventory || []).forEach((skin, i, arr) => {
+  (USERDATA.profile.skinInventory || []).forEach((skin, i, arr) => {
     if (skin.startsWith("casino")) {
       const dkinfo = DECKDATA.find((dk) => dk.id === skin);
       if (dkinfo) {

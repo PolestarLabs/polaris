@@ -15,11 +15,11 @@ const init = async function (msg) {
                 Jades: \`${userData.currency.JDE}\`
                 Level: \`${userData.progression.level}\`
                 Exp: \`${userData.progression.exp}\`
-                Inventory: \`${userData.modules.inventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Backgrounds: \`${userData.modules.bgInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Medals: \`${userData.modules.medalInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Stickers: \`${userData.modules.stickerInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Flairs: \`${userData.modules.flairsInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Inventory: \`${userData.profile.inventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Backgrounds: \`${userData.profile.bgInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Medals: \`${userData.profile.medalInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Stickers: \`${userData.profile.stickerInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Flairs: \`${userData.profile.flairsInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
                 Equipped BG:
                  • \`${userData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
@@ -32,15 +32,15 @@ const init = async function (msg) {
                 Rubines: \`${vanillaUserData.modules.rubines}\`
                 Sapphires: \`${vanillaUserData.modules.sapphires}\`
                 Jades: \`${vanillaUserData.modules.jades}\`
-                Level: \`${vanillaUserData.modules.level}\`
-                Exp: \`${vanillaUserData.modules.exp}\`
-                Inventory: \`${vanillaUserData.modules.inventory.length}\`
-                Backgrounds: \`${vanillaUserData.modules.bgInventory.length}\`
-                Medals: \`${vanillaUserData.modules.medalInventory.length}\`
-                Stickers: \`${vanillaUserData.modules.stickerInventory.length}\`
+                Level: \`${vanillaUserData.progression.level}\`
+                Exp: \`${vanillaUserData.progression.exp}\`
+                Inventory: \`${vanillaUserData.profile.inventory.length}\`
+                Backgrounds: \`${vanillaUserData.profile.bgInventory.length}\`
+                Medals: \`${vanillaUserData.profile.medalInventory.length}\`
+                Stickers: \`${vanillaUserData.profile.stickerInventory.length}\`
                 Flairs: \`${vanillaUserData.modules.flairsInventory.length}\`
                 Equipped BG:
-                 • \`${vanillaUserData.modules.bgID.padEnd(32, ' ')}\`
+                 • \`${vanillaUserData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
                 \u2003 • \`${vanillaUserData.modules.medals.join('\`\n\u2003 • \`')}\`
                 

@@ -46,7 +46,7 @@ async function init(msg, args) {
   const preafter = async function preafter(M, D) {
     if (
       // TODO(sunset): migrate to DB.userCosmetics
-      userData.modules.inventory.find((itm) => itm.id === "commendtoken")
+      userData.profile.inventory.find((itm) => itm.id === "commendtoken")
         ?.count >= 1
     ) {
       if (Target.id === msg.author.id) {
@@ -105,7 +105,7 @@ async function init(msg, args) {
     }\   
       \n\n:reminder_ribbon: × **${
         // TODO(sunset): migrate to DB.userCosmetics
-        userData.modules.inventory.find((i) => i.id === "commendtoken")
+        userData.profile.inventory.find((i) => i.id === "commendtoken")
           ?.count || 0
       }**`);
     return msg.channel.send({ embed });

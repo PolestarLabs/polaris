@@ -95,13 +95,13 @@ class Crafter extends EventEmitter {
       DB.users.get(userid),
     ]).then(([dataFull, data]) => {
       if (!data) throw new Error(`Couldn't find user by ID: ${userid}`);
-      this._modules = data.modules;
+      this._modules = { ...data.currency, inventory: data.profile.inventory };
       Object.assign(this._modules, dataFull);
       this._init();
     });
   }
 
-  get _inventory() { return this._modules.inventory; } // TODO(sunset): migrate inventory ops to DB.userCosmetics
+  get _inventory() { return this._modules.inventory; }
 
   /**
    * Returns an array of arrays with: name, amount needed (+penalty), amount available, penalty amount.
@@ -240,10 +240,10 @@ class Crafter extends EventEmitter {
     for (; i < itemsCrafted.length; i++) {
       const [itemID, amount] = itemsCrafted[i];
       arrayFilters.push({ [`i${i}.id`]: itemID });
-      user[`modules.inventory.$[i${i}].crafted`] = amount; // TODO(sunset): migrate inventory ops to DB.userCosmetics
-      if (this._mode === 2) user[`modules.inventory.$[i${i}].count`] = amount; // TODO(sunset): migrate inventory ops to DB.userCosmetics
+      user[`profile.inventory.$[i${i}].crafted`] = amount;
+      if (this._mode === 2) user[`profile.inventory.$[i${i}].count`] = amount;
 
-      if (itemID === this._item.id) user[`modules.inventory.$[i${i}].count`] = amount; // TODO(sunset): migrate inventory ops to DB.userCosmetics
+      if (itemID === this._item.id) user[`profile.inventory.$[i${i}].count`] = amount;
       const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
       if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
     }
@@ -253,7 +253,7 @@ class Crafter extends EventEmitter {
     for (let j = 0; j < itemsInventory.length; j++) {
       const [itemID, amount] = itemsInventory[j];
       arrayFilters.push({ [`i${i}.id`]: itemID });
-      user[`modules.inventory.$[i${i}].count`] = -amount; // TODO(sunset): migrate inventory ops to DB.userCosmetics
+      user[`profile.inventory.$[i${i}].count`] = -amount;
       i++;
     }
 
@@ -271,7 +271,7 @@ class Crafter extends EventEmitter {
       toWrite.splice(0, 0, {
         updateOne: {
           filter: { id: this._userID }, // @ts-ignore
-          update: { $addToSet: { "modules.inventory": toAdd } }, // TODO(sunset): migrate inventory ops to DB.userCosmetics
+          update: { $addToSet: { "profile.inventory": toAdd } },
         },
       });
     }
