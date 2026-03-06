@@ -169,22 +169,41 @@ PLX.registerOne = cmdPreproc.registerOne;
 
 PLX.blackListedUsers = [];
 PLX.blackListedServers = [];
+// prefer fetching blacklists via the dashboard API whenever possible
+// the bot should never poke the database directly unless absolutely
+// required for performance reasons. this helper will fall back to the
+// legacy DB query if the API endpoints are missing or fail.
 PLX.updateBlacklists = async (DB) => {
-  const result = await Promise.all([
-    DB.users
-      .find({ blacklisted: { $exists: true } }, { id: 1, _id: 0 })
-      .lean()
-      .exec(),
-    DB.servers
-      .find({ blacklisted: { $exists: true } }, { id: 1, _id: 0 })
-      .lean()
-      .exec(),
-  ]).then(([users, servers]) => {
-    PLX.blacklistedUsers = (users || []).map((usr) => usr.id);
-    PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
-  });
+  try {
+    // example endpoints, create them on the API if they don't exist
+    const [userRes, serverRes] = await Promise.all([
+      PLX.api.get("/system/blacklisted/users"),
+      PLX.api.get("/system/blacklisted/servers"),
+    ]);
 
-  return result;
+    PLX.blacklistedUsers = (userRes.data || []).map((u) => u.id);
+    PLX.blacklistedServers = (serverRes.data || []).map((s) => s.id);
+    return { users: PLX.blacklistedUsers, servers: PLX.blacklistedServers };
+  } catch (err) {
+    // if the API call fails (endpoint missing / network error) fall back
+    // to the old database code so the bot can still start.
+    console.warn("updateBlacklists: API fetch failed, querying DB directly", err.message);
+    const result = await Promise.all([
+      DB.users
+        .find({ blacklisted: { $exists: true } }, { id: 1, _id: 0 })
+        .lean()
+        .exec(),
+      DB.servers
+        .find({ blacklisted: { $exists: true } }, { id: 1, _id: 0 })
+        .lean()
+        .exec(),
+    ]).then(([users, servers]) => {
+      PLX.blacklistedUsers = (users || []).map((usr) => usr.id);
+      PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
+    });
+
+    return result;
+  }
 };
 
 const databaseConnectOptions = {
