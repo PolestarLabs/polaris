@@ -126,7 +126,7 @@ module.exports = {
     initServerConfigSubscriber();
     
     if (trigger.content === "pick" && !trigger.channel.natural) {
-      return DB.users.set(trigger.author.id, { $inc: { "modules.exp": -10 } });
+      return DB.users.set(trigger.author.id, { $inc: { "progression.exp": -10 } });
     }
 
     const regexes = [
@@ -338,8 +338,8 @@ Winner:\`${JSON.stringify(luckyOne)}\
       dramaMsg.delete().catch(() => false);
       CHN.send(`||${drama[rand]}||, ${v.gratz}`);
       await Promise.all([
-        DB.users.set({ id: { $in: ids } }, { $inc: { "modules.exp": 100 } }),
-        DB.users.set(luckyOne.id, { $inc: { "modules.exp": 500 } }),
+        DB.users.set({ id: { $in: ids } }, { $inc: { "progression.exp": 100 } }),
+        DB.users.set(luckyOne.id, { $inc: { "progression.exp": 500 } }),
         DB.control.set(
           trigger.author.id,
           {

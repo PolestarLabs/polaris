@@ -2,7 +2,7 @@
 module.exports = {
 
   async updateMeta(msg) {
-    DB.userDB.updateMeta(msg.author);
+    DB.users.updateMeta(msg.author);
     if (msg.guild) DB.serverDB.updateMeta(msg.guild);
     return null;
   },
@@ -19,7 +19,7 @@ module.exports = {
   },
   async administrateExp(usID, command) {
     const EXP = command.exp || 1;
-    return DB.users.updateOne({ id: usID }, { $inc: { "modules.exp": EXP } }, { upsert: false }).lean().exec();
+    return DB.users.updateOne({ id: usID }, { $inc: { "progression.exp": EXP } }, { upsert: false }).lean().exec();
   },
 
   async saveStatistics(message, command) {
