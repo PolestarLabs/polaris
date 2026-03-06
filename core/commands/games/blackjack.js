@@ -255,7 +255,10 @@ const drawTable = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 };
 
 const DECK = async (msg, args) => {
-  const USERDATA = await DB.users.get(msg.author.id);
+  const [USERDATA, cosmeticsData] = await Promise.all([
+    DB.users.get(msg.author.id),
+    DB.userCosmetics.get(msg.author.id),
+  ]);
   const P = { lngs: msg.lang };
   if (args[0] === "list") return deckManager.init(msg, args, "casino");
 
@@ -267,19 +270,18 @@ const DECK = async (msg, args) => {
   }
 
   const DECKDATA = await DB.cosmetics.find({ type: "skin", for: "casino" });
-  // TODO(sunset): migrate to DB.userCosmetics
-  if (!USERDATA.profile.skinInventory) {
+  if (!cosmeticsData.skinInventory) {
     return msg.channel.send("You don't own any skins yet.");
   }
 
   const targetDeck = DECKDATA.find(
     (dck) => dck.localizer === args[0]
-      || dck.id === USERDATA.profile.skinInventory[args[0]]
+      || dck.id === cosmeticsData.skinInventory[args[0]]
       || dck.name.toLowerCase().includes(args.join(" ").toLowerCase()),
   ) || null;
 
-  if (targetDeck && USERDATA.profile.skinInventory.includes(targetDeck.id)) {
-    await DB.users.set(msg.author.id, { "profile.skins.blackjack": targetDeck.localizer });
+  if (targetDeck && cosmeticsData.skinInventory.includes(targetDeck.id)) {
+    await DB.users.set(msg.author.id, { "modules.skins.blackjack": targetDeck.localizer });
     P.deckname = `${_emoji("plxcards").no_space}\`${targetDeck.name}\``;
     let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeck", P)}`
       + `${rand$t("responses.verbose.opinion_decks", P)}`;

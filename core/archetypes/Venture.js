@@ -154,7 +154,7 @@ module.exports = {
       this.prize = {};
       this.journey = [];
       this.supply = {
-        item: { ...player.profile.inventory },
+        item: player.inventory || [],
         rubines: this.insurance,
         jades: player.currency.JDE,
         rubines_bank: player.currency.RBN,

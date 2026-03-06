@@ -1,7 +1,10 @@
 // TRANSLATE[epic=translations] use
 
 const init = async function (msg, args) {
-  const userData = await DB.users.getFull(msg.author.id);
+  const [userData, cosmeticsDoc] = await Promise.all([
+    DB.users.getFull(msg.author.id),
+    DB.userCosmetics.getFull(msg.author.id),
+  ]);
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   const ITEM = args[0];
@@ -9,7 +12,7 @@ const init = async function (msg, args) {
 
   if (!ITEM) return msg.channel.send(`${_emoji("nope")}*"Use"*... use **what**?`);
 
-  if (userData.hasItem(ITEM)) {
+  if (cosmeticsDoc.hasItem(ITEM)) {
     try {
       const itemDetails = DB.items.get(ITEM);
       const itemCommand = require(`${appRoot}/resources/items/${ITEM}.js`);

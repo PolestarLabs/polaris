@@ -18,22 +18,25 @@ const init = async (msg, args) => {
   if (!["bg", "background", "medal", "sticker"].includes(itemType)) return msg.command.invalidUsageMessage(msg);
   itemType = itemType === "bg" ? "background" : itemType;
 
-  const userData = await DB.users.getFull({ id: msg.author.id });
+  const [userData, cosmeticsDoc] = await Promise.all([
+    DB.users.get({ id: msg.author.id }),
+    DB.userCosmetics.getFull(msg.author.id),
+  ]);
   if (!userData) return "User Not Registered";
   let BASE; let inventory; let param;
 
   if (itemType === "background") {
-    BASE = await DB.cosmetics.find({ type: "background", code: { $in: userData.profile.bgInventory } });
+    BASE = await DB.cosmetics.find({ type: "background", code: { $in: cosmeticsDoc?.bgInventory || [] } });
     inventory = "bgInventory";
     param = "code";
   }
   if (itemType === "medal") {
-    BASE = await DB.cosmetics.find({ type: "medal", icon: { $in: userData.profile.medalInventory } });
+    BASE = await DB.cosmetics.find({ type: "medal", icon: { $in: cosmeticsDoc?.medalInventory || [] } });
     inventory = "medalInventory";
     param = "icon";
   }
   if (itemType === "sticker") {
-    BASE = await DB.cosmetics.find({ type: "sticker", id: { $in: userData.profile.stickerInventory } });
+    BASE = await DB.cosmetics.find({ type: "sticker", id: { $in: cosmeticsDoc?.stickerInventory || [] } });
     inventory = "stickerInventory";
     param = "id";
   }
@@ -46,15 +49,16 @@ const init = async (msg, args) => {
 
   let targetItem;
   if (Target) targetItem = BASE.find((x) => x[param] === Target);
-  if (Target === "last") targetItem = BASE.find((x) => x[param] === userData.profile[inventory][userData.profile[inventory].length - 1]);
+  const cosmeticsInv = cosmeticsDoc?.[inventory] || [];
+  if (Target === "last") targetItem = BASE.find((x) => x[param] === cosmeticsInv[cosmeticsInv.length - 1]);
 
   console.log(
-    { Target, inventory, targetItem }, userData.profile[inventory][userData.profile[inventory].length - 1], userData.profile[inventory].length,
+    { Target, inventory, targetItem }, cosmeticsInv[cosmeticsInv.length - 1], cosmeticsInv.length,
   );
 
   if (!targetItem) return "[REQUIRES_TRANSLATION] Target item not found";
 
-  if (userData.profile[inventory].includes(targetItem[param])) {
+  if (cosmeticsInv.includes(targetItem[param])) {
     P.rarity_emoji = _emoji(targetItem.rarity);
 
     let endpoint;
@@ -93,11 +97,11 @@ const init = async (msg, args) => {
     const YesNo = require("../../structures/YesNo");
     return msg.channel.send({ embed }).then((m) => {
       positive = async () => {
-        if (targetItem.type === "background") DB.users.set(msg.author.id, { $pull: { "profile.bgInventory": targetItem.code } });
-        if (targetItem.type === "sticker") DB.users.set(msg.author.id, { $pull: { "profile.stickerInventory": targetItem.id } });
-        if (targetItem.type === "medal") DB.users.set(msg.author.id, { $pull: { "profile.medalInventory": targetItem.icon } });
+        if (targetItem.type === "background") DB.userCosmetics.set(msg.author.id, { $pull: { bgInventory: targetItem.code } });
+        if (targetItem.type === "sticker") DB.userCosmetics.set(msg.author.id, { $pull: { stickerInventory: targetItem.id } });
+        if (targetItem.type === "medal") DB.userCosmetics.set(msg.author.id, { $pull: { medalInventory: targetItem.icon } });
 
-        userData.addItem("cosmo_fragment", fragAmt);
+        cosmeticsDoc.addItem("cosmo_fragment", fragAmt);
 
         msg.reply("ok1");
       };

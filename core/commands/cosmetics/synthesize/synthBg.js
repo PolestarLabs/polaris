@@ -2,22 +2,21 @@ const Picto = require(`${appRoot}/core/utilities/Picto`);
 const { SynthPrompt, Template } = require("./any.js");
 
 module.exports = async function synthBG(args, userData, embed, P, ctx) {
+  const cosmeticsData = await DB.userCosmetics.get(userData.id);
   const {
     payCoin, canBuy, affordsIt, obtainable,
-  } = await Template("background", args, userData);
+  } = await Template("background", args, userData, cosmeticsData);
 
-  // TODO(sunset): migrate to DB.userCosmetics
-  const hasIt = userData.profile.bgInventory.includes(selectedItem.code);
+  const hasIt = cosmeticsData?.bgInventory?.includes(selectedItem.code);
   const positive = async (cancellation) => {
     if (!hasIt && affordsIt) {
       userData.removeItem(payCoin, 1);
     }
     if (!affordsIt) return cancellation();
-    return DB.users.set({ id: userData.id }, {
-      $set: { "profile.bgID": selectedItem.code },
-      // TODO(sunset): migrate to DB.userCosmetics
-      $addToSet: { "profile.bgInventory": selectedItem.code },
-    }).then(() => { });
+    return Promise.all([
+      DB.users.set({ id: userData.id }, { $set: { "profile.bgID": selectedItem.code } }),
+      DB.userCosmetics.set(userData.id, { $addToSet: { bgInventory: selectedItem.code } }),
+    ]).then(() => { });
   };
 
   embed.author($t("interface.synthfrag.cosmeticSynth", P), `${paths.CDN}/images/tiers/${selectedItem.rarity}.png`);

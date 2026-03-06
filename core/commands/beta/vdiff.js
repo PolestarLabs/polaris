@@ -1,6 +1,10 @@
 const init = async function (msg) {
 
-    const userData = (await DB.users.findOne({ id: msg.author.id }).noCache())._doc;
+    const [userDocResult, cosmeticsData] = await Promise.all([
+        DB.users.findOne({ id: msg.author.id }).noCache(),
+        DB.userCosmetics.get(msg.author.id),
+    ]);
+    const userData = userDocResult._doc;
     const vanillaUserData = (await vDB.users.findOne({ id: msg.author.id }).noCache())._doc;
 
  
@@ -15,11 +19,11 @@ const init = async function (msg) {
                 Jades: \`${userData.currency.JDE}\`
                 Level: \`${userData.progression.level}\`
                 Exp: \`${userData.progression.exp}\`
-                Inventory: \`${userData.profile.inventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Backgrounds: \`${userData.profile.bgInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Medals: \`${userData.profile.medalInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Stickers: \`${userData.profile.stickerInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
-                Flairs: \`${userData.profile.flairsInventory.length}\` ${"" /* TODO(sunset): migrate to DB.userCosmetics */}
+                Inventory: \`${(cosmeticsData?.inventory||[]).length}\`
+                Backgrounds: \`${(cosmeticsData?.bgInventory||[]).length}\`
+                Medals: \`${(cosmeticsData?.medalInventory||[]).length}\`
+                Stickers: \`${(cosmeticsData?.stickerInventory||[]).length}\`
+                Flairs: \`${(cosmeticsData?.flairInventory||[]).length}\`
                 Equipped BG:
                  • \`${userData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:

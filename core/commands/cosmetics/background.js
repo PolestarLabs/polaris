@@ -52,10 +52,13 @@ const init = async (msg, args) => {
   if (isEventBG(selectedBG)) embed.field($t("terms.event", P), `\`${selectedBG.event}\``, true);
   else embed.field("\u200b", "\u200b", true);
 
-  const userData = await DB.users.get(msg.author.id);
+  const [userData, cosmeticsData] = await Promise.all([
+    DB.users.get(msg.author.id),
+    DB.userCosmetics.get(msg.author.id),
+  ]);
   if (!userData) return "User Not Registered";
 
-  const hasIt = userData.profile.bgInventory.includes(selectedBG.code);
+  const hasIt = cosmeticsData?.bgInventory?.includes(selectedBG.code);
   const affordsIt = await ECO.checkFunds(msg.author, _price);
   const canBuy = selectedBG.buyable && !isEventBG(selectedBG);
   if (hasIt) {
@@ -79,8 +82,10 @@ const init = async (msg, args) => {
         await ECO.pay(msg.author.id, _price, "bgshop_bot");
       }
       if (!affordsIt) return cancellation();
-      return DB.users.set({ id: msg.author.id },
-        { $set: { "profile.bgID": selectedBG.code }, $addToSet: { "profile.bgInventory": selectedBG.code } }).then(() => { });
+      return Promise.all([
+        DB.users.set({ id: msg.author.id }, { $set: { "profile.bgID": selectedBG.code } }),
+        DB.userCosmetics.set(msg.author.id, { $addToSet: { bgInventory: selectedBG.code } }),
+      ]).then(() => { });
     }
 
     if (hasIt || (affordsIt && canBuy)) {

@@ -93,9 +93,11 @@ class Crafter extends EventEmitter {
     Promise.all([
       DB.users.getFull({ id: userid }),
       DB.users.get(userid),
-    ]).then(([dataFull, data]) => {
+      DB.userCosmetics.get(userid),
+    ]).then(([dataFull, data, cosmeticsData]) => {
       if (!data) throw new Error(`Couldn't find user by ID: ${userid}`);
-      this._modules = { ...data.currency, inventory: data.profile.inventory };
+      this._modules = { ...data.currency };
+      this._modules.inventory = cosmeticsData?.inventory || [];
       Object.assign(this._modules, dataFull);
       this._init();
     });
@@ -228,22 +230,22 @@ class Crafter extends EventEmitter {
       * 5. Amount crafted is updated for ALL (intermediate) crafted item(s).
       * THEN payloads get inserted & returned.=
       */
-    const user = {}; const plx = {}; const arrayFilters = []; const
+    const coreUser = {}; const cosmeticsUser = {}; const plx = {}; const arrayFilters = []; const
       toAdd = [];
 
     let i = 0;
 
     // ITEMS CRAFTED
     const { itemsCrafted } = this;
-    
+
 
     for (; i < itemsCrafted.length; i++) {
       const [itemID, amount] = itemsCrafted[i];
       arrayFilters.push({ [`i${i}.id`]: itemID });
-      user[`profile.inventory.$[i${i}].crafted`] = amount;
-      if (this._mode === 2) user[`profile.inventory.$[i${i}].count`] = amount;
+      cosmeticsUser[`inventory.$[i${i}].crafted`] = amount;
+      if (this._mode === 2) cosmeticsUser[`inventory.$[i${i}].count`] = amount;
 
-      if (itemID === this._item.id) user[`profile.inventory.$[i${i}].count`] = amount;
+      if (itemID === this._item.id) cosmeticsUser[`inventory.$[i${i}].count`] = amount;
       const itemInv = this._getFromInventory(itemID); // if doesn't exist already in inventory -> make it
       if (!itemInv) toAdd.push({ id: itemID, count: 0, crafted: 0 });
     }
@@ -253,36 +255,41 @@ class Crafter extends EventEmitter {
     for (let j = 0; j < itemsInventory.length; j++) {
       const [itemID, amount] = itemsInventory[j];
       arrayFilters.push({ [`i${i}.id`]: itemID });
-      user[`profile.inventory.$[i${i}].count`] = -amount;
+      cosmeticsUser[`inventory.$[i${i}].count`] = -amount;
       i++;
     }
 
     // GEMS
     for (const gemArr of this.gemsTotal) {
-      user[`currency.${gemArr[0]}`] = -gemArr[1];
+      coreUser[`currency.${gemArr[0]}`] = -gemArr[1];
       plx[`currency.${gemArr[0]}`] = gemArr[1];
     }
-    if (this.xp) user["progression.craftingXP"] = this.xp;
+    if (this.xp) coreUser["progression.craftingXP"] = this.xp;
 
     // SETUP DB CALLS
-    const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: user }, arrayFilters } }]; // @ts-ignore
-    if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
-    if (Object.keys(toAdd).length) {
-      toWrite.splice(0, 0, {
+    const cosmeticsToWrite = [{ updateOne: { filter: { userId: this._userID }, update: { $inc: cosmeticsUser }, arrayFilters } }];
+    if (toAdd.length) {
+      cosmeticsToWrite.splice(0, 0, {
         updateOne: {
-          filter: { id: this._userID }, // @ts-ignore
-          update: { $addToSet: { "profile.inventory": toAdd } },
+          filter: { userId: this._userID }, // @ts-ignore
+          update: { $addToSet: { "inventory": toAdd } },
         },
       });
     }
+    const toWrite = [{ updateOne: { filter: { id: this._userID }, update: { $inc: coreUser }, arrayFilters: [] } }]; // @ts-ignore
+    if (Object.keys(plx).length) toWrite.push({ updateOne: { filter: { id: PLX.user.id }, update: { $inc: plx } } });
 
+    console.log(inspect(cosmeticsToWrite, { depth: 5 }));
     console.log(inspect(toWrite, { depth: 5 }));
-    console.log("USER");
-    console.table(user);
+    console.log("CORE USER");
+    console.table(coreUser);
     console.log(inspect(arrayFilters));
 
     // EXECUTE
-    return DB.users.bulkWrite(toWrite).then(() => {
+    return Promise.all([
+      DB.userCosmetics.bulkWrite(cosmeticsToWrite),
+      DB.users.bulkWrite(toWrite),
+    ]).then(() => {
       const payloads = this.gemsTotal
         .map((gem) => {
           Progression.emit(`spend.${gem[0]}.crafting`,{userID: this._userID, value: Math.abs(gem[1]) });

@@ -19,7 +19,7 @@ exports.run = (msg, args, userData, itemDetails) => new Promise(async (resolve) 
   YesNo(promptMessage, msg,
     async (cancel, prompt) => {
       await DB.users.set(userData.id, { [`counters.${TARGET}.streak`]: destinationCounter.highest });
-      await (await DB.users.getFull(userData.id)).removeItem(userData.id, "streakfix", 1);
+      await (await DB.userCosmetics.getFull(userData.id)).removeItem("streakfix+", 1);
 
       resolve("OK");
     },

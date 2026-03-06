@@ -43,20 +43,15 @@ const init = async (msg, args) => {
 
   const Target = msg.mentions[0] || msg.author;
 
-  const [_baseline, hex, userData, itemData] = await Promise.all([
+  const [_baseline, hex, userData, itemData, cosmeticsData] = await Promise.all([
     Picto.getCanvas(`${paths.CDN}/build/invent/inventframe.png`),
     Picto.makeHex(175, Target.avatarURL),
-    DB.users.getFull({ id: Target.id }, {
-      // TODO(sunset): migrate to DB.userCosmetics
-      "profile.inventory": 1,
-      "profile.flairsInventory": 1,
-      "profile.bgInventory": 1,
-      "profile.medalInventory": 1,
-      "profile.stickerInventory": 1,
+    DB.users.get(Target.id, {
       "profile.favcolor": 1,
       id: 1,
     }),
     DB.items.find().lean().exec(),
+    DB.userCosmetics.get(Target.id),
   ]);
 
   ctx.fillStyle = userData.profile.favcolor || "#FFF";
@@ -82,9 +77,8 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.key", P), "400 22pt 'Panton'", "#FFF"), XYZ.KEY.x, XYZ.KEY.y, XYZ.KEY.w, "right");
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.junk", P), "400 22pt 'Panton'", "#FFF"), XYZ.JNK.x, XYZ.JNK.y, XYZ.JNK.w, "left");
 
-  // TODO(sunset): migrate to DB.userCosmetics
   types = {};
-  userData.profile.inventory.forEach((itm) => {
+  cosmeticsData.inventory.forEach((itm) => {
     let itemType;
     try {
       itemType = itemData.find((i) => (itm.id || itm) == i.id).type || "other";
@@ -110,11 +104,10 @@ const init = async (msg, args) => {
     return x;
   }
 
-  // TODO(sunset): migrate to DB.userCosmetics
-  const a_bg = userData.profile.bgInventory.length;
-  const a_md = userData.profile.medalInventory.length;
-  const a_st = userData.profile.stickerInventory.length;
-  const a_fl = userData.profile.flairsInventory.length;
+  const a_bg = cosmeticsData.bgInventory.length;
+  const a_md = cosmeticsData.medalInventory.length;
+  const a_st = cosmeticsData.stickerInventory.length;
+  const a_fl = cosmeticsData.flairInventory.length;
 
   ctx.globalAlpha = 0.7;
   Picto.setAndDraw(ctx, Picto.tag(ctx, a_st, "600 18pt 'Panton'", "#FFF"), XYZ.mST.x, XYZ.mST.y, 100, "right");
