@@ -4,9 +4,9 @@ const CLUSTER_NAMES = require("@polestar/constants/clusters")?.default;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
 const isPRIME             = process.env.PRIME === "true" || process.env.PRIME === true;
-const CLIENT_NAME         = process.env.PRIME_FLAVORED_CLIENT;
+const CLIENT_DATA         = process.env.PRIME_FLAVORED_CLIENT;
 
-const UNIT = isPRIME ? `⭐ PRIME (${CLIENT_NAME})` : CLUSTER_NAMES[CLUSTER_ID] || `Cluster ${CLUSTER_ID}`;
+const UNIT = isPRIME ? `⭐ PRIME (${CLIENT_DATA.name})` : CLUSTER_NAMES[CLUSTER_ID] || `Cluster ${CLUSTER_ID}`;
 
 const ascii = function () {
   const a = isPRIME ? "yellow" : "green";

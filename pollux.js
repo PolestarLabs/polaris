@@ -16,7 +16,6 @@ if (!CLIENT_DATA) {
   console.error("*** No CLIENT_DATA environment variable found. Proceeding in debug mode. ***");
 }
 
-const CLIENT_NAME         = process.env.PRIME_FLAVORED_CLIENT;
 const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
