@@ -3,7 +3,7 @@
 const init = async (msg) => {
   if (!PLX?.isPRIME) return;
 
-  const USERDATA = await DB.users.findOne({ id: msg.author.id }).lean().exec();
+  const USERDATA = await DB.users.get(msg.author.id);
   const UNCLAIMED = new Date().getMonth() !== new Date(USERDATA.prime?.lastClaimed).getMonth();
 
   let MAXPREM = USERDATA.prime?.maxServers || 0;
@@ -20,7 +20,7 @@ const init = async (msg) => {
     return msg.channel.send(_emoji(USERDATA.prime?.tier) + " **Prime Servers Info:** `" + `${userPremiumCount}/${MAXPREM}\` \`\`\`${USERDATA.prime?.servers?.join(' ') || "-- No Servers --"}` + "```" );
   }
 
-  const SVdata = (await DB.servers.findOne({ id: msg.args[0] }).lean().exec()) || await vDB.servers.findOne({ id: msg.args[0] }).lean().exec();
+  const SVdata = (await DB.servers.findOne({ id: msg.args[0] }).lean()) || await vDB.servers.findOne({ id: msg.args[0] }).lean();
 
 
 

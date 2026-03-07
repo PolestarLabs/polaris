@@ -1,7 +1,7 @@
 const ECO = require("../../archetypes/Economy.js");
 
 const init = async (msg, args) => {
-  const roleMarket = await DB.paidroles.find({ server: msg.guild.id }).lean().exec();
+  const roleMarket = await DB.paidroles.find({ server: msg.guild.id }).lean();
 
   if (args.length === 0 || args[1] === "list") {
     return {

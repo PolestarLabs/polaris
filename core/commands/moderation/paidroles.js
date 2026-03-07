@@ -17,7 +17,7 @@ const init = async (msg, args) => {
 
   const rolefind = (x) => (msg.guild.roles.find((rl) => args.slice(x).join(" ").toLowerCase() === rl.name.toLowerCase()) || msg.guild.roles.find((rl) => rl.id === msg.roleMentions[0]) || msg.guild.roles.find((rl) => rl.id === arg4) || msg.guild.roles.find((rl) => rl.name.toLowerCase().startsWith(args.slice(x).join(" ").toLowerCase())));
 
-  const roleMarket = await DB.paidroles.find({ server: msg.guild.id }).lean().exec();
+  const roleMarket = await DB.paidroles.find({ server: msg.guild.id }).lean();
 
   if (subcommand === "add") {
     const targetRole = rolefind(4);

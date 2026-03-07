@@ -1,5 +1,5 @@
 const init = async (msg, args) => {
-  const inventory = await DB.gifts.find({ holder: msg.author.id }).lean().exec();
+  const inventory = await DB.gifts.find({ holder: msg.author.id }).lean();
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
   if (!inventory?.length) {

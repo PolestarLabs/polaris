@@ -345,7 +345,7 @@ async function getMarriagesDDown(user,prompt="Select...",id="mrgDdown",defaultFu
 					let [mUser,ring] = await Promise.all(
 						[
 							PLX.resolveUser(mrg.users.find(u=>u!=user)),
-							DB.items.findOne({id: mrg.ring })
+							DB.items.findOne({ id: mrg.ring }).lean().exec()
 						]
 					);
 					

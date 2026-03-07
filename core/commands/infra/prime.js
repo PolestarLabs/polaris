@@ -1,6 +1,6 @@
 // TRANSLATE[epic=translations] donate
 const init = async (msg, args) => {
-  const USERDATA = await DB.users.findOne({ id: msg.author.id }).lean().exec();
+  const USERDATA = await DB.users.get(msg.author.id);
 
   if (USERDATA.prime.tier && !msg.content.includes('donate')) {
     const UNCLAIMED =
@@ -34,7 +34,7 @@ const init = async (msg, args) => {
       });
 
     const primeServerId = msg.args[1];
-    const SVdata = await DB.servers.findOne({ id: primeServerId }).lean().exec();
+    const SVdata = await DB.servers.findOne({ id: primeServerId }).lean();
 
     if (!SVdata){
       return _emoji("nope") + "**Server Registry not found!** | Pollux has no data about your server. Try inviting ther non-prime version first.";
