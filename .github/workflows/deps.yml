@@ -87,9 +87,6 @@ jobs:
             exit 0
           fi
           echo "Running npm ci"
-          git config --global credential.helper store
-          echo "https://${{ secrets.GITHUB_TOKEN }}@github.com" > ~/.git-credentials
-          git config --global url."https://${{ secrets.GITHUB_TOKEN }}@github.com/".insteadOf "git@github.com:"
           npm ci
 
       - name: Verify dependencies installed
