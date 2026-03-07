@@ -31,7 +31,7 @@ const TopGG               = require("@top-gg/sdk");
 const ErisLib             = require("eris");
 const Eris                = require("eris-additions")(ErisLib);
 
-const DBSchema            = require("@polestar/database_schema");
+const DBSchema            = require("@polestarlabs/database_schema");
 const CLUSTER_NAMES       = require("@polestar/constants/clusters")?.default;
 const cfg                 = require("./config.json");
 const cmdPreproc          = require("./core/structures/CommandPreprocessor");
