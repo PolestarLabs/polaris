@@ -19,7 +19,7 @@
   "dependencies": {
     "@google-cloud/vision": "^2.1.2",
     "@polestar/constants": "github:PolestarLabs/constants",
-    "@polestar/database_schema": "github:PolestarLabs/db-schema#refactor",
+    "@polestarlabs/database_schema": "^0.19.0",
     "@polestar/emoji-grimoire": "github:PolestarLabs/emoji-grimoire",
     "@polestar/i18n": "github:PolestarLabs/pollux-i18n",
     "@polestar/morse": "github:PolestarLabs/morse",
