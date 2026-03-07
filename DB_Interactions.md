@@ -59,7 +59,7 @@ This document enumerates every place in the bot codebase where the database is r
 
 | Operation | Used for | Overload | Remarks | Suggested endpoint |
 |---|---|---|---|---|
-| `DB.users.findOne/ updateOne` | user quests/progression state | ~10 per call | split into GET/PATCH `/users/:id/progression` | GET `/users/:id/progression` (R4), PATCH `/users/:id/progression` (W4) |
+| `DB.userQuests` / `DB.users` (legacy) | user quests/progression state stored separately | ~10 per call | split into GET/PATCH `/users/:id/progression` | GET `/users/:id/progression` (R4), PATCH `/users/:id/progression` (W4) |
 | `DB.quests.find` / `DB.quests.get` | list and fetch quests | many | static data; cache in API | GET `/quests` (R5), GET `/quests/:id` (R6) |
 
 ### core/archetypes/Premium.js
