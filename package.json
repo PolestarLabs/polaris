@@ -28,7 +28,7 @@
     "@polestar/timed-usage": "github:PolestarLabs/timed-usage",
     "@top-gg/sdk": "^3.1.2",
     "@vitalets/google-translate-api": "^9.1.0",
-    "axios": "^0.28.0",
+    "axios": "^0.30.3",
     "bluebird": "^3.7.2",
     "canvas-text-wrapper": "^0.10.2",
     "cheerio": "^1.0.0-rc.2",
