@@ -6,7 +6,7 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
 
-const CLIENT_DATA = JSON.parse(process.env.CLIENT_DATA );
+const CLIENT_DATA = JSON.parse(process.env.CLIENT_DATA);
 
 if (!CLIENT_DATA) {
   if (!process.env.DEBUG) {
@@ -20,12 +20,11 @@ const SHARDS_PER_CLUSTER  = parseInt(process.env.SHARDS_PER_CLUSTER) || 1;
 const CLUSTER_ID          = parseInt(process.env.CLUSTER_ID) || 0;
 const TOTAL_SHARDS        = parseInt(process.env.TOTAL_SHARDS) || 1;
 const isPRIME             = process.env.PRIME === "true" || process.env.PRIME === true;
-const BANNER              = require("./resources/asciiPollux.js");
-const DB_INFO             = process.env.DB_INFO;
-const VANILLA_DB_INFO     = process.env.VANILLA_DB_INFO;
+const { DB_INFO } = process.env;
+const { VANILLA_DB_INFO } = process.env;
 
+const BANNER              = require("./resources/asciiPollux.js");
 const { readdirSync }     = require("fs");
-const axios               = require("axios");
 const Bluebird            = require("bluebird");
 const TopGG               = require("@top-gg/sdk");
 const ErisLib             = require("eris");
@@ -57,7 +56,7 @@ ErisLib.CommandClient.prototype.onMessageCreate = function safeOnMessageCreate(m
     this.emit("warn", "MessageCreate received without an author.");
     return;
   }
-  return originalOnMessageCreate.call(this, msg);
+  originalOnMessageCreate.call(this, msg);
 };
 const originalWsEvent = ErisLib.Shard.prototype.wsEvent;
 ErisLib.Shard.prototype.wsEvent._original = originalWsEvent;
@@ -69,11 +68,10 @@ ErisLib.Shard.prototype.wsEvent = function safeWsEvent(packet) {
     // the packet data refers to undefined caches.  We want to ignore
     // those instead of crashing the whole shard.
     if (
-      err instanceof TypeError &&
-      /reading '(?:remove|get)'/.test(String(err.message || err))
+      err instanceof TypeError
+      && /reading '(?:remove|get)'/.test(String(err.message || err))
     ) {
-      this.client?.emit?.("warn", `Shard wsEvent ignored: ${err.message}`);
-      return;
+      return this.client?.emit?.("warn", `Shard wsEvent ignored: ${err.message}`);
     }
     throw err;
   }
@@ -117,7 +115,19 @@ global.PLX = new Eris.CommandClient(
       ratelimiterOffset: 800,
     },
     defaultImageFormat: "png",
-    intents: ["guilds", "guildMembers", "guildBans", "guildWebhooks", "guildInvites", "guildVoiceStates", "guildPresences", "guildMessages", "guildMessageReactions", "guildMessageTyping", "messageContent"],
+    intents: [
+      "guilds",
+      "guildMembers",
+      "guildBans",
+      "guildWebhooks",
+      "guildInvites",
+      "guildVoiceStates",
+      "guildPresences",
+      "guildMessages",
+      "guildMessageReactions",
+      "guildMessageTyping",
+      "messageContent",
+    ],
     disableEvents: {
       TYPING_START: true,
       TYPING_STOP: true,
@@ -129,16 +139,16 @@ global.PLX = new Eris.CommandClient(
     ignoreBots: true,
     requestTimeout: 5000,
     defaultCommandOptions: cmdPreproc.DEFAULT_CMD_OPTS,
-    prefix: ["+", "p!", "plx!", "@mention"],
-  }
+    prefix: [ "+", "p!", "plx!", "@mention" ],
+  },
 );
 
 require("./core/utilities/SelfAPI.js");
 
-PLX.engine      = Eris;
-PLX.staging     = process.env.NODE_ENV !== "production";
+PLX.engine = Eris;
+PLX.staging = process.env.NODE_ENV !== "production";
 PLX.maintenance = process.env.maintenance;
-PLX.isPRIME     = Boolean(isPRIME);
+PLX.isPRIME = Boolean(isPRIME);
 PLX._flavordata = CLIENT_DATA;
 
 if (isPRIME === true) {
@@ -153,9 +163,7 @@ console.table({
   SHARDS: TOTAL_SHARDS,
 });
 console.report = (...args) => {
-  console.log(
-    ` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" ")
-  );
+  console.log(` ${PLX.cluster.name} `.white.bgBlue + " • ".gray + [...args].join(" "));
 };
 
 Object.assign(global, Gearbox.Global);
@@ -176,7 +184,7 @@ PLX.blackListedServers = [];
 PLX.updateBlacklists = async (DB) => {
   try {
     // example endpoints, create them on the API if they don't exist
-    const [userRes, serverRes] = await Promise.all([
+    const [ userRes, serverRes ] = await Promise.all([
       PLX.api.get("/system/blacklisted/users"),
       PLX.api.get("/system/blacklisted/servers"),
     ]);
@@ -197,7 +205,7 @@ PLX.updateBlacklists = async (DB) => {
         .find({ blacklisted: { $exists: true } }, { id: 1, _id: 0 })
         .lean()
         .exec(),
-    ]).then(([users, servers]) => {
+    ]).then(([ users, servers ]) => {
       PLX.blacklistedUsers = (users || []).map((usr) => usr.id);
       PLX.blacklistedServers = (servers || []).map((svr) => svr.id);
     });
@@ -228,14 +236,14 @@ DBSchema(DB_CONNECTION_DATA, {
     global.DB = Connection;
 
     try {
-      let ProgMgr = require("@polestar/progression");
+      const ProgMgr = require("@polestar/progression");
       ProgMgr.init(PLX);
       console.log("PROGRESSION MANAGER LOADED");
     } catch (err) {
       console.error("PROGRESSION MANAGER LOADED FAILED", err);
     }
 
-    const _tokenPreview = (CLIENT_DATA.token || "").slice(0, 12) + "…";
+    const _tokenPreview = `${(CLIENT_DATA.token || "").slice(0, 12)}…`;
     console.log("Discord connection start...", {
       token: _tokenPreview,
       firstShard: SHARDS_PER_CLUSTER * CLUSTER_ID,
@@ -251,7 +259,7 @@ DBSchema(DB_CONNECTION_DATA, {
         "PLX.connect() did not resolve within 30s — likely stuck at gateway WS or token rejected"
       );
       // Log shard statuses for visibility
-      for (const [id, shard] of PLX.shards) {
+      for (const [ id, shard ] of PLX.shards) {
         console.error(`  Shard ${id}: status=${shard.status} seq=${shard.seq} sessionID=${shard.sessionID ?? "none"}`);
       }
     }, 10_000);
@@ -279,6 +287,7 @@ DBSchema(VANILLA_CONNECTION_DATA, { redis: null }).then((vConnection) => {
 
 // Translation Engine ------------- <
 global.translateEngineStart = require("@polestar/i18n").translateEngineStart;
+
 translateEngineStart();
 
 let ReadyCount = 0;
@@ -287,7 +296,7 @@ PLX.on("ready", () => {
   ReadyCount++;
   // eslint-disable-next-line no-undef
   INSTR.gauge("READY_count", ReadyCount);
-  console.log(BANNER.ascii());  
+  console.log(BANNER.ascii());
 });
 PLX.once("ready", async () => {
   if (PLX._flavordata?.name === "main") {
@@ -315,9 +324,7 @@ PLX.once("ready", async () => {
   require("./core/subroutines/cronjobs.js").run();
   if (PLX.shard) {
     PLX.user.setStatus("online");
-    console.log(
-      `${"● ".green}Shard${1 + PLX.shard.id}/${PLX.shard.count} [ONLINE]`
-    );
+    console.log(`${"● ".green}Shard${1 + PLX.shard.id}/${PLX.shard.count} [ONLINE]`);
   }
 
   PLX.registerCommands();
@@ -395,7 +402,7 @@ function initializeEvents() {
 
   const files = readdirSync("./eventHandlers/");
   for (const file of files) {
-    const [eventide, suffix] = file.split(".");
+    const [ eventide, suffix ] = file.split(".");
     if (suffix !== "js") continue;
 
     try {
@@ -407,9 +414,7 @@ function initializeEvents() {
 
   PLX.microserverStart = () => {
     try {
-      PLX.microserver = new (require("./core/archetypes/Microserver"))(
-        cfg.crossAuth // TODO: Replace with Env
-      );
+      PLX.microserver = new (require("./core/archetypes/Microserver"))(cfg.crossAuth); // TODO: Replace with Env
       PLX.microserver.microtasks.updateServerCache("all");
       PLX.microserver.microtasks.updateChannels("all");
     } catch (e) {
