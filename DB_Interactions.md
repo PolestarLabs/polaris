@@ -125,6 +125,140 @@ This document enumerates every place in the bot codebase where the database is r
 
 ---
 
+## Domain‑specific tables
+
+### Economy commands
+
+#### `balance.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.get`, `DB.userInventory.get` | fetch target balance and inventory | 2 | consolidate into single call | GET `/economy/balance/:user` (R22) |
+| `DB.audits.find(...).sort().limit()` | recent transactions | 1 | could be  `/audits?user=:id&limit=5` | GET `/audits?user=:id&limit=5` (R23) |
+
+#### `daily.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.getFull` | user data for daily reward | 1 | use `/users/:id` | GET `/users/:id` (R24) |
+| `DB.items.find` | select boosterpacks | 1 | static lookup; cache | GET `/items?type=boosterpack&rarity=in(C,U,R)` (R25) |
+
+#### `givebox.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.get`, `getFull` | author and target verification | 2 | already in user API | GET `/users/:id` (R26) |
+| `DB.items.find` | box catalogue | 1 | `/items?type=box` | GET `/items?type=box` (R27) |
+
+#### `local$.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.audits.new` | record conversion | 2 | POST `/audits` (already W8) | POST `/audits` (W8) |
+
+#### marketplace sub‑commands
+
+| File | Operations | Purpose | Endpoint |
+|------|------------|---------|----------|
+| delete.js | `DB.marketplace.get`, `DB.marketbase`, `DB.marketplace.remove` | remove listing | GET `/marketplace/:id` (R28)<br>DELETE `/marketplace/:id` (W14) |
+| list.js | `DB.marketbase`, `DB.marketplace.find` | list offers | GET `/marketplace` (R29) |
+| post.js | `DB.users.getFull`, `DB.userInventory.getFull`, `DB.items.findOne`, `DB.cosmetics.findOne` | create listing | POST `/marketplace` (W15) |
+
+#### `transfer.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.get` | sender/recipient lookup | 2 | GET `/users/:id` (R30) |
+
+### Social commands
+
+*(only a representative subset is shown; many commands follow the same pattern)*
+
+#### `buyrole.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.paidroles.find` | fetch server role market | 1 | GET `/servers/:id/paidroles` (R31) |
+| `DB.users.get` | buyer lookup | 1 | GET `/users/:id` (R32) |
+| `DB.temproles.add` | assign temporary role | 1 | POST `/servers/:id/temproles` (W16) |
+
+#### `commend.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.findOne`, `DB.userInventory.getFull` | author data | 2 | use `/users/:id` and inventory API | GET `/users/:id` (R33) |
+| `DB.commends.parseFull` | fetch target commends | many | GET `/users/:id/commends` (R34) |
+| `DB.commends.add` | record commend | 1 | POST `/commends` (W17) |
+| `DB.users` (meta lookup) | owner metas | 1 | reuse user API | R35 |
+
+#### `divorce.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.relationships.find` / `findByIdAndDelete` | read/delete marriages | several | GET/DELETE `/relationships/:id` (R36/W18) |
+| `DB.users.getFull` | user tags | 2 | GET `/users/:id` (R37) |
+
+#### `gift` sub‑commands
+
+| File | Operations | Purpose | Endpoint |
+|------|------------|---------|----------|
+| give.js | `DB.gifts.find`, `updateOne` | send gift | GET `/gifts?holder=:id` (R38) / PATCH `/gifts/:id` (W19) |
+| inventory.js | `DB.gifts.find` | view inventory | GET `/gifts?holder=:id` (R38) |
+| open.js | `DB.gifts.find`, `DB.users.get`, `DB.cosmetics.get`,`DB.gifts.remove`,`DB.users.set` | open gift | POST `/gifts/:id/open` (W20) |
+| peek.js | `DB.gifts.find`, `DB.users.get` | peek at gifts | reuse endpoints R38/R32 |
+| wrap.js | `DB.users.getFull`, `DB.users.set`, `DB.gifts.set` | wrap gift | POST `/gifts` (W21), PATCH `/users/:id` (W22) |
+
+#### `leaderboards.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.find` / `DB.localranks.find` | compute leaderboards | many | use leaderboard API | GET `/leaderboards` (R39) |
+| `DB.localranks.get` | self rank | 1 | GET `/users/:id/localrank` (R15) |
+| `DB.users.find` (count) | server‑wide rank count | 1 | aggregate endpoint | R40 |
+
+<!-- additional social command tables would follow similar format -->
+
+### Games commands
+
+#### `airline/new.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.airlines.AIRPORT.find` / `AIRPLANES.find` | starter options | 2 | GET `/games/airline/airports?starter=true` (R41) |
+| `DB.airlines.AIRLINES.findOne` | check existing airline | 1 | GET `/games/airline/:id` (R42) |
+
+#### `airline/routes/new.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.airlines.AIRPORT.findOne` | lookup port | 1 | GET `/games/airline/airports/:iata` (R43) |
+
+#### `betflip.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.get` | fetch gambler | 1 | R9 |
+
+#### `blackjack.js`
+
+| Operation | Purpose | Overload | Remarks | Endpoint |
+|-----------|---------|----------|---------|----------|
+| `DB.users.get`, `DB.userInventory.get` | player data | 2 | R9 / R10 |
+| `DB.users.set` | change skin | 2 | PATCH `/users/:id` (W23) |
+| `DB.cosmetics.find` | deck skins | 1 | R8 |
+
+#### ranking/score files
+
+| File | Operation | Purpose | Endpoint |
+|------|-----------|---------|----------|
+| guessflag.js, highscores/* | `DB.rankings.find` / `.collection.insert` | record or fetch scores | GET `/rankings` (R44), POST `/rankings` (W24) |
+
+
+---
+
+## Detailed scan results
+---
+
 ## Detailed scan results
 
 ## Detailed scan results
