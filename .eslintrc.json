@@ -58,7 +58,7 @@
         "no-param-reassign": "off",
         "global-require": "off",
         "import/no-dynamic-require": "off",
-        "linebreak-style": "warn",
+        "linebreak-style": "off",
         "disable-next-line": "off",
         "no-extra-parens": "warn",
         "no-extra-semi": "warn",

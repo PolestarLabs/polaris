@@ -32,7 +32,7 @@ const init = async (msg, args) => {
     // If args === item.id
     let craftedItem = Crafter.getItem(toBeCrafted);
 
-    const userDiscoveries = (await DB.users.get(msg.author.id))?.modules.inventory.filter((itm) => itm.crafted).map((itm) => itm.id) || [];
+    const userDiscoveries = (await DB.userInventory.get(msg.author.id))?.inventory?.filter((itm) => itm.crafted).map((itm) => itm.id) || [];
     if (craftedItem && !userDiscoveries.includes(craftedItem.id) && !craftedItem.open) craftedItem = null;
     // Else find a partial match
     if (!craftedItem) {

@@ -40,38 +40,41 @@ const init = async (msg, args) => {
         `;
 
   async function AllChecks() {
-    const userData = DB.users.getFull({ id: msg.author.id });
+    const [userData, cosmeticsData] = await Promise.all([
+      DB.users.getFull({ id: msg.author.id }),
+      DB.userInventory.getFull(msg.author.id),
+    ]);
     if (!userData) return { pass: false, reason: "User Not Registered" };
 
-    const checkItem = (uD, type, id, transaction) => {
+    const checkItem = (uD, cosD, type, id, transaction) => {
       pass = true;
       reason = "";
       prequery = false;
       query = false;
 
       if (type === "background") {
-        if (!uD.modules.bgInventory.includes(id)) {
+        if (!cosD?.bgInventory?.includes(id)) {
           pass = false;
           reason = "Background not in Inventory";
         } else {
-          query = { $pull: { "modules.bgInventory": id } };
+          query = { $pull: { bgInventory: id } };
         }
       }
       if (type === "medal") {
-        if (!uD.modules.medalInventory.includes(id)) {
+        if (!cosD?.medalInventory?.includes(id)) {
           pass = false;
           reason = "Medal not in Inventory";
         } else {
-          query = { $pull: { "modules.medalInventory": id } };
+          query = { $pull: { medalInventory: id } };
         }
       }
       if (type === "boosterpack") {
-        if (!uD.modules.inventory.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
+        if (!cosD?.inventory?.filter((itm) => itm.id === `${id}_booster` && itm.count > 0)) {
           pass = false;
           reason = "Booster not in Inventory";
         } else {
-          prequery = { id: uD.id, "modules.inventory.id": id };
-          query = { $inc: { "modules.inventory.$.count": -1 } };
+          prequery = { userId: uD.id, "inventory.id": id };
+          query = { $inc: { "inventory.$.count": -1 } };
         }
       }
       if (transaction === "buy") {
@@ -82,18 +85,18 @@ const init = async (msg, args) => {
         pass, reason, prequery, query,
       };
     };
-    const checkSales = (uD) => {
+    const checkSales = (uD, cosD) => {
       let forRBN = true;
       let forSPH = true;
-      if (uD.modules.RBN < ( price * .15)) forRBN = false;
-      if (uD.amtItem("sph-license") < 2 * ~~(price * .05) ) forSPH = false;
-      if (uD.modules.SPH < 2) forSPH = false;
+      if (uD.currency.RBN < ( price * .15)) forRBN = false;
+      if (cosD.amtItem("sph-license") < 2 * ~~(price * .05) ) forSPH = false;
+      if (uD.currency.SPH < 2) forSPH = false;
 
       return { forRBN, forSPH };
     };
 
-    const saleStatus = checkSales(await userData, itemType, itemID);
-    const itemStatus = checkItem(await userData, itemType, itemID, operation);
+    const saleStatus = checkSales(userData, cosmeticsData, itemType, itemID);
+    const itemStatus = checkItem(userData, cosmeticsData, itemType, itemID, operation);
 
     embed.field(
       `${_emoji("RBN")}Rubine Listing Eligibility`,

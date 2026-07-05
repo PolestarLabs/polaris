@@ -1,7 +1,7 @@
 const {ITEM_TYPES} = require("./_meta.js");
 
 const init = async (msg, args) => {
-  const inventory = await DB.gifts.find({ holder: msg.author.id }).lean().exec();
+  const inventory = await DB.gifts.find({ holder: msg.author.id }).lean();
 
   if (inventory.length < 1) return "No gifts to be opened!";
 

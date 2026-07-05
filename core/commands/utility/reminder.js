@@ -18,7 +18,7 @@ parser.refiners.push({refine (text, results, opt) {
 */
 
 const init = async (msg, args) => {
-  const userReminders = await DB.feed.find({ url: msg.author.id }).lean().exec();
+  const userReminders = await DB.feed.find({ url: msg.author.id }).lean();
   const P = { lngs: msg.lang };
 
   if (msg.content.split(" ")[0].includes("reminders") || (args[0] === "list" && args.length === 1)) {

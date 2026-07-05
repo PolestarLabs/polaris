@@ -29,13 +29,13 @@ const init = async (msg) => {
     });
   }
 
-  if (USERDATA.modules.RBN < TARGETDATA.modules.RBN) {
+  if (USERDATA.currency.RBN < TARGETDATA.currency.RBN) {
     //      return msg.reply("you cannot send Rubines to an account with a higher balance.");
   }
   if (AMOUNT > 2500) {
     return msg.reply("you cannot send more than 2500 Rubines at a time.");
   }
-  if (AMOUNT === USERDATA.modules.RBN) {
+  if (AMOUNT === USERDATA.currency.RBN) {
     return msg.reply("you cannot send all of your Rubines at once.");
   }
 
@@ -68,7 +68,7 @@ const init = async (msg) => {
 
   const precheck = async (message) => {
     if (await ECO.checkFunds(message.author.id, AMOUNT)) return true;
-    P.number = USERDATA.modules.RBN;
+    P.number = USERDATA.currency.RBN;
     message.channel.send($t("responses.generic.noFundsBalance", P));
     return false;
   };

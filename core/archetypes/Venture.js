@@ -154,11 +154,11 @@ module.exports = {
       this.prize = {};
       this.journey = [];
       this.supply = {
-        item: { ...player.modules.inventory },
+        item: player.inventory || [],
         rubines: this.insurance,
-        jades: player.modules.JDE,
-        rubines_bank: player.modules.RBN,
-        sapphires: player.modules.SPH,
+        jades: player.currency.JDE,
+        rubines_bank: player.currency.RBN,
+        sapphires: player.currency.SPH,
       };
 
       const eventCount = Math.round((time * 60) / TIME_SLICE);

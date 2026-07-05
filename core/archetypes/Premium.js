@@ -456,6 +456,7 @@ async function processRewards(userID, options) {
   const mansionMember = await PLX.resolveMember(OFFICIAL_GUILD, userID, { enforceDB: true, softMatch: false }).catch(() => {});
 
   const userData = await DB.users.findOne({ id: userID }).noCache();
+  const cosmeticsData = await DB.userInventory.get(userID);
 
   let currentTier = options?.currentTier; // || userData.prime?.tier || userData.donator;
   const tierPrizes = { ...getTierBonus(currentTier) };
@@ -506,11 +507,13 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
       "prime.custom_shop": tierPrizes.custom_shop,
     },
     $inc: {
-      "modules.EVT": tierPrizes.monthly_event_tkn,
+      "currency.EVT": tierPrizes.monthly_event_tkn,
     },
-    $addToSet: {
-      "modules.flairsInventory": currentTier,
-    },
+  };
+
+  // cosmetics ops (inventory, flairs, medals) go to DB.userInventory separately
+  const cosmeticsAddToSet = {
+    flairInventory: currentTier,
   };
 
   tierPrizes?.box_bonus?.forEach((boostBox) => bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`, boostBox.n)));
@@ -518,7 +521,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   const stickersReport = [];
   const packsReport = [];
   if (tierPrizes.sticker_prize) {
-    const ownedStickers = userData.modules.stickerInventory;
+    const ownedStickers = cosmeticsData?.stickerInventory || [];
     const [ stickerList, packsList ] = await Promise.all([ PREMIUM_STICKERS, PREMIUM_PACKS ]);
 
     const availableStickerList = stickerList.filter((stk) => !ownedStickers.includes(stk.id)); ;
@@ -570,10 +573,10 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
     bulkWriteQuery.push(...[
       {
         updateOne: {
-          filter: { id: userID },
+          filter: { userId: userID },
           update: {
             $addToSet: {
-              "modules.stickerInventory": { $each: [ ...lasts, ...randoms ] },
+              "stickerInventory": { $each: [ ...lasts, ...randoms ] },
             },
           },
         },
@@ -583,13 +586,13 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   }
 
   if (isBooster) {
-    regularQuery.$inc["modules.PSM"] = tierPrizes.booster_bonus_psm;
+    regularQuery.$inc["currency.PSM"] = tierPrizes.booster_bonus_psm;
     const boxes = tierPrizes.booster_bonus_box || []; // [{n:10,t:'SR'}]
     boxes.forEach((boostBox) => bulkWriteQuery.push(createAddItemQuery(`lootbox_${boostBox.t}_O`, boostBox.n)));
   }
 
   if (currentTierStreak >= 3) {
-    regularQuery.$addToSet["modules.medalInventory"] = currentTier;
+    cosmeticsAddToSet.medalInventory = currentTier;
   }
 
   const amts = [ tierPrizes.monthly_jde, tierPrizes.monthly_sph ];
@@ -601,7 +604,7 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
     JDE: amts[0],
     BOX: tierPrizes.box_bonus,
 
-    EVT: regularQuery.$inc["modules.EVT"],
+    EVT: regularQuery.$inc["currency.EVT"],
 
     // Booster
     IS_BOOSTER: isBooster,
@@ -614,9 +617,9 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
 
     STREAK: totalStreak,
     AS_TIER: tierStreaks,
-    HAS_FLAIR: userData.modules.flairsInventory.includes(currentTier),
-    HAS_MEDAL: userData.modules.medalInventory.includes(currentTier),
-    AWARD_MEDAL: currentTierStreak >= 3 && !userData.modules.medalInventory.includes(currentTier),
+    HAS_FLAIR: (cosmeticsData?.flairInventory || []).includes(currentTier),
+    HAS_MEDAL: (cosmeticsData?.medalInventory || []).includes(currentTier),
+    AWARD_MEDAL: currentTierStreak >= 3 && !(cosmeticsData?.medalInventory || []).includes(currentTier),
 
     PRIME_COUNT: tierPrizes.prime_servers,
 
@@ -640,30 +643,37 @@ console.log({tierStreaks,totalStreak,currentTierStreak})
   //console.log(require("util").inspect({ bulkWriteQuery, regularQuery, amts }, 0, 5, 1));
 
   // FIXME replace this
-  if (!userData.modules.EVT) {
+  if (!userData.currency.EVT) {
     console.log("User has no EVT history");
     //await DB.users.set(userID, { "modules.EVT": 0 }).catch((err) => { console.error(err); return null; });
   }
 
-  const q1 = await DB.users.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; });
+  const cosmeticsQuery = Object.keys(cosmeticsAddToSet).length ? { $addToSet: cosmeticsAddToSet } : null;
+
+  const q1 = bulkWriteQuery.length
+    ? await DB.userInventory.bulkWrite(bulkWriteQuery).catch((err) => { console.error(err); return null; })
+    : null;
   const q2 = await DB.users.set(userID, regularQuery).catch((err) => { console.error(err); return null; });
+  const q2c = cosmeticsQuery
+    ? await DB.userInventory.set(userID, cosmeticsQuery).catch((err) => { console.error(err); return null; })
+    : null;
   const q3 = await ECO.receive(userID, amts, "dono_rewards", currs, { details: { tier: currentTier, month: RUNNING_MONTH_SHORT, year: RUNNING_YEAR } });
 
   return {
-    data, report, success: !!q1 && !!q2 && !!q3, qBreakdown: { q1, q2, q3 },
+    data, report, success: !!q2 && !!q3, qBreakdown: { q1, q2, q2c, q3 },
   };
 
   function createAddItemQuery(toAdd, count = 1) {
-    return userData.modules.inventory.find((it) => it.id === toAdd)
+    return (cosmeticsData?.inventory || []).find((it) => it.id === toAdd)
       ? {
         updateOne: {
-          filter: { id: userID, "modules.inventory.id": toAdd },
-          update: { $inc: { "modules.inventory.$.count": count } },
+          filter: { userId: userID, "inventory.id": toAdd },
+          update: { $inc: { "inventory.$.count": count } },
         },
       } : {
         updateOne: {
-          filter: { id: userID },
-          update: { $addToSet: { "modules.inventory": { id: toAdd, count } } },
+          filter: { userId: userID },
+          update: { $addToSet: { "inventory": { id: toAdd, count } } },
         },
       };
   }
@@ -700,7 +710,7 @@ const DAILY_GETS = {
 async function getTier(userID) {
   const usr = await DB.users.get(userID);
   if (!usr) return null;
-  const tier = usr.prime?.tier || usr.donator; // LEGACY SUPPORT
+  const tier = usr.prime?.tier ?? null; // LEGACY: was usr.prime?.tier || usr.donator
   return tier?.toLowerCase() || null;
   // return false;
 }

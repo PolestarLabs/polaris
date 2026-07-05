@@ -19,7 +19,7 @@ module.exports = {
   getTier: function getTier(user) {
     return new Promise((resolve) => {
       DB.users.get(user.id).then((usr) => {
-        const tier = usr.donator;
+        const tier = usr.prime?.tier ?? null;
         // if((usr.premium||{}).active)
         resolve(tier || null);
         // else resolve (false);

@@ -35,9 +35,12 @@ const init = async function (msg,args){
 	if (Target.id === PLX.user.id) 
 		return $t("responses.marry.cantMarryPollux", P);	
 
-	const USERDATA = await DB.users.getFull(msg.author.id);
+	const [USERDATA, cosmeticsData] = await Promise.all([
+		DB.users.getFull(msg.author.id),
+		DB.userInventory.get(msg.author.id),
+	]);
 
-	const inventoryIDmap = USERDATA.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
+	const inventoryIDmap = cosmeticsData.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	
 	if (!userInventoryFull.length) return _emoji("nope") + "There are no rings to propose in your inventory. Please try `plx!craft ring`";// $t("responses.marry.needRing", P);
@@ -54,7 +57,7 @@ const init = async function (msg,args){
 			min_values: 0,
 			max_values: 1,
 			disabled: false,
-			options: availableRings(userInventoryFull, USERDATA,0,gPage)	 
+			options: availableRings(userInventoryFull, cosmeticsData,0,gPage)
 		}
 	  ]
 	 },
@@ -112,13 +115,13 @@ const init = async function (msg,args){
 
 		if (ring.startsWith("next") ){
 			let opts = ring.split(":");
-			components[0].components[0].options = availableRings( userInventoryFull, USERDATA,  opts[1] * gPage , gPage );
+			components[0].components[0].options = availableRings( userInventoryFull, cosmeticsData,  opts[1] * gPage , gPage );
 			return interaction.message.edit({components});
 
 		}
 		if (ring.startsWith("prev") ){
 			let opts = ring.split(":");
-			components[0].components[0].options = availableRings( userInventoryFull, USERDATA,  opts[1]-2 * gPage , gPage );
+			components[0].components[0].options = availableRings( userInventoryFull, cosmeticsData,  opts[1]-2 * gPage , gPage );
 			return interaction.message.edit({components});
 
 		}
@@ -342,7 +345,7 @@ async function getMarriagesDDown(user,prompt="Select...",id="mrgDdown",defaultFu
 					let [mUser,ring] = await Promise.all(
 						[
 							PLX.resolveUser(mrg.users.find(u=>u!=user)),
-							DB.items.findOne({id: mrg.ring })
+							DB.items.findOne({ id: mrg.ring }).lean().exec()
 						]
 					);
 					
@@ -369,7 +372,7 @@ function availableRings(rings,USERDATA,skip=0,size=23,nodescription){
 		const partialEmoji = _emoji( ring.rarity || ring.emoji, "💍" );
 		return {
 			label: "💍 " + ring.name.slice(0,100),
-			description: nodescription ? "" : `(x${USERDATA.modules.inventory.find(x=>x.id===ring.id)?.count || 0 })`,
+			description: nodescription ? "" : `(x${USERDATA.inventory.find(x=>x.id===ring.id)?.count || 0 })`,
 			emoji: partialEmoji.id ? {id:partialEmoji.id} : {name: partialEmoji.name },
 			value: ring.id,
 		};				
@@ -403,16 +406,19 @@ async function upgrade(msg,args){
 	const components = await getMarriagesDDown(msg.author.id,"Choose a marriage to upgrade","mrgUpgrade");
 	if (!components) return "No marriages";
 
-	const userData = await DB.users.getFull(msg.author.id);
+	const [userData, cosmeticsData] = await Promise.all([
+		DB.users.getFull(msg.author.id),
+		DB.userInventory.get(msg.author.id),
+	]);
 
-	const inventoryIDmap = userData.modules.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
+	const inventoryIDmap = cosmeticsData.inventory.filter(x=>x.count>0).map(it=>it.id).filter(x=>typeof x === "string");
 	const userInventoryFull = await DB.items.find( {series:"ring", id: { $in: inventoryIDmap}} ).lean();
 	if (!userInventoryFull.length) return _emoji("nope") + $t("responses.marry.needRing", P);
 
 	let skip = 0;
 	let pgSize = 10;
 
-	const options = availableRings( userInventoryFull , userData, skip ,pgSize);
+	const options = availableRings( userInventoryFull , cosmeticsData, skip ,pgSize);
 	components[1] = ({
 		type:1,
 		components: [{

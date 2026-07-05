@@ -135,7 +135,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           }
 
           const { size, imported, cost } = marriage_transfer_res;
-          await DB.users.set(msg.author.id, { $inc: { "modules.SPH": -1 * cost || 0 } });
+          await DB.users.set(msg.author.id, { $inc: { "currency.SPH": -1 * cost || 0 } });
           this.name += ` (${imported}/${size} - ${_emoji('SPH')}**-${cost}**)`;
           marriage_message = marriage_transfer_res.res;
 
@@ -163,7 +163,9 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           });
 
           newInventory.push({ id: "streakfix", count: 1 });
+          // TODO(sunset): migrate to DB.userInventory
           await DB.users.set(msg.author.id, { $set: { "modules.inventory": newInventory } }).catch(console.error);
+          // TODO(sunset): migrate to DB.userInventory
           userData_OLD.modules.inventory = newInventory;
 
 
@@ -189,7 +191,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           return !!bulk;
           */
           this.name += ` (+${_emoji('PSM') + exceedingBoxBonus})`;
-          await DB.users.set(msg.author.id, { $set: { "modules.PSM": exceedingBoxBonus } });
+          await DB.users.set(msg.author.id, { $set: { "currency.PSM": exceedingBoxBonus } });
           return true;
         }
       },
@@ -202,17 +204,17 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
           const newRubines = Math.min(~~((userData_OLD.modules.rubines || 0) * 0.05) + (userData_OLD.modules.dyStreakHard || 1) * 10, 50000);
           const oldRubines = userData_OLD.modules.rubines || 0;
           const jades = ~~(userData_OLD.modules.jades / 2);
-          const saph = ~~(userData_OLD.modules.sapphires * (((SAPPHIREFACTOR(userData_OLD.donator, userData_OLD.formerDonator) || 1) / 10) + 1));
+          const saph = ~~(userData_OLD.modules.sapphires * (((SAPPHIREFACTOR(userData_OLD.prime?.tier ?? null, userData_OLD.formerDonator) || 1) / 10) + 1));
 
           await DB.users.set(msg.author.id, {
             $set:
             {
               "counters.daily.streak": userData_OLD.modules.dyStreakHard || 0,
               "counters.daily.last": Date.now() - (23 * 60 * 60 * 1000),
-              "modules.RBN": newRubines,
+              "currency.RBN": newRubines,
               "modules.rubinesOld": oldRubines,
-              "modules.JDE": jades,
-              "modules.SPH": saph,
+              "currency.JDE": jades,
+              "currency.SPH": saph,
             },
           });
           this.name += ` (${_emoji('RBN')}×**${newRubines}** ${_emoji('SPH')}×**${saph}** ${_emoji('JDE')}×**${jades}**)`;
@@ -293,7 +295,7 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
         action: async function () {
           try {
 
-            const oldDonoTier = userData_OLD.donator;
+            const oldDonoTier = userData_OLD.prime?.tier ?? null;
             const oldDonoStreak = userData_OLD.switches.donateStreak;
 
             await DB.users.set(msg.author.id, { $set: { "prime.tier": oldDonoTier, "counters.prime_streak": oldDonoStreak } });
@@ -315,18 +317,19 @@ Pollux collects usage data for analytics and telemetry purposes and does not sto
 
           await DB.users.set(msg.author.id, {
             $set: {
-              "modules.bgID": userData_OLD.modules.bgID,
-              "modules.medals": userData_OLD.modules.medals,
-              "modules.sticker": userData_OLD.modules.sticker,
-              "modules.flair": userData_OLD.modules.flairTop,
-              "modules.tagline": userData_OLD.modules.tagline,
-              "modules.persotext": userData_OLD.modules.persotext,
-              "modules.favcolor": userData_OLD.modules.favcolor,
+              "profile.bgID": userData_OLD.modules.bgID,
+              "profile.medals": userData_OLD.modules.medals,
+              "profile.sticker": userData_OLD.modules.sticker,
+              "profile.flair": userData_OLD.modules.flairTop,
+              "profile.tagline": userData_OLD.modules.tagline,
+              "profile.persotext": userData_OLD.modules.persotext,
+              "profile.favcolor": userData_OLD.modules.favcolor,
+              // TODO(sunset): migrate to DB.userInventory
               "modules.medalInventory": userData_OLD.modules.medalInventory,
               "modules.flairsInventory": userData_OLD.modules.flairsInventory,
               "modules.bgInventory": userData_OLD.modules.bgInventory,
               "modules.stickerInventory": userData_OLD.modules.stickerInventory,
-              "modules.EVT": userData_OLD.eventGoodie,
+              "currency.EVT": userData_OLD.eventGoodie,
               "personal": userData_OLD.personal,
             }
           });

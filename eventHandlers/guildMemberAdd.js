@@ -6,8 +6,8 @@ module.exports = async (guild, member) => {
     const welcomeTimer = svData.modules.GREET.timer;
     let welcomeText = svData.modules.GREET.text
       .replace(/%pfLink%/g, `${paths.DASH}/profile/${userData.personalhandle || userData.id}`)
-      .replace(/%lvGlobal%/g, `${userData.modules.level}`)
-      .replace(/%reputation%/g, `${userData.modules.commend || 0}`)
+      .replace(/%lvGlobal%/g, `${userData.progression.level}`)
+      .replace(/%reputation%/g, `${userData.counters?.commend || 0}`)
       .replace(/%membernumber%/g, `${guild.memberCount}`)
       .replace(/%user%/g, `<@${member.id}>`)
       .replace(/%userid%/g, `${member.id}`)
@@ -19,7 +19,7 @@ module.exports = async (guild, member) => {
       .replace(/%servername%/g, guild.name)
       .replace(/%serverIcon%/g, `${guild.iconURL}`)
       .replace(/%userAvatar%/g, `${member.user.avatarURL}`)
-      .replace(/%userBackground%/g, `${paths.CDN}/backdrops/${userData.modules.bgID}.png`)
+      .replace(/%userBackground%/g, `${paths.CDN}/backdrops/${userData.profile.bgID}.png`)
       .split("%embed%");
 
     welcomeText[0] = welcomeText[0].replace(/[^<]#([^ |^>|^"]+)/g,
@@ -41,7 +41,7 @@ module.exports = async (guild, member) => {
     const welcomeImage = true || svData.modules.GREET.image;
     if (embed) {
       embed.image = embed.image?.url ? embed.image : welcomeImage && embed ? { url: "attachment://in.png" } : undefined;
-      embed.color = embed.color === 0 ? parseInt((userData.modules.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
+      embed.color = embed.color === 0 ? parseInt((userData.profile.favcolor || "#FF3355").replace("#", ""), 16) : embed.color;
       
     }
 

@@ -21,7 +21,7 @@ const init = async (msg) => {
 
   call = ["HEADS", $t("terms.coinHeads", P).toUpperCase()].includes(call) ? "HEADS" : "TAILS";
 
-  if (currency && currency !== "RBN" && !(await userData).donator) {
+  if (currency && currency !== "RBN" && !(await userData).prime?.tier) {
     msg.channel.send("Betting different currencies is a donators-only feature. Type `+donate` for info.");
     currency = "RBN";
   }

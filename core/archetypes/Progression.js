@@ -101,8 +101,8 @@ class ProgressionManager extends EventEmitter {
                 msg.channel.send("**Extra bonus:** `All Quests Completed` +100 EXP");
                 await DB.users.set(userID, {
                     $inc: {
-                        "modules.exp": 100,
-                        "modules.SPH": 0
+                        "progression.exp": 100,
+                        "currency.SPH": 0
                     }
                 });
 
@@ -120,31 +120,33 @@ class ProgressionManager extends EventEmitter {
         if (type) super.emit(`${action}.${type}`, event, ...args); // emit specific
         if (condition) super.emit(`${action}.${type}.${condition}`, event, ...args); // emit super specific
     }
+    // fetches all quest documents for a user from the dedicated collection
     async getUserQuests(userID) {
-
-        let quests = (await DB.users.findOne({ id: userID }).noCache().lean())?.quests; //this.userQuestsCache.get(userID);
-        if (!quests) {
-            const userData = await DB.users.findOne({ id: userID }).noCache().lean() || [];
-            quests = userData.quests || [];
-            //this.userQuestsCache.set(userID,quests);
-        }
-
-        return quests;
+        // userID sometimes comes in as an object
+        if (typeof userID === "object" && userID.id) userID = userID.id;
+        return await DB.userQuests.allForUser(userID);
     }
 
     async updateProgress(userID, questUniqueID, value = 1, msg) {
-        await DB.users.updateOne({ id: userID, "quests._id": questUniqueID }, { $inc: { 'quests.$.progress': value } }, { new: !0 });
+        // increment the progress value on the separate user_quests document
+        await DB.userQuests.updateOne({ _id: questUniqueID, userId: userID }, { $inc: { progress: value } });
         if (msg) this.checkStatusOne(questUniqueID, userID, msg);
     }
 
     async overrideProgress(userID, questUniqueID, value = 0, msg) {
-        await DB.users.updateOne({ id: userID, "quests._id": questUniqueID }, { $set: { 'quests.$.progress': value } }, { new: !0 });
+        await DB.userQuests.updateOne({ _id: questUniqueID, userId: userID }, { $set: { progress: value } });
         if (msg) this.checkStatusOne(questUniqueID, userID, msg);
     }
 
     async updateAll(userID, quests) {
-        await DB.users.set(userID, { $set: { quests } });
-        //this.userQuestsCache.set(userID,quests);
+        // replace the user's entire quest set with the provided list
+        userID = userID && userID.id ? userID.id : userID;
+        // delete existing records and bulk insert the new ones
+        await DB.userQuests.deleteMany({ userId: userID });
+        if (Array.isArray(quests) && quests.length) {
+            const docs = quests.map(q => Object.assign({}, q, { userId: userID }));
+            await DB.userQuests.insertMany(docs);
+        }
     }
 
     async checkStatusAll(userID, msg) {
@@ -165,11 +167,11 @@ class ProgressionManager extends EventEmitter {
 
 
                 if (quest.progress >= quest.target) {
-                    await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
+                    await DB.userQuests.updateOne({ _id: quest._id }, { $set: { completed: true, completedAt: new Date() } });
                     if (msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
-                };
+                }
                 if (quest.progress && !quest.target) {
-                    await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
+                    await DB.userQuests.updateOne({ _id: quest._id }, { $set: { completed: true, completedAt: new Date() } });
                     if (msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
                 }
             }
@@ -182,18 +184,14 @@ class ProgressionManager extends EventEmitter {
         let userQuests = await this.getUserQuests(userID);
         if (!userQuests) return [];
 
-        const quest = userQuests.find(q => q._id == questID.toString());
+        const quest = userQuests.find(q => q._id.toString() === questID.toString());
         if (!quest) return [];
 
         await setImmediate(0, { ref: false });
 
-        if (quest.progress >= quest.target) {
-            await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
+        if (quest.progress >= quest.target || (quest.progress && !quest.target)) {
+            await DB.userQuests.updateOne({ _id: quest._id }, { $set: { completed: true, completedAt: new Date() } });
             if (msg && !quest.completed) return Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
-        };
-        if (quest.progress && !quest.target) {
-            await DB.users.updateOne({ id: userID, "quests._id": quest._id }, { $set: { 'quests.$.completed': true } }, { new: !0 });
-            if (msg && !quest.completed) Progression.emit("QUEST_COMPLETED", quest, { msg, userQuests, userID });
         }
     }
 
@@ -201,35 +199,36 @@ class ProgressionManager extends EventEmitter {
     async assign(questID, userID) {
         let quest = await DB.quests.get(questID);
         let newQuest = {
-            id: quest.id,
+            userId: userID,
+            questId: quest.id,
             target: quest.target || 1,
             tracker: `${quest.action}.${quest.type || "*"}${quest.condition ? "." + quest.condition : ""}`,
             progress: 0,
             completed: false,
-        }
-        await DB.users.set(userID, { $push: { quests: newQuest } });
-        let quests = (await DB.users.findOne({ id: userID }).noCache().lean())?.quests; // this.userQuestsCache.get(userID) || [];
-        //quests.push(newQuest);
-        //this.userQuestsCache.set(userID,quests);
+        };
+        await DB.userQuests.create(newQuest);
         return quest;
     }
     async remove(questID, userID) {
-        await DB.users.set(userID, { $pull: { "quests": { id: questID } } });
-        const userData = await DB.users.findOne({ id: userID }).noCache().lean();
-        //this.userQuestsCache.set(userID,userData.quests);
+        // questID in legacy flow was the internal quest id, not the user_quests _id
+        // attempt delete by _id first, fallback to questId field
+        await DB.userQuests.deleteOne({
+            userId: userID,
+            $or: [
+                { _id: questID },
+                { questId: questID }
+            ]
+        });
     }
     async assignArbitrary(newQuest, userID) {
-        await DB.users.set(userID, { $push: { quests: newQuest } });
-        let quests = (await DB.users.findOne({ id: userID }).noCache().lean())?.quests; //this.userQuestsCache.get(userID) || [];
-        //quests.push(newQuest);
-        //this.userQuestsCache.set(userID,quests);
+        await DB.userQuests.create(Object.assign({ userId: userID }, newQuest));
         return newQuest;
     }
 
     async available(userID) {
         const userData = await DB.users.findOne({ id: userID }).noCache().lean();
-        if (!userData?.modules) return [];
-        return (await DB.quests.find({ public: true, reveal_level: { $lte: userData.modules.level } }).lean());
+        if (!userData?.progression) return [];
+        return (await DB.quests.find({ public: true, reveal_level: { $lte: userData.progression.level } }).lean());
     }
 
     fulfillsTracker(eventTracker, quest) {
@@ -297,20 +296,27 @@ const init = () => {
 async function questCompletedMsg(userQuest, userID) {
     if (!userID) return " • Errand Completed Error";
     let disUser = PLX.resolveUser(userID);
+    // delete, handled by the RESOLVE API route
     const quest = await DB.quests.get(userQuest.id);
-    const currentUserQuests = (await DB.users.findOne({ id: userID }, { quest: 1 }).noCache())?.quests || [];
+    // handled by the RESOLVE API route
+    const currentUserQuests = await DB.userQuests.get(userID) || [];
 
     await wait(3);
 
     // DOUBLE-CHECK
+    // avoid double-dip, should be handled by the API. delete after we implement it
     if (currentUserQuests.find(q => userQuest._id.toString() == q._id)?.completed) return;
 
     const embed = {};
+
+
+
+    // post api -> /quests/resolve/:questUniqueID -> returns rewards
     await DB.users.set(userID, {
         $inc: {
-            "modules.exp": quest.rewards?.exp || 0,
-            "modules.RBN": quest.rewards?.RBN || 0,
-            "modules.SPH": quest.rewards?.SPH || 0
+            "progression.exp": quest.rewards?.exp || 0,
+            "currency.RBN": quest.rewards?.RBN || 0,
+            "currency.SPH": quest.rewards?.SPH || 0
         }
     });
     const createdAt = new Date(parseInt(userQuest._id.toString().substring(0, 8), 16) * 1000).getTime();

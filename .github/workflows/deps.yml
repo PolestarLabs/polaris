@@ -10,6 +10,8 @@ on:
 jobs:
   install:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     outputs:
       lockhash: ${{ steps.lockhash.outputs.hash }}
     steps:
@@ -85,9 +87,6 @@ jobs:
             exit 0
           fi
           echo "Running npm ci"
-          git config --global credential.helper store
-          echo "https://oauth2:${{ secrets.PAT_PRIVATE_DEPS }}@github.com" > ~/.git-credentials
-          git config --global url."https://${{ secrets.PAT_PRIVATE_DEPS }}@github.com/".insteadOf "git@github.com:"
           npm ci
 
       - name: Verify dependencies installed

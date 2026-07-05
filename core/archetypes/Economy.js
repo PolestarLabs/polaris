@@ -202,12 +202,12 @@ function checkFunds(user, amount, currency = "RBN") {
   const uID = (typeof user === "object") ? user.id : user;
   if (uID === PLX.user.id) return Promise.resolve(true);
 
-  return DB.users.get(uID).then((  /** @type { { modules: {[K in Currency]:number} } | null } */ userData) => {
+  return DB.users.get(uID).then((  /** @type { { currency: {[K in Currency]:number} } | null } */ userData) => {
     if (!userData) return false;
     return (/** @type {Currency[]} */(curr)).every((c, i) => {
       if ((/** @type {number[]} */(amount))[i] === 0) return true;
-      if (!userData.modules[c]) return false;
-      return (userData.modules[c] >= (/** @type {number[]} */(amount))[i]);
+      if (!userData.currency[c]) return false;
+      return (userData.currency[c] >= (/** @type {number[]} */(amount))[i]);
     });
   });
 }
@@ -372,8 +372,8 @@ async function transfer(userFrom, userTo, amt, type = "SEND", curr = "RBN", subt
     let absAmount = Math.abs(amt[i]);
     if (typeof absAmount !== "number") return Promise.reject(new TypeError("Amounts should be of type number."));
     if (absAmount === 0 && !allowZero) continue; // stop if AMT = 0 && !allowZero
-    fromUpdate[`modules.${curr[i]}`] = -absAmount;
-    toUpdate[`modules.${curr[i]}`] = absAmount;
+    fromUpdate[`currency.${curr[i]}`] = -absAmount;
+    toUpdate[`currency.${curr[i]}`] = absAmount;
     payloads.push(generatePayload(userFrom, userTo, amt[i], type, curr[i], subtype, symbol, fields));
   }
 

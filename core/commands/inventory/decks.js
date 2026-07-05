@@ -3,10 +3,10 @@
 const init = async function (msg, args, pollux) {
   const P = { lngs: msg.lang, prefix: msg.prefix };
 
-  const [USERDATA, DECKDATA] = await Promise.all(
+  const [DECKDATA, cosmeticsData] = await Promise.all(
     [
-      DB.users.get(msg.author.id),
       DB.cosmetics.find({ type: "skin", for: "casino" }),
+      DB.userInventory.get(msg.author.id),
     ],
   );
 
@@ -15,7 +15,7 @@ const init = async function (msg, args, pollux) {
   embed.description = "";
   const CASINO = []; const
     TAROT = [];
-  (USERDATA.modules.skinInventory || []).forEach((skin, i, arr) => {
+  (cosmeticsData.skinInventory || []).forEach((skin, i, arr) => {
     if (skin.startsWith("casino")) {
       const dkinfo = DECKDATA.find((dk) => dk.id === skin);
       if (dkinfo) {

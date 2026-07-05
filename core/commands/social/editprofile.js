@@ -36,22 +36,22 @@ const init = async function (msg) {
   embed = new Embed();
   embed.title(":tools: Profile Quick Edit");
   embed.description = "\u200b";
-  embed.color(userData.modules.favcolor);
+  embed.color(userData.profile.favcolor);
   embed.field("✏ " + "Change Personal Text",
-    `\u200b \u2003  *"${userData.modules.tagline}"*`, true);
+    `\u200b \u2003  *"${userData.profile.tagline}"*`, true);
   embed.field(`${frameOn === true ? "🔴" : frameOn === false ? "🔵" : "🚫"} ${"Toggle Propic Frame"}`,
     `${frameOn === true ? `${_emoji("yep")} **ON**` : frameOn === false ? `${_emoji("nope")}**OFF**` : "🚫"}`, true);
   embed.field("📝 " + "Change Personal Text",
-    ` \`\`\`${userData.modules.persotext}\`\`\``);
+    ` \`\`\`${userData.profile.persotext}\`\`\``);
   embed.field("🖌 " + "Change Fav Color",
-    ` \`${userData.modules.favcolor}\``, true);
+    ` \`${userData.profile.favcolor}\``, true);
   embed.field(`🖼 ${"Change BG"}`,
-    `\`${userData.modules.bgID}\``, true);
+    `\`${userData.profile.bgID}\``, true);
   embed.field(`🌐  ${"Change Profile vanity link"}`,
     `\`${paths.DASH}/profile/\`\u200b**\`${userData.personalhandle || userData.id}\`**`, true);
   embed.field("\u200b", `🗃 ${"Change Medals/Sticker/Flair"}  `,
     true);
-  embed.image(`${paths.CDN}/backdrops/${userData.modules.bgID}.png`);
+  embed.image(`${paths.CDN}/backdrops/${userData.profile.bgID}.png`);
 
   men = await msg.channel.send({ embed });
 

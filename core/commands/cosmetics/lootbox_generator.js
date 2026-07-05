@@ -70,6 +70,7 @@ const init = async (msg, args) => {
   if (VisualsCache.size > 800) VisualsCache.clear();
 
   const USERDATA = (await DB.users.getFull({ id: msg.author.id })) || (await DB.users.new(msg.author));
+  const COSMETICSDATA = await DB.userInventory.get(msg.author.id);
 
   if (LootingUsers.get(msg.author.id)) {
     await DB.users.set(msg.author.id, { $inc: { "counters.cross_server_box_attempts": 1 } });
@@ -99,13 +100,13 @@ const init = async (msg, args) => {
     if (currentRoll === 0) preRoll = msg.channel.send(FIRSTROLL_MSG(P));
     else preRoll = msg.channel.send(REROLL_MSG(P));
 
-    const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA);
+    const rerollCost = determineRerollCost(lootbox, currentRoll, USERDATA, COSMETICSDATA);
     const totalRerolls = BASELINE_REROLLS + (USERDATA.modules.powerups?.rerollBonus || 0);
     const canAffordReroll = await ECO.checkFunds(USERDATA, rerollCost);
 
     const canReroll = canAffordReroll && totalRerolls - currentRoll > 0;
 
-    const firstRoll = await compileBox(msg, lootbox, USERDATA, {
+    const firstRoll = await compileBox(msg, lootbox, USERDATA, COSMETICSDATA, {
       P, currentRoll, totalRerolls, rerollCost, canAffordReroll, canReroll,
     });
 
@@ -133,7 +134,7 @@ const init = async (msg, args) => {
       await Promise.all([
         USERDATA.removeItem(lootbox.id),
         USERDATA.addItem("cosmo_fragment", P.cosmos),
-        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA), "lootbox_reroll"),
+        ECO.pay(USERDATA, determineRerollCost(lootbox, currentRoll - 1, USERDATA, COSMETICSDATA), "lootbox_reroll"),
         DB.users.set(USERDATA.id, lootbox.bonus.query),
         // FIXME [epic=flicky] Boosterpacks not being added
         Promise.all(lootbox.content.map((item) => getPrize(item, USERDATA))),
@@ -288,15 +289,15 @@ function getPrize(loot, USERDATA) {
 
   if (loot.collection === "items") return USERDATA.addItem(loot.id);
 
-  if (loot.type === "background") return DB.users.set(USERDATA.id, { $addToSet: { "modules.bgInventory": (loot.code || loot.id) } });
+  if (loot.type === "background") return DB.userInventory.set(USERDATA.id, { $addToSet: { bgInventory: (loot.code || loot.id) } });
 
-  if (loot.type === "medal") return DB.users.set(USERDATA.id, { $addToSet: { "modules.medalInventory": (loot.icon || loot.id) } });
+  if (loot.type === "medal") return DB.userInventory.set(USERDATA.id, { $addToSet: { medalInventory: (loot.icon || loot.id) } });
 }
-function determineRerollCost(box, rollNum, USERDATA) {
+function determineRerollCost(box, rollNum, USERDATA, COSMETICSDATA) {
   let stake = Math.round(
-    (USERDATA.modules.bgInventory.length || 100)
-    + (USERDATA.modules.bgInventory.length || 100)
-    + (USERDATA.modules.inventory.length || 100),
+    (COSMETICSDATA?.bgInventory?.length || 100)
+    + (COSMETICSDATA?.bgInventory?.length || 100)
+    + (COSMETICSDATA?.inventory?.length || 100),
   );
   stake = stake < 50 ? 50 : stake;
 
@@ -313,10 +314,10 @@ function boxBonus(USERDATA, lootbox, options) {
   return {
     label: prize,
     unit: "EXP",
-    query: { $inc: { "modules.exp": prize } },
+    query: { $inc: { "progression.exp": prize } },
   };
 }
-async function compileBox(msg, lootbox, USERDATA, options) {
+async function compileBox(msg, lootbox, USERDATA, COSMETICSDATA, options) {
   await Promise.all(
     lootbox.visuals.map(async (vis) => VisualsCache.get(vis) || VisualsCache.set(vis, await Picto.getCanvas(vis).catch((e) => e )) && VisualsCache.get(vis)),
   );
@@ -368,8 +369,8 @@ async function compileBox(msg, lootbox, USERDATA, options) {
   lootbox.content.forEach((loot, i, a) => {
     let isDupe = false;
 
-    if (loot.type === "background") isDupe = USERDATA.modules.bgInventory.includes(loot.id || loot.code); // <- ID/CODE backwards compat
-    if (loot.type === "medal") isDupe = USERDATA.modules.medalInventory.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
+    if (loot.type === "background") isDupe = COSMETICSDATA?.bgInventory?.includes(loot.id || loot.code); // <- ID/CODE backwards compat
+    if (loot.type === "medal") isDupe = COSMETICSDATA?.medalInventory?.includes(loot.id || loot.icon); // <- ID/ICON backwards compat
 
     if (isDupe) {
       hasDupes = true;

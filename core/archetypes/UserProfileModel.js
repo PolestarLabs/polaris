@@ -18,29 +18,29 @@ class UserProfileModel {
     this.bot = userDiscordData.bot;
 
     // Pollux User Data
-    if (!userDBData || !userDBData.modules) {
-      userDBData = { modules: {} };
+    if (!userDBData || !userDBData.profile) {
+      userDBData = { profile: {}, progression: {}, currency: {} };
       this.PARTIAL = true;
     }
 
-    this.favColor = /^#[0-9,A-F,a-f]{6}$/.test(userDBData.modules.favcolor) ? userDBData.modules.favcolor : "#dd5383";
-    this.tagline = userDBData.modules.tagline || "";
-    this.background = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userDBData.modules.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6";
-    this.personalText = userDBData.modules.persotext || "";
-    this.exp = userDBData.modules.exp || 0;
-    this.level = userDBData.modules.level || 0;
+    this.favColor = /^#[0-9,A-F,a-f]{6}$/.test(userDBData.profile.favcolor) ? userDBData.profile.favcolor : "#dd5383";
+    this.tagline = userDBData.profile.tagline || "";
+    this.background = this.bot ? "IlyEEDBj0GLLlFl8n6boPLSkADNuBwke" : userDBData.profile.bgID || "5zhr3HWlQB4OmyCBFyHbFuoIhxrZY6l6";
+    this.personalText = userDBData.profile.persotext || "";
+    this.exp = userDBData.progression.exp || 0;
+    this.level = userDBData.progression.level || 0;
     this.percent = XPercent(this.exp, this.level) || 0;
-    this.sticker = userDBData.modules.sticker || null;
-    this.flair = userDBData.modules.flairTop || "default";
-    this.rubines = userDBData.modules.RBN || 0;
-    this.sapphires = userDBData.modules.SPH || 0;
-    this.medals = userDBData.modules.medals || [];
+    this.sticker = userDBData.profile.sticker || null;
+    this.flair = userDBData.profile.flairTop || "default";
+    this.rubines = userDBData.currency.RBN || 0;
+    this.sapphires = userDBData.currency.SPH || 0;
+    this.medals = userDBData.profile.medals || [];
     this.marriage = userDBData.marriageData || null;
-    this.featMarriage = userDBData.featuredMarriage || null;
+    this.featMarriage = userDBData.profile.featuredMarriage || null;
     this.commend = 0;
     const flagOverride = userDBData.switches?.flagOverride === "hidden" ? null : userDBData.switches?.flagOverride;
     this.countryFlag = flagOverride || userDBData.personal?.country || null;
-    this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.donator : null;
+    this.profileFrame = userDBData.switches?.profileFrame === true ? userDBData.prime?.tier ?? null : null;
 
     if (this.medals.length > 0) {
       const validMedals = this.medals.filter((mdl) => mdl && mdl !== "0").map((v) => this.medals.indexOf(v));
@@ -51,7 +51,7 @@ class UserProfileModel {
 
   get globalRank() {
     return DB.users
-      .find({ "modules.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res => {
+      .find({ "progression.exp": { $gt: this.exp } }, {}).countDocuments().exec().then(res => {
         this.rank = res;
         return res;
       });

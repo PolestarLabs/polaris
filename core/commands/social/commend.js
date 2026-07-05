@@ -10,7 +10,10 @@ async function init(msg, args) {
   }).catch(() => {});
   if (!Target) return msg.reply($t("responses.errors.kin404", P));
 
-  const userData = await DB.users.findOne({ id: msg.author.id });
+  const [userData, cosmeticsDoc] = await Promise.all([
+    DB.users.findOne({ id: msg.author.id }),
+    DB.userInventory.getFull(msg.author.id),
+  ]);
   const targetData = (await DB.commends.parseFull({ id: Target.id })) || {
     id: Target.id,
     whoIn: [],
@@ -45,7 +48,7 @@ async function init(msg, args) {
 
   const preafter = async function preafter(M, D) {
     if (
-      userData.modules.inventory.find((itm) => itm.id === "commendtoken")
+      cosmeticsDoc?.inventory?.find((itm) => itm.id === "commendtoken")
         ?.count >= 1
     ) {
       if (Target.id === msg.author.id) {
@@ -61,7 +64,7 @@ async function init(msg, args) {
 
   const after = async function after(msg, Dly) {
     await Promise.all([
-      userData.removeItem("commendtoken"),
+      cosmeticsDoc.removeItem("commendtoken"),
       DB.commends.add(userData.id, Target.id, 1),
     ]);
 
@@ -103,7 +106,7 @@ async function init(msg, args) {
         : _emoji("dnd") + $t("responses.commend.check_no", P)
     }\   
       \n\n:reminder_ribbon: × **${
-        userData.modules.inventory.find((i) => i.id === "commendtoken")
+      cosmeticsDoc?.inventory?.find((i) => i.id === "commendtoken")
           ?.count || 0
       }**`);
     return msg.channel.send({ embed });

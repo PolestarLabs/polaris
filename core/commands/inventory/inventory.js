@@ -43,22 +43,18 @@ const init = async (msg, args) => {
 
   const Target = msg.mentions[0] || msg.author;
 
-  const [_baseline, hex, userData, itemData] = await Promise.all([
+  const [_baseline, hex, userData, itemData, cosmeticsData] = await Promise.all([
     Picto.getCanvas(`${paths.CDN}/build/invent/inventframe.png`),
     Picto.makeHex(175, Target.avatarURL),
-    DB.users.getFull({ id: Target.id }, {
-      "modules.inventory": 1,
-      "modules.flairsInventory": 1,
-      "modules.bgInventory": 1,
-      "modules.medalInventory": 1,
-      "modules.stickerInventory": 1,
-      "modules.favcolor": 1,
+    DB.users.get(Target.id, {
+      "profile.favcolor": 1,
       id: 1,
     }),
     DB.items.find().lean().exec(),
+    DB.userInventory.get(Target.id),
   ]);
 
-  ctx.fillStyle = userData.modules.favcolor || "#FFF";
+  ctx.fillStyle = userData.profile.favcolor || "#FFF";
   ctx.fillRect(154, 127, 500, 408);
   ctx.fillRect(427, 516, 132, 60);
 
@@ -82,7 +78,7 @@ const init = async (msg, args) => {
   Picto.setAndDraw(ctx, Picto.tag(ctx, $t("keywords.junk", P), "400 22pt 'Panton'", "#FFF"), XYZ.JNK.x, XYZ.JNK.y, XYZ.JNK.w, "left");
 
   types = {};
-  userData.modules.inventory.forEach((itm) => {
+  cosmeticsData.inventory.forEach((itm) => {
     let itemType;
     try {
       itemType = itemData.find((i) => (itm.id || itm) == i.id).type || "other";
@@ -108,10 +104,10 @@ const init = async (msg, args) => {
     return x;
   }
 
-  const a_bg = userData.modules.bgInventory.length;
-  const a_md = userData.modules.medalInventory.length;
-  const a_st = userData.modules.stickerInventory.length;
-  const a_fl = userData.modules.flairsInventory.length;
+  const a_bg = cosmeticsData.bgInventory.length;
+  const a_md = cosmeticsData.medalInventory.length;
+  const a_st = cosmeticsData.stickerInventory.length;
+  const a_fl = cosmeticsData.flairInventory.length;
 
   ctx.globalAlpha = 0.7;
   Picto.setAndDraw(ctx, Picto.tag(ctx, a_st, "600 18pt 'Panton'", "#FFF"), XYZ.mST.x, XYZ.mST.y, 100, "right");

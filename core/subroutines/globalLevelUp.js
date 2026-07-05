@@ -2,7 +2,7 @@
 
 const _CURVE = 0.0427899;
 const xp_to_lv = (xp) => Math.floor(_CURVE * Math.sqrt(xp));
-//Math.trunc(Math.pow((userData.modules.level + 1) / _CURVE, 2)); 			=> REVERSE
+//Math.trunc(Math.pow((userData.progression.level + 1) / _CURVE, 2)); 			=> REVERSE
 
 const notifyUser = async (userData,prize) => {
 	if ( await PLX.redis.aget(`noDMs.${userData.id}`) ) return;
@@ -32,7 +32,7 @@ const notifyUser = async (userData,prize) => {
 		userData.addItem(`lootbox_${awardTier}_O`),
 	];
 }
-const commitLevel = (U,L) => DB.users.set(U, { $set: { "modules.level": L } });
+const commitLevel = (U,L) => DB.users.set(U, { $set: { "progression.level": L } });
 
 module.exports = async (msg,userData) => {
 
@@ -40,8 +40,8 @@ module.exports = async (msg,userData) => {
 
 	userData ??= await DB.users.getFull(msg.author.id);
 	if (!userData || !userData.addItem) return;
-	const curLevelG = xp_to_lv(userData.modules.exp) || 0;
-	const prevLevel = userData.modules.level;
+	const curLevelG = xp_to_lv(userData.progression.exp) || 0;
+	const prevLevel = userData.progression.level;
 	await commitLevel(userData.id,curLevelG);
 
 	setImmediate(()=>{

@@ -1,5 +1,5 @@
 module.exports = {
-  Template: async function Template(type, args, userData) {
+  Template: async function Template(type, args, userData, cosmeticsData) {
     const target = args[1];
     let BASE = await DB.cosmetics.find({
       type,
@@ -25,7 +25,7 @@ module.exports = {
 
     const payCoin = `cosmo_gem_${selectedItem.rarity}`;
     const canBuy = selectedItem.buyable && !selectedItem.event;
-    const affordsIt = userData.modules.inventory.find((itm) => (itm.id === `cosmo_gem_${selectedItem.rarity}`) && itm.count >= 1) || false;
+    const affordsIt = cosmeticsData?.inventory?.find((itm) => (itm.id === `cosmo_gem_${selectedItem.rarity}`) && itm.count >= 1) || false;
     const obtainable = selectedItem.buyable && !selectedItem.event;
     console.log({
       payCoin, canBuy, affordsIt, obtainable,

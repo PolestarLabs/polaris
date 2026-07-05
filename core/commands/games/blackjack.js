@@ -255,30 +255,33 @@ const drawTable = async (PL, DL, DATA_A, DATA_B, drawOpts) => {
 };
 
 const DECK = async (msg, args) => {
-  const USERDATA = await DB.users.get(msg.author.id);
+  const [USERDATA, cosmeticsData] = await Promise.all([
+    DB.users.get(msg.author.id),
+    DB.userInventory.get(msg.author.id),
+  ]);
   const P = { lngs: msg.lang };
   if (args[0] === "list") return deckManager.init(msg, args, "casino");
 
   if (["default", "vegas", "reset"].includes(msg.args[1])) {
-    await DB.users.set(msg.author.id, { "modules.skins.blackjack": "default" });
+    await DB.users.set(msg.author.id, { "profile.skins.blackjack": "default" });
     P.deckname = `${_emoji("plxcards").no_space}\`Vegas (default)\``;
     return msg.channel.send(`${rand$t("responses.verbose.interjections.acknowledged")} `
       + `${$t("games:blackjack.switchdeck", P)} ${rand$t("responses.verbose.opinion_decks", P)}`);
   }
 
   const DECKDATA = await DB.cosmetics.find({ type: "skin", for: "casino" });
-  if (!USERDATA.modules.skinInventory) {
+  if (!cosmeticsData.skinInventory) {
     return msg.channel.send("You don't own any skins yet.");
   }
 
   const targetDeck = DECKDATA.find(
     (dck) => dck.localizer === args[0]
-      || dck.id === USERDATA.modules.skinInventory[args[0]]
+      || dck.id === cosmeticsData.skinInventory[args[0]]
       || dck.name.toLowerCase().includes(args.join(" ").toLowerCase()),
   ) || null;
 
-  if (targetDeck && USERDATA.modules.skinInventory.includes(targetDeck.id)) {
-    await DB.users.set(msg.author.id, { "modules.skins.blackjack": targetDeck.localizer });
+  if (targetDeck && cosmeticsData.skinInventory.includes(targetDeck.id)) {
+    await DB.users.set(msg.author.id, { "profile.skins.blackjack": targetDeck.localizer });
     P.deckname = `${_emoji("plxcards").no_space}\`${targetDeck.name}\``;
     let deckSwitchMessage = `${rand$t("responses.verbose.interjections.acknowledged")} ${$t("games:blackjack.switchdeck", P)}`
       + `${rand$t("responses.verbose.opinion_decks", P)}`;
@@ -580,7 +583,7 @@ const init = async (msg, args) => {
   if (args[0] === "decks") return deckManager.init(msg, "casino");
 
   const powerups = USERDATA.modules.powerups || {};
-  const myDeck = USERDATA.modules.skins?.blackjack || "default";
+  const myDeck = USERDATA.profile.skins?.blackjack || "default";
 
   const arg = args[0];
 
@@ -611,7 +614,7 @@ const init = async (msg, args) => {
   v.bet = $t("dict.bet", P);
 
   v.insu = $t("$.insuBet", { lngs: msg.lang, number: 25 });
-  v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.modules.RBN });
+  v.nofunds = $t("$.noFundsBet", { lngs: msg.lang, number: USERDATA.currency.RBN });
   v.insuFloor = $t("$.insuFloor", { lngs: msg.lang, number: 25 });
   v.ceiling = $t("games:ceilingBet", { lngs: msg.lang, number: MAX_BET }).replace("%emj%", _emoji("rubine"));
 
@@ -619,8 +622,8 @@ const init = async (msg, args) => {
     return msg.reply(v.ONGOING);
   }
 
-  if (USERDATA.modules.RBN < 25) {
-    P.number = USERDATA.modules.RBN;
+  if (USERDATA.currency.RBN < 25) {
+    P.number = USERDATA.currency.RBN;
     return msg.reply(v.insuFloor);
   }
   const bet = Math.abs(parseInt(arg));
@@ -632,7 +635,7 @@ const init = async (msg, args) => {
     return msg.reply(v.insu);
   }
 
-  if (USERDATA.modules.RBN < bet) return msg.reply(v.nofunds);
+  if (USERDATA.currency.RBN < bet) return msg.reply(v.nofunds);
   if (bet > MAX_BET) {
     P.number = MAX_BET;
     return msg.reply(v.ceiling);
@@ -643,7 +646,7 @@ const init = async (msg, args) => {
   try {
     const playerHand = blackjack.getHand(powerups);
     const dealerHand = blackjack.getHand().map((card) => (card.startsWith("JOKER") ? `${randomize(1, 10)}H` : card));
-    const balance = USERDATA.modules.RBN;
+    const balance = USERDATA.currency.RBN;
 
     const canInsurance = testInsurance(balance, bet, playerHand, dealerHand);
     const canDoubleDown = testDoubleDown(balance, bet, playerHand);

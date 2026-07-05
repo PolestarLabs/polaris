@@ -81,12 +81,12 @@ function createInteraction(overrides = {}) {
 }
 
 /**
- * Fake user data (DB shape)
+ * Fake user data (DB shape — new refactored schema: currency.*, not modules.*)
  */
 function createUserData(overrides = {}) {
   return {
     id: overrides.id || nextId(),
-    modules: {
+    currency: {
       RBN: overrides.rubines ?? 10000,
       JDE: overrides.jades ?? 500,
       SPH: overrides.sapphires ?? 100,
@@ -95,7 +95,7 @@ function createUserData(overrides = {}) {
       TPZ: overrides.topazes ?? 0,
       PSM: overrides.prisms ?? 0,
       EVT: overrides.events ?? 0,
-      ...(overrides.modules || {}),
+      ...(overrides.currency || {}),
     },
     counters: overrides.counters || {},
     ...(overrides.userData || {}),

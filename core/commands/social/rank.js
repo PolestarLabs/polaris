@@ -37,10 +37,10 @@ const init = async function (msg) {
   // const rolecolor = msg.guild.roles.find(r=>r.id==TARGET.roles[0])
   await Promise.all([
     _back = await Picto.getCanvas(`${paths.BUILD}/profile/mainframe_mini.png`),
-    _bg = await Picto.getCanvas(`${paths.CDN}/backdrops/${userData.modules.bgID}.png`),
-    _flair = await Picto.getCanvas(`${paths.CDN}/flairs/${userData.modules.flairTop || "default"}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`)),
+    _bg = await Picto.getCanvas(`${paths.CDN}/backdrops/${userData.profile.bgID}.png`),
+    _flair = await Picto.getCanvas(`${paths.CDN}/flairs/${userData.profile.flairTop || "default"}.png`).catch((err) => Picto.getCanvas(`${paths.CDN}/flairs/default.png`)),
     _mask = await Picto.getCanvas(`${paths.BUILD}/profile/bgmask.png`),
-    _roundel = await Picto.XChart(120, percent, userData.modules.favcolor, undefined, level, $t("website.level", P)),
+    _roundel = await Picto.XChart(120, percent, userData.profile.favcolor, undefined, level, $t("website.level", P)),
     _hexavat = await Picto.makeHex(210, TARGET.avatarURL),
     _hexfram = await Picto.makeHex(250),
   ]);

@@ -20,7 +20,7 @@ PLX.tempRoleTimers = new Map();
 PLX.muteTimers = new Map();
 PLX.reminderTimers = new Map();
 
-const DBSchema = require("@polestar/database_schema");
+const DBSchema = require("@polestarlabs/database_schema");
 const WebhookDigester = require("./utils/WebhookDigester.js");
 
 const debugHook = new WebhookDigester(PLX);

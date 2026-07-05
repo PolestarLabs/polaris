@@ -2,11 +2,11 @@
 
 const init = async function (msg) {
 
-    const oldUser = await vDB.userDB.findOne({ id: msg.author.id });
+    const oldUser = await vDB.users.findOne({ id: msg.author.id });
     if (!oldUser || oldUser.switches?.tokensMigrated2)
         return msg.addReaction(_emoji('nope').reaction);
 
-    await DB.users.set(msg.author.id, { $set: { "modules.EVT": oldUser.eventGoodie  || 0} });
+    await DB.users.set(msg.author.id, { $set: { "currency.EVT": oldUser.eventGoodie  || 0} });
     await vDB.users.set(msg.author.id, { $set: { "switches.tokensMigrated2": true } });
 
     return msg.addReaction(_emoji('yep').reaction);

@@ -68,7 +68,7 @@ class AchievementsManager extends EventEmitter {
         if (!achiev?.condition) return;
 
         const SCOPES = { user, statistics };
-        const isRevealed = userData.modules.level >= achiev.reveal_level;
+        const isRevealed = userData.progression.level >= achiev.reveal_level;
 
         const [scope, category, unit, ticker] = achiev?.condition?.split('.') || [];
         let checkedValue = achiev.target;
@@ -138,7 +138,7 @@ async function init() {
     if (!userData) return;
 
     const awarded = await Achievements.give(userData, achievement);
-    DB.users.set(uID, { $inc: { "modules.exp": awarded.exp || 100 } });
+    DB.users.set(uID, { $inc: { "progression.exp": awarded.exp || 100 } });
     const DMchannel = await PLX.getDMChannel(uID);
     const channel = DM ? DMchannel : msg.channel || DMchannel;
 

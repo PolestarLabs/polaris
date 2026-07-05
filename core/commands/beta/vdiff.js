@@ -1,6 +1,10 @@
 const init = async function (msg) {
 
-    const userData = (await DB.users.findOne({ id: msg.author.id }).noCache())._doc;
+    const [userDocResult, cosmeticsData] = await Promise.all([
+        DB.users.findOne({ id: msg.author.id }).noCache(),
+        DB.userInventory.get(msg.author.id),
+    ]);
+    const userData = userDocResult._doc;
     const vanillaUserData = (await vDB.users.findOne({ id: msg.author.id }).noCache())._doc;
 
  
@@ -10,20 +14,20 @@ const init = async function (msg) {
             fields: [
                 {
                     name: "Polaris DB", value: `
-                Rubines: \`${userData.modules.RBN}\`
-                Sapphires: \`${userData.modules.SPH}\`
-                Jades: \`${userData.modules.JDE}\`
-                Level: \`${userData.modules.level}\`
-                Exp: \`${userData.modules.exp}\`
-                Inventory: \`${userData.modules.inventory.length}\`
-                Backgrounds: \`${userData.modules.bgInventory.length}\`
-                Medals: \`${userData.modules.medalInventory.length}\`
-                Stickers: \`${userData.modules.stickerInventory.length}\`
-                Flairs: \`${userData.modules.flairsInventory.length}\`
-                Equipped BG: 
-                 • \`${userData.modules.bgID.padEnd(32, ' ')}\`
+                Rubines: \`${userData.currency.RBN}\`
+                Sapphires: \`${userData.currency.SPH}\`
+                Jades: \`${userData.currency.JDE}\`
+                Level: \`${userData.progression.level}\`
+                Exp: \`${userData.progression.exp}\`
+                Inventory: \`${(cosmeticsData?.inventory||[]).length}\`
+                Backgrounds: \`${(cosmeticsData?.bgInventory||[]).length}\`
+                Medals: \`${(cosmeticsData?.medalInventory||[]).length}\`
+                Stickers: \`${(cosmeticsData?.stickerInventory||[]).length}\`
+                Flairs: \`${(cosmeticsData?.flairInventory||[]).length}\`
+                Equipped BG:
+                 • \`${userData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
-                \u2003 • \`${userData.modules.medals.join('\`\n\u2003 • \`')}\`
+                \u2003 • \`${userData.profile.medals.join('\`\n\u2003 • \`')}\`
                 
                 `, inline: true
                 },
@@ -32,15 +36,15 @@ const init = async function (msg) {
                 Rubines: \`${vanillaUserData.modules.rubines}\`
                 Sapphires: \`${vanillaUserData.modules.sapphires}\`
                 Jades: \`${vanillaUserData.modules.jades}\`
-                Level: \`${vanillaUserData.modules.level}\`
-                Exp: \`${vanillaUserData.modules.exp}\`
-                Inventory: \`${vanillaUserData.modules.inventory.length}\`
-                Backgrounds: \`${vanillaUserData.modules.bgInventory.length}\`
-                Medals: \`${vanillaUserData.modules.medalInventory.length}\`
-                Stickers: \`${vanillaUserData.modules.stickerInventory.length}\`
+                Level: \`${vanillaUserData.progression.level}\`
+                Exp: \`${vanillaUserData.progression.exp}\`
+                Inventory: \`${vanillaUserData.profile.inventory.length}\`
+                Backgrounds: \`${vanillaUserData.profile.bgInventory.length}\`
+                Medals: \`${vanillaUserData.profile.medalInventory.length}\`
+                Stickers: \`${vanillaUserData.profile.stickerInventory.length}\`
                 Flairs: \`${vanillaUserData.modules.flairsInventory.length}\`
                 Equipped BG:
-                 • \`${vanillaUserData.modules.bgID.padEnd(32, ' ')}\`
+                 • \`${vanillaUserData.profile.bgID.padEnd(32, ' ')}\`
                 Equipped Medals:
                 \u2003 • \`${vanillaUserData.modules.medals.join('\`\n\u2003 • \`')}\`
                 

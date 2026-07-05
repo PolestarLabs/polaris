@@ -2,6 +2,7 @@
 const init = async function (msg, args, silent) {
   const userData = await DB.users.get(msg.author.id);
 
+  // TODO(sunset): migrate to DB.userInventory
   const oldInventory = userData.modules.inventory;
   const newInventory = [];
 
